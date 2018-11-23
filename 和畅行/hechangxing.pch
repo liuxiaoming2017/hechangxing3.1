@@ -1,0 +1,31 @@
+//
+//  和畅行.pch
+//  和畅行
+//
+//  Created by 刘晓明 on 2018/7/2.
+//  Copyright © 2018年 刘晓明. All rights reserved.
+//
+
+#ifndef ____pch
+#define ____pch
+#ifdef __OBJC__
+#import "GlobalDefine.h"
+#import "UtilityFunc.h"
+#import "NetworkManager.h"
+#import "Global.h"
+#import "UserShareOnce.h"
+#import "MJExtension.h"
+#import "NSDictionary+Extension.h"
+#import "NSArray+Extension.h"
+#import "GlobalCommon.h"
+#import "MemberUserShance.h"
+#import "Tools.h"
+#import "MBProgressHUD.h"
+#import "UIView+ViewController.h"
+#import "ZYGASINetworking.h"
+#import "NSString+Extesion.h"
+#import "UIViewExt.h"
+#endif /* ____pch */
+#endif
+
+

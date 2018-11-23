@@ -1,0 +1,179 @@
+//
+//  PrefixHeader.pch
+//  SUIMVVMDemo
+//
+//  Created by RandomSuio on 16/2/20.
+//  Copyright © 2016年 lovemo. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import "Constants.h"
+#import "MOXApiConstants.h"
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "AppDelegate.h"
+#import "EaseMob.h"
+#import "EaseUI.h"
+#import "EaseConvertToCommonEmoticonsHelper.h"
+#import "BaseControlViewController.h"
+#import "UMMobClick/MobClick.h"
+#import "ImageUtil.h"
+#import "NSString+MOXSizeToFit.h"
+#import "UIView+Frame.h"
+#import "UIColor+MLBUtilities.h"
+#import "MOXGlobleConstes.h"
+#import "ServiceConfig.h"
+#import <YYCache/YYCache.h>
+
+typedef NS_ENUM(NSUInteger, MOXSearchType) {
+    MOXSearchTypeHome,
+    MOXSearchTypeAnswerRecord,
+};
+#endif
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+
+// debug打印信息，release不打印信息
+#ifdef __OPTIMIZE__
+# define NSLog(...) {}
+#else
+# define NSLog(...) NSLog(__VA_ARGS__)
+#endif
+
+#define NO_COMPILE_CCI         0            //0可模拟器运行（屏蔽视频问诊） 1真机调试
+#define SUPPORTHTTPS           true       //设置https网络请求
+#define SUPPORT_ETAGCACHE      TRUE         //启用etag网络请求缓存机制
+#define SUPPORT_JPUSH          TRUE         //启用jpush推送apns(解决i386模拟器4,4s,5无法运行的问题)
+
+#define IS_TEST_VERSION        false   // TRUE/FALSE不可以使用 YES/NO
+
+#define  JDF_PROTOCOL_URL       @"http://www.jiudafu.com/web/licence/doctor.html"
+#define  JDF_DINGYUE_URL        @"http://www.jiudafu.com/web/yangs/weixin_subscribe.html"
+
+#if IS_TEST_VERSION
+#define  WEB_URL_INFORMATION    @"http://info-sandbox.jiudafu.com"
+#define  MAIN_QUANZI_UPLOAD_URL @"http://you-sandbox.jiudafu.com/"  //由于上传图片不支持https单独提出
+#if (SUPPORTHTTPS)
+#define  MAIN_WEB_URL           @"https://api-sandbox.jiudafu.com/" //@"http://www.jiudafu.com/mobile-sandbox/mobile/"
+#define  ECSHOP_WEB_URL         @"https://w2.jiudafu.com/shop-sandbox/mobile/"
+#define  MAIN_QUANZI_URL        @"http://www.jiudafu.com/jiuyou-sandbox/"
+#define  SHERA_URL_BASE         @"https://a-sandbox.jiudaifu.com/"
+#else
+#define  MAIN_WEB_URL           @"http://api-sandbox.jiudafu.com/" //@"http://www.jiudafu.com/mobile-sandbox/mobile/"
+#define  ECSHOP_WEB_URL         @"http://shop-sandbox.jiudafu.com/mobile/" //@"http://w2.jiudafu.com/shop-sandbox/mobile/"
+#define  MAIN_QUANZI_URL        @"http://you-sandbox.jiudafu.com/"  //@"http://www.jiudafu.com/jiuyou-sandbox/"
+#define  SHERA_URL_BASE         @"http://a-sandbox.jiudaifu.com/"
+
+#endif
+#else
+#define  WEB_URL_INFORMATION    @"http://info.jiudaifu.com"
+#define  MAIN_QUANZI_UPLOAD_URL @"http://you.jiudaifu.com/"   //由于上传图片不支持https单独提出
+#if (SUPPORTHTTPS)
+#define  MAIN_WEB_URL           @"https://api.jiudaifu.com/"  //@"http://mobile.jiudafu.com/mobile/"
+#define  ECSHOP_WEB_URL         @"https://shop.jiudaifu.com/mobile/"
+#define  MAIN_QUANZI_URL        @"https://you.jiudaifu.com/"
+#define  SHERA_URL_BASE         @"http://a.jiudaifu.com/"
+#else
+#define  MAIN_WEB_URL           @"http://api.jiudafu.com/"  //@"http://mobile.jiudafu.com/mobile/"
+#define  ECSHOP_WEB_URL         @"http://shop.jiudafu.com/mobile/"
+#define  MAIN_QUANZI_URL        @"http://you.jiudafu.com/"
+#define  SHERA_URL_BASE         @"http://a.jiudaifu.com/"
+
+#endif
+#endif
+
+#define NSEaseLocalizedString(key, comment) [[NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"EaseUIResource" withExtension:@"bundle"]] localizedStringForKey:(key) value:@"" table:nil]
+#define suitRect(str,textW,textH,font) ([str boundingRectWithSize:CGSizeMake(textW, textH) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObject:[UIFont systemFontOfSize:font] forKey:NSFontAttributeName] context:nil])
+#define LocalizedString(key, comment)    (NSLocalizedString(key, comment))
+
+
+// 蓝牙部分
+#define BLUETOOTHMOD            2
+#define TIME_PERIOD_I9          0.3           
+#define TIME_PERIOD             0.2           //200ms
+#define RESENT_MAXCOUNT         5       //一条命令重发的最大次数，大于这个次数，删除，不再发送
+#define DICARD_COUNT            3              //废弃记数达到时，删除这个命令
+#define IDLE_READCHANNEL_COUNT  1       //发送命令的队列空了count个记数后， 生成读取各个通道状态的命令，
+#define LOSTCONNECT_COUNT       30       //如果count个记数没连接， 主动去连接一下
+#define LOSTMESSAGE_COUNT       3        //连续丢失10个计数的消息， 认为连接断开
+
+#define WPASSWORD_CHECK     0
+#define WPASSWORD_MODIFY    1
+#define WPASSWORD_HIDE      2
+
+#define  addrConf   @"addrConf"
+#define  macPwConf  @"macPwConf"
+#define  addi9rConf   @"addi9rConf"
+#define  maci9PwConf  @"maci9PwConf"
+#define  voiceConf  @"voiceConf"
+
+// QQ，微信
+#define WXID_KEY            @"wx677818e0150f79b2"
+#define WXAPP_SECRET_KEY    @"e60106b1068cd51b1f68e4bb871cde90"
+#define WX_PAY_CHANNEL      @"3"
+
+//商户号，填写商户对应参数
+#define MCH_ID              @"1224643801"
+//商户API密钥，填写相应参数
+#define PARTNER_ID          @"04be440ad52a5cd057980f790fe75583"
+
+#define QQ_SHERA_KEY        @"1103429035"
+#define APP_KEY             @"48185764"
+
+// 百度统计
+#define BAIDUSTAT_KEY       @"9eea59c217"
+
+#define MAXPLANNUM          100
+
+// 路径
+#define SysDocumentsPath    [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]
+#define SysDownLoadTempPath [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/DownLoad/temp/"]
+
+// 其它
+#define iPhone6plus ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define iPhone6 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define iPhone4 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define IS_IOS_7        ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+#define SCREEN_WID      ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_HEI      ([[UIScreen mainScreen] bounds].size.height)
+#define STATUS_HEI      ([[UIApplication sharedApplication] statusBarFrame].size.height)
+#define NAVBAR_HEI      (self.navigationController.navigationBar.frame.size.height)
+
+//颜色和透明度设置
+#define RGBA(r,g,b,a)   [UIColor colorWithRed:(float)r/255.0f green:(float)g/255.0f blue:(float)b/255.0f alpha:a]
+
+#define NORMAL_BTN_COLOR    RGBA(0x00, 0x97, 0xea, 1)
+#define PRESSED_BTN_COLOR   RGBA(0xd0, 0xcf, 0xcf, 1)
+#define BTN_BORDER_COLOR    RGBA(0xaa, 0xaa, 0xaa, 1)
+
+#define GRADIENT_START_COLOR    RGBA(0xff, 0xff, 0xff, 1)
+#define GRADIENT_END_COLOR      RGBA(0xdd, 0xdd, 0xdd, 1)
+
+#define CARE_NORMAL_BTN_COLOR    RGBA(0xFF, 0x69, 0x87, 1)
+#define CARE_PRESSED_BTN_COLOR   RGBA(0xd0, 0xcf, 0xcf, 1)
+
+#define SYSTEM_DOCTOR "10000000"
+
+#define BLANKSPACESTR           @"   "
+
+#define TEXTSIZE 16
+#define TOP_OFFSET_30 30
+#define BOTTOM_OFFSET_15 15
+#define BOTTOM_OFFSET_30 30
+#define BOTTOM_OFFSET_60 60
+#define HINT_SHOW_TIME_2 2
+#define HINT_SHOW_TIME_5 3
+
+#define BOLD_TEXT @"Helvetica-Bold"
+#import "MOXMacros.h"
+#endif /* PrefixHeader_pch */

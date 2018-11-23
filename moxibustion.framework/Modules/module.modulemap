@@ -1,0 +1,6 @@
+framework module moxibustion {
+  umbrella header "moxibustion.h"
+
+  export *
+  module * { export * }
+}
