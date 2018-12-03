@@ -18,8 +18,10 @@
 
 - (void)dealloc
 {
-    
-    [self.wkwebview removeObserver:self forKeyPath:@"estimatedProgress"];
+    if(self.progressType == progress2)
+    {
+        [self.wkwebview removeObserver:self forKeyPath:@"estimatedProgress"];
+    }
     self.wkwebview = nil;
 }
 
@@ -28,7 +30,8 @@
     self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.navTitleLabel.textColor = [UIColor whiteColor];
     self.preBtn.hidden = NO;
-    [self.leftBtn setImage:[UIImage imageNamed:@"user_01"] forState:UIControlStateNormal];
+    //[self.leftBtn setImage:[UIImage imageNamed:@"user_01"] forState:UIControlStateNormal];
+    self.leftBtn.hidden = YES;
     [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     
 }

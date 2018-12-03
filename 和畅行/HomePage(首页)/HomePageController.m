@@ -14,7 +14,7 @@
 #import "RemindModel.h"
 #import "RecommendReadView.h"
 
-@interface HomePageController ()
+@interface HomePageController ()<UIScrollViewDelegate>
 
 @property (nonatomic,strong) UIScrollView *bgScrollView;
 @property (nonatomic,strong) HeChangPackge *packgeView;
@@ -77,12 +77,12 @@
     self.packgeView = [[HeChangPackge alloc] initWithFrame:CGRectMake(0, -kNavBarHeight, ScreenWidth, 298/746.0*ScreenHeight)];
   
     
-    self.bgScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-49)];
+    self.bgScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-kTabBarHeight)];
     self.bgScrollView.showsVerticalScrollIndicator = NO;
     self.bgScrollView.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
     self.bgScrollView.bounces = YES;
     self.bgScrollView.contentSize = CGSizeMake(1, ScreenHeight+260);
-    
+    self.bgScrollView.delegate = self;
     [self.bgScrollView addSubview:self.packgeView];
     
     [self.view addSubview:self.bgScrollView];
@@ -219,6 +219,18 @@
 }
 
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView == self.bgScrollView)
+    {
+        //禁止下拉
+        CGPoint offset = self.bgScrollView.contentOffset;
+        if (offset.y <= 0) {
+            offset.y = 0;
+        }
+        self.bgScrollView.contentOffset = offset;
+    }
+    
+}
 
 
 @end

@@ -6,7 +6,7 @@
 //  Copyright © 2018年 刘晓明. All rights reserved.
 //
 
-#import "CommonViewController.h"
+#import "SayAndWriteController.h"
 #import <WebKit/WebKit.h>
 
 typedef enum : NSUInteger {
@@ -14,7 +14,7 @@ typedef enum : NSUInteger {
     progress2,
 } progressType;
 
-@interface WKWebController : CommonViewController
+@interface WKWebController :SayAndWriteController
 
 @property (nonatomic ,retain) NSString *dataStr;
 @property (nonatomic ,retain) NSString *titleStr;

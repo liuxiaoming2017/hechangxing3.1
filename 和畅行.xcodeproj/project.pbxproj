@@ -175,6 +175,8 @@
 		03535EFB20F7425100664FA9 /* QuestionListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03535EFA20F7425100664FA9 /* QuestionListController.m */; };
 		03535EFF20F7462900664FA9 /* QuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03535EFE20F7462900664FA9 /* QuestionView.m */; };
 		03535F0320F74BDA00664FA9 /* QuestionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03535F0220F74BDA00664FA9 /* QuestionModel.m */; };
+		035BBC5A21ABA4E900AB537D /* UIButton+BACountDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 035BBC5821ABA4E900AB537D /* UIButton+BACountDown.m */; };
+		035BBC6021ABDF2300AB537D /* GovSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035BBC5E21ABDF2200AB537D /* GovSectionView.m */; };
 		035FD3F721881F03008CD7E7 /* zhifubeijingtupian.png in Resources */ = {isa = PBXBuildFile; fileRef = 035FD3ED21881F02008CD7E7 /* zhifubeijingtupian.png */; };
 		035FD3F821881F03008CD7E7 /* zhifudetu.png in Resources */ = {isa = PBXBuildFile; fileRef = 035FD3EE21881F02008CD7E7 /* zhifudetu.png */; };
 		035FD3FA21881F03008CD7E7 /* zhifuchenggong.png in Resources */ = {isa = PBXBuildFile; fileRef = 035FD3F021881F02008CD7E7 /* zhifuchenggong.png */; };
@@ -663,6 +665,11 @@
 		03CEFC0D21A64BA80097CB17 /* i9_MoxaMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CEFC0B21A64BA70097CB17 /* i9_MoxaMainViewController.m */; };
 		03CEFC1321A64EF40097CB17 /* ZKIndxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CEFC1221A64EF30097CB17 /* ZKIndxView.m */; };
 		03CEFC1621A68E580097CB17 /* GuidanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CEFC1421A68E580097CB17 /* GuidanceView.m */; };
+		03D99E5921AD2CBE00C766FD /* UMShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D99E5821AD2CBD00C766FD /* UMShare.framework */; };
+		03D99E5B21AD334300C766FD /* libSocialWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D99E5A21AD334300C766FD /* libSocialWeChat.a */; };
+		03D99E5D21AD335100C766FD /* libSocialQQ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D99E5C21AD335100C766FD /* libSocialQQ.a */; };
+		03D99E5F21AD335E00C766FD /* libSocialSina.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D99E5E21AD335E00C766FD /* libSocialSina.a */; };
+		03D99E6121AD338000C766FD /* UShareUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D99E6021AD338000C766FD /* UShareUI.framework */; };
 		03DEBC6A210841FC008434BD /* HealthTipsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DEBC68210841FC008434BD /* HealthTipsModel.m */; };
 		03DEBC6E2108637C008434BD /* ElecDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DEBC6C2108637C008434BD /* ElecDetailViewController.m */; };
 		03DEBC71210863AB008434BD /* LiveMonitorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DEBC70210863AA008434BD /* LiveMonitorVC.m */; };
@@ -787,7 +794,6 @@
 		03FBDF4421927DB3006116FC /* UMCommonLog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 03FBDF4321927DB3006116FC /* UMCommonLog.bundle */; };
 		03FBDF4921927DC1006116FC /* UMAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FBDF4521927DC0006116FC /* UMAnalytics.framework */; };
 		03FBDF4A21927DC1006116FC /* UMCommonLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FBDF4621927DC1006116FC /* UMCommonLog.framework */; };
-		03FBDF4B21927DC1006116FC /* UMShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FBDF4721927DC1006116FC /* UMShare.framework */; };
 		03FBDF4C21927DC1006116FC /* UMCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FBDF4821927DC1006116FC /* UMCommon.framework */; };
 		03FBDF5121927E21006116FC /* SocialLibraries in Resources */ = {isa = PBXBuildFile; fileRef = 03FBDF5021927E21006116FC /* SocialLibraries */; };
 		03FBDF5321927E38006116FC /* UMSocialUI in Resources */ = {isa = PBXBuildFile; fileRef = 03FBDF5221927E38006116FC /* UMSocialUI */; };
@@ -1058,6 +1064,11 @@
 		03535EFE20F7462900664FA9 /* QuestionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuestionView.m; sourceTree = "<group>"; };
 		03535F0120F74BDA00664FA9 /* QuestionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuestionModel.h; sourceTree = "<group>"; };
 		03535F0220F74BDA00664FA9 /* QuestionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuestionModel.m; sourceTree = "<group>"; };
+		035BBC5421ABA41E00AB537D /* BAKit_ConfigurationDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BAKit_ConfigurationDefine.h; sourceTree = "<group>"; };
+		035BBC5721ABA4E900AB537D /* UIButton+BACountDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+BACountDown.h"; sourceTree = "<group>"; };
+		035BBC5821ABA4E900AB537D /* UIButton+BACountDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+BACountDown.m"; sourceTree = "<group>"; };
+		035BBC5E21ABDF2200AB537D /* GovSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GovSectionView.m; sourceTree = "<group>"; };
+		035BBC5F21ABDF2200AB537D /* GovSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GovSectionView.h; sourceTree = "<group>"; };
 		035FD3ED21881F02008CD7E7 /* zhifubeijingtupian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhifubeijingtupian.png; sourceTree = "<group>"; };
 		035FD3EE21881F02008CD7E7 /* zhifudetu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhifudetu.png; sourceTree = "<group>"; };
 		035FD3F021881F02008CD7E7 /* zhifuchenggong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhifuchenggong.png; sourceTree = "<group>"; };
@@ -1770,6 +1781,11 @@
 		03CEFC1221A64EF30097CB17 /* ZKIndxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZKIndxView.m; sourceTree = "<group>"; };
 		03CEFC1421A68E580097CB17 /* GuidanceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuidanceView.m; sourceTree = "<group>"; };
 		03CEFC1521A68E580097CB17 /* GuidanceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuidanceView.h; sourceTree = "<group>"; };
+		03D99E5821AD2CBD00C766FD /* UMShare.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMShare.framework; sourceTree = "<group>"; };
+		03D99E5A21AD334300C766FD /* libSocialWeChat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSocialWeChat.a; path = "和畅行/友盟分享/SocialLibraries/WeChat/libSocialWeChat.a"; sourceTree = "<group>"; };
+		03D99E5C21AD335100C766FD /* libSocialQQ.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSocialQQ.a; path = "和畅行/友盟分享/SocialLibraries/QQ/libSocialQQ.a"; sourceTree = "<group>"; };
+		03D99E5E21AD335E00C766FD /* libSocialSina.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSocialSina.a; path = "和畅行/友盟分享/SocialLibraries/Sina/libSocialSina.a"; sourceTree = "<group>"; };
+		03D99E6021AD338000C766FD /* UShareUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UShareUI.framework; path = "和畅行/友盟分享/UMSocialUI/UShareUI.framework"; sourceTree = "<group>"; };
 		03DEBC68210841FC008434BD /* HealthTipsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HealthTipsModel.m; sourceTree = "<group>"; };
 		03DEBC69210841FC008434BD /* HealthTipsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HealthTipsModel.h; sourceTree = "<group>"; };
 		03DEBC6C2108637C008434BD /* ElecDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElecDetailViewController.m; sourceTree = "<group>"; };
@@ -1936,7 +1952,6 @@
 		03FBDF4321927DB3006116FC /* UMCommonLog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMCommonLog.bundle; sourceTree = "<group>"; };
 		03FBDF4521927DC0006116FC /* UMAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMAnalytics.framework; sourceTree = "<group>"; };
 		03FBDF4621927DC1006116FC /* UMCommonLog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMCommonLog.framework; sourceTree = "<group>"; };
-		03FBDF4721927DC1006116FC /* UMShare.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMShare.framework; sourceTree = "<group>"; };
 		03FBDF4821927DC1006116FC /* UMCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMCommon.framework; sourceTree = "<group>"; };
 		03FBDF5021927E21006116FC /* SocialLibraries */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SocialLibraries; sourceTree = "<group>"; };
 		03FBDF5221927E38006116FC /* UMSocialUI */ = {isa = PBXFileReference; lastKnownFileType = folder; path = UMSocialUI; sourceTree = "<group>"; };
@@ -1995,11 +2010,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03FBDF4B21927DC1006116FC /* UMShare.framework in Frameworks */,
+				03D99E6121AD338000C766FD /* UShareUI.framework in Frameworks */,
+				03D99E5F21AD335E00C766FD /* libSocialSina.a in Frameworks */,
+				03D99E5D21AD335100C766FD /* libSocialQQ.a in Frameworks */,
+				03D99E5B21AD334300C766FD /* libSocialWeChat.a in Frameworks */,
 				036E85B62186EBD8001B9BB4 /* libxml2.2.tbd in Frameworks */,
 				0377198E21056F5F0010EA8B /* QuartzCore.framework in Frameworks */,
 				0377198C21056EE20010EA8B /* UIKit.framework in Frameworks */,
 				03CEFC0A21A64B6B0097CB17 /* moxibustion.framework in Frameworks */,
+				03D99E5921AD2CBE00C766FD /* UMShare.framework in Frameworks */,
 				038517022186AB8E001DD2B7 /* libWeChatSDK.a in Frameworks */,
 				0377198921056E700010EA8B /* libz.1.1.3.tbd in Frameworks */,
 				0377198A21056E700010EA8B /* libz.1.2.5.tbd in Frameworks */,
@@ -2209,6 +2228,8 @@
 				036285982106BB020090020D /* CellUtil.m */,
 				03FBDF982192B066006116FC /* TimeLineView.h */,
 				03FBDF992192B066006116FC /* TimeLineView.m */,
+				035BBC5F21ABDF2200AB537D /* GovSectionView.h */,
+				035BBC5E21ABDF2200AB537D /* GovSectionView.m */,
 				03FBDF9B2192B0B3006116FC /* TimeLineCell.h */,
 				03FBDF9C2192B0B3006116FC /* TimeLineCell.m */,
 				039BE71221A7E07C004652AA /* NoTimeLineCell.h */,
@@ -2574,6 +2595,9 @@
 				030F51372101C206003C918F /* MeridianIdentifierViewController.m */,
 				0377198F210580BA0010EA8B /* ResultSpeakController.h */,
 				03771990210580BA0010EA8B /* ResultSpeakController.m */,
+				035BBC5721ABA4E900AB537D /* UIButton+BACountDown.h */,
+				035BBC5821ABA4E900AB537D /* UIButton+BACountDown.m */,
+				035BBC5421ABA41E00AB537D /* BAKit_ConfigurationDefine.h */,
 			);
 			path = "Speak(说)";
 			sourceTree = "<group>";
@@ -3476,6 +3500,10 @@
 		0390CF7B20ECB5CF000ECA53 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				03D99E6021AD338000C766FD /* UShareUI.framework */,
+				03D99E5E21AD335E00C766FD /* libSocialSina.a */,
+				03D99E5C21AD335100C766FD /* libSocialQQ.a */,
+				03D99E5A21AD334300C766FD /* libSocialWeChat.a */,
 				03CEFC0921A64B6A0097CB17 /* moxibustion.framework */,
 				036E85B52186EBD8001B9BB4 /* libxml2.2.tbd */,
 				0377198D21056F5F0010EA8B /* QuartzCore.framework */,
@@ -4049,12 +4077,12 @@
 		03FBDF4221927DA0006116FC /* 友盟分享 */ = {
 			isa = PBXGroup;
 			children = (
+				03D99E5821AD2CBD00C766FD /* UMShare.framework */,
 				03FBDF5221927E38006116FC /* UMSocialUI */,
 				03FBDF5021927E21006116FC /* SocialLibraries */,
 				03FBDF4521927DC0006116FC /* UMAnalytics.framework */,
 				03FBDF4821927DC1006116FC /* UMCommon.framework */,
 				03FBDF4621927DC1006116FC /* UMCommonLog.framework */,
-				03FBDF4721927DC1006116FC /* UMShare.framework */,
 				03FBDF4321927DB3006116FC /* UMCommonLog.bundle */,
 			);
 			path = "友盟分享";
@@ -4807,6 +4835,7 @@
 				03FBDF752192806F006116FC /* InformationDedailssViewController.m in Sources */,
 				036E84152186EAB1001B9BB4 /* SetNetsPassWordViewController.m in Sources */,
 				036E85AC2186EB6E001B9BB4 /* TYWaveProgressView.m in Sources */,
+				035BBC6021ABDF2300AB537D /* GovSectionView.m in Sources */,
 				03F6931520FF2FD400308E38 /* SBJsonStreamWriterAccumulator.m in Sources */,
 				039C239A2123D80900F9AFA3 /* BloodPressureNonDeviceViewController.m in Sources */,
 				032735982105CE0900554516 /* ArchivesCell.m in Sources */,
@@ -4881,6 +4910,7 @@
 				036A66CE2114023F0096A006 /* FamilyViewController.m in Sources */,
 				038A654A2112B0860055C760 /* MineCell.m in Sources */,
 				03DEBC74210863CC008434BD /* LeadPlayer.m in Sources */,
+				035BBC5A21ABA4E900AB537D /* UIButton+BACountDown.m in Sources */,
 				036A667E2113ECBB0096A006 /* SelectedAdvisorModel.m in Sources */,
 				036E84412186EAD3001B9BB4 /* UIImage+Util.m in Sources */,
 				034A4E83211A9AD900936A46 /* TZPhotoPickerController.m in Sources */,
@@ -5178,17 +5208,19 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 432A80A6E0CB6A191C1F35C4 /* Pods-和畅行.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 57V29JY44X;
+				DEVELOPMENT_TEAM = 3X65BCYVHU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/和畅行/Mall(商城)/购买/View/IntegratedAlipay/AlipaySDK",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/和畅行/友盟分享",
+					"$(PROJECT_DIR)/和畅行/友盟分享/UMSocialUI",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$SRCROOT/和畅行/hechangxing.pch";
@@ -5216,6 +5248,9 @@
 					"$(PROJECT_DIR)/和畅行/SayAndWrite(说写点)/Speak(说)/MLAudioRecorder/lib",
 					"$(PROJECT_DIR)/和畅行/Mall(商城)/购买/View/IntegratedAlipay/AlipaySDK",
 					"$(PROJECT_DIR)/和畅行/Mall(商城)/购买/Model/SDKExport",
+					"$(PROJECT_DIR)/和畅行/友盟分享/SocialLibraries/WeChat",
+					"$(PROJECT_DIR)/和畅行/友盟分享/SocialLibraries/QQ",
+					"$(PROJECT_DIR)/和畅行/友盟分享/SocialLibraries/Sina",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -5266,7 +5301,7 @@
 					"\"VideoToolbox\"",
 					"-all_load",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nationsky.liuxiaoming222;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -5278,17 +5313,19 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FE7460D05597BE7EC6524138 /* Pods-和畅行.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 57V29JY44X;
+				DEVELOPMENT_TEAM = 3X65BCYVHU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/和畅行/Mall(商城)/购买/View/IntegratedAlipay/AlipaySDK",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/和畅行/友盟分享",
+					"$(PROJECT_DIR)/和畅行/友盟分享/UMSocialUI",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$SRCROOT/和畅行/hechangxing.pch";
@@ -5316,6 +5353,9 @@
 					"$(PROJECT_DIR)/和畅行/SayAndWrite(说写点)/Speak(说)/MLAudioRecorder/lib",
 					"$(PROJECT_DIR)/和畅行/Mall(商城)/购买/View/IntegratedAlipay/AlipaySDK",
 					"$(PROJECT_DIR)/和畅行/Mall(商城)/购买/Model/SDKExport",
+					"$(PROJECT_DIR)/和畅行/友盟分享/SocialLibraries/WeChat",
+					"$(PROJECT_DIR)/和畅行/友盟分享/SocialLibraries/QQ",
+					"$(PROJECT_DIR)/和畅行/友盟分享/SocialLibraries/Sina",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -5366,7 +5406,7 @@
 					"\"VideoToolbox\"",
 					"-all_load",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nationsky.liuxiaoming222;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

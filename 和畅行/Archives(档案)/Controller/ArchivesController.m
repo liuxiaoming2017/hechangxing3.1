@@ -96,7 +96,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     //[self.leftBtn setImage:[UIImage imageNamed:@"user_01"] forState:UIControlStateNormal];
     [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     
-    TimeLineView *timeLinvView = [[TimeLineView alloc] initWithFrame:CGRectMake(0, self.topView.bottom+5, ScreenWidth, ScreenHeight-self.topView.bottom) withData:self.archiveArr];
+    TimeLineView *timeLinvView = [[TimeLineView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, ScreenWidth, ScreenHeight-self.topView.bottom-kTabBarHeight) withData:self.archiveArr];
     [self.view addSubview:timeLinvView];
     
     UIButton *filterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -112,7 +112,11 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     //    [self.view addSubview:self.sidebarVC.view];
     self.sidebarVC.view.frame  = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
     
+    if(!memberId){
+        memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
+    }
     
+    [self requestNetworkWithIndex:1];
     
     /*
     self.titleArr = [NSArray arrayWithObjects:@"最新",@"经络",@"体质",@"脏腑",@"心率",@"血压",@"血氧",@"血糖",@"体温",@"呼吸", nil];
@@ -154,11 +158,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     
     [self requestNetworkWithIndex:currentIndex];
     */
-    if(!memberId){
-        memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
-    }
     
-   // [self requestNetworkWithIndex:0];
 }
 
 - (void)filterBtnAction:(UIButton *)button
@@ -641,6 +641,8 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     [GlobalCommon showMessage:@"请求失败!" duration:2];
     //[self addFailView];
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

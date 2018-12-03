@@ -15,8 +15,11 @@
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 #import "SBJson.h"
-#import <sys/utsname.h>
-#import <CommonCrypto/CommonDigest.h>
+
+#import <UMShare/UMShare.h>
+#import <UMCommon/UMCommon.h>
+
+#import "ZYGASINetworking.h"
 
 #define margin 40
 #define leftOrigin 40
@@ -205,7 +208,26 @@
 # pragma mark - 微信登录
 - (void)weixinBtnAction
 {
-    
+    [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_WechatSession currentViewController:nil completion:^(id result, NSError *error) {
+        NSLog(@"hahah");
+        if (error) {
+            
+        } else {
+            UMSocialUserInfoResponse *resp = result;
+            // 授权信息
+            NSLog(@"Wechat uid: %@", resp.uid);
+            NSLog(@"Wechat openid: %@", resp.openid);
+            NSLog(@"Wechat accessToken: %@", resp.accessToken);
+            NSLog(@"Wechat refreshToken: %@", resp.refreshToken);
+            NSLog(@"Wechat expiration: %@", resp.expiration);
+            // 用户信息
+            NSLog(@"Wechat name: %@", resp.name);
+            NSLog(@"Wechat iconurl: %@", resp.iconurl);
+            NSLog(@"Wechat gender: %@", resp.gender);
+            // 第三方平台SDK源数据
+            NSLog(@"Wechat originalResponse: %@", resp.originalResponse);
+        }
+    }];
 }
 
 # pragma mark - 获取验证码
@@ -217,23 +239,44 @@
         return;
     }
     
-    NSString *aUrl = [NSString stringWithFormat:@"%@/register/captcha.jhtml",URL_PRE];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+    NSString *aUrl = @"weiq/sms/getsmsCode.jhtml";
     /**
      *  MD5加密后的字符串
      */
-    NSString *iPoneNumber = [NSString stringWithFormat:@"%@xinxijishubu",userNameBox.text];
-    NSString *iPoneNumberMD5 = [self md5:iPoneNumber];
+    NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",userNameBox.text];
+    NSString *iPoneNumberMD5 = [GlobalCommon md5:iPoneNumber].uppercaseString;
+    NSDictionary *dic = @{@"phone":userNameBox.text,@"token":iPoneNumberMD5};
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:dic successBlock:^(id response) {
+        id status=[response objectForKey:@"status"];
+        if (status!=nil)
+        {
+            if ([status intValue]==100) {
+                
+                self->timer=[NSTimer scheduledTimerWithTimeInterval:1
+                                                       target:self
+                                                     selector:@selector(getResults)
+                                                     userInfo:nil
+                                                      repeats:YES];
+            }else{
+                
+                NSString *str = [dic objectForKey:@"data"];
+                [weakSelf showAlertWarmMessage:str];
+                
+            }
+        }
+        else
+        {
+            [weakSelf showAlertWarmMessage:@"短信验证码发送失败，请重试"];
+            
+            return;
+            
+        }
+    } failureBlock:^(NSError *error) {
+        [weakSelf showAlertWarmMessage:@"短信验证码发送失败，请重试"];
+    }];
     
-    [request setPostValue:userNameBox.text forKey:@"username"];
-    [request setPostValue:iPoneNumberMD5 forKey:@"UserPhoneKey"];
-    
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestYZMError:)];
-    [request setDidFinishSelector:@selector(requestYZMCompleted:)];
-    [request startAsynchronous];
+
     
 }
 
@@ -251,189 +294,6 @@
     }
     YZMbtn.titleLabel.font=[UIFont systemFontOfSize:7];
     [YZMbtn setTitle:[NSString stringWithFormat:@"%i秒内重新发送",pageNo--] forState:UIControlStateNormal];
-}
-
-- (void)requestYZMError:(ASIHTTPRequest *)request
-{
-    [self showAlertWarmMessage:@"短信验证码发送失败，请重试"];
-    return;
-}
-- (void)requestYZMCompleted:(ASIHTTPRequest *)request
-{
-    
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    NSLog(@"dic==%@",dic);
-    id status=[dic objectForKey:@"status"];
-    if (status!=nil)
-    {
-        if ([status intValue]==100) {
-            
-            timer=[NSTimer scheduledTimerWithTimeInterval:1
-                                                   target:self
-                                                 selector:@selector(getResults)
-                                                 userInfo:nil
-                                                  repeats:YES];
-        }
-        else{
-            
-            NSString *str = [dic objectForKey:@"data"];
-            [self showAlertWarmMessage:str];
-            
-        }
-    }
-    else
-    {
-        [self showAlertWarmMessage:@"短信验证码发送失败，请重试"];
-        
-        return;
-        
-    }
-}
-
-- (void)initViewControl{
-    
-    self.view.backgroundColor=[UtilityFunc colorWithHexString:@"##f2f1ef"];
-    //[self setNaviBarTitle:@"登录"];
-    
-    UIButton* ReginBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    ReginBtn.frame=CGRectMake(0, 0, 60, 44);
-    [ReginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [ReginBtn setTitle:@"注册" forState:UIControlStateNormal];
-    ReginBtn.titleLabel.font=[UIFont systemFontOfSize:18];
-    [ReginBtn addTarget:self action:@selector(userRegistrationButton) forControlEvents:UIControlEventTouchUpInside];
-    ReginBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    //[self setNaviBarRightBtn:ReginBtn];
-    
-    UIImage* LoginUserBg=[UIImage imageNamed:@"LoginUser_bg.png"];
-    UIImageView *viewbg_ImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,LoginUserBg.size.width/2,LoginUserBg.size.height/2)];
-    [viewbg_ImgView setImage:LoginUserBg];
-    
-    UIView* userView=[[UIView alloc] init];
-    userView.frame=CGRectMake(margin,kNavBarHeight+27,LoginUserBg.size.width/2,LoginUserBg.size.height/2);
-    [userView addSubview:viewbg_ImgView];
-    [self.view addSubview:userView];
-   
-    
-    [userView addSubview:viewbg_ImgView];
-    
-    
-    UIImage * Loginimage=[UIImage imageNamed:@"LoginUser.png"];
-    UIImageView *viewbgImgView = [[UIImageView alloc] initWithFrame:CGRectMake((userView.frame.size.width-Loginimage.size.width/2)/2,(userView.frame.size.height-Loginimage.size.height/2)/2,Loginimage.size.width/2,Loginimage.size.height/2)];
-    [viewbgImgView setImage:Loginimage];
-    [userView addSubview:viewbgImgView];
-    
-    
-    UIImage* UserBoxImg=[UIImage imageNamed:@"UserBoxImg.png"];
-    userNameBox=[[UITextField alloc] init];
-   userNameBox.frame=CGRectMake(userView.frame.origin.x+userView.frame.size.width, userView.frame.origin.y, ScreenWidth-margin-userView.right , UserBoxImg.size.height/2);
-    userNameBox.borderStyle=UITextBorderStyleNone;
-    CALayer *ImageUserNameLayer = [CALayer layer];
-    ImageUserNameLayer.frame = CGRectMake(0, 0, userNameBox.width, UserBoxImg.size.height/2);
-    ImageUserNameLayer.contents = (id) UserBoxImg.CGImage;
-    [userNameBox.layer addSublayer:ImageUserNameLayer];
-    userNameBox.returnKeyType=UIReturnKeyNext;
-    userNameBox.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
-    userNameBox.clearButtonMode=UITextFieldViewModeWhileEditing;
-    userNameBox.delegate=self;
-    userNameBox.tag=20;
-    userNameBox.placeholder=@"  请输入用户名";
-    [self.view addSubview:userNameBox];
-    
-    UIImage* LoginPassWordBg=[UIImage imageNamed:@"LoginUser_bg.png"];
-    UIImageView *Passviewbg_ImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,LoginPassWordBg.size.width/2,LoginPassWordBg.size.height/2)];
-    [Passviewbg_ImgView setImage:LoginPassWordBg];
-    
-    UIView* PassWordView=[[UIView alloc] init];
- PassWordView.frame=CGRectMake(margin,userView.frame.origin.y+userView.frame.size.height+8,LoginPassWordBg.size.width/2,LoginPassWordBg.size.height/2);
-    [PassWordView addSubview:Passviewbg_ImgView];
-    [self.view addSubview:PassWordView];
-    
-    
-    [PassWordView addSubview:Passviewbg_ImgView];
-    
-    UIImage * PassWordimage=[UIImage imageNamed:@"LoginPassWord.png"];
-    UIImageView *PassWordImgView = [[UIImageView alloc] initWithFrame:CGRectMake((PassWordView.frame.size.width-PassWordimage.size.width/2)/2,(PassWordView.frame.size.height-PassWordimage.size.height/2)/2,PassWordimage.size.width/2,PassWordimage.size.height/2)];
-    [PassWordImgView setImage:PassWordimage];
-    [PassWordView addSubview:PassWordImgView];
-    
-    
-    
-    passWordBox=[[UITextField alloc]init];
-    passWordBox.secureTextEntry=YES;
-    passWordBox.clearButtonMode=UITextFieldViewModeWhileEditing;
- passWordBox.frame=CGRectMake(PassWordView.frame.origin.x+PassWordView.frame.size.width, userNameBox.frame.origin.y+userNameBox.frame.size.height+8, userNameBox.width, UserBoxImg.size.height/2);
-    passWordBox.borderStyle=UITextBorderStyleNone;
-    CALayer *ImagePassWordLayer = [CALayer layer];
-    ImagePassWordLayer.frame = CGRectMake(0, 0, userNameBox.width, UserBoxImg.size.height/2);
-    ImagePassWordLayer.contents = (id) UserBoxImg.CGImage;
-    [passWordBox.layer addSublayer:ImagePassWordLayer];
-    passWordBox.delegate = self;
-    passWordBox.tag=21;
-    passWordBox.placeholder=@"  请输入密码";
-    passWordBox.returnKeyType=UIReturnKeyDone;
-    [self.view addSubview:passWordBox];
-    
-    
-    UIImage* CheckBoxImg=[UIImage imageNamed:@"checkboxyes.png"];
-    isPush = YES;
-    UIButton* CheckBoxBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    [CheckBoxBtn setFrame:CGRectMake(margin, passWordBox.frame.origin.y+passWordBox.frame.size.height+15.5, 20, 20)];
-    
-    [CheckBoxBtn setImage:CheckBoxImg forState:UIControlStateNormal];
-    [CheckBoxBtn addTarget:self action:@selector(CheckActive:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:CheckBoxBtn];
-    
-    
-    
-    UILabel* checkLable=[[UILabel alloc] init];
-    checkLable.frame=CGRectMake(CheckBoxBtn.frame.origin.x+CheckBoxBtn.frame.size.width+10, CheckBoxBtn.frame.origin.y, 60, 21);
-    checkLable.text=@"记住我";
-    checkLable.textColor=[UtilityFunc colorWithHexString:@"#9b9b9b"];
-    checkLable.font=[UIFont systemFontOfSize:13];
-    [self.view addSubview:checkLable];
-    
-    
-    UIButton* ForgetBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    ForgetBtn.frame=CGRectMake(ScreenWidth-margin-120, CheckBoxBtn.frame.origin.y, 120, 21);
-    [ForgetBtn setTitle:@"忘记密码?" forState:UIControlStateNormal];
-    ForgetBtn.titleLabel.font=[UIFont systemFontOfSize:14];
-    ForgetBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    [ForgetBtn addTarget:self action:@selector(FoggetActive:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [ForgetBtn setTitleColor:[UtilityFunc colorWithHexString:@"#9b9b9b"] forState:UIControlStateNormal];
-    [self.view addSubview:ForgetBtn];
-    
-    UIImage* LoginBtnImg=[UIImage imageNamed:@"LoginBtn.png"];
-    UIButton* LoginBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    LoginBtn.frame=CGRectMake(margin, passWordBox.frame.origin.y+passWordBox.frame.size.height+46, ScreenWidth-margin*2, LoginBtnImg.size.height/2);
-    [LoginBtn addTarget:self action:@selector(userLogin) forControlEvents:UIControlEventTouchUpInside];
-    [LoginBtn setImage:LoginBtnImg forState:UIControlStateNormal];
-    [self.view addSubview:LoginBtn];
-    
-    if (!self.isChangeUser) {
-        //从本地查找用户
-        NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
-        NSString* strcheck=[dicTmp objectForKey:@"ischeck"];
-        if ([strcheck isEqualToString:@"1"])
-        {
-            UIImage* CheckBoxImg=[UIImage imageNamed:@"checkboxyes.png"];
-            [CheckBoxBtn setImage:CheckBoxImg forState:UIControlStateNormal];
-            isCheck=YES;
-            userNameBox.text=[dicTmp objectForKey:@"USERNAME"];
-            passWordBox.text=[dicTmp objectForKey:@"PASSWORDAES"];
-            if(userNameBox.text.length>0&&passWordBox.text.length>0)
-            {
-               // [self userLogin ];
-            }
-        }
-        else
-        {
-            isCheck=YES;
-        }
-    }
-    
 }
 
 -(void) CheckActive:(id)sender
@@ -464,7 +324,45 @@
     
 }
 
+# pragma mark - 登录按钮
 - (void)userLogin
+{
+    UIButton *button = (UIButton *)[self.view viewWithTag:2018];
+    //短信验证码登录
+    if([button.titleLabel.text isEqualToString:@"获取验证码"]){
+        [self smsCodeLoginAction];
+    }
+    //用户名密码登录
+    else{
+        [self userNameLoginAction];
+    }
+}
+
+# pragma mark - 短信验证码登录
+- (void)smsCodeLoginAction
+{
+    if (userNameBox.text.length!=11) {
+        
+        [self showAlertWarmMessage:@"请输入正确的手机号"];
+        
+        return;
+    }
+    if (passWordBox.text.length==0) {
+        
+        [self showAlertWarmMessage:@"请输入短信验证码"];
+        return;
+    }
+    
+    NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
+    
+    [paramDic setObject:userNameBox.text forKey:@"phone"];
+    [paramDic setObject:passWordBox.text forKey:@"code"];
+    
+    [self userLoginWithParams:paramDic withisCheck:isCheck];
+}
+
+# pragma mark - 用户名密码登录
+- (void)userNameLoginAction
 {
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
@@ -475,13 +373,13 @@
     NSString* devicesname=@"iPhone 7";
     
     if (userNameBox.text.length==0) {
-       
+        
         [self showAlertWarmMessage:@"请输入用户名或密码"];
         
         return;
     }
     if (passWordBox.text.length==0) {
-
+        
         [self showAlertWarmMessage:@"请输入用户名或密码"];
         return;
     }
@@ -498,71 +396,6 @@
     [paramDic setObject:userNameBox.text forKey:@"username"];
     
     [self userLoginWithParams:paramDic withisCheck:isCheck];
-    
-    /*
-    __weak typeof(self) weakself = self;
-    
-    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:paramDic successBlock:^(id response) {
-        //NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:response options:kNilOptions error:nil];
-        if([[response objectForKey:@"status"] intValue] == 100){
-            
-            //判断是不是第一次登录
-            if (![[NSUserDefaults standardUserDefaults] boolForKey:@"everLongined"]) {
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"everLongined"];
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLogin"];
-            }
-            else{
-                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstLogin"];
-            }
-            [[NSUserDefaults standardUserDefaults] setObject:self->userNameBox.text forKey:@"loginPhone"];
-            [[NSUserDefaults standardUserDefaults] setObject:self->passWordBox.text forKey:@"loginPassword"];
-            //将登录成功的标志保存到本地
-            [[NSUserDefaults standardUserDefaults] setObject:@"isLogin" forKey:@"longinStatus"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            //发送登录成功的通知
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginCompleted" object:self userInfo:nil];
-            if (self->isCheck)
-            {
-                NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
-                if (dicTmp) {
-                    [dicTmp setObject:self->userNameBox.text forKey:@"USERNAME"];
-                    [dicTmp setObject:self->passWordBox.text forKey:@"PASSWORDAES"];
-                    [dicTmp setValue:@"1" forKey:@"ischeck"];
-                }
-                [UtilityFunc updateAppConfigWithMutableDictionary:dicTmp];
-            }
-            
-            
-            UserShareOnce *userShare = [UserShareOnce shareOnce];
-            NSDictionary *dic = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"member"];
-            userShare = [UserShareOnce mj_objectWithKeyValues:dic];
-            userShare.JSESSIONID = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"JSESSIONID"];
-            userShare.token = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"token"];
-            
-            if (![[dic objectForKey:@"isMarried"] isKindOfClass:[NSNull class]]) {
-                if ([[dic objectForKey:@"isMarried"] boolValue] == YES) {
-                    userShare.marryState = @"未婚";
-                }else if ([[dic objectForKey:@"isMarried"] boolValue] == NO){
-                    userShare.marryState = @"未婚";
-                }
-            }
-            
-            NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberChirldArr"];
-            if (arr.count) {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"memberChirldArr"];
-            }
-            NSArray *modelArr = [[NSArray alloc] initWithArray:userShare.mengberchild];
-            
-            [[NSUserDefaults standardUserDefaults] setObject:modelArr forKey:@"memberChirldArr"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            [weakself GetMemberChild];
-        }else{
-            [weakself showAlertWarmMessage:[response objectForKey:@"data"]];
-        }
-    } failureBlock:^(NSError *error) {
-        [weakself showAlertWarmMessage:@"抱歉登录失败，请重试"];
-    }];
-     */
 }
 
 - (void)GetMemberChild2
@@ -619,19 +452,6 @@
     return YES;
 }
 
-- (NSString *)md5:(NSString *)str
-{
-    const char *cStr = [str UTF8String];
-    unsigned char result[16];
-    CC_MD5(cStr, strlen(cStr), result);
-    return [NSString stringWithFormat:
-            @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-            result[0], result[1], result[2], result[3],
-            result[4], result[5], result[6], result[7],
-            result[8], result[9], result[10], result[11],
-            result[12], result[13], result[14], result[15]
-            ];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

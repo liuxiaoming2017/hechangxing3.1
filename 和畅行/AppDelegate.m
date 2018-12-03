@@ -28,6 +28,11 @@
 #import "ApiXml.h"
 #import <QuartzCore/QuartzCore.h>
 
+#import <UMShare/UMShare.h>
+#import <UMCommon/UMCommon.h>
+#import <UMCommonLog/UMCommonLogManager.h>
+
+#import "SBJson.h"
 //#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 
 
@@ -60,9 +65,29 @@
     
     [self.window makeKeyAndVisible];
     
-     [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
-    
+    [UMCommonLogManager setUpUMCommonLogManager];
+    [UMConfigure setLogEnabled:YES];
+    [UMConfigure initWithAppkey:@"5bbacd04b465f5db4c000073" channel:@"App Store"];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:APP_SECRET redirectURL:nil];
+   //  [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
+    [self getAppSecret];
     return YES;
+}
+
+- (void)getAppSecret
+{
+    /**
+     *  MD5加密后的字符串
+     */
+    NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",@"weixinPayPlugin"];
+    NSString *iPoneNumberMD5 = [GlobalCommon md5:iPoneNumber];
+    NSDictionary *dic = @{@"pluginname":@"weixinPayPlugin",@"token":iPoneNumberMD5};
+    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:@"weiq/weiq/getWeiqSecret.jhtml" parameters:dic successBlock:^(id response) {
+        
+    } failureBlock:^(NSError *error) {
+        
+    }];
+    
 }
 
 
@@ -252,7 +277,13 @@
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    return  [WXApi handleOpenURL:url delegate:self];
+    BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
+    if (!result) {
+        // 其他如支付等SDK的回调
+        return  [WXApi handleOpenURL:url delegate:self];
+    }
+    return result;
+    
 }
 
 //- (void)application:(UIApplication *)application handleOpenURL:(NSURL * _Nonnull)url
@@ -260,6 +291,56 @@
 //
 //}
 
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+    BOOL result = [[UMSocialManager defaultManager]  handleOpenURL:url options:options];
+    if (!result) {
+        // 其他如支付等SDK的回调
+    if ([url.host isEqualToString:@"safepay"]) {
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@",[resultDic objectForKey:@"memo"]);
+            NSString *str = [NSString stringWithFormat:@"%@",[resultDic objectForKey:@"memo"]];
+            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+            [av show];
+            
+            if ([[resultDic objectForKey:@"resultStatus"]integerValue] == 9000 ) {
+                
+                NSDictionary * dic = @{@"count":@"1"};
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"count" object:self userInfo:dic];
+                
+            }else{
+                NSDictionary * dic = @{@"count":@"0"};
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"count" object:self userInfo:dic];
+            }
+            
+        }];
+    } else if ([url.host isEqualToString:@"platformapi"]){//支付宝钱包快登授权返回 authCode
+        
+        [[AlipaySDK defaultService] processAuthResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@",resultDic);
+            NSString *str = [NSString stringWithFormat:@"%@",[resultDic objectForKey:@"memo"]];
+            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+            [av show];
+            
+            if ([[resultDic objectForKey:@"resultStatus"]integerValue] == 9000 ) {
+                NSDictionary * dic = @{@"count":@"1"};
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"count" object:self userInfo:dic];
+            }else{
+                NSDictionary * dic = @{@"count":@"0"};
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"count" object:self userInfo:dic];
+            }
+        }];
+        
+        return YES;
+    }else{
+        
+        return  [WXApi handleOpenURL:url delegate:self];
+    }
+}
+    return YES;
+}
+
+/*
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
 {
     if ([url.host isEqualToString:@"safepay"]) {
@@ -304,6 +385,7 @@
     }
     return YES;
 }
+ */
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.

@@ -74,7 +74,7 @@
 
 - (void)userLoginWithParams:(NSDictionary *)paramDic withisCheck:(BOOL)isCheck
 {
-    
+   // NSString *aUrl = @"weiq/sms/login.jhtml";
     NSString *aUrl = @"login/commit.jhtml";
     __weak typeof(self) weakself = self;
     

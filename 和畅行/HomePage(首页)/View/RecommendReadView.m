@@ -140,6 +140,7 @@
     WKWebController *vc = [[WKWebController alloc] init];
     vc.titleStr = [self.recommendArr[indexPath.row] objectForKey:@"title"];
     vc.dataStr = [self.recommendArr[indexPath.row] objectForKey:@"path"];
+    vc.hidesBottomBarWhenPushed = YES;
     [self.viewController.navigationController pushViewController:vc animated:YES];
 }
 

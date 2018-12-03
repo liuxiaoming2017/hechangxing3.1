@@ -12,6 +12,9 @@
 #import "TipClickController.h"
 #import "TipSpeakController.h"
 
+#import "MeridianIdentifierViewController.h"
+#import "WriteListController.h"
+#import "QuestionListController.h"
 @implementation ReadOrWriteView
 
 -(instancetype)initWithFrame:(CGRect)frame
@@ -137,24 +140,40 @@
 
 - (void)buttonAction:(UIButton *)btn
 {
+     SayAndWriteController *vc = nil;
     switch (btn.tag) {
         case 100:
         {
-            TipSpeakController *vc = [[TipSpeakController alloc] init];
+            if([self isFirestClickThePageWithString:@"speak"]){
+                vc = [[MeridianIdentifierViewController alloc] init];
+            }else{
+                vc = [[TipSpeakController alloc] init];
+            }
+            
             vc.hidesBottomBarWhenPushed = YES;
             [self.viewController.navigationController pushViewController:vc animated:YES];
         }
             break;
            case 101:
         {
-            TipWriteController *vc = [[TipWriteController alloc] init];
+            if([self isFirestClickThePageWithString:@"write"]){
+                vc = [[WriteListController alloc] init];
+            }else{
+                vc = [[TipWriteController alloc] init];
+            }
+            
             vc.hidesBottomBarWhenPushed = YES;
             [self.viewController.navigationController pushViewController:vc animated:YES];
         }
             break;
             case 102:
         {
-            TipClickController *vc = [[TipClickController alloc] init];
+            if([self isFirestClickThePageWithString:@"click"]){
+                vc = [[QuestionListController alloc] init];
+            }else{
+                vc = [[TipClickController alloc] init];
+            }
+            
             vc.hidesBottomBarWhenPushed = YES;
             [self.viewController.navigationController pushViewController:vc animated:YES];
         }
@@ -167,13 +186,26 @@
 # pragma mark - 写按钮点击
 - (void)writeBtnBtnAction:(UIButton *)btn
 {
-    TipWriteController *vc = [[TipWriteController alloc] init];
+    SayAndWriteController *vc = nil;
+    
+    if([self isFirestClickThePageWithString:@"write"]){
+        vc = [[WriteListController alloc] init];
+//        vc.hidesBottomBarWhenPushed = YES;
+//        [self.viewController.navigationController pushViewController:vc animated:YES];
+    }else{
+        vc = [[TipWriteController alloc] init];
+    }
+    
+    
     vc.hidesBottomBarWhenPushed = YES;
     [self.viewController.navigationController pushViewController:vc animated:YES];
 }
 # pragma mark - 说按钮点击
 - (void)readBtnBtnAction:(UIButton *)btn
 {
+    if([self isFirestClickThePageWithString:@"speak"]){
+        
+    }
     TipSpeakController *vc = [[TipSpeakController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.viewController.navigationController pushViewController:vc animated:YES];
@@ -181,9 +213,27 @@
 # pragma mark - 点按钮点击
 - (void)hitBtnBtnAction:(UIButton *)btn
 {
+    if([self isFirestClickThePageWithString:@"tip"]){
+        
+    }
     TipClickController *vc = [[TipClickController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.viewController.navigationController pushViewController:vc animated:YES];
+}
+
+- (BOOL)isFirestClickThePageWithString:(NSString *)string
+{
+    NSString *userName = [UserShareOnce shareOnce].username;
+    NSString *writeKey = [NSString stringWithFormat:@"%@_%@",userName,string];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if([[userDefaults objectForKey:writeKey] isEqualToString:@"1"]){
+        return YES;
+    }else{
+        [userDefaults setObject:@"1" forKey:writeKey];
+        [userDefaults synchronize];
+        return NO;
+    }
+    return NO;
 }
 
 @end

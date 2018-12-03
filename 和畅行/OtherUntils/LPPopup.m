@@ -74,8 +74,8 @@ static NSString * const kLPAnimationKeyPopup = @"kLPAnimationKeyPopup";
         self.numberOfLines = 0;
         self.textAlignment = NSTextAlignmentCenter;
         
-        self.textColor = [UIColor darkTextColor];
-        self.font = [UIFont boldSystemFontOfSize:16.0f];
+        self.textColor = [UIColor blackColor];
+        self.font = [UIFont boldSystemFontOfSize:15.0f];
     }
     return self;
 }
@@ -146,9 +146,12 @@ static NSString * const kLPAnimationKeyPopup = @"kLPAnimationKeyPopup";
 
 - (CGRect)textRectForBounds:(CGRect)bounds limitedToNumberOfLines:(NSInteger)numberOfLines
 {
-    bounds.size = [self.text sizeWithFont:self.font
-                        constrainedToSize:CGSizeMake(self.maxWidth - self.textInsets.left - self.textInsets.right,
-                                                     CGFLOAT_MAX)];
+//    bounds.size = [self.text sizeWithFont:self.font
+//                        constrainedToSize:CGSizeMake(self.maxWidth - self.textInsets.left - self.textInsets.right,
+//                                                     CGFLOAT_MAX)];
+    
+    bounds.size = [self.text boundingRectWithSize:CGSizeMake(self.maxWidth - self.textInsets.left - self.textInsets.right,
+                                                             CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:[NSDictionary dictionaryWithObjectsAndKeys:self.font,NSFontAttributeName, nil] context:nil].size;
     return bounds;
 }
 

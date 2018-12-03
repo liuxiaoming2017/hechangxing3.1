@@ -9,6 +9,7 @@
 #import "HeChangRemind.h"
 #import "RemindCell.h"
 #import "RemindModel.h"
+#import "HeChangPackgeController.h"
 
 @interface HeChangRemind()<UITableViewDelegate,UITableViewDataSource>
 
@@ -114,6 +115,41 @@
     }
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    RemindCell *cell = (RemindCell *)[tableView cellForRowAtIndexPath:indexPath];
+    
+    NSString *type = @"";
+    NSString *fangtype = @"";
+    NSString *titleStr = @"";
+    NSString *urlStr = @"";
+    
+    if([cell.typeLabel.text isEqualToString:@"一说"]){
+        
+    }else if ([cell.typeLabel.text isEqualToString:@"一听"]){
+        type = @"/member/service/view/fang/JLBS/1/";
+        fangtype = @"yiting";
+        titleStr = @"音乐处方";
+    }else if ([cell.typeLabel.text isEqualToString:@"一站"]){
+        type = @"/member/service/view/fang/JLBS/1/";
+        fangtype = @"yizhan";
+        titleStr = @"运动处方";
+    }else if ([cell.typeLabel.text isEqualToString:@"一推"]){
+        type = @"/member/service/view/fang/JLBS/1/";
+        fangtype = @"yitui";
+        titleStr = @"推拿处方";
+    }
+    
+    urlStr = [NSString stringWithFormat:@"%@%@%@.jhtml?type=%@",URL_PRE,type,[MemberUserShance shareOnce].idNum,fangtype];
+    HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
+    vc.progressType = progress2;
+    vc.urlStr = urlStr;
+    vc.titleStr = titleStr;
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.viewController.navigationController pushViewController:vc animated:YES];
+    
 }
 
 - (void)updateViewWithData:(NSArray *)arr withHeight:(CGFloat)height

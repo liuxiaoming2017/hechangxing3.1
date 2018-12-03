@@ -19,6 +19,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "ResultSpeakController.h"
+#import "UIButton+BACountDown.h"
 
 #define MENU_POPOVER_FRAME  CGRectMake(8, 0, 140, 88)
 #define kTabsHeight 46.5
@@ -35,8 +36,7 @@
     NSTimer* playTime;
     NSTimer* playmp3;
     NSTimer * bianshiTime;
-    NSTimer * bianshiTime1;
-    NSTimer * bianshiTime2;
+   
     NSTimer *timerACC;
     AVAudioRecorder *RecorderAcc;
     STSegmentedControl *segmentImg;
@@ -60,141 +60,169 @@
 @property( nonatomic,strong) UIImageView *image6;
 @property( nonatomic,strong) UIImageView *image7;
 
+@property(nonatomic,strong) UILabel *duoLabel;
+@property(nonatomic,strong) UILabel *ruaiLabel;
+@property(nonatomic,strong) UILabel *miLabel;
+@property(nonatomic,strong) UILabel *souLabel;
+@property(nonatomic,strong) UILabel *laLabel;
+
 /**soundCount*/
 @property (nonatomic,assign) CGFloat soundCount;
 @end
 
 @implementation MeridianIdentifierViewController
 
-
--(void)goBack:(UIButton *)btn{
-    [self.navigationController popToRootViewControllerAnimated:YES];
+-(void)setupBackView
+{
+    UIButton *preBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     
+    preBtn.frame = CGRectMake(20, kStatusBarHeight+5, 80, 30);
+    [preBtn setImage:[UIImage imageNamed:@"nav_bar_back"] forState:UIControlStateNormal];
+    [preBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [preBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [preBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    preBtn.titleEdgeInsets = UIEdgeInsetsMake(1, -5, 0, 0);
+    preBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    
+    [preBtn addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:preBtn];
 }
+
+- (void)goBack:(UIButton *)btn
+{
+    [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 - (void)viewDidLoad {
+    
+     [self setupContentView];
+    
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    // 重构代码 适配iPhone6 ~ 机型 hai
     
+    self.topView.backgroundColor = [UIColor clearColor];
     self.navTitleLabel.text = @"经络功能状态评估";
-    
+    self.navTitleLabel.textColor = [UIColor whiteColor];
+}
+
+- (void)setupContentView
+{
+    // 重构代码 适配iPhone6 ~ 机型 hai
     UIView* UpView = [[UIView alloc] init];
-    UpView.frame = CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight);
+    UpView.frame = [UIScreen mainScreen].bounds;
     [self.view addSubview:UpView];
     
-    
     // 背景图片
-    UIImageView* UpImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"0闻音辨2识11960_01"]];
-    //     UpImgView.frame = CGRectMake(0, 0, ScreenWidth, UpImgView.bounds.size.height);
-    UpImgView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight * 0.69);
+    UIImageView* UpImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"wenyinBg"]];
+    UpImgView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
     [UpView addSubview:UpImgView];
-
+  
     
     // 哆
-    UIImageView *duoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Wybs_duo_1.png"]];
-    CGFloat duoX = (ScreenWidth - 160) * 0.5;
-    duoView.frame = CGRectMake(duoX, 60, 160, 160);
-    NSLog(@"%f -------  %f",duoView.bounds.size.width, duoView.bounds.size.height);
+    UIImageView *duoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"duo"]];
+    CGFloat duoX = (ScreenWidth - duoView.frame.size.width*0.6) * 0.5;
+    //duoView.frame = CGRectMake(duoX, ScreenHeight * 0.2, duoView.bounds.size.width*0.6, duoView.bounds.size.height*0.6);
+    if(IS_IPHONE_6){
+        duoView.frame = CGRectMake(duoX, ScreenHeight * 0.16, duoView.bounds.size.width*0.6, duoView.bounds.size.height*0.6);
+    }else{
+        duoView.frame = CGRectMake(duoX, ScreenHeight * 0.2, duoView.bounds.size.width*0.6, duoView.bounds.size.height*0.6);
+    }
+    duoView.image = [UIImage imageNamed:@"duo默认"];
     _image1 = duoView;
     [UpView addSubview:duoView];
-//    [duoView release];
-    
-    // 哆音标背景框
-    UIImageView *yinBgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Wybs_PinYinImg.png"]];
-    CGFloat yinX = (ScreenWidth - 100) * 0.5;
-    yinBgView.frame = CGRectMake(yinX, duoView.bottom+45, 100, 45);
-    NSLog(@"================= %.0f",yinBgView.bounds.size.width);
-    [UpView addSubview:yinBgView];
-//    [yinBgView release];
-    
-    // 哆音标
-    UIImageView *yinView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Wybs_duo"]];
-    yinView.frame = yinBgView.bounds;
-    _image2 = yinView;
-    [yinBgView addSubview:yinView];
-//    [yinView release];
     
     
     // 文字背景框
-    UIImageView *wenBgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Wybs_WinZhi_Img_bg.png"]];
-    
-    wenBgView.frame = CGRectMake(20, yinBgView.bottom+60, ScreenWidth-20*2, 60);
+    UIImageView *wenBgView = [[UIImageView alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(duoView.frame)+75, ScreenWidth-40, 80)];
+    if(IS_IPHONE_6){
+        wenBgView.frame = CGRectMake(20, ScreenHeight*0.5, ScreenWidth-40, 80);
+    }
+    [wenBgView setImage:[UIImage imageNamed:@"Wybs_WinZhi_Img_bg.png"]];
+    wenBgView.tag = 10086;
     [UpView addSubview:wenBgView];
-//    [wenBgView release];
     
-    // 文字
-    NSArray *array = @[@"WinZhi_Img_duo_1.png",@"WinZhi_Img_ruai_1.png",@"WinZhi_Img_mi_1.png",@"WinZhi_Img_sao_1.png",@"WinZhi_Img_la_1.png"];
+    
+    
+    NSArray *titleArr = @[@"哆",@"唻",@"咪",@"嗦",@"啦"];
     
     CGFloat marin = 10.0;
-    CGFloat wenX = wenBgView.bounds.size.width / array.count;
-    for (int i = 0; i < array.count; i++) {
-        UIImageView *wenView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:array[i]]];
-        wenView.frame = CGRectMake(wenX * i + marin, 4, wenBgView.height-8, wenBgView.height-8);
+    CGFloat wenX = wenBgView.bounds.size.width / titleArr.count;
+    for (int i = 0; i < titleArr.count; i++) {
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(wenX * i + marin, 10, 60, 60)];
+        titleLabel.text = [titleArr objectAtIndex:i];
+        titleLabel.font = [UIFont systemFontOfSize:50.0];
+        titleLabel.textColor = UIColorFromHex(0xFFFFFF);
+        titleLabel.tag = 2018+i;
+        titleLabel.alpha = 0.44;
+        [wenBgView addSubview:titleLabel];
         
-        if (i == 0) {
-            _image3 = wenView;
-        }else if (i == 1) {
-            _image4 = wenView;
-        }else if (i == 2) {
-            _image5 = wenView;
-        }else if (i == 3) {
-            _image6 = wenView;
-        }else if (i == 4) {
-            _image7 = wenView;
-        }else{
-            
+        switch (i) {
+            case 0:
+                self.duoLabel = titleLabel;
+                break;
+            case 1:
+                self.ruaiLabel = titleLabel;
+                break;
+            case 2:
+                self.miLabel = titleLabel;
+                break;
+            case 3:
+                self.souLabel = titleLabel;
+                break;
+            case 4:
+                self.laLabel = titleLabel;
+                break;
+            default:
+                break;
         }
         
-        [wenBgView addSubview:wenView];
-
     }
-    
     
     // 开始
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setImage:[UIImage imageNamed:@"2_0-126.png"] forState:UIControlStateNormal];
-    CGFloat startBtnX = (ScreenWidth - 260) * 0.5;
-    button.frame = CGRectMake(startBtnX, UpImgView.bottom+(ScreenHeight-UpImgView.bottom-kNavBarHeight-260/3.9)/2.0, 260,260/3.9);
+    [button setImage:[UIImage imageNamed:@"luyinbegin"] forState:UIControlStateNormal];
+    [button setBackgroundColor:UIColorFromHex(0xfac121)];
+    //button.currentImage.size.width
+    CGFloat startBtnX = (ScreenWidth - 160) * 0.5;
     
+    if(IS_IPHONE_6P){
+        button.frame = CGRectMake(startBtnX, CGRectGetMaxY(wenBgView.frame)+75, 160,160);
+    }else{
+        CGFloat ff = ScreenHeight - CGRectGetMaxY(wenBgView.frame)-160;
+        button.frame = CGRectMake(startBtnX, CGRectGetMaxY(wenBgView.frame)+ff/2.0, 160,160);
+    }
+    
+    button.layer.cornerRadius = button.frame.size.width/2.0;
     button.tag=10004;
     [button addTarget:self action:@selector(record:) forControlEvents:UIControlEventTouchUpInside];
     
-    [UpView addSubview:button];
-    
-    
-    
+    [self.view addSubview:button];
     
     timeNStager=0;
     bianshiTime=[NSTimer scheduledTimerWithTimeInterval:0.6f target:self selector:@selector(runTimeBianshi) userInfo:nil repeats:YES];
     [bianshiTime setFireDate:[NSDate distantFuture]];
-    bianshiTime1=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(runTimeBianshi1) userInfo:nil repeats:YES];
-    [bianshiTime1 setFireDate:[NSDate distantFuture]];
-    bianshiTime2=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(runTimeBianshi2) userInfo:nil repeats:YES];
-    [bianshiTime2 setFireDate:[NSDate distantFuture]];
-    UIView *diView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 51, self.view.frame.size.width, 51)];
-    [self.view addSubview:diView];
-    UIImageView *diImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 49)];
-    diImage.image = [UIImage imageNamed:@"我的11_102.png"];
-    [diView addSubview:diImage];
-    float width = 0;
-    width = (self.view.frame.size.width - 39 * 5) / 5;
-
+    
+    
+    
+    
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(showLoginView)
      name:@"showLoginView"
      object:nil];
+    
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(showQianHuanLogin:)
+     
      name:@"QianHuanLogin"
      object:nil];
     yincangView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 51, self.view.frame.size.width, 51)];
     [self.view addSubview:yincangView];
     yincangView.hidden = YES;
-    
-//    [UpView release];
 }
+
 
 -(void)showQianHuanLogin:(NSNotification*)NotiSuc
 {
@@ -207,20 +235,6 @@
 }
 
 
--(void)LeftBtnActive:(id)sender
-{
-    UIButton* btn=(UIButton*)sender;
-    [btn setImage:[UIImage imageNamed:@"演示中1.png"] forState:UIControlStateNormal];
-    btn.enabled=NO;
-    IsShiFan=YES;
-    yincangView.hidden = NO;
-    UIButton* btn1=(UIButton*)[self.view viewWithTag:10004];
-    //[btn1 setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-    btn1.enabled=NO;
-    self.ZhiShiImgView.hidden=NO;
-    [bianshiTime1 setFireDate:[NSDate distantPast]];
-    
-}
 - (void)audio
 {
     recordButton.selected = YES;
@@ -313,10 +327,10 @@
     //最大50  0
     //图片 小-》大
 }
-- (IBAction)record:(id)sender
+- (IBAction)record:(UIButton *)sender
 {
     self.soundCount = 0;
-    recordButton = (UIButton*)sender;
+    recordButton = sender;
     if (recordButton.selected) {
         recordButton.selected = NO;
         timeNStager=0;
@@ -324,14 +338,9 @@
         btn.enabled=YES;
         // IsShiFan=false;
         [bianshiTime setFireDate:[NSDate distantFuture]];
-        _image1.image=[UIImage imageNamed:@"Wybs_duo_1.png"];
-        _image3.image=[UIImage imageNamed:@"WinZhi_Img_duo_1.png"];
-        _image4.image=[UIImage imageNamed:@"WinZhi_Img_ruai_1.png"];
-        _image5.image=[UIImage imageNamed:@"WinZhi_Img_mi_1.png"];
-        _image6.image=[UIImage imageNamed:@"WinZhi_Img_sao_1.png"];
-        _image7.image=[UIImage imageNamed:@"WinZhi_Img_la_1.png"];
-        _image2.image=[UIImage imageNamed:@"Wybs_duo.png"];
-        [recordButton setImage:[UIImage imageNamed:@"2_0-126.png"] forState:UIControlStateNormal];
+        _image1.image=[UIImage imageNamed:@"duo默认"];
+        [self changeTitleLabelAlphaWithtag:100];
+        [recordButton setImage:[UIImage imageNamed:@"luyinbegin"] forState:UIControlStateNormal];
         double cTime = RecorderAcc.currentTime;
         if (cTime > 2) {//如果录制时间<2 不发送
             NSLog(@"发出去");
@@ -344,23 +353,110 @@
         [timerACC invalidate];
         yincangView.hidden = YES;
     }else{
+        //开启一个定时器 三秒后录音
+        sender.userInteractionEnabled = NO;
+        __weak UIButton *btn = sender;
+        __weak typeof(self) blockSelf = self;
+        [btn setImage:nil forState:UIControlStateNormal];
         
-        if([self checkPermission]){
-            [self audio];
-        }else{
-            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL granted) {
-                if(granted){
-                    [self audio];
-                }else{
-                    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"请打开麦克风权限" preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:NULL];
-                    [alertVC addAction:alertAct1];
-                    [self presentViewController:alertVC animated:YES completion:NULL];
-                }
-            }];
-        }
+        [sender ba_countDownCustomWithTimeInterval:3 block:^(NSInteger currentTime) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [btn setTitle:[NSString stringWithFormat:@"%ld",(long)currentTime] forState:UIControlStateNormal];
+                btn.titleLabel.font = [UIFont systemFontOfSize:90];
+                
+            });
+        }];
+        
+        [sender setTimeStoppedCallback:^{
+            [btn setTitle:nil forState:UIControlStateNormal];
+            [blockSelf startRecordAudion];
+            self->recordButton.selected = YES;
+            self->yincangView.hidden = NO;
+        }];
+        
         
     }
+    
+}
+
+- (void)startRecordAudion
+{
+    if([self checkPermission]){
+        [self recordAudio];
+    }else{
+        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL granted) {
+            if(granted){
+                [self recordAudio];
+            }else{
+                UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"请打开麦克风权限" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:NULL];
+                [alertVC addAction:alertAct1];
+                [self presentViewController:alertVC animated:YES completion:NULL];
+            }
+        }];
+    }
+}
+
+#pragma mark - 录音
+- (void)recordAudio
+{
+    
+    NSError *error1 = nil;
+    AVAudioSession * audioSession = [AVAudioSession sharedInstance]; //得到AVAudioSession单例对象
+    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error: &error1];//设置类别,表示该应用同时支持播放和录音
+    [audioSession setActive:YES error: &error1];//启动音频会话管理,此时会阻断后台音乐的播放.
+    
+    //录音设置
+    NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc]init];
+    //设置录音格式  AVFormatIDKey==kAudioFormatLinearPCM
+    [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
+    //设置录音采样率(Hz) 如：AVSampleRateKey==8000/44100/96000（影响音频的质量）
+    [recordSetting setValue:[NSNumber numberWithFloat:44100] forKey:AVSampleRateKey];
+    //  [recordSetting setValue:[NSNumber numberWithFloat:9600] forKey:AVEncoderBitRateKey];
+    //AVEncoderBitRateKey
+    //录音通道数  1 或 2
+    [recordSetting setValue:[NSNumber numberWithInt:2] forKey:AVNumberOfChannelsKey];
+    //线性采样位数  8、16、24、32
+    [recordSetting setValue:[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
+    //录音的质量
+    [recordSetting setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsBigEndianKey];
+    [recordSetting setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
+    NSDate *  senddate=[NSDate date];
+    
+    NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
+    [dateformatter setDateFormat:@"YYYYMMdd-mm:hh:ss"];
+    
+    NSString *  locationString=[dateformatter stringFromDate:senddate];
+    NSLog(@"locationString:%@",locationString);
+    // NSString* path=[self getPathOfDocuments];
+    NSString *path = [ NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *imageDir = [path stringByAppendingPathComponent:@"wybs"];
+    imageDir = [NSString stringWithFormat:@"%@/Caches/%@", path, [UserShareOnce shareOnce].username];
+    [self addSkipBackupAttributeToItemAtPath:imageDir];
+    BOOL isDir = NO;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL existed = [fileManager fileExistsAtPath:imageDir isDirectory:&isDir];
+    if ( !(isDir == YES && existed == YES) )
+    {
+        [fileManager createDirectoryAtPath:imageDir withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
+    self.filePath=[imageDir stringByAppendingPathComponent:[NSString stringWithFormat:@"HY%@.aac",locationString]];
+    NSLog(@"filepath===%@",self.filePath);
+    // NSString *strUrl = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSURL *url = [NSURL fileURLWithPath:self.filePath];
+    //urlPlay = url;
+    
+    NSError *error;
+    //初始化
+    RecorderAcc = [[AVAudioRecorder alloc]initWithURL:url settings:recordSetting error:&error];
+    //开启音量检测
+    RecorderAcc.meteringEnabled = YES;
+    RecorderAcc.delegate = self;
+    
+    //判断设备是否支持录音
+    [self luyinWithrecording];
 }
 
 -(BOOL)checkPermission
@@ -373,18 +469,18 @@
 - (void)luyinWithrecording{
     if (timeNStager!=0) {
         //取消录音
-        
         timeNStager=0;
-        // IsShiFan=false;
-        [bianshiTime setFireDate:[NSDate distantFuture]];
-        _image1.image=[UIImage imageNamed:@"Wybs_duo_1.png"];
-        _image3.image=[UIImage imageNamed:@"WinZhi_Img_duo_1.png"];
-        _image4.image=[UIImage imageNamed:@"WinZhi_Img_ruai_1.png"];
-        _image5.image=[UIImage imageNamed:@"WinZhi_Img_mi_1.png"];
-        _image6.image=[UIImage imageNamed:@"WinZhi_Img_sao_1.png"];
-        _image7.image=[UIImage imageNamed:@"WinZhi_Img_la_1.png"];
-        _image2.image=[UIImage imageNamed:@"Wybs_duo.png"];
-        [recordButton setImage:[UIImage imageNamed:@"2_0-126.png"] forState:UIControlStateNormal];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self->bianshiTime setFireDate:[NSDate distantFuture]];
+            self->_image1.image=[UIImage imageNamed:@"duo"];
+            self->_image3.image=[UIImage imageNamed:@"WinZhi_Img_duo_1.png"];
+            self->_image4.image=[UIImage imageNamed:@"WinZhi_Img_ruai_1.png"];
+            self->_image5.image=[UIImage imageNamed:@"WinZhi_Img_mi_1.png"];
+            self->_image6.image=[UIImage imageNamed:@"WinZhi_Img_sao_1.png"];
+            self->_image7.image=[UIImage imageNamed:@"WinZhi_Img_la_1.png"];
+            self->_image2.image=[UIImage imageNamed:@"Wybs_duo.png"];
+            [self->recordButton setImage:[UIImage imageNamed:@"luyinbegin"] forState:UIControlStateNormal];
+        });
         double cTime = RecorderAcc.currentTime;
         if (cTime > 2) {//如果录制时间<2 不发送
             NSLog(@"发出去");
@@ -399,54 +495,31 @@
     }
     else
     {
-        
-        UIButton* btn=(UIButton*)[self.view viewWithTag:10007];
-        btn.enabled=NO;
-        self.RotateImg.hidden=YES;
-        [bianshiTime setFireDate:[NSDate distantPast]];
-        [recordButton setImage:[UIImage imageNamed:@"2_06 -11122.png"] forState:UIControlStateNormal];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIButton* btn=(UIButton*)[self.view viewWithTag:10007];
+            btn.enabled=NO;
+            self.RotateImg.hidden=YES;
+            [self->bianshiTime setFireDate:[NSDate distantPast]];
+            [self->recordButton setImage:[UIImage imageNamed:@"luyinover"] forState:UIControlStateNormal];
+        });
         //创建录音文件，准备录音
         if ([RecorderAcc prepareToRecord]) {
             //开始
             [RecorderAcc record];
         }
         
-        timerACC = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(detectionVoices) userInfo:nil repeats:YES];
+        //设置定时检测
+        //        if (self.filePath.length == 0) {
+        //            [self audio];
+        //        }
+        timerACC = [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(detectionVoices) userInfo:nil repeats:YES];
         
     }
+
     
 }
 
--(void)runTimeBianshi1
-{
-    timeNStager++;
-    if (timeNStager==5) {
-        timeNStager=0;
-        [bianshiTime1 setFireDate:[NSDate distantFuture]];
-        [bianshiTime setFireDate:[NSDate distantPast]];
-        [self ShiFanYinPlay];
-    }
-    
-}
--(void)ShiFanYinPlay
-{
-    NSString *audioPath = [[NSBundle mainBundle] pathForResource:@"WY_bssf.mp3" ofType:@"wav"];
-    NSURL *audioUrl = [NSURL fileURLWithPath:audioPath];
-    if ([UserShareOnce shareOnce].mp3)
-    {
-        if ([UserShareOnce shareOnce].mp3.playing) {
-            [[UserShareOnce shareOnce].mp3 pause];
-        }
 
-        [UserShareOnce shareOnce].mp3 =nil;
-    }
-    [UserShareOnce shareOnce].mp3 = [[AVAudioPlayer alloc] initWithContentsOfURL:audioUrl error:nil];
-    [[UserShareOnce shareOnce].mp3 setDelegate:self];//设置代理
-    [UserShareOnce shareOnce].mp3.volume = 0.9;//播放音量
-    [[UserShareOnce shareOnce].mp3 prepareToPlay];
-    playmp3= [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(paly) userInfo:nil repeats:NO];
-    
-}
 -(void) paly
 {
     [[UserShareOnce shareOnce].mp3 play];//播放音乐
@@ -457,22 +530,8 @@
 {
     NSLog(@"finish");//设置代理的AVAudioPlayer对象每次播放结束都会触发这个函数
 }
--(void)runTimeBianshi2
-{
-    timeNStager++;
-    if (timeNStager==5) {
-        timeNStager=0;
-        self.ZhiShiImgView2.hidden=YES;
-        self.ZhiShiImgView3.hidden=YES;
-        UIButton* btn1=(UIButton*)[self.view viewWithTag:10007];
-        btn1.enabled=YES;
-        [btn1 setImage:[UIImage imageNamed:@"演示前1.png"] forState:UIControlStateNormal];
-        UIButton* btn=(UIButton*)[self.view viewWithTag:10004];
-        btn.enabled=YES;
-        yincangView.hidden = YES;
-        [bianshiTime2 setFireDate:[NSDate distantFuture]];
-    }
-}
+
+#pragma mark - 录音文字图片变换
 -(void)runTimeBianshi
 {
     if (timeNStager==0)
@@ -482,15 +541,16 @@
             self.ZhiShiImgView.hidden=YES;
             self.ZhiShiImgView1.hidden=NO;
         }
-        _image1.image=[UIImage imageNamed:@"Wybs_duo_2.png"];
-        _image3.image=[UIImage imageNamed:@"WinZhi_Img_duo_2.png"];
+        _image1.image=[UIImage imageNamed:@"duo"];
+        //_image3.image=[UIImage imageNamed:@"WinZhi_Img_duo_2.png"];
+        [self changeTitleLabelAlphaWithtag:2018];
         _image2.image=[UIImage imageNamed:@"Wybs_duo.png"];
         timeNStager++;
         return;
     }
     if (timeNStager==1)
     {
-        _image1.image=[UIImage imageNamed:@"Wybs_duo_3.png"];
+        _image1.image=[UIImage imageNamed:@"duo"];
         //_image3.image=[UIImage imageNamed:@"WinZhi_Img_duo_2.png"];
         //[segmentImg setImage:[UIImage imageNamed:@"bs_6_1_duo.png"] forSegmentAtIndex:0];
         timeNStager++;
@@ -498,16 +558,17 @@
     }
     
     if (timeNStager==2) {
-        _image1.image=[UIImage imageNamed:@"Wybs_ruai_1.png"];
-        _image3.image=[UIImage imageNamed:@"WinZhi_Img_duo_1.png"];
-        _image4.image=[UIImage imageNamed:@"WinZhi_Img_ruai_2.png"];
+        _image1.image=[UIImage imageNamed:@"ruai"];
+        //        _image3.image=[UIImage imageNamed:@"WinZhi_Img_duo_1.png"];
+        //        _image4.image=[UIImage imageNamed:@"WinZhi_Img_ruai_2.png"];
+        [self changeTitleLabelAlphaWithtag:2018+1];
         _image2.image=[UIImage imageNamed:@"Wybs_ruai.png"];
         // [segmentImg setImage:[UIImage imageNamed:@"bs_6_2_ruai.png"] forSegmentAtIndex:1];
         timeNStager++;
         return;
     }
     if (timeNStager==3) {
-        _image1.image=[UIImage imageNamed:@"Wybs_ruai_2.png"];
+        _image1.image=[UIImage imageNamed:@"ruai"];
         // _image4.image=[UIImage imageNamed:@"WinZhi_Img_ruai_2.png"];
         // [segmentImg setImage:[UIImage imageNamed:@"bs_6_1_ruai.png"] forSegmentAtIndex:1];
         timeNStager++;
@@ -515,17 +576,17 @@
     }
     if (timeNStager==4) {
         
-        _image1.image=[UIImage imageNamed:@"Wybs_ruai_3.png"];
+        _image1.image=[UIImage imageNamed:@"ruai"];
         //[segmentImg setImage:[UIImage imageNamed:@"bs_6_2_ruai.png"] forSegmentAtIndex:1];
         timeNStager++;
         return;
     }
     if (timeNStager==5) {
         
-        _image1.image=[UIImage imageNamed:@"Wybs_mi_1.png"];
-        _image4.image=[UIImage imageNamed:@"WinZhi_Img_ruai_1.png"];
-        _image5.image=[UIImage imageNamed:@"WinZhi_Img_mi_2.png"];
-        
+        _image1.image=[UIImage imageNamed:@"mi"];
+        //        _image4.image=[UIImage imageNamed:@"WinZhi_Img_ruai_1.png"];
+        //        _image5.image=[UIImage imageNamed:@"WinZhi_Img_mi_2.png"];
+        [self changeTitleLabelAlphaWithtag:2018+2];
         _image2.image=[UIImage imageNamed:@"Wybs_mi.png"];
         // [segmentImg setImage:[UIImage imageNamed:@"bs_6_2_mi.png"] forSegmentAtIndex:2];
         timeNStager++;
@@ -533,14 +594,14 @@
     }
     if (timeNStager==6) {
         
-        _image1.image=[UIImage imageNamed:@"Wybs_mi_2.png"];
+        _image1.image=[UIImage imageNamed:@"mi"];
         //[segmentImg setImage:[UIImage imageNamed:@"bs_6_1_mi.png"] forSegmentAtIndex:2];
         timeNStager++;
         return;
     }
     if (timeNStager==7) {
         
-        _image1.image=[UIImage imageNamed:@"Wybs_mi_3.png"];
+        _image1.image=[UIImage imageNamed:@"mi"];
         //[segmentImg setImage:[UIImage imageNamed:@"bs_6_2_mi.png"] forSegmentAtIndex:2];
         timeNStager++;
         return;
@@ -548,10 +609,10 @@
     
     if (timeNStager==8) {
         
-        _image1.image=[UIImage imageNamed:@"Wybs_sao_1.png"];
-        _image5.image=[UIImage imageNamed:@"WinZhi_Img_mi_1.png"];
-        _image6.image=[UIImage imageNamed:@"WinZhi_Img_sao_2.png"];
-        
+        _image1.image=[UIImage imageNamed:@"sou"];
+        //        _image5.image=[UIImage imageNamed:@"WinZhi_Img_mi_1.png"];
+        //        _image6.image=[UIImage imageNamed:@"WinZhi_Img_sao_2.png"];
+        [self changeTitleLabelAlphaWithtag:2018+3];
         _image2.image=[UIImage imageNamed:@"Wybs_sao.png"];
         // [segmentImg setImage:[UIImage imageNamed:@"bs_6_2_sao.png"] forSegmentAtIndex:3];
         timeNStager++;
@@ -559,23 +620,24 @@
     }
     if (timeNStager==9) {
         
-        _image1.image=[UIImage imageNamed:@"Wybs_sao_2.png"];
+        _image1.image=[UIImage imageNamed:@"sou"];
         
         timeNStager++;
         return;
     }
     if (timeNStager==10) {
         
-        _image1.image=[UIImage imageNamed:@"Wybs_sao_3.png"];
+        _image1.image=[UIImage imageNamed:@"sou"];
         
         timeNStager++;
         return;
     }
     
     if (timeNStager==11) {
-        _image1.image=[UIImage imageNamed:@"Wybs_la_1.png"];
-        _image6.image=[UIImage imageNamed:@"WinZhi_Img_sao_1.png"];
-        _image7.image=[UIImage imageNamed:@"WinZhi_Img_la_2.png"];
+        _image1.image=[UIImage imageNamed:@"la"];
+        //        _image6.image=[UIImage imageNamed:@"WinZhi_Img_sao_1.png"];
+        //        _image7.image=[UIImage imageNamed:@"WinZhi_Img_la_2.png"];
+        [self changeTitleLabelAlphaWithtag:2018+4];
         _image2.image=[UIImage imageNamed:@"Wybs_la.png"];
         //[segmentImg setImage:[UIImage imageNamed:@"bs_6_2_la.png"] forSegmentAtIndex:4];
         timeNStager++;
@@ -583,22 +645,25 @@
     }
     if (timeNStager==12) {
         
-        _image1.image=[UIImage imageNamed:@"Wybs_la_2.png"];
+        _image1.image=[UIImage imageNamed:@"la"];
         
         timeNStager++;
         return;
     }
     if (timeNStager==13) {
         
-        _image1.image=[UIImage imageNamed:@"Wybs_la_3.png"];
-//        [segmentImg setImage:[UIImage imageNamed:@"bs_6_2_la.png"] forSegmentAtIndex:4];
+        _image1.image=[UIImage imageNamed:@"la"];
+        //[segmentImg setImage:[UIImage imageNamed:@"bs_6_2_la.png"] forSegmentAtIndex:4];
         timeNStager++;
         return;
     }
     if (timeNStager==14) {
         
-        _image1.image=[UIImage imageNamed:@"Wybs_duo_1.png"];
-        _image7.image=[UIImage imageNamed:@"WinZhi_Img_la_1.png"];
+        _image1.image=[UIImage imageNamed:@"duo"];
+        
+        //_image7.image=[UIImage imageNamed:@"la"];
+        [self changeTitleLabelAlphaWithtag:100];
+        
         _image2.image=[UIImage imageNamed:@"Wybs_duo.png"];
         //_image7.image=[UIImage imageNamed:@"WinZhi_Img_la_2.png"];
         // [segmentImg setImage:[UIImage imageNamed:@"bs_6_3_la.png"] forSegmentAtIndex:4];
@@ -610,7 +675,7 @@
             //self.RotateImg.hidden=NO;
             UIButton* btn=(UIButton*)[self.view viewWithTag:10004];
             
-            [btn setImage:[UIImage imageNamed:@"2_0-126.png"] forState:UIControlStateNormal];
+            [btn setImage:[UIImage imageNamed:@"luyinbegin"] forState:UIControlStateNormal];
             
             if (IsShiFan)
             {
@@ -627,7 +692,7 @@
                     NSError *err;
                     [fileMgr removeItemAtPath:self.filePath error:&err];
                 }
-                [bianshiTime2 setFireDate:[NSDate distantPast]];
+               
                 return;
             }
             else{
@@ -643,7 +708,6 @@
                 [timerACC invalidate];
             }
             
-            NSLog(@" soundCount : %f",self.soundCount);
             if ( self.soundCount < 0.6) {
                 [self soundTooLow];
             }else{
@@ -664,13 +728,27 @@
                 }else{
                     [self testMp3Upload];
                 }
-               
+                
                 
             }
-    
+            
+            
         }
     }
 }
+
+- (void)changeTitleLabelAlphaWithtag:(NSInteger)tag
+{
+    UIImageView *bgView = (UIImageView *)[self.view viewWithTag:10086];
+    for(UILabel *titleLabel in bgView.subviews){
+        if(titleLabel.tag == tag){
+            titleLabel.alpha = 1.0;
+        }else{
+            titleLabel.alpha = 0.44;
+        }
+    }
+}
+
 -(void)testMp3Upload
 {
     [self showHUD];

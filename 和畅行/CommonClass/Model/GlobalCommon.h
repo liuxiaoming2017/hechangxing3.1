@@ -41,4 +41,5 @@
 
 + (BOOL)isManyMember;
 
++ (NSString *)md5:(NSString *)str;
 @end

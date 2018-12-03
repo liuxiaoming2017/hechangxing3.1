@@ -9,8 +9,9 @@
 #import "TimeLineView.h"
 #import "TimeLineCell.h"
 #import "NoTimeLineCell.h"
+#import "GovSectionView.h"
 
-@interface TimeLineView()<UITableViewDelegate,UITableViewDataSource>
+@interface TimeLineView()<UITableViewDelegate,UITableViewDataSource,govSectionViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *dataArr;
@@ -53,7 +54,12 @@
 #pragma mark -- 每组返回多少个
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return 10;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 90;
 }
 
 #pragma mark -- 每个cell的高度
@@ -62,9 +68,9 @@
     if(indexPath.row==0 || indexPath.row == 2){
         return 105;
     }else if (indexPath.row==1){
-        return 59;
+        return 65;
     }
-    return 40;
+    return 65;
 //    TimeLineModel*model = self.dataArr[indexPath.row];
 //
 //    return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:[TimeLineCell class] contentViewWidth:self.frame.size.width];
@@ -82,7 +88,7 @@
     }else{
        cell = (NoTimeLineCell *)[tableView dequeueReusableCellWithIdentifier:@"cell2"];
         if(cell==nil){
-            cell = [[NoTimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
+            cell = [[NoTimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
     }
@@ -93,10 +99,25 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 40)];
-    imageV.image = [UIImage imageNamed:@"五月健康报告"];
-    imageV.contentMode = UIViewContentModeScaleAspectFit;
-    return imageV;
+    GovSectionView *sectionV = [GovSectionView showWithName:@"" withSection:section];
+    sectionV.tableView = self.tableView;
+    sectionV.section = section;
+    sectionV.delegate=self;
+    return sectionV;
+}
+
+#pragma mark - 自定义sectionView的代理方法
+- (void)sectionGestTap:(NSInteger)section withTapGesture:(UITapGestureRecognizer *)gest
+{
+    UIView *sectionV = gest.view;
+    NSInteger sectionTag = sectionV.tag-100;
+    NSInteger sect = 0;
+    if(sectionV.superview ==self.tableView){
+        sect = sectionTag;
+    }else{
+        sect = sectionTag;
+    }
+    
 }
 
 #pragma mark -- 选择每个cell执行的操作
@@ -104,5 +125,26 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
+
+//# pragma mark - 让section头视图和cell一起滚动
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    if (scrollView == self.tableView)
+//    {
+//        CGFloat sectionHeaderHeight = 40;
+//    if(scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
+//        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+//    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
+//        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+//            }
+//
+//        //禁止下拉
+//                CGPoint offset = self.tableView.contentOffset;
+//                if (offset.y <= 0) {
+//                    offset.y = 0;
+//                }
+//                self.tableView.contentOffset = offset;
+//    }
+//
+//}
 
 @end
