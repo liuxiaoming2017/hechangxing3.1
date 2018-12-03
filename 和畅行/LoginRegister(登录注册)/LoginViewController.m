@@ -248,6 +248,8 @@
     NSDictionary *dic = @{@"phone":userNameBox.text,@"token":iPoneNumberMD5};
     __weak typeof(self) weakSelf = self;
     [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:dic successBlock:^(id response) {
+        
+        NSLog(@"%@",response);
         id status=[response objectForKey:@"status"];
         if (status!=nil)
         {

@@ -2352,6 +2352,7 @@
 				032A7A2420EA1E8B003D4952 /* GlobalDefine.h */,
 				038CE86E20EDE75D005E9219 /* Global.h */,
 				0334105620EDBDB800BD68C2 /* NetworkManager.h */,
+				C935835221B567CE0068E328 /* New Group */,
 				0334105720EDBDB800BD68C2 /* NetworkManager.m */,
 				036A66882113F6A30096A006 /* ZYGASINetworking.h */,
 				036A66872113F6A20096A006 /* ZYGASINetworking.m */,
@@ -4147,6 +4148,21 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		C935835221B567CE0068E328 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				C935835321B567D10068E328 /* New Group */,
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		C935835321B567D10068E328 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -5145,7 +5161,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -5197,7 +5213,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -5213,7 +5229,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3X65BCYVHU;
+				DEVELOPMENT_TEAM = YSFHX6Y4U7;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5318,7 +5334,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3X65BCYVHU;
+				DEVELOPMENT_TEAM = YSFHX6Y4U7;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5424,7 +5440,7 @@
 				03513ADD20E9CAD4004E2805 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		03513ADE20E9CAD4004E2805 /* Build configuration list for PBXNativeTarget "和畅行" */ = {
 			isa = XCConfigurationList;
@@ -5433,7 +5449,7 @@
 				03513AE020E9CAD4004E2805 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
