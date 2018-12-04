@@ -77,7 +77,7 @@
         //创建图片按钮
         //创建背景图片 按钮
         //button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button = [[UIButton alloc] init];
+        button = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [button setBackgroundImage:[UIImage imageNamed:name] forState:UIControlStateNormal];
         if (title) {//图片标题按钮
             [button setTitle:title forState:UIControlStateNormal];
@@ -87,7 +87,7 @@
         
     }else if (title) {
         //创建标题按钮
-        button = [[UIButton alloc] init];
+        button = [UIButton buttonWithType:(UIButtonTypeCustom)];
         //button = [UIButton buttonWithType:UIButtonTypeSystem];
         [button setTitle:title forState:UIControlStateNormal];
         

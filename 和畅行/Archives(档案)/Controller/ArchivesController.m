@@ -37,6 +37,8 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
 @property (nonatomic,strong) UIProgressView *progressView;
 @property (nonatomic,strong) NSMutableArray *healthTipsData;
 
+@property (nonatomic,strong) TimeLineView *timeLinvView;
+
 @property (nonatomic, retain) SidebarViewController* sidebarVC;
 
 @end
@@ -96,8 +98,44 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     //[self.leftBtn setImage:[UIImage imageNamed:@"user_01"] forState:UIControlStateNormal];
     [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     
-    TimeLineView *timeLinvView = [[TimeLineView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, ScreenWidth, ScreenHeight-self.topView.bottom-kTabBarHeight) withData:self.archiveArr];
-    [self.view addSubview:timeLinvView];
+    self.timeLinvView = [[TimeLineView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, ScreenWidth, ScreenHeight-self.topView.bottom-kTabBarHeight) withData:self.archiveArr];
+    [self.view addSubview:self.timeLinvView];
+    
+ 
+  //下拉刷新
+    
+    MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+
+    // 设置文字
+    [header setTitle:@"下拉刷新" forState:MJRefreshStateIdle];
+    [header setTitle:@"松开即可刷新" forState:MJRefreshStateWillRefresh];
+    [header setTitle:@"努力加载中..." forState:MJRefreshStateRefreshing];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    
+    // 设置字体
+    header.stateLabel.font = [UIFont systemFontOfSize:14];
+    header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:14];
+    
+    // 设置颜色
+    header.stateLabel.textColor = RGB_TextAppBlue;
+    header.lastUpdatedTimeLabel.textColor = RGB_TextAppBlue;
+    self.timeLinvView.tableView.mj_header = header;
+    
+//上拉加载
+    
+    MJRefreshBackGifFooter *footer = [MJRefreshBackGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataOther)];
+    
+    [footer setTitle:@"上拉加载"   forState:MJRefreshStateIdle];
+    [footer setTitle:@"加载中..."  forState:MJRefreshStateRefreshing];
+    [footer setTitle:@"没有更多了"  forState:MJRefreshStateNoMoreData];
+    [footer setTitle:@"松开即可加载..."  forState:MJRefreshStatePulling];
+    
+    // 设置字体
+    footer.stateLabel.font = [UIFont systemFontOfSize:14];
+    // 设置颜色
+    footer.stateLabel.textColor = RGB_TextAppBlue;
+    self.timeLinvView.tableView.mj_footer = footer;
+    
     
     UIButton *filterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     filterBtn.frame = CGRectMake(ScreenWidth-37-14, ScreenHeight-120, 36, 36);
@@ -158,6 +196,22 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     
     [self requestNetworkWithIndex:currentIndex];
     */
+    
+}
+
+
+-(void)loadNewData {
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.timeLinvView.tableView.mj_header endRefreshing];;
+    });
+}
+
+-(void)loadMoreDataOther {
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.timeLinvView.tableView.mj_footer endRefreshing];;
+    });
     
 }
 

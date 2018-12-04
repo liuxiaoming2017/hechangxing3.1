@@ -600,7 +600,7 @@
         cell.textLabel.font = [UIFont systemFontOfSize:15];
     }
     if (indexPath.row==0) {
-        
+
         UILabel* TxLb=[[UILabel alloc] init];
         TxLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
         TxLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
@@ -608,9 +608,9 @@
         TxLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
         [cell addSubview:TxLb];
         TxLb.backgroundColor=[UIColor whiteColor];
-        
-        
-        
+
+
+
         mobile_Tf=[[UITextField alloc] init];
         mobile_Tf.frame=CGRectMake(TxLb.frame.origin.x+TxLb.frame.size.width+5, (cell.frame.size.height-21)/2, ScreenWidth-TxLb.frame.origin.x-TxLb.frame.size.width-5-20.5, 21);
         mobile_Tf.returnKeyType=UIReturnKeyNext;
@@ -620,34 +620,18 @@
         [mobile_Tf setValue:[UtilityFunc colorWithHexString:@"#666666"] forKeyPath:@"_placeholderLabel.textColor"];
         [mobile_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
         if ([UserShareOnce shareOnce].phone== (id)[NSNull null]) {
-            
+
         }
         else{
             mobile_Tf.text=[UserShareOnce shareOnce].username;
-            
+
         }
         mobile_Tf.font=[UIFont systemFontOfSize:14];
         [cell addSubview:mobile_Tf];
-        //[mobile_Tf release];
-        
-        //  UIImage * TxImg=nil;//;=[UIImage imageNamed:@"UserInfo_TxImg.png"];
-//        UIImage *  TxImg1=[UIImage imageNamed:@"UserTouXiang.png"];
-//        
-//        
-//        if (TxImg==nil) {
-//            TxImg=[UIImage imageNamed:@"UserTouXiang.png"];
-//        }
-//        ivIDCard=[UIButton buttonWithType:UIButtonTypeCustom];
-//        ivIDCard.frame=CGRectMake(ScreenWidth-15-TxImg1.size.width/2, (94.5-TxImg1.size.height/2)/2, TxImg1.size.width/2, TxImg1.size.height/2);
-//        ivIDCard.layer.masksToBounds = YES;
-//        ivIDCard.layer.cornerRadius=38;
-//        [ivIDCard setImage:TxImg forState:UIControlStateNormal];
-//        [ivIDCard addTarget:self action:@selector(ivIDCardTapped:) forControlEvents:UIControlEventTouchUpInside];
-//        [cell addSubview:ivIDCard];
-        
+
     }
     else  if(indexPath.row==1){
-        
+
         UILabel* nameLb=[[UILabel alloc] init];
         nameLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
         nameLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
@@ -655,15 +639,15 @@
         nameLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
         [cell addSubview:nameLb];
         nameLb.backgroundColor=[UIColor whiteColor];
-        
+
         Yh_TF=[[UITextField alloc] init];
         Yh_TF.frame=CGRectMake(nameLb.frame.origin.x+nameLb.frame.size.width+5, (cell.frame.size.height-21)/2, ScreenWidth-nameLb.frame.origin.x-nameLb.frame.size.width-5-20.5, 21);
         Yh_TF.placeholder=@"填写您的真实姓名";
-        //Yh_TF.backgroundColor = [UIColor blackColor];
-        if ([UserShareOnce shareOnce].name== (id)[NSNull null]) {
+        NSString *str = [UserShareOnce shareOnce].name;
+        if (str == nil || [str isKindOfClass:[NSNull class]] ||str.length == 0) {
             //Yh_TF.text=@"";
         }else{
-            Yh_TF.text=[NSString stringWithString:[UserShareOnce shareOnce].name];
+            Yh_TF.text=[NSString stringWithString:str];
         }
         [Yh_TF setValue:[UtilityFunc colorWithHexString:@"#666666"] forKeyPath:@"_placeholderLabel.textColor"];
         [Yh_TF setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
@@ -671,9 +655,9 @@
         Yh_TF.delegate=self;
         [cell addSubview:Yh_TF];
         Yh_TF.font=[UIFont systemFontOfSize:14];
-        
-        
-        
+
+
+
     }
     else if (indexPath.row==2)
     {
@@ -684,10 +668,11 @@
         marryLabel.textColor=[UtilityFunc colorWithHexString:@"#333333"];
         [cell addSubview:marryLabel];
         marryLabel.backgroundColor=[UIColor whiteColor];
-        
+
         UIButton *marryStateBtn = [Tools creatButtonWithFrame:CGRectMake(marryLabel.frame.origin.x+marryLabel.frame.size.width+5, (cell.frame.size.height-21)/2, ScreenWidth-marryLabel.frame.origin.x-marryLabel.frame.size.width-5-20.5, 21) target:self sel:@selector(marryBtnClick:) tag:31 image:nil title:@"请选择您的婚否情况"];
-        //marryStateBtn.backgroundColor = [UIColor blackColor];
-        
+//        marryStateBtn.backgroundColor = [UIColor blackColor];
+        [marryStateBtn setTitle:@"111" forState:(UIControlStateNormal)];
+
         marryStateBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         [marryStateBtn setTitleColor:[UtilityFunc colorWithHexString:@"#666666"] forState:UIControlStateNormal];
         marryStateBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -699,9 +684,9 @@
             [marryStateBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -180, 0, 0)];
         }
         [cell addSubview:marryStateBtn];
-        
-        
-        
+
+
+
 
     }
     else if (indexPath.row==3)
@@ -713,7 +698,7 @@
         nationLabel.textColor=[UtilityFunc colorWithHexString:@"#333333"];
         [cell addSubview:nationLabel];
         nationLabel.backgroundColor=[UIColor whiteColor];
-        
+
         nation_Tf=[[UITextField alloc] init];
         nation_Tf.frame=CGRectMake(nationLabel.frame.origin.x+nationLabel.frame.size.width+5, (cell.frame.size.height-21)/2, ScreenWidth-nationLabel.frame.origin.x-nationLabel.frame.size.width-5-20.5, 21);
         nation_Tf.placeholder=@"请输入您的民族";
@@ -729,8 +714,8 @@
         nation_Tf.delegate=self;
        [cell addSubview:nation_Tf];
         nation_Tf.font=[UIFont systemFontOfSize:14];
-        
-       
+
+
     }
     else if (indexPath.row==4)
     {
@@ -741,14 +726,14 @@
         AddressLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
         [cell addSubview:AddressLb];
         AddressLb.backgroundColor=[UIColor whiteColor];
-        
-        
+
+
         AddressLb_Tf=[[UITextField alloc] init];
         AddressLb_Tf.frame=CGRectMake(AddressLb.frame.origin.x+AddressLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-AddressLb.frame.origin.x-AddressLb.frame.size.width-5-20.5, 21);
         AddressLb_Tf.delegate=self;
         AddressLb_Tf.placeholder=@"请输入您的居住地址";
         if ([UserShareOnce shareOnce].address== (id)[NSNull null]) {
-            
+
         }
         else
         {
@@ -757,13 +742,13 @@
         AddressLb_Tf.returnKeyType=UIReturnKeyDone;
         [AddressLb_Tf setValue:[UtilityFunc colorWithHexString:@"#666666"] forKeyPath:@"_placeholderLabel.textColor"];
         [AddressLb_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
-        
+
         [cell addSubview:AddressLb_Tf];
         AddressLb_Tf.font=[UIFont systemFontOfSize:14];
-      
-        
-        
-        
+
+
+
+
     }
     else if (indexPath.row==5)
     {
@@ -774,8 +759,8 @@
         TelephoneLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
         [cell addSubview:TelephoneLb];
         TelephoneLb.backgroundColor=[UIColor whiteColor];
-       
-        
+
+
         TelephoneLb_Tf=[[UITextField alloc] init];
         TelephoneLb_Tf.frame=CGRectMake(TelephoneLb.frame.origin.x+TelephoneLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-TelephoneLb.frame.origin.x-TelephoneLb.frame.size.width-5-20.5, 21);
         TelephoneLb_Tf.returnKeyType=UIReturnKeyDone;
@@ -785,16 +770,16 @@
         [TelephoneLb_Tf setValue:[UtilityFunc colorWithHexString:@"#666666"] forKeyPath:@"_placeholderLabel.textColor"];
         [TelephoneLb_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
         if ([UserShareOnce shareOnce].phone== (id)[NSNull null]) {
-            
+
         }
         else{
             TelephoneLb_Tf.text=[UserShareOnce shareOnce].phone;
-            
+
         }
         TelephoneLb_Tf.font=[UIFont systemFontOfSize:14];
         [cell addSubview:TelephoneLb_Tf];
-        
-        
+
+
     }
     else if (indexPath.row==6)
     {
@@ -805,8 +790,8 @@
         CertificatesLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
         [cell addSubview:CertificatesLb];
         CertificatesLb.backgroundColor=[UIColor whiteColor];
-       
-        
+
+
         Certificates_btn=[UIButton buttonWithType:UIButtonTypeCustom];
         Certificates_btn.frame=CGRectMake(CertificatesLb.frame.origin.x+CertificatesLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-CertificatesLb.frame.origin.x-CertificatesLb.frame.size.width-5-20.5, 21);
         [cell addSubview:Certificates_btn];
@@ -815,7 +800,7 @@
         [Certificates_btn setTitleColor:[UtilityFunc colorWithHexString:@"#666666"] forState:UIControlStateNormal];
         [Certificates_btn addTarget:self action:@selector(CertificatesAactive:) forControlEvents:UIControlEventTouchUpInside];
         Certificates_btn.titleLabel.font=[UIFont systemFontOfSize:14];
-        
+
         if ([UserShareOnce shareOnce].identityType == (id)[NSNull null]) {
             [Certificates_btn setTitle:@"请选择您的证件类型" forState:UIControlStateNormal];
         }else{
@@ -844,17 +829,17 @@
         Certificates_NumberLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
         [cell addSubview:Certificates_NumberLb];
         Certificates_NumberLb.backgroundColor=[UIColor whiteColor];
-        
-        
+
+
         Certificates_Number_Tf=[[UITextField alloc] init];
         Certificates_Number_Tf.frame=CGRectMake(Certificates_NumberLb.frame.origin.x+Certificates_NumberLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-Certificates_NumberLb.frame.origin.x-Certificates_NumberLb.frame.size.width-5-20.5, 21);
         Certificates_Number_Tf.delegate=self;
         Certificates_Number_Tf.returnKeyType=UIReturnKeyDone;
         Certificates_Number_Tf.placeholder=@"请输入您的证件号码";
         if ([UserShareOnce shareOnce].idNumber== (id)[NSNull null] || [UserShareOnce shareOnce].idNumber == nil) {
-            
+
         }else{
-            
+
             Certificates_Number_Tf.text=[NSString stringWithString:[UserShareOnce shareOnce].idNumber];
         }
         [Certificates_Number_Tf setValue:[UtilityFunc colorWithHexString:@"#666666"] forKeyPath:@"_placeholderLabel.textColor"];
@@ -863,44 +848,9 @@
         Certificates_Number_Tf.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
         Certificates_Number_Tf.textColor=[UIColor blackColor];
         Certificates_Number_Tf.font=[UIFont systemFontOfSize:14];
-        
-        
+
     }
-//    else if (indexPath.row==8)
-//    {
-//        UILabel* SexLb=[[UILabel alloc] init];
-//        SexLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 100, 21);
-//        SexLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
-//        SexLb.font=[UIFont systemFontOfSize:14];
-//        SexLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
-//        [cell addSubview:SexLb];
-//        SexLb.backgroundColor=[UIColor whiteColor];
-//        [SexLb release];
-//        NSArray *segmentedArray = [[NSArray alloc] initWithObjects:@"有",@"无",nil];
-//        UISegmentedControl* YiHunSex=[[UISegmentedControl alloc] initWithItems:segmentedArray];
-//        YiHunSex.frame=CGRectMake(ScreenWidth-80-20.5, (cell.frame.size.height-26)/2, 80, 26);
-//        if ([UserShareOnce shareOnce].isMedicare == (id)[NSNull null])
-//        {
-//            YiHunSex.selectedSegmentIndex=0;
-//        }
-//        else{
-//            if ([[UserShareOnce shareOnce].isMedicare boolValue])
-//                
-//            {
-//                YiHunSex.selectedSegmentIndex=0;
-//            }
-//            else
-//            {
-//                YiHunSex.selectedSegmentIndex=1;
-//            }
-//        }
-//        
-//        [YiHunSex addTarget:self action:@selector(YiHunSexAction:) forControlEvents:UIControlEventValueChanged];
-//        YiHunSex.segmentedControlStyle = UISegmentedControlStyleBordered;//设置样
-//        YiHunSex.tintColor = [UtilityFunc colorWithHexString:@"#5eb4fd"];
-//        [cell addSubview:YiHunSex];
-//        [YiHunSex release];
-//    }
+
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor=[UIColor whiteColor];
     return cell;
@@ -1014,7 +964,6 @@
     
 }
 -(void) BirthDayActive:(id)sender
-
 {
     if (SelectTF!=nil) {
         [SelectTF resignFirstResponder];

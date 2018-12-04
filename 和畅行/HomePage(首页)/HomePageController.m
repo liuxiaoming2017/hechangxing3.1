@@ -35,6 +35,10 @@
     self.tabBarController.tabBar.hidden = NO;
 }
 
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+}
+
 - (void)viewDidLoad {
     
     self.view.backgroundColor = UIColorFromHex(0xffffff);

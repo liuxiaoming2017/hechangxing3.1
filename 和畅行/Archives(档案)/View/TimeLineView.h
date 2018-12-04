@@ -9,5 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface TimeLineView : UIView
+
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSArray *dataArr;
+
+
 - (id)initWithFrame:(CGRect)frame withData:(NSArray *)dataArr;
 @end

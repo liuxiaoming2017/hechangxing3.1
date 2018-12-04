@@ -24,6 +24,7 @@ PODS:
   - HHDoctorSDK/Base (2.0.6)
   - MBProgressHUD (1.1.0)
   - MJExtension (3.0.13)
+  - MJRefresh (3.1.15.7)
   - PYPhotoBrowser (1.5.6):
     - DACircularProgress
     - MBProgressHUD
@@ -40,6 +41,7 @@ DEPENDENCIES:
   - FMDB
   - HHDoctorSDK (from `http://code.hh-medic.com/hh_public/HHDoctorSDK.ios.git`)
   - MJExtension
+  - MJRefresh
   - PYPhotoBrowser (~> 1.5.6)
   - SDWebImage (~> 4.2.1)
 
@@ -60,9 +62,10 @@ SPEC CHECKSUMS:
   HHDoctorSDK: dbe30b2e8dbca0efe3056fcd7538776052cbbf11
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
+  MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
   PYPhotoBrowser: 74f6526b290069a55943ed92e5a21f84c6d90ecf
   SDWebImage: 791bb72962b3492327ddcac4b1880bd1b5458431
 
-PODFILE CHECKSUM: bb4382c8731f89c806ef17c031cb7408ee048fb9
+PODFILE CHECKSUM: a84de21cf46e4f801a84b03fa412d9d5beeb7a85
 
 COCOAPODS: 1.4.0
