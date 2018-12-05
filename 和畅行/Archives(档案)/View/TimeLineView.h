@@ -14,5 +14,7 @@
 @property (nonatomic, strong) NSArray *dataArr;
 
 
+-(void)relodTableViewWitDataArray:(NSMutableArray *)dataArray;
+
 - (id)initWithFrame:(CGRect)frame withData:(NSArray *)dataArr;
 @end

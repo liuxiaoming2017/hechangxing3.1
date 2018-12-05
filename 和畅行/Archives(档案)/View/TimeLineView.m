@@ -22,7 +22,6 @@
 {
     self = [super initWithFrame:frame];
     if(self){
-        self.dataArr = dataArr;
         [self createView];
     }
     return self;
@@ -32,6 +31,7 @@
 {
     self.backgroundColor = [UIColor whiteColor];
     
+    self.dataArr = [NSMutableArray array];
     self.tableView = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.backgroundColor=[UIColor clearColor];
@@ -43,6 +43,12 @@
     [self addSubview:self.tableView];
 }
 
+-(void)relodTableViewWitDataArray:(NSMutableArray *)dataArray {
+    
+    self.dataArr = dataArray;
+    [self.tableView reloadData];
+}
+
 #pragma mark -- tableView的代理方法
 #pragma mark -- 返回多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -52,7 +58,9 @@
 #pragma mark -- 每组返回多少个
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+   
+    return _dataArr.count;
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -63,12 +71,22 @@
 #pragma mark -- 每个cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row==0 || indexPath.row == 2){
-        return 105;
-    }else if (indexPath.row==1){
-        return 65;
+    
+    if (indexPath.row == 0) {
+         return 105;
+    }else {
+        
+        HealthTipsModel *model = _dataArr[indexPath.row];
+        HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
+        
+        NSLog(@"%@  %@",model.createTime,onAmodel.createTime);
+        if ([model.createTime isEqualToString:onAmodel.createTime]) {
+            return 65;
+        }else {
+            return 105;
+        }
     }
-    return 65;
+    
 //    TimeLineModel*model = self.dataArr[indexPath.row];
 //
 //    return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:[TimeLineCell class] contentViewWidth:self.frame.size.width];
@@ -77,18 +95,36 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = nil;
-    if(indexPath.row == 0 || indexPath.row == 2){
-         cell = (TimeLineCell *)[tableView dequeueReusableCellWithIdentifier:@"cell1"];
+    
+     HealthTipsModel *model = _dataArr[indexPath.row];
+    
+    if(indexPath.row == 0 ){
+        TimeLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
         if(cell==nil){
             cell = [[TimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
+        [cell assignmentCellWithModel:model];
     }else{
-       cell = (NoTimeLineCell *)[tableView dequeueReusableCellWithIdentifier:@"cell2"];
-        if(cell==nil){
-            cell = [[NoTimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        }
+       
+        HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
+        if ([model.createTime isEqualToString:onAmodel.createTime]) {
+          
+          NoTimeLineCell * cell =[tableView dequeueReusableCellWithIdentifier:@"cell2"];
+            if(cell==nil){
+                cell = [[NoTimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+            [cell assignmentCellWithModel:model];
+        }else {
+            
+           TimeLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
+            if(cell==nil){
+                cell = [[TimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+           
+        }      
     }
     
     

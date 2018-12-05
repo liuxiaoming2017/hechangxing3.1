@@ -16,8 +16,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) UIImageView *leftImageV;
 @property (nonatomic,strong) UILabel *contentLabel;
 @property (nonatomic,strong) UILabel *timeLabel;
+@property (nonatomic,strong) UILabel *createDateLabel;
+
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+
+-(void)assignmentCellWithModel:(HealthTipsModel *)model;
 
 @end
 

@@ -26,6 +26,8 @@
 #import "NSString+Extesion.h"
 #import "UIViewExt.h"
 #import "MJRefresh.h"
+#import "YYModel.h"
+#import "HealthTipsModel.h"
 #endif /* ____pch */
 #endif
 

@@ -212,6 +212,8 @@
         NSLog(@"hahah");
         if (error) {
             
+            NSLog(@"%@",error);
+            
         } else {
             UMSocialUserInfoResponse *resp = result;
             // 授权信息

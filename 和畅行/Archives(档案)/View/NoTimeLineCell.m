@@ -66,6 +66,13 @@
     self.contentLabel.text = @"您的经络状态已有七天未测评";
     [self addSubview:self.contentLabel];
     
+    self.createDateLabel = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth - 100,  imageV.top, 100, imageV.height)];
+    self.createDateLabel.font=[UIFont systemFontOfSize:13.0];
+    self.createDateLabel.textColor=UIColorFromHex(0x8E8E93);
+    self.createDateLabel.text = @"2018-08-08 08:08";
+    [self addSubview:self.createDateLabel];
+    
+    
     UIImageView *lineImageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(lineImageV.left, imageV.bottom-5+5, 1, 10)];
     lineImageV2.backgroundColor = UIColorFromHex(0xe2e2e2);
     [self addSubview:lineImageV2];
@@ -91,6 +98,25 @@
         subLayer.frame = imageV.frame;
     }
     
+}
+
+//为cell 赋值
+-(void)assignmentCellWithModel:(HealthTipsModel *)model {
+    
+    self.contentLabel.text = [model.subject valueForKey:@"name"];
+    NSString *str = [NSString stringWithFormat:@"%@",model.createDate];
+    self.createDateLabel.text = [self getDateStringWithTimeStr:str];
+    
+}
+
+-(NSString *)getDateStringWithTimeStr:(NSString *)str{
+    NSTimeInterval time=[str doubleValue]/1000;//传入的时间戳str如果是精确到毫秒的记得要/1000
+    NSDate *detailDate=[NSDate dateWithTimeIntervalSince1970:time];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; //实例化一个NSDateFormatter对象
+    //设定时间格式,这里可以设置成自己需要的格式
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss SS"];
+    NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
+    return currentDateStr;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

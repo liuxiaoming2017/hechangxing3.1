@@ -10,11 +10,9 @@
 
 @interface HealthTipsModel : NSObject
 
-@property (nonatomic,strong) NSNumber *totalPages;
-@property (nonatomic,strong) NSNumber *tipId;
+@property (nonatomic,strong) NSDictionary *subject;
+@property (nonatomic,strong) NSDictionary *phoneReport;
 @property (nonatomic,strong) NSNumber *createDate;
-@property (nonatomic,strong) NSNumber *modifyDate;
-@property (nonatomic,copy) NSString *title;
-@property (nonatomic,copy) NSString *content;
+@property (nonatomic,copy)   NSString *createTime;
 
 @end

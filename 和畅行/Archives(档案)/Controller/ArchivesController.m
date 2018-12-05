@@ -29,9 +29,11 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
 }
 
 @property (nonatomic,strong) NSArray *titleArr;
-@property (nonatomic,strong) UITableView *tableView;
+//@property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *archiveArr;
 
+//
+@property (nonatomic,strong) NSMutableArray *dataListArray;
 
 @property (nonatomic,strong) WKWebView *wkwebview;
 @property (nonatomic,strong) UIProgressView *progressView;
@@ -50,7 +52,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
 {
     self.titleArr = nil;
     self.archiveArr = nil;
-    self.tableView = nil;
+//    self.tableView = nil;
     self.progressView = nil;
     self.wkwebview = nil;
     self.healthTipsData = nil;
@@ -92,50 +94,42 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.healthTipsData = [NSMutableArray array];
+    self.dataListArray  = [NSMutableArray array];
+    
     self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.navTitleLabel.text = @"健康档案";
     self.navTitleLabel.textColor = [UIColor whiteColor];
     //[self.leftBtn setImage:[UIImage imageNamed:@"user_01"] forState:UIControlStateNormal];
     [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     
-    self.timeLinvView = [[TimeLineView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, ScreenWidth, ScreenHeight-self.topView.bottom-kTabBarHeight) withData:self.archiveArr];
+    self.timeLinvView = [[TimeLineView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, ScreenWidth, ScreenHeight-self.topView.bottom-kTabBarHeight) withData:self.healthTipsData];
     [self.view addSubview:self.timeLinvView];
     
  
-  //下拉刷新
+//下拉刷新
     
     MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
-
-    // 设置文字
     [header setTitle:@"下拉刷新" forState:MJRefreshStateIdle];
     [header setTitle:@"松开即可刷新" forState:MJRefreshStateWillRefresh];
     [header setTitle:@"努力加载中..." forState:MJRefreshStateRefreshing];
     header.lastUpdatedTimeLabel.hidden = YES;
-    
-    // 设置字体
     header.stateLabel.font = [UIFont systemFontOfSize:14];
     header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:14];
-    
-    // 设置颜色
     header.stateLabel.textColor = RGB_TextAppBlue;
     header.lastUpdatedTimeLabel.textColor = RGB_TextAppBlue;
     self.timeLinvView.tableView.mj_header = header;
     
 //上拉加载
-    
     MJRefreshBackGifFooter *footer = [MJRefreshBackGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataOther)];
     
     [footer setTitle:@"上拉加载"   forState:MJRefreshStateIdle];
     [footer setTitle:@"加载中..."  forState:MJRefreshStateRefreshing];
     [footer setTitle:@"没有更多了"  forState:MJRefreshStateNoMoreData];
     [footer setTitle:@"松开即可加载..."  forState:MJRefreshStatePulling];
-    
-    // 设置字体
     footer.stateLabel.font = [UIFont systemFontOfSize:14];
-    // 设置颜色
     footer.stateLabel.textColor = RGB_TextAppBlue;
     self.timeLinvView.tableView.mj_footer = footer;
-    
     
     UIButton *filterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     filterBtn.frame = CGRectMake(ScreenWidth-37-14, ScreenHeight-120, 36, 36);
@@ -188,7 +182,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     self.archiveArr = [NSMutableArray arrayWithCapacity:0];
     
     
-    [self requestHealthHintData];
+    
     
     if(!memberId){
         memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
@@ -197,6 +191,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     [self requestNetworkWithIndex:currentIndex];
     */
     
+    [self requestHealthHintDataWithTipyInteger:1];
 }
 
 
@@ -264,7 +259,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     }else{
         self.wkwebview.hidden = NO;
     }
-    self.tableView.hidden = YES;
+//    self.tableView.hidden = YES;
     NSURL *url = [NSURL URLWithString:urlStr];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [self.wkwebview loadRequest:request];
@@ -272,27 +267,44 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
 }
 
 # pragma mark - 健康提示数据
-- (void)requestHealthHintData
+- (void)requestHealthHintDataWithTipyInteger:(NSInteger )tipyInteger
 {
     __weak typeof(self) weakSelf = self;
-    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:@"member/healthAdvisor/healthTipList.jhtml" parameters:nil successBlock:^(id response) {
+    
+    NSString *urlStr = [NSString new];
+    
+    switch (tipyInteger) {
+        case 0:   urlStr = @"";
+            break;
+        case 1:   urlStr = @"member/myreport/list/JLBS/9.jhtml?pageNumber=1";
+            break;
+            
+        case 2:   urlStr = @"";
+            break;
+            
+        case 3:   urlStr = @"";
+            break;
+            
+        case 4:   urlStr = @"";
+            break;
+            
+        default:
+            break;
+    }
+    
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
+        
         if ([response[@"status"] integerValue] == 100){
-            NSDictionary *dataDic = response[@"data"];
-            NSArray *contentArr = dataDic[@"content"];
-            if (contentArr.count) {
-                for (NSDictionary *dic in contentArr) {
-                    HealthTipsModel *tipModel = [[HealthTipsModel alloc] init];
-                    tipModel.totalPages = dataDic[@"totalPages"];
-                    tipModel.tipId = dic[@"id"];
-                    tipModel.createDate = dic[@"createDate"];
-                    tipModel.modifyDate = dic[@"modifyDate"];
-                    tipModel.title = dic[@"title"];
-                    tipModel.content = dic[@"content"];
-                    [weakSelf.healthTipsData addObject:tipModel];
-                    
-                }
+            
+            
+            for (NSDictionary *dic in [response valueForKey:@"data"]) {
+                 HealthTipsModel *tipModel = [[HealthTipsModel alloc] init];
+                [tipModel yy_modelSetWithJSON:dic];
+                [weakSelf.dataListArray addObject:tipModel];
             }
-            [weakSelf setHealthTips];
+            
+            [ self.timeLinvView relodTableViewWitDataArray:weakSelf.dataListArray];
+//            [weakSelf setHealthTips];
         }
     } failureBlock:^(NSError *error) {
         [weakSelf showAlertWarmMessage:@"请求失败,网络错误!"];
@@ -300,25 +312,25 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
 }
 
 #pragma mark - 设置提示消息
--(void)setHealthTips{
-    if (self.healthTipsData.count) {
-        //设置消息.......
-        HealthTipsModel *tipModel = self.healthTipsData[0];
-        UILabel *tip = [Tools labelWith:tipModel.content frame:CGRectMake(40, 45, ScreenWidth-40-20, 10) textSize:12 textColor:[Tools colorWithHexString:@"#747474"] lines:0 aligment:NSTextAlignmentLeft];
-        //动态计算label的高度
-        CGRect tmpRect = [tip.text boundingRectWithSize:CGSizeMake(ScreenWidth-60, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObjectsAndKeys:tip.font,NSFontAttributeName, nil] context:nil];
-        CGFloat labelH = tmpRect.size.height;
-        [tip setFrame:CGRectMake(40, 45, ScreenWidth-60,labelH)];
-        [tipsView addSubview:tip];
-        NSString *time1 = [Tools timeYMDStringFrom:tipModel.modifyDate.doubleValue];
-        NSString *time2 = [Tools timeHMStringFrom:tipModel.modifyDate.doubleValue];
-        UILabel *timeLabel = [Tools labelWith:[NSString stringWithFormat:@"%@  %@",time1,time2] frame:CGRectMake(ScreenWidth-120, tipsView.frame.size.height-20, 110, 10) textSize:12 textColor:[Tools colorWithHexString:@"#747474"] lines:1 aligment:NSTextAlignmentLeft];
-        [tipsView addSubview:timeLabel];
-    }else{
-        UILabel *tip = [Tools labelWith:@"暂时没有健康提示" frame:CGRectMake(40, 45, ScreenWidth-40-20, 10) textSize:12 textColor:[Tools colorWithHexString:@"#747474"] lines:1 aligment:NSTextAlignmentLeft];
-        [tipsView addSubview:tip];
-    }
-}
+//-(void)setHealthTips{
+//    if (self.healthTipsData.count) {
+//        //设置消息.......
+//        HealthTipsModel *tipModel = self.healthTipsData[0];
+//        UILabel *tip = [Tools labelWith:tipModel.content frame:CGRectMake(40, 45, ScreenWidth-40-20, 10) textSize:12 textColor:[Tools colorWithHexString:@"#747474"] lines:0 aligment:NSTextAlignmentLeft];
+//        //动态计算label的高度
+//        CGRect tmpRect = [tip.text boundingRectWithSize:CGSizeMake(ScreenWidth-60, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObjectsAndKeys:tip.font,NSFontAttributeName, nil] context:nil];
+//        CGFloat labelH = tmpRect.size.height;
+//        [tip setFrame:CGRectMake(40, 45, ScreenWidth-60,labelH)];
+//        [tipsView addSubview:tip];
+//        NSString *time1 = [Tools timeYMDStringFrom:tipModel.modifyDate.doubleValue];
+//        NSString *time2 = [Tools timeHMStringFrom:tipModel.modifyDate.doubleValue];
+//        UILabel *timeLabel = [Tools labelWith:[NSString stringWithFormat:@"%@  %@",time1,time2] frame:CGRectMake(ScreenWidth-120, tipsView.frame.size.height-20, 110, 10) textSize:12 textColor:[Tools colorWithHexString:@"#747474"] lines:1 aligment:NSTextAlignmentLeft];
+//        [tipsView addSubview:timeLabel];
+//    }else{
+//        UILabel *tip = [Tools labelWith:@"暂时没有健康提示" frame:CGRectMake(40, 45, ScreenWidth-40-20, 10) textSize:12 textColor:[Tools colorWithHexString:@"#747474"] lines:1 aligment:NSTextAlignmentLeft];
+//        [tipsView addSubview:tip];
+//    }
+//}
 
 # pragma mark - 网络请求
 - (void)requestNetworkWithIndex:(NSInteger)index
@@ -380,15 +392,14 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     hud.label.text = @"加载中...";
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
         [hud hideAnimated:YES];
-        NSLog(@"response:%@",response);
         if([[response objectForKey:@"status"] integerValue] == 100){
             
-            weakSelf.tableView.frame = CGRectMake(0, self->_columnBar.bottom+10, ScreenWidth, ScreenHeight-self->_columnBar.bottom-10);
-            weakSelf.tableView.hidden = NO;
+//            weakSelf.tableView.frame = CGRectMake(0, self->_columnBar.bottom+10, ScreenWidth, ScreenHeight-self->_columnBar.bottom-10);
+//            weakSelf.tableView.hidden = NO;
             self->tipsView.hidden = YES;
             
             if(index == 0){
-                weakSelf.tableView.frame = CGRectMake(0, self->tipsView.bottom, ScreenWidth, ScreenHeight-self->tipsView.bottom);
+//                weakSelf.tableView.frame = CGRectMake(0, self->tipsView.bottom, ScreenWidth, ScreenHeight-self->tipsView.bottom);
                 self->tipsView.hidden = NO;
                 [weakSelf handleReportDataWith:[response objectForKey:@"data"]];
             }else if (index == 1){
@@ -402,13 +413,13 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
             }
             
         }else{
-            [weakSelf.tableView reloadData];
+//            [weakSelf.tableView reloadData];
             [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
         }
         
     } failureBlock:^(NSError *error) {
         [hud hideAnimated:YES];
-        [weakSelf.tableView reloadData];
+//        [weakSelf.tableView reloadData];
         [weakSelf showAlertWarmMessage:@"请求失败,网络错误!"];
     }];
 }
@@ -509,7 +520,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
         [self.archiveArr addObject:model];
     }
     
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
     
     if ([XLBS isKindOfClass:[NSNull class]] && [oxygen isKindOfClass:[NSNull class]]&& [bloodPressure isKindOfClass:[NSNull class]]&& [TZBS isKindOfClass:[NSNull class]]&& [bodyTemperature isKindOfClass:[NSNull class]]&& [ecg isKindOfClass:[NSNull class]]&& [JLBS isKindOfClass:[NSNull class]]&& [ZFBS isKindOfClass:[NSNull class]]) {
         
@@ -527,7 +538,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
         model.cellType = 1;
         [self.archiveArr addObject:model];
     }
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 
 - (void)handleTiZhiDataWith:(NSArray *)arr
@@ -541,7 +552,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
         model.cellType = 2;
         [self.archiveArr addObject:model];
     }
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 
 - (void)handleZangFuDataWith:(NSArray *)arr
@@ -555,7 +566,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
         model.cellType = 3;
         [self.archiveArr addObject:model];
     }
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 
 
@@ -575,7 +586,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
         }
     }
     
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 
 #pragma mark - tableview代理方法
@@ -583,7 +594,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
 {
     
     if(currentIndex==0||currentIndex==1||currentIndex==2){
-        return 50;
+        return 500;
     }else if (currentIndex == 3){
         return 80;
     }else if (currentIndex == 4){
@@ -602,6 +613,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
 {
     ArchivesCell *cell = nil;
     ArchiveModel *archive = [self.archiveArr objectAtIndex:indexPath.row];
+    cell.backgroundColor = [UIColor blueColor];
     cell = [CellUtil getArchiveCell:archive in:tableView];
     return cell;
 }
@@ -637,7 +649,6 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
 # pragma mark - columnBar代理
 - (void)columnBar:(ColumnBar *)sender didSelectedTabAtIndex:(int)index
 {
-    NSLog(@"index:%d",index);
     currentIndex = index;
     [self requestNetworkWithIndex:index];
 }

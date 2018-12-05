@@ -79,6 +79,8 @@
     __weak typeof(self) weakself = self;
     
     [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:paramDic successBlock:^(id response) {
+        
+        
         //NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:response options:kNilOptions error:nil];
         if([[response objectForKey:@"status"] intValue] == 100){
             
@@ -152,6 +154,7 @@
             [weakself showAlertWarmMessage:[response objectForKey:@"data"]];
         }
     } failureBlock:^(NSError *error) {
+        
         [weakself showAlertWarmMessage:@"抱歉登录失败，请重试"];
     }];
     
