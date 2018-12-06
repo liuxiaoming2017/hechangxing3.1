@@ -12,9 +12,9 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *dataArr;
+@property (nonatomic,assign)  NSInteger typeInteger;
 
-
--(void)relodTableViewWitDataArray:(NSMutableArray *)dataArray;
+-(void)relodTableViewWitDataArray:(NSMutableArray *)dataArray withType:(NSInteger)type;
 
 - (id)initWithFrame:(CGRect)frame withData:(NSArray *)dataArr;
 @end

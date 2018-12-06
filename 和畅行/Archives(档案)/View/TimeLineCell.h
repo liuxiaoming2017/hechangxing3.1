@@ -15,8 +15,10 @@
 @property (nonatomic,strong) UILabel *contentLabel;
 @property (nonatomic,strong) UILabel *timeLabel;
 @property (nonatomic,strong) UILabel *createDateLabel;
+@property (nonatomic, strong) UILabel *typeLabel;
 
-- (void)assignmentCellWithModel:(HealthTipsModel *)model ;
+
+- (void)assignmentCellWithModel:(HealthTipsModel *)model;
 - (void)configCellWithModel1;
 - (void)configCellWithModel2;
 

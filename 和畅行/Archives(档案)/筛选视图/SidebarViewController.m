@@ -94,11 +94,7 @@
             btn.selected = NO;
         }
     }
-}
-
-- (void)sureBtnAction:(UIButton *)button
-{
-    [self autoShowHideSidebar];
+    
     if(self.selectTag == -1){
         return;
     }else{
@@ -107,6 +103,12 @@
             [self.delegate selectIndexWithString:str];
         }
     }
+}
+
+- (void)sureBtnAction:(UIButton *)button
+{
+    [self autoShowHideSidebar];
+    
 }
 
 - (void)didReceiveMemoryWarning {

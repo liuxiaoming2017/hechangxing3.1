@@ -821,6 +821,8 @@
 		03FBDF9A2192B066006116FC /* TimeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF992192B066006116FC /* TimeLineView.m */; };
 		03FBDF9D2192B0B3006116FC /* TimeLineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF9C2192B0B3006116FC /* TimeLineCell.m */; };
 		3B88757C3A0CEA01D7FCC37D /* libPods-和畅行.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17770868BEF9BD6F1270F864 /* libPods-和畅行.a */; };
+		C973089A21B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C973089921B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m */; };
+		C99B717221B903BE00F1FF5F /* HCY_DAVisceraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2002,6 +2004,10 @@
 		03FBDF9C2192B0B3006116FC /* TimeLineCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimeLineCell.m; sourceTree = "<group>"; };
 		17770868BEF9BD6F1270F864 /* libPods-和畅行.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-和畅行.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		432A80A6E0CB6A191C1F35C4 /* Pods-和畅行.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-和畅行.debug.xcconfig"; path = "Pods/Target Support Files/Pods-和畅行/Pods-和畅行.debug.xcconfig"; sourceTree = "<group>"; };
+		C973089821B91C4B00060447 /* HCY_DAVisceraNoTimeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_DAVisceraNoTimeCell.h; sourceTree = "<group>"; };
+		C973089921B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_DAVisceraNoTimeCell.m; sourceTree = "<group>"; };
+		C99B717021B903BE00F1FF5F /* HCY_DAVisceraCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_DAVisceraCell.h; sourceTree = "<group>"; };
+		C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_DAVisceraCell.m; sourceTree = "<group>"; };
 		FE7460D05597BE7EC6524138 /* Pods-和畅行.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-和畅行.release.xcconfig"; path = "Pods/Target Support Files/Pods-和畅行/Pods-和畅行.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2234,6 +2240,10 @@
 				03FBDF9C2192B0B3006116FC /* TimeLineCell.m */,
 				039BE71221A7E07C004652AA /* NoTimeLineCell.h */,
 				039BE71321A7E07C004652AA /* NoTimeLineCell.m */,
+				C99B717021B903BE00F1FF5F /* HCY_DAVisceraCell.h */,
+				C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */,
+				C973089821B91C4B00060447 /* HCY_DAVisceraNoTimeCell.h */,
+				C973089921B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4827,6 +4837,7 @@
 				03FBDF6021927FB7006116FC /* LoginRequestController.m in Sources */,
 				032A7A0420E9F6EB003D4952 /* CustomNavigationController.m in Sources */,
 				03771991210580BA0010EA8B /* ResultSpeakController.m in Sources */,
+				C99B717221B903BE00F1FF5F /* HCY_DAVisceraCell.m in Sources */,
 				03535EFB20F7425100664FA9 /* QuestionListController.m in Sources */,
 				034A4E8D211A9AD900936A46 /* TZImageCropManager.m in Sources */,
 				032A7A1A20EA17A5003D4952 /* HSTabBar.m in Sources */,
@@ -4978,6 +4989,7 @@
 				03FBDF9221928509006116FC /* ReadOrWriteView.m in Sources */,
 				036E84112186EAB1001B9BB4 /* FindBackPasswordViewController.m in Sources */,
 				036E84372186EAD3001B9BB4 /* UIView+FirstResponder.m in Sources */,
+				C973089A21B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m in Sources */,
 				0343909B210AC3AB00B57142 /* DownloadHandler.m in Sources */,
 				0370A85E2111570500447DFB /* ShareProcessPoll.m in Sources */,
 				038516AA2186AB39001DD2B7 /* RSADataVerifier.m in Sources */,
@@ -5257,7 +5269,10 @@
 				);
 				INFOPLIST_FILE = "和畅行/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/和畅行/SayAndWrite(说写点)/Speak(说)/MLAudioRecorder/lib",
@@ -5359,7 +5374,10 @@
 				);
 				INFOPLIST_FILE = "和畅行/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/和畅行/SayAndWrite(说写点)/Speak(说)/MLAudioRecorder/lib",

@@ -10,6 +10,8 @@
 #import "TimeLineCell.h"
 #import "NoTimeLineCell.h"
 #import "GovSectionView.h"
+#import "HCY_DAVisceraCell.h"
+#import "HCY_DAVisceraNoTimeCell.h"
 
 @interface TimeLineView()<UITableViewDelegate,UITableViewDataSource,govSectionViewDelegate>
 
@@ -31,6 +33,7 @@
 {
     self.backgroundColor = [UIColor whiteColor];
     
+    
     self.dataArr = [NSMutableArray array];
     self.tableView = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
     self.tableView.delegate = self;
@@ -43,8 +46,8 @@
     [self addSubview:self.tableView];
 }
 
--(void)relodTableViewWitDataArray:(NSMutableArray *)dataArray {
-    
+-(void)relodTableViewWitDataArray:(NSMutableArray *)dataArray withType:(NSInteger)type {
+    self.typeInteger = type;
     self.dataArr = dataArray;
     [self.tableView reloadData];
 }
@@ -71,21 +74,39 @@
 #pragma mark -- 每个cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    if (indexPath.row == 0) {
-         return 105;
+//    if (self.typeInteger == 0) {
+//
+//    }else
+    if (self.typeInteger == 1 || self.typeInteger == 2) {
+        if (indexPath.row == 0) {
+            return 105;
+        }else {
+            HealthTipsModel *model = _dataArr[indexPath.row];
+            HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
+
+            if ([model.createTime isEqualToString:onAmodel.createTime]) {
+                return 65;
+            }else {
+                return 105;
+            }
+        }
     }else {
         
-        HealthTipsModel *model = _dataArr[indexPath.row];
-        HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
-        
-        NSLog(@"%@  %@",model.createTime,onAmodel.createTime);
-        if ([model.createTime isEqualToString:onAmodel.createTime]) {
-            return 65;
+        if (indexPath.row == 0) {
+            return 130;
         }else {
-            return 105;
+            HealthTipsModel *model = _dataArr[indexPath.row];
+            HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
+            
+            if ([model.createTime isEqualToString:onAmodel.createTime]) {
+                return 95;
+            }else {
+                return 130;
+            }
         }
     }
+    
+   
     
 //    TimeLineModel*model = self.dataArr[indexPath.row];
 //
@@ -94,51 +115,100 @@
 #pragma mark -- 每个cell显示的内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = nil;
     
-     HealthTipsModel *model = _dataArr[indexPath.row];
+    HealthTipsModel *model = _dataArr[indexPath.row];
     
-    if(indexPath.row == 0 ){
-        TimeLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
-        if(cell==nil){
-            cell = [[TimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        }
-        [cell assignmentCellWithModel:model];
-    }else{
-       
-        HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
-        if ([model.createTime isEqualToString:onAmodel.createTime]) {
-          
-          NoTimeLineCell * cell =[tableView dequeueReusableCellWithIdentifier:@"cell2"];
-            if(cell==nil){
-                cell = [[NoTimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            [cell assignmentCellWithModel:model];
-        }else {
-            
-           TimeLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
+    
+    if (self.typeInteger == 1|| self.typeInteger == 2) {
+        
+        
+        if(indexPath.row == 0 ){
+            TimeLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
             if(cell==nil){
                 cell = [[TimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
-           
-        }      
+            
+            [cell assignmentCellWithModel:model];
+            return cell;
+        }else{
+            
+            HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
+            if ([model.createTime isEqualToString:onAmodel.createTime]) {
+                
+                NoTimeLineCell * cell =[tableView dequeueReusableCellWithIdentifier:@"cell2"];
+                if(cell==nil){
+                    cell = [[NoTimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
+                [cell assignmentNoCellWithModel:model];
+                return cell;
+            }else {
+                
+                TimeLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
+                if(cell==nil){
+                    cell = [[TimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
+                [cell assignmentCellWithModel:model];
+                return cell;
+            }
+        }
+        
+    }else {
+        
+        if(indexPath.row == 0 ){
+            HCY_DAVisceraCell * cell =[tableView dequeueReusableCellWithIdentifier:@"HCY_DAVisceraCell"];
+            if(cell==nil){
+                cell = [[HCY_DAVisceraCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HCY_DAVisceraCell"];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+            [cell assignmentVisceraWithModel:model];
+            return cell;
+        }else{
+            
+            HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
+            if ([model.createTime isEqualToString:onAmodel.createTime]) {
+                
+                HCY_DAVisceraNoTimeCell * cell =[tableView dequeueReusableCellWithIdentifier:@"HCY_DAVisceraNoTimeCell"];
+                if(cell==nil){
+                    cell = [[HCY_DAVisceraNoTimeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HCY_DAVisceraNoTimeCell"];
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
+                [cell assignmentNoVisceraWithModel:model];
+                return cell;
+            }else {
+                
+                HCY_DAVisceraCell * cell =[tableView dequeueReusableCellWithIdentifier:@"HCY_DAVisceraCell"];
+                if(cell==nil){
+                    cell = [[HCY_DAVisceraCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HCY_DAVisceraCell"];
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
+                [cell assignmentVisceraWithModel:model];
+                return cell;
+                
+            }
+        }
+        
+        
+       
+        
     }
+   
     
     
-    return cell;
+    
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    GovSectionView *sectionV = [GovSectionView showWithName:@"" withSection:section];
-    sectionV.tableView = self.tableView;
-    sectionV.section = section;
-    sectionV.delegate=self;
-    return sectionV;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//
+//    GovSectionView *sectionV = [GovSectionView showWithName:@"" withSection:section];
+//    sectionV.tableView = self.tableView;
+//    sectionV.section = section;
+//    sectionV.delegate=self;
+//    return nil;
+//}
 
 #pragma mark - 自定义sectionView的代理方法
 - (void)sectionGestTap:(NSInteger)section withTapGesture:(UITapGestureRecognizer *)gest

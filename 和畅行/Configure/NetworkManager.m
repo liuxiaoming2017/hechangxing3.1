@@ -29,6 +29,8 @@ static NSMutableArray *tasks;
 - (AFHTTPSessionManager *)sharedAFManager
 {
        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    
         
         /*! 设置请求超时时间 */
         manager.requestSerializer.timeoutInterval = 30;
@@ -48,7 +50,8 @@ static NSMutableArray *tasks;
         /*! 这里是去掉了键值对里空对象的键值 */
         //response.removesKeysWithNullValues = YES;
         manager.responseSerializer = [AFJSONResponseSerializer serializer]; // 设置接收数据为 JSON 数据
-        
+        manager.responseSerializer =[AFJSONResponseSerializer serializerWithReadingOptions: NSJSONReadingAllowFragments];
+  
         /* 设置请求服务器数类型式为 json */
         /*! 根据服务器的设定不同还可以设置 [AFJSONRequestSerializer serializer](常用) */
     

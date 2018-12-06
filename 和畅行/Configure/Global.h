@@ -35,6 +35,29 @@ extern BOOL isBF;
 //#define URL_PRE @"http://liuzyx.vicp.cc:17001/taiping/voice";
 //2014-10-23
 
+/**
+ * 档案接口
+ */
+
+/**
+ * 经络接口
+ */
+#define MainAndCollateralChannels_url  @"/member/myreport/list/JLBS/9.jhtml?pageNumber="
+
+/**
+ * 体质接口
+ */
+#define Constitution_url               @"/myreport/list/TZBS/24.jhtml?pageNumber="
+
+/**
+ * 脏腑接口
+ */
+#define InternalOrgans_url            @"/result/IdentificationList.jhtml?cust_id=24&pageNumber="
+
+/**
+ * 心率接口
+ */
+#define HeartRate_url                 @"/member/myreport/getEcgList/24.jhtml?pageNumber="
 
 
 /**

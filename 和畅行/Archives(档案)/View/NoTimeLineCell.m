@@ -33,7 +33,7 @@
 {
     
    
-    UIImageView *lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(25, 0, 1, 10)];
+    UIImageView *lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, 0, 1, 10)];
     //UIImageView *lineImageV = [[UIImageView alloc] initWithFrame:CGRectZero];
     lineImageV.backgroundColor = UIColorFromHex(0xe2e2e2);
     
@@ -50,27 +50,33 @@
     [self addSubview:imageV];
     [self insertSublayerWithImageView:imageV];
     
-    UIImageView *circleImageV = [[UIImageView alloc] initWithFrame:CGRectMake(15, imageV.top+imageV.height/2.0-10, 20, 20)];
+    UIImageView *circleImageV = [[UIImageView alloc] initWithFrame:CGRectMake(20, imageV.top+imageV.height/2.0-10, 20, 20)];
     //UIImageView *circleImageV = [[UIImageView alloc] initWithFrame:CGRectZero];
     circleImageV.layer.cornerRadius = circleImageV.width/2.0;
     circleImageV.layer.masksToBounds = YES;
     circleImageV.backgroundColor = UIColorFromHex(0xe2e2e2);
-    [self addSubview:circleImageV];
+//    [self addSubview:circleImageV];
     
-    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageV.left+15, imageV.top, 200, imageV.height)];
-    //self.contentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.contentLabel.textAlignment=NSTextAlignmentLeft;
-    self.contentLabel.font=[UIFont systemFontOfSize:13.0];
-    self.contentLabel.textColor=UIColorFromHex(0x8E8E93);
-    self.contentLabel.backgroundColor=[UIColor clearColor];
-    self.contentLabel.text = @"您的经络状态已有七天未测评";
+    self.typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageV.left+15, imageV.top, 80, imageV.height)];
+    self.typeLabel.text = @"经络辨识";
+    self.typeLabel.textColor = RGB(55, 55, 55);
+    self.typeLabel.font = [UIFont systemFontOfSize:15];
+    [self addSubview:self.typeLabel];
+    
+    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right, imageV.top, ScreenWidth - self.typeLabel.right - 135, imageV.height)];
+    self.contentLabel.textAlignment=NSTextAlignmentCenter;
+    self.contentLabel.font=[UIFont systemFontOfSize:15.0];
+    self.contentLabel.textColor=RGB(221, 156, 92);
+    self.contentLabel.text = @"大羽";
     [self addSubview:self.contentLabel];
     
-    self.createDateLabel = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth - 100,  imageV.top, 100, imageV.height)];
-    self.createDateLabel.font=[UIFont systemFontOfSize:13.0];
+    self.createDateLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  imageV.top+imageV.height/2.0-10, 60, 20)];
+    self.createDateLabel.font=[UIFont systemFontOfSize:12.0];
+    self.createDateLabel.textAlignment = NSTextAlignmentCenter;
     self.createDateLabel.textColor=UIColorFromHex(0x8E8E93);
-    self.createDateLabel.text = @"2018-08-08 08:08";
+    self.createDateLabel.text = @"08:08";
     [self addSubview:self.createDateLabel];
+    
     
     
     UIImageView *lineImageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(lineImageV.left, imageV.bottom-5+5, 1, 10)];
@@ -101,8 +107,8 @@
 }
 
 //为cell 赋值
--(void)assignmentCellWithModel:(HealthTipsModel *)model {
-    
+- (void)assignmentNoCellWithModel:(HealthTipsModel *)model {
+
     self.contentLabel.text = [model.subject valueForKey:@"name"];
     NSString *str = [NSString stringWithFormat:@"%@",model.createDate];
     self.createDateLabel.text = [self getDateStringWithTimeStr:str];
@@ -114,7 +120,7 @@
     NSDate *detailDate=[NSDate dateWithTimeIntervalSince1970:time];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; //实例化一个NSDateFormatter对象
     //设定时间格式,这里可以设置成自己需要的格式
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss SS"];
+    [dateFormatter setDateFormat:@"HH:mm"];
     NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
     return currentDateStr;
 }
@@ -123,6 +129,7 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+    
 }
 
 @end

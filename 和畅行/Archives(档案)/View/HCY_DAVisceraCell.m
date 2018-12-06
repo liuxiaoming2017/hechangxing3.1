@@ -1,13 +1,14 @@
 //
-//  TimeLineCell.m
+//  HCY_DAVisceraCell.m
 //  和畅行
 //
-//  Created by 刘晓明 on 2018/11/7.
-//  Copyright © 2018 刘晓明. All rights reserved.
+//  Created by Wei Zhao on 2018/12/6.
+//  Copyright © 2018年 刘晓明. All rights reserved.
 //
 
-#import "TimeLineCell.h"
-@implementation TimeLineCell
+#import "HCY_DAVisceraCell.h"
+
+@implementation HCY_DAVisceraCell
 
 @synthesize subLayer;
 
@@ -31,50 +32,55 @@
     self.timeLabel.text = @"11-23";
     [self addSubview:self.timeLabel];
     
-    UIImageView *lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, self.timeLabel.bottom+5, 1, 20)];
+    UIImageView *lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, self.timeLabel.bottom+5, 1, 25)];
     lineImageV.backgroundColor = UIColorFromHex(0xe2e2e2);
     [self addSubview:lineImageV];
     
-    
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(self.timeLabel.right - 20, lineImageV.bottom-5, ScreenWidth-self.timeLabel.right + 10, 49)];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(self.timeLabel.right - 20, lineImageV.bottom-15, ScreenWidth-self.timeLabel.right + 10, 79)];
     imageV.layer.cornerRadius = 8.0;
     imageV.layer.masksToBounds = YES;
     imageV.backgroundColor = [UIColor whiteColor];
     [self addSubview:imageV];
     [self insertSublayerWithImageView:imageV];
     
-    self.createDateLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  imageV.top+imageV.height/2.0-10, 60, 20)];
+    self.createDateLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  imageV.top+imageV.height/2.0-20, 60, 20)];
     self.createDateLabel.font=[UIFont systemFontOfSize:13.0];
     self.createDateLabel.textAlignment = NSTextAlignmentCenter;
     self.createDateLabel.textColor=UIColorFromHex(0x8E8E93);
     self.createDateLabel.text = @"08:08";
     [self addSubview:self.createDateLabel];
     
-    UIImageView *circleImageV = [[UIImageView alloc] initWithFrame:CGRectMake(20, imageV.top+imageV.height/2.0-10, 20, 20)];
-    //UIImageView *circleImageV = [[UIImageView alloc] initWithFrame:CGRectZero];
-    circleImageV.layer.cornerRadius = circleImageV.width/2.0;
-    circleImageV.layer.masksToBounds = YES;
-    circleImageV.backgroundColor = UIColorFromHex(0xe2e2e2);
-//    [self addSubview:circleImageV];
+    NSMutableAttributedString * attributedString1 = [[NSMutableAttributedString alloc] initWithString:@"症状选择:\nICD-10:"];
+    NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle1 setLineSpacing:8];
+    [attributedString1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [@"症状选择:\nICD-10:" length])];
+  
+
     
     self.typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageV.left+15, imageV.top, 80, imageV.height)];
-    self.typeLabel.text = @"经络辨识";
+    self.typeLabel.attributedText = attributedString1;
+    self.typeLabel.numberOfLines = 2;
     self.typeLabel.textColor = RGB(55, 55, 55);
     self.typeLabel.font = [UIFont systemFontOfSize:15];
     [self addSubview:self.typeLabel];
     
     
-    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right, imageV.top, ScreenWidth - self.typeLabel.right - 135, imageV.height)];
-    self.contentLabel.textAlignment=NSTextAlignmentCenter;
-    self.contentLabel.font=[UIFont systemFontOfSize:15];
-    self.contentLabel.textColor=RGB(221, 156, 92);
-    self.contentLabel.text = @"大羽";
-    [self addSubview:self.contentLabel];
+    self.topLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right, imageV.top + 13, ScreenWidth - self.typeLabel.right - 20, imageV.height/2 - 13)];
+    self.topLabel.font=[UIFont systemFontOfSize:15];
+    self.topLabel.textColor=RGB(221, 156, 92);
+    self.topLabel.text = @"新病有汗";
+    [self addSubview:self.topLabel];
     
-   
+    self.lowLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right, self.topLabel.bottom  , ScreenWidth - self.typeLabel.right - 20, imageV.height/2-13)];
+    self.lowLabel.font=[UIFont systemFontOfSize:15];
+    self.lowLabel.textColor=RGB(221, 156, 92);
+    self.lowLabel.text = @"无";
+    [self addSubview:self.lowLabel];
     
     
-    UIImageView *lineImageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(lineImageV.left, 105-20, 1, 20)];
+    
+    
+    UIImageView *lineImageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(lineImageV.left, 105-15, 1, 30)];
     lineImageV2.backgroundColor = UIColorFromHex(0xe2e2e2);
     [self addSubview:lineImageV2];
     
@@ -94,14 +100,7 @@
 
 
 //为cell 赋值
--(void)assignmentCellWithModel:(HealthTipsModel *)model{
-    
-//    NSString *str1 = [string substringToIndex:5]
-//    if (typeInteger == 0) {
-//        self.typeLabel.text = @"经络辨识";
-//    }else {
-//        self.typeLabel.text = @"体质辨识";
-//    }
+- (void)assignmentVisceraWithModel:(HealthTipsModel *)model{
     
     NSString *timestr = model.createTime;
     timestr = [timestr stringByReplacingOccurrencesOfString:@"-" withString:@"月"];
@@ -110,14 +109,15 @@
     NSString *subString3 = [timestr substringWithRange:range];
     if ([subString3 isEqualToString: @"0"]) {
         self.timeLabel.text = [timestr substringFromIndex:timestr.length - 5];
-
+        
     }else {
         self.timeLabel.text = [timestr substringFromIndex:timestr.length - 6];
-
+        
     }
-    self.contentLabel.text = [model.subject valueForKey:@"name"];
-    NSString *str = [NSString stringWithFormat:@"%@",model.createDate];
-    self.createDateLabel.text = [self getDateStringWithTimeStr:str];
+    self.topLabel.text = model.zz_name_str;
+    self.lowLabel.text = model.icd_name_str;
+    NSString *littletimestr = [NSString stringWithFormat:@"%@",model.createDate];
+    self.createDateLabel.text = [self getDateStringWithTimeStr:littletimestr];
     
 }
 
@@ -161,7 +161,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 

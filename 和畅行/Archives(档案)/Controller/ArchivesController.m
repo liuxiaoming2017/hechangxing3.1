@@ -43,6 +43,12 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
 
 @property (nonatomic, retain) SidebarViewController* sidebarVC;
 
+//请求接口分类
+@property (nonatomic,assign) NSInteger typeUrlInteger;
+
+//请求页数
+@property (nonatomic,assign) NSInteger pageInteger;
+
 @end
 
 @implementation ArchivesController
@@ -56,6 +62,8 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     self.progressView = nil;
     self.wkwebview = nil;
     self.healthTipsData = nil;
+    
+    
     
     [_wkwebview removeObserver:self forKeyPath:@"estimatedProgress"];
     
@@ -96,6 +104,8 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     
     self.healthTipsData = [NSMutableArray array];
     self.dataListArray  = [NSMutableArray array];
+    self.typeUrlInteger = 1;
+    self.pageInteger    = 1;
     
     self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.navTitleLabel.text = @"健康档案";
@@ -103,7 +113,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     //[self.leftBtn setImage:[UIImage imageNamed:@"user_01"] forState:UIControlStateNormal];
     [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     
-    self.timeLinvView = [[TimeLineView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, ScreenWidth, ScreenHeight-self.topView.bottom-kTabBarHeight) withData:self.healthTipsData];
+    self.timeLinvView = [[TimeLineView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, ScreenWidth, ScreenHeight-self.topView.bottom-kTabBarHeight) withData:self.dataListArray];
     [self.view addSubview:self.timeLinvView];
     
  
@@ -111,8 +121,8 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     
     MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     [header setTitle:@"下拉刷新" forState:MJRefreshStateIdle];
-    [header setTitle:@"松开即可刷新" forState:MJRefreshStateWillRefresh];
     [header setTitle:@"努力加载中..." forState:MJRefreshStateRefreshing];
+    [header setTitle:@"松开即可刷新..." forState:MJRefreshStatePulling];
     header.lastUpdatedTimeLabel.hidden = YES;
     header.stateLabel.font = [UIFont systemFontOfSize:14];
     header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:14];
@@ -149,6 +159,8 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     }
     
     [self requestNetworkWithIndex:1];
+    
+    [self requestHealthHintDataWithTipyInteger:1 withPageInteger:self.pageInteger];
     
     /*
     self.titleArr = [NSArray arrayWithObjects:@"最新",@"经络",@"体质",@"脏腑",@"心率",@"血压",@"血氧",@"血糖",@"体温",@"呼吸", nil];
@@ -191,22 +203,23 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     [self requestNetworkWithIndex:currentIndex];
     */
     
-    [self requestHealthHintDataWithTipyInteger:1];
+    
 }
 
 
 -(void)loadNewData {
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.timeLinvView.tableView.mj_header endRefreshing];;
-    });
+    self.pageInteger = 1;
+    
+   [self requestHealthHintDataWithTipyInteger:self.typeUrlInteger withPageInteger:self.pageInteger];
 }
 
 -(void)loadMoreDataOther {
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.timeLinvView.tableView.mj_footer endRefreshing];;
-    });
+    self.pageInteger ++;
+    
+    [self requestHealthHintDataWithTipyInteger:self.typeUrlInteger withPageInteger:self.pageInteger];
+    
     
 }
 
@@ -215,9 +228,25 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     [self.sidebarVC showHideSidebar];
 }
 
+
+//点击筛选确定走的方法
 - (void)selectIndexWithString:(NSString *)str
 {
-    NSLog(@"hhhh:%@",str);
+    if ([str isEqualToString:@"最新"])     self.typeUrlInteger = 0;
+    else if([str isEqualToString:@"经络"]) self.typeUrlInteger = 1;
+    else if([str isEqualToString:@"体质"]) self.typeUrlInteger = 2;
+    else if([str isEqualToString:@"脏腑"]) self.typeUrlInteger = 3;
+    else if([str isEqualToString:@"心率"]) self.typeUrlInteger = 4;
+    else if([str isEqualToString:@"血压"]) self.typeUrlInteger = 5;
+    else if([str isEqualToString:@"血氧"]) self.typeUrlInteger = 6;
+    else if([str isEqualToString:@"血糖"]) self.typeUrlInteger = 7;
+    else if([str isEqualToString:@"体温"]) self.typeUrlInteger = 8;
+    else if([str isEqualToString:@"呼吸"]) self.typeUrlInteger = 9;
+    
+    self.pageInteger = 1;
+    
+    [self requestHealthHintDataWithTipyInteger:self.typeUrlInteger withPageInteger:self.pageInteger];
+
 }
 
 # pragma mark - wkwebview的设置
@@ -267,48 +296,62 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
 }
 
 # pragma mark - 健康提示数据
-- (void)requestHealthHintDataWithTipyInteger:(NSInteger )tipyInteger
+- (void)requestHealthHintDataWithTipyInteger:(NSInteger )tipyInteger withPageInteger:(NSInteger )pageInteger
 {
     __weak typeof(self) weakSelf = self;
     
-    NSString *urlStr = [NSString new];
+    NSString *str = [NSString new];
     
     switch (tipyInteger) {
-        case 0:   urlStr = @"";
+        case 0:   str = @"";
             break;
-        case 1:   urlStr = @"member/myreport/list/JLBS/9.jhtml?pageNumber=1";
-            break;
-            
-        case 2:   urlStr = @"";
+        case 1:   str = MainAndCollateralChannels_url;
             break;
             
-        case 3:   urlStr = @"";
+        case 2:   str = Constitution_url;
             break;
             
-        case 4:   urlStr = @"";
+        case 3:   str = InternalOrgans_url;
+            break;
+            
+        case 4:   str = HeartRate_url;
             break;
             
         default:
             break;
     }
+   NSString *urlStr = [NSString stringWithFormat:@"%@%ld",str,(long)pageInteger];
+    
     
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
         
+        
+        NSLog(@"%@",response);
         if ([response[@"status"] integerValue] == 100){
             
-            
+            if (self.pageInteger == 1) {
+                [weakSelf.dataListArray removeAllObjects];
+            }
             for (NSDictionary *dic in [response valueForKey:@"data"]) {
                  HealthTipsModel *tipModel = [[HealthTipsModel alloc] init];
                 [tipModel yy_modelSetWithJSON:dic];
                 [weakSelf.dataListArray addObject:tipModel];
             }
             
-            [ self.timeLinvView relodTableViewWitDataArray:weakSelf.dataListArray];
+            [ self.timeLinvView relodTableViewWitDataArray:weakSelf.dataListArray withType:self.typeUrlInteger];
+            
 //            [weakSelf setHealthTips];
         }
     } failureBlock:^(NSError *error) {
+        NSLog(@"%@",error);
         [weakSelf showAlertWarmMessage:@"请求失败,网络错误!"];
     }];
+    
+    if (self.pageInteger == 1) {
+        [self.timeLinvView.tableView.mj_header endRefreshing];
+    }else {
+        [self.timeLinvView.tableView.mj_footer endRefreshing];
+    }
 }
 
 #pragma mark - 设置提示消息
