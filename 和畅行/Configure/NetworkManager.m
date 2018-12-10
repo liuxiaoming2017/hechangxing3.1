@@ -119,7 +119,7 @@ static NSMutableArray *tasks;
         return ;
     }
     
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE22,urlString];
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,urlString];
     /*! 检查地址中是否有中文 */
     NSString *URLString = [NSURL URLWithString:urlStr] ? urlStr : [self strUTF8Encoding:urlStr];
     

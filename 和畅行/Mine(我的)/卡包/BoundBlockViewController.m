@@ -12,6 +12,9 @@
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 #import "SBJson.h"
+#import "SGScanningQRCodeVC.h"
+#import "SGAlertView.h"
+#import "HCY_InformationController.h"
 @interface BoundBlockViewController ()<UITextFieldDelegate,MBProgressHUDDelegate>
 {
     MBProgressHUD* progress_;
@@ -21,10 +24,7 @@
 
 @implementation BoundBlockViewController
 
-- (void)dealloc
-{
-    [super dealloc];
-}
+
 
 -(void)backClick:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
@@ -33,38 +33,55 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     self.navTitleLabel.text = @"我的卡包";
     self.view.backgroundColor = [UIColor whiteColor];
-    UIImageView *diImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, kNavBarHeight+5, self.view.frame.size.width - 20, 55)];
+  
     
-    diImageView.image = [UIImage imageNamed:@"xinkadi.png"];
-    [self.view addSubview:diImageView];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, kNavBarHeight + 70, ScreenWidth, 30)];
+    titleLabel.text = @"请在输入框输入服务卡号";
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.font = [UIFont systemFontOfSize:17];
+    [self.view addSubview:titleLabel];
     
-    UIImageView *kaImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10,20,20,15)];
-    
-    kaImageView.image = [UIImage imageNamed:@"xinkabao.png"];
-    
-    _textField = [[UITextField alloc]initWithFrame:CGRectMake(50, 80, self.view.frame.size.width - 70, 55)];
+    _textField = [[UITextField alloc]initWithFrame:CGRectMake(15, titleLabel.bottom + 30, ScreenWidth - 30, 55)];
     _textField.delegate = self;
+    _textField.layer.cornerRadius = 10;
+    _textField.layer.masksToBounds = YES;
+    _textField.textAlignment = NSTextAlignmentCenter;
+    _textField.layer.borderWidth =1.0f;
+    _textField.layer.borderColor = RGB_TextAppBlue.CGColor;;
     _textField.placeholder = @"请输入卡号";
+    _textField.borderStyle = UITextBorderStyleRoundedRect;
     _textField.returnKeyType=UIReturnKeyDone;
-    //UIView *redView=[[UIView alloc]initWithFrame:CGRectMake(10, 20, 20, 15)];
-    // redView.backgroundColor=[UIColor redColor];
-    [diImageView addSubview:kaImageView];
-    //    _textField.leftView = redView;
-    //    _textField.leftViewMode=UI_textFieldViewModeAlways;
-    //    [redView release];
     [self.view addSubview:_textField];
+    
+    
     UIButton *bangButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    bangButton.frame = CGRectMake(10, diImageView.bottom+20, self.view.frame.size.width - 20, 45);
-    [bangButton setBackgroundImage:[UIImage imageNamed:@"xinkabang.png"] forState:UIControlStateNormal];
+    bangButton.frame = CGRectMake(ScreenWidth/2 - 75, _textField.bottom+50, 150, 50);
+    [bangButton setTitle:@"添加至卡包" forState:(UIControlStateNormal)];
+    [bangButton setBackgroundImage:[UIImage imageNamed:@"HCY_ButtonBack"] forState:UIControlStateNormal];
     [bangButton addTarget:self action:@selector(bangButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:bangButton];
     
     
+    UIButton *flickingBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - 13 ,ScreenHeight - 200, 50, 50) target:self sel:@selector(flickingClick) tag:31 image:nil title:@"二维码"];
+    [flickingBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [flickingBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [flickingBtn setImage:[UIImage imageNamed:@"二维码"] forState:(UIControlStateNormal)];
+    [self.view addSubview:flickingBtn];
+   
+    
+     [flickingBtn setTitleEdgeInsets:UIEdgeInsetsMake(flickingBtn.imageView.frame.size.height +30 ,-flickingBtn.imageView.frame.size.width -18, 0.0,0.0)];
+    
+    
+    
 }
 - (void)bangButton{
+    
+    HCY_InformationController *informaTionVC = [[HCY_InformationController alloc]init];
+    [self.navigationController pushViewController:informaTionVC animated:YES];
+    
     if ([_textField.text isEqualToString:@""]) {
         UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"卡号不能为空" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
         [av show];
@@ -106,6 +123,44 @@
     
     
 }
+
+
+
+////扫一扫
+-(void)flickingClick {
+    
+    // 1、 获取摄像设备
+    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    if (device) {
+        AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+        if (status == AVAuthorizationStatusNotDetermined) {
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                if (granted) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        SGScanningQRCodeVC *scanningQRCodeVC = [[SGScanningQRCodeVC alloc] init];
+                        [self presentViewController:scanningQRCodeVC animated:YES completion:nil];
+                    });
+                }else {
+                }
+            }];
+        } else if (status == AVAuthorizationStatusAuthorized) { // 用户允许当前应用访问相机
+            SGScanningQRCodeVC *scanningQRCodeVC = [[SGScanningQRCodeVC alloc] init];
+            [self presentViewController:scanningQRCodeVC animated:YES completion:nil];
+        } else if (status == AVAuthorizationStatusDenied) { // 用户拒绝当前应用访问相机
+            SGAlertView *alertView = [SGAlertView alertViewWithTitle:@"⚠️ 警告" delegate:nil contentTitle:@"请去-> [设置 - 隐私 - 相机 - 特卫工分] 打开访问开关" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne)];
+            [alertView show];
+        } else if (status == AVAuthorizationStatusRestricted) {
+        }
+    } else {
+        SGAlertView *alertView = [SGAlertView alertViewWithTitle:@"⚠️ 警告" delegate:nil contentTitle:@"未检测到您的摄像头, 请在真机上测试" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne)];
+        [alertView show];
+    }
+    
+    
+    
+}
+    
+    
 - (void)requesstuserinfoError:(ASIHTTPRequest *)request
 {
     [self hudWasHidden:nil];
@@ -231,6 +286,12 @@
 - (BOOL)textFieldShouldClear:(UITextField *)textField{
     NSLog(@"%s",__FUNCTION__);
     return YES;
+}
+
+
+- (void)dealloc
+{
+    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning {

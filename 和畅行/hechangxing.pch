@@ -28,6 +28,8 @@
 #import "MJRefresh.h"
 #import "YYModel.h"
 #import "HealthTipsModel.h"
+#import "Tools.h"
+#import "UIColor+Gradient.h"
 #endif /* ____pch */
 #endif
 

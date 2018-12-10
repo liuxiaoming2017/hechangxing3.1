@@ -671,7 +671,6 @@
 
         UIButton *marryStateBtn = [Tools creatButtonWithFrame:CGRectMake(marryLabel.frame.origin.x+marryLabel.frame.size.width+5, (cell.frame.size.height-21)/2, ScreenWidth-marryLabel.frame.origin.x-marryLabel.frame.size.width-5-20.5, 21) target:self sel:@selector(marryBtnClick:) tag:31 image:nil title:@"请选择您的婚否情况"];
 //        marryStateBtn.backgroundColor = [UIColor blackColor];
-        [marryStateBtn setTitle:@"111" forState:(UIControlStateNormal)];
 
         marryStateBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         [marryStateBtn setTitleColor:[UtilityFunc colorWithHexString:@"#666666"] forState:UIControlStateNormal];

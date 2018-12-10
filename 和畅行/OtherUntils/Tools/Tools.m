@@ -67,7 +67,7 @@
     label.font = [UIFont systemFontOfSize:size];
     label.backgroundColor = [UIColor clearColor];
     label.numberOfLines = 0;
-    label.font = [UIFont systemFontOfSize:15];
+    label.font = [UIFont systemFontOfSize:size];
     return label;
 }
 
