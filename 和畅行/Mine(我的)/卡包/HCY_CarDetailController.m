@@ -63,7 +63,7 @@
     [imageV addSubview:_yLabel];
     
     
-    NSArray *titleArray = @[@"余      额",@"视频咨询"];
+    NSArray *titleArray = @[@"余        额",@"视频咨询"];
     NSArray *contentArray = @[@"300元",@"3次"];
     NSArray *buttonArray = @[@"去购物",@"去咨询"];
     
@@ -102,7 +102,7 @@
     
     
 //    self.dataArray = [NSMutableArray array];
-    self.listTableView = [[UITableView alloc]initWithFrame:CGRectMake(40, listLabel.bottom+20, self.view.frame.size.width - 80, self.view.frame.size.height - kNavBarHeight-listLabel.bottom - 100) style:UITableViewStylePlain];
+    self.listTableView = [[UITableView alloc]initWithFrame:CGRectMake(40, listLabel.bottom+20, self.view.frame.size.width - 80, self.view.frame.size.height - kNavBarHeight-listLabel.bottom - 20) style:UITableViewStylePlain];
     self.listTableView.backgroundColor = [UIColor clearColor];
     self.listTableView.separatorStyle = UITableViewCellEditingStyleNone;
     self.listTableView.dataSource = self;

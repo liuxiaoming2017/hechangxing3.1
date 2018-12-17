@@ -7,7 +7,6 @@
 //
 
 #import "ArchivesController.h"
-#import "ColumnBar.h"
 #import "ArchivesCell.h"
 #import "ArchiveModel.h"
 #import "CellUtil.h"
@@ -20,32 +19,24 @@
 #import "SidebarViewController.h"
 #import "TimeLineView.h"
 
-@interface ArchivesController ()<ColumnBarDelegate,
-ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNavigationDelegate,SidebarViewDelegate>
+@interface ArchivesController ()<WKUIDelegate,WKNavigationDelegate,SidebarViewDelegate>
 
 {
-    ColumnBar *_columnBar;
     UIView *tipsView;
 }
 
 @property (nonatomic,strong) NSArray *titleArr;
-//@property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *archiveArr;
-
-//
 @property (nonatomic,strong) NSMutableArray *dataListArray;
-
 @property (nonatomic,strong) WKWebView *wkwebview;
 @property (nonatomic,strong) UIProgressView *progressView;
 @property (nonatomic,strong) NSMutableArray *healthTipsData;
-
 @property (nonatomic,strong) TimeLineView *timeLinvView;
-
 @property (nonatomic, retain) SidebarViewController* sidebarVC;
-
+//刷选button
+@property (nonatomic,strong) UIButton *filterBtn;
 //请求接口分类
 @property (nonatomic,assign) NSInteger typeUrlInteger;
-
 //请求页数
 @property (nonatomic,assign) NSInteger pageInteger;
 
@@ -54,31 +45,38 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
 @implementation ArchivesController
 @synthesize currentIndex,memberId;
 
+
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.filterBtn.hidden = NO;
+}
+
+
+
 - (void)dealloc
 {
     self.titleArr = nil;
     self.archiveArr = nil;
-//    self.tableView = nil;
     self.progressView = nil;
     self.wkwebview = nil;
     self.healthTipsData = nil;
-    
-    
     
     [_wkwebview removeObserver:self forKeyPath:@"estimatedProgress"];
     
 }
 
+
+//获取其他成员
 - (void)userBtnAction:(UIButton *)btn
 {
-   
-        SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
-        __weak typeof(self) weakSelf = self;
-        [subMember receiveSubIdWith:^(NSString *subId) {
-            self->memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
-            [weakSelf requestNetworkWithIndex:self->currentIndex];
-            [subMember hideHintView];
-        }];
+    SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
+    __weak typeof(self) weakSelf = self;
+    [subMember receiveSubIdWith:^(NSString *subId) {
+        self->memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
+        [weakSelf requestNetworkWithIndex:self->currentIndex];
+        [subMember hideHintView];
+    }];
     
 }
 
@@ -86,7 +84,6 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
 - (void)setCurrentIndex:(NSInteger)currentInde
 {
     currentIndex = currentInde;
-    
 }
 
 - (id)initWithIndex:(NSInteger )index
@@ -104,7 +101,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     
     self.healthTipsData = [NSMutableArray array];
     self.dataListArray  = [NSMutableArray array];
-    self.typeUrlInteger = 1;
+    self.typeUrlInteger = 0;
     self.pageInteger    = 1;
     
     self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
@@ -141,11 +138,11 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     footer.stateLabel.textColor = RGB_TextAppBlue;
     self.timeLinvView.tableView.mj_footer = footer;
     
-    UIButton *filterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    filterBtn.frame = CGRectMake(ScreenWidth-37-14, ScreenHeight-120, 36, 36);
-    [filterBtn setImage:[UIImage imageNamed:@"筛选"] forState:UIControlStateNormal];
-    [filterBtn addTarget:self action:@selector(filterBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:filterBtn];
+    self.filterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.filterBtn.frame = CGRectMake(ScreenWidth-37-14, ScreenHeight-120, 36, 36);
+    [self.filterBtn setImage:[UIImage imageNamed:@"筛选"] forState:UIControlStateNormal];
+    [self.filterBtn addTarget:self action:@selector(filterBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.filterBtn];
     
     self.sidebarVC = [[SidebarViewController alloc] init];
     [self.sidebarVC setBgRGB:0x000000];
@@ -158,68 +155,22 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
         memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
     }
     
-    [self requestNetworkWithIndex:1];
     
-    [self requestHealthHintDataWithTipyInteger:1 withPageInteger:self.pageInteger];
-    
-    /*
-    self.titleArr = [NSArray arrayWithObjects:@"最新",@"经络",@"体质",@"脏腑",@"心率",@"血压",@"血氧",@"血糖",@"体温",@"呼吸", nil];
-    _columnBar = [[ColumnBar alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, 40) withIsFirstNewsVC:YES];
-    _columnBar.columnName = [self.titleArr objectAtIndex:currentIndex];
-    _columnBar.selectedIndex = (int)currentIndex;
-    _columnBar.dataSource = self;
-    _columnBar.delegate = self;
-    [_columnBar reloadData:[self.titleArr objectAtIndex:0]];
-    [self.view addSubview:_columnBar];
-    
-    self.healthTipsData = [NSMutableArray arrayWithCapacity:0];
-    tipsView = [[UIView alloc] initWithFrame:CGRectMake(0, _columnBar.bottom, ScreenWidth, 140)];
-    tipsView.backgroundColor = [Tools colorWithHexString:@"#f0f0f0"];
-    [self.view addSubview:tipsView];
-    UILabel *tipTitleLbel = [Tools labelWith:@"最新提示" frame:CGRectMake(20, 15, 140, 10) textSize:14 textColor:[Tools colorWithHexString:@"#747474"] lines:1 aligment:NSTextAlignmentLeft];
-    [tipsView addSubview:tipTitleLbel];
-    
-    //添加tableview
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, tipsView.bottom, ScreenWidth, ScreenHeight-tipsView.bottom) style:UITableViewStylePlain];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.backgroundColor=[UIColor clearColor];
-    self.tableView.backgroundView=nil;
-    self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
-    self.tableView.showsVerticalScrollIndicator = NO;
-    self.tableView.showsHorizontalScrollIndicator = NO;
-    
-    [self.view addSubview:self.tableView];
-    
-    self.archiveArr = [NSMutableArray arrayWithCapacity:0];
-    
-    
-    
-    
-    if(!memberId){
-        memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
-    }
-    
-    [self requestNetworkWithIndex:currentIndex];
-    */
-    
+    [self requestHealthHintDataWithTipyInteger:0 withPageInteger:self.pageInteger];
     
 }
 
-
+//下拉加载
 -(void)loadNewData {
     
     self.pageInteger = 1;
-    
    [self requestHealthHintDataWithTipyInteger:self.typeUrlInteger withPageInteger:self.pageInteger];
 }
 
+//上拉刷新
 -(void)loadMoreDataOther {
-    
     self.pageInteger ++;
-    
     [self requestHealthHintDataWithTipyInteger:self.typeUrlInteger withPageInteger:self.pageInteger];
-    
     
 }
 
@@ -232,21 +183,39 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
 //点击筛选确定走的方法
 - (void)selectIndexWithString:(NSString *)str
 {
-    if ([str isEqualToString:@"最新"])     self.typeUrlInteger = 0;
-    else if([str isEqualToString:@"经络"]) self.typeUrlInteger = 1;
-    else if([str isEqualToString:@"体质"]) self.typeUrlInteger = 2;
-    else if([str isEqualToString:@"脏腑"]) self.typeUrlInteger = 3;
-    else if([str isEqualToString:@"心率"]) self.typeUrlInteger = 4;
-    else if([str isEqualToString:@"血压"]) self.typeUrlInteger = 5;
-    else if([str isEqualToString:@"血氧"]) self.typeUrlInteger = 6;
-    else if([str isEqualToString:@"血糖"]) self.typeUrlInteger = 7;
-    else if([str isEqualToString:@"体温"]) self.typeUrlInteger = 8;
-    else if([str isEqualToString:@"呼吸"]) self.typeUrlInteger = 9;
+    if ([str isEqualToString:@"最新"])        self.typeUrlInteger = 0;
+    else if([str isEqualToString:@"经络"])    self.typeUrlInteger = 1;
+    else if([str isEqualToString:@"体质"])    self.typeUrlInteger = 2;
+    else if([str isEqualToString:@"脏腑"])    self.typeUrlInteger = 3;
+    else if([str isEqualToString:@"心率"])    self.typeUrlInteger = 4;
+    else if([str isEqualToString:@"血压"])    self.typeUrlInteger = 5;
+    else if([str isEqualToString:@"血氧"])    self.typeUrlInteger = 6;
+    else if([str isEqualToString:@"血糖"])    self.typeUrlInteger = 7;
+    else if([str isEqualToString:@"体温"])    self.typeUrlInteger = 8;
+    else if([str isEqualToString:@"呼吸"])    self.typeUrlInteger = 9;
+    else if([str isEqualToString:@"季度报告"]) self.typeUrlInteger = 10;
+    else if([str isEqualToString:@"病例"])    self.typeUrlInteger = 3;
     
     self.pageInteger = 1;
     
-    [self requestHealthHintDataWithTipyInteger:self.typeUrlInteger withPageInteger:self.pageInteger];
-
+    
+    [_dataListArray removeAllObjects];
+    [self.timeLinvView.tableView reloadData];
+    
+    if(self.typeUrlInteger < 5 || self.typeUrlInteger > 9) {
+        if (self.wkwebview) {
+            self.wkwebview.hidden = YES;
+        }
+        self.timeLinvView.hidden = NO;
+        [self requestHealthHintDataWithTipyInteger:self.typeUrlInteger withPageInteger:self.pageInteger];
+    }else {
+        if (self.wkwebview) {
+            self.wkwebview.hidden = NO;
+        }
+        self.timeLinvView.hidden = YES;
+        [self requestNetworkWithIndex:self.typeUrlInteger];
+        
+    }
 }
 
 # pragma mark - wkwebview的设置
@@ -266,7 +235,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
         // 通过JS与webview内容交互
         config.userContentController = [[WKUserContentController alloc] init];
         
-        self.wkwebview = [[WKWebView alloc] initWithFrame:CGRectMake(0, _columnBar.bottom+10, ScreenWidth, ScreenHeight-_columnBar.bottom-10)
+        self.wkwebview = [[WKWebView alloc] initWithFrame:CGRectMake(0, kNavBarHeight + 10, ScreenWidth, ScreenHeight- kNavHeight + 54)
                                             configuration:config];
         // 导航代理
         self.wkwebview.navigationDelegate = self;
@@ -301,48 +270,74 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
     __weak typeof(self) weakSelf = self;
     
     NSString *str = [NSString new];
+    NSString *pageIntegerstr = [NSString stringWithFormat:@"%ld",(long)pageInteger];
     
     switch (tipyInteger) {
-        case 0:   str = @"";
+        case 0:   str = [NSString stringWithFormat:
+                         @"/member/myreport/list/JLBS/%@.jhtml?pageNumber=%@",memberId,pageIntegerstr];
             break;
-        case 1:   str = MainAndCollateralChannels_url;
-            break;
-            
-        case 2:   str = Constitution_url;
-            break;
-            
-        case 3:   str = InternalOrgans_url;
+        case 1:   str = [NSString stringWithFormat:
+                         @"/member/myreport/list/JLBS/%@.jhtml?pageNumber=%@",memberId,pageIntegerstr];
             break;
             
-        case 4:   str = HeartRate_url;
+        case 2:   str = [NSString stringWithFormat:
+                         @"/member/myreport/list/TZBS/%@.jhtml?pageNumber=%@",memberId,pageIntegerstr];
+            break;
+            
+        case 3:   str = [NSString stringWithFormat:
+                         @"/result/IdentificationList.jhtml?cust_id=%@&pageNumber=%@",memberId,pageIntegerstr];
+            break;
+            
+        case 4:   str = [NSString stringWithFormat:
+                         @"/member/myreport/getEcgList/%@.jhtml?pageNumber=%@",memberId,pageIntegerstr];
+            break;
+            
+        case 10:               [self.timeLinvView relodTableViewWitDataArray:weakSelf.dataListArray withType:self.typeUrlInteger];
+            return;
+;
+            break;
+            
+        case 11:   [weakSelf showAlertWarmMessage:@"病例!"];
             break;
             
         default:
             break;
     }
-   NSString *urlStr = [NSString stringWithFormat:@"%@%ld",str,(long)pageInteger];
+   
     
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.label.text = @"加载中...";
     
-    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:str parameters:nil successBlock:^(id response) {
         
-        
+        [hud hideAnimated:YES];
         NSLog(@"%@",response);
         if ([response[@"status"] integerValue] == 100){
             
             if (self.pageInteger == 1) {
                 [weakSelf.dataListArray removeAllObjects];
             }
-            for (NSDictionary *dic in [response valueForKey:@"data"]) {
-                 HealthTipsModel *tipModel = [[HealthTipsModel alloc] init];
-                [tipModel yy_modelSetWithJSON:dic];
-                [weakSelf.dataListArray addObject:tipModel];
+            
+            if (tipyInteger == 4) {
+                for (NSDictionary *dic in [[response valueForKey:@"data"] valueForKey:@"content"]) {
+                    HealthTipsModel *tipModel = [[HealthTipsModel alloc] init];
+                    [tipModel yy_modelSetWithJSON:dic];
+                    [weakSelf.dataListArray addObject:tipModel];
+                    NSLog(@"%@",tipModel.createDate);
+                }
+            }else {
+                for (NSDictionary *dic in [response valueForKey:@"data"]) {
+                    HealthTipsModel *tipModel = [[HealthTipsModel alloc] init];
+                    [tipModel yy_modelSetWithJSON:dic];
+                    [weakSelf.dataListArray addObject:tipModel];
+                }
             }
+            [self.timeLinvView relodTableViewWitDataArray:weakSelf.dataListArray withType:self.typeUrlInteger];
             
-            [ self.timeLinvView relodTableViewWitDataArray:weakSelf.dataListArray withType:self.typeUrlInteger];
-            
-//            [weakSelf setHealthTips];
         }
     } failureBlock:^(NSError *error) {
+        
+        [hud hideAnimated:YES];
         NSLog(@"%@",error);
         [weakSelf showAlertWarmMessage:@"请求失败,网络错误!"];
     }];
@@ -378,6 +373,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
 # pragma mark - 网络请求
 - (void)requestNetworkWithIndex:(NSInteger)index
 {
+    
     NSString *urlStr = @"";
     
     if(index > 4){
@@ -409,228 +405,9 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
         self.wkwebview.hidden = YES;
     }
     
-    switch (index) {
-        case 0:
-            
-            urlStr = [NSString stringWithFormat:@"/member/myreport/view/%@.jhtml",memberId];
-            break;
-         case 1:
-            urlStr = [NSString stringWithFormat:@"/member/myreport/list/JLBS/%@.jhtml",memberId];
-            break;
-        case 2:
-            urlStr = [NSString stringWithFormat:@"/member/myreport/list/TZBS/%@.jhtml",memberId];
-            break;
-        case 3:
-            urlStr = [NSString stringWithFormat:@"result/IdentificationList.jhtml?cust_id=%@",memberId];
-            break;
-        case 4:
-            urlStr = [NSString stringWithFormat:@"member/myreport/getEcgList/%@.jhtml",memberId];
-            break;
-        default:
-            break;
-    }
-    __weak typeof(self) weakSelf = self;
-    [self.archiveArr removeAllObjects];
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.label.text = @"加载中...";
-    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
-        [hud hideAnimated:YES];
-        if([[response objectForKey:@"status"] integerValue] == 100){
-            
-//            weakSelf.tableView.frame = CGRectMake(0, self->_columnBar.bottom+10, ScreenWidth, ScreenHeight-self->_columnBar.bottom-10);
-//            weakSelf.tableView.hidden = NO;
-            self->tipsView.hidden = YES;
-            
-            if(index == 0){
-//                weakSelf.tableView.frame = CGRectMake(0, self->tipsView.bottom, ScreenWidth, ScreenHeight-self->tipsView.bottom);
-                self->tipsView.hidden = NO;
-                [weakSelf handleReportDataWith:[response objectForKey:@"data"]];
-            }else if (index == 1){
-                [weakSelf handleJingLuoDataWith:[response objectForKey:@"data"]];
-            }else if (index == 2){
-                [weakSelf handleTiZhiDataWith:[response objectForKey:@"data"]];
-            }else if (index == 3){
-                [weakSelf handleZangFuDataWith:[response objectForKey:@"data"]];
-            }else if (index == 4){
-                [weakSelf handleXinLvDataWith:[response objectForKey:@"data"]];
-            }
-            
-        }else{
-//            [weakSelf.tableView reloadData];
-            [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
-        }
-        
-    } failureBlock:^(NSError *error) {
-        [hud hideAnimated:YES];
-//        [weakSelf.tableView reloadData];
-        [weakSelf showAlertWarmMessage:@"请求失败,网络错误!"];
-    }];
+  
 }
 
-#pragma mark - 处理报告数据
--(void)handleReportDataWith:(NSDictionary *)dic
-{
-    
-    NSDictionary *XLBS = dic[@"XLBS"];
-//    if (![XLBS isKindOfClass:[NSNull class]]) {
-//        NSDictionary *subjectDic = XLBS[@"subject"];
-//
-//    }
-    
-    //oxygen
-    NSDictionary *oxygen = dic[@"oxygen"];
-    if (![oxygen isKindOfClass:[NSNull class]]) {
-        ArchiveModel *model = [[ArchiveModel alloc] init];
-        model.iconImage = @"知己档案_血氧";
-        model.result = @"血氧";
-        model.symptom = [oxygen objectForKey:@"density"];
-        model.time = [oxygen objectForKey:@"createDate"];
-        model.cellType = 0;
-        [self.archiveArr addObject:model];
-    }
-    
-    //bloodPressure
-    NSDictionary *bloodPressure = dic[@"bloodPressure"];
-    if (![bloodPressure isKindOfClass:[NSNull class]]) {
-        ArchiveModel *model = [[ArchiveModel alloc] init];
-        model.iconImage = @"知己档案_血压";
-        model.result = @"血压";
-        model.symptom = [NSString stringWithFormat:@"%@-%@",bloodPressure[@"lowPressure"],bloodPressure[@"highPressure"]];
-        model.time = [bloodPressure objectForKey:@"createDate"] ;
-        model.cellType = 0;
-        [self.archiveArr addObject:model];
-    }
-    
-    //TZBS
-    NSDictionary *TZBS = dic[@"TZBS"];
-    if (![TZBS isKindOfClass:[NSNull class]]) {
-        NSDictionary *subject = TZBS[@"subject"];
-        ArchiveModel *model = [[ArchiveModel alloc] init];
-        model.iconImage = @"知己档案_体质";
-        model.result = @"体质";
-        model.symptom = [subject objectForKey:@"name"];
-        model.time = [TZBS objectForKey:@"createDate"] ;
-        model.cellType = 0;
-        [self.archiveArr addObject:model];
-    }
-    
-    //bodyTemperature
-    NSDictionary *bodyTemperature = dic[@"bodyTemperature"];
-    if (![bodyTemperature isKindOfClass:[NSNull class]]) {
-        ArchiveModel *model = [[ArchiveModel alloc] init];
-        model.iconImage = @"知己档案_体温";
-        model.result = @"体温";
-        model.symptom = [bodyTemperature objectForKey:@"temperature"];
-        model.time = [bodyTemperature objectForKey:@"createDate"];
-        model.cellType = 0;
-        [self.archiveArr addObject:model];
-    }
-    
-    //ecg
-    NSDictionary *ecg = dic[@"ecg"];
-    if(![ecg isKindOfClass:[NSNull class]]){
-        ArchiveModel *model = [[ArchiveModel alloc] init];
-        model.iconImage = @"知己档案_心电";
-        model.result = @"心电";
-        model.symptom = [ecg objectForKey:@"heartRate"];
-        model.time = [ecg objectForKey:@"createDate"];
-        model.cellType = 0;
-        [self.archiveArr addObject:model];
-    }
-    
-    //JLBS
-    NSDictionary *JLBS = dic[@"JLBS"];
-    if(![JLBS isKindOfClass:[NSNull class]]){
-        NSDictionary *subjectDic = JLBS[@"subject"];
-        ArchiveModel *model = [[ArchiveModel alloc] init];
-        model.iconImage = @"知己档案_经络";
-        model.result = @"经络";
-        model.symptom = [subjectDic objectForKey:@"name"];
-        model.time = [JLBS objectForKey:@"createDate"];
-        model.cellType = 0;
-        [self.archiveArr addObject:model];
-    }
-    
-    //ZFBS
-    NSDictionary *ZFBS = dic[@"ZFBS"];
-    if(![ZFBS isKindOfClass:[NSNull class]]){
-        ArchiveModel *model = [[ArchiveModel alloc] init];
-        model.iconImage = @"知己档案_脏腑";
-        model.result = @"脏腑";
-        model.symptom = [ZFBS objectForKey:@"zz_name_str"];
-        model.time = [ZFBS objectForKey:@"createDate"];
-        model.cellType = 0;
-        [self.archiveArr addObject:model];
-    }
-    
-//    [self.tableView reloadData];
-    
-    if ([XLBS isKindOfClass:[NSNull class]] && [oxygen isKindOfClass:[NSNull class]]&& [bloodPressure isKindOfClass:[NSNull class]]&& [TZBS isKindOfClass:[NSNull class]]&& [bodyTemperature isKindOfClass:[NSNull class]]&& [ecg isKindOfClass:[NSNull class]]&& [JLBS isKindOfClass:[NSNull class]]&& [ZFBS isKindOfClass:[NSNull class]]) {
-        
-    }
-}
-
-- (void)handleJingLuoDataWith:(NSArray *)arr
-{
-    for(NSDictionary *dic in arr){
-        ArchiveModel *model = [[ArchiveModel alloc] init];
-        model.iconImage = [dic objectForKey:@"picture"];
-        model.symptom = [[dic objectForKey:@"subject"] objectForKey:@"name"];
-        model.time = [dic objectForKey:@"createDate"];
-        model.subject_sn = [[dic objectForKey:@"subject"] objectForKey:@"subject_sn"];
-        model.cellType = 1;
-        [self.archiveArr addObject:model];
-    }
-//    [self.tableView reloadData];
-}
-
-- (void)handleTiZhiDataWith:(NSArray *)arr
-{
-    for(NSDictionary *dic in arr){
-        ArchiveModel *model = [[ArchiveModel alloc] init];
-        model.iconImage = [dic objectForKey:@"picture"];
-        model.symptom = [[dic objectForKey:@"subject"] objectForKey:@"name"];
-        model.time = [dic objectForKey:@"createDate"];
-        model.subject_sn = [[dic objectForKey:@"subject"] objectForKey:@"subject_sn"];
-        model.cellType = 2;
-        [self.archiveArr addObject:model];
-    }
-//    [self.tableView reloadData];
-}
-
-- (void)handleZangFuDataWith:(NSArray *)arr
-{
-    for(NSDictionary *dic in arr){
-        ArchiveModel *model = [[ArchiveModel alloc] init];
-        model.result = [dic objectForKey:@"zz_name_str"];
-        model.symptom = [dic objectForKey:@"icd_name_str"];
-        model.time = [dic objectForKey:@"createDate"];
-        model.subject_sn = [dic objectForKey:@"physique_id"];
-        model.cellType = 3;
-        [self.archiveArr addObject:model];
-    }
-//    [self.tableView reloadData];
-}
-
-
-- (void)handleXinLvDataWith:(NSDictionary *)dic
-{
-    NSArray *contentArr = [dic objectForKey:@"content"];
-    if(contentArr.count>0){
-        for(NSDictionary *contentDic in contentArr){
-            NSDictionary *subjectDic = [contentDic objectForKey:@"subject"];
-            ArchiveModel *model = [[ArchiveModel alloc] init];
-            model.result = [subjectDic objectForKey:@"introduction"];
-            model.symptom = [[contentDic objectForKey:@"content"] isKindOfClass:[NSNull class]] ? @"暂无心电图医生提示" : [contentDic objectForKey:@"content"];
-            model.time = [subjectDic objectForKey:@"createDate"];
-            model.subject_sn = [contentDic objectForKey:@"path"];
-            model.cellType = 4;
-            [self.archiveArr addObject:model];
-        }
-    }
-    
-//    [self.tableView reloadData];
-}
 
 #pragma mark - tableview代理方法
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -646,67 +423,6 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
         return 0;
     }
     return 0;
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.archiveArr.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    ArchivesCell *cell = nil;
-    ArchiveModel *archive = [self.archiveArr objectAtIndex:indexPath.row];
-    cell.backgroundColor = [UIColor blueColor];
-    cell = [CellUtil getArchiveCell:archive in:tableView];
-    return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    ArchiveModel *model = [self.archiveArr objectAtIndex:indexPath.row];
-    if(currentIndex == 1){
-        NSString *aUrlle= [NSString stringWithFormat:@"%@member/service/reshow.jhtml?sn=%@&device=1",URL_PRE,model.subject_sn];
-        ResultSpeakController *vc = [[ResultSpeakController alloc] init];
-        vc.urlStr = aUrlle;
-        [self.navigationController pushViewController:vc animated:YES];
-    }else if(currentIndex == 2){
-        ResultController *resultVC = [[ResultController alloc] init];
-        resultVC.TZBSstr = model.subject_sn;
-        [self.navigationController pushViewController:resultVC animated:YES];
-    }else if (currentIndex == 3){
-        NSString *url = [[NSString alloc] initWithFormat:@"%@esult/reportHtml.jhtml?cust_id=%@&physique_id=%@",URL_PRE,memberId,model.subject_sn];
-        ResultSpeakController *vc = [[ResultSpeakController alloc] init];
-        vc.urlStr = url;
-        [self.navigationController pushViewController:vc animated:YES];
-        
-    }else if (currentIndex == 4){
-//        ElecDetailViewController *detail = [[ElecDetailViewController alloc] init];
-//        detail.dataPath = model.subject_sn;
-        EEGDetailController *detail = [[EEGDetailController alloc] init];
-        detail.dataPath = model.subject_sn;
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:detail];
-        [self presentViewController:nav animated:YES completion:nil];
-    }
-}
-
-# pragma mark - columnBar代理
-- (void)columnBar:(ColumnBar *)sender didSelectedTabAtIndex:(int)index
-{
-    currentIndex = index;
-    [self requestNetworkWithIndex:index];
-}
-
-#pragma mark - column bar data source
-
-- (NSString *)columnBar:(ColumnBar *)columnBar titleForTabAtIndex:(int)index
-{
-    NSString *titleStr = [self.titleArr objectAtIndex:index];
-    return titleStr;
-}
-
-- (int)numberOfTabsInColumnBar:(ColumnBar *)columnBar
-{
-    return 10;
 }
 
 #pragma mark - KVO
@@ -751,11 +467,15 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
 }
 
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.filterBtn.hidden = YES;
+    
+    if (self.timeLinvView.hud){
+        [self.timeLinvView.hud hideAnimated:YES];
+    }
 }
+
 
 
 @end

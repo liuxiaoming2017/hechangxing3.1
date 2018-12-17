@@ -10,6 +10,8 @@
 
 @interface Tools : NSObject
 
+
+
 +(UIColor *) colorWithHexString: (NSString *) hexString;
 
 + (UILabel *)creatLabelWithFrame:(CGRect)frame text:(NSString *)text textSize:(CGFloat)size;
@@ -49,5 +51,6 @@
 + (CGFloat)textHeightFromTextString:(NSString *)text width:(CGFloat)textWidth fontSize:(CGFloat)size;
 
 +(NSString *)stringFromArr:(NSMutableArray *)arr;
+
 
 @end

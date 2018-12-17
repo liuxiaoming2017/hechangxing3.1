@@ -17,7 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) UIImageView *leftImageV;
 @property (nonatomic,strong) UILabel *topLabel;
 @property (nonatomic,strong) UILabel *lowLabel;
-@property (nonatomic,strong) UILabel *timeLabel;
 @property (nonatomic,strong) UILabel *createDateLabel;
 @property (nonatomic, strong) UILabel *typeLabel;
 

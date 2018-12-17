@@ -30,6 +30,9 @@
 #import "HealthTipsModel.h"
 #import "Tools.h"
 #import "UIColor+Gradient.h"
+#import "AppDelegate.h"
+#import <SDWebImage/UIButton+WebCache.h>
+#import "UIImageView+WebCache.h"
 #endif /* ____pch */
 #endif
 

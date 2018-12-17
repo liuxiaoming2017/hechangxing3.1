@@ -82,7 +82,10 @@
     NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",@"weixinPayPlugin"];
     NSString *iPoneNumberMD5 = [GlobalCommon md5:iPoneNumber];
     NSDictionary *dic = @{@"pluginname":@"weixinPayPlugin",@"token":iPoneNumberMD5};
+    
+    NSLog(@"%@",dic);
     [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:@"weiq/weiq/getWeiqSecret.jhtml" parameters:dic successBlock:^(id response) {
+        
         
     } failureBlock:^(NSError *error) {
         

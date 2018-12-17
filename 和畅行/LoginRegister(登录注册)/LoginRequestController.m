@@ -123,7 +123,7 @@
             
             for (NSDictionary *dic in  arrMem) {
                 ChildMemberModel *model = [ChildMemberModel mj_objectWithKeyValues:dic];
-                if([model.name isEqualToString:userShare.username]){
+                if([model.mobile isEqualToString:[paramDic objectForKey:@"username"]]) {
                     MemberUserShance *memberShance = [MemberUserShance shareOnce];
                     memberShance = [MemberUserShance mj_objectWithKeyValues:dic];
                     

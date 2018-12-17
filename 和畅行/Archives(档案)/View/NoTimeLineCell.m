@@ -63,7 +63,7 @@
     self.typeLabel.font = [UIFont systemFontOfSize:15];
     [self addSubview:self.typeLabel];
     
-    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right, imageV.top, ScreenWidth - self.typeLabel.right - 135, imageV.height)];
+    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right, imageV.top, ScreenWidth - self.typeLabel.right - 90, imageV.height)];
     self.contentLabel.textAlignment=NSTextAlignmentCenter;
     self.contentLabel.font=[UIFont systemFontOfSize:15.0];
     self.contentLabel.textColor=RGB(221, 156, 92);
@@ -108,6 +108,10 @@
 
 //为cell 赋值
 - (void)assignmentNoCellWithModel:(HealthTipsModel *)model {
+    
+    if ([model.subjectCategorySn isEqualToString:@"TZBS"]){
+        self.typeLabel.text = @"体质辨识";
+    }
 
     self.contentLabel.text = [model.subject valueForKey:@"name"];
     NSString *str = [NSString stringWithFormat:@"%@",model.createDate];

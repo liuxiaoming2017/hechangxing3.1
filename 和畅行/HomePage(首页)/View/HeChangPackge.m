@@ -8,10 +8,10 @@
 
 #import "HeChangPackge.h"
 #import "HeChangPackgeController.h"
+#import "HCY_ActivityController.h"
 
 @interface HeChangPackge()
 
-@property (nonatomic,strong) UILabel *remindLabel;
 @property (nonatomic,strong) UILabel *stateLabel;
 @property (nonatomic,strong) CAShapeLayer *shapeLayer;
 
@@ -33,20 +33,13 @@
 - (void)createupUI
 {
     
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height-20)];
-    //添加渐变色
-    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-    gradientLayer.frame = imageV.bounds;
-    gradientLayer.colors = [NSArray arrayWithObjects:(id)UIColorFromHex(0x1E82D2).CGColor,(id)UIColorFromHex(0x2B95EB).CGColor,(id)UIColorFromHex(0x05A1EE).CGColor, nil];
-    gradientLayer.startPoint = CGPointMake(0.5, 0);
-    gradientLayer.endPoint = CGPointMake(0.5, 1);
-    gradientLayer.locations = @[@0,@0.5,@1.0];
-    [imageV.layer addSublayer:gradientLayer];
-    [self addSubview:imageV];
+    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height-20)];
+    self.imageV.userInteractionEnabled = YES;
+    [self addSubview:self.imageV];
     
     //下方阴影效果
     CALayer *subLayer=[CALayer layer];
-    CGRect fixframe = imageV.frame;
+    CGRect fixframe = self.imageV.frame;
     subLayer.frame= fixframe;
     subLayer.cornerRadius=11;
     subLayer.backgroundColor=[UIColorFromHex(0xffffff) colorWithAlphaComponent:1.0].CGColor;
@@ -55,18 +48,18 @@
     subLayer.shadowOffset = CGSizeMake(2,5);//shadowOffset阴影偏移,x向右偏移3，y向下偏移2，默认(0, -3),这个跟shadowRadius配合使用
     subLayer.shadowOpacity = 0.6;//阴影透明度，默认0
     subLayer.shadowRadius = 11;//阴影半径，默认3
-    [self.layer insertSublayer:subLayer below:imageV.layer];
+//    [self.layer insertSublayer:subLayer below:self.imageV.layer];
     
     //CGFloat originX = (ScreenWidth - 122*3-18)/2.0;
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.height/2.0-30, 120, 30)];
-    titleLabel.font = [UIFont systemFontOfSize:21];
-    titleLabel.textAlignment = NSTextAlignmentLeft;
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.text = @"和畅包";
-    [self addSubview:titleLabel];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.height/2.0-30, 120, 30)];
+    self.titleLabel.font = [UIFont systemFontOfSize:21];
+    self.titleLabel.textAlignment = NSTextAlignmentLeft;
+    self.titleLabel.textColor = [UIColor whiteColor];
+    self.titleLabel.text = @"和畅包";
+    [self addSubview:self.titleLabel];
     
-    self.remindLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.left, titleLabel.bottom, self.width-titleLabel.left*2, 60)];
+    self.remindLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLabel.left, self.titleLabel.bottom, self.width-120, 60)];
     self.remindLabel.font = [UIFont systemFontOfSize:16];
     self.remindLabel.numberOfLines = 0;
     self.remindLabel.textAlignment = NSTextAlignmentLeft;
@@ -77,22 +70,26 @@
     //CGSize strSize = [str boundingRectWithSize:CGSizeMake(self.remindLabel.width, 1200) options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont fontWithName:[[UIFont systemFontOfSize:1] fontName] size:15]} context:nil].size;
     //self.remindLabel.frame = CGRectMake(self.remindLabel.left, imgV.top+(imgV.height-strSize.height)/2.0, self.remindLabel.width, strSize.height);
     
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake((ScreenWidth-272)/2.0, imageV.bottom-20, 272, 40)];
-    bottomView.backgroundColor = [UIColor whiteColor];
-    bottomView.layer.cornerRadius = bottomView.height/2.0;
-    bottomView.clipsToBounds = YES;
-    [self addSubview:bottomView];
+//    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake((ScreenWidth-272)/2.0, self.imageV.bottom-20, 272, 40)];
+//    bottomView.backgroundColor = [UIColor whiteColor];
+//    bottomView.layer.cornerRadius = bottomView.height/2.0;
+//    bottomView.clipsToBounds = YES;
+//    [self addSubview:bottomView];
     
-   
-    UILabel *buttonLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, bottomView.width, 30)];
-    buttonLabel.font = [UIFont systemFontOfSize:16];
-    buttonLabel.textAlignment = NSTextAlignmentCenter;
-    buttonLabel.textColor = UIColorFromHex(0X1E82D2);
-    buttonLabel.text = @"请查看为您定制的和畅服务包";
-    [bottomView addSubview:buttonLabel];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
-    [bottomView addGestureRecognizer:tap];
+    self.toViewButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    [self.toViewButton addTarget:self action:@selector(pushAction) forControlEvents:(UIControlEventTouchUpInside)];
+    self.toViewButton.frame = CGRectMake(ScreenWidth/2.0 - 136, self.imageV.bottom - 20, 272, 40);
+    [self addSubview:self.toViewButton];
+
+    
+    UIButton *tapButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    tapButton.frame = CGRectMake(10, self.height/2.0-30, self.width-120, 90);
+    [tapButton addTarget:self action:@selector(tapAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self addSubview:tapButton];
+    
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
+//    [bottomView addGestureRecognizer:tap];
     
     /*
     UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
@@ -134,6 +131,27 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
     [self addGestureRecognizer:tap];
      */
+}
+
+
+-(void)changeBackImageWithStr:(NSString *)str {
+    
+    if (str==nil || [str isKindOfClass:[NSNull class]]||str.length == 0) {
+        //添加渐变色
+        CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+        gradientLayer.frame = self.imageV.bounds;
+        gradientLayer.colors = [NSArray arrayWithObjects:(id)UIColorFromHex(0x1E82D2).CGColor,(id)UIColorFromHex(0x2B95EB).CGColor,(id)UIColorFromHex(0x05A1EE).CGColor, nil];
+        gradientLayer.startPoint = CGPointMake(0.5, 0);
+        gradientLayer.endPoint = CGPointMake(0.5, 1);
+        gradientLayer.locations = @[@0,@0.5,@1.0];
+        [self.imageV.layer addSublayer:gradientLayer];
+    }else {
+        
+        NSString *imageUrl = [NSString stringWithFormat:@"%@%@",URL_PRE,str];
+        NSURL *url = [NSURL URLWithString:imageUrl];
+        [self.imageV sd_setImageWithURL:url];
+    }
+    
 }
 
 - (void)changePackgeTypeWithStatus:(NSInteger)status
@@ -252,6 +270,17 @@
     vc.progressType = progress2;
     vc.urlStr = urlStr;
     
+}
+
+-(void)pushAction {
+    
+    HCY_ActivityController *vc = [[HCY_ActivityController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.viewController.navigationController pushViewController:vc animated:YES];
+    vc.titleStr = _pushModel.title;
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,_pushModel.link];
+    vc.progressType = progress2;
+    vc.urlStr = urlStr;
 }
 
 @end

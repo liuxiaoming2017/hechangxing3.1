@@ -26,13 +26,14 @@
 -(void)layoutAcitivaTionView{
     
     UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10,kNavBarHeight + 20 ,ScreenWidth - 20, ScreenHeight -  kNavBarHeight - 200)];
+    imageV.userInteractionEnabled = YES;
     //添加渐变色
     [imageV.layer addSublayer:[UIColor setGradualChangingColor:imageV fromColor:@"4294E1" toColor:@"D1BDFF"]];
     imageV.layer.cornerRadius = 10;
     imageV.layer.masksToBounds = YES;
     [self.view addSubview:imageV];
     
-    UILabel *carTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0 , 10, imageV.width, 50)];
+    UILabel *carTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0 , 10, imageV.width, 45)];
     carTitleLabel.text = @"视频问诊半年卡";
     carTitleLabel.backgroundColor = [UIColor clearColor];
     carTitleLabel.textColor = [UIColor whiteColor];
@@ -41,10 +42,11 @@
     [imageV addSubview:carTitleLabel];
     
     
-    UITextView *contentTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, carTitleLabel.bottom,imageV.width - 20, imageV.height - 50)];
+    UITextView *contentTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, carTitleLabel.bottom ,imageV.width - 20, imageV.height - 65)];
     
     contentTextView.text = @"  视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊\n  半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年\n  卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡视频问诊半年卡";
     contentTextView.font = [UIFont systemFontOfSize:15];
+    [contentTextView setEditable:NO];
 
     contentTextView.backgroundColor = [UIColor clearColor];
     contentTextView.textColor = RGB(240, 240, 240);

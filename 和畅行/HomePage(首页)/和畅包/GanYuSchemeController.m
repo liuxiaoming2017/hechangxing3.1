@@ -11,6 +11,9 @@
 #import "JingLuoSchemeController.h"
 #import "InformationViewController.h"
 #import "TestViewController.h"
+#import "HCY_CallController.h"
+#import "HCY_HelpController.h"
+
 
 @interface GanYuSchemeController ()
 
@@ -58,9 +61,9 @@
     [allBtn addTarget:self action:@selector(allBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [scrollView addSubview:allBtn];
     
-    NSArray *imageArr = @[@"一戴",@"一站",@"一吃",@"一坐",@"一饮",@"一测",@"一阅"];
+    NSArray *imageArr = @[@"一戴",@"一站",@"一吃",@"一坐",@"一饮",@"一呼",@"一助",@"一测",@"一阅"];
     if([UserShareOnce shareOnce].isOnline){
-        imageArr = @[@"一选",@"一站",@"一吃",@"一坐",@"一饮",@"一测",@"一阅"];
+        imageArr = @[@"一戴",@"一站",@"一吃",@"一坐",@"一饮",@"一呼",@"一助",@"一测",@"一阅"];
     }
     /*
     for(NSInteger i = 0;i<imageArr.count;i++){
@@ -181,30 +184,38 @@
             break;
         case 205:
         {
-            //一测
-            TestViewController *vc = [[TestViewController alloc] init];
-            [self.navigationController pushViewController:vc animated:YES];
+            HCY_CallController *callVC = [[HCY_CallController alloc]init];
+            [self.navigationController pushViewController:callVC animated:YES];
+            
+          
             return;
         }
             
             break;
         case 206:
         {
+            
+            HCY_HelpController *helpVC = [[HCY_HelpController alloc]init];
+            [self.navigationController pushViewController:helpVC animated:YES];
+            return;
+           
+        }
+           
+        case 207:
+        {
+            //一测
+            TestViewController *vc = [[TestViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+            return;
+        }
+            break;
+
+        case 208:
+        {
             InformationViewController *vc = [[InformationViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
             return;
         }
-           
-//        case 207:
-//            [self showAlertWarmMessage:@"该功能还在努力开发中!!"];
-//            break;
-//            return;
-//        case 208:
-//        {
-//            InformationViewController *vc = [[InformationViewController alloc] init];
-//            [self.navigationController pushViewController:vc animated:YES];
-//            return;
-//        }
             
             break;
         default:

@@ -50,13 +50,18 @@ static NSMutableArray *tasks;
         /*! 这里是去掉了键值对里空对象的键值 */
         //response.removesKeysWithNullValues = YES;
         manager.responseSerializer = [AFJSONResponseSerializer serializer]; // 设置接收数据为 JSON 数据
-        manager.responseSerializer =[AFJSONResponseSerializer serializerWithReadingOptions: NSJSONReadingAllowFragments];
+    
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];// 请求返回的格式为json
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+  
+    manager.responseSerializer =[AFJSONResponseSerializer serializerWithReadingOptions: NSJSONReadingAllowFragments];
   
         /* 设置请求服务器数类型式为 json */
         /*! 根据服务器的设定不同还可以设置 [AFJSONRequestSerializer serializer](常用) */
     
         /* 设置请求和接收的数据编码格式 */
-        manager.requestSerializer = [AFHTTPRequestSerializer serializer]; // 设置请求数据为 JSON 数据
+//        manager.requestSerializer = [AFHTTPRequestSerializer serializer]; // 设置请求数据为 JSON 数据
     
     
     

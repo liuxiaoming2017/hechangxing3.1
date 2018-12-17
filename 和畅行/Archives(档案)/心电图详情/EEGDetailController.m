@@ -58,6 +58,7 @@
     self.rightBtn.userInteractionEnabled = NO;
     self.leftBtn.userInteractionEnabled = NO;
     self.preBtn.hidden = NO;
+    self.leftBtn.hidden = YES;
     
     NSURL *url = [NSURL URLWithString:self.dataPath];
     NSData *data = [NSData dataWithContentsOfURL:url];
@@ -113,6 +114,18 @@
 {
     static NSInteger dataSourceCounterIndex = -1;
     dataSourceCounterIndex ++;
+    
+    if(self.dataSource.count == 0) {
+        
+        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"数据错误" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+        [alertVC addAction:alertAct1];
+        [self presentViewController:alertVC animated:YES completion:NULL];
+        
+    }
+    
     dataSourceCounterIndex %= [self.dataSource count];
     
     

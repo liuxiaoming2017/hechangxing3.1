@@ -47,6 +47,19 @@ DEPENDENCIES:
   - SDWebImage (~> 4.2.1)
   - YYModel
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - DACircularProgress
+    - FLAnimatedImage
+    - FMDB
+    - MBProgressHUD
+    - MJExtension
+    - MJRefresh
+    - PYPhotoBrowser
+    - SDWebImage
+    - YYModel
+
 EXTERNAL SOURCES:
   HHDoctorSDK:
     :git: http://code.hh-medic.com/hh_public/HHDoctorSDK.ios.git
@@ -69,6 +82,6 @@ SPEC CHECKSUMS:
   SDWebImage: 791bb72962b3492327ddcac4b1880bd1b5458431
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 50190a772c5061d35015d368f052925b1aa668b1
+PODFILE CHECKSUM: 1e3012e441b4b5be2d660c0df36d9214a447ef1f
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

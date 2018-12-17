@@ -821,6 +821,13 @@
 		03FBDF9A2192B066006116FC /* TimeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF992192B066006116FC /* TimeLineView.m */; };
 		03FBDF9D2192B0B3006116FC /* TimeLineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF9C2192B0B3006116FC /* TimeLineCell.m */; };
 		3B88757C3A0CEA01D7FCC37D /* libPods-和畅行.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17770868BEF9BD6F1270F864 /* libPods-和畅行.a */; };
+		83E23EE921C0A53100B43298 /* HCY_CallController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EE821C0A53000B43298 /* HCY_CallController.m */; };
+		83E23EED21C0AD2D00B43298 /* HCY_CallCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EEB21C0AD2D00B43298 /* HCY_CallCell.m */; };
+		83E23EEE21C0AD2D00B43298 /* HCY_CallCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E23EEC21C0AD2D00B43298 /* HCY_CallCell.xib */; };
+		83E23EF121C0DC2700B43298 /* HCY_HelpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EF021C0DC2700B43298 /* HCY_HelpController.m */; };
+		83E23EF421C202B100B43298 /* HCY_HomeImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EF321C202B100B43298 /* HCY_HomeImageModel.m */; };
+		83E23EF721C24F7F00B43298 /* HCY_ActivityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EF621C24F7F00B43298 /* HCY_ActivityController.m */; };
+		83E23EFA21C34C1800B43298 /* HCY_ReportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EF921C34C1800B43298 /* HCY_ReportCell.m */; };
 		C973089A21B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C973089921B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m */; };
 		C97308E221BA0E9800060447 /* UIColor+Gradient.m in Sources */ = {isa = PBXBuildFile; fileRef = C97308E121BA0E9800060447 /* UIColor+Gradient.m */; };
 		C97308F621BA50FB00060447 /* SGGenerateQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C97308E521BA50FB00060447 /* SGGenerateQRCodeVC.m */; };
@@ -2018,6 +2025,19 @@
 		03FBDF9C2192B0B3006116FC /* TimeLineCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimeLineCell.m; sourceTree = "<group>"; };
 		17770868BEF9BD6F1270F864 /* libPods-和畅行.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-和畅行.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		432A80A6E0CB6A191C1F35C4 /* Pods-和畅行.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-和畅行.debug.xcconfig"; path = "Pods/Target Support Files/Pods-和畅行/Pods-和畅行.debug.xcconfig"; sourceTree = "<group>"; };
+		83E23EE721C0A53000B43298 /* HCY_CallController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_CallController.h; sourceTree = "<group>"; };
+		83E23EE821C0A53000B43298 /* HCY_CallController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_CallController.m; sourceTree = "<group>"; };
+		83E23EEA21C0AD2D00B43298 /* HCY_CallCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_CallCell.h; sourceTree = "<group>"; };
+		83E23EEB21C0AD2D00B43298 /* HCY_CallCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_CallCell.m; sourceTree = "<group>"; };
+		83E23EEC21C0AD2D00B43298 /* HCY_CallCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HCY_CallCell.xib; sourceTree = "<group>"; };
+		83E23EEF21C0DC2700B43298 /* HCY_HelpController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_HelpController.h; sourceTree = "<group>"; };
+		83E23EF021C0DC2700B43298 /* HCY_HelpController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_HelpController.m; sourceTree = "<group>"; };
+		83E23EF221C202B100B43298 /* HCY_HomeImageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_HomeImageModel.h; sourceTree = "<group>"; };
+		83E23EF321C202B100B43298 /* HCY_HomeImageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_HomeImageModel.m; sourceTree = "<group>"; };
+		83E23EF521C24F7F00B43298 /* HCY_ActivityController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_ActivityController.h; sourceTree = "<group>"; };
+		83E23EF621C24F7F00B43298 /* HCY_ActivityController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_ActivityController.m; sourceTree = "<group>"; };
+		83E23EF821C34C1700B43298 /* HCY_ReportCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_ReportCell.h; sourceTree = "<group>"; };
+		83E23EF921C34C1800B43298 /* HCY_ReportCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_ReportCell.m; sourceTree = "<group>"; };
 		C973089821B91C4B00060447 /* HCY_DAVisceraNoTimeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_DAVisceraNoTimeCell.h; sourceTree = "<group>"; };
 		C973089921B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_DAVisceraNoTimeCell.m; sourceTree = "<group>"; };
 		C97308E021BA0E9800060447 /* UIColor+Gradient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Gradient.h"; sourceTree = "<group>"; };
@@ -2284,6 +2304,8 @@
 				C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */,
 				C973089821B91C4B00060447 /* HCY_DAVisceraNoTimeCell.h */,
 				C973089921B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m */,
+				83E23EF821C34C1700B43298 /* HCY_ReportCell.h */,
+				83E23EF921C34C1800B43298 /* HCY_ReportCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2403,7 +2425,6 @@
 				032A7A2420EA1E8B003D4952 /* GlobalDefine.h */,
 				038CE86E20EDE75D005E9219 /* Global.h */,
 				0334105620EDBDB800BD68C2 /* NetworkManager.h */,
-				C935835221B567CE0068E328 /* New Group */,
 				0334105720EDBDB800BD68C2 /* NetworkManager.m */,
 				036A66882113F6A30096A006 /* ZYGASINetworking.h */,
 				036A66872113F6A20096A006 /* ZYGASINetworking.m */,
@@ -2456,6 +2477,9 @@
 				03FBDF812192825B006116FC /* RecommendCollectCell.m */,
 				03FBDF822192825C006116FC /* RecommendReadView.h */,
 				03FBDF802192825B006116FC /* RecommendReadView.m */,
+				83E23EEA21C0AD2D00B43298 /* HCY_CallCell.h */,
+				83E23EEB21C0AD2D00B43298 /* HCY_CallCell.m */,
+				83E23EEC21C0AD2D00B43298 /* HCY_CallCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3215,6 +3239,12 @@
 				0370A86021115BF000447DFB /* GanYuSchemeController.m */,
 				03430B4321119AF7008EE6C8 /* JingLuoSchemeController.h */,
 				03430B4421119AF7008EE6C8 /* JingLuoSchemeController.m */,
+				83E23EE721C0A53000B43298 /* HCY_CallController.h */,
+				83E23EE821C0A53000B43298 /* HCY_CallController.m */,
+				83E23EEF21C0DC2700B43298 /* HCY_HelpController.h */,
+				83E23EF021C0DC2700B43298 /* HCY_HelpController.m */,
+				83E23EF521C24F7F00B43298 /* HCY_ActivityController.h */,
+				83E23EF621C24F7F00B43298 /* HCY_ActivityController.m */,
 			);
 			path = "和畅包";
 			sourceTree = "<group>";
@@ -3871,6 +3901,8 @@
 			children = (
 				03C1F50520F491B700A341A8 /* RemindModel.h */,
 				03C1F50620F491B700A341A8 /* RemindModel.m */,
+				83E23EF221C202B100B43298 /* HCY_HomeImageModel.h */,
+				83E23EF321C202B100B43298 /* HCY_HomeImageModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4212,21 +4244,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		C935835221B567CE0068E328 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-				C935835321B567D10068E328 /* New Group */,
-			);
-			path = "New Group";
-			sourceTree = "<group>";
-		};
-		C935835321B567D10068E328 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
-			sourceTree = "<group>";
-		};
 		C97308E321BA50FB00060447 /* SGQRCode */ = {
 			isa = PBXGroup;
 			children = (
@@ -4428,6 +4445,7 @@
 				036E856B2186EB2A001B9BB4 /* MoxaSetting.xib in Resources */,
 				030F51AD2101CEBE003C918F /* no_card.png in Resources */,
 				036A66AE2113FEF80096A006 /* wodekabaoxia.png in Resources */,
+				83E23EEE21C0AD2D00B43298 /* HCY_CallCell.xib in Resources */,
 				030F51CF2101CEBE003C918F /* pinggushibai.png in Resources */,
 				036E85232186EB1A001B9BB4 /* triangle.png in Resources */,
 				036E85062186EB1A001B9BB4 /* btn_dec_click.png in Resources */,
@@ -4959,6 +4977,7 @@
 				C9E2E23921BE306800F45021 /* HCY_CarDetailController.m in Sources */,
 				032A7A1A20EA17A5003D4952 /* HSTabBar.m in Sources */,
 				030F51332101B0E1003C918F /* WKWebviewController.m in Sources */,
+				83E23EED21C0AD2D00B43298 /* HCY_CallCell.m in Sources */,
 				0379824120FC3832002015A3 /* Tools.m in Sources */,
 				036E85942186EB4C001B9BB4 /* CMPopTipView.m in Sources */,
 				03799C1920F899AD004024D1 /* AnwerModel.m in Sources */,
@@ -4972,6 +4991,7 @@
 				034A4E8A211A9AD900936A46 /* TZProgressView.m in Sources */,
 				03F6931C20FF30B700308E38 /* JSONKit.m in Sources */,
 				03E36FE920EDB882000974E1 /* UtilityFunc.m in Sources */,
+				83E23EFA21C34C1800B43298 /* HCY_ReportCell.m in Sources */,
 				039B2AFB212564C100D558F5 /* SugerViewController.m in Sources */,
 				C97308FC21BA50FB00060447 /* SGQRCodeTool.m in Sources */,
 				030F51442101C2B5003C918F /* MLAudioRecorder.m in Sources */,
@@ -5012,6 +5032,7 @@
 				03F692E920FF2DF000308E38 /* ASIDownloadCache.m in Sources */,
 				034390A1210ACCA500B57142 /* SongListModel.m in Sources */,
 				03CEFC0D21A64BA80097CB17 /* i9_MoxaMainViewController.m in Sources */,
+				83E23EE921C0A53100B43298 /* HCY_CallController.m in Sources */,
 				03F6931020FF2FD400308E38 /* SBJsonStreamParserState.m in Sources */,
 				036A66A52113FEAB0096A006 /* BlockTableViewCell.m in Sources */,
 				036E85AE2186EB6E001B9BB4 /* MySwitchBtn.m in Sources */,
@@ -5057,6 +5078,7 @@
 				032A7A1320E9F9AE003D4952 /* MallViewController.m in Sources */,
 				03A24CB2211437A1005B5BA1 /* LeMedicineViewController.m in Sources */,
 				039B2AE121255FD500D558F5 /* BreathCheckViewController.m in Sources */,
+				83E23EF721C24F7F00B43298 /* HCY_ActivityController.m in Sources */,
 				038516A92186AB39001DD2B7 /* RSADataSigner.m in Sources */,
 				0325A5FA2109C29900275671 /* MenuTypeView.m in Sources */,
 				036A66CE2114023F0096A006 /* FamilyViewController.m in Sources */,
@@ -5067,6 +5089,7 @@
 				036E84412186EAD3001B9BB4 /* UIImage+Util.m in Sources */,
 				034A4E83211A9AD900936A46 /* TZPhotoPickerController.m in Sources */,
 				036E84132186EAB1001B9BB4 /* i9_UISetTTViewForRollerController.m in Sources */,
+				83E23EF421C202B100B43298 /* HCY_HomeImageModel.m in Sources */,
 				038516A62186AB39001DD2B7 /* DataVerifier.m in Sources */,
 				036FC0D421181AF400C1A793 /* MyAdvisoryTableViewCell.m in Sources */,
 				036A66862113F4830096A006 /* BoundBlockViewController.m in Sources */,
@@ -5159,6 +5182,7 @@
 				03A24CA921142C67005B5BA1 /* HealthLectureOrderViewController.m in Sources */,
 				0385170A2186AB9F001DD2B7 /* ApiXml.mm in Sources */,
 				03731DC52112D98200994C53 /* PersonalInformationViewController.m in Sources */,
+				83E23EF121C0DC2700B43298 /* HCY_HelpController.m in Sources */,
 				03A24CA521142C43005B5BA1 /* HealthOrderedInfoModel.m in Sources */,
 				036A66D02114023F0096A006 /* SonAccount.m in Sources */,
 				034A4E80211A9AD900936A46 /* TZLocationManager.m in Sources */,

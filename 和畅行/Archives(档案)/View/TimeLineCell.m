@@ -64,7 +64,7 @@
     [self addSubview:self.typeLabel];
     
     
-    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right, imageV.top, ScreenWidth - self.typeLabel.right - 135, imageV.height)];
+    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right, imageV.top, ScreenWidth - self.typeLabel.right - 90, imageV.height)];
     self.contentLabel.textAlignment=NSTextAlignmentCenter;
     self.contentLabel.font=[UIFont systemFontOfSize:15];
     self.contentLabel.textColor=RGB(221, 156, 92);
@@ -102,6 +102,10 @@
 //    }else {
 //        self.typeLabel.text = @"体质辨识";
 //    }
+    
+    if ([model.subjectCategorySn isEqualToString:@"TZBS"]){
+        self.typeLabel.text = @"体质辨识";
+    }
     
     NSString *timestr = model.createTime;
     timestr = [timestr stringByReplacingOccurrencesOfString:@"-" withString:@"月"];

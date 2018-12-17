@@ -42,7 +42,7 @@
     
     self.selectTag = -1;
     
-    self.titleArr = [NSArray arrayWithObjects:@"最新",@"经络",@"体质",@"脏腑",@"心率",@"血压",@"血氧",@"血糖",@"体温",@"呼吸", nil];
+    self.titleArr = [NSArray arrayWithObjects:@"最新",@"经络",@"体质",@"脏腑",@"心率",@"血压",@"血氧",@"血糖",@"体温",@"呼吸",@"季度报告",@"病例", nil];
     for(NSInteger i=0;i<self.titleArr.count;i++){
         UIButton *selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         selectBtn.frame = CGRectMake(titleLabel.left+(72+26)*(i%2), titleLabel.bottom+20+(32+26)*(i/2), 72, 32);
@@ -87,7 +87,7 @@
        [button.layer setBorderColor:UIColorFromHex(0XEEEEEE).CGColor];
     }
     
-    for(NSInteger i=0;i<10;i++){
+    for(NSInteger i=0;i<12;i++){
         UIButton *btn = (UIButton *)[self.contentView viewWithTag:100+i];
         if(button.tag != 100+i){
             [btn.layer setBorderColor:UIColorFromHex(0XEEEEEE).CGColor];

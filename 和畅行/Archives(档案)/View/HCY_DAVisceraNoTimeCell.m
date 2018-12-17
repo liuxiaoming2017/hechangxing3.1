@@ -25,11 +25,11 @@
 - (void)setupView
 {
     
-    UIImageView *lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, self.timeLabel.bottom+5, 1, 25)];
+    UIImageView *lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, 0, 1, 30)];
     lineImageV.backgroundColor = UIColorFromHex(0xe2e2e2);
     [self addSubview:lineImageV];
     
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(self.timeLabel.right - 20, lineImageV.bottom-15, ScreenWidth-self.timeLabel.right + 10, 79)];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(60, lineImageV.bottom-15, ScreenWidth-70, 79)];
     imageV.layer.cornerRadius = 8.0;
     imageV.layer.masksToBounds = YES;
     imageV.backgroundColor = [UIColor whiteColor];
@@ -50,7 +50,7 @@
     
     
     
-    self.typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageV.left+15, imageV.top, 80, imageV.height)];
+    self.typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageV.left+15, imageV.top, 120, imageV.height)];
     self.typeLabel.attributedText = attributedString1;
     self.typeLabel.numberOfLines = 2;
     self.typeLabel.textColor = RGB(55, 55, 55);
@@ -73,16 +73,9 @@
     
     
     
-    UIImageView *lineImageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(lineImageV.left, 105-15, 1, 30)];
+    UIImageView *lineImageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(lineImageV.left, self.createDateLabel.bottom + 10, 1, 35)];
     lineImageV2.backgroundColor = UIColorFromHex(0xe2e2e2);
     [self addSubview:lineImageV2];
-    
-}
-
-- (void)configCellWithModel1
-{
-    self.timeLabel.frame = CGRectMake(10, 0, 80, 20);
-    
     
 }
 
@@ -93,22 +86,43 @@
 
 
 //为cell 赋值
-- (void)assignmentVisceraWithModel:(HealthTipsModel *)model{
+- (void)assignmentNoVisceraWithModel:(HealthTipsModel *)model{
     
-    NSString *timestr = model.createTime;
-    timestr = [timestr stringByReplacingOccurrencesOfString:@"-" withString:@"月"];
-    timestr = [timestr stringByAppendingString:@"日"];
-    NSRange range = NSMakeRange(timestr.length - 6, 1);
-    NSString *subString3 = [timestr substringWithRange:range];
-    if ([subString3 isEqualToString: @"0"]) {
-        self.timeLabel.text = [timestr substringFromIndex:timestr.length - 5];
+    
+    
+    if ([model.subject valueForKey:@"subject_sn"] != nil&&![[model.subject valueForKey:@"subject_sn"] isKindOfClass:[NSNull class]]) {
         
-    }else {
-        self.timeLabel.text = [timestr substringFromIndex:timestr.length - 6];
+        NSMutableAttributedString * attributedString1 = [[NSMutableAttributedString alloc] initWithString:@"心率监测结果:\n心电图医生提醒:"];
+        NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+        [paragraphStyle1 setLineSpacing:8];
+        [attributedString1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [attributedString1 length])];
+        
+        self.typeLabel.attributedText = attributedString1;
         
     }
-    self.topLabel.text = model.zz_name_str;
-    self.lowLabel.text = model.icd_name_str;
+    
+    if (![model.physique_id isKindOfClass:[NSNull class]]&&model.physique_id!=nil&&model.physique_id.length!=0) {
+        
+        NSMutableAttributedString * attributedString1 = [[NSMutableAttributedString alloc] initWithString:@"症状选择:\nICD-10:"];
+        NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+        [paragraphStyle1 setLineSpacing:8];
+        [attributedString1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [attributedString1 length])];
+        
+        self.typeLabel.attributedText = attributedString1;
+    }
+    
+    
+    if( model.zz_name_str == nil || [model.zz_name_str isKindOfClass:[NSNull class]]||model.zz_name_str.length == 0) {
+        self.topLabel.text = [model.subject valueForKey:@"name"];
+        if(model.content != nil&&![model.content isKindOfClass:[NSNull class]]&&model.content.length != 0){
+            self.lowLabel.text = model.content;
+        }else {
+            self.lowLabel.text =  @"暂无心电图医生提示";
+        }
+    }else {
+        self.topLabel.text = model.zz_name_str;
+        self.lowLabel.text = model.icd_name_str;
+    }
     NSString *littletimestr = [NSString stringWithFormat:@"%@",model.createDate];
     self.createDateLabel.text = [self getDateStringWithTimeStr:littletimestr];
     

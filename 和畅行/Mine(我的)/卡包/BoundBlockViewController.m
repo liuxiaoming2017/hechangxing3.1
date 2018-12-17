@@ -60,7 +60,9 @@
     UIButton *bangButton = [UIButton buttonWithType:UIButtonTypeCustom];
     bangButton.frame = CGRectMake(ScreenWidth/2 - 75, _textField.bottom+50, 150, 50);
     [bangButton setTitle:@"添加至卡包" forState:(UIControlStateNormal)];
-    [bangButton setBackgroundImage:[UIImage imageNamed:@"HCY_ButtonBack"] forState:UIControlStateNormal];
+    [bangButton setBackgroundColor:RGB_ButtonBlue];
+    bangButton.layer.cornerRadius = 25;
+    bangButton.layer.masksToBounds = YES;
     [bangButton addTarget:self action:@selector(bangButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:bangButton];
     
@@ -69,7 +71,7 @@
     [flickingBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [flickingBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [flickingBtn setImage:[UIImage imageNamed:@"二维码"] forState:(UIControlStateNormal)];
-    [self.view addSubview:flickingBtn];
+//    [self.view addSubview:flickingBtn];
    
     
      [flickingBtn setTitleEdgeInsets:UIEdgeInsetsMake(flickingBtn.imageView.frame.size.height +30 ,-flickingBtn.imageView.frame.size.width -18, 0.0,0.0)];

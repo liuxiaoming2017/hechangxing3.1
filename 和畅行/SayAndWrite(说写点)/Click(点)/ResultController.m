@@ -25,6 +25,7 @@
     NSString *str = [NSString stringWithFormat:@"member/service/reshow.jhtml?sn=%@&device=1",self.TZBSstr];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,str];
     
+    
     [self customeViewWithStr:urlStr];
 }
 

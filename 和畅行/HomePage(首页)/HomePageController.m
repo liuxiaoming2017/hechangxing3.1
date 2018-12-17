@@ -13,6 +13,7 @@
 #import "HeChangRemind.h"
 #import "RemindModel.h"
 #import "RecommendReadView.h"
+#import "HCY_HomeImageModel.h"
 
 @interface HomePageController ()<UIScrollViewDelegate>
 
@@ -21,7 +22,10 @@
 @property (nonatomic,strong) HeChangRemind *remindView;
 @property (nonatomic,strong) ReadOrWriteView *readWriteView;
 @property (nonatomic, strong) RecommendReadView *recommendView;
-
+@property (nonatomic, strong) NSMutableArray    *homeImageArray;
+@property (nonatomic, strong) HCY_HomeImageModel *backImageModel;
+@property (nonatomic, strong) HCY_HomeImageModel *pushModel;
+@property (nonatomic, strong) UIImageView *imageV;
 
 
 @end
@@ -37,19 +41,17 @@
 
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+
 }
 
 - (void)viewDidLoad {
-    
-    self.view.backgroundColor = UIColorFromHex(0xffffff);
-    
-    [self createTopView];
     [super viewDidLoad];
-   
+    self.view.backgroundColor = UIColorFromHex(0xffffff);
     self.topView.backgroundColor = [UIColor clearColor];
-    
+
+    [self createTopView];
+   
     [self requestPackgeNetWork];
-  
 }
 
 
@@ -58,25 +60,102 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)requestUI {
+    
+    NSString *urlStr = @"mobile/index/indexpic.jhtml";
+   
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
+        
+        if([[response objectForKey:@"status"] integerValue] == 100){
+            
+            for (NSDictionary *dic in [response valueForKey:@"data"]) {
+                HCY_HomeImageModel *model = [[HCY_HomeImageModel alloc]init];
+                [model yy_modelSetWithJSON:dic];
+                
+                if([model.type isEqualToString:@"1"]){
+                    self.backImageModel = model;
+                }
+                if ([model.type isEqualToString:@"2"]){
+                    self.pushModel = model;
+                }
+                [self.homeImageArray addObject:model];
+            }
+            [self addGradientLayer];
+            [self.readWriteView setButtonImageWithArray:self.homeImageArray];
+        }else{
+            [self addGradientLayer];
+            [self.readWriteView initWithUI];
+        }
+    } failureBlock:^(NSError *error) {
+        [self addGradientLayer];
+        [self.readWriteView initWithUI];
+    }];
+    
+    
+    
+}
+
 - (void)addGradientLayer
 {
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 298/746.0*ScreenHeight-20)];
+    [self.packgeView changeBackImageWithStr:self.backImageModel.picurl];
+    
+    if ([self.backImageModel.link isEqualToString:@"0"]) {
+        self.packgeView.titleLabel.textColor = [UIColor blackColor];
+        self.packgeView.remindLabel.textColor = [UIColor blackColor];
+        [self.rightBtn setImage:[UIImage imageNamed:@"message"] forState:UIControlStateNormal];
+
+    }else {
+        self.packgeView.titleLabel.textColor = [UIColor whiteColor];
+        self.packgeView.remindLabel.textColor = [UIColor whiteColor];
+        [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
+
+    }
+    if (_backImageModel.picurl==nil || [_backImageModel.picurl isKindOfClass:[NSNull class]]||_backImageModel.picurl.length == 0) {
+        CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+        gradientLayer.frame = self.imageV.bounds;
+        gradientLayer.colors = [NSArray arrayWithObjects:(id)UIColorFromHex(0x1E82D2).CGColor,(id)UIColorFromHex(0x2B95EB).CGColor,(id)UIColorFromHex(0x05A1EE).CGColor, nil];
+        gradientLayer.startPoint = CGPointMake(0.5, 0);
+        gradientLayer.endPoint = CGPointMake(0.5, 1);
+        gradientLayer.locations = @[@0,@0.5,@1.0];
+        [self.imageV.layer addSublayer:gradientLayer];
+    }else {
+        
+        NSString *imageUrl = [NSString stringWithFormat:@"%@%@",URL_PRE,_backImageModel.picurl];
+        NSURL *url = [NSURL URLWithString:imageUrl];
+        [self.imageV sd_setImageWithURL:url];
+        
+        [self.packgeView.imageV sd_setImageWithURL:url];
+    }
+    
+    [self.view addSubview:self.topView];
+    
+    
+    self.packgeView.pushModel = self.pushModel;
+    
+    if (self.pushModel.picurl!=nil && ![self.pushModel.picurl isKindOfClass:[NSNull class]]&&self.pushModel.picurl.length != 0) {
+        NSString *imageUrl = [NSString stringWithFormat:@"%@%@",URL_PRE,self.pushModel.picurl];
+        NSURL *url = [NSURL URLWithString:imageUrl];
+        [self.packgeView.toViewButton sd_setBackgroundImageWithURL:url forState:UIControlStateNormal];
+    }
+    
+    
+    
+    
+    
     //添加渐变色
-    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-    gradientLayer.frame = imageV.bounds;
-    gradientLayer.colors = [NSArray arrayWithObjects:(id)UIColorFromHex(0x1E82D2).CGColor,(id)UIColorFromHex(0x2B95EB).CGColor,(id)UIColorFromHex(0x05A1EE).CGColor, nil];
-    gradientLayer.startPoint = CGPointMake(0.5, 0);
-    gradientLayer.endPoint = CGPointMake(0.5, 1);
-    gradientLayer.locations = @[@0,@0.5,@1.0];
-    [imageV.layer addSublayer:gradientLayer];
-    [self.view addSubview:imageV];
 }
 
 - (void)createTopView
 {
     NSLog(@"w:%f,h:%f",ScreenWidth,ScreenHeight);
     
-    [self addGradientLayer];
+    self.homeImageArray = [NSMutableArray array];
+
+    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 298/746.0*ScreenHeight-20)];
+
+    self.imageV.userInteractionEnabled = YES;
+    [self.view addSubview:self.imageV];
+    
     
     self.packgeView = [[HeChangPackge alloc] initWithFrame:CGRectMake(0, -kNavBarHeight, ScreenWidth, 298/746.0*ScreenHeight)];
   
@@ -97,6 +176,9 @@
     
      self.readWriteView = [[ReadOrWriteView alloc] initWithFrame:CGRectMake(0, self.packgeView.bottom, ScreenWidth, imageHeight+10)];
     [self.bgScrollView addSubview:self.readWriteView];
+    
+    [self requestUI];
+
    
     
 }
