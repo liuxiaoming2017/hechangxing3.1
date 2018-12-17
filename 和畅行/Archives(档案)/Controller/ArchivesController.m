@@ -116,7 +116,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
         memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
     }
     
-    [self requestNetworkWithIndex:1];
+    [self requestNetworkWithIndex:3];
     
     /*
     self.titleArr = [NSArray arrayWithObjects:@"最新",@"经络",@"体质",@"脏腑",@"心率",@"血压",@"血氧",@"血糖",@"体温",@"呼吸", nil];
@@ -309,7 +309,7 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
             urlStr = [NSString stringWithFormat:@"/member/myreport/list/JLBS/%@.jhtml",memberId];
             break;
         case 2:
-            urlStr = [NSString stringWithFormat:@"/member/myreport/list/TZBS/%@.jhtml",memberId];
+            urlStr = [NSString stringWithFormat:@"/member/myreport/list/TZBS/%@.jhtml?pageNumber=9",memberId];
             break;
         case 3:
             urlStr = [NSString stringWithFormat:@"result/IdentificationList.jhtml?cust_id=%@",memberId];
@@ -329,12 +329,12 @@ ColumnBarDataSource,UITableViewDelegate,UITableViewDataSource,WKUIDelegate,WKNav
         NSLog(@"response:%@",response);
         if([[response objectForKey:@"status"] integerValue] == 100){
             
-            weakSelf.tableView.frame = CGRectMake(0, self->_columnBar.bottom+10, ScreenWidth, ScreenHeight-self->_columnBar.bottom-10);
+            weakSelf.tableView.frame = CGRectMake(0, self->_columnBar.bottom+10, ScreenWidth, ScreenHeight-self->_columnBar.bottom-10-kTabBarHeight);
             weakSelf.tableView.hidden = NO;
             self->tipsView.hidden = YES;
             
             if(index == 0){
-                weakSelf.tableView.frame = CGRectMake(0, self->tipsView.bottom, ScreenWidth, ScreenHeight-self->tipsView.bottom);
+                weakSelf.tableView.frame = CGRectMake(0, self->tipsView.bottom, ScreenWidth, ScreenHeight-self->tipsView.bottom-kTabBarHeight);
                 self->tipsView.hidden = NO;
                 [weakSelf handleReportDataWith:[response objectForKey:@"data"]];
             }else if (index == 1){

@@ -59,7 +59,7 @@
 
 - (void)test2
 {
-    //获取病例详情
+    //获取病例列表
     NSString *resultStr = [[HHMSDK default] getMedicListWithUserToken:testToken];
     NSLog(@"result:%@",resultStr);
 }
@@ -70,7 +70,7 @@
     NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:testToken medicId:testMedicId];
     NSLog(@"result:%@",resultStr);
 }
- */
+*/
 
 # pragma mark - ZKIndexViewDelegate
 - (void)indexClickWitbNumber:(NSInteger)tag
@@ -78,7 +78,7 @@
     [zkView removeFromSuperview];
     
 //    [self test2];
-//    return;
+    return;
     
     UIViewController *vc = nil;
     

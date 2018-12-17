@@ -217,6 +217,7 @@
     if (@available(iOS 10.0, *)) {
         model.attributeDic = @{NSForegroundColorAttributeName : [UIColor colorWithDisplayP3Red:80/255.0 green:158/255.0 blue:247/255.0 alpha:1.0]};
     } else {
+        model.attributeDic = @{NSForegroundColorAttributeName : [UIColor colorWithRed:80/255.0 green:158/255.0 blue:247/255.0 alpha:1.0]};
         // Fallback on earlier versions
     }
     
@@ -226,6 +227,7 @@
     if (@available(iOS 10.0, *)) {
         model1.attributeDic = @{NSForegroundColorAttributeName : [UIColor colorWithDisplayP3Red:80/255.0 green:158/255.0 blue:247/255.0 alpha:1.0]};
     } else {
+        model.attributeDic = @{NSForegroundColorAttributeName : [UIColor colorWithRed:80/255.0 green:158/255.0 blue:247/255.0 alpha:1.0]};
         // Fallback on earlier versions
     }
     
