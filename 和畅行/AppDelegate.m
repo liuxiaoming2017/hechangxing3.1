@@ -55,6 +55,8 @@
     
     [UserShareOnce shareOnce].isOnline = NO;
     
+    [[UITabBar appearance] setTranslucent:NO];
+    
     //和缓医疗SDK注册
 //    HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:@"9001" isDebug:YES isDevelop:YES];
 //    hhSdk.cerName = @"2cDevTest";
