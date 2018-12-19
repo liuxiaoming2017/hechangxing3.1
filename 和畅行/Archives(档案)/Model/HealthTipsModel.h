@@ -33,4 +33,14 @@
 
 @property (nonatomic,copy)   NSString *content;
 
+
+//季度报告model
+
+//年份
+@property (nonatomic,copy)   NSString *year;
+//季度
+@property (nonatomic,copy)   NSString *quarter;
+
+
+
 @end

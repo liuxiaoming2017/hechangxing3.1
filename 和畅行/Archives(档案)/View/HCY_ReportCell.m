@@ -58,34 +58,42 @@
 -(void)setReportModel:(HealthTipsModel *)model withIndex:(NSIndexPath *)indexpath {
     
     
+    NSString *quarterStr = [NSString stringWithFormat:@"%@",model.quarter];
+    NSString *yearStr = [NSString stringWithFormat:@"%@",model.year];
+    
     NSString *topColor = [NSString string];
     NSString *bottomColor = [NSString string];
-    NSString *quarterStr= [NSString string];
+    NSString *quartertitleStr= [NSString string];
     NSString *timeStr= [NSString string];
-    if(indexpath.row%4 == 0) {
-        topColor = @"6673EE";
-        bottomColor = @"FCA6D1";
-        quarterStr = @"第四季度阶段报告";
-        timeStr = @"2018.10.01-2018.12.31";
-    }else if(indexpath.row%4 == 1) {
-        topColor = @"E2862C";
-        bottomColor = @"F3D285";
-        quarterStr = @"第三季度阶段报告";
-        timeStr = @"2018.07.01-2018.09.30";
-    } else if(indexpath.row%4 == 2) {
-        topColor = @"4294E1";
-        bottomColor = @"D1BDFF";
-        quarterStr = @"第二季度阶段报告";
-        timeStr = @"2018.04.01-2018.06.30";
-    }else {
+
+    if ([model.quarter isEqualToString:@"1"]) {
         topColor = @"2BAD75";
         bottomColor = @"DBCC61";
-        quarterStr = @"第一季度阶段报告";
+        quartertitleStr = @"第一季度阶段报告";
+        timeStr =  [NSString stringWithFormat:@"%@.01.01-%@.3.31",yearStr,yearStr];
+    }else if ([model.quarter isEqualToString:@"2"]) {
+        topColor = @"4294E1";
+        bottomColor = @"D1BDFF";
+        quartertitleStr = @"第二季度阶段报告";
+        timeStr =  [NSString stringWithFormat:@"%@.04.01-%@.06.30",yearStr,yearStr];
+        timeStr = @"2018.04.01-2018.06.30";
+    }else if ([model.quarter isEqualToString:@"3"]) {
+        topColor = @"E2862C";
+        bottomColor = @"F3D285";
+        quartertitleStr = @"第三季度阶段报告";
+        timeStr =  [NSString stringWithFormat:@"%@.07.01-%@.09.30",yearStr,yearStr];
+        timeStr = @"2018.07.01-2018.09.30";
+    }else{
+        topColor = @"6673EE";
+        bottomColor = @"FCA6D1";
+        quartertitleStr = @"第四季度阶段报告";
+        timeStr =  [NSString stringWithFormat:@"%@.10.01-%@.12.31",yearStr,yearStr];
         timeStr = @"2018.10.01-2018.12.31";
     }
+    
     [self.backImageView.layer addSublayer:[UIColor setGradualChangingColor:self.backImageView fromColor:topColor toColor:bottomColor]];
 
-    self.quarterLabel.text = quarterStr;
+    self.quarterLabel.text = quartertitleStr;
     self.timeLabel.text    = timeStr;
     [self.backImageView addSubview:self.quarterLabel];
     [self.backImageView addSubview:self.timeLabel];

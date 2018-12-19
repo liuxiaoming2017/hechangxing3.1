@@ -55,6 +55,7 @@
 -(void)setButtonImageWithArray:(NSMutableArray *)array {
     
     
+    
     CGFloat imageWidth = 122;
     CGFloat imageHeight = 96;
     
@@ -64,7 +65,12 @@
     NSArray *imageArr = @[@"readImage",@"writeImage",@"hitImage"];
     
     for(NSInteger i = 0;i<3;i++){
-        HCY_HomeImageModel *model = array[i+2];
+        
+        HCY_HomeImageModel *model;
+
+        if (array.count > 2) {
+            model =  array[i+2];
+        }
         UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         rightBtn.frame = CGRectMake(10+(imageWidth+10)*i, 10, imageWidth, imageHeight);
         

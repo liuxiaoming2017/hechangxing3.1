@@ -828,6 +828,7 @@
 		83E23EF421C202B100B43298 /* HCY_HomeImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EF321C202B100B43298 /* HCY_HomeImageModel.m */; };
 		83E23EF721C24F7F00B43298 /* HCY_ActivityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EF621C24F7F00B43298 /* HCY_ActivityController.m */; };
 		83E23EFA21C34C1800B43298 /* HCY_ReportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EF921C34C1800B43298 /* HCY_ReportCell.m */; };
+		83E23F0021C76CE800B43298 /* HYC_CardsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EFF21C76CE800B43298 /* HYC_CardsModel.m */; };
 		C973089A21B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C973089921B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m */; };
 		C97308E221BA0E9800060447 /* UIColor+Gradient.m in Sources */ = {isa = PBXBuildFile; fileRef = C97308E121BA0E9800060447 /* UIColor+Gradient.m */; };
 		C97308F621BA50FB00060447 /* SGGenerateQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C97308E521BA50FB00060447 /* SGGenerateQRCodeVC.m */; };
@@ -2038,6 +2039,8 @@
 		83E23EF621C24F7F00B43298 /* HCY_ActivityController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_ActivityController.m; sourceTree = "<group>"; };
 		83E23EF821C34C1700B43298 /* HCY_ReportCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_ReportCell.h; sourceTree = "<group>"; };
 		83E23EF921C34C1800B43298 /* HCY_ReportCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_ReportCell.m; sourceTree = "<group>"; };
+		83E23EFE21C76CE800B43298 /* HYC_CardsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HYC_CardsModel.h; sourceTree = "<group>"; };
+		83E23EFF21C76CE800B43298 /* HYC_CardsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HYC_CardsModel.m; sourceTree = "<group>"; };
 		C973089821B91C4B00060447 /* HCY_DAVisceraNoTimeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_DAVisceraNoTimeCell.h; sourceTree = "<group>"; };
 		C973089921B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_DAVisceraNoTimeCell.m; sourceTree = "<group>"; };
 		C97308E021BA0E9800060447 /* UIColor+Gradient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Gradient.h"; sourceTree = "<group>"; };
@@ -2770,6 +2773,8 @@
 				C9E2E23821BE306800F45021 /* HCY_CarDetailController.m */,
 				C9FDB92521BE35AC00E726F3 /* HCY_UnderlineButton.h */,
 				C9FDB92621BE35AC00E726F3 /* HCY_UnderlineButton.m */,
+				83E23EFE21C76CE800B43298 /* HYC_CardsModel.h */,
+				83E23EFF21C76CE800B43298 /* HYC_CardsModel.m */,
 				C9FDB92821BE3D4900E726F3 /* HCY_ConsumptionListCell.h */,
 				C9FDB92921BE3D4900E726F3 /* HCY_ConsumptionListCell.m */,
 				C9FDB92A21BE3D4900E726F3 /* HCY_ConsumptionListCell.xib */,
@@ -5040,6 +5045,7 @@
 				03A24C9921142BE0005B5BA1 /* NoMessageView.m in Sources */,
 				03F97D1721007FE200A0F842 /* OrganDiseaseModel.m in Sources */,
 				0337A723218ADC6C005A4693 /* PECropRectView.m in Sources */,
+				83E23F0021C76CE800B43298 /* HYC_CardsModel.m in Sources */,
 				036E84402186EAD3001B9BB4 /* NSString+Util.m in Sources */,
 				C97308F721BA50FB00060447 /* SGScanningQRCodeVC.m in Sources */,
 				03535EF620F7263C00664FA9 /* TipSpeakController.m in Sources */,

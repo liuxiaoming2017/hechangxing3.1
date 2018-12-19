@@ -77,13 +77,8 @@
      [flickingBtn setTitleEdgeInsets:UIEdgeInsetsMake(flickingBtn.imageView.frame.size.height +30 ,-flickingBtn.imageView.frame.size.width -18, 0.0,0.0)];
     
     
-    
 }
 - (void)bangButton{
-    
-    HCY_InformationController *informaTionVC = [[HCY_InformationController alloc]init];
-    [self.navigationController pushViewController:informaTionVC animated:YES];
-    
     if ([_textField.text isEqualToString:@""]) {
         UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"卡号不能为空" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
         [av show];
@@ -97,72 +92,45 @@
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    
-    
-    //[request setPostValue:self.UrlHttpImg forKey:@"memberImage"];
-    
+
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    //[request setPostValue:[UserShareOnce shareOnce].uid forKey:@"id"];
     [request setPostValue:_textField.text forKey:@"code"];
-    
-    //    //[request setPostValue:TelephoneLb_Tf.text forKey:@"phone"];
-    // [request setPostValue:@"2" forKey:@"weight"];
-    //[request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    
-    //
+
     [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    // [request setPostValue:AddressLb_Tf.text forKey:@"address"];
-    
-    // [request setPostValue:Certificates_Number_Tf.text forKey:@"idNumber"];
-    
-    
     [request setTimeOutSeconds:20];
     [request setRequestMethod:@"POST"];
     [request setDelegate:self];
     [request setDidFailSelector:@selector(requesstuserinfoError:)];
     [request setDidFinishSelector:@selector(requesstuserinfoCompleted:)];
     [request startAsynchronous];
+//
+    
+//    NSDictionary *dic = @{@"memberId":[UserShareOnce shareOnce].uid,
+//                          @"code":_textField.text};
+//
+//    NSString *str = @"/member/cashcard/bind.jhtml";
+//
+//            //为网络请求添加请
+//    NSDictionary *headers = @{@"token":[UserShareOnce shareOnce].token,
+//                              @"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID],
+//                              @"version":@"ios_hcy-yh-1.0"};
+//
+//    [[NetworkManager sharedNetworkManager]requestWithType:1 urlString:str headParameters:headers parameters:dic successBlock:^(id response) {
+//
+//
+//        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+//
+//
+//                NSLog(@"%@",dict);
+//
+//
+//            } failureBlock:^(NSError *error) {
+//
+//                NSLog(@"%@",error);
+//            }];
     
     
 }
-
-
-
-////扫一扫
--(void)flickingClick {
-    
-    // 1、 获取摄像设备
-    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    if (device) {
-        AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-        if (status == AVAuthorizationStatusNotDetermined) {
-            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
-                if (granted) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        SGScanningQRCodeVC *scanningQRCodeVC = [[SGScanningQRCodeVC alloc] init];
-                        [self presentViewController:scanningQRCodeVC animated:YES completion:nil];
-                    });
-                }else {
-                }
-            }];
-        } else if (status == AVAuthorizationStatusAuthorized) { // 用户允许当前应用访问相机
-            SGScanningQRCodeVC *scanningQRCodeVC = [[SGScanningQRCodeVC alloc] init];
-            [self presentViewController:scanningQRCodeVC animated:YES completion:nil];
-        } else if (status == AVAuthorizationStatusDenied) { // 用户拒绝当前应用访问相机
-            SGAlertView *alertView = [SGAlertView alertViewWithTitle:@"⚠️ 警告" delegate:nil contentTitle:@"请去-> [设置 - 隐私 - 相机 - 特卫工分] 打开访问开关" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne)];
-            [alertView show];
-        } else if (status == AVAuthorizationStatusRestricted) {
-        }
-    } else {
-        SGAlertView *alertView = [SGAlertView alertViewWithTitle:@"⚠️ 警告" delegate:nil contentTitle:@"未检测到您的摄像头, 请在真机上测试" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne)];
-        [alertView show];
-    }
-    
-    
-    
-}
-    
-    
 - (void)requesstuserinfoError:(ASIHTTPRequest *)request
 {
     [self hudWasHidden:nil];
@@ -178,26 +146,15 @@
     NSString* reqstr=[request responseString];
     //NSLog(@"dic==%@",reqstr);
     NSDictionary * dic=[reqstr JSONValue];
-    //NSLog(@"dic==%@",dic);
+    NSLog(@"dic==%@",dic);
     id status=[dic objectForKey:@"status"];
     //NSLog(@"234214324%@",status);
     if ([status intValue]== 100) {
-        
-        //        sonAccount.name = Yh_TF.text;
-        //        sonAccount.gender = SexStr;
-        //        sonAccount.birthday = BirthDay_btn.titleLabel.text;
-        //
-        //        sonAccount.mobile = TelephoneLb_Tf.text;
-        //        sonAccount.idCard = CertificatesType;
-        //        //[UserShareOnce shareOnce].idNumber=Certificates_Number_Tf.text;
-        //        sonAccount.medicare = IsYiBao;
-        // [UserShareOnce shareOnce].memberImage=self.UrlHttpImg;
-        //NSLog(@"111111%@",[dic objectForKey:@"data"]);
+  
         
         UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"信息更新成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
         [av show];
         av.tag=10007;
-        [av release];
         _textField.text = @"";
         
     }
@@ -290,25 +247,20 @@
     return YES;
 }
 
-
-- (void)dealloc
-{
-    [super dealloc];
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 /*
-#pragma mark - Navigation
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

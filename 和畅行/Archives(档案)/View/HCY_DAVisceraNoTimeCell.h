@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) UILabel *lowLabel;
 @property (nonatomic,strong) UILabel *createDateLabel;
 @property (nonatomic, strong) UILabel *typeLabel;
+@property (nonatomic, strong) UIImageView *imageV;
 
 
 - (void)assignmentNoVisceraWithModel:(HealthTipsModel *)model;

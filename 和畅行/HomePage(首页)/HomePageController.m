@@ -20,7 +20,7 @@
 @property (nonatomic,strong) UIScrollView *bgScrollView;
 @property (nonatomic,strong) HeChangPackge *packgeView;
 @property (nonatomic,strong) HeChangRemind *remindView;
-@property (nonatomic,strong) ReadOrWriteView *readWriteView;
+@property (nonatomic,strong)  ReadOrWriteView *readWriteView;
 @property (nonatomic, strong) RecommendReadView *recommendView;
 @property (nonatomic, strong) NSMutableArray    *homeImageArray;
 @property (nonatomic, strong) HCY_HomeImageModel *backImageModel;
@@ -57,7 +57,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)requestUI {
@@ -103,12 +102,10 @@
         self.packgeView.titleLabel.textColor = [UIColor blackColor];
         self.packgeView.remindLabel.textColor = [UIColor blackColor];
         [self.rightBtn setImage:[UIImage imageNamed:@"message"] forState:UIControlStateNormal];
-
     }else {
         self.packgeView.titleLabel.textColor = [UIColor whiteColor];
         self.packgeView.remindLabel.textColor = [UIColor whiteColor];
         [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
-
     }
     if (_backImageModel.picurl==nil || [_backImageModel.picurl isKindOfClass:[NSNull class]]||_backImageModel.picurl.length == 0) {
         CAGradientLayer *gradientLayer = [CAGradientLayer layer];
@@ -128,21 +125,22 @@
     }
     
     [self.view addSubview:self.topView];
-    
-    
     self.packgeView.pushModel = self.pushModel;
     
     if (self.pushModel.picurl!=nil && ![self.pushModel.picurl isKindOfClass:[NSNull class]]&&self.pushModel.picurl.length != 0) {
         NSString *imageUrl = [NSString stringWithFormat:@"%@%@",URL_PRE,self.pushModel.picurl];
         NSURL *url = [NSURL URLWithString:imageUrl];
         [self.packgeView.toViewButton sd_setBackgroundImageWithURL:url forState:UIControlStateNormal];
+        [self.packgeView.toViewButton setBackgroundColor:[UIColor clearColor]];
+        [self.packgeView.toViewButton setTitle:@"" forState:(UIControlStateNormal)];
+    }else {
+        [self.packgeView.toViewButton setBackgroundColor:RGB_ButtonBlue];
+        [self.packgeView.toViewButton setTitle:@"活动页面" forState:(UIControlStateNormal)];
+        self.packgeView.toViewButton.layer.cornerRadius = self.packgeView.toViewButton.height/2;
+        self.packgeView.toViewButton.layer.masksToBounds = YES;
     }
     
     
-    
-    
-    
-    //添加渐变色
 }
 
 - (void)createTopView
@@ -151,13 +149,13 @@
     
     self.homeImageArray = [NSMutableArray array];
 
-    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 298/746.0*ScreenHeight-20)];
-
+    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenWidth*274/414)];
+//414.000000    274.005362
     self.imageV.userInteractionEnabled = YES;
     [self.view addSubview:self.imageV];
     
     
-    self.packgeView = [[HeChangPackge alloc] initWithFrame:CGRectMake(0, -kNavBarHeight, ScreenWidth, 298/746.0*ScreenHeight)];
+    self.packgeView = [[HeChangPackge alloc] initWithFrame:CGRectMake(0, -kNavBarHeight, ScreenWidth, ScreenWidth*274/414+20)];
   
     
     self.bgScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-kTabBarHeight)];

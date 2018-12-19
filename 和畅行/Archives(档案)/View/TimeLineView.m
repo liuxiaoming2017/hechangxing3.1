@@ -70,14 +70,9 @@
 #pragma mark -- 每组返回多少个
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(_typeInteger == 10) {
-        return 10;
-    }else {
-        return _dataArr.count;
-
-    }
-   
     
+    return _dataArr.count;
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -92,11 +87,8 @@
 }
 
 #pragma mark -- 每个cell的高度
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    if (self.typeInteger == 0) {
-//
-//    }else
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
     if (self.typeInteger == 1 || self.typeInteger == 2||self.typeInteger == 0) {
         if (indexPath.row == 0) {
             return 105;
@@ -129,10 +121,6 @@
     }
     
    
-    
-//    TimeLineModel*model = self.dataArr[indexPath.row];
-//
-//    return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:[TimeLineCell class] contentViewWidth:self.frame.size.width];
 }
 #pragma mark -- 每个cell显示的内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -180,10 +168,11 @@
     }
     if (self.typeInteger == 10) {
         
+        HealthTipsModel *model = _dataArr[indexPath.row];
         HCY_ReportCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HCY_ReportCell"];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell setReportModel:nil withIndex:indexPath];
+        [cell setReportModel:model withIndex:indexPath];
 
         return cell;
         
@@ -266,9 +255,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     
-    if (_typeInteger == 10) {
-        return;
-    }
+    
     HealthTipsModel *model = [self.dataArr objectAtIndex:indexPath.row];
     
     ////经络
@@ -309,6 +296,19 @@
             [[self viewController] presentViewController:nav animated:YES completion:nil];
             
         }
+    }
+    
+    
+
+    if (model.quarter != nil && ![model.quarter isKindOfClass:[NSNull class]]&&model.quarter.length != 0) {
+        
+//        NSString *idNim = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
+        
+        NSString *url = [[NSString alloc] initWithFormat:@"%@/member/service/reports.jhtml?memberChildId=%@&quarter=%@&year=%@",URL_PRE,@"24",model.quarter,model.year];
+        ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+        vc.urlStr = url;
+        [[self viewController].navigationController pushViewController:vc animated:YES];
+        
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];

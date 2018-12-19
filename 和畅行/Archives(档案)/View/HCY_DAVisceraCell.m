@@ -36,14 +36,14 @@
     lineImageV.backgroundColor = UIColorFromHex(0xe2e2e2);
     [self addSubview:lineImageV];
     
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(self.timeLabel.right - 20, lineImageV.bottom-15, ScreenWidth-self.timeLabel.right + 10, 79)];
-    imageV.layer.cornerRadius = 8.0;
-    imageV.layer.masksToBounds = YES;
-    imageV.backgroundColor = [UIColor whiteColor];
-    [self addSubview:imageV];
-    [self insertSublayerWithImageView:imageV];
+    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(self.timeLabel.right - 20, lineImageV.bottom-15, ScreenWidth-self.timeLabel.right + 10, 79)];
+    self.imageV.layer.cornerRadius = 8.0;
+    self.imageV.layer.masksToBounds = YES;
+    self.imageV.backgroundColor = [UIColor whiteColor];
+    [self addSubview:self.imageV];
+    [self insertSublayerWithImageView:self.imageV];
     
-    self.createDateLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  imageV.top+imageV.height/2.0-20, 60, 20)];
+    self.createDateLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  self.imageV.top+self.imageV.height/2.0-20, 60, 20)];
     self.createDateLabel.font=[UIFont systemFontOfSize:13.0];
     self.createDateLabel.textAlignment = NSTextAlignmentCenter;
     self.createDateLabel.textColor=UIColorFromHex(0x8E8E93);
@@ -57,7 +57,7 @@
   
 
     
-    self.typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageV.left+15, imageV.top, 120, imageV.height)];
+    self.typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.imageV.left+15, self.imageV.top, 80, self.imageV.height)];
     self.typeLabel.attributedText = attributedString1;
     self.typeLabel.numberOfLines = 2;
     self.typeLabel.textColor = RGB(55, 55, 55);
@@ -65,21 +65,19 @@
     [self addSubview:self.typeLabel];
     
     
-    self.topLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right, imageV.top + 13, ScreenWidth - self.typeLabel.right - 20, imageV.height/2 - 13)];
+    self.topLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right, self.imageV.top + 13, ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2 - 13)];
     self.topLabel.font=[UIFont systemFontOfSize:15];
     self.topLabel.textColor=RGB(221, 156, 92);
     self.topLabel.text = @"新病有汗";
     [self addSubview:self.topLabel];
     
-    self.lowLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right, self.topLabel.bottom  , ScreenWidth - self.typeLabel.right - 20, imageV.height/2-13)];
+    self.lowLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right, self.topLabel.bottom  , ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2-13)];
     self.lowLabel.font=[UIFont systemFontOfSize:15];
     self.lowLabel.textColor=RGB(221, 156, 92);
     self.lowLabel.text = @"无";
     [self addSubview:self.lowLabel];
     
-    
-    
-    
+        
     UIImageView *lineImageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(lineImageV.left, self.createDateLabel.bottom + 10, 1, 35)];
     lineImageV2.backgroundColor = UIColorFromHex(0xe2e2e2);
     [self addSubview:lineImageV2];
@@ -121,8 +119,16 @@
         [paragraphStyle1 setLineSpacing:8];
         [attributedString1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [attributedString1 length])];
         
-        self.typeLabel.attributedText = attributedString1;
+        self.typeLabel.frame = CGRectMake(self.imageV.left+15, self.imageV.top, 120, self.imageV.height);
+        self.topLabel.frame = CGRectMake(self.typeLabel.right, self.imageV.top + 13, ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2 - 13);
+        self.lowLabel.frame = CGRectMake(self.typeLabel.right, self.topLabel.bottom  , ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2-13);
         
+        self.typeLabel.attributedText = attributedString1;
+    }else{
+        self.typeLabel.frame = CGRectMake(self.imageV.left+15, self.imageV.top, 80, self.imageV.height);
+        self.topLabel.frame = CGRectMake(self.typeLabel.right, self.imageV.top + 13, ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2 - 13);
+        self.lowLabel.frame = CGRectMake(self.typeLabel.right, self.topLabel.bottom  , ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2-13);
+
     }
     
     if (![model.physique_id isKindOfClass:[NSNull class]]&&model.physique_id!=nil&&model.physique_id.length!=0) {
