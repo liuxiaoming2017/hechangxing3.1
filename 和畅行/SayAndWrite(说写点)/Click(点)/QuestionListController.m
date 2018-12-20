@@ -216,6 +216,7 @@
     
     QuestionModel *model = nil;
     NSInteger indexNum = 0;
+    /*
     if(num>100 && num<200){ //第一个题目
         indexNum = num - 100;
         model = [self.questionArr objectAtIndex:_currentIndex*2];
@@ -238,23 +239,25 @@
     }else{
         model.grade = indexNum;
     }
-    
+    */
     NSArray *idArr = [model.allIDStr componentsSeparatedByString:@","];
     model.answerID = [[idArr objectAtIndex:model.selectNum-1] integerValue];
     
-//    for(NSInteger i=0;i<self.questionArr.count;i++){
-//        QuestionModel *model = [self.questionArr objectAtIndex:i];
-//        _selectNum+=1;
-//        NSInteger indexNum = (arc4random() % 5) + 1;
-//        model.selectNum = indexNum;
-//        if(model.reverse){
-//            model.grade = 5 - indexNum;
-//        }else{
-//            model.grade = indexNum;
-//        }
-//        NSArray *idArr = [model.allIDStr componentsSeparatedByString:@","];
-//        model.answerID = [[idArr objectAtIndex:model.selectNum-1] integerValue];
-//    }
+    /*自动答题*/
+    for(NSInteger i=0;i<self.questionArr.count;i++){
+        QuestionModel *model = [self.questionArr objectAtIndex:i];
+        _selectNum+=1;
+        NSInteger indexNum = (arc4random() % 5) + 1;
+        model.selectNum = indexNum;
+        if(model.reverse){
+            model.grade = 5 - indexNum;
+        }else{
+            model.grade = indexNum;
+        }
+        NSArray *idArr = [model.allIDStr componentsSeparatedByString:@","];
+        model.answerID = [[idArr objectAtIndex:model.selectNum-1] integerValue];
+    }
+    /*自动答题*/
     
     if(_selectNum == self.questionArr.count){ //所有题目已经答完
         [self generateTZBS];
@@ -376,6 +379,8 @@
     
     NSString *mstr0 = @"", *mstr1=@"",*mstr2 = @"", *mstr3=@"",*mstr4 = @"", *mstr5=@"",*mstr6 = @"", *mstr7=@"",*mstr8 = @"";
     
+    NSMutableArray *examCatIdArr = [[NSMutableArray alloc] initWithArray:@[@"",@"",@"",@"",@"",@"",@"",@"",@""]];
+    
     NSArray *totalArr = [self.questionArr arrayByAddingObjectsFromArray:self.repeatQuestionArr];
     for(QuestionModel *model in totalArr){
         
@@ -386,38 +391,47 @@
             TZ00Count+=1;
             TZ00Fraction = TZ00Fraction+model.grade;
             mstr0 =[mstr0 stringByAppendingString:[NSString stringWithFormat:@",%ld,%ld",(long)key,(long)value]];
+            [examCatIdArr replaceObjectAtIndex:0 withObject:@(model.uid)];
         }else if ([model.type isEqualToString:@"气虚质问卷"]){
             TZ01Count+=1;
             TZ01Fraction+=model.grade;
             mstr1 =[mstr1 stringByAppendingString:[NSString stringWithFormat:@",%ld,%ld",(long)key,(long)value]];
+            [examCatIdArr replaceObjectAtIndex:1 withObject:@(model.uid)];
         }else if ([model.type isEqualToString:@"阳虚质问卷"]){
             TZ02Count+=1;
             TZ02Fraction+=model.grade;
             mstr2 =[mstr2 stringByAppendingString:[NSString stringWithFormat:@",%ld,%ld",(long)key,(long)value]];
+            [examCatIdArr replaceObjectAtIndex:2 withObject:@(model.uid)];
         }else if ([model.type isEqualToString:@"阴虚质问卷"]){
             TZ03Count+=1;
             TZ03Fraction+=model.grade;
             mstr3 =[mstr3 stringByAppendingString:[NSString stringWithFormat:@",%ld,%ld",(long)key,(long)value]];
+            [examCatIdArr replaceObjectAtIndex:3 withObject:@(model.uid)];
         }else if ([model.type isEqualToString:@"痰湿质问卷"]){
             TZ04Count+=1;
             TZ04Fraction+=model.grade;
             mstr4 =[mstr4 stringByAppendingString:[NSString stringWithFormat:@",%ld,%ld",(long)key,(long)value]];
+            [examCatIdArr replaceObjectAtIndex:4 withObject:@(model.uid)];
         }else if ([model.type isEqualToString:@"湿热质问卷"]){
             TZ05Count+=1;
             TZ05Fraction+=model.grade;
             mstr5 =[mstr5 stringByAppendingString:[NSString stringWithFormat:@",%ld,%ld",(long)key,(long)value]];
+            [examCatIdArr replaceObjectAtIndex:5 withObject:@(model.uid)];
         }else if ([model.type isEqualToString:@"血瘀质问卷"]){
             TZ06Count+=1;
             TZ06Fraction+=model.grade;
             mstr6 =[mstr6 stringByAppendingString:[NSString stringWithFormat:@",%ld,%ld",(long)key,(long)value]];
+            [examCatIdArr replaceObjectAtIndex:6 withObject:@(model.uid)];
         }else if ([model.type isEqualToString:@"气郁质问卷"]){
             TZ07Count+=1;
             TZ07Fraction+=model.grade;
             mstr7 =[mstr7 stringByAppendingString:[NSString stringWithFormat:@",%ld,%ld",(long)key,(long)value]];
+            [examCatIdArr replaceObjectAtIndex:7 withObject:@(model.uid)];
         }else if ([model.type isEqualToString:@"特禀质问卷"]){
             TZ08Count+=1;
             TZ08Fraction+=model.grade;
             mstr8 =[mstr8 stringByAppendingString:[NSString stringWithFormat:@",%ld,%ld",(long)key,(long)value]];
+            [examCatIdArr replaceObjectAtIndex:8 withObject:@(model.uid)];
         }
             
     }
@@ -456,8 +470,9 @@
     TZ07Fraction = (TZ07Fraction - TZ07Count)/(TZ07Count*4.0)*100;
     TZ08Fraction = (TZ08Fraction - TZ08Count)/(TZ08Count*4.0)*100;
     
-    //NSArray *arr = [[NSArray alloc] initWithArray:@[@(TZ01Fraction),@(TZ02Fraction),@(TZ03Fraction),@(TZ04Fraction),@(TZ05Fraction),@(TZ06Fraction),@(TZ07Fraction),@(TZ08Fraction)]];
+    
     NSArray *arr = [[NSArray alloc] initWithObjects:@(TZ01Fraction),@(TZ02Fraction),@(TZ03Fraction),@(TZ04Fraction),@(TZ05Fraction),@(TZ06Fraction),@(TZ07Fraction),@(TZ08Fraction), nil];
+    
     NSString *str = @"TZBS-01";//赋初值
     if ((TZ01Fraction <30)&&(TZ02Fraction <30)&&(TZ03Fraction <30)&&(TZ04Fraction <30)&&(TZ05Fraction <30)&&(TZ06Fraction <30)&&(TZ07Fraction <30)&&(TZ08Fraction <30)) {
         str = @"TZBS-01";
@@ -477,19 +492,63 @@
         }
     }
     
+    NSArray *arr2 = [[NSArray alloc] initWithObjects:@(TZ00Fraction),@(TZ01Fraction),@(TZ02Fraction),@(TZ03Fraction),@(TZ04Fraction),@(TZ05Fraction),@(TZ06Fraction),@(TZ07Fraction),@(TZ08Fraction), nil];
+    NSArray *TZBS_arr = @[@"TZBS-01",@"TZBS-02",@"TZBS-03",@"TZBS-04",@"TZBS-07",@"TZBS-06",@"TZBS-09",@"TZBS-05",@"TZBS-08"];
+    NSString *tzscore = @"";
+    NSString *tempStr = @"";
+    for(NSInteger i=0;i<TZBS_arr.count;i++){
+        tempStr = [[TZBS_arr objectAtIndex:i] stringByAppendingString:[NSString stringWithFormat:@":%@;",[arr2 objectAtIndex:i]]];
+        if(i == 0){
+            tzscore = tempStr;
+        }else{
+            tzscore = [tzscore stringByAppendingString:tempStr];
+        }
+    }
+    NSLog(@"tzscore:%@",tzscore);
+    
+    NSMutableString *questionIdsString = [[NSMutableString alloc] initWithCapacity:10];
+    for (id object in examCatIdArr) {
+        NSString *string = [object stringValue];
+        [questionIdsString appendFormat:@",%@",string];
+    }
+    if (questionIdsString) {
+        [questionIdsString deleteCharactersInRange:NSMakeRange(0, 1)];
+    }
+    
+    NSLog(@"questionIdsString************%@",questionIdsString);
+    
+    NSDictionary *paramDic = @{@"subjectSn":str,@"memberChildId":[MemberUserShance shareOnce].idNum,@"jsonResults":@"",@"questionnaireIds":questionIdsString,@"tzscore":tzscore};
+    
     __weak typeof(self) weakSelf = self;
-    NSString *urlStr = @"subject_category/list.jhtml?sn=TZBS";
-    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
-        NSArray *dataArr = [response objectForKey:@"data"];
-        NSDictionary *dataDic = [dataArr objectAtIndex:0];
-        NSInteger dataID = [[dataDic objectForKey:@"id"] integerValue];
-        ResultController *resultVC = [[ResultController alloc] init];
-        resultVC.TZBSstr = str;
-        resultVC.subCatId = dataID;
-        [weakSelf.navigationController pushViewController:resultVC animated:YES];
-    } failureBlock:^(NSError *error) {
-        [weakSelf showAlertWarmMessage:@"请求网络失败!"];
+    //NSString *urlStr = @"subject_category/list.jhtml?sn=TZBS";
+    NSString *urlStr = @"/member/myreport/save_report.jhtml";
+    NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+    
+    [ZYGASINetworking POST_Path:urlStr params:paramDic completed:^(id JSON, NSString *stringData) {
+        NSLog(@"json****:%@",JSON);
+    } failed:^(NSError *error) {
+        
     }];
+    
+//    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:urlStr headParameters:headers parameters:paramDic successBlock:^(id response) {
+//        NSError *errorForJSON = [NSError errorWithDomain:@"请求数据解析为json格式，发出错误" code:2014 userInfo:@{@"请求数据json解析错误": @"中文",@"serial the data to json error":@"English"}];
+//        id jsonData = [NSJSONSerialization JSONObjectWithData:response options:0 error:&errorForJSON];
+//        NSLog(@"data:%@",jsonData);
+//    } failureBlock:^(NSError *error) {
+//        
+//    }];
+    
+//    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
+//        NSArray *dataArr = [response objectForKey:@"data"];
+//        NSDictionary *dataDic = [dataArr objectAtIndex:0];
+//        NSInteger dataID = [[dataDic objectForKey:@"id"] integerValue];
+//        ResultController *resultVC = [[ResultController alloc] init];
+//        resultVC.TZBSstr = str;
+//        resultVC.subCatId = dataID;
+//        [weakSelf.navigationController pushViewController:resultVC animated:YES];
+//    } failureBlock:^(NSError *error) {
+//        [weakSelf showAlertWarmMessage:@"请求网络失败!"];
+//    }];
     
 }
 

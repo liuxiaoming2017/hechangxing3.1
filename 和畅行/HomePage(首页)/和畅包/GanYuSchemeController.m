@@ -61,61 +61,56 @@
     [allBtn addTarget:self action:@selector(allBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [scrollView addSubview:allBtn];
     
-    NSArray *imageArr = @[@"一戴",@"一站",@"一吃",@"一坐",@"一饮",@"一呼",@"一助",@"一测",@"一阅"];
-    if([UserShareOnce shareOnce].isOnline){
+    NSArray *imageArr = [[NSArray array] init];
+    if(self.notYiChi){
+        imageArr = @[@"一戴",@"一站",@"一坐",@"一饮",@"一呼",@"一助",@"一测",@"一阅"];
+    }else{
         imageArr = @[@"一戴",@"一站",@"一吃",@"一坐",@"一饮",@"一呼",@"一助",@"一测",@"一阅"];
     }
-    /*
-    for(NSInteger i = 0;i<imageArr.count;i++){
-        UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        
-        NSInteger xx = 0, yy = 0;
-        if(i<4){
-            xx = i%2;
-            yy = i/2;
-            rightBtn.frame = CGRectMake(10+(imageWidth+10)*xx, 30+(imageHeight+25)*yy, imageWidth, imageHeight);
-        }else if (i==4){
-            rightBtn.frame = CGRectMake(10, 30+(imageHeight+25)*2, ScreenWidth-20, imageHeight);
-        }else{
-            xx = (i+1)%2;
-            yy = (i+1)/2;
-            if(yy==3){
-                rightBtn.frame = CGRectMake(10+(imageWidth+10)*xx, 30+(imageHeight+25)*yy, imageWidth, imageHeight);
-            }else{
-                rightBtn.frame = CGRectMake(10+(imageWidth+10)*xx, 30+imageHeight*yy+25*(yy-1)+10, imageWidth, imageHeight);
-            }
-            
-        }
-        
-        [rightBtn setImage:[UIImage imageNamed:[imageArr objectAtIndex:i]] forState:UIControlStateNormal];
-        rightBtn.tag = 200+i;
-        [rightBtn addTarget:self action:@selector(rightBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-        [scrollView addSubview:rightBtn];
-    }
-    */
-    
     
     for(NSInteger i = 0;i<imageArr.count;i++){
         
         UIImageView *imageV = [[UIImageView alloc] init];
         
         NSInteger xx = 0, yy = 0;
-        if(i<4){
-            xx = i%2;
-            yy = i/2;
-            
-            imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+(imageHeight+30)*yy, imageWidth, imageHeight);
-        }else if (i==4){
-            imageV.frame = CGRectMake(15, 30+(imageHeight+30)*2, ScreenWidth-30, imageHeight);
-        }else{
-            xx = (i+1)%2;
-            yy = (i+1)/2;
-            if(yy==3){
+        if(self.notYiChi){
+            if(i<2){
+                xx = i%2;
+                yy = i/2;
+                
                 imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+(imageHeight+30)*yy, imageWidth, imageHeight);
+            }else if (i==2){
+                imageV.frame = CGRectMake(15, 30+(imageHeight+30)*2, ScreenWidth-30, imageHeight);
+            }else if (i==3){
+                imageV.frame = CGRectMake(15, 30+(imageHeight+30)*2, ScreenWidth-30, imageHeight);
             }else{
-                imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+imageHeight*yy+30*(yy-1)+15, imageWidth, imageHeight);
+                xx = (i+1)%2;
+                yy = (i+1)/2;
+                if(yy==3){
+                    imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+(imageHeight+30)*yy, imageWidth, imageHeight);
+                }else{
+                    imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+imageHeight*yy+30*(yy-1)+15, imageWidth, imageHeight);
+                }
+                
             }
-            
+        }else{
+            if(i<4){
+                xx = i%2;
+                yy = i/2;
+                
+                imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+(imageHeight+30)*yy, imageWidth, imageHeight);
+            }else if (i==4){
+                imageV.frame = CGRectMake(15, 30+(imageHeight+30)*2, ScreenWidth-30, imageHeight);
+            }else{
+                xx = (i+1)%2;
+                yy = (i+1)/2;
+                if(yy==3){
+                    imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+(imageHeight+30)*yy, imageWidth, imageHeight);
+                }else{
+                    imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+imageHeight*yy+30*(yy-1)+15, imageWidth, imageHeight);
+                }
+                
+            }
         }
         
         imageV.contentMode = UIViewContentModeScaleToFill;

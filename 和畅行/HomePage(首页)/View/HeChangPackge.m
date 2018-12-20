@@ -266,7 +266,8 @@
     vc.hidesBottomBarWhenPushed = YES;
     [self.viewController.navigationController pushViewController:vc animated:YES];
     vc.titleStr = @"和畅包";
-    NSString *urlStr = [NSString stringWithFormat:@"%@/member/service/home/1/%@.jhtml",URL_PRE,[MemberUserShance shareOnce].idNum];
+    //[MemberUserShance shareOnce].idNum
+    NSString *urlStr = [NSString stringWithFormat:@"%@member/service/home/1/%@.jhtml?isnew=1",URL_PRE,@"217"];
     vc.progressType = progress2;
     vc.urlStr = urlStr;
     

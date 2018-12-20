@@ -37,10 +37,12 @@
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     
     NSString *strRequest = [navigationAction.request.URL.absoluteString stringByRemovingPercentEncoding];
-    NSString *ganyuStr = [NSString stringWithFormat:@"%@hcy/member/action/ganyufangan",URL_PRE];
+    //NSString *ganyuStr = [NSString stringWithFormat:@"%@hcy/member/action/ganyufangan",URL_PRE];
+    NSString *ganyuStr = [NSString stringWithFormat:@"%@member/action/fangan",URL_PRE];
     if([strRequest isEqualToString:ganyuStr]){
         decisionHandler(WKNavigationActionPolicyCancel);
         GanYuSchemeController *vc = [[GanYuSchemeController alloc] init];
+        vc.notYiChi = YES;
         [self.navigationController pushViewController:vc animated:YES];
         return;
     }else if ([strRequest isEqualToString:yueleyi]){ //悦乐仪
