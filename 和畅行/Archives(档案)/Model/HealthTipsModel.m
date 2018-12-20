@@ -10,4 +10,9 @@
 
 @implementation HealthTipsModel
 
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+    if([key isEqualToString:@"id"])
+        self.oxygenId = value;
+}
+
 @end

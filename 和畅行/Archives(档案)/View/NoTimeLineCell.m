@@ -109,14 +109,53 @@
 //为cell 赋值
 - (void)assignmentNoCellWithModel:(HealthTipsModel *)model {
     
-    if ([model.subjectCategorySn isEqualToString:@"TZBS"]){
-        self.typeLabel.text = @"体质辨识";
-    }
+    if (model.typeStr != nil && ![model.typeStr isKindOfClass:[NSNull class]]&&model.typeStr.length!=0){
+        
+        if ([model.typeStr isEqualToString:@"XLBS"]){
+            self.typeLabel.text = @"心理";
+            self.contentLabel.text = [model.subject valueForKey:@"name"];
+            
+        }else if ([model.typeStr isEqualToString:@"SAS20"]){
+            self.typeLabel.text = @"SAS20";
+            self.contentLabel.text = [model.subject valueForKey:@"name"];
+        }else if ([model.typeStr isEqualToString:@"SDS20"]){
+            self.typeLabel.text = @"SDS20";
+            self.contentLabel.text = [model.subject valueForKey:@"name"];
+        }else if ([model.typeStr isEqualToString:@"oxygen"]){
+            self.typeLabel.text = @"血氧";
+            self.contentLabel.text = model.density;
+        }else if ([model.typeStr isEqualToString:@"bloodPressure"]){
+            self.typeLabel.text = @"血压";
+            self.contentLabel.text = [NSString stringWithFormat:@"%@ - %@",model.lowPressure,model.highPressure];
+        }else if ([model.typeStr isEqualToString:@"ecg"]){
+            self.typeLabel.text = @"心电";
+            self.contentLabel.text = [model.subject valueForKey:@"name"];
+        }else if ([model.typeStr isEqualToString:@"JLBS"]){
+            self.typeLabel.text = @"经络";
+            self.contentLabel.text = [model.subject valueForKey:@"name"];
+        }else if ([model.typeStr isEqualToString:@"TZBS"]){
+            self.typeLabel.text = @"体质";
+            self.contentLabel.text = [model.subject valueForKey:@"name"];
+        }else if ([model.typeStr isEqualToString:@"ZFBS"]){
+            self.typeLabel.text = @"脏腑";
+            self.contentLabel.text = model.zz_name_str;
+        }else if ([model.typeStr isEqualToString:@"bodyTemperature"]){
+            self.typeLabel.text = @"体温";
+            self.contentLabel.text = model.temperature;
+        }
+    }else {
+        if ([model.subjectCategorySn isEqualToString:@"TZBS"]){
+            self.typeLabel.text = @"体质辨识";
+        }else{
+            self.typeLabel.text = @"经络辨识";
+            self.contentLabel.text = [model.subject valueForKey:@"name"];
 
-    self.contentLabel.text = [model.subject valueForKey:@"name"];
+        }
+       
+    }
+    
     NSString *str = [NSString stringWithFormat:@"%@",model.createDate];
     self.createDateLabel.text = [self getDateStringWithTimeStr:str];
-    
 }
 
 -(NSString *)getDateStringWithTimeStr:(NSString *)str{

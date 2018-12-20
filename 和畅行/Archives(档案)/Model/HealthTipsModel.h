@@ -16,6 +16,8 @@
 @property (nonatomic,strong) NSNumber *createDate;
 @property (nonatomic,copy)   NSString *createTime;
 
+@property (nonatomic,copy)   NSString *typeStr;
+
 @property (nonatomic,copy)   NSString *subjectCategorySn;
 
 
@@ -41,6 +43,26 @@
 //季度
 @property (nonatomic,copy)   NSString *quarter;
 
+
+//血氧
+@property (nonatomic,copy)   NSString *oxygenId;
+@property (nonatomic,copy)   NSString *density;
+
+
+//血压
+@property (nonatomic,copy)   NSString *highPressure;
+@property (nonatomic,copy)   NSString *lowPressure;
+
+// 体温
+@property (nonatomic,copy)   NSString *temperature;
+
+
+//病例
+
+@property (nonatomic,copy)   NSString *medicRecordId;
+@property (nonatomic,copy)   NSString *mainSuit;
+@property (nonatomic,copy)   NSString *doctorDept;
+@property (nonatomic,copy)   NSString *doctorName;
 
 
 @end

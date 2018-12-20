@@ -125,9 +125,7 @@
 #pragma mark -- 每个cell显示的内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
-    
+        
     if (self.typeInteger == 1|| self.typeInteger == 2||self.typeInteger == 0) {
         
         HealthTipsModel *model = _dataArr[indexPath.row];
@@ -296,6 +294,53 @@
             [[self viewController] presentViewController:nav animated:YES completion:nil];
             
         }
+        
+        //血压
+        if (model.highPressure != nil&&![model.highPressure isKindOfClass:[NSNull class]]&&model.highPressure.length != 0) {
+            
+            NSString *urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(30)];
+           
+            ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+            vc.urlStr = urlStr;
+            [[self viewController].navigationController pushViewController:vc animated:YES];
+            
+            
+        }
+        
+        //血氧
+        
+        if (model.density != nil&&![model.density isKindOfClass:[NSNull class]]&&model.density.length != 0) {
+            
+            NSString *urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(20)];
+
+            ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+            vc.urlStr = urlStr;
+            [[self viewController].navigationController pushViewController:vc animated:YES];
+            
+        }
+        
+        //体温
+        
+        if (model.temperature != nil&&![model.temperature isKindOfClass:[NSNull class]]&&model.temperature.length != 0) {
+            
+            
+             NSString *urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(20)];
+           
+            ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+            vc.urlStr = urlStr;
+            [[self viewController].navigationController pushViewController:vc animated:YES];
+        }
+    }
+    
+    
+    //档案
+    if (model.medicRecordId!=nil&&![model.medicRecordId isKindOfClass:[NSNull class]]&&model.medicRecordId.length!=0){
+        
+        UIAlertController *showAler = [UIAlertController alertControllerWithTitle:@"提示" message:@"跳转档案详情" preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleCancel) handler:nil];
+        [showAler addAction:sureAction];
+        [[self viewController] presentViewController:showAler animated:YES completion:nil];
+        
     }
     
     

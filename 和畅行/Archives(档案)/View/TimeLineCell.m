@@ -23,7 +23,7 @@
 
 - (void)setupView
 {
-    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 70, 20)];
+    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 80, 20)];
     self.timeLabel.textAlignment=NSTextAlignmentLeft;
     self.timeLabel.font=[UIFont systemFontOfSize:16.0];
     self.timeLabel.textColor=[UIColor blackColor];
@@ -95,33 +95,60 @@
 
 //为cell 赋值
 -(void)assignmentCellWithModel:(HealthTipsModel *)model{
-    
-//    NSString *str1 = [string substringToIndex:5]
-//    if (typeInteger == 0) {
-//        self.typeLabel.text = @"经络辨识";
-//    }else {
-//        self.typeLabel.text = @"体质辨识";
-//    }
-    
-    if ([model.subjectCategorySn isEqualToString:@"TZBS"]){
-        self.typeLabel.text = @"体质辨识";
-    }
-    
-    NSString *timestr = model.createTime;
-    timestr = [timestr stringByReplacingOccurrencesOfString:@"-" withString:@"月"];
-    timestr = [timestr stringByAppendingString:@"日"];
-    NSRange range = NSMakeRange(timestr.length - 6, 1);
-    NSString *subString3 = [timestr substringWithRange:range];
-    if ([subString3 isEqualToString: @"0"]) {
-        self.timeLabel.text = [timestr substringFromIndex:timestr.length - 5];
 
+    
+    if (model.typeStr != nil && ![model.typeStr isKindOfClass:[NSNull class]]&&model.typeStr.length!=0){
+        
+        if ([model.typeStr isEqualToString:@"oxygen"]){
+            self.typeLabel.text = @"血氧";
+            self.contentLabel.text = model.density;
+        }else if ([model.typeStr isEqualToString:@"bloodPressure"]){
+            self.typeLabel.text = @"血压";
+            self.contentLabel.text = [NSString stringWithFormat:@"%@ - %@",model.lowPressure,model.highPressure];
+        }else if ([model.typeStr isEqualToString:@"ecg"]){
+            self.typeLabel.text = @"心电";
+            self.contentLabel.text = [model.subject valueForKey:@"name"];
+        }else if ([model.typeStr isEqualToString:@"JLBS"]){
+            self.typeLabel.text = @"经络";
+            self.contentLabel.text = [model.subject valueForKey:@"name"];
+        }else if ([model.typeStr isEqualToString:@"TZBS"]){
+            self.typeLabel.text = @"体质";
+            self.contentLabel.text = [model.subject valueForKey:@"name"];
+        }else if ([model.typeStr isEqualToString:@"ZFBS"]){
+            self.typeLabel.text = @"脏腑";
+            self.contentLabel.text = model.zz_name_str;
+        }else if ([model.typeStr isEqualToString:@"bodyTemperature"]){
+            self.typeLabel.text = @"体温";
+            self.contentLabel.text = model.temperature;
+        }
     }else {
-        self.timeLabel.text = [timestr substringFromIndex:timestr.length - 6];
+        if ([model.subjectCategorySn isEqualToString:@"TZBS"]){
+            self.typeLabel.text = @"体质辨识";
+        }else{
+            self.typeLabel.text = @"经络辨识";
+        }
+        self.contentLabel.text = [model.subject valueForKey:@"name"];
 
+        
+      
     }
-    self.contentLabel.text = [model.subject valueForKey:@"name"];
+   
+    NSString *timerStr = [NSString stringWithFormat:@"%@",model.createDate];
+    timerStr = [self getDateStringWithOtherTimeStr:timerStr];
+//    timestr = [timestr stringByReplacingOccurrencesOfString:@"-" withString:@"月"];
+//    timestr = [timestr stringByAppendingString:@"日"];
+//    NSRange range = NSMakeRange(timestr.length - 6, 1);
+//    NSString *subString3 = [timestr substringWithRange:range];
+//    if ([subString3 isEqualToString: @"0"]) {
+        self.timeLabel.text = timerStr;
+        
+//    }else {
+//        self.timeLabel.text = [timestr substringFromIndex:timestr.length - 6];
+    
+//    }
     NSString *str = [NSString stringWithFormat:@"%@",model.createDate];
     self.createDateLabel.text = [self getDateStringWithTimeStr:str];
+    
     
 }
 
@@ -132,6 +159,16 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; //实例化一个NSDateFormatter对象
     //设定时间格式,这里可以设置成自己需要的格式
     [dateFormatter setDateFormat:@"HH:mm"];
+    NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
+    return currentDateStr;
+}
+
+-(NSString *)getDateStringWithOtherTimeStr:(NSString *)str{
+    NSTimeInterval time=[str doubleValue]/1000;//传入的时间戳str如果是精确到毫秒的记得要/1000
+    NSDate *detailDate=[NSDate dateWithTimeIntervalSince1970:time];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; //实例化一个NSDateFormatter对象
+    //设定时间格式,这里可以设置成自己需要的格式
+    [dateFormatter setDateFormat:@"MM月dd日"];
     NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
     return currentDateStr;
 }
