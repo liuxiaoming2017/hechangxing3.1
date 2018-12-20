@@ -333,6 +333,17 @@
     }
     
     
+    //档案
+    if (model.medicRecordId!=nil&&![model.medicRecordId isKindOfClass:[NSNull class]]&&model.medicRecordId.length!=0){
+        
+        UIAlertController *showAler = [UIAlertController alertControllerWithTitle:@"提示" message:@"跳转档案详情" preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleCancel) handler:nil];
+        [showAler addAction:sureAction];
+        [[self viewController] presentViewController:showAler animated:YES completion:nil];
+        
+    }
+    
+    
 
     if (model.quarter != nil && ![model.quarter isKindOfClass:[NSNull class]]&&model.quarter.length != 0) {
         
