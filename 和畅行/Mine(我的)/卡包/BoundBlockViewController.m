@@ -133,7 +133,7 @@
 }
 - (void)requesstuserinfoError:(ASIHTTPRequest *)request
 {
-    [self hudWasHidden:nil];
+    [self hudWasHidden];
     //[SSWaitViewEx removeWaitViewFrom:self.view];
     
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉，请检查您的网络是否畅通" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
@@ -142,7 +142,7 @@
 }
 - (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
 {
-    [self hudWasHidden:nil];
+    [self hudWasHidden];
     NSString* reqstr=[request responseString];
     //NSLog(@"dic==%@",reqstr);
     NSDictionary * dic=[reqstr JSONValue];
@@ -183,9 +183,8 @@
     [progress_ showAnimated:YES];
 }
 
-- (void)hudWasHidden:(MBProgressHUD *)hud
+- (void)hudWasHidden
 {
-    NSLog(@"Hud: %@", hud);
     // Remove HUD from screen when the HUD was hidded
     [progress_ removeFromSuperview];
     [progress_ release];

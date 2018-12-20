@@ -61,9 +61,9 @@
     [allBtn addTarget:self action:@selector(allBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [scrollView addSubview:allBtn];
     
-    NSArray *imageArr = [[NSArray array] init];
+    NSArray *imageArr = @[];
     if(self.notYiChi){
-        imageArr = @[@"一戴",@"一站",@"一坐",@"一饮",@"一呼",@"一助",@"一测",@"一阅"];
+        imageArr = @[@"一戴",@"一站",@"一坐2",@"一饮",@"一呼",@"一助",@"一测",@"一阅"];
     }else{
         imageArr = @[@"一戴",@"一站",@"一吃",@"一坐",@"一饮",@"一呼",@"一助",@"一测",@"一阅"];
     }
@@ -71,29 +71,33 @@
     for(NSInteger i = 0;i<imageArr.count;i++){
         
         UIImageView *imageV = [[UIImageView alloc] init];
-        
+        imageV.tag = 200+i;
         NSInteger xx = 0, yy = 0;
-        if(self.notYiChi){
+        if(self.notYiChi){ ///
             if(i<2){
                 xx = i%2;
                 yy = i/2;
                 
                 imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+(imageHeight+30)*yy, imageWidth, imageHeight);
             }else if (i==2){
-                imageV.frame = CGRectMake(15, 30+(imageHeight+30)*2, ScreenWidth-30, imageHeight);
+                imageV.frame = CGRectMake(15, 30+(imageHeight+30), ScreenWidth-30, imageHeight);
+                imageV.tag = 201+i;
             }else if (i==3){
                 imageV.frame = CGRectMake(15, 30+(imageHeight+30)*2, ScreenWidth-30, imageHeight);
+                imageV.tag = 201+i;
             }else{
-                xx = (i+1)%2;
-                yy = (i+1)/2;
+                xx = (i)%2;
+                yy = (i)/2;
+                imageV.tag = 201+i;
                 if(yy==3){
-                    imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+(imageHeight+30)*yy, imageWidth, imageHeight);
-                }else{
-                    imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+imageHeight*yy+30*(yy-1)+15, imageWidth, imageHeight);
+                    imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+(imageHeight+30)*(yy+1)-10, imageWidth, imageHeight);
+                }
+                else{
+                    imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+imageHeight*(yy+1)+30*(yy+1), imageWidth, imageHeight);
                 }
                 
             }
-        }else{
+        }else{ ///
             if(i<4){
                 xx = i%2;
                 yy = i/2;
@@ -115,7 +119,7 @@
         
         imageV.contentMode = UIViewContentModeScaleToFill;
         imageV.userInteractionEnabled = YES;
-        imageV.tag = 200+i;
+        
         imageV.image = [UIImage imageNamed:[imageArr objectAtIndex:i]];
         [scrollView addSubview:imageV];
         

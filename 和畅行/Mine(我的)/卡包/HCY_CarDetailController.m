@@ -9,20 +9,26 @@
 #import "HCY_CarDetailController.h"
 #import "HCY_UnderlineButton.h"
 #import "HCY_ConsumptionListCell.h"
-@interface HCY_CarDetailController ()<UITableViewDelegate,UITableViewDataSource>
+#import "ServiceBlockCell.h"
+#import "HCY_CallController.h"
+
+
+@interface HCY_CarDetailController ()<UITableViewDelegate,UITableViewDataSource,ServiceBlockCellDelegate>
 
 @property (nonatomic,strong)UILabel *hLabel;
 @property (nonatomic,strong)UILabel *mLabel;
 @property (nonatomic,strong)UILabel *yLabel;
 @property (nonatomic,strong)UITableView *listTableView;
-
+@property (nonatomic,strong)UITableView *serviceTableView;
+@property (nonatomic,strong) NSArray *dataArr;
+@property (nonatomic,strong) NSArray *serviceArr;
 @end
 
 @implementation HCY_CarDetailController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self requestPurchaseHistory];
     [self layoutCarDetailView];
 }
 
@@ -41,14 +47,14 @@
     _hLabel.frame = CGRectMake(0, 20, imageV.width, 25);
     _hLabel.textColor = [UIColor whiteColor];
     _hLabel.textAlignment = NSTextAlignmentCenter;
-    _hLabel.text = @"视频问诊半年卡";
+    _hLabel.text = self.model.service_name;
     _hLabel.font = [UIFont systemFontOfSize:21];
     [imageV addSubview:_hLabel];
     
     _mLabel = [[UILabel alloc] init];
     _mLabel.frame = CGRectMake(20,_hLabel.bottom , imageV.width -  40, 60 );
     _mLabel.numberOfLines = 2;
-    _mLabel.text = @"阿道夫沙发沙发沙发上发送到发的是飞洒发士大夫撒按时发生";
+    _mLabel.text = self.model.cardDescription;
     _mLabel.font = [UIFont systemFontOfSize:14];
     _mLabel.textColor = [UIColor whiteColor];
     [imageV addSubview:_mLabel];
@@ -62,36 +68,13 @@
     _yLabel.textColor = [UIColor whiteColor];
     [imageV addSubview:_yLabel];
     
-    
-    NSArray *titleArray = @[@"余        额",@"视频咨询"];
-    NSArray *contentArray = @[@"300元",@"3次"];
-    NSArray *buttonArray = @[@"去购物",@"去咨询"];
-    
-    for (int i = 0 ; i < 2; i++) {
-        
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(_mLabel.left , _yLabel.bottom + 30*i, imageV.width/3, 30)];
-        label.text = titleArray[i];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [UIColor whiteColor];
-        [imageV addSubview:label];
-        
-        
-        UILabel *contentlabel = [[UILabel alloc]initWithFrame:CGRectMake(_mLabel.left + _mLabel.width/3 , _yLabel.bottom + 30*i, imageV.width/3, 30)];
-        contentlabel.text = contentArray[i];
-        contentlabel.textAlignment = NSTextAlignmentCenter;
-        contentlabel.textColor = [UIColor whiteColor];
-        [imageV addSubview:contentlabel];
-        
-        
-        HCY_UnderlineButton *actionButton = [HCY_UnderlineButton buttonWithType:(UIButtonTypeCustom)];
-        actionButton.frame =CGRectMake( _mLabel.width*2/3, _yLabel.bottom + 30*i, imageV.width/3, 30);
-        [actionButton setTitle:buttonArray[i] forState:(UIControlStateNormal)];
-        [actionButton addTarget:self action:@selector(consultingAction:) forControlEvents:(UIControlEventTouchUpInside)];
-        [actionButton setTag:2000 + i];
-        [actionButton setColor:[UIColor whiteColor]];
-        [imageV addSubview:actionButton];
-        
-    }
+    self.serviceTableView = [[UITableView alloc]initWithFrame:CGRectMake(_yLabel.left+5, _yLabel.bottom+5, imageV.width-_yLabel.left*2 - 10, imageV.height-_yLabel.bottom-10) style:UITableViewStylePlain];
+    self.serviceTableView.backgroundColor = [UIColor clearColor];
+    self.serviceTableView.separatorStyle = UITableViewCellEditingStyleNone;
+    self.serviceTableView.dataSource = self;
+    self.serviceTableView.delegate = self;
+    self.serviceTableView.rowHeight = 30;
+    [imageV addSubview:self.serviceTableView];
     
     
     UILabel *listLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, imageV.bottom + 23, 200, 30)];
@@ -101,7 +84,7 @@
     [self.view addSubview:listLabel];
     
     
-//    self.dataArray = [NSMutableArray array];
+
     self.listTableView = [[UITableView alloc]initWithFrame:CGRectMake(40, listLabel.bottom+20, self.view.frame.size.width - 80, self.view.frame.size.height - kNavBarHeight-listLabel.bottom - 20) style:UITableViewStylePlain];
     self.listTableView.backgroundColor = [UIColor clearColor];
     self.listTableView.separatorStyle = UITableViewCellEditingStyleNone;
@@ -113,6 +96,35 @@
     [self.listTableView registerNib:[UINib nibWithNibName:@"HCY_ConsumptionListCell" bundle:nil] forCellReuseIdentifier:@"HCY_ConsumptionListCell"];
     
     
+}
+
+- (void)requestPurchaseHistory
+{
+    NSString *urlStr   = @"weiq/user_record.jhtml";
+    NSDictionary *dic = @{@"memberId":[UserShareOnce shareOnce].uid,
+                          @"card_no":@"NGKHY99QMOKMOTMA7ZV"
+                          
+                          };
+    //@"token":[UserShareOnce shareOnce].token
+    __weak typeof(self) weakSelf = self;
+    [ZYGASINetworking POST_Path:urlStr params:dic completed:^(id JSON, NSString *stringData) {
+        if([[JSON objectForKey:@"code"] integerValue] == 100){
+            NSArray *arr = [JSON objectForKey:@"data"];
+            if(arr.count>0){
+                    weakSelf.serviceArr = [arr objectAtIndex:0];
+                [weakSelf.serviceTableView reloadData];
+                if(arr.count>1){
+                    weakSelf.dataArr = [arr objectAtIndex:1];
+                    [weakSelf.listTableView reloadData];
+                }
+            }
+           // [weakSelf.listTableView reloadData];
+        }else{
+            [weakSelf showAlertWarmMessage:[JSON objectForKey:@"message"]];
+        }
+    } failed:^(NSError *error) {
+        [weakSelf showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+    }];
 }
 
 -(void)consultingAction:(UIButton *)button {
@@ -136,17 +148,69 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 10;
+    if(tableView == self.serviceTableView){
+        return self.serviceArr.count;
+    }else if (tableView == self.listTableView){
+        return self.dataArr.count;
+    }
+    return 0;
 }
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    HCY_ConsumptionListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HCY_ConsumptionListCell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor clearColor];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if(tableView == self.serviceTableView){
+        ServiceBlockCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ServiceBlockCell"];
+        if(cell == nil){
+            cell = [[ServiceBlockCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ServiceBlockCell"];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.backgroundColor = [UIColor clearColor];
+            cell.delegate = self;
+        }
+        if(self.serviceArr.count>indexPath.row){
+            NSDictionary *dic = [self.serviceArr objectAtIndex:indexPath.row];
+            cell.typeLabel.text = [dic objectForKey:@"serviceName"];
+            NSString *str = [NSString stringWithFormat:@"%@%@",[dic objectForKey:@"value"],[dic objectForKey:@"unit"]];
+            cell.contentLabel.text = str;
+            if([[dic objectForKey:@"serviceCode"] isEqualToString:@"100006"]){
+                [cell.tradeBtn setTitle:@"去咨询" forState:UIControlStateNormal];
+            }else{
+                [cell.tradeBtn setTitle:@"去预约" forState:UIControlStateNormal];
+            }
+        }
+        return cell;
+    }else if (tableView == self.listTableView){
+        HCY_ConsumptionListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HCY_ConsumptionListCell" forIndexPath:indexPath];
+        cell.backgroundColor = [UIColor clearColor];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if(self.dataArr.count>indexPath.row){
+            NSDictionary *dic = [self.dataArr objectAtIndex:indexPath.row];
+            cell.kindLabel.text = [dic objectForKey:@"serviceName"];
+            NSString *timeStr = [dic objectForKey:@"createTime"];
+            if(timeStr != nil && ![timeStr isEqualToString:@""] && ![timeStr isKindOfClass:[NSNull class]]){
+                NSArray *arr = [timeStr componentsSeparatedByString:@" "];
+                NSLog(@"arr:%@",arr);
+                if(arr.count>0){
+                    cell.timeLabel.text = [arr objectAtIndex:0];
+                    cell.hourLabel.text = [arr objectAtIndex:1];
+                }
+            }
+        }
+        return cell;
+    }
     
-    return cell;
+    return nil;
 };
+
+- (void)selectTradeButton:(NSString *)btnStr
+{
+    
+    if([btnStr isEqualToString:@"去咨询"]){
+        HCY_CallController *vc = [[HCY_CallController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4008118899"]];
+    }
+}
 
 @end

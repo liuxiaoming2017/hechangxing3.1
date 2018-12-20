@@ -263,6 +263,7 @@
 
 - (void)tapAction
 {
+    
     HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.viewController.navigationController pushViewController:vc animated:YES];

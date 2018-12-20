@@ -198,7 +198,7 @@
     else if([str isEqualToString:@"体温"])    self.typeUrlInteger = 8;
     else if([str isEqualToString:@"呼吸"])    self.typeUrlInteger = 9;
     else if([str isEqualToString:@"季度报告"]) self.typeUrlInteger = 10;
-    else if([str isEqualToString:@"病例"])    self.typeUrlInteger = 3;
+    else if([str isEqualToString:@"病例"])    self.typeUrlInteger = 11;
     
     self.pageInteger = 1;
     
@@ -300,7 +300,11 @@
                           @"/member/service/reportslist.jhtml?memberChildId=%@",@"24"];
             break;
             
-        case 11:   [weakSelf showAlertWarmMessage:@"病例!"];
+        case 11:  //病例列表单独处理
+        {
+            [self requestCaseList];
+            return;
+        }
             break;
             
         default:
@@ -350,6 +354,18 @@
     }else {
         [self.timeLinvView.tableView.mj_footer endRefreshing];
     }
+}
+
+# pragma mark - 请求病例列表
+- (void)requestCaseList
+{
+    NSString *urlStr = @"weiq/diseaList.jhtml";
+    NSDictionary *dic = @{@"memberId":[UserShareOnce shareOnce].uid};
+    [ZYGASINetworking POST_Path:urlStr params:dic completed:^(id JSON, NSString *stringData) {
+        
+    } failed:^(NSError *error) {
+        
+    }];
 }
 
 #pragma mark - 设置提示消息

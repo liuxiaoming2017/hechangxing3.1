@@ -20,8 +20,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self requestMemberInfo];
     /// 布局激活卡页面
-    [self layoutAcitivaTionView];
+    //[self layoutAcitivaTionView];
     
 }
 
@@ -110,62 +112,23 @@
     
     if (button.tag == 1001) {
         
-//
-//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//        hud.label.text = @"加载中...";
-        
         NSString *memberId = [NSString stringWithFormat:@"%@",[UserShareOnce shareOnce].uid];
-//        NSString *str   = @"weiq/service_card/active.jhtm";
-//        NSDictionary *dic = @{@"memberId":memberId,
-//                              @"card_no":self.model.card_no,
-//                              @"token":[UserShareOnce shareOnce].token};
-    
+        NSString *urlStr   = @"weiq/service_card/active.jhtml";
+        NSDictionary *dic = @{@"memberId":memberId,
+                              @"card_no":self.model.card_no,
+                              @"token":[UserShareOnce shareOnce].token
+                              };
 
-        NSString *UrlPre=URL_PRE;
-        NSString *str = [NSString stringWithFormat:@"%@weiq/service_card/active.jhtm",UrlPre];
-        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:str]];
-        [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-        [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-
-        [request setPostValue:memberId forKey:@"memberId"];
-        [request setPostValue:self.model.card_no forKey:@"card_no"];
-
-//        [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-        [request setTimeOutSeconds:20];
-        [request setRequestMethod:@"POST"];
-        [request setDelegate:self];
-        [request setDidFailSelector:@selector(requesstuserinfoError:)];
-        [request setDidFinishSelector:@selector(requesstuserinfoCompleted:)];
-        [request startAsynchronous];
-        
-//        //为网络请求添加请求头
-//        NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
-//
-//        [[NetworkManager sharedNetworkManager]requestWithType:1 urlString:str headParameters:headers parameters:dic successBlock:^(id response) {
-//
-//            NSLog(@"%@",response);
-//
-//        } failureBlock:^(NSError *error) {
-//
-//            NSLog(@"%@",error);
-//        }];
-//        [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:str parameters:dic successBlock:^(id response) {
-//
-//            [hud hideAnimated:YES];
-//            NSLog(@"%@",response);
-//            if ([response[@"status"] integerValue] == 100){
-//
-//
-//            }
-//        } failureBlock:^(NSError *error) {
-//
-//            [hud hideAnimated:YES];
-//            NSLog(@"%@",error);
-//            [self showAlertWarmMessage:@"请求失败,网络错误!"];
-//        }];
-        
-        
-//        [self.navigationController popViewControllerAnimated:YES];
+        __weak typeof(self) weakSelf = self;
+        [ZYGASINetworking POST_Path:urlStr params:dic completed:^(id JSON, NSString *stringData) {
+            if([[JSON objectForKey:@"code"] integerValue] == 100){
+                [weakSelf requestMemberInfo];
+            }else{
+                [weakSelf showAlertWarmMessage:[JSON objectForKey:@"message"]];
+            }
+        } failed:^(NSError *error) {
+            [weakSelf showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+        }];
     }
     
     
@@ -173,43 +136,24 @@
     
 }
 
+# pragma mark - 激活成功后 查询用户信息
+- (void)requestMemberInfo
+{
+    NSString *urlStr   = @"weiq/getMemberInfo.jhtml";
+    NSDictionary *dic = @{@"memberId":[UserShareOnce shareOnce].uid
+                          };
+    
+    __weak typeof(self) weakSelf = self;
+    [ZYGASINetworking POST_Path:urlStr params:dic completed:^(id JSON, NSString *stringData) {
+        if([[JSON objectForKey:@"code"] integerValue] == 100){
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        }else{
+            [weakSelf showAlertWarmMessage:[JSON objectForKey:@"message"]];
+        }
+    } failed:^(NSError *error) {
+        [weakSelf showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+    }];
+}
 
-- (void)requesstuserinfoError:(ASIHTTPRequest *)request
-{
-    
-    NSLog(@"%@",request);
-    
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉，请检查您的网络是否畅通" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-    [av show];
-}
-- (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
-{
-    NSString* reqstr=[request responseString];
-    //NSLog(@"dic==%@",reqstr);
-    NSDictionary * dic=[reqstr JSONValue];
-    NSLog(@"dic==%@",dic);
-    id status=[dic objectForKey:@"status"];
-    //NSLog(@"234214324%@",status);
-    if ([status intValue]== 100) {
-        
-        
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"信息更新成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-        [av show];
-        av.tag=10007;
-        
-    }
-    else if ([status intValue]== 44)
-    {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"登录超时，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-        av.tag  = 100008;
-        [av show];
-    }
-    else  {
-        NSString *str = [dic objectForKey:@"data"];
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-        
-        [av show];
-    }
-}
 
 @end

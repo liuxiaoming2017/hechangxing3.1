@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03003E4E21CB707B003C89EE /* ServiceBlockCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03003E4D21CB707B003C89EE /* ServiceBlockCell.m */; };
 		0303BDF820F34FFD006A9EDF /* MemberUserShance.m in Sources */ = {isa = PBXBuildFile; fileRef = 0303BDF720F34FFD006A9EDF /* MemberUserShance.m */; };
 		030F51332101B0E1003C918F /* WKWebviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 030F51322101B0E1003C918F /* WKWebviewController.m */; };
 		030F51362101B2A2003C918F /* ResultWriteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 030F51352101B2A2003C918F /* ResultWriteController.m */; };
@@ -848,6 +849,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		03003E4C21CB707B003C89EE /* ServiceBlockCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServiceBlockCell.h; sourceTree = "<group>"; };
+		03003E4D21CB707B003C89EE /* ServiceBlockCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServiceBlockCell.m; sourceTree = "<group>"; };
 		0303BDF620F34FFD006A9EDF /* MemberUserShance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemberUserShance.h; sourceTree = "<group>"; };
 		0303BDF720F34FFD006A9EDF /* MemberUserShance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MemberUserShance.m; sourceTree = "<group>"; };
 		030F51312101B0E1003C918F /* WKWebviewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKWebviewController.h; sourceTree = "<group>"; };
@@ -2775,6 +2778,8 @@
 				C9FDB92621BE35AC00E726F3 /* HCY_UnderlineButton.m */,
 				83E23EFE21C76CE800B43298 /* HYC_CardsModel.h */,
 				83E23EFF21C76CE800B43298 /* HYC_CardsModel.m */,
+				03003E4C21CB707B003C89EE /* ServiceBlockCell.h */,
+				03003E4D21CB707B003C89EE /* ServiceBlockCell.m */,
 				C9FDB92821BE3D4900E726F3 /* HCY_ConsumptionListCell.h */,
 				C9FDB92921BE3D4900E726F3 /* HCY_ConsumptionListCell.m */,
 				C9FDB92A21BE3D4900E726F3 /* HCY_ConsumptionListCell.xib */,
@@ -5058,6 +5063,7 @@
 				036A667D2113ECBB0096A006 /* PrivateServiceModel.m in Sources */,
 				03535EE720F701DF00664FA9 /* TipWriteController.m in Sources */,
 				03F692EE20FF2DF000308E38 /* ASINetworkQueue.m in Sources */,
+				03003E4E21CB707B003C89EE /* ServiceBlockCell.m in Sources */,
 				03430B4521119AF7008EE6C8 /* JingLuoSchemeController.m in Sources */,
 				036E843B2186EAD3001B9BB4 /* UINavigationController+MHDismissModalView.m in Sources */,
 				03535EFF20F7462900664FA9 /* QuestionView.m in Sources */,
