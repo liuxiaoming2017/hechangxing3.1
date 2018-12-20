@@ -77,6 +77,28 @@
     self.lowLabel.text = @"无";
     [self addSubview:self.lowLabel];
     
+    
+    //病例
+    self.doctorNameLabel = [[UILabel alloc]initWithFrame:CGRectMake( 15, 5, 130, self.imageV.height/2)];
+    self.doctorNameLabel.textColor = RGB(55, 55, 55);
+    self.doctorNameLabel.font = [UIFont systemFontOfSize:15];
+    self.doctorNameLabel.hidden = YES;
+    [self.imageV addSubview:self.doctorNameLabel];
+    
+    self.departmentNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.imageV.width - 130 , 0,120 , self.imageV.height/2)];
+    self.departmentNameLabel.textAlignment = NSTextAlignmentRight;
+    self.departmentNameLabel.textColor = RGB(55, 55, 55);
+    self.departmentNameLabel.font = [UIFont systemFontOfSize:15];
+    self.departmentNameLabel.hidden = YES;
+    [self.imageV addSubview:self.departmentNameLabel];
+    
+    
+    self.CCLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.doctorNameLabel.left , self.doctorNameLabel.bottom - 10, self.imageV.width - 10, self.imageV.height/2)];
+    self.CCLabel.textColor = RGB(221, 156, 92);
+    self.CCLabel.hidden = YES;
+    self.CCLabel.font = [UIFont systemFontOfSize:15];
+    [self.imageV addSubview:self.CCLabel];
+    
         
     UIImageView *lineImageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(lineImageV.left, self.createDateLabel.bottom + 10, 1, 35)];
     lineImageV2.backgroundColor = UIColorFromHex(0xe2e2e2);
@@ -100,17 +122,54 @@
 //为cell 赋值
 - (void)assignmentVisceraWithModel:(HealthTipsModel *)model{
     
-    NSString *timestr = model.createTime;
-    timestr = [timestr stringByReplacingOccurrencesOfString:@"-" withString:@"月"];
-    timestr = [timestr stringByAppendingString:@"日"];
-    NSRange range = NSMakeRange(timestr.length - 6, 1);
-    NSString *subString3 = [timestr substringWithRange:range];
-    if ([subString3 isEqualToString: @"0"]) {
-        self.timeLabel.text = [timestr substringFromIndex:timestr.length - 5];
+    
+    if (model.medicRecordId!=nil&&![model.medicRecordId isKindOfClass:[NSNull class]]&&model.medicRecordId.length!=0){
+        self.doctorNameLabel.text = model.doctorName;
+        self.departmentNameLabel.text = model.doctorDept;
+        self.CCLabel.text =  [NSString stringWithFormat:@"主诉: %@",model.mainSuit];
+        
+        NSString *strday = [model.createTime substringWithRange:NSMakeRange(5,5)];
+        self.timeLabel.text = strday;
+        
+        NSString *strtime = [model.createTime substringWithRange:NSMakeRange(model.createTime.length - 8,5)];
+        self.createDateLabel.text = strtime;
+
+        self.doctorNameLabel.hidden = NO;
+        self.departmentNameLabel.hidden = NO;
+        self.CCLabel.hidden = NO;
+        self.typeLabel.hidden = YES;
+        self.topLabel.hidden = YES;
+        self.lowLabel.hidden = YES;
+        
+        
     }else {
-        self.timeLabel.text = [timestr substringFromIndex:timestr.length - 6];
+        
+        self.doctorNameLabel.hidden = YES;
+        self.departmentNameLabel.hidden = YES;
+        self.CCLabel.hidden = YES;
+        self.typeLabel.hidden = NO;
+        self.topLabel.hidden = NO;
+        self.lowLabel.hidden = NO;
+        
+        NSString *timestr = model.createTime;
+        timestr = [timestr stringByReplacingOccurrencesOfString:@"-" withString:@"月"];
+        timestr = [timestr stringByAppendingString:@"日"];
+        NSRange range = NSMakeRange(timestr.length - 6, 1);
+        NSString *subString3 = [timestr substringWithRange:range];
+        if ([subString3 isEqualToString: @"0"]) {
+            self.timeLabel.text = [timestr substringFromIndex:timestr.length - 5];
+        }else {
+            self.timeLabel.text = [timestr substringFromIndex:timestr.length - 6];
+        }
+        
+        NSString *littletimestr = [NSString stringWithFormat:@"%@",model.createDate];
+        self.createDateLabel.text = [self getDateStringWithTimeStr:littletimestr];
+        
+        
     }
     
+    
+  
     
     if ([model.subject valueForKey:@"subject_sn"] != nil&&![[model.subject valueForKey:@"subject_sn"] isKindOfClass:[NSNull class]]) {
         
@@ -155,8 +214,6 @@
         self.lowLabel.text = model.icd_name_str;
     }
     
-    NSString *littletimestr = [NSString stringWithFormat:@"%@",model.createDate];
-    self.createDateLabel.text = [self getDateStringWithTimeStr:littletimestr];
     
 }
 

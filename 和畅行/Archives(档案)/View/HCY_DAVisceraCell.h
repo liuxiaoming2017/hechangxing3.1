@@ -22,6 +22,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *imageV;
 
 
+//病例
+@property (nonatomic, strong) UILabel *doctorNameLabel;
+@property (nonatomic, strong) UILabel *departmentNameLabel;
+@property (nonatomic, strong) UILabel *CCLabel;
+
 - (void)assignmentVisceraWithModel:(HealthTipsModel *)model;
 
 @end

@@ -18,6 +18,8 @@
 #import "EEGDetailController.h"
 #import "SidebarViewController.h"
 #import "TimeLineView.h"
+#import "SBJson.h"
+
 
 @interface ArchivesController ()<WKUIDelegate,WKNavigationDelegate,SidebarViewDelegate>
 
@@ -169,7 +171,7 @@
 //上拉刷新
 -(void)loadMoreDataOther {
     
-    if (_typeUrlInteger == 10){
+    if (_typeUrlInteger == 10||_typeUrlInteger == 0){
         [self.timeLinvView.tableView.mj_footer endRefreshing];
         return;
     };
@@ -198,7 +200,7 @@
     else if([str isEqualToString:@"体温"])    self.typeUrlInteger = 8;
     else if([str isEqualToString:@"呼吸"])    self.typeUrlInteger = 9;
     else if([str isEqualToString:@"季度报告"]) self.typeUrlInteger = 10;
-    else if([str isEqualToString:@"病例"])    self.typeUrlInteger = 3;
+    else if([str isEqualToString:@"病例"])    self.typeUrlInteger = 11;
     
     self.pageInteger = 1;
     
@@ -278,7 +280,7 @@
     
     switch (tipyInteger) {
         case 0:   str = [NSString stringWithFormat:
-                         @"/member/myreport/list/JLBS/%@.jhtml?pageNumber=%@",memberId,pageIntegerstr];
+                         @"/member/myreport/view/%@.jhtml?",memberId];
             break;
         case 1:   str = [NSString stringWithFormat:
                          @"/member/myreport/list/JLBS/%@.jhtml?pageNumber=%@",memberId,pageIntegerstr];
@@ -300,13 +302,14 @@
                           @"/member/service/reportslist.jhtml?memberChildId=%@",@"24"];
             break;
             
-        case 11:   [weakSelf showAlertWarmMessage:@"病例!"];
+        case 11:   [self getCasesList];
+            
+            return;
             break;
             
         default:
             break;
     }
-   
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.label.text = @"加载中...";
@@ -314,19 +317,34 @@
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:str parameters:nil successBlock:^(id response) {
         
         [hud hideAnimated:YES];
-        NSLog(@"%@",response);
         if ([response[@"status"] integerValue] == 100){
             
             if (self.pageInteger == 1) {
                 [weakSelf.dataListArray removeAllObjects];
             }
             
-            if (tipyInteger == 4) {
+
+            if (tipyInteger == 0) {
+                
+                NSArray *array = @[@"JLBS",@"TZBS",@"ZFBS",@"ecg",@"bloodPressure",@"oxygen",@"bodyTemperature"];
+                
+                for (int i = 0 ; i<array.count; i++) {
+                     NSDictionary *dic  = [[response valueForKey:@"data"] valueForKey:array[i]];
+                    HealthTipsModel *tipModel = [[HealthTipsModel alloc] init];
+                    
+                    if (dic != nil && ![dic isKindOfClass:[NSNull class]]) {
+                        [tipModel yy_modelSetWithJSON:dic];
+                        tipModel.typeStr = array[i];
+                        [weakSelf.dataListArray addObject:tipModel];
+                    }
+                }
+         
+                
+            }else if (tipyInteger == 4) {
                 for (NSDictionary *dic in [[response valueForKey:@"data"] valueForKey:@"content"]) {
                     HealthTipsModel *tipModel = [[HealthTipsModel alloc] init];
                     [tipModel yy_modelSetWithJSON:dic];
                     [weakSelf.dataListArray addObject:tipModel];
-                    NSLog(@"%@",tipModel.createDate);
                 }
             }else {
                 for (NSDictionary *dic in [response valueForKey:@"data"]) {
@@ -386,6 +404,7 @@
                 urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(30)];
                 break;
             case 6:
+                
                 urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(20)];
                 break;
             case 7:
@@ -407,10 +426,73 @@
     if(self.wkwebview){
         self.wkwebview.hidden = YES;
     }
-    
-  
 }
 
+
+//病例的请求
+
+-(void)getCasesList {
+    
+    NSString *UrlPre=URL_PRE;
+    NSString *aUrl = [NSString stringWithFormat:@"%@weiq/diseaList.jhtml",UrlPre];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    
+    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+    [request setPostValue:[UserShareOnce shareOnce].phone forKey:@"phone"];
+    
+    [request setTimeOutSeconds:20];
+    [request setRequestMethod:@"POST"];
+    [request setDelegate:self];
+    [request setDidFailSelector:@selector(requesstuserinfoError:)];
+    [request setDidFinishSelector:@selector(requesstuserinfoCompleted:)];
+    [request startAsynchronous];
+    
+    
+}
+
+
+- (void)requesstuserinfoError:(ASIHTTPRequest *)request
+{
+    //[SSWaitViewEx removeWaitViewFrom:self.view];
+    
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉，请检查您的网络是否畅通" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+    [av show];
+}
+- (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
+{
+    NSString* reqstr=[request responseString];
+    //NSLog(@"dic==%@",reqstr);
+    NSDictionary * dica=[reqstr JSONValue];
+    NSLog(@"dic==%@",reqstr);
+    id status=[dica objectForKey:@"status"];
+    //NSLog(@"234214324%@",status);
+    if ([status intValue]== 100) {
+        
+        for (NSDictionary *dic in [dica valueForKey:@"data"]) {
+            HealthTipsModel *tipModel = [[HealthTipsModel alloc] init];
+            [tipModel yy_modelSetWithJSON:dic];
+            [self.dataListArray addObject:tipModel];
+        }
+        
+        
+        [self.timeLinvView relodTableViewWitDataArray:self.dataListArray withType:self.typeUrlInteger];
+
+    }
+    else if ([status intValue]== 44)
+    {
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"登录超时，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        av.tag  = 100008;
+        [av show];
+    }
+    else  {
+        NSString *str = [dica objectForKey:@"data"];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        
+        [av show];
+    }
+}
 
 #pragma mark - tableview代理方法
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
