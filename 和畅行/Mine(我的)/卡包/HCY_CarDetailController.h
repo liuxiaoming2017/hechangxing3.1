@@ -7,11 +7,11 @@
 //
 
 #import "SayAndWriteController.h"
-
+#import "HYC_CardsModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HCY_CarDetailController : SayAndWriteController
-
+@property (nonatomic,strong)HYC_CardsModel *model;
 @end
 
 NS_ASSUME_NONNULL_END

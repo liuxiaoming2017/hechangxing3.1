@@ -33,7 +33,8 @@
 - (void)createupUI
 {
     
-    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height-20)];
+    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.width *274/414)];
+    
     self.imageV.userInteractionEnabled = YES;
     [self addSubview:self.imageV];
     
@@ -275,13 +276,24 @@
 
 -(void)pushAction {
     
-    HCY_ActivityController *vc = [[HCY_ActivityController alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.viewController.navigationController pushViewController:vc animated:YES];
-    vc.titleStr = _pushModel.title;
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,_pushModel.link];
-    vc.progressType = progress2;
-    vc.urlStr = urlStr;
+    if(_pushModel.link==nil||[_pushModel.link isKindOfClass:[NSNull class]]||_pushModel.link.length == 0){
+        
+        UIAlertController *aler = [UIAlertController alertControllerWithTitle:@"提示" message:@"敬请期待" preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *sureACtion = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleCancel) handler:nil];
+        [aler addAction:sureACtion];
+        [[self viewController] presentViewController:aler animated:YES completion:nil];
+        
+    }else {
+        HCY_ActivityController *vc = [[HCY_ActivityController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.viewController.navigationController pushViewController:vc animated:YES];
+        vc.titleStr = _pushModel.title;
+        NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,_pushModel.link];
+        vc.progressType = progress2;
+        vc.urlStr = urlStr;
+    }
+    
+   
 }
 
 @end

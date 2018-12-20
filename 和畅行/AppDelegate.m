@@ -67,11 +67,7 @@
     
     [self.window makeKeyAndVisible];
     
-    [UMCommonLogManager setUpUMCommonLogManager];
-    [UMConfigure setLogEnabled:YES];
-    [UMConfigure initWithAppkey:@"5bbacd04b465f5db4c000073" channel:@"App Store"];
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:APP_SECRET redirectURL:nil];
-     [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
+    
     [self getAppSecret];
     return YES;
 }
@@ -82,15 +78,23 @@
      *  MD5加密后的字符串
      */
     NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",@"weixinPayPlugin"];
-    NSString *iPoneNumberMD5 = [GlobalCommon md5:iPoneNumber];
-    NSDictionary *dic = @{@"pluginname":@"weixinPayPlugin",@"token":iPoneNumberMD5};
+    NSString *iPoneNumberMD5 = [[GlobalCommon md5:iPoneNumber] uppercaseString];
+    NSDictionary *dic = @{@"pluginname":@"weixinPayPlugin",
+                          @"token":iPoneNumberMD5};
     
     NSLog(@"%@",dic);
     [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:@"weiq/weiq/getWeiqSecret.jhtml" parameters:dic successBlock:^(id response) {
         
+        NSString *str = [[response valueForKey:@"data"] valueForKey:@"secret"];
+        
+        [UMCommonLogManager setUpUMCommonLogManager];
+        [UMConfigure setLogEnabled:YES];
+        [UMConfigure initWithAppkey:@"5bbacd04b465f5db4c000073" channel:@"App Store"];
+        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:str redirectURL:nil];
+        [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
         
     } failureBlock:^(NSError *error) {
-        
+        NSLog(@"%@",error);
     }];
     
 }

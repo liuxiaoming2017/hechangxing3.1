@@ -205,6 +205,22 @@
     }
 }
 
+
+/*
+ privilege =         [
+ ]
+ unionid = oD48ct2BfaaDLCIO70OTBtPZhj5M
+ openid = orAqNwqb-7U7Nb9Vt3tDdejnMOIc
+ headimgurl = http://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83erevfDZxULclPdNWhZrxeINicMCS1zUXIpwlXuE0EeE5h1Lwfg6rqc0wbHQ0aWjbmbVR2IsXx728icA/132
+ nickname = 化身孤岛的鲸 🐳
+ city = 石家庄
+ country = 中国
+ province = 河北
+ sex = 1
+ language = zh_CN
+ 
+ */
+
 # pragma mark - 微信登录
 - (void)weixinBtnAction
 {
@@ -216,18 +232,26 @@
             
         } else {
             UMSocialUserInfoResponse *resp = result;
-            // 授权信息
-            NSLog(@"Wechat uid: %@", resp.uid);
-            NSLog(@"Wechat openid: %@", resp.openid);
-            NSLog(@"Wechat accessToken: %@", resp.accessToken);
-            NSLog(@"Wechat refreshToken: %@", resp.refreshToken);
-            NSLog(@"Wechat expiration: %@", resp.expiration);
-            // 用户信息
-            NSLog(@"Wechat name: %@", resp.name);
-            NSLog(@"Wechat iconurl: %@", resp.iconurl);
-            NSLog(@"Wechat gender: %@", resp.gender);
-            // 第三方平台SDK源数据
-            NSLog(@"Wechat originalResponse: %@", resp.originalResponse);
+            
+            NSDictionary *weiXDic = @{@"unionid":resp.uid,
+                                      @"screen_name":@"resp.name",
+                                      @"gende":resp.gender,
+                                      @"profile_image_url":resp.iconurl};
+            
+             [self userLoginWithWeiXParams:weiXDic];
+            
+//            // 授权信息
+//            NSLog(@"Wechat uid: %@", resp.uid);
+//            NSLog(@"Wechat openid: %@", resp.openid);
+//            NSLog(@"Wechat accessToken: %@", resp.accessToken);
+//            NSLog(@"Wechat refreshToken: %@", resp.refreshToken);
+//            NSLog(@"Wechat expiration: %@", resp.expiration);
+//            // 用户信息
+//            NSLog(@"Wechat name: %@", resp.name);
+//            NSLog(@"Wechat iconurl: %@", resp.iconurl);
+//            NSLog(@"Wechat gender: %@", resp.gender);
+//            // 第三方平台SDK源数据
+//            NSLog(@"Wechat originalResponse: %@", resp.originalResponse);
         }
     }];
 }

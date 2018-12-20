@@ -325,7 +325,6 @@
 -(void)chooseMarry:(UIButton *)button{
     UIButton *marryStatuBtn = (UIButton *)[self.view viewWithTag:31];
     [marryStatuBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [marryStatuBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -180, 0, 0)];
     switch (button.tag) {
         case 51:
         {//已婚
@@ -670,8 +669,7 @@
         marryLabel.backgroundColor=[UIColor whiteColor];
 
         UIButton *marryStateBtn = [Tools creatButtonWithFrame:CGRectMake(marryLabel.frame.origin.x+marryLabel.frame.size.width+5, (cell.frame.size.height-21)/2, ScreenWidth-marryLabel.frame.origin.x-marryLabel.frame.size.width-5-20.5, 21) target:self sel:@selector(marryBtnClick:) tag:31 image:nil title:@"请选择您的婚否情况"];
-//        marryStateBtn.backgroundColor = [UIColor blackColor];
-
+        
         marryStateBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         [marryStateBtn setTitleColor:[UtilityFunc colorWithHexString:@"#666666"] forState:UIControlStateNormal];
         marryStateBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -680,7 +678,6 @@
             NSLog(@"婚姻状况：%@",[UserShareOnce shareOnce].marryState);
             [marryStateBtn setTitle:[UserShareOnce shareOnce].marryState forState:UIControlStateNormal];
             [marryStateBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [marryStateBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -180, 0, 0)];
         }
         [cell addSubview:marryStateBtn];
 

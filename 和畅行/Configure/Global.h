@@ -16,12 +16,12 @@ extern BOOL isJY;
 extern BOOL isSF;
 extern BOOL isBF;
 
-//#define URL_PRE @"http://119.254.24.4:7006/"
+#define URL_PRE @"http://10.1.71.52:8888/hcy-system/"
 
 
 //#define URL_PRE @"http://eky3h.com/healthlm/"
-#define URL_PRE @"http://10.1.71.104:8080/hcy/"
-//#define URL_PRE @"http://10.1.71.104:10080/hcy-system/"
+//#define URL_PRE @"http://10.1.71.104:8080/hcy/"
+
 
 
 //#define URL_PRE22 @"http://10.1.71.50:8080/hcy/"

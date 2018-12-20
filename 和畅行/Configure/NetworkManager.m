@@ -163,7 +163,6 @@ static NSMutableArray *tasks;
                 failureBlock(error);
             }
             
-            
         }];
         
     }
@@ -186,14 +185,12 @@ static NSMutableArray *tasks;
                 successBlock(responseObject);
             }
             
-            
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
             if (failureBlock)
             {
                 failureBlock(error);
             }
-            
             
         }];
         
@@ -285,7 +282,6 @@ static NSMutableArray *tasks;
             {
                 successBlock(responseObject);
             }
-            
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             

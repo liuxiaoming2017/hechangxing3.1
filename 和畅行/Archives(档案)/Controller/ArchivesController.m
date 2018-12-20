@@ -107,7 +107,6 @@
     self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.navTitleLabel.text = @"健康档案";
     self.navTitleLabel.textColor = [UIColor whiteColor];
-    //[self.leftBtn setImage:[UIImage imageNamed:@"user_01"] forState:UIControlStateNormal];
     [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     
     self.timeLinvView = [[TimeLineView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, ScreenWidth, ScreenHeight-self.topView.bottom-kTabBarHeight) withData:self.dataListArray];
@@ -169,6 +168,11 @@
 
 //上拉刷新
 -(void)loadMoreDataOther {
+    
+    if (_typeUrlInteger == 10){
+        [self.timeLinvView.tableView.mj_footer endRefreshing];
+        return;
+    };
     self.pageInteger ++;
     [self requestHealthHintDataWithTipyInteger:self.typeUrlInteger withPageInteger:self.pageInteger];
     
@@ -292,9 +296,8 @@
                          @"/member/myreport/getEcgList/%@.jhtml?pageNumber=%@",memberId,pageIntegerstr];
             break;
             
-        case 10:               [self.timeLinvView relodTableViewWitDataArray:weakSelf.dataListArray withType:self.typeUrlInteger];
-            return;
-;
+        case 10:   str = [NSString stringWithFormat:
+                          @"/member/service/reportslist.jhtml?memberChildId=%@",@"24"];
             break;
             
         case 11:   [weakSelf showAlertWarmMessage:@"病例!"];

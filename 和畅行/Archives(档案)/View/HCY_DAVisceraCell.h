@@ -12,13 +12,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HCY_DAVisceraCell : UITableViewCell
 
-@property (nonatomic,strong) CALayer *subLayer;
-@property (nonatomic,strong) UIImageView *leftImageV;
-@property (nonatomic,strong) UILabel *topLabel;
-@property (nonatomic,strong) UILabel *lowLabel;
-@property (nonatomic,strong) UILabel *timeLabel;
-@property (nonatomic,strong) UILabel *createDateLabel;
+@property (nonatomic, strong) CALayer *subLayer;
+@property (nonatomic, strong) UIImageView *leftImageV;
+@property (nonatomic, strong) UILabel *topLabel;
+@property (nonatomic, strong) UILabel *lowLabel;
+@property (nonatomic, strong) UILabel *timeLabel;
+@property (nonatomic, strong) UILabel *createDateLabel;
 @property (nonatomic, strong) UILabel *typeLabel;
+@property (nonatomic, strong) UIImageView *imageV;
 
 
 - (void)assignmentVisceraWithModel:(HealthTipsModel *)model;

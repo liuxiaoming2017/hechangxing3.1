@@ -32,7 +32,7 @@
     
     
     _hLabel = [[UILabel alloc] init];
-    _hLabel.frame = CGRectMake(10, 10, 150, 30);
+    _hLabel.frame = CGRectMake(10, 10, 200, 30);
     _hLabel.textColor = [UIColor whiteColor];
     _hLabel.text = @"视频问诊半年卡";
     _hLabel.font = [UIFont systemFontOfSize:21];
@@ -57,12 +57,46 @@
     _yLabel.text = @"2019-11-11到期";
     _yLabel.font = [UIFont systemFontOfSize:12];
     _yLabel.textColor = [UIColor whiteColor];
-    [imageV addSubview:_yLabel];
-      
+//    [imageV addSubview:_yLabel];
+    
     
 }
 
 
+-(void)setCarListDataWithModel:(HYC_CardsModel *)model {
+    
+    _hLabel.text = model.service_name;
+    
+    
+    if (model.cardDescription==nil || [model.cardDescription isKindOfClass:[NSNull class]]||model.cardDescription.length == 0) {
+         _mLabel.text = @"暂无";
+    }else{
+        _mLabel.text = model.cardDescription;
+    }
+    
+    
+    if ([model.status  isEqualToString:@"1"]) {
+        _imageV.hidden = NO;
+    }else {
+        _imageV.hidden = YES;
+    }
+
+//    NSString *timeStr = ;
+//    NSString *endTimeStr =  [NSString stringWithFormat:@"%@到期",[self getDateStringWithTimeStr:timeStr]];
+//    _yLabel.text = endTimeStr;
+    
+}
+
+
+-(NSString *)getDateStringWithTimeStr:(NSString *)str{
+    NSTimeInterval time=[str doubleValue]/1000;//传入的时间戳str如果是精确到毫秒的记得要/1000
+    NSDate *detailDate=[NSDate dateWithTimeIntervalSince1970:time];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; //实例化一个NSDateFormatter对象
+    //设定时间格式,这里可以设置成自己需要的格式
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
+    return currentDateStr;
+}
 
 
 - (void)layoutSubviews{
