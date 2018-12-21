@@ -130,14 +130,12 @@
     if (self.pushModel.picurl!=nil && ![self.pushModel.picurl isKindOfClass:[NSNull class]]&&self.pushModel.picurl.length != 0) {
         NSString *imageUrl = [NSString stringWithFormat:@"%@%@",URL_PRE,self.pushModel.picurl];
         NSURL *url = [NSURL URLWithString:imageUrl];
+        self.packgeView.toViewButton.frame = CGRectMake(ScreenWidth/2.0 - 136, self.imageV.bottom - 20, 272, 40);
+
         [self.packgeView.toViewButton sd_setBackgroundImageWithURL:url forState:UIControlStateNormal];
-        [self.packgeView.toViewButton setBackgroundColor:[UIColor clearColor]];
-        [self.packgeView.toViewButton setTitle:@"" forState:(UIControlStateNormal)];
     }else {
-        [self.packgeView.toViewButton setBackgroundColor:RGB_ButtonBlue];
-        [self.packgeView.toViewButton setTitle:@"活动页面" forState:(UIControlStateNormal)];
-        self.packgeView.toViewButton.layer.cornerRadius = self.packgeView.toViewButton.height/2;
-        self.packgeView.toViewButton.layer.masksToBounds = YES;
+        self.packgeView.toViewButton.frame = CGRectMake(ScreenWidth/2.0 - 136, self.imageV.bottom - 30, 272, 60);
+        [self.packgeView.toViewButton setBackgroundImage:[UIImage imageNamed:@"和畅包"] forState:(UIControlStateNormal)];
     }
     
     

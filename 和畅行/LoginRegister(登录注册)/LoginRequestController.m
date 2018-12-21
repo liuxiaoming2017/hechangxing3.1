@@ -178,6 +178,9 @@
                 
             }
         }else{
+            
+            [UIApplication sharedApplication].keyWindow.rootViewController = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSuccessNotification object:nil];
             [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
         }
     } failureBlock:^(NSError *error) {
@@ -207,14 +210,13 @@
 
 
 //微信登录
-- (void)userLoginWithWeiXParams:(NSDictionary *)paramDic{
+- (void)userLoginWithWeiXParams:(NSDictionary *)paramDic withCheck:(NSInteger)check{
     
     
-    NSString *aUrl = @"weiq/weix/authlogin.jhtml";
+    NSString *aUrl = @"/weiq/weiq/weix/authlogin.jhtml";
     __weak typeof(self) weakself = self;
     
     [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:paramDic successBlock:^(id response) {
-        
         NSLog(@"%@",response);
 
         if([[response objectForKey:@"status"] intValue] == 100){
@@ -228,30 +230,27 @@
                 [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstLogin"];
             }
             [[NSUserDefaults standardUserDefaults] setObject:[paramDic objectForKey:@"username"] forKey:@"loginPhone"];
-            [[NSUserDefaults standardUserDefaults] setObject:[paramDic objectForKey:@"password"] forKey:@"loginPassword"];
             //将登录成功的标志保存到本地
             [[NSUserDefaults standardUserDefaults] setObject:@"isLogin" forKey:@"longinStatus"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             //发送登录成功的通知
             [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginCompleted" object:self userInfo:nil];
-           
             
             
             UserShareOnce *userShare = [UserShareOnce shareOnce];
             NSDictionary *dic = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"member"];
             
-            NSLog(@"%@",response);
+            NSLog(@"%@",dic);
             userShare = [UserShareOnce mj_objectWithKeyValues:dic];
             userShare.JSESSIONID = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"JSESSIONID"];
             userShare.token = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"token"];
-            userShare.passWord = self->passWordBox.text;
             NSArray *arrMem = [[[response objectForKey:@"data"] objectForKey:@"member"] objectForKey:@"mengberchild"];
             
             NSMutableArray *memberArr = [NSMutableArray arrayWithCapacity:0];
             
             for (NSDictionary *dic in  arrMem) {
                 ChildMemberModel *model = [ChildMemberModel mj_objectWithKeyValues:dic];
-                if([model.mobile isEqualToString:[paramDic objectForKey:@"username"]]) {
+                if([model.name isEqualToString:[[[response objectForKey:@"data"] objectForKey:@"member"] objectForKey:@"username"]]) {
                     MemberUserShance *memberShance = [MemberUserShance shareOnce];
                     memberShance = [MemberUserShance mj_objectWithKeyValues:dic];
                     
@@ -260,6 +259,20 @@
                 [memberArr addObject:data];
             }
             
+            
+            if (check)
+            {
+                NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
+                if (dicTmp) {
+                    [dicTmp setObject:[paramDic valueForKey:@"unionid"] forKey:@"UNIONID"];
+                    [dicTmp setObject:[paramDic valueForKey:@"screen_name"] forKey:@"SCREENNAME"];
+                    [dicTmp setObject:[paramDic valueForKey:@"gender"] forKey:@"GENDER"];
+                    [dicTmp setObject:[paramDic valueForKey:@"profile_image_url"] forKey:@"PROFILEIMAGEURL"];
+                    [dicTmp setValue:@"2" forKey:@"ischeck"];
+
+                }
+                [UtilityFunc updateAppConfigWithMutableDictionary:dicTmp];
+            }
             
             if (![[dic objectForKey:@"isMarried"] isKindOfClass:[NSNull class]]) {
                 if ([[dic objectForKey:@"isMarried"] boolValue] == YES) {

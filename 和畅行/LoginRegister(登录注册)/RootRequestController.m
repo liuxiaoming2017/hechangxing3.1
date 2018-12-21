@@ -71,6 +71,18 @@
 //        } failureBlock:^(NSError *error) {
 //
 //        }];
+    }else if ([strcheck isEqualToString:@"2"]){
+        
+      
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+        [dic setObject:[dicTmp valueForKey:@"UNIONID"] forKey:@"unionid"];
+        [dic setObject:[dicTmp valueForKey:@"SCREENNAME"] forKey:@"screen_name"];
+        [dic setObject:[dicTmp valueForKey:@"GENDER"] forKey:@"gender"];
+        [dic setObject:[dicTmp valueForKey:@"PROFILEIMAGEURL"] forKey:@"profile_image_url"];
+        // __block typeof(self) blockSelf = self;
+        [self userLoginWithWeiXParams:dic withCheck:2];
+        
     }else{
         [appDelegate() returnMainPage];
     }

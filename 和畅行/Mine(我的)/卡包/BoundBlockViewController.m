@@ -83,7 +83,6 @@
         UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"卡号不能为空" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
         [av show];
         
-        [av release];
         return;
     }
     [self showHUD];
@@ -96,32 +95,35 @@
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
     [request setPostValue:_textField.text forKey:@"code"];
 
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
     [request setTimeOutSeconds:20];
     [request setRequestMethod:@"POST"];
     [request setDelegate:self];
     [request setDidFailSelector:@selector(requesstuserinfoError:)];
     [request setDidFinishSelector:@selector(requesstuserinfoCompleted:)];
     [request startAsynchronous];
-//
+    
     
 //    NSDictionary *dic = @{@"memberId":[UserShareOnce shareOnce].uid,
 //                          @"code":_textField.text};
+   
+//
+    
+    
 //
 //    NSString *str = @"/member/cashcard/bind.jhtml";
-//
+
 //            //为网络请求添加请
 //    NSDictionary *headers = @{@"token":[UserShareOnce shareOnce].token,
 //                              @"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID],
 //                              @"version":@"ios_hcy-yh-1.0"};
-//
-//    [[NetworkManager sharedNetworkManager]requestWithType:1 urlString:str headParameters:headers parameters:dic successBlock:^(id response) {
-//
-//
-//        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+
+//    [[NetworkManager sharedNetworkManager]requestWithType:1 urlString:str headParameters:nil parameters:dic successBlock:^(id response) {
 //
 //
-//                NSLog(@"%@",dict);
+////        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+//
+//
+//                NSLog(@"%@",response);
 //
 //
 //            } failureBlock:^(NSError *error) {
