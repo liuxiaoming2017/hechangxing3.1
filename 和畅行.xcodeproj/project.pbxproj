@@ -5405,9 +5405,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3X65BCYVHU;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Nation Sky Network Technology Co.,Ltd";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = E2CU52X6UR;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5495,10 +5495,10 @@
 					"\"VideoToolbox\"",
 					"-all_load",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nationsky.meap.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = meaptest;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -5510,9 +5510,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3X65BCYVHU;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Nation Sky Network Technology Co.,Ltd";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = E2CU52X6UR;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5600,10 +5600,10 @@
 					"\"VideoToolbox\"",
 					"-all_load",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nationsky.meap.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = meaptest;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
