@@ -68,6 +68,10 @@
     _yLabel.textColor = [UIColor whiteColor];
     [imageV addSubview:_yLabel];
     
+    if([GlobalCommon stringEqualNull:self.model.cardDescription]){
+        _yLabel.frame = CGRectMake(_mLabel.left , _hLabel.bottom , 160, 30);
+    }
+    
     self.serviceTableView = [[UITableView alloc]initWithFrame:CGRectMake(_yLabel.left+5, _yLabel.bottom+5, imageV.width-_yLabel.left*2 - 10, imageV.height-_yLabel.bottom-10) style:UITableViewStylePlain];
     self.serviceTableView.backgroundColor = [UIColor clearColor];
     self.serviceTableView.separatorStyle = UITableViewCellEditingStyleNone;
@@ -172,11 +176,17 @@
             cell.typeLabel.text = [dic objectForKey:@"serviceName"];
             NSString *str = [NSString stringWithFormat:@"%@%@",[dic objectForKey:@"value"],[dic objectForKey:@"unit"]];
             cell.contentLabel.text = str;
-            if([[dic objectForKey:@"serviceCode"] isEqualToString:@"100006"]){
-                [cell.tradeBtn setTitle:@"去咨询" forState:UIControlStateNormal];
+            
+            if(![GlobalCommon stringEqualNull:[dic objectForKey:@"serviceCode"]]){
+                if([[dic objectForKey:@"serviceCode"] isEqualToString:@"100006"]){
+                    [cell.tradeBtn setTitle:@"去咨询" forState:UIControlStateNormal];
+                }else{
+                    [cell.tradeBtn setTitle:@"去预约" forState:UIControlStateNormal];
+                }
             }else{
-                [cell.tradeBtn setTitle:@"去预约" forState:UIControlStateNormal];
+                [cell.tradeBtn setTitle:@"去咨询" forState:UIControlStateNormal];
             }
+            
         }
         return cell;
     }else if (tableView == self.listTableView){

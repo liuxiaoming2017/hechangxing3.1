@@ -433,4 +433,17 @@
     
 }
 
++ (BOOL)stringEqualNull:(NSString *)str
+{
+    if([str isKindOfClass:[NSNull class]]){
+        return YES;
+    }
+    if(str != nil && ![str isEqualToString:@""] ){
+        return NO;
+    }else{
+        return YES;
+    }
+    return NO;
+}
+
 @end

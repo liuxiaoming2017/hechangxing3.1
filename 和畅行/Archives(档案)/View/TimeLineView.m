@@ -17,7 +17,7 @@
 #import "ResultController.h"
 #import "EEGDetailController.h"
 #import "HCY_ReportCell.h"
-
+#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 
 @interface TimeLineView()<UITableViewDelegate,UITableViewDataSource,govSectionViewDelegate>
 
@@ -333,13 +333,15 @@
     }
     
     
-    //档案
+    //病例列表
     if (model.medicRecordId!=nil&&![model.medicRecordId isKindOfClass:[NSNull class]]&&model.medicRecordId.length!=0){
         
-        UIAlertController *showAler = [UIAlertController alertControllerWithTitle:@"提示" message:@"跳转档案详情" preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleCancel) handler:nil];
-        [showAler addAction:sureAction];
-        [[self viewController] presentViewController:showAler animated:YES completion:nil];
+        NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:testToken medicId:testMedicId];
+        ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+        vc.urlStr = resultStr;
+        vc.titleStr = @"病例详情";
+        vc.hidesBottomBarWhenPushed = YES;
+        [[self viewController].navigationController pushViewController:vc animated:YES];
         
     }
     

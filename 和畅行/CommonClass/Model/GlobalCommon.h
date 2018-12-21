@@ -42,4 +42,7 @@
 + (BOOL)isManyMember;
 
 + (NSString *)md5:(NSString *)str;
+
++ (BOOL)stringEqualNull:(NSString *)str;
+
 @end

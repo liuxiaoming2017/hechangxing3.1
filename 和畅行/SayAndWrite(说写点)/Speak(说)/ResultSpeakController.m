@@ -16,7 +16,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navTitleLabel.text = @"健康档案";
+    
+    self.navTitleLabel.text = self.titleStr;
     [self customeViewWithStr:self.urlStr];
 }
 

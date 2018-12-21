@@ -27,6 +27,9 @@
 - (void)setupUI
 {
     NSLog(@"width:%f",self.width);
+    
+    CGFloat cellWidth = ScreenWidth - 20 -20*2-10;
+    
     self.typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 100, 30)];
     self.typeLabel.textAlignment=NSTextAlignmentLeft;
     self.typeLabel.font=[UIFont systemFontOfSize:13.0];
@@ -34,15 +37,15 @@
     self.typeLabel.backgroundColor=[UIColor clearColor];
     [self addSubview:self.typeLabel];
 
-    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right+15, 0, 100, 30)];
-    self.contentLabel.textAlignment=NSTextAlignmentLeft;
+    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(cellWidth/2.0-40, 0, 80, 30)];
+    self.contentLabel.textAlignment=NSTextAlignmentCenter;
     self.contentLabel.font=[UIFont systemFontOfSize:13.0];
     self.contentLabel.textColor=[UIColor whiteColor];
     self.contentLabel.backgroundColor=[UIColor clearColor];
     [self addSubview:self.contentLabel];
     
     self.tradeBtn = [HCY_UnderlineButton buttonWithType:(UIButtonTypeCustom)];
-    self.tradeBtn.frame =CGRectMake(self.width-90, 0, 80, 30);
+    self.tradeBtn.frame =CGRectMake(cellWidth-90, 0, 80, 30);
     self.tradeBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
     self.tradeBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [self.tradeBtn addTarget:self action:@selector(consultingAction:) forControlEvents:(UIControlEventTouchUpInside)];

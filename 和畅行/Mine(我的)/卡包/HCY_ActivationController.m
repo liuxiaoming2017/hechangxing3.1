@@ -21,9 +21,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self requestMemberInfo];
+    //[self requestMemberInfo];
     /// 布局激活卡页面
-    //[self layoutAcitivaTionView];
+    [self layoutAcitivaTionView];
     
 }
 
