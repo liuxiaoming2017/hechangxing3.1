@@ -216,7 +216,7 @@
     
     QuestionModel *model = nil;
     NSInteger indexNum = 0;
-    /*
+    
     if(num>100 && num<200){ //第一个题目
         indexNum = num - 100;
         model = [self.questionArr objectAtIndex:_currentIndex*2];
@@ -239,24 +239,24 @@
     }else{
         model.grade = indexNum;
     }
-    */
+    
     NSArray *idArr = [model.allIDStr componentsSeparatedByString:@","];
     model.answerID = [[idArr objectAtIndex:model.selectNum-1] integerValue];
     
     /*自动答题*/
-    for(NSInteger i=0;i<self.questionArr.count;i++){
-        QuestionModel *model = [self.questionArr objectAtIndex:i];
-        _selectNum+=1;
-        NSInteger indexNum = (arc4random() % 5) + 1;
-        model.selectNum = indexNum;
-        if(model.reverse){
-            model.grade = 5 - indexNum;
-        }else{
-            model.grade = indexNum;
-        }
-        NSArray *idArr = [model.allIDStr componentsSeparatedByString:@","];
-        model.answerID = [[idArr objectAtIndex:model.selectNum-1] integerValue];
-    }
+//    for(NSInteger i=0;i<self.questionArr.count;i++){
+//        QuestionModel *model = [self.questionArr objectAtIndex:i];
+//        _selectNum+=1;
+//        NSInteger indexNum = (arc4random() % 5) + 1;
+//        model.selectNum = indexNum;
+//        if(model.reverse){
+//            model.grade = 5 - indexNum;
+//        }else{
+//            model.grade = indexNum;
+//        }
+//        NSArray *idArr = [model.allIDStr componentsSeparatedByString:@","];
+//        model.answerID = [[idArr objectAtIndex:model.selectNum-1] integerValue];
+//    }
     /*自动答题*/
     
     if(_selectNum == self.questionArr.count){ //所有题目已经答完
@@ -326,9 +326,11 @@
         self.lastPage.hidden = NO;
     }
     if(_currentIndex+1 == _pages){
-        self.nextPage.hidden = YES;
+        //self.nextPage.hidden = YES;
+        [self.nextPage setTitle:@"提交" forState:UIControlStateNormal];
     }else{
-        self.nextPage.hidden = NO;
+        //self.nextPage.hidden = NO;
+        [self.nextPage setTitle:@"下一页" forState:UIControlStateNormal];
     }
     self.allPage.text = [NSString stringWithFormat:@"%ld/%ld页",_currentIndex+1,_pages];
 }
@@ -346,6 +348,15 @@
 
 - (void)nextPageAction
 {
+    if([self.nextPage.titleLabel.text isEqualToString:@"提交"]){
+        if(_selectNum == self.questionArr.count){
+            [self generateTZBS];
+        }else{
+            [self showAlertWarmMessage:@"题目还未答完,不能提交!"];
+        }
+        return;
+    }
+    
     _firstQuestionSelect = NO;
     _secondQuestionSelect = NO;
     [collectionV scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex+1 inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
@@ -515,19 +526,25 @@
         [questionIdsString deleteCharactersInRange:NSMakeRange(0, 1)];
     }
     
-    NSLog(@"questionIdsString************%@",questionIdsString);
+    //NSLog(@"questionIdsString************%@",questionIdsString);
     
     NSDictionary *paramDic = @{@"subjectSn":str,@"memberChildId":[MemberUserShance shareOnce].idNum,@"jsonResults":@"",@"questionnaireIds":questionIdsString,@"tzscore":tzscore};
     
     __weak typeof(self) weakSelf = self;
     //NSString *urlStr = @"subject_category/list.jhtml?sn=TZBS";
     NSString *urlStr = @"/member/myreport/save_report.jhtml";
-    NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+    
     
     [ZYGASINetworking POST_Path:urlStr params:paramDic completed:^(id JSON, NSString *stringData) {
-        NSLog(@"json****:%@",JSON);
+        if([[JSON objectForKey:@"status"] integerValue] == 100){
+            ResultController *resultVC = [[ResultController alloc] init];
+            resultVC.TZBSstr = str;
+            [weakSelf.navigationController pushViewController:resultVC animated:YES];
+        }else{
+            [weakSelf showAlertWarmMessage:@"请求网络失败"];
+        }
     } failed:^(NSError *error) {
-        
+        [weakSelf showAlertWarmMessage:@"请求网络失败"];
     }];
     
 //    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:urlStr headParameters:headers parameters:paramDic successBlock:^(id response) {
