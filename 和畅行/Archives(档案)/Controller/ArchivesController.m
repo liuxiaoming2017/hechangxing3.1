@@ -156,8 +156,7 @@
         memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
     }
     
-    
-    [self requestHealthHintDataWithTipyInteger:0 withPageInteger:self.pageInteger];
+    [self selectIndexWithString:@"最新"];
     
 }
 

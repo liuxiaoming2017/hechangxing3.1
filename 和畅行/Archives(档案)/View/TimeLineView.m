@@ -57,7 +57,38 @@
 
 -(void)relodTableViewWitDataArray:(NSMutableArray *)dataArray withType:(NSInteger)type {
     self.typeInteger = type;
+   
+    if (dataArray.count > 0){
+        HealthTipsModel *model = dataArray[0];
+        if (model.quarter != nil && ![model.quarter isKindOfClass:[NSNull class]]&&model.quarter.length != 0) {
+            self.topModel = model;
+            [dataArray removeObjectAtIndex:0];
+        }
+    }
+    
     self.dataArr = dataArray;
+        
+    if (_typeInteger == 0) {
+         self.dataArr = [self.dataArr  sortedArrayUsingComparator:^(HealthTipsModel *model1, HealthTipsModel *model2) {
+             
+            NSTimeInterval time1=[model1.createDate doubleValue]/1000;
+            NSTimeInterval time2=[model2.createDate doubleValue]/1000;
+            NSDate *detailDate1=[NSDate dateWithTimeIntervalSince1970:time1];
+            NSDate *detailDate2=[NSDate dateWithTimeIntervalSince1970:time2];
+
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat: @"yyyy/MM/dd HH:mm"];
+             
+            if (detailDate1 == [detailDate1 earlierDate: detailDate2]) {
+                return NSOrderedDescending;
+            }else if (detailDate1 == [detailDate1 laterDate: detailDate2]) {
+                return NSOrderedAscending;//升序
+            }else{
+                
+                return NSOrderedSame;//相等
+            }
+        }];
+    }
     [self.tableView reloadData];
 }
 
@@ -70,24 +101,14 @@
 #pragma mark -- 每组返回多少个
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
-    if (_typeInteger == 0&&_dataArr.count > 0) {
-        return _dataArr.count -1;
-    }else {
-        return _dataArr.count;
-    }
-
+    return _dataArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    HealthTipsModel * model = [[HealthTipsModel alloc]init];
-    if (_dataArr.count > 0) {
-         model = _dataArr[0];
-    }
-    if (_typeInteger == 0 &&model.quarter!=nil&&![model.quarter isKindOfClass:[NSNull class]]&&model.quarter.length != 0) {
-             return 90;
-    }else {
+    if (self.topModel != nil && ![self.topModel isKindOfClass:[NSNull class]]) {
+        return 90;
+    }else{
         return 0;
     }
 }
@@ -234,15 +255,17 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
 
-    HealthTipsModel *mdoel = [[HealthTipsModel alloc]init];
-    if (_dataArr.count > 0) {
-        mdoel = _dataArr[0];
+    
+    if (self.topModel != nil && ![self.topModel isKindOfClass:[NSNull class]]) {
+        
+        GovSectionView *sectionV = [GovSectionView showWithModel:self.topModel];
+        sectionV.tableView = self.tableView;
+        sectionV.section = section;
+        sectionV.delegate=self;
+        return sectionV;
+    }else{
+        return nil;
     }
-    GovSectionView *sectionV = [GovSectionView showWithModel:mdoel];
-    sectionV.tableView = self.tableView;
-    sectionV.section = section;
-    sectionV.delegate=self;
-    return sectionV;
 }
 
 #pragma mark - 自定义sectionView的代理方法
@@ -386,6 +409,17 @@
     }
     return nil;
 }
+
+
+
+//排序
+// 将数组按照时间戳排序
+//- (NSMutableArray *)sortWithdataArray:(NSMutableArray *)array {
+//
+//
+//    return sortArray;
+//
+//}
 
 //cell的点击事件
 

@@ -26,6 +26,7 @@
 @property (nonatomic, strong) HCY_HomeImageModel *backImageModel;
 @property (nonatomic, strong) HCY_HomeImageModel *pushModel;
 @property (nonatomic, strong) UIImageView *imageV;
+@property (nonatomic, strong) MBProgressHUD *hud;
 
 
 @end
@@ -200,6 +201,8 @@
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
     [paramDic setObject:[MemberUserShance shareOnce].idNum forKey:@"memberChildId"];
     __weak typeof(self) weakSelf = self;
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.hud.label.text = @"加载中...";
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:paramDic successBlock:^(id response) {
         
         [weakSelf requestRemindNetWork];
@@ -220,10 +223,12 @@
 - (void)requestRemindNetWork
 {
    
+    
     NSString *urlStr = @"member/new_ins/tips.jhtml";
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
     [paramDic setObject:[MemberUserShance shareOnce].idNum forKey:@"memberChildId"];
     __weak typeof(self) weakSelf = self;
+    
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:paramDic successBlock:^(id response) {
         
         if([[response objectForKey:@"status"] integerValue] == 100){
@@ -283,8 +288,9 @@
         }else{
             [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
         }
+        [self.hud hideAnimated:YES];
     } failureBlock:^(NSError *error) {
-        
+        [self.hud hideAnimated:YES];
     }];
 }
 
