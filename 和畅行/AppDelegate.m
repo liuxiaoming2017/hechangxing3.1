@@ -93,6 +93,8 @@
         [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:str redirectURL:nil];
         [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
         
+        [[NSUserDefaults standardUserDefaults]setValue:@"10" forKey:@"WEIXINSTATES"];
+        
     } failureBlock:^(NSError *error) {
         NSLog(@"%@",error);
     }];

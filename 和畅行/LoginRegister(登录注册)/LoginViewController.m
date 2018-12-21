@@ -158,6 +158,14 @@
     [weixinBtn addTarget:self action:@selector(weixinBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:weixinBtn];
     
+    NSString *str = [[NSUserDefaults standardUserDefaults]valueForKey:@"WEIXINSTATES"];
+    if ([str isEqualToString:@"10"]) {
+        weixinBtn.hidden = NO;
+        otherLoginLabel.hidden = NO;
+    }else{
+        weixinBtn.hidden = YES;
+        otherLoginLabel.hidden = YES;
+    }
     //从本地查找用户
     NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
     NSString* strcheck=[dicTmp objectForKey:@"ischeck"];
@@ -224,6 +232,7 @@
 # pragma mark - 微信登录
 - (void)weixinBtnAction
 {
+    
     [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_WechatSession currentViewController:nil completion:^(id result, NSError *error) {
         NSLog(@"hahah");
         if (error) {
