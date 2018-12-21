@@ -57,6 +57,10 @@
         [selectBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [selectBtn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
         [selectBtn addTarget:self action:@selector(selectBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+        
+        if(i == 0) {
+            selectBtn.selected = YES;
+        }
         [self.contentView addSubview:selectBtn];
     }
     
@@ -72,7 +76,6 @@
     sureBtn.titleLabel.font = [UIFont systemFontOfSize:20];
     [sureBtn addTarget:self action:@selector(sureBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:sureBtn];
-    
     
 }
 

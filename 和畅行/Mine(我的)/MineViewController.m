@@ -93,7 +93,7 @@
     [self.view addSubview:lineView];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, lineView.bottom, ScreenWidth, ScreenHeight-lineView.bottom-45) style:UITableViewStylePlain];
+        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, lineView.bottom, ScreenWidth, ScreenHeight-lineView.bottom-kNavBarHeight) style:UITableViewStylePlain];
         self.tableView.showsVerticalScrollIndicator = NO;
         self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
         self.tableView.delegate = self;

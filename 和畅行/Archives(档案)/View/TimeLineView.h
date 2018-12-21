@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HealthTipsModel.h"
 @interface TimeLineView : UIView
+
+@property (nonatomic,strong) HealthTipsModel*topModel;
 @property (nonatomic,strong)  MBProgressHUD *hud;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *dataArr;
