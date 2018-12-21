@@ -71,18 +71,24 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return _dataArr.count;
+    if (_typeInteger == 0&&_dataArr.count > 0) {
+        return _dataArr.count -1;
+    }else {
+        return _dataArr.count;
+    }
 
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    
-    if (_typeInteger == 0) {
-        return 90;
+    HealthTipsModel * model = [[HealthTipsModel alloc]init];
+    if (_dataArr.count > 0) {
+         model = _dataArr[0];
+    }
+    if (_typeInteger == 0 &&model.quarter!=nil&&![model.quarter isKindOfClass:[NSNull class]]&&model.quarter.length != 0) {
+             return 90;
     }else {
         return 0;
-
     }
 }
 
@@ -176,7 +182,13 @@
         
         
     }else {
-        HealthTipsModel *model = _dataArr[indexPath.row];
+        
+        HealthTipsModel *model = [[HealthTipsModel alloc]init];
+        if (_typeInteger == 0) {
+            model = _dataArr[indexPath.row - 1];
+        }else {
+            model = _dataArr[indexPath.row];
+        }
 
         
         if(indexPath.row == 0 ){
@@ -222,7 +234,11 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
 
-    GovSectionView *sectionV = [GovSectionView showWithName:@"" withSection:section];
+    HealthTipsModel *mdoel = [[HealthTipsModel alloc]init];
+    if (_dataArr.count > 0) {
+        mdoel = _dataArr[0];
+    }
+    GovSectionView *sectionV = [GovSectionView showWithModel:mdoel];
     sectionV.tableView = self.tableView;
     sectionV.section = section;
     sectionV.delegate=self;
@@ -232,20 +248,19 @@
 #pragma mark - 自定义sectionView的代理方法
 - (void)sectionGestTap:(NSInteger)section withTapGesture:(UITapGestureRecognizer *)gest
 {
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"跳转报告详情" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:NULL];
-    [alertVC addAction:alertAct1];
-    [self.viewController presentViewController:alertVC animated:YES completion:NULL];
     
+    HealthTipsModel *model = [[HealthTipsModel alloc]init];
+    if(_dataArr.count > 0) {
+        model = _dataArr[0];
+    }
     
-//    UIView *sectionV = gest.view;
-//    NSInteger sectionTag = sectionV.tag-100;
-//    NSInteger sect = 0;
-//    if(sectionV.superview ==self.tableView){
-//        sect = sectionTag;
-//    }else{
-//        sect = sectionTag;
-//    }
+    NSString *idNim = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
+    
+    NSString *url = [[NSString alloc] initWithFormat:@"%@/member/service/reports.jhtml?memberChildId=%@&quarter=%@&year=%@",URL_PRE,idNim,model.quarter,model.year];
+    ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+    vc.urlStr = url;
+    [[self viewController].navigationController pushViewController:vc animated:YES];
+
     
 }
 
@@ -346,12 +361,12 @@
     }
     
     
-
+ //季度报告
     if (model.quarter != nil && ![model.quarter isKindOfClass:[NSNull class]]&&model.quarter.length != 0) {
         
-//        NSString *idNim = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
+        NSString *idNim = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
         
-        NSString *url = [[NSString alloc] initWithFormat:@"%@/member/service/reports.jhtml?memberChildId=%@&quarter=%@&year=%@",URL_PRE,@"24",model.quarter,model.year];
+        NSString *url = [[NSString alloc] initWithFormat:@"%@/member/service/reports.jhtml?memberChildId=%@&quarter=%@&year=%@",URL_PRE,idNim,model.quarter,model.year];
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = url;
         [[self viewController].navigationController pushViewController:vc animated:YES];

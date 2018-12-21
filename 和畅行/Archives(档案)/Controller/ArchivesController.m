@@ -326,7 +326,7 @@
 
             if (tipyInteger == 0) {
                 
-                NSArray *array = @[@"JLBS",@"TZBS",@"ZFBS",@"ecg",@"bloodPressure",@"oxygen",@"bodyTemperature"];
+                NSArray *array = @[@"report",@"JLBS",@"TZBS",@"ZFBS",@"ecg",@"bloodPressure",@"oxygen",@"bodyTemperature"];
                 
                 for (int i = 0 ; i<array.count; i++) {
                      NSDictionary *dic  = [[response valueForKey:@"data"] valueForKey:array[i]];
@@ -446,7 +446,7 @@
     [request setRequestMethod:@"POST"];
     [request setDelegate:self];
     [request setDidFailSelector:@selector(requesstuserinfoError:)];
-    [request setDidFinishSelector:@selector(requesstuserinfoCompleted:)];
+    [request setDidFinishSelector:@selector(requesstuserinfoCompleted11:)];
     [request startAsynchronous];
     
     
@@ -460,7 +460,7 @@
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉，请检查您的网络是否畅通" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
     [av show];
 }
-- (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
+- (void)requesstuserinfoCompleted11:(ASIHTTPRequest *)request
 {
     NSString* reqstr=[request responseString];
     //NSLog(@"dic==%@",reqstr);

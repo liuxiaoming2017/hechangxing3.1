@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HealthTipsModel.h"
 @class GovSectionView;
 
 @protocol govSectionViewDelegate<NSObject>
@@ -20,6 +21,7 @@
 
 @property (nonatomic, weak) id<govSectionViewDelegate>delegate;
 
-+ (GovSectionView *)showWithName:(NSString *)nameStr withSection:(NSInteger)section;
+
++ (GovSectionView *)showWithModel:(HealthTipsModel *)model;
 + (CGFloat)getSectionHeight;
 @end

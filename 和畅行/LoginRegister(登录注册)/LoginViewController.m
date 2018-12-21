@@ -233,12 +233,21 @@
         } else {
             UMSocialUserInfoResponse *resp = result;
             
+            NSString *str = [NSString string];
+            if ([resp.gender isEqualToString:@"m"]) {
+                str = @"男";
+            }else if([resp.gender isEqualToString:@"w"]) {
+                str = @"女";
+            }else {
+                str = @"";
+            }
+            
             NSDictionary *weiXDic = @{@"unionid":resp.uid,
-                                      @"screen_name":@"resp.name",
-                                      @"gende":resp.gender,
+                                      @"screen_name":resp.name,
+                                      @"gender":str,
                                       @"profile_image_url":resp.iconurl};
             
-             [self userLoginWithWeiXParams:weiXDic];
+             [self userLoginWithWeiXParams:weiXDic withCheck:2];
             
 //            // 授权信息
 //            NSLog(@"Wechat uid: %@", resp.uid);

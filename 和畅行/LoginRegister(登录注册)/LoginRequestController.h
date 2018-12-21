@@ -21,7 +21,7 @@
 
 - (void)userLoginWithParams:(NSDictionary *)paramDic withisCheck:(BOOL)isCheck;
 
-- (void)userLoginWithWeiXParams:(NSDictionary *)paramDic;
+- (void)userLoginWithWeiXParams:(NSDictionary *)paramDic withCheck:(NSInteger)check;
 
 - (void)showAlertViewController:(NSString *)message;
 - (void)showAlertWarmMessage:(NSString *)message;

@@ -279,10 +279,8 @@
     
     if(_pushModel.link==nil||[_pushModel.link isKindOfClass:[NSNull class]]||_pushModel.link.length == 0){
         
-        UIAlertController *aler = [UIAlertController alertControllerWithTitle:@"提示" message:@"敬请期待" preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *sureACtion = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleCancel) handler:nil];
-        [aler addAction:sureACtion];
-        [[self viewController] presentViewController:aler animated:YES completion:nil];
+        [self tapAction];
+        
         
     }else {
         HCY_ActivityController *vc = [[HCY_ActivityController alloc] init];
