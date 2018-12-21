@@ -151,11 +151,12 @@
     //NSLog(@"234214324%@",status);
     if ([status intValue]== 100) {
   
-        
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"信息更新成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-        [av show];
-        av.tag=10007;
-        _textField.text = @"";
+//        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"信息更新成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+//        [av show];
+//        av.tag=10007;
+//        _textField.text = @"";
+        [GlobalCommon showMessage:@"服务卡添加成功" duration:1];
+        [self.navigationController popViewControllerAnimated:YES];
         
     }
     else if ([status intValue]== 44)

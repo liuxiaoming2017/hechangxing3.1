@@ -106,7 +106,7 @@
 {
     NSString *urlStr   = @"weiq/user_record.jhtml";
     NSDictionary *dic = @{@"memberId":[UserShareOnce shareOnce].uid,
-                          @"card_no":@"NGKHY99QMOKMOTMA7ZV"
+                          @"card_no":self.model.card_no
                           
                           };
     //@"token":[UserShareOnce shareOnce].token
