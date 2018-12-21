@@ -237,6 +237,8 @@
         NSLog(@"hahah");
         if (error) {
             
+            [self showAlertWarmMessage:@"抱歉登录失败，请重试"];
+
             NSLog(@"%@",error);
             
         } else {

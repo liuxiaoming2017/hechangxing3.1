@@ -40,7 +40,7 @@
     [self addSubview:lineImageV];
     
     
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(65, lineImageV.bottom-5, ScreenWidth-imagevRight-10, 49)];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(65, lineImageV.bottom-5, ScreenWidth-75, 49)];
     //UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectZero];
     imageV.layer.cornerRadius = 8.0;
     imageV.layer.masksToBounds = YES;

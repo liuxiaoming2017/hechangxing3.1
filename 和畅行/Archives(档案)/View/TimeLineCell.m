@@ -36,7 +36,7 @@
     [self addSubview:lineImageV];
     
     
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(65 , lineImageV.bottom-5, ScreenWidth-self.timeLabel.right + 10, 49)];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(65 , lineImageV.bottom-5, ScreenWidth-75, 49)];
     imageV.layer.cornerRadius = 8.0;
     imageV.layer.masksToBounds = YES;
     imageV.backgroundColor = [UIColor whiteColor];
