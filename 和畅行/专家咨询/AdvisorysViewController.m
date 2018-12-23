@@ -19,7 +19,7 @@
 #import "NSString+Emoji.h"
 #import "TZImagePickerController.h"
 #import "PYPhotoBrowser.h"
-#import <AFNetworking.h>
+#import "AFNetworking.h"
 
 ///弱引用/强引用
 #define CCWeakSelf __weak typeof(self) weakSelf = self;

@@ -8,7 +8,7 @@
 
 #import "ArchivesCell.h"
 #import "ArchiveModel.h"
-#import <UIImageView+WebCache.h>
+#import "UIImageView+WebCache.h"
 
 @implementation ArchivesCell
 
