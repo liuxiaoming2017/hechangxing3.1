@@ -65,7 +65,7 @@ typedef void(^EDLoadRequestAction)(void);
     
     self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.navTitleLabel.textColor = [UIColor whiteColor];
-    [self.leftBtn setImage:[UIImage imageNamed:@"user_01"] forState:UIControlStateNormal];
+  //  [self.leftBtn setImage:[UIImage imageNamed:@"user_01"] forState:UIControlStateNormal];
     [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     self.navTitleLabel.text = @"和畅商城";
     self.preBtn.hidden = YES;

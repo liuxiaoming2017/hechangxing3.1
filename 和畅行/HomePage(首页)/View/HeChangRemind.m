@@ -67,7 +67,7 @@
 //    [self addSubview:lineImageV];
     
     //添加tableview
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 52, self.frame.size.width, 45*self.dataArr.count) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 52, self.frame.size.width, (45+14)*self.dataArr.count) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor=[UIColor clearColor];
@@ -84,7 +84,7 @@
 #pragma mark - tableview代理方法
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 45;
+    return 45+14;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -100,6 +100,7 @@
     if(cell == nil){
         cell = [[RemindCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RemindCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
     }
     if(self.dataArr.count>indexPath.row){
         RemindModel *model = [self.dataArr objectAtIndex:indexPath.row];
@@ -126,8 +127,8 @@
     NSString *titleStr = @"";
     NSString *urlStr = @"";
     
-    if([cell.typeLabel.text isEqualToString:@"一说"]){
-        
+    if([cell.typeLabel.text isEqualToString:@"一说"]||[cell.typeLabel.text isEqualToString:@"一写"]||[cell.typeLabel.text isEqualToString:@"一点"]){
+        return;
     }else if ([cell.typeLabel.text isEqualToString:@"一听"]){
         type = @"/member/service/view/fang/JLBS/1/";
         fangtype = @"yiting";

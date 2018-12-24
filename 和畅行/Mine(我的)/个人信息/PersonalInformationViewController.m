@@ -524,7 +524,7 @@
     [GlobalCommon showMBHudWithView:self.view];
     NSString *UrlPre=URL_PRE;
     NSString *aUrlle= [NSString stringWithFormat:@"%@/member/fileUpload/upload.jhtml",UrlPre];
-    aUrlle = [aUrlle stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url1 = [NSURL URLWithString:aUrlle];
     ASIFormDataRequest *request=[[ASIFormDataRequest alloc]initWithURL:url1];
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
@@ -548,6 +548,7 @@
     if ([status intValue]==100)
     {
         self.UrlHttpImg=[dic objectForKey:@"data"];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:@"uploadImageSuccess" object:nil];
     }
     else
     {

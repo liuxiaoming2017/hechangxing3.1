@@ -520,7 +520,7 @@
         else{
             
             
-            urlpath = [urlpath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            urlpath = [urlpath stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
             NSURL *url = [NSURL URLWithString:urlpath];
             BOOL fileExists = [fileManager fileExistsAtPath:urlpath];
             if (fileExists)
@@ -580,7 +580,7 @@
                 NSLog(@"不存在");
                 
                 NSString* aurl=[NSString stringWithFormat:@"%@",NewFileName];
-                aurl = [aurl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                aurl = [aurl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
                 for (int i=0; i<btnbfzt.subviews.count; i++)
                 {
                     UIView* view=[btnbfzt.subviews objectAtIndex:i];
@@ -609,7 +609,7 @@
     }
     else{
         
-        urlpath = [urlpath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        urlpath = [urlpath stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
         NSURL *url = [NSURL URLWithString:urlpath];
         BOOL fileExists = [fileManager fileExistsAtPath:urlpath];
         if (fileExists)

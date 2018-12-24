@@ -359,7 +359,7 @@
         
         [hud hideAnimated:YES];
         NSLog(@"%@",error);
-        [weakSelf showAlertWarmMessage:@"请求失败,网络错误!"];
+        [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
     
     if (self.pageInteger == 1) {

@@ -19,9 +19,16 @@
 
 @synthesize topView,preBtn,rightBtn,leftBtn;
 
+- (void)dealloc
+{
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupNav];
+    
+   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadImageSuccess) name:@"uploadImageSuccess" object:nil];
 }
 
 -(void)setupNav
@@ -80,6 +87,18 @@
     [leftBtn addTarget:self action:@selector(userBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:leftBtn];
     
+}
+
+
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if([[UserShareOnce shareOnce].memberImage isKindOfClass:[NSNull class]]){
+        [leftBtn setImage:[UIImage imageNamed:@"1我的_03"] forState:UIControlStateNormal];
+    }else{
+        [leftBtn sd_setImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"1我的_03"]];
+    }
 }
 
 - (void)messageBtnAction:(UIButton *)btn
@@ -152,6 +171,8 @@
     
     //self.navigationController.navigationBar.translucent = NO;
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

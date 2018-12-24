@@ -532,7 +532,6 @@
 		038A65382112AC130055C760 /* 1我的_102.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A65282112AC120055C760 /* 1我的_102.png */; };
 		038A65392112AC130055C760 /* 1我的_100.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A65292112AC120055C760 /* 1我的_100.png */; };
 		038A653A2112AC130055C760 /* 1我的_110.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A652A2112AC120055C760 /* 1我的_110.png */; };
-		038A653B2112AC130055C760 /* 1我的_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A652B2112AC130055C760 /* 1我的_03.png */; };
 		038A653D2112ADB00055C760 /* private.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A653C2112ADB00055C760 /* private.png */; };
 		038A653F2112ADCE0055C760 /* refundRecord@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A653E2112ADCE0055C760 /* refundRecord@2x.png */; };
 		038A65412112ADDC0055C760 /* returedGoodsRecord@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A65402112ADDC0055C760 /* returedGoodsRecord@2x.png */; };
@@ -1632,7 +1631,6 @@
 		038A65282112AC120055C760 /* 1我的_102.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1我的_102.png"; sourceTree = "<group>"; };
 		038A65292112AC120055C760 /* 1我的_100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1我的_100.png"; sourceTree = "<group>"; };
 		038A652A2112AC120055C760 /* 1我的_110.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1我的_110.png"; sourceTree = "<group>"; };
-		038A652B2112AC130055C760 /* 1我的_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1我的_03.png"; sourceTree = "<group>"; };
 		038A653C2112ADB00055C760 /* private.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = private.png; sourceTree = "<group>"; };
 		038A653E2112ADCE0055C760 /* refundRecord@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refundRecord@2x.png"; sourceTree = "<group>"; };
 		038A65402112ADDC0055C760 /* returedGoodsRecord@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "returedGoodsRecord@2x.png"; sourceTree = "<group>"; };
@@ -3633,7 +3631,6 @@
 				038A65532112B5360055C760 /* 我的待付款.png */,
 				038A65512112B5350055C760 /* 我的待评价.png */,
 				038A65522112B5360055C760 /* 我的全部订单.png */,
-				038A652B2112AC130055C760 /* 1我的_03.png */,
 				038A65202112AC0F0055C760 /* 1我的_05.png */,
 				038A65272112AC120055C760 /* 1我的_09.png */,
 				038A65292112AC120055C760 /* 1我的_100.png */,
@@ -4510,7 +4507,6 @@
 				036E84FD2186EB1A001B9BB4 /* ic_help.png in Resources */,
 				0343907B210AB81800B57142 /* YY_seg_bg.png in Resources */,
 				036E84DD2186EB1A001B9BB4 /* icon_close.png in Resources */,
-				038A653B2112AC130055C760 /* 1我的_03.png in Resources */,
 				036E85682186EB2A001B9BB4 /* blelistviewcell.xib in Resources */,
 				039C23B92123FA3100F9AFA3 /* 血压05.png in Resources */,
 				036E85722186EB2A001B9BB4 /* i9_MoxaMainView.xib in Resources */,
@@ -5497,9 +5493,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Nation Sky Network Technology Co.,Ltd";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = E2CU52X6UR;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3X65BCYVHU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5539,10 +5535,10 @@
 					"$(PROJECT_DIR)/和畅行/友盟分享/SocialLibraries/Sina",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nationsky.meap.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = meaptest;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -5554,9 +5550,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Nation Sky Network Technology Co.,Ltd";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = E2CU52X6UR;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3X65BCYVHU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5596,10 +5592,10 @@
 					"$(PROJECT_DIR)/和畅行/友盟分享/SocialLibraries/Sina",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nationsky.meap.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = meaptest;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

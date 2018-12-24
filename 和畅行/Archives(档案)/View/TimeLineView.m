@@ -387,6 +387,7 @@
  //季度报告
     if (model.quarter != nil && ![model.quarter isKindOfClass:[NSNull class]]&&model.quarter.length != 0) {
         
+        
         NSString *idNim = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
         
         NSString *url = [[NSString alloc] initWithFormat:@"%@/member/service/reports.jhtml?memberChildId=%@&quarter=%@&year=%@",URL_PRE,idNim,model.quarter,model.year];

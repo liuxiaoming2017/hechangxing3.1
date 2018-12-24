@@ -44,7 +44,7 @@
     self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.navTitleLabel.text = @"我的";
     self.navTitleLabel.textColor = [UIColor whiteColor];
-    [self.leftBtn setImage:[UIImage imageNamed:@"user_01"] forState:UIControlStateNormal];
+   // [self.leftBtn setImage:[UIImage imageNamed:@"user_01"] forState:UIControlStateNormal];
     [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createUI];

@@ -94,7 +94,7 @@
     self.allPage.font = [UIFont systemFontOfSize:15];
     self.allPage.textAlignment = NSTextAlignmentCenter;
     self.allPage.textColor = [Tools colorWithHexString:@"#0282bf"];
-    self.allPage.text = [NSString stringWithFormat:@"1/%ld页",_pages];
+    self.allPage.text = [NSString stringWithFormat:@"1/%ld页",(long)_pages];
     [backView addSubview:self.allPage];
     
     self.nextPage = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -119,7 +119,6 @@
     NSString *dbPath = [docuPath stringByAppendingPathComponent:@"question.db"];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL isExist = [fileManager fileExistsAtPath:dbPath];
-    isExist = NO;
     if(isExist){
         CacheManager *cacheManager = [[CacheManager alloc] initManage];
         
@@ -160,7 +159,9 @@
     NSString *str = @"questionnaire/lists.jhtml";
     NSDictionary *dic = [NSDictionary dictionaryWithObject:@"TZBS" forKey:@"sn"];
     __weak typeof(self) weakSelf = self;
+    [GlobalCommon showMBHudWithView:self.view];
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:str parameters:dic successBlock:^(id response) {
+         [GlobalCommon hideMBHudWithView:weakSelf.view];
         if([[response objectForKey:@"status"] integerValue] == 100){
             
             NSArray *arr1 = [response objectForKey:@"data"];
@@ -206,7 +207,8 @@
             [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
         }
     } failureBlock:^(NSError *error) {
-        
+        [GlobalCommon hideMBHudWithView:weakSelf.view];
+        [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
 }
 
@@ -279,14 +281,14 @@
     QuestionCell *cell = (QuestionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     cell.delegate = self;
     QuestionModel *model1 = [self.questionArr objectAtIndex:indexPath.row*2];
-    cell.title1.text = [NSString stringWithFormat:@"%ld.  %@",indexPath.row*2+1,model1.name];
+    cell.title1.text = [NSString stringWithFormat:@"%d.  %@",indexPath.row*2+1,model1.name];
     
     [cell updateButtonStateWithGrade1:model1.selectNum withTag:100];
     
-    NSLog(@"count1:%ld,count2:%ld",self.questionArr.count,indexPath.row);
+    //NSLog(@"count1:%ld,count2:%ld",self.questionArr.count,indexPath.row);
     if(self.questionArr.count>indexPath.row*2+1){
         QuestionModel *model2 = [self.questionArr objectAtIndex:indexPath.row*2+1];
-        cell.title2.text = [NSString stringWithFormat:@"%ld.  %@",indexPath.row*2+2,model2.name];
+        cell.title2.text = [NSString stringWithFormat:@"%d.  %@",indexPath.row*2+2,model2.name];
         
         [cell updateButtonStateWithGrade1:model2.selectNum withTag:200];
         
@@ -332,7 +334,7 @@
         //self.nextPage.hidden = NO;
         [self.nextPage setTitle:@"下一页" forState:UIControlStateNormal];
     }
-    self.allPage.text = [NSString stringWithFormat:@"%ld/%ld页",_currentIndex+1,_pages];
+    self.allPage.text = [NSString stringWithFormat:@"%ld/%ld页",_currentIndex+1,(long)_pages];
 }
 
 - (void)lastPageAction
@@ -535,7 +537,10 @@
     NSString *urlStr = @"/member/myreport/save_report.jhtml";
     
     
+    [GlobalCommon showMBHudWithView:self.view];
+    
     [ZYGASINetworking POST_Path:urlStr params:paramDic completed:^(id JSON, NSString *stringData) {
+        [GlobalCommon hideMBHudWithView:weakSelf.view];
         if([[JSON objectForKey:@"status"] integerValue] == 100){
             ResultController *resultVC = [[ResultController alloc] init];
             resultVC.TZBSstr = str;
@@ -544,6 +549,7 @@
             [weakSelf showAlertWarmMessage:@"请求网络失败"];
         }
     } failed:^(NSError *error) {
+        [GlobalCommon hideMBHudWithView:weakSelf.view];
         [weakSelf showAlertWarmMessage:@"请求网络失败"];
     }];
     
@@ -569,20 +575,20 @@
     
 }
 
-- (void)networkTZBS
-{
-    __weak typeof(self) weakSelf = self;
-    NSString *urlStr = @"subject_category/list.jhtml?sn=TZBS";
-    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
-        NSArray *dataArr = [response objectForKey:@"data"];
-        NSDictionary *dataDic = [dataArr objectAtIndex:0];
-        NSInteger dataID = [[dataDic objectForKey:@"id"] integerValue];
-        
-    } failureBlock:^(NSError *error) {
-        [weakSelf showAlertWarmMessage:@"请求网络失败!"];
-    }];
-    
-}
+//- (void)networkTZBS
+//{
+//    __weak typeof(self) weakSelf = self;
+//    NSString *urlStr = @"subject_category/list.jhtml?sn=TZBS";
+//    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
+//        NSArray *dataArr = [response objectForKey:@"data"];
+//        NSDictionary *dataDic = [dataArr objectAtIndex:0];
+//        NSInteger dataID = [[dataDic objectForKey:@"id"] integerValue];
+//
+//    } failureBlock:^(NSError *error) {
+//        [weakSelf showAlertWarmMessage:@"请求网络失败!"];
+//    }];
+//
+//}
 
 //求出最大值对应的体质类型
 -(NSString *) maxIndexWithArr:(NSArray *)arr{

@@ -97,7 +97,7 @@
     [rightBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
     
     rightBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
-    [rightBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [rightBtn setTitleColor:[UIColor colorWithRed:69/255.0 green:139/255.0 blue:208/255.0 alpha:1.0] forState:UIControlStateNormal];
     rightBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [rightBtn addTarget:self action:@selector(rightBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:rightBtn];
@@ -321,7 +321,7 @@
             
         }
     } failureBlock:^(NSError *error) {
-        [weakSelf showAlertWarmMessage:@"短信验证码发送失败，请重试"];
+        [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
     
 
@@ -467,7 +467,7 @@
             [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
         }
     } failureBlock:^(NSError *error) {
-        [weakSelf showAlertWarmMessage:@"抱歉登录失败，请重试"];
+        [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
 }
 

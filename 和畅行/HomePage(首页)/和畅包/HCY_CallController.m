@@ -62,6 +62,7 @@
 
 -(void)comeToNextBlockCellwithIndex:(NSIndexPath *)index {
     
+    
      HHMSDK *hhmSdk = [[HHMSDK alloc] init];
     __weak typeof(self) weakSelf = self;
     if(index.row == 0) {
@@ -89,6 +90,7 @@
         [self.navigationController pushViewController:adVC animated:YES];
         
     }
+     
 }
 
 

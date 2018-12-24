@@ -356,7 +356,7 @@ static NSMutableArray *tasks;
     }
     else
     {
-        return [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        return [str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     }
 }
 

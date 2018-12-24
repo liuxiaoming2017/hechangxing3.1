@@ -157,7 +157,7 @@
         }
     } failureBlock:^(NSError *error) {
         
-        [weakself showAlertWarmMessage:@"抱歉登录失败，请重试"];
+        [weakself showAlertWarmMessage:requestErrorMessage];
     }];
     
 }
@@ -184,7 +184,7 @@
             [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
         }
     } failureBlock:^(NSError *error) {
-        [weakSelf showAlertWarmMessage:@"抱歉登录失败，请重试"];
+        [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
 }
 
@@ -297,7 +297,7 @@
     } failureBlock:^(NSError *error) {
         NSLog(@"%@",error);
         
-        [weakself showAlertWarmMessage:@"抱歉登录失败，请重试"];
+        [weakself showAlertWarmMessage:requestErrorMessage];
     }];
     
     

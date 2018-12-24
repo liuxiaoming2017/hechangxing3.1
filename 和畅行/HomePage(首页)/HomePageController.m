@@ -144,7 +144,7 @@
 
 - (void)createTopView
 {
-    NSLog(@"w:%f,h:%f",ScreenWidth,ScreenHeight);
+    
     
     self.homeImageArray = [NSMutableArray array];
 
@@ -268,7 +268,7 @@
             weakSelf.remindView.dataArr = mutableArr;
             dispatch_async(dispatch_get_main_queue(), ^{
                 if(!weakSelf.remindView){
-                    weakSelf.remindView = [[HeChangRemind alloc] initWithFrame:CGRectMake(weakSelf.packgeView.left, weakSelf.readWriteView.bottom+10, weakSelf.readWriteView.width, 58+mutableArr.count*45) withDataArr:mutableArr];
+                    weakSelf.remindView = [[HeChangRemind alloc] initWithFrame:CGRectMake(weakSelf.packgeView.left, weakSelf.readWriteView.bottom+10, weakSelf.readWriteView.width, 58+mutableArr.count*(45+14)) withDataArr:mutableArr];
                     [weakSelf.bgScrollView addSubview:weakSelf.remindView];
                     
                     CGFloat width = (ScreenWidth - 23 - 10)/2.5;

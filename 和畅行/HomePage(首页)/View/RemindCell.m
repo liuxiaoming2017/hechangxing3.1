@@ -32,19 +32,19 @@
 
 - (void)setupUI
 {
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 35)];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 35+14)];
     imageV.layer.cornerRadius = 8.0;
     imageV.layer.masksToBounds = YES;
     imageV.backgroundColor = [UIColor whiteColor];
     [self addSubview:imageV];
      [self insertSublayerWithImageView:imageV];
     
-    self.lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, imageV.top+10, 2, 15)];
+    self.lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, imageV.top+10, 2, 15+14)];
     [self addSubview:self.lineImageV];
     
     self.backgroundColor = [UIColor clearColor];
     
-    self.typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 8, 40, 30)];
+    self.typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 8+7, 40, 30)];
     self.typeLabel.textAlignment=NSTextAlignmentLeft;
     self.typeLabel.font=[UIFont systemFontOfSize:13.0];
     self.typeLabel.textColor=UIColorFromHex(0x8E8E93);
@@ -54,7 +54,7 @@
 //    UIImageView *lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(self.typeLabel.right+10, 44, ScreenWidth-14*2-self.typeLabel.right-10-5, 1)];
 //    lineImageV.backgroundColor = UIColorFromHex(0xDADADA);
     
-    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right+15, 8, 200, 30)];
+    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right+15, 8+7, 200, 30)];
     self.contentLabel.textAlignment=NSTextAlignmentLeft;
     self.contentLabel.font=[UIFont systemFontOfSize:13.0];
     self.contentLabel.textColor=UIColorFromHex(0x8E8E93);

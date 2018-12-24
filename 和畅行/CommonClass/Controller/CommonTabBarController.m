@@ -43,34 +43,7 @@
     [[UIApplication sharedApplication].keyWindow addSubview:zkView];
 }
 
-/*
-- (void)test
-{
-    HHMSDK *sdk = [[HHMSDK alloc] init];
-    [sdk addWithDelegate:self];
-    [sdk loginWithUuid:100002514 completion:^(NSError * _Nullable error) {
-        if(error){
-            
-        }else{
-            [sdk startCall:HHCallTypeAdult];
-        }
-    }];
-}
 
-- (void)test2
-{
-    //获取病例详情
-    NSString *resultStr = [[HHMSDK default] getMedicListWithUserToken:testToken];
-    NSLog(@"result:%@",resultStr);
-}
-
-- (void)test3
-{
-    //获取病例详情
-    NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:testToken medicId:testMedicId];
-    NSLog(@"result:%@",resultStr);
-}
- */
 
 # pragma mark - ZKIndexViewDelegate
 - (void)indexClickWitbNumber:(NSInteger)tag

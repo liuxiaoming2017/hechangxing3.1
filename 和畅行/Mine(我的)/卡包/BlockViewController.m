@@ -154,7 +154,7 @@
         
         [hud hideAnimated:YES];
         NSLog(@"%@",error);
-        [self showAlertWarmMessage:@"请求失败,网络错误!"];
+        [self showAlertWarmMessage:requestErrorMessage];
     }];
     
 //    if (self.pageInteger == 1) {

@@ -41,7 +41,7 @@ static NSDictionary *sg_httpHeaders = nil;
 + (ASIHTTPRequest *)GET_Path:(NSString *)path completed:(KKCompletedBlock )completeBlock failed:(KKFailedBlock )failed
 {
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",kAPI_BASE_URL,path];
-    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    urlStr = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlStr];
     __weak ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     request.requestMethod = @"GET";
@@ -81,7 +81,7 @@ static NSDictionary *sg_httpHeaders = nil;
     }];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@?%@",kAPI_BASE_URL,path,paramsString];
     urlStr = [urlStr substringToIndex:urlStr.length-1];
-    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    urlStr = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     NSURL *url = [NSURL URLWithString:urlStr];
     __weak ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -116,7 +116,7 @@ static NSDictionary *sg_httpHeaders = nil;
 + (ASIHTTPRequest *)POST_Path:(NSString *)path params:(NSDictionary *)paramsDic completed:(KKCompletedBlock )completeBlock failed:(KKFailedBlock )failed
 {
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",kAPI_BASE_URL,path];
-    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    urlStr = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlStr];
     __weak ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     request.requestMethod = @"POST";

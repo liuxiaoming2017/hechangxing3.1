@@ -387,7 +387,7 @@
             }
         }
     } failureBlock:^(NSError *error) {
-        [weakSelf showAlertWarmMessage:@"抱歉修改密码失败，请重试"];
+        [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
 }
 

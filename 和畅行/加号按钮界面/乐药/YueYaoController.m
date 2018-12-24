@@ -299,7 +299,7 @@
         }
     } failureBlock:^(NSError *error) {
         [GlobalCommon hideMBHudWithView:weakSelf.view];
-        [weakSelf showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+        [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
 }
 
