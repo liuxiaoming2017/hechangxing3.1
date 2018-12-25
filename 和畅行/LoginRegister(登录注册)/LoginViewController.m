@@ -241,7 +241,7 @@
         
         NSString *str = [[response valueForKey:@"data"] valueForKey:@"secret"];
         [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
-        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:APP_SECRET redirectURL:nil];
+        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:str redirectURL:nil];
         
         
         [weakSelf loginByWeiXin];
