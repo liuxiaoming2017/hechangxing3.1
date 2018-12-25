@@ -17,7 +17,7 @@
 #import "ResultController.h"
 #import "EEGDetailController.h"
 #import "HCY_ReportCell.h"
-#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+//#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 
 @interface TimeLineView()<UITableViewDelegate,UITableViewDataSource,govSectionViewDelegate>
 
@@ -374,12 +374,12 @@
     //病例列表
     if (model.medicRecordId!=nil&&![model.medicRecordId isKindOfClass:[NSNull class]]&&model.medicRecordId.length!=0){
         
-        NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:testToken medicId:testMedicId];
-        ResultSpeakController *vc = [[ResultSpeakController alloc] init];
-        vc.urlStr = resultStr;
-        vc.titleStr = @"病例详情";
-        vc.hidesBottomBarWhenPushed = YES;
-        [[self viewController].navigationController pushViewController:vc animated:YES];
+//        NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:testToken medicId:testMedicId];
+//        ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+//        vc.urlStr = resultStr;
+//        vc.titleStr = @"病例详情";
+//        vc.hidesBottomBarWhenPushed = YES;
+//        [[self viewController].navigationController pushViewController:vc animated:YES];
         
     }
     
