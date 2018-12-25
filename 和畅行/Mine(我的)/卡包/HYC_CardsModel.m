@@ -16,4 +16,13 @@
         self.cardDescription = value;
 }
 
+
++ (NSDictionary *)modelCustomPropertyMapper {
+    return @{@"name" : @"n",
+             @"page" : @"p",
+             @"desc" : @"ext.desc",
+             @"cardDescription" : @"description"};
+}
+
+
 @end

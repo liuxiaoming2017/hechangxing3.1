@@ -557,7 +557,6 @@
 		038CE88C20EDF63D005E9219 /* UserBoxImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 038CE88B20EDF63D005E9219 /* UserBoxImg.png */; };
 		0390CF7F20ECB5D0000ECA53 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0390CF7C20ECB5D0000ECA53 /* CoreFoundation.framework */; };
 		0390CF8020ECB5D0000ECA53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0390CF7D20ECB5D0000ECA53 /* Foundation.framework */; };
-		0390CF8120ECB5D0000ECA53 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0390CF7E20ECB5D0000ECA53 /* AVFoundation.framework */; };
 		0390CF8820ECB94F000ECA53 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0390CF8720ECB94F000ECA53 /* LoginViewController.m */; };
 		0390CF8B20ECB975000ECA53 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0390CF8A20ECB975000ECA53 /* RegisterViewController.m */; };
 		0391D0F920F5ACE4001B52F1 /* SubMemberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391D0F720F5ACE4001B52F1 /* SubMemberView.m */; };
@@ -2134,7 +2133,6 @@
 				0390CF8020ECB5D0000ECA53 /* Foundation.framework in Frameworks */,
 				0306C5C921CCBEFA00DA5DC1 /* libSocialWeChat.a in Frameworks */,
 				030F514B2101C2D5003C918F /* libopencore-amrnb.a in Frameworks */,
-				0390CF8120ECB5D0000ECA53 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5494,7 +5492,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 3X65BCYVHU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5538,8 +5536,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = com.ky3h.hechangxing;
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "arm64 arm64e armv7";
 			};
 			name = Debug;
 		};
@@ -5551,7 +5550,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 3X65BCYVHU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5595,8 +5594,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = com.ky3h.hechangxing;
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "arm64 arm64e armv7";
 			};
 			name = Release;
 		};

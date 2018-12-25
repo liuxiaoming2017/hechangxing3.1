@@ -65,7 +65,7 @@
 
 -(void)setCarListDataWithModel:(HYC_CardsModel *)model {
     
-    _hLabel.text = model.service_name;
+    _hLabel.text = model.card_name;
     
     
     if (model.cardDescription==nil || [model.cardDescription isKindOfClass:[NSNull class]]||model.cardDescription.length == 0) {
