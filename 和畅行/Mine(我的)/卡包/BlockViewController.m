@@ -28,6 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
+    [self getDatawithpageInteger:self.pageInteger];
     [self layoutView];
 }
 
@@ -35,7 +36,7 @@
     [super viewWillAppear:animated];
     self.pageInteger = 1;
 
-    [self getDatawithpageInteger:self.pageInteger];
+    
 }
 
 -(void)layoutView {

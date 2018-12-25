@@ -132,7 +132,7 @@
     [registBtn setTitle:@"注册" forState:UIControlStateNormal];
     registBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
     [registBtn setTitleColor:UIColorFromHex(0xb8b8b8) forState:UIControlStateNormal];
-    [self.view addSubview:registBtn];
+    //[self.view addSubview:registBtn];
     
     
     
@@ -230,9 +230,9 @@
     /**
      *  MD5加密后的字符串
      */
-    NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",@"weixinPayPlugin"];
+    NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",@"weixinPayHcyPhonePlugin"];
     NSString *iPoneNumberMD5 = [[GlobalCommon md5:iPoneNumber] uppercaseString];
-    NSDictionary *dic = @{@"pluginname":@"weixinPayPlugin",
+    NSDictionary *dic = @{@"pluginname":@"weixinPayHcyPhonePlugin",
                           @"token":iPoneNumberMD5};
     
     NSLog(@"%@",dic);
@@ -240,8 +240,7 @@
     [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:@"weiq/weiq/getWeiqSecret.jhtml" parameters:dic successBlock:^(id response) {
         
         NSString *str = [[response valueForKey:@"data"] valueForKey:@"secret"];
-        [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
-        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:APP_SECRET redirectURL:nil];
+        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:str redirectURL:nil];
         
         
         [weakSelf loginByWeiXin];

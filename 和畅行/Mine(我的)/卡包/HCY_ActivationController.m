@@ -38,7 +38,7 @@
     [self.view addSubview:imageV];
     
     UILabel *carTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0 , 10, imageV.width, 45)];
-    carTitleLabel.text = _model.service_name;
+    carTitleLabel.text = _model.card_name;
     carTitleLabel.backgroundColor = [UIColor clearColor];
     carTitleLabel.textColor = [UIColor whiteColor];
     carTitleLabel.textAlignment = NSTextAlignmentCenter;
@@ -48,11 +48,9 @@
     
     UITextView *contentTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, carTitleLabel.bottom ,imageV.width - 20, imageV.height - 65)];
     
-    if (self.model.cardDescription==nil || [self.model.cardDescription isKindOfClass:[NSNull class]]||self.model.cardDescription.length == 0) {
-        contentTextView.text = @"暂无";
-    }else{
-        contentTextView.text = self.model.cardDescription;
-    }
+    
+    contentTextView.text = self.model.card_no;
+    
     contentTextView.font = [UIFont systemFontOfSize:15];
     [contentTextView setEditable:NO];
 
@@ -119,6 +117,7 @@
 //                              @"token":[UserShareOnce shareOnce].token
 //                              };
 
+        [GlobalCommon showMBHudWithView:self.view];
         NSString *UrlPre=URL_PRE;
         NSString *aUrl = [NSString stringWithFormat:@"%@/weiq/service_card/active.jhtml",UrlPre];
         ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
@@ -132,7 +131,7 @@
         [request setRequestMethod:@"POST"];
         [request setDelegate:self];
         [request setDidFailSelector:@selector(requesstuserinfoError:)];
-        [request setDidFinishSelector:@selector(requesstuserinfoCompleted:)];
+        [request setDidFinishSelector:@selector(requesstCardCompleted:)];
         [request startAsynchronous];
         
 //        [ZYGASINetworking POST_Path:urlStr params:dic completed:^(id JSON, NSString *stringData) {
@@ -186,13 +185,32 @@
 
 - (void)requesstuserinfoError:(ASIHTTPRequest *)request
 {
-    //[SSWaitViewEx removeWaitViewFrom:self.view];
     
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉，请检查您的网络是否畅通" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+    [GlobalCommon hideMBHudWithView:self.view];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:requestErrorMessage delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
     [av show];
 }
+
+- (void)requesstCardCompleted:(ASIHTTPRequest *)request
+{
+    NSString* reqstr=[request responseString];
+    //NSLog(@"dic==%@",reqstr);
+    NSDictionary * dic=[reqstr JSONValue];
+    NSLog(@"dic==%@",dic);
+    id status=[dic objectForKey:@"status"];
+    
+    if ([status intValue] == 100) {
+        [self requestMemberInfo];
+        
+    }else{
+        [GlobalCommon hideMBHudWithView:self.view];
+        [self showAlertWarmMessage:[dic objectForKey:@"message"]];
+    }
+}
+
 - (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
 {
+    [GlobalCommon hideMBHudWithView:self.view];
     NSString* reqstr=[request responseString];
     //NSLog(@"dic==%@",reqstr);
     NSDictionary * dic=[reqstr JSONValue];
@@ -200,8 +218,10 @@
     id status=[dic objectForKey:@"status"];
     //NSLog(@"234214324%@",status);
     if ([status intValue]== 100) {
-         [self showAlertWarmMessage:[dic objectForKey:@"message"]];
-        
+        [self.navigationController popViewControllerAnimated:YES];
+        [GlobalCommon showMessage:@"服务卡激活成功" duration:1.0];
+    }else{
+        [self showAlertWarmMessage:[dic objectForKey:@"message"]];
     }
     
 }

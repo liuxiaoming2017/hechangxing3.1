@@ -73,7 +73,7 @@
 - (void)requestArticleData{
     NSString *UrlPre=URL_PRE;
     
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/article/healthArticleList.jhtml",UrlPre];
+    NSString *aUrlle= [NSString stringWithFormat:@"%@article/healthArticleList.jhtml",UrlPre];
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:aUrlle];
     

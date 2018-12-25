@@ -28,8 +28,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self requestPurchaseHistory];
     [self layoutCarDetailView];
+    [self requestPurchaseHistory];
 }
 
 -(void)layoutCarDetailView {
@@ -51,9 +51,9 @@
     [imageV addSubview:_hLabel];
     
     _mLabel = [[UILabel alloc] init];
-    _mLabel.frame = CGRectMake(20,_hLabel.bottom , imageV.width -  40, 60 );
+    _mLabel.frame = CGRectMake(20,_hLabel.bottom , imageV.width -  40, 30 );
     _mLabel.numberOfLines = 2;
-    _mLabel.text = self.model.cardDescription;
+    _mLabel.text = self.model.card_no;
     _mLabel.font = [UIFont systemFontOfSize:14];
     _mLabel.textColor = [UIColor whiteColor];
     [imageV addSubview:_mLabel];
@@ -226,7 +226,7 @@
             cell.contentLabel.text = str;
             
             if(![GlobalCommon stringEqualNull:[dic objectForKey:@"serviceCode"]]){
-                if([[dic objectForKey:@"serviceCode"] isEqualToString:@"100006"]){
+                if([[dic objectForKey:@"serviceCode"] isEqualToString:@"10006"]){
                     [cell.tradeBtn setTitle:@"去咨询" forState:UIControlStateNormal];
                 }else{
                     [cell.tradeBtn setTitle:@"去预约" forState:UIControlStateNormal];

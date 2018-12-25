@@ -68,6 +68,7 @@
     [UMCommonLogManager setUpUMCommonLogManager];
     [UMConfigure setLogEnabled:YES];
     [UMConfigure initWithAppkey:@"5bbacd04b465f5db4c000073" channel:@"App Store"];
+    [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
     
      [self returnMainPage2];
     
