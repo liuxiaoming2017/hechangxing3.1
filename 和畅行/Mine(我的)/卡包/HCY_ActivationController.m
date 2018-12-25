@@ -38,20 +38,19 @@
     [self.view addSubview:imageV];
     
     UILabel *carTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0 , 10, imageV.width, 45)];
-    carTitleLabel.text = _model.service_name;
+    carTitleLabel.text = _model.card_name;
     carTitleLabel.backgroundColor = [UIColor clearColor];
     carTitleLabel.textColor = [UIColor whiteColor];
     carTitleLabel.textAlignment = NSTextAlignmentCenter;
     carTitleLabel.font = [UIFont systemFontOfSize:22];
     [imageV addSubview:carTitleLabel];
     
-    
     UITextView *contentTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, carTitleLabel.bottom ,imageV.width - 20, imageV.height - 65)];
     
     if (self.model.cardDescription==nil || [self.model.cardDescription isKindOfClass:[NSNull class]]||self.model.cardDescription.length == 0) {
         contentTextView.text = @"暂无";
     }else{
-        contentTextView.text = self.model.cardDescription;
+        contentTextView.text = self.model.card_no;
     }
     contentTextView.font = [UIFont systemFontOfSize:15];
     [contentTextView setEditable:NO];

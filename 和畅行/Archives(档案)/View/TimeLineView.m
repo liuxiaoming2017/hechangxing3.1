@@ -164,10 +164,22 @@
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             
+            if (_dataArr.count > 1) {
+                 HealthTipsModel *nextmodel = _dataArr[indexPath.row+1];
+                 if (![model.createTime isEqualToString:nextmodel.createTime]) {
+                     cell.lineImageV2.hidden = YES;
+                 }else{
+                     cell.lineImageV2.hidden = NO;
+                 }
+            }else{
+                cell.lineImageV2.hidden = NO;
+            }
+            
             [cell assignmentCellWithModel:model];
             return cell;
         }else{
             
+           
             HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
             if ([model.createTime isEqualToString:onAmodel.createTime]) {
                 
@@ -176,6 +188,17 @@
                     cell = [[NoTimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 }
+                if (indexPath.row < _dataArr.count -1) {
+                    HealthTipsModel *nextAmodel = _dataArr[indexPath.row + 1];
+                    if (![model.createTime isEqualToString:nextAmodel.createTime]) {
+                        cell.lineImageV2.hidden = YES;
+                    }else{
+                        cell.lineImageV2.hidden = NO;
+                    }
+                }else if (indexPath.row == _dataArr.count -1){
+                    cell.lineImageV2.hidden = YES;
+                }
+
                 [cell assignmentNoCellWithModel:model];
                 return cell;
             }else {
@@ -185,6 +208,18 @@
                     cell = [[TimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 }
+                
+                if (indexPath.row < _dataArr.count -1) {
+                    HealthTipsModel *nextAmodel = _dataArr[indexPath.row + 1];
+                      if (![model.createTime isEqualToString:nextAmodel.createTime]) {
+                          cell.lineImageV2.hidden = YES;
+                      }else{
+                          cell.lineImageV2.hidden = NO;
+                      }
+                }else if (indexPath.row == _dataArr.count -1){
+                    cell.lineImageV2.hidden = YES;
+                }
+                
                 [cell assignmentCellWithModel:model];
                 return cell;
             }
@@ -204,13 +239,7 @@
         
     }else {
         
-        HealthTipsModel *model = [[HealthTipsModel alloc]init];
-        if (_typeInteger == 0) {
-            model = _dataArr[indexPath.row - 1];
-        }else {
-            model = _dataArr[indexPath.row];
-        }
-
+        HealthTipsModel *model = _dataArr[indexPath.row];;
         
         if(indexPath.row == 0 ){
             HCY_DAVisceraCell * cell =[tableView dequeueReusableCellWithIdentifier:@"HCY_DAVisceraCell"];
@@ -218,6 +247,19 @@
                 cell = [[HCY_DAVisceraCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HCY_DAVisceraCell"];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
+            
+            if (_dataArr.count > 1) {
+                HealthTipsModel *nextmodel = _dataArr[indexPath.row+1];
+                if (![model.createTime isEqualToString:nextmodel.createTime]) {
+                    cell.lineImageV2.hidden = YES;
+                }else{
+                    cell.lineImageV2.hidden = NO;
+                }
+            }else{
+                cell.lineImageV2.hidden = NO;
+            }
+            
+           
             [cell assignmentVisceraWithModel:model];
             return cell;
         }else{
@@ -230,6 +272,16 @@
                     cell = [[HCY_DAVisceraNoTimeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HCY_DAVisceraNoTimeCell"];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 }
+                if (indexPath.row < _dataArr.count -1) {
+                    HealthTipsModel *nextAmodel = _dataArr[indexPath.row + 1];
+                    if (![model.createTime isEqualToString:nextAmodel.createTime]) {
+                        cell.lineImageV2.hidden = YES;
+                    }else{
+                        cell.lineImageV2.hidden = NO;
+                    }
+                }else if (indexPath.row == _dataArr.count -1){
+                    cell.lineImageV2.hidden = YES;
+                }
                 [cell assignmentNoVisceraWithModel:model];
                 return cell;
             }else {
@@ -238,6 +290,17 @@
                 if(cell==nil){
                     cell = [[HCY_DAVisceraCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HCY_DAVisceraCell"];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
+                
+                if (indexPath.row < _dataArr.count -1) {
+                    HealthTipsModel *nextAmodel = _dataArr[indexPath.row + 1];
+                    if (![model.createTime isEqualToString:nextAmodel.createTime]) {
+                        cell.lineImageV2.hidden = YES;
+                    }else{
+                        cell.lineImageV2.hidden = NO;
+                    }
+                }else if (indexPath.row == _dataArr.count -1){
+                    cell.lineImageV2.hidden = YES;
                 }
                 [cell assignmentVisceraWithModel:model];
                 return cell;

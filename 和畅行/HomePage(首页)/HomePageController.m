@@ -159,7 +159,8 @@
     
     self.bgScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-kTabBarHeight)];
     self.bgScrollView.showsVerticalScrollIndicator = NO;
-    self.bgScrollView.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
+//    self.bgScrollView.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
+    self.bgScrollView.backgroundColor = [UIColor whiteColor];
     self.bgScrollView.bounces = YES;
     self.bgScrollView.contentSize = CGSizeMake(1, ScreenHeight+260);
     self.bgScrollView.delegate = self;

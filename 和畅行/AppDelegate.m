@@ -60,11 +60,6 @@
     [[UITabBar appearance] setTranslucent:NO];
     
 
-    //和缓医疗SDK注册
-//    HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:@"9001" isDebug:YES isDevelop:YES];
-//    hhSdk.cerName = @"2cDevTest";
-//    [[HHMSDK alloc] startWithOption:hhSdk];
-
     [UMCommonLogManager setUpUMCommonLogManager];
     [UMConfigure setLogEnabled:YES];
     [UMConfigure initWithAppkey:@"5bbacd04b465f5db4c000073" channel:@"App Store"];

@@ -16,6 +16,7 @@
 @property (nonatomic,strong) UILabel *timeLabel;
 @property (nonatomic,strong) UILabel *createDateLabel;
 @property (nonatomic, strong) UILabel *typeLabel;
+@property (nonatomic, strong)UIImageView *lineImageV2;
 
 
 - (void)assignmentCellWithModel:(HealthTipsModel *)model;
