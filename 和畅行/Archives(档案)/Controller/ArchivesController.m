@@ -433,6 +433,8 @@
 
 -(void)getCasesList {
     
+     [self.timeLinvView.tableView.mj_footer endRefreshing];
+    [self.timeLinvView.tableView.mj_header endRefreshing];
     NSString *UrlPre=URL_PRE;
     NSString *aUrl = [NSString stringWithFormat:@"%@weiq/diseaList.jhtml",UrlPre];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];

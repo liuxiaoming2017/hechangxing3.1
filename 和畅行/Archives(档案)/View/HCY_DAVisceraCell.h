@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *createDateLabel;
 @property (nonatomic, strong) UILabel *typeLabel;
 @property (nonatomic, strong) UIImageView *imageV;
+@property (nonatomic, strong)UIImageView *lineImageV2;
 
 
 //病例
