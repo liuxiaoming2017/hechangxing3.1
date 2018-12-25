@@ -76,7 +76,8 @@
     __weak typeof(self) weakSelf = self;
     [subMember receiveSubIdWith:^(NSString *subId) {
         self->memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
-        [weakSelf requestNetworkWithIndex:self->currentIndex];
+        weakSelf.pageInteger = 1;
+        [weakSelf requestHealthHintDataWithTipyInteger:self->currentIndex withPageInteger:weakSelf.pageInteger];
         [subMember hideHintView];
     }];
     
@@ -273,7 +274,7 @@
 - (void)requestHealthHintDataWithTipyInteger:(NSInteger )tipyInteger withPageInteger:(NSInteger )pageInteger
 {
     __weak typeof(self) weakSelf = self;
-    
+    ///member/service/zf_report.jhtml?cust_id=32&physique_id=181224175130815054&device=1
     NSString *str = [NSString new];
     NSString *pageIntegerstr = [NSString stringWithFormat:@"%ld",(long)pageInteger];
     

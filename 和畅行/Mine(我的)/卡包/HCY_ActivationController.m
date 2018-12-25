@@ -86,7 +86,7 @@
     [self.blackView addSubview:whiteView];
     
     UILabel *txtLabel = [[UILabel alloc]initWithFrame:CGRectMake( 50, 0, whiteView.width - 100, whiteView.height - 62)];
-    txtLabel.text =  [NSString stringWithFormat:@"您将激活%@,是否继续?",_model.service_name] ;
+    txtLabel.text =  [NSString stringWithFormat:@"您将激活%@,是否继续?",_model.card_name] ;
     txtLabel.textColor = RGB_TextLightGray;
     txtLabel.font = [UIFont systemFontOfSize:17];
     txtLabel.numberOfLines = 2;

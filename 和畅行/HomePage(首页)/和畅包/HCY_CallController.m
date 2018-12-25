@@ -9,7 +9,7 @@
 #import "HCY_CallController.h"
 #import "HCY_CallCell.h"
 #import "AdvisorysViewController.h"
-#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+//#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 
 @interface HCY_CallController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -63,33 +63,33 @@
 -(void)comeToNextBlockCellwithIndex:(NSIndexPath *)index {
     
     
-     HHMSDK *hhmSdk = [[HHMSDK alloc] init];
-    __weak typeof(self) weakSelf = self;
-    if(index.row == 0) {
-        [hhmSdk loginWithUuid:100002514 completion:^(NSError * _Nullable error) {
-            if(error){
-                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
-            }else{
-                [hhmSdk startCall:HHCallTypeChild];
-            }
-        }];
-        
-    }else if (index.row == 1) {
-        
-        [hhmSdk loginWithUuid:100002514 completion:^(NSError * _Nullable error) {
-            if(error){
-                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
-            }else{
-                [hhmSdk startCall:HHCallTypeAdult];
-            }
-        }];
-        
-    }else {
-        
-        AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
-        [self.navigationController pushViewController:adVC animated:YES];
-        
-    }
+//     HHMSDK *hhmSdk = [[HHMSDK alloc] init];
+//    __weak typeof(self) weakSelf = self;
+//    if(index.row == 0) {
+//        [hhmSdk loginWithUuid:100002514 completion:^(NSError * _Nullable error) {
+//            if(error){
+//                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
+//            }else{
+//                [hhmSdk startCall:HHCallTypeChild];
+//            }
+//        }];
+//        
+//    }else if (index.row == 1) {
+//        
+//        [hhmSdk loginWithUuid:100002514 completion:^(NSError * _Nullable error) {
+//            if(error){
+//                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
+//            }else{
+//                [hhmSdk startCall:HHCallTypeAdult];
+//            }
+//        }];
+//        
+//    }else {
+//        
+//        AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
+//        [self.navigationController pushViewController:adVC animated:YES];
+//        
+//    }
     
 }
 

@@ -148,10 +148,10 @@
             self.typeLabel.text = @"体质辨识";
         }else{
             self.typeLabel.text = @"经络辨识";
-            self.contentLabel.text = [model.subject valueForKey:@"name"];
 
         }
-       
+        self.contentLabel.text = [model.subject valueForKey:@"name"];
+
     }
     
     NSString *str = [NSString stringWithFormat:@"%@",model.createDate];

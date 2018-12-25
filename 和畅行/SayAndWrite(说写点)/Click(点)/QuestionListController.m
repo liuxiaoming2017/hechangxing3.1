@@ -608,12 +608,13 @@
 - (void)requesstuserinfoError:(ASIHTTPRequest *)request
 {
     //[SSWaitViewEx removeWaitViewFrom:self.view];
-    
+    [GlobalCommon hideMBHudWithView:self.view];
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉，请检查您的网络是否畅通" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
     [av show];
 }
 - (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
 {
+    [GlobalCommon hideMBHudWithView:self.view];
     NSString* reqstr=[request responseString];
     //NSLog(@"dic==%@",reqstr);
     NSDictionary * dic=[reqstr JSONValue];

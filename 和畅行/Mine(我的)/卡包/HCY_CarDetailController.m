@@ -107,7 +107,7 @@
 //    NSDictionary *dic = @{@"memberId":[UserShareOnce shareOnce].uid,
 //                                    @"card_no":self.model.card_no};
     
-    
+    [GlobalCommon showMBHudWithView:self.view];
     NSString *UrlPre=URL_PRE;
     NSString *aUrl = [NSString stringWithFormat:@"%@/weiq/user_record.jhtml",UrlPre];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
@@ -146,11 +146,13 @@
 
 - (void)requesstuserinfoError:(ASIHTTPRequest *)request
 {
+    [GlobalCommon hideMBHudWithView:self.view];
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉，请检查您的网络是否畅通" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
     [av show];
 }
 - (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
 {
+    [GlobalCommon hideMBHudWithView:self.view];
     NSString* reqstr=[request responseString];
     //NSLog(@"dic==%@",reqstr);
     NSDictionary * dic=[reqstr JSONValue];

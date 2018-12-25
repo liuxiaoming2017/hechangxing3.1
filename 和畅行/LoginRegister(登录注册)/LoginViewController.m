@@ -236,15 +236,15 @@
                           @"token":iPoneNumberMD5};
     
     NSLog(@"%@",dic);
+    __weak typeof(self) weakSelf = self;
     [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:@"weiq/weiq/getWeiqSecret.jhtml" parameters:dic successBlock:^(id response) {
         
         NSString *str = [[response valueForKey:@"data"] valueForKey:@"secret"];
-        
-        
-        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:str redirectURL:nil];
         [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
+        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:APP_SECRET redirectURL:nil];
         
-        [self loginByWeiXin];
+        
+        [weakSelf loginByWeiXin];
         
     } failureBlock:^(NSError *error) {
         NSLog(@"%@",error);
