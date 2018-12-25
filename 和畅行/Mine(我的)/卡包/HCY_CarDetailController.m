@@ -47,7 +47,7 @@
     _hLabel.frame = CGRectMake(0, 20, imageV.width, 25);
     _hLabel.textColor = [UIColor whiteColor];
     _hLabel.textAlignment = NSTextAlignmentCenter;
-    _hLabel.text = self.model.service_name;
+    _hLabel.text = self.model.card_name;
     _hLabel.font = [UIFont systemFontOfSize:21];
     [imageV addSubview:_hLabel];
     
@@ -107,28 +107,53 @@
     NSString *urlStr   = @"weiq/user_record.jhtml";
     NSDictionary *dic = @{@"memberId":[UserShareOnce shareOnce].uid,
                           @"card_no":self.model.card_no
-                          
                           };
-    //@"token":[UserShareOnce shareOnce].token
+    
     __weak typeof(self) weakSelf = self;
-    [ZYGASINetworking POST_Path:urlStr params:dic completed:^(id JSON, NSString *stringData) {
-        if([[JSON objectForKey:@"code"] integerValue] == 100){
-            NSArray *arr = [JSON objectForKey:@"data"];
+    NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:urlStr headParameters:headers parameters:dic successBlock:^(id jsonData) {
+        
+        NSError *errorForJSON = [NSError errorWithDomain:@"请求数据解析为json格式，发出错误" code:2014 userInfo:@{@"请求数据json解析错误": @"中文",@"serial the data to json error":@"English"}];
+        id response = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&errorForJSON];
+
+        if([[response objectForKey:@"code"] integerValue] == 100){
+            NSArray *arr = [response objectForKey:@"data"];
             if(arr.count>0){
-                    weakSelf.serviceArr = [arr objectAtIndex:0];
+                weakSelf.serviceArr = [arr objectAtIndex:0];
                 [weakSelf.serviceTableView reloadData];
                 if(arr.count>1){
                     weakSelf.dataArr = [arr objectAtIndex:1];
                     [weakSelf.listTableView reloadData];
                 }
             }
-           // [weakSelf.listTableView reloadData];
+            // [weakSelf.listTableView reloadData];
         }else{
-            [weakSelf showAlertWarmMessage:[JSON objectForKey:@"message"]];
+            [weakSelf showAlertWarmMessage:[response objectForKey:@"message"]];
         }
-    } failed:^(NSError *error) {
-        [weakSelf showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+    } failureBlock:^(NSError *error) {
+        [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
+    
+    
+//    [ZYGASINetworking POST_Path:urlStr params:dic completed:^(id JSON, NSString *stringData) {
+//        if([[JSON objectForKey:@"code"] integerValue] == 100){
+//            NSArray *arr = [JSON objectForKey:@"data"];
+//            if(arr.count>0){
+//                    weakSelf.serviceArr = [arr objectAtIndex:0];
+//                [weakSelf.serviceTableView reloadData];
+//                if(arr.count>1){
+//                    weakSelf.dataArr = [arr objectAtIndex:1];
+//                    [weakSelf.listTableView reloadData];
+//                }
+//            }
+//           // [weakSelf.listTableView reloadData];
+//        }else{
+//            [weakSelf showAlertWarmMessage:[JSON objectForKey:@"message"]];
+//        }
+//    } failed:^(NSError *error) {
+//        [weakSelf showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+//    }];
+    
 }
 
 -(void)consultingAction:(UIButton *)button {

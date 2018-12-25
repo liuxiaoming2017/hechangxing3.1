@@ -19,7 +19,6 @@
 #import <UMShare/UMShare.h>
 #import <UMCommon/UMCommon.h>
 #import <UMCommonLog/UMCommonLogManager.h>
-#import "ZYGASINetworking.h"
 #import "payRequsestHandler.h"
 
 #define margin 40

@@ -120,15 +120,26 @@
                               };
 
         __weak typeof(self) weakSelf = self;
-        [ZYGASINetworking POST_Path:urlStr params:dic completed:^(id JSON, NSString *stringData) {
-            if([[JSON objectForKey:@"code"] integerValue] == 100){
+         NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+        [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:urlStr headParameters:headers parameters:dic successBlock:^(id response) {
+            if([[response objectForKey:@"code"] integerValue] == 100){
                 [weakSelf requestMemberInfo];
             }else{
-                [weakSelf showAlertWarmMessage:[JSON objectForKey:@"message"]];
+                [weakSelf showAlertWarmMessage:[response objectForKey:@"message"]];
             }
-        } failed:^(NSError *error) {
-            [weakSelf showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+        } failureBlock:^(NSError *error) {
+            [weakSelf showAlertWarmMessage:requestErrorMessage];
         }];
+        
+//        [ZYGASINetworking POST_Path:urlStr params:dic completed:^(id JSON, NSString *stringData) {
+//            if([[JSON objectForKey:@"code"] integerValue] == 100){
+//                [weakSelf requestMemberInfo];
+//            }else{
+//                [weakSelf showAlertWarmMessage:[JSON objectForKey:@"message"]];
+//            }
+//        } failed:^(NSError *error) {
+//            [weakSelf showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+//        }];
     }
     
     

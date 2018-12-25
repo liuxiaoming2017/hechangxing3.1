@@ -314,14 +314,17 @@ static NSMutableArray *tasks;
         rsSerializer.stringEncoding = NSUTF8StringEncoding;
         
         manager.requestSerializer = rqSerializer;
-       // manager.responseSerializer = rsSerializer;
-//        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        manager.responseSerializer = rsSerializer;
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/css",@"text/xml",@"text/plain", @"application/javascript", @"image/*", nil];
         
+        [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"content-type"];
+        
         for(NSString *key in headerDic.allKeys){
             [manager.requestSerializer setValue:[headerDic objectForKey:key] forHTTPHeaderField:key];
+           
         }
+        
         sessionTask = [manager POST:URLString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

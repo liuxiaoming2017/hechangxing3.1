@@ -553,6 +553,8 @@
         [weakSelf showAlertWarmMessage:@"请求网络失败"];
     }];
     
+    
+    
 //    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:urlStr headParameters:headers parameters:paramDic successBlock:^(id response) {
 //        NSError *errorForJSON = [NSError errorWithDomain:@"请求数据解析为json格式，发出错误" code:2014 userInfo:@{@"请求数据json解析错误": @"中文",@"serial the data to json error":@"English"}];
 //        id jsonData = [NSJSONSerialization JSONObjectWithData:response options:0 error:&errorForJSON];
