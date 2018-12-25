@@ -15,11 +15,12 @@
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 #import "SBJson.h"
-
+#import "WXApi.h"
 #import <UMShare/UMShare.h>
 #import <UMCommon/UMCommon.h>
-
+#import <UMCommonLog/UMCommonLogManager.h>
 #import "ZYGASINetworking.h"
+#import "payRequsestHandler.h"
 
 #define margin 40
 #define leftOrigin 40
@@ -158,14 +159,6 @@
     [weixinBtn addTarget:self action:@selector(weixinBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:weixinBtn];
     
-    NSString *str = [[NSUserDefaults standardUserDefaults]valueForKey:@"WEIXINSTATES"];
-    if ([str isEqualToString:@"10"]) {
-        weixinBtn.hidden = NO;
-        otherLoginLabel.hidden = NO;
-    }else{
-        weixinBtn.hidden = YES;
-        otherLoginLabel.hidden = YES;
-    }
     //从本地查找用户
     NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
     NSString* strcheck=[dicTmp objectForKey:@"ischeck"];
@@ -229,16 +222,45 @@
  
  */
 
+
+
+
 # pragma mark - 微信登录
 - (void)weixinBtnAction
 {
+    /**
+     *  MD5加密后的字符串
+     */
+    NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",@"weixinPayPlugin"];
+    NSString *iPoneNumberMD5 = [[GlobalCommon md5:iPoneNumber] uppercaseString];
+    NSDictionary *dic = @{@"pluginname":@"weixinPayPlugin",
+                          @"token":iPoneNumberMD5};
     
+    NSLog(@"%@",dic);
+    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:@"weiq/weiq/getWeiqSecret.jhtml" parameters:dic successBlock:^(id response) {
+        
+        NSString *str = [[response valueForKey:@"data"] valueForKey:@"secret"];
+        
+        
+        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:str redirectURL:nil];
+        [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
+        
+        [self loginByWeiXin];
+        
+    } failureBlock:^(NSError *error) {
+        NSLog(@"%@",error);
+    }];
+    
+}
+
+- (void)loginByWeiXin
+{
     [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_WechatSession currentViewController:nil completion:^(id result, NSError *error) {
         NSLog(@"hahah");
         if (error) {
             
             [self showAlertWarmMessage:@"抱歉登录失败，请重试"];
-
+            
             NSLog(@"%@",error);
             
         } else {
@@ -258,20 +280,20 @@
                                       @"gender":str,
                                       @"profile_image_url":resp.iconurl};
             
-             [self userLoginWithWeiXParams:weiXDic withCheck:2];
+            [self userLoginWithWeiXParams:weiXDic withCheck:2];
             
-//            // 授权信息
-//            NSLog(@"Wechat uid: %@", resp.uid);
-//            NSLog(@"Wechat openid: %@", resp.openid);
-//            NSLog(@"Wechat accessToken: %@", resp.accessToken);
-//            NSLog(@"Wechat refreshToken: %@", resp.refreshToken);
-//            NSLog(@"Wechat expiration: %@", resp.expiration);
-//            // 用户信息
-//            NSLog(@"Wechat name: %@", resp.name);
-//            NSLog(@"Wechat iconurl: %@", resp.iconurl);
-//            NSLog(@"Wechat gender: %@", resp.gender);
-//            // 第三方平台SDK源数据
-//            NSLog(@"Wechat originalResponse: %@", resp.originalResponse);
+            //            // 授权信息
+            //            NSLog(@"Wechat uid: %@", resp.uid);
+            //            NSLog(@"Wechat openid: %@", resp.openid);
+            //            NSLog(@"Wechat accessToken: %@", resp.accessToken);
+            //            NSLog(@"Wechat refreshToken: %@", resp.refreshToken);
+            //            NSLog(@"Wechat expiration: %@", resp.expiration);
+            //            // 用户信息
+            //            NSLog(@"Wechat name: %@", resp.name);
+            //            NSLog(@"Wechat iconurl: %@", resp.iconurl);
+            //            NSLog(@"Wechat gender: %@", resp.gender);
+            //            // 第三方平台SDK源数据
+            //            NSLog(@"Wechat originalResponse: %@", resp.originalResponse);
         }
     }];
 }

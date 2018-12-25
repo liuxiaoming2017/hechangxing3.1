@@ -30,6 +30,8 @@
 
 #import <UMShare/UMShare.h>
 #import <UMCommon/UMCommon.h>
+
+
 #import <UMCommonLog/UMCommonLogManager.h>
 
 #import "SBJson.h"
@@ -62,45 +64,20 @@
     HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:@"9001" isDebug:YES isDevelop:YES];
     hhSdk.cerName = @"2cDevTest";
     [[HHMSDK alloc] startWithOption:hhSdk];
-
+    
+    [UMCommonLogManager setUpUMCommonLogManager];
+    [UMConfigure setLogEnabled:YES];
+    [UMConfigure initWithAppkey:@"5bbacd04b465f5db4c000073" channel:@"App Store"];
     
      [self returnMainPage2];
     
     [self.window makeKeyAndVisible];
     
     
-    [self getAppSecret];
     return YES;
 }
 
-- (void)getAppSecret
-{
-    /**
-     *  MD5加密后的字符串
-     */
-    NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",@"weixinPayPlugin"];
-    NSString *iPoneNumberMD5 = [[GlobalCommon md5:iPoneNumber] uppercaseString];
-    NSDictionary *dic = @{@"pluginname":@"weixinPayPlugin",
-                          @"token":iPoneNumberMD5};
-    
-    NSLog(@"%@",dic);
-    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:@"weiq/weiq/getWeiqSecret.jhtml" parameters:dic successBlock:^(id response) {
-        
-        NSString *str = [[response valueForKey:@"data"] valueForKey:@"secret"];
-        
-        [UMCommonLogManager setUpUMCommonLogManager];
-        [UMConfigure setLogEnabled:YES];
-        [UMConfigure initWithAppkey:@"5bbacd04b465f5db4c000073" channel:@"App Store"];
-        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:str redirectURL:nil];
-        [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
-        
-        [[NSUserDefaults standardUserDefaults]setValue:@"10" forKey:@"WEIXINSTATES"];
-        
-    } failureBlock:^(NSError *error) {
-        NSLog(@"%@",error);
-    }];
-    
-}
+
 
 
 -(void)returnMainPage{

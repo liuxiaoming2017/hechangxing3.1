@@ -26,7 +26,7 @@
 @property (nonatomic, strong) HCY_HomeImageModel *backImageModel;
 @property (nonatomic, strong) HCY_HomeImageModel *pushModel;
 @property (nonatomic, strong) UIImageView *imageV;
-@property (nonatomic, strong) MBProgressHUD *hud;
+@property (nonatomic, strong)UIActivityIndicatorView *testActivityIndicator;
 
 
 @end
@@ -174,6 +174,16 @@
      self.readWriteView = [[ReadOrWriteView alloc] initWithFrame:CGRectMake(0, self.packgeView.bottom, ScreenWidth, imageHeight+10)];
     [self.bgScrollView addSubview:self.readWriteView];
     
+    
+//    self.remindView = [[HeChangRemind alloc] initWithFrame:CGRectMake(self.packgeView.left, self.readWriteView.bottom+10, self.readWriteView.width, 200) withDataArr:nil];
+//    [self.bgScrollView addSubview:self.remindView];
+    
+    
+    self.testActivityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.testActivityIndicator.center = CGPointMake(self.view.width/2 , self.readWriteView.bottom +100);//只能设置中心，不能设置大小
+    [self.bgScrollView addSubview:self.testActivityIndicator];
+    self.testActivityIndicator.color = RGB_TextAppBlue;
+    
     [self requestUI];
 
    
@@ -201,8 +211,7 @@
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
     [paramDic setObject:[MemberUserShance shareOnce].idNum forKey:@"memberChildId"];
     __weak typeof(self) weakSelf = self;
-    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    self.hud.label.text = @"加载中...";
+     [self.testActivityIndicator startAnimating];
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:paramDic successBlock:^(id response) {
         
         [weakSelf requestRemindNetWork];
@@ -222,6 +231,7 @@
 # pragma mark - 和畅提醒网络请求
 - (void)requestRemindNetWork
 {
+    
    
     
     NSString *urlStr = @"member/new_ins/tips.jhtml";
@@ -288,9 +298,11 @@
         }else{
             [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
         }
-        [self.hud hideAnimated:YES];
+            [self.testActivityIndicator stopAnimating];
+            [self.testActivityIndicator setHidesWhenStopped:YES];
     } failureBlock:^(NSError *error) {
-        [self.hud hideAnimated:YES];
+        [self.testActivityIndicator stopAnimating];
+        [self.testActivityIndicator setHidesWhenStopped:YES];
     }];
 }
 
@@ -319,6 +331,5 @@
     }
     
 }
-
 
 @end

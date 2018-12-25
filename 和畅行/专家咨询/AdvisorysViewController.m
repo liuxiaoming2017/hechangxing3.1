@@ -21,6 +21,7 @@
 #import "PYPhotoBrowser.h"
 #import "AFNetworking.h"
 
+
 ///弱引用/强引用
 #define CCWeakSelf __weak typeof(self) weakSelf = self;
 #define WIDTHS (self.view.frame.size.width -64)/4
@@ -135,6 +136,7 @@
     photoButton.frame = CGRectMake(24, 0, 50, 50) ;
     [photoButton setBackgroundImage:[UIImage imageNamed:@"专家咨询11_023.png"] forState:UIControlStateNormal];
     [photoButton addTarget:self action:@selector(photoButton) forControlEvents:UIControlEventTouchUpInside];
+
     [bottomView addSubview:photoButton];
     
     UIButton *finishButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -145,8 +147,7 @@
     finishButton.clipsToBounds = YES;
     [finishButton addTarget:self action:@selector(finishButton) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:finishButton];
-    
-    
+
     
 }
 

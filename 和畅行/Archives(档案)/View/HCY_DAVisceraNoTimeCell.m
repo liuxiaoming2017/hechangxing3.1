@@ -96,7 +96,7 @@
     
     
     
-    UIImageView *lineImageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(lineImageV.left, self.createDateLabel.bottom + 10, 1, 35)];
+    UIImageView *lineImageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(lineImageV.left, self.createDateLabel.bottom + 10, 1, 37)];
     lineImageV2.backgroundColor = UIColorFromHex(0xe2e2e2);
     [self addSubview:lineImageV2];
     

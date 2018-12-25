@@ -79,7 +79,7 @@
     
     
     
-    UIImageView *lineImageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(lineImageV.left, imageV.bottom-5+5, 1, 10)];
+    UIImageView *lineImageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(lineImageV.left, imageV.bottom-5+5, 1, 12)];
     lineImageV2.backgroundColor = UIColorFromHex(0xe2e2e2);
     [self addSubview:lineImageV2];
     

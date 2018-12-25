@@ -99,7 +99,7 @@
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         [self.view addSubview:self.tableView];
-
+        
     });
     
     
@@ -161,7 +161,7 @@
 #pragma mark - 点击全部订单、待付款、待评价
 -(void)MyBTnClick:(UIButton *)button{
     
-     HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
+    HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
     vc.noWebviewBack = YES;
     vc.progressType = progress2;
     switch (button.tag - 666) {
@@ -215,7 +215,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-
+    
     switch (indexPath.row) {
         case 0:
         {
@@ -232,7 +232,7 @@
                 [self.navigationController pushViewController:vc animated:YES];
                 vc.hidesBottomBarWhenPushed = YES;
             }
-           
+            
         }
             
             break;
@@ -255,7 +255,7 @@
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
             }
-           
+            
         }
             break;
         case 2:
@@ -277,7 +277,7 @@
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
             }
-           
+            
         }
             break;
         case 3:
@@ -381,7 +381,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self presentViewController:nav animated:YES completion:nil];
             });
-
+            
         }
             break;
         case 13:

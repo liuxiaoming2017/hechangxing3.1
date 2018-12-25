@@ -73,7 +73,6 @@
 //        }];
     }else if ([strcheck isEqualToString:@"2"]){
         
-      
         
         NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
         [dic setObject:[dicTmp valueForKey:@"UNIONID"] forKey:@"unionid"];
