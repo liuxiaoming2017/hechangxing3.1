@@ -186,8 +186,7 @@
     
     [self requestUI];
 
-   
-    
+    ///SelectCellBlock
 }
 
 - (void)createMiddleView
@@ -202,6 +201,7 @@
     
     
 }
+
 
 # pragma mark - 和畅包网络请求
 - (void)requestPackgeNetWork
@@ -286,8 +286,8 @@
                     [weakSelf.bgScrollView addSubview:self.recommendView];
                     weakSelf.bgScrollView.contentSize = CGSizeMake(1, self.recommendView.bottom+20);
                 }else{
-                    //weakSelf.remindView.height = 58+mutableArr.count*45;
-                    [weakSelf.remindView updateViewWithData:mutableArr withHeight:58+mutableArr.count*45];
+//                    weakSelf.remindView.height = 58+mutableArr.count*45;
+                    [weakSelf.remindView updateViewWithData:mutableArr withHeight:58+mutableArr.count*(45+14)];
                     weakSelf.recommendView.frame = CGRectMake(0, weakSelf.remindView.bottom+10, weakSelf.recommendView.width, weakSelf.recommendView.height);
                 }
                 

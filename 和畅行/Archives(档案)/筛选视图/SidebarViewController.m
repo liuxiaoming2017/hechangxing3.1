@@ -60,8 +60,10 @@
         
         if(i == 0) {
             selectBtn.selected = YES;
+            [selectBtn.layer setBorderColor:[UIColor redColor].CGColor];
         }
         [self.contentView addSubview:selectBtn];
+        
     }
     
     UIButton *selButton = (UIButton *)[self.contentView viewWithTag:100+self.titleArr.count-1];

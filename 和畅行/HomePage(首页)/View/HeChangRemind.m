@@ -157,7 +157,7 @@
 {
     UIImageView *imgV = [self viewWithTag:200];
     self.dataArr = arr;
-    self.tableView.height = 45*arr.count;
+    self.tableView.height = height;
     imgV.height = height;
     [self insertSublayerWithImageView:imgV];
     self.height = height;
