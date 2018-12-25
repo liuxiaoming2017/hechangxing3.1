@@ -30,6 +30,7 @@
 @property (nonatomic,strong) UILabel *allPage;
 @property (nonatomic,strong) UIButton *lastPage;
 @property (nonatomic,strong) UIButton *nextPage;
+@property (nonatomic,copy)NSString *str;
 
 @end
 
@@ -486,21 +487,21 @@
     
     NSArray *arr = [[NSArray alloc] initWithObjects:@(TZ01Fraction),@(TZ02Fraction),@(TZ03Fraction),@(TZ04Fraction),@(TZ05Fraction),@(TZ06Fraction),@(TZ07Fraction),@(TZ08Fraction), nil];
     
-    NSString *str = @"TZBS-01";//赋初值
+    self.str = @"TZBS-01";//赋初值
     if ((TZ01Fraction <30)&&(TZ02Fraction <30)&&(TZ03Fraction <30)&&(TZ04Fraction <30)&&(TZ05Fraction <30)&&(TZ06Fraction <30)&&(TZ07Fraction <30)&&(TZ08Fraction <30)) {
-        str = @"TZBS-01";
+       self.str = @"TZBS-01";
     }
     if ((TZ01Fraction >40)||(TZ02Fraction >40)||(TZ02Fraction >40)||(TZ02Fraction >40)||(TZ02Fraction >40)||(TZ02Fraction >40)||(TZ02Fraction >40)||(TZ02Fraction >40)) {
-        str = [self maxIndexWithArr:arr];
+        self.str = [self maxIndexWithArr:arr];
     }if (TZ00Fraction >=60) {
         if (((TZ01Fraction <40)&&(TZ01Fraction >=30))&&((TZ02Fraction <40)&&(TZ02Fraction >=30))&&((TZ03Fraction <40)&&(TZ03Fraction >=30))&&((TZ04Fraction <40)&&(TZ04Fraction >=30))&&((TZ05Fraction <40)&&(TZ05Fraction >=30))&&((TZ06Fraction <40)&&(TZ06Fraction >=30))&&((TZ07Fraction <40)&&(TZ07Fraction >=30))&&((TZ08Fraction <40)&&(TZ08Fraction >=30))) {
-            str = @"TZBS-01";
+            self.str = @"TZBS-01";
         }
     }else{
         if (((TZ01Fraction <40)&&(TZ01Fraction >=30))&&((TZ02Fraction <40)&&(TZ02Fraction >=30))&&((TZ03Fraction <40)&&(TZ03Fraction >=30))&&((TZ04Fraction <40)&&(TZ04Fraction >=30))&&((TZ05Fraction <40)&&(TZ05Fraction >=30))&&((TZ06Fraction <40)&&(TZ06Fraction >=30))&&((TZ07Fraction <40)&&(TZ07Fraction >=30))&&((TZ08Fraction <40)&&(TZ08Fraction >=30))) {
             //取分数高者为该偏颇体质
             
-            str= [self maxIndexWithArr:arr];
+            self.str= [self maxIndexWithArr:arr];
             
         }
     }
@@ -530,28 +531,54 @@
     
     //NSLog(@"questionIdsString************%@",questionIdsString);
     
-    NSDictionary *paramDic = @{@"subjectSn":str,@"memberChildId":[MemberUserShance shareOnce].idNum,@"jsonResults":@"",@"questionnaireIds":questionIdsString,@"tzscore":tzscore};
+    
+    
+    
+    NSDictionary *paramDic = @{@"subjectSn":self.str,
+                                             @"memberChildId":[MemberUserShance shareOnce].idNum,
+                                             @"jsonResults":@"",
+                                             @"questionnaireIds":questionIdsString,
+                                             @"tzscore":tzscore};
     
     __weak typeof(self) weakSelf = self;
     //NSString *urlStr = @"subject_category/list.jhtml?sn=TZBS";
-    NSString *urlStr = @"/member/myreport/save_report.jhtml";
+//    NSString *urlStr = @"/member/myreport/save_report.jhtml";
     
     
     [GlobalCommon showMBHudWithView:self.view];
     
-    [ZYGASINetworking POST_Path:urlStr params:paramDic completed:^(id JSON, NSString *stringData) {
-        [GlobalCommon hideMBHudWithView:weakSelf.view];
-        if([[JSON objectForKey:@"status"] integerValue] == 100){
-            ResultController *resultVC = [[ResultController alloc] init];
-            resultVC.TZBSstr = str;
-            [weakSelf.navigationController pushViewController:resultVC animated:YES];
-        }else{
-            [weakSelf showAlertWarmMessage:@"请求网络失败"];
-        }
-    } failed:^(NSError *error) {
-        [GlobalCommon hideMBHudWithView:weakSelf.view];
-        [weakSelf showAlertWarmMessage:@"请求网络失败"];
-    }];
+    
+    NSString *UrlPre=URL_PRE;
+    NSString *aUrl = [NSString stringWithFormat:@"%@/member/myreport/save_report.jhtml",UrlPre];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    
+    [request setPostValue:[MemberUserShance shareOnce].idNum forKey:@"memberChildId"];
+    [request setPostValue:self.str forKey:@"subjectSn"];
+    [request setPostValue:@"" forKey:@"jsonResults"];
+    [request setPostValue:questionIdsString forKey:@"questionnaireIds"];
+    [request setPostValue:tzscore forKey:@"tzscore"];
+    [request setTimeOutSeconds:20];
+    [request setRequestMethod:@"POST"];
+    [request setDelegate:self];
+    [request setDidFailSelector:@selector(requesstuserinfoError:)];
+    [request setDidFinishSelector:@selector(requesstuserinfoCompleted:)];
+    [request startAsynchronous];
+    
+ //
+//    [ZYGASINetworking POST_Path:urlStr params:paramDic completed:^(id JSON, NSString *stringData) {
+//        [GlobalCommon hideMBHudWithView:weakSelf.view];
+//        if([[JSON objectForKey:@"status"] integerValue] == 100){
+//            ResultController *resultVC = [[ResultController alloc] init];
+//            resultVC.TZBSstr = str;
+//            [weakSelf.navigationController pushViewController:resultVC animated:YES];
+//        }else{
+//        }
+//    } failed:^(NSError *error) {
+//        [GlobalCommon hideMBHudWithView:weakSelf.view];
+//        [weakSelf showAlertWarmMessage:@"请求网络失败"];
+//    }];
     
     
     
@@ -574,6 +601,32 @@
 //    } failureBlock:^(NSError *error) {
 //        [weakSelf showAlertWarmMessage:@"请求网络失败!"];
 //    }];
+    
+}
+
+
+- (void)requesstuserinfoError:(ASIHTTPRequest *)request
+{
+    //[SSWaitViewEx removeWaitViewFrom:self.view];
+    
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉，请检查您的网络是否畅通" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+    [av show];
+}
+- (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
+{
+    NSString* reqstr=[request responseString];
+    //NSLog(@"dic==%@",reqstr);
+    NSDictionary * dic=[reqstr JSONValue];
+    NSLog(@"dic==%@",dic);
+    id status=[dic objectForKey:@"status"];
+    //NSLog(@"234214324%@",status);
+    if ([status intValue]== 100) {
+        
+        ResultController *resultVC = [[ResultController alloc] init];
+        resultVC.TZBSstr = self.str;
+        [self.navigationController pushViewController:resultVC animated:YES];
+        
+    }
     
 }
 
