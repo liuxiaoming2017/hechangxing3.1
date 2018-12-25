@@ -42,12 +42,11 @@
     imageV.userInteractionEnabled = YES;
     [self.view addSubview:imageV];
     
-    
     _hLabel = [[UILabel alloc] init];
     _hLabel.frame = CGRectMake(0, 20, imageV.width, 25);
     _hLabel.textColor = [UIColor whiteColor];
     _hLabel.textAlignment = NSTextAlignmentCenter;
-    _hLabel.text = self.model.service_name;
+    _hLabel.text = self.model.card_name;
     _hLabel.font = [UIFont systemFontOfSize:21];
     [imageV addSubview:_hLabel];
     
@@ -104,32 +103,79 @@
 
 - (void)requestPurchaseHistory
 {
-    NSString *urlStr   = @"weiq/user_record.jhtml";
-    NSDictionary *dic = @{@"memberId":[UserShareOnce shareOnce].uid,
-                          @"card_no":self.model.card_no
-                          
-                          };
-    //@"token":[UserShareOnce shareOnce].token
-    __weak typeof(self) weakSelf = self;
-    [ZYGASINetworking POST_Path:urlStr params:dic completed:^(id JSON, NSString *stringData) {
-        if([[JSON objectForKey:@"code"] integerValue] == 100){
-            NSArray *arr = [JSON objectForKey:@"data"];
-            if(arr.count>0){
-                    weakSelf.serviceArr = [arr objectAtIndex:0];
-                [weakSelf.serviceTableView reloadData];
-                if(arr.count>1){
-                    weakSelf.dataArr = [arr objectAtIndex:1];
-                    [weakSelf.listTableView reloadData];
-                }
-            }
+//    NSString *urlStr   = @"weiq/user_record.jhtml";
+//    NSDictionary *dic = @{@"memberId":[UserShareOnce shareOnce].uid,
+//                                    @"card_no":self.model.card_no};
+    
+    
+    NSString *UrlPre=URL_PRE;
+    NSString *aUrl = [NSString stringWithFormat:@"%@/weiq/user_record.jhtml",UrlPre];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    
+    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+    [request setPostValue:self.model.card_no forKey:@"card_no"];
+    [request setTimeOutSeconds:20];
+    [request setRequestMethod:@"POST"];
+    [request setDelegate:self];
+    [request setDidFailSelector:@selector(requesstuserinfoError:)];
+    [request setDidFinishSelector:@selector(requesstuserinfoCompleted:)];
+    [request startAsynchronous];
+    
+//    __weak typeof(self) weakSelf = self;
+//    [ZYGASINetworking POST_Path:urlStr params:dic completed:^(id JSON, NSString *stringData) {
+//        if([[JSON objectForKey:@"code"] integerValue] == 100){
+//            NSArray *arr = [JSON objectForKey:@"data"];
+//            if(arr.count>0){
+//                    weakSelf.serviceArr = [arr objectAtIndex:0];
+//                [weakSelf.serviceTableView reloadData];
+//                if(arr.count>1){
+//                    weakSelf.dataArr = [arr objectAtIndex:1];
+//                    [weakSelf.listTableView reloadData];
+//                }
+//            }
            // [weakSelf.listTableView reloadData];
-        }else{
-            [weakSelf showAlertWarmMessage:[JSON objectForKey:@"message"]];
-        }
-    } failed:^(NSError *error) {
-        [weakSelf showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
-    }];
+//        }else{
+//            [weakSelf showAlertWarmMessage:[JSON objectForKey:@"message"]];
+//        }
+//    } failed:^(NSError *error) {
+//        [weakSelf showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+//    }];
 }
+
+- (void)requesstuserinfoError:(ASIHTTPRequest *)request
+{
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉，请检查您的网络是否畅通" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+    [av show];
+}
+- (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
+{
+    NSString* reqstr=[request responseString];
+    //NSLog(@"dic==%@",reqstr);
+    NSDictionary * dic=[reqstr JSONValue];
+    NSLog(@"dic==%@",dic);
+    id status=[dic objectForKey:@"status"];
+    //NSLog(@"234214324%@",status);
+    if ([status intValue]== 100) {
+        
+        NSArray *arr = [dic objectForKey:@"data"];
+        if(arr.count>0){
+            self.serviceArr = [arr objectAtIndex:0];
+            [self.serviceTableView reloadData];
+            if(arr.count>1){
+                self.dataArr = [arr objectAtIndex:1];
+                [self.listTableView reloadData];
+            }
+        }
+    }else{
+        [self showAlertWarmMessage:[dic objectForKey:@"message"]];
+
+    }
+    
+}
+
+
 
 -(void)consultingAction:(UIButton *)button {
     
@@ -196,11 +242,11 @@
         if(self.dataArr.count>indexPath.row){
             NSDictionary *dic = [self.dataArr objectAtIndex:indexPath.row];
             cell.kindLabel.text = [dic objectForKey:@"serviceName"];
-            NSString *timeStr = [dic objectForKey:@"createTime"];
+            NSString *timeStr =[NSString stringWithFormat:@"%@", [dic objectForKey:@"createTime"]];
             if(timeStr != nil && ![timeStr isEqualToString:@""] && ![timeStr isKindOfClass:[NSNull class]]){
                 NSArray *arr = [timeStr componentsSeparatedByString:@" "];
                 NSLog(@"arr:%@",arr);
-                if(arr.count>0){
+                if(arr.count>1){
                     cell.timeLabel.text = [arr objectAtIndex:0];
                     cell.hourLabel.text = [arr objectAtIndex:1];
                 }

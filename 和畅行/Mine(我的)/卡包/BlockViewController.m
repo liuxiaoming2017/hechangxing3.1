@@ -126,14 +126,17 @@
         if ([response[@"status"] integerValue] == 100){
                 [self.dataArray removeAllObjects];
            
-            
-            NSArray *dataArray = [response valueForKey:@"attr_data"];
+            NSArray *dataArray = [response valueForKey:@"data"];
+            NSArray *dataListArray = [NSArray array];
+            if (dataArray.count > 1) {
+                dataListArray = dataArray[1];
+            }
             if (dataArray.count == 0){
                 self.nullLabel.hidden = NO;
                 self.tableView.hidden = YES;
                 return ;
             }
-            for (NSDictionary *dic in dataArray ) {
+            for (NSDictionary *dic in dataListArray ) {
                 HYC_CardsModel *model = [[HYC_CardsModel alloc]init];
                 [model yy_modelSetWithJSON:dic];
                 [self.dataArray addObject:model];

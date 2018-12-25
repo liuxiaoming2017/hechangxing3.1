@@ -54,7 +54,6 @@
     _mLabel.textColor = [UIColor whiteColor];
     [self.view addSubview:_mLabel];
     
-    
 
     _yLabel = [[UILabel alloc] init];
     _yLabel.frame = CGRectMake(_hLabel.left , _mLabel.bottom , 160, 20);
