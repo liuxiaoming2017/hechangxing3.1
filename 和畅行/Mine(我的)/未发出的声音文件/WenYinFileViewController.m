@@ -161,7 +161,7 @@
     NSLog(@"string4==%@",string4);
     
     UILabel* lbDate=[[UILabel alloc] init];
-    lbDate.frame=CGRectMake(lbname.frame.origin.x+lbname.frame.size.width+22, (cell.frame.size.height-23)/2, 100, 23);
+    lbDate.frame=CGRectMake(lbname.frame.origin.x+lbname.frame.size.width+22, (cell.frame.size.height-23)/2, 140, 23);
     lbDate.backgroundColor=[UIColor clearColor];
     lbDate.textColor=[UtilityFunc colorWithHexString:@"#666666"];
     lbDate.font=[UIFont systemFontOfSize:10];

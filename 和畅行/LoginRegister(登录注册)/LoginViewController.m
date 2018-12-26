@@ -65,7 +65,7 @@
     userNameBox.frame=CGRectMake(welcomLabel.left, welcomLabel.bottom+10, 200 ,30 );
     userNameBox.borderStyle=UITextBorderStyleNone;
     userNameBox.returnKeyType=UIReturnKeyNext;
-    userNameBox.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
+    userNameBox.keyboardType=UIKeyboardTypeNumberPad;
     userNameBox.clearButtonMode=UITextFieldViewModeWhileEditing;
     userNameBox.delegate=self;
     userNameBox.font=[UIFont systemFontOfSize:13.0];
@@ -132,11 +132,9 @@
     [registBtn setTitle:@"注册" forState:UIControlStateNormal];
     registBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
     [registBtn setTitleColor:UIColorFromHex(0xb8b8b8) forState:UIControlStateNormal];
-<<<<<<< Updated upstream
+
     //[self.view addSubview:registBtn];
-=======
-//    [self.view addSubview:registBtn];
->>>>>>> Stashed changes
+
     
     
     
@@ -193,6 +191,10 @@
         passWordBox.secureTextEntry=YES;
         passWordBox.keyboardType = UIKeyboardTypeDefault;
         [btn setTitle:@"忘记密码" forState:UIControlStateNormal];
+        if(timer){
+            [timer invalidate];
+            pageNo = 0;
+        }
     }else if ([button.titleLabel.text isEqualToString:@"短信验证码登录"]){
          //button.titleLabel.text = @"账户密码登录";
         userNameBox.placeholder = @"  请输入手机号";
@@ -201,6 +203,7 @@
         passWordBox.keyboardType = UIKeyboardTypeNumberPad;
         [button setTitle:@"账户密码登录" forState:UIControlStateNormal];
         [btn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        
     }
 }
 
@@ -309,6 +312,7 @@
 {
     if (userNameBox.text.length==0) {
         
+       
         [self showAlertWarmMessage:@"登录手机号不能为空"];
         return;
     }
@@ -328,7 +332,7 @@
         if (status!=nil)
         {
             if ([status intValue]==100) {
-                
+                self->pageNo = 300;
                 self->timer=[NSTimer scheduledTimerWithTimeInterval:1
                                                        target:self
                                                      selector:@selector(getResults)
@@ -336,7 +340,7 @@
                                                       repeats:YES];
             }else{
                 
-                NSString *str = [dic objectForKey:@"data"];
+                NSString *str = [dic objectForKey:@"message"];
                 [weakSelf showAlertWarmMessage:str];
                 
             }
@@ -364,12 +368,13 @@
     {
         [timer invalidate];
         pageNo=300;
-        YZMbtn.titleLabel.font=[UIFont systemFontOfSize:13];
+        YZMbtn.titleLabel.font=[UIFont systemFontOfSize:14];
         [YZMbtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         return;
     }
-    YZMbtn.titleLabel.font=[UIFont systemFontOfSize:7];
-    [YZMbtn setTitle:[NSString stringWithFormat:@"%i秒内重新发送",pageNo--] forState:UIControlStateNormal];
+    YZMbtn.titleLabel.font=[UIFont systemFontOfSize:14];
+    //[YZMbtn setTitle:[NSString stringWithFormat:@"%i秒内重新发送",pageNo--] forState:UIControlStateNormal];
+    [YZMbtn setTitle:[NSString stringWithFormat:@"%is后发送",pageNo--] forState:UIControlStateNormal];
 }
 
 -(void) CheckActive:(id)sender

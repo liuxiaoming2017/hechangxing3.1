@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="476" height="182.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="17:33" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s9g-XJ-dug">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="17:33" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s9g-XJ-dug">
                         <rect key="frame" x="396" y="0.0" width="70" height="182.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="Vyd-Xh-aN2"/>
@@ -29,7 +29,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2018-12-09" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWW-UI-vTy">
-                        <rect key="frame" x="110" y="0.0" width="286" height="182.5"/>
+                        <rect key="frame" x="178" y="0.0" width="120" height="182.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="120" id="bgR-mb-Bf9"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.35691967275407577" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -45,13 +48,12 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="TWW-UI-vTy" firstAttribute="leading" secondItem="3OR-0s-K1m" secondAttribute="trailing" id="018-MZ-fZw"/>
                     <constraint firstItem="3OR-0s-K1m" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="0fV-Vs-7pY"/>
                     <constraint firstAttribute="bottom" secondItem="s9g-XJ-dug" secondAttribute="bottom" id="4Ec-AQ-Iej"/>
                     <constraint firstItem="3OR-0s-K1m" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="DIR-sc-Eu8"/>
                     <constraint firstAttribute="trailing" secondItem="s9g-XJ-dug" secondAttribute="trailing" constant="10" id="SAI-Su-Axe"/>
-                    <constraint firstItem="s9g-XJ-dug" firstAttribute="leading" secondItem="TWW-UI-vTy" secondAttribute="trailing" id="SS9-pa-0ez"/>
                     <constraint firstAttribute="bottom" secondItem="3OR-0s-K1m" secondAttribute="bottom" id="Ta2-Bc-tCN"/>
+                    <constraint firstItem="TWW-UI-vTy" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="bA9-8h-k3Z"/>
                     <constraint firstItem="s9g-XJ-dug" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="gAk-w9-ydh"/>
                     <constraint firstItem="TWW-UI-vTy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="i0h-EO-m4I"/>
                     <constraint firstAttribute="bottom" secondItem="TWW-UI-vTy" secondAttribute="bottom" id="jws-DH-05x"/>

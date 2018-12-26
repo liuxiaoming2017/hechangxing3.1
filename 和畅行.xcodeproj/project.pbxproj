@@ -517,6 +517,8 @@
 		0385402420EF1469002AC776 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0385402320EF1469002AC776 /* Security.framework */; };
 		0385402620EF1482002AC776 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0385402520EF1482002AC776 /* CoreTelephony.framework */; };
 		0385403020EF1C00002AC776 /* ChildMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0385402F20EF1C00002AC776 /* ChildMemberModel.m */; };
+		0389890A21D36CC5004A6CBD /* My_DeleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0389890921D36CC5004A6CBD /* My_DeleIcon.png */; };
+		0389890C21D36CCB004A6CBD /* My_upIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0389890B21D36CCB004A6CBD /* My_upIcon.png */; };
 		038A652C2112AC130055C760 /* 1我的_104.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A651C2112AC0E0055C760 /* 1我的_104.png */; };
 		038A652D2112AC130055C760 /* 1我的_112.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A651D2112AC0E0055C760 /* 1我的_112.png */; };
 		038A652E2112AC130055C760 /* 1我的_107.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A651E2112AC0F0055C760 /* 1我的_107.png */; };
@@ -1615,6 +1617,8 @@
 		0385402520EF1482002AC776 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		0385402E20EF1C00002AC776 /* ChildMemberModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildMemberModel.h; sourceTree = "<group>"; };
 		0385402F20EF1C00002AC776 /* ChildMemberModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildMemberModel.m; sourceTree = "<group>"; };
+		0389890921D36CC5004A6CBD /* My_DeleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = My_DeleIcon.png; sourceTree = "<group>"; };
+		0389890B21D36CCB004A6CBD /* My_upIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = My_upIcon.png; sourceTree = "<group>"; };
 		038A651C2112AC0E0055C760 /* 1我的_104.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1我的_104.png"; sourceTree = "<group>"; };
 		038A651D2112AC0E0055C760 /* 1我的_112.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1我的_112.png"; sourceTree = "<group>"; };
 		038A651E2112AC0F0055C760 /* 1我的_107.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1我的_107.png"; sourceTree = "<group>"; };
@@ -2577,6 +2581,8 @@
 		03439068210AB5EB00B57142 /* 乐药 */ = {
 			isa = PBXGroup;
 			children = (
+				0389890B21D36CCB004A6CBD /* My_upIcon.png */,
+				0389890921D36CC5004A6CBD /* My_DeleIcon.png */,
 				0343907A210AB81800B57142 /* YY_seg_bg.png */,
 				03439069210AB5FA00B57142 /* 乐药11_1106.png */,
 				0343906A210AB5FA00B57142 /* 乐药112_01.png */,
@@ -4470,6 +4476,7 @@
 				03F97CD521005AE900A0F842 /* ICD10_front_hip_hilighted.png in Resources */,
 				03F97CA621005ACD00A0F842 /* ICD11_back_lefArm_highlighted.png in Resources */,
 				039C238D2123D02600F9AFA3 /* bloodguide3.png in Resources */,
+				0389890A21D36CC5004A6CBD /* My_DeleIcon.png in Resources */,
 				03F97CC421005ADB00A0F842 /* ICD11_front_leftArm_nomal.png in Resources */,
 				03F97C9421005A9E00A0F842 /* ICD10_leftLine.png in Resources */,
 				036E84502186EAF5001B9BB4 /* wd55.mp3 in Resources */,
@@ -4574,6 +4581,7 @@
 				036E84DA2186EB1A001B9BB4 /* i9setPwd.png in Resources */,
 				036E84E12186EB1A001B9BB4 /* ic_password_normal.png in Resources */,
 				03FBDF4421927DB3006116FC /* UMCommonLog.bundle in Resources */,
+				0389890C21D36CCB004A6CBD /* My_upIcon.png in Resources */,
 				036A66AF2113FEF80096A006 /* wodekabaoxu.png in Resources */,
 				03F97CDD21005AE900A0F842 /* ICD10_front_chest_hilighted.png in Resources */,
 				038A654C2112B39B0055C760 /* 我的vLine.png in Resources */,

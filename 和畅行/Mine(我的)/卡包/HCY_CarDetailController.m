@@ -53,8 +53,8 @@
     _mLabel = [[UILabel alloc] init];
     _mLabel.frame = CGRectMake(20,_hLabel.bottom , imageV.width -  40, 30 );
     _mLabel.numberOfLines = 2;
-    _mLabel.text = self.model.card_no;
-    _mLabel.font = [UIFont systemFontOfSize:14];
+    _mLabel.text = [NSString stringWithFormat:@"卡号：%@",self.model.card_no];
+    _mLabel.font = [UIFont systemFontOfSize:16];
     _mLabel.textColor = [UIColor whiteColor];
     [imageV addSubview:_mLabel];
     
@@ -88,7 +88,7 @@
     
     
 
-    self.listTableView = [[UITableView alloc]initWithFrame:CGRectMake(40, listLabel.bottom+20, self.view.frame.size.width - 80, self.view.frame.size.height - kNavBarHeight-listLabel.bottom - 20) style:UITableViewStylePlain];
+    self.listTableView = [[UITableView alloc]initWithFrame:CGRectMake(30, listLabel.bottom+20, self.view.frame.size.width - 60, self.view.frame.size.height - kNavBarHeight-listLabel.bottom - 20) style:UITableViewStylePlain];
     self.listTableView.backgroundColor = [UIColor clearColor];
     self.listTableView.separatorStyle = UITableViewCellEditingStyleNone;
     self.listTableView.dataSource = self;

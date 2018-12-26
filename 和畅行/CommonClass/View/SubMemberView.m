@@ -161,9 +161,9 @@
     
     int sesss ;
     int age ;
-    UILabel *sexLabel = [[UILabel alloc] initWithFrame:CGRectMake(_tableView.frame.size.width/2 + 20, 10, 20, 24)];
+    UILabel *sexLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.right + 10, 10, 40, 24)];
     sexLabel.font = [UIFont systemFontOfSize:13];
-    UILabel *ageLabel = [[UILabel alloc] initWithFrame:CGRectMake(_tableView.frame.size.width-80, 10, 70, 24)];
+    UILabel *ageLabel = [[UILabel alloc] initWithFrame:CGRectMake(sexLabel.right+10, 10, 70, 24)];
     ageLabel.font = [UIFont systemFontOfSize:13];
     [cell addSubview:sexLabel];
     [cell addSubview:ageLabel];
@@ -171,7 +171,7 @@
     NSString *sex = @"";
 
     if([UserShareOnce shareOnce].gender == nil||[[UserShareOnce shareOnce].gender isKindOfClass:[NSNull class]]){
-        sex =@"_" ;
+        sex =@"—" ;
     }else if ([[UserShareOnce shareOnce].gender isEqualToString:@"male"]){
         sex = @"男";
     }else{
