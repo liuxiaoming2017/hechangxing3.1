@@ -16,7 +16,7 @@
 #import "WKWebController.h"
 #import "InformationViewController.h"
 #import "HCY_ConsultingModel.h"
-#import "XZMRefresh.h"
+
 
 @interface RecommendReadView()<UICollectionViewDataSource,UICollectionViewDelegate>
 

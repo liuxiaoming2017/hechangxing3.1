@@ -285,7 +285,7 @@
             }
             
             NSDictionary *weiXDic = @{@"unionid":resp.uid,
-                                                   @"screen_name":@"11111",
+                                                   @"screen_name":resp.name,
                                                    @"gender":str,
                                                    @"profile_image_url":resp.iconurl};
             

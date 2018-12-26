@@ -732,7 +732,7 @@
         BOOL bRet = [fileMgr fileExistsAtPath:self.filePath];
         if (bRet) {
             NSError *err;
-          //  [fileMgr removeItemAtPath:self.filePath error:&err];
+            [fileMgr removeItemAtPath:self.filePath error:&err];
         }
         UIButton* btn=(UIButton*)[self.view viewWithTag:10007];
         btn.enabled=YES;
