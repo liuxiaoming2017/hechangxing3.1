@@ -362,8 +362,10 @@
             
             if (weakSelf.dataListArray.count < 1) {
                 weakSelf.noView.hidden = NO;
+                weakSelf.timeLinvView.tableView.hidden = YES;
             }else{
                 weakSelf.noView.hidden = YES;
+                weakSelf.timeLinvView.tableView.hidden = NO;
             }
             [self.timeLinvView relodTableViewWitDataArray:weakSelf.dataListArray withType:self.typeUrlInteger];
             

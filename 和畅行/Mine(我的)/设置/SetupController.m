@@ -213,6 +213,8 @@
                         [UtilityFunc updateAppConfigWithMutableDictionary:dicTmp];
                         CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:loginview];
                         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"memberChirldArr"];
+                        [[NSUserDefaults standardUserDefaults]  setValue: nil forKey:@"Physical"];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
                         [UIApplication sharedApplication].keyWindow.rootViewController = nav;
                         //[self.navigationController pushViewController:loginview animated:YES];
                     }];

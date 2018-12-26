@@ -56,8 +56,6 @@
 @property (nonatomic,assign) BOOL isBleLink;
 
 
-@property (nonatomic,assign) int i;
-@property (nonatomic,assign) int j;
 @end
 
 @implementation YueYaoController
@@ -129,28 +127,7 @@
     hysegmentControl = [[HYSegmentedControl alloc] initWithOriginY:segmentedControl.frame.origin.y+segmentedControl.frame.size.height + 5 Titles:@[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"] delegate:self];
     [self.view addSubview:hysegmentControl];
 
-    if ([UserShareOnce shareOnce].myPhysical.length != 0 && [UserShareOnce shareOnce].myPhysical !=nil) {
-    
-        NSString *newPhysicalStr = [UserShareOnce shareOnce].myPhysical;
-    
-    NSArray * segmentedArray = @[
-                                 @[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"],
-                                 @[@"上商", @"少商", @"钛商", @"右商", @"左商"],
-                                 @[@"大角", @"判角", @"上角", @"少角", @"钛角"],
-                                 @[@"判徵", @"上徵", @"少徵", @"右徵", @"质徵"],
-                                 @[@"大羽", @"上羽", @"少羽", @"桎羽", @"众羽"]
-                                 ];
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++) {
-            NSString *str = segmentedArray[i][j];
-            if([newPhysicalStr isEqualToString:str]){
-                self.i = i;
-                self.j = j;
-                
-            }
-        }
-    }
-}
+   
 
     
     UIImageView *diImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, hysegmentControl.bottom, self.view.frame.size.width, self.view.frame.size.height - hysegmentControl.bottom)];
@@ -170,8 +147,33 @@
         [self BluBluetoothView];
         [self BluetoothConnection];
     }
-    
     [self requestYueyaoListWithType:@"大宫"];
+    
+    
+    //根据个人经络最新一条信息展示
+    NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
+    if (physicalStr.length != 0 && physicalStr !=nil &&![physicalStr isKindOfClass:[NSNull class]]) {
+        
+        NSArray * segmentedArray = @[
+                                     @[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"],
+                                     @[@"上商", @"少商", @"钛商", @"右商", @"左商"],
+                                     @[@"大角", @"判角", @"上角", @"少角", @"钛角"],
+                                     @[@"判徵", @"上徵", @"少徵", @"右徵", @"质徵"],
+                                     @[@"大羽", @"上羽", @"少羽", @"桎羽", @"众羽"]
+                                     ];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                NSString *str = segmentedArray[i][j];
+                if([physicalStr isEqualToString:str]){
+                    [segmentedControl setSelectedSegmentIndex:i];
+                    segmentedControl.selectedSegmentIndex = i;
+                    [self valuesegChanged:nil];
+                    [hysegmentControl changeSegmentedControlWithIndex:j];
+                    [self requestYueyaoListWithType:physicalStr];
+                }
+            }
+        }
+    }
 }
 
 

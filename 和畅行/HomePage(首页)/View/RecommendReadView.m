@@ -14,16 +14,19 @@
 #import "UIImageView+WebCache.h"
 #import "NSObject+SBJson.h"
 #import "WKWebController.h"
+#import "InformationViewController.h"
+#import "HCY_HomeImageModel.h"
 
 @interface RecommendReadView()<UICollectionViewDataSource,UICollectionViewDelegate>
 
 @property (nonatomic,strong) UICollectionView *collectionV;
+//请求页数
+@property (nonatomic,assign) NSInteger pageInteger;
 
 @end
 
 @implementation RecommendReadView
 
-@synthesize collectionV;
 
 
 
@@ -46,6 +49,12 @@
     titleLabel.text = @"推荐阅读";
     [self addSubview:titleLabel];
     
+    UIButton *moreButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    moreButton.frame = CGRectMake(self.width - 90, 15, 90, 20);
+    [moreButton setImage:[UIImage imageNamed:@"HCY_right"] forState:(UIControlStateNormal)];
+    [moreButton addTarget:self action:@selector(moreAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self addSubview:moreButton];
+    
     CGFloat width = (ScreenWidth - 23 - 10)/2.5;
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -54,69 +63,65 @@
     layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 10);
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
+    self.recommendArr = [NSMutableArray array];
     
-    collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(23, 40+10, self.bounds.size.width-23*2, layout.itemSize.height) collectionViewLayout:layout];
-    collectionV.delegate = self;
-    collectionV.dataSource = self;
-    collectionV.showsHorizontalScrollIndicator = NO;
-    collectionV.backgroundColor = [UIColor clearColor];
+    self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(23, 40+10, self.bounds.size.width-23*2, layout.itemSize.height) collectionViewLayout:layout];
+    self.collectionV.delegate = self;
+    self.collectionV.dataSource = self;
+    self.collectionV.showsHorizontalScrollIndicator = NO;
+    self.collectionV.backgroundColor = [UIColor clearColor];
     
     
     
-    [collectionV registerClass:[RecommendCollectCell class] forCellWithReuseIdentifier:@"cellId"];
+    [self.collectionV registerClass:[RecommendCollectCell class] forCellWithReuseIdentifier:@"cellId"];
     
-    [self addSubview:collectionV];
-    [self requestArticleData];
+    self.pageInteger = 1;
+    [self addSubview:self.collectionV];
+    [self requestHealthHintDataWithPageInteger:1];
 
 }
-
-- (void)requestArticleData{
-    NSString *UrlPre=URL_PRE;
-    
-    NSString *aUrlle= [NSString stringWithFormat:@"%@article/healthArticleList.jhtml",UrlPre];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:aUrlle];
-    
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
-    [request setRequestMethod:@"GET"];
-    [request setTimeOutSeconds:20];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestResourceslisttssError:)];
-    [request setDidFinishSelector:@selector(requestResourceslisttssCompleted:)];
-    [request startAsynchronous];
-}
-- (void)requestResourceslisttssError:(ASIHTTPRequest *)request
+- (void)requestHealthHintDataWithPageInteger:(NSInteger )pageInteger
 {
-    //[self hudWasHidden:nil];
-    //[SSWaitViewEx removeWaitViewFrom:self.view];
+    __weak typeof(self) weakSelf = self;
+    NSString *pageIntegerstr = [NSString stringWithFormat:@"%ld",(long)pageInteger];
     
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉，请检查您的网络是否畅通" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-    [av show];
+  NSString *aUrlle= [NSString stringWithFormat:@"/article/healthArticleList.jhtml?pageNumber=%@",pageIntegerstr];
     
-}
-
-- (void)requestResourceslisttssCompleted:(ASIHTTPRequest *)request
-{
-    //[self hudWasHidden:nil];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic = (NSDictionary *)[reqstr JSONValue];
-    id status=[dic objectForKey:@"status"];
-    NSLog(@"%@",status);
-    if ([status intValue] == 100)
-    {
-        self.recommendArr = [dic objectForKey:@"data"];
-        [collectionV reloadData];
-    }
-    else
-    {
-        NSString *str = [dic objectForKey:@"data"];
-        UIAlertView *avv = [[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-        [avv show];
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:aUrlle parameters:nil successBlock:^(id response) {
         
+        NSLog(@"%@",response);
+        if ([response[@"status"] integerValue] == 100){
+            
+            if (self.pageInteger == 1) {
+                [weakSelf.recommendArr removeAllObjects];
+            }
+
+            for (NSDictionary *dic in [[response valueForKey:@"data"] valueForKey:@"content"]) {
+                HCY_HomeImageModel *tipModel = [[HCY_HomeImageModel alloc] init];
+                [tipModel yy_modelSetWithJSON:dic];
+                [weakSelf.recommendArr addObject:tipModel];
+            }
+            [weakSelf.collectionV reloadData];
+        
+        }
+    } failureBlock:^(NSError *error) {
+        NSLog(@"%@",error);
+        [weakSelf showAlertWarmMessage:requestErrorMessage];
+    }];
+    
+    if (weakSelf.pageInteger == 1) {
+//        [self.timeLinvView.tableView.mj_header endRefreshing];
+    }else {
+//        [self.timeLinvView.tableView.mj_footer endRefreshing];
     }
 }
 
+-(void)moreAction {
+    
+    InformationViewController *vc = [[InformationViewController alloc] init];
+    [[self viewController].navigationController pushViewController:vc animated:YES];
+    
+}
 
 #pragma mark <UICollectionViewDataSource>
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -126,11 +131,11 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    HCY_HomeImageModel *tipModel = self.recommendArr[indexPath.row];
     RecommendCollectCell *cell = (RecommendCollectCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     cell.imageV.hidden = NO;
-    [cell.imageV sd_setImageWithURL:[NSURL URLWithString:[self.recommendArr[indexPath.row]objectForKey:@"picture"]]];
-    cell.titleLabel.text = [self.recommendArr[indexPath.row]objectForKey:@"title"];
+    [cell.imageV sd_setImageWithURL:[NSURL URLWithString:tipModel.picurl]];
+    cell.titleLabel.text = tipModel.title;
     return cell;
 }
 
@@ -143,6 +148,15 @@
     vc.hidesBottomBarWhenPushed = YES;
     [self.viewController.navigationController pushViewController:vc animated:YES];
 }
+
+- (void)showAlertWarmMessage:(NSString *)message
+{
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:NULL];
+    [alertVC addAction:alertAct1];
+    [[self viewController] presentViewController:alertVC animated:YES completion:NULL];
+}
+
 
 - (void)tapGesture:(UITapGestureRecognizer *)tap
 {
