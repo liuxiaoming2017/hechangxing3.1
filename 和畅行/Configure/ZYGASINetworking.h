@@ -17,17 +17,17 @@
  *  IS_ENABLE_DEBUG_LOG 设置为 1 ，打印请求log基本信息；
  *  IS_ENABLE_DEBUG_LOG 设置为 0 ，不打印请求log基本信息；
  */
-#define IS_ENABLE_DEBUG_LOG 1
+//#define IS_ENABLE_DEBUG_LOG 1
+//
+//#if IS_ENABLE_DEBUG_LOG
+//#define kDEBUG_LOG() NSLog(@"line:(%d),%s",__LINE__,__FUNCTION__)
+//#define kNSLog(...)  NSLog(__VA_ARGS__)
+//#else
+//#define kDEBUG_LOG()
+//#define kNSLog(...)
+//#endif
 
-#if IS_ENABLE_DEBUG_LOG
-#define kDEBUG_LOG() NSLog(@"line:(%d),%s",__LINE__,__FUNCTION__)
-#define kNSLog(...)  NSLog(__VA_ARGS__)
-#else
-#define kDEBUG_LOG()
-#define kNSLog(...)
-#endif
-
-extern NSString * kAPI_BASE_URL;
+//extern NSString * kAPI_BASE_URL;
 
 /**
  *  ASICLient 请求回调的块声明；
@@ -49,7 +49,7 @@ typedef void (^KKProgressBlock)(float progress);
  *
  *  @param baseUrl 网络接口的基础url
  */
-+ (void)updateBaseUrl:(NSString *)baseUrl;
+//+ (void)updateBaseUrl:(NSString *)baseUrl;
 
 +(ZYGASINetworking* )shareInstance;
 /**

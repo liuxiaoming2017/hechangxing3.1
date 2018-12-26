@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy)   NSString *cardDescription;
 @property (nonatomic,copy)   NSString *status;
 @property (nonatomic,copy)   NSString *service_name;
+@property (nonatomic,copy)   NSString *exprise_time;
 @end
 
 NS_ASSUME_NONNULL_END

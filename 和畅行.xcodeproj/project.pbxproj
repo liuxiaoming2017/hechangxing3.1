@@ -682,6 +682,7 @@
 		03DEBC74210863CC008434BD /* LeadPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DEBC72210863CB008434BD /* LeadPlayer.m */; };
 		03DEBC772108641D008434BD /* Helper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03DEBC752108641C008434BD /* Helper.mm */; };
 		03E36FE920EDB882000974E1 /* UtilityFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE820EDB882000974E1 /* UtilityFunc.m */; };
+		03EE3C3D21D3982B00647E53 /* WenYinFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EE3C3C21D3982B00647E53 /* WenYinFileCell.m */; };
 		03F692D020FEEE9500308E38 /* ResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F692CF20FEEE9500308E38 /* ResultController.m */; };
 		03F692E920FF2DF000308E38 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F692D720FF2DED00308E38 /* ASIDownloadCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		03F692EA20FF2DF000308E38 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F692DC20FF2DEE00308E38 /* ASIFormDataRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1847,6 +1848,8 @@
 		03DEBC762108641D008434BD /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 		03E36FE720EDB882000974E1 /* UtilityFunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UtilityFunc.h; sourceTree = "<group>"; };
 		03E36FE820EDB882000974E1 /* UtilityFunc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UtilityFunc.m; sourceTree = "<group>"; };
+		03EE3C3B21D3982B00647E53 /* WenYinFileCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WenYinFileCell.h; sourceTree = "<group>"; };
+		03EE3C3C21D3982B00647E53 /* WenYinFileCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WenYinFileCell.m; sourceTree = "<group>"; };
 		03F692CE20FEEE9500308E38 /* ResultController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResultController.h; sourceTree = "<group>"; };
 		03F692CF20FEEE9500308E38 /* ResultController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ResultController.m; sourceTree = "<group>"; };
 		03F692D520FF2DED00308E38 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -3250,6 +3253,8 @@
 			children = (
 				036FC0CB2118176E00C1A793 /* WenYinFileViewController.h */,
 				036FC0CA2118176D00C1A793 /* WenYinFileViewController.m */,
+				03EE3C3B21D3982B00647E53 /* WenYinFileCell.h */,
+				03EE3C3C21D3982B00647E53 /* WenYinFileCell.m */,
 			);
 			path = "未发出的声音文件";
 			sourceTree = "<group>";
@@ -5144,6 +5149,7 @@
 				03CEFC0D21A64BA80097CB17 /* i9_MoxaMainViewController.m in Sources */,
 				83E23EE921C0A53100B43298 /* HCY_CallController.m in Sources */,
 				03F6931020FF2FD400308E38 /* SBJsonStreamParserState.m in Sources */,
+				03EE3C3D21D3982B00647E53 /* WenYinFileCell.m in Sources */,
 				036A66A52113FEAB0096A006 /* BlockTableViewCell.m in Sources */,
 				036E85AE2186EB6E001B9BB4 /* MySwitchBtn.m in Sources */,
 				03FBDF6321928039006116FC /* HomePageController.m in Sources */,
@@ -5505,9 +5511,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Nation Sky Network Technology Co.,Ltd";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = E2CU52X6UR;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3X65BCYVHU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5547,10 +5553,10 @@
 					"$(PROJECT_DIR)/和畅行/友盟分享/SocialLibraries/Sina",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nationsky.meap.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = meaptest;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};
@@ -5563,9 +5569,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Nation Sky Network Technology Co.,Ltd";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = E2CU52X6UR;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3X65BCYVHU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5605,10 +5611,10 @@
 					"$(PROJECT_DIR)/和畅行/友盟分享/SocialLibraries/Sina",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nationsky.meap.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = meaptest;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};

@@ -450,7 +450,7 @@
      [self.timeLinvView.tableView.mj_footer endRefreshing];
     [self.timeLinvView.tableView.mj_header endRefreshing];
     NSString *UrlPre=URL_PRE;
-    NSString *aUrl = [NSString stringWithFormat:@"%@weiq/diseaList.jhtml",UrlPre];
+    NSString *aUrl = [NSString stringWithFormat:@"%@md/diseaList.jhtml",UrlPre];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
@@ -493,6 +493,11 @@
             [self.dataListArray addObject:tipModel];
         }
         
+        if(self.dataListArray.count==0){
+            self.noView.hidden = NO;
+            self.timeLinvView.tableView.hidden = YES;
+            return;
+        }
         
         [self.timeLinvView relodTableViewWitDataArray:self.dataListArray withType:self.typeUrlInteger];
 

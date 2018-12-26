@@ -45,4 +45,5 @@
 
 + (BOOL)stringEqualNull:(NSString *)str;
 
++(NSString *)getStringWithSubjectSn:(NSString *)nameStr;
 @end

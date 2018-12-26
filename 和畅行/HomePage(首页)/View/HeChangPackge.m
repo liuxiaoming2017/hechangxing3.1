@@ -158,10 +158,12 @@
 - (void)changePackgeTypeWithStatus:(NSInteger)status
 {
     if(status == 7){
+        [MemberUserShance shareOnce].isOpenPackge = NO;
         [self updateImageView];
         return;
     }
     
+    [MemberUserShance shareOnce].isOpenPackge = YES;
     switch (status) {
         case 1:
            // [self createShapeLayerWithColor:UIColorFromHex(0x61D179)];
@@ -263,7 +265,9 @@
 
 - (void)tapAction
 {
-    
+    if(![MemberUserShance shareOnce].isOpenPackge){
+        return;
+    }
     HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.viewController.navigationController pushViewController:vc animated:YES];

@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,strong) UILabel *typeLabel;
 @property (nonatomic,strong) UILabel *contentLabel;
+
 @property (nonatomic,strong) HCY_UnderlineButton *tradeBtn;
 @property (nonatomic,weak) id<ServiceBlockCellDelegate>delegate;
 @end

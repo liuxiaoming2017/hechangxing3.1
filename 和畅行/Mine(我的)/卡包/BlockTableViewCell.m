@@ -57,7 +57,7 @@
     _yLabel.text = @"2019-11-11到期";
     _yLabel.font = [UIFont systemFontOfSize:12];
     _yLabel.textColor = [UIColor whiteColor];
-//    [imageV addSubview:_yLabel];
+    [imageV addSubview:_yLabel];
     
     
 }
@@ -81,10 +81,12 @@
         _imageV.hidden = YES;
     }
 
-//    NSString *timeStr = ;
-//    NSString *endTimeStr =  [NSString stringWithFormat:@"%@到期",[self getDateStringWithTimeStr:timeStr]];
-//    _yLabel.text = endTimeStr;
-    
+    NSString *timeStr = model.exprise_time;
+    if(![GlobalCommon stringEqualNull:timeStr]){
+        NSString *endTimeStr =  [NSString stringWithFormat:@"%@到期",timeStr];
+        _yLabel.text = endTimeStr;
+    }
+
 }
 
 

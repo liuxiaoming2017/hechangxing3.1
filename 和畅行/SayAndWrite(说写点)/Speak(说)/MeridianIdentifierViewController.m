@@ -732,7 +732,7 @@
         BOOL bRet = [fileMgr fileExistsAtPath:self.filePath];
         if (bRet) {
             NSError *err;
-            [fileMgr removeItemAtPath:self.filePath error:&err];
+          //  [fileMgr removeItemAtPath:self.filePath error:&err];
         }
         UIButton* btn=(UIButton*)[self.view viewWithTag:10007];
         btn.enabled=YES;
@@ -798,21 +798,25 @@
                          @"28", @"27", @"26", @"29", @"30",
                          @"32", @"31", @"34", @"33", @"35",
                          @"37", @"40", @"36", @"38", @"39"];
-    NSInteger codeIndex = [[codeArr objectAtIndex:code] integerValue];
+    NSInteger codeIndex = [[codeArr objectAtIndex:code-1] integerValue];
     NSString *codeStr = @"";
     if(codeIndex>=16&&codeIndex<=20){
-        codeStr = [NSString stringWithFormat:@"JLBS-G%ld",codeIndex-15];
+        codeStr = [NSString stringWithFormat:@"JLBS-G%d",codeIndex-15];
     }else if (codeIndex>=21&&codeIndex<=25){
-        codeStr = [NSString stringWithFormat:@"JLBS-S%ld",codeIndex-20];
+        codeStr = [NSString stringWithFormat:@"JLBS-S%d",codeIndex-20];
     }else if (codeIndex>=26&&codeIndex<=30){
-        codeStr = [NSString stringWithFormat:@"JLBS-J%ld",codeIndex-25];
+        codeStr = [NSString stringWithFormat:@"JLBS-J%d",codeIndex-25];
     }else if (codeIndex>=31&&codeIndex<=35){
-        codeStr = [NSString stringWithFormat:@"JLBS-Z%ld",codeIndex-30];
+        codeStr = [NSString stringWithFormat:@"JLBS-Z%d",codeIndex-30];
     }else if (codeIndex>=36&&codeIndex<=40){
-        codeStr = [NSString stringWithFormat:@"JLBS-Y%ld",codeIndex-35];
+        codeStr = [NSString stringWithFormat:@"JLBS-Y%d",codeIndex-35];
     }else{
         codeStr = @"";
     }
+    
+    NSString *jlbsStr = [GlobalCommon getStringWithSubjectSn:codeStr];
+    [[NSUserDefaults standardUserDefaults]setValue: jlbsStr forKey:@"Physical"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     return codeStr;
 }
 

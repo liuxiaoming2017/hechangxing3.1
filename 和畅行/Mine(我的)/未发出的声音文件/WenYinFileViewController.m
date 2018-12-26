@@ -14,8 +14,9 @@
 #import "SBJson.h"
 #import "LPPopup.h"
 
+#import "WenYinFileCell.h"
 
-@interface WenYinFileViewController ()<UITableViewDelegate ,UITableViewDataSource,MBProgressHUDDelegate>
+@interface WenYinFileViewController ()<UITableViewDelegate ,UITableViewDataSource,MBProgressHUDDelegate,WenYinFileCellDelegate>
 {
     UIView *noView;
 }
@@ -84,7 +85,7 @@
     tableview.delegate=self;
     tableview.dataSource=self;
     self.WenYinTabView=tableview;
-    [self.view addSubview:tableview];
+    [self.view addSubview:self.WenYinTabView];
     
     [self setExtraCellLineHidden:tableview];
     NSFileManager *fileMgr = [NSFileManager defaultManager];    NSString *path = [ NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
@@ -125,7 +126,10 @@
                                       reuseIdentifier:CellIdentifier];
         cell.backgroundColor=[UIColor clearColor];
         cell.textLabel.font = [UIFont systemFontOfSize:15];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    
+    
     NSLog(@"ddddd%f",cell.frame.size.height);
     UIImage* CellIcon=nil;
     CellIcon=[UIImage imageNamed:@"YY_GongIcon.png"];
@@ -185,7 +189,8 @@
     [CellDeleImgView addTarget:self action:@selector(DeleActive:) forControlEvents:UIControlEventTouchUpInside];
     [CellDeleImgView setImage:CellDeleImg forState:UIControlStateNormal];
     [cell addSubview:CellDeleImgView];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+   
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -273,7 +278,7 @@
 {
     [self showHUD];
     NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/fileUpload/upload.jhtml?fileType=media&convert=convert&memberChildId=%@",UrlPre,[MemberUserShance shareOnce].idNum];
+    NSString *aUrlle= [NSString stringWithFormat:@"%@member/fileUpload/diagnosis.jhtml?convert=convert&memberChildId=%@",UrlPre,[MemberUserShance shareOnce].idNum];
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url1 = [NSURL URLWithString:aUrlle];
     ASIFormDataRequest *request=[[ASIFormDataRequest alloc]initWithURL:url1];

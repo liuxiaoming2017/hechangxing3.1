@@ -102,15 +102,25 @@ NSString *isYiBao;
 {
     
     [self showHUD];
-    [ZYGASINetworking GET_Path:@"/member/memberModifi/list.jhtml" params:@{@"memberId":[UserShareOnce shareOnce].uid} completed:^(id JSON, NSString *stringData) {
-        [self hudWasHidden];
-        [self requestResourceslistCompletedWith:JSON];
-    } failed:^(NSError *error) {
-        [self hudWasHidden];
-        
-        [self showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
-        
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:@"/member/memberModifi/list.jhtml" parameters:@{@"memberId":[UserShareOnce shareOnce].uid} successBlock:^(id response) {
+        [weakSelf hudWasHidden];
+        [weakSelf requestResourceslistCompletedWith:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf hudWasHidden];
+
+        [weakSelf showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
     }];
+    
+//    [ZYGASINetworking GET_Path:@"/member/memberModifi/list.jhtml" params:@{@"memberId":[UserShareOnce shareOnce].uid} completed:^(id JSON, NSString *stringData) {
+//        [self hudWasHidden];
+//        [self requestResourceslistCompletedWith:JSON];
+//    } failed:^(NSError *error) {
+//        [self hudWasHidden];
+//
+//        [self showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+//
+//    }];
 }
 -(void) showHUD
 {
