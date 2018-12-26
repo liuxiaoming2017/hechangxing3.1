@@ -46,7 +46,6 @@
 
 @property (nonatomic,copy) NSString *uuid; //和缓id
 @property (nonatomic,copy) NSString *userToken; //和缓token
-@property (nonatomic,copy) NSString *myPhysical;
 @property (nonatomic,assign) BOOL isOnline;
 
 

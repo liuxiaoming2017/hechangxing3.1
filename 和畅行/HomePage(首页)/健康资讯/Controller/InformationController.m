@@ -59,7 +59,7 @@
 {
     NSString *UrlPre=URL_PRE;
     
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/article/ healthCategoryList.jhtml",UrlPre];
+    NSString *aUrlle= [NSString stringWithFormat:@"%@/article/healthCategoryList.jhtml",UrlPre];
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSDictionary *headDic = [NSDictionary dictionaryWithObject:@"ios_jlsl-yh-3" forKey:@"version"];
     

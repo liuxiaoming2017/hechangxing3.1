@@ -94,7 +94,7 @@
 - (void)huoquwenzhangCanshu{
     NSString *UrlPre=URL_PRE;
     
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/article/ healthCategoryList.jhtml",UrlPre];
+    NSString *aUrlle= [NSString stringWithFormat:@"%@/article/healthCategoryList.jhtml",UrlPre];
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:aUrlle];
     
@@ -110,7 +110,7 @@
 - (void)requestwenzhangResourceslisttssError:(ASIHTTPRequest *)request
 {
     [self hudWasHidden];
-    [self showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+    [self showAlertWarmMessage:requestErrorMessage];
     
 }
 

@@ -165,7 +165,8 @@
             }
             
             if ([model.subjectCategorySn isEqualToString:@"JLBS"]){
-                [UserShareOnce shareOnce].myPhysical = [model.subject valueForKey:@"name"];
+                [[NSUserDefaults standardUserDefaults]setValue: [model.subject valueForKey:@"name"] forKey:@"Physical"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
             }
             
             if (_dataArr.count > 1) {

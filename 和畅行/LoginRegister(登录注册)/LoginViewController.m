@@ -132,11 +132,8 @@
     [registBtn setTitle:@"注册" forState:UIControlStateNormal];
     registBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
     [registBtn setTitleColor:UIColorFromHex(0xb8b8b8) forState:UIControlStateNormal];
-<<<<<<< Updated upstream
     //[self.view addSubview:registBtn];
-=======
-//    [self.view addSubview:registBtn];
->>>>>>> Stashed changes
+
     
     
     
