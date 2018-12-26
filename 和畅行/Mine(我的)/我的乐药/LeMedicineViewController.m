@@ -29,9 +29,9 @@
 
 -(void)dealloc{
     [super dealloc];
-    [_leyaoPath release];
-    [_otherPaths release];
-    [_fileurl release];
+   // [_leyaoPath release];
+   // [_otherPaths release];
+    //[_fileurl release];
     [_LeMedicArray release];
     [_LeMedicArrayId release];
     [_bfztbutton release];

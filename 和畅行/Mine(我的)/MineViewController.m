@@ -22,6 +22,7 @@
 #import "MyAvdisorysViewController.h"
 #import "FeedbackViewController.h"
 #import "SetupController.h"
+#import "EDWKWebViewController.h"
 
 @interface MineViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -417,11 +418,14 @@
             break;
         case 16:
         {
-            HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-            vc.noWebviewBack = YES;
-            vc.progressType = progress2;
-            vc.titleStr = @"收藏";
-            vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/focus_ware/list.jhtml",URL_PRE];
+            NSString *urlStr =  [NSString stringWithFormat:@"%@member/mobile/focus_ware/list.jhtml",URL_PRE];
+            EDWKWebViewController *vc = [[EDWKWebViewController alloc] initWithUrlString:urlStr];
+            vc.isCollect = YES;
+//            HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
+//            vc.noWebviewBack = YES;
+//            vc.progressType = progress2;
+//            vc.titleStr = @"收藏";
+//            vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/focus_ware/list.jhtml",URL_PRE];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }

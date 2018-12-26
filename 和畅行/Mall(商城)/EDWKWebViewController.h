@@ -10,7 +10,7 @@
 #import "NavBarViewController.h"
 
 @interface EDWKWebViewController : NavBarViewController
-
+@property (nonatomic,assign) BOOL isCollect;
 - (instancetype)initWithUrlString:(NSString *)url;
 
 @end

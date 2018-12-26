@@ -119,7 +119,7 @@
 
         [GlobalCommon showMBHudWithView:self.view];
         NSString *UrlPre=URL_PRE;
-        NSString *aUrl = [NSString stringWithFormat:@"%@/weiq/service_card/active.jhtml",UrlPre];
+        NSString *aUrl = [NSString stringWithFormat:@"%@/md/service_card/active.jhtml",UrlPre];
         ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
         [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
         [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
@@ -157,7 +157,7 @@
 //    NSDictionary *dic = @{@"memberId":[UserShareOnce shareOnce].uid};    
     
     NSString *UrlPre=URL_PRE;
-    NSString *aUrl = [NSString stringWithFormat:@"%@/weiq/getMemberInfo.jhtml",UrlPre];
+    NSString *aUrl = [NSString stringWithFormat:@"%@/md/getMemberInfo.jhtml",UrlPre];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];

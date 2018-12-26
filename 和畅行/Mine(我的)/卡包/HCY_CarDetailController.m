@@ -67,9 +67,9 @@
     _yLabel.textColor = [UIColor whiteColor];
     [imageV addSubview:_yLabel];
     
-    if([GlobalCommon stringEqualNull:self.model.cardDescription]){
-        _yLabel.frame = CGRectMake(_mLabel.left , _hLabel.bottom , 160, 30);
-    }
+//    if([GlobalCommon stringEqualNull:self.model.cardDescription]){
+//        _yLabel.frame = CGRectMake(_mLabel.left , _hLabel.bottom , 160, 30);
+//    }
     
     self.serviceTableView = [[UITableView alloc]initWithFrame:CGRectMake(_yLabel.left+5, _yLabel.bottom+5, imageV.width-_yLabel.left*2 - 10, imageV.height-_yLabel.bottom-10) style:UITableViewStylePlain];
     self.serviceTableView.backgroundColor = [UIColor clearColor];
@@ -109,7 +109,7 @@
     
     [GlobalCommon showMBHudWithView:self.view];
     NSString *UrlPre=URL_PRE;
-    NSString *aUrl = [NSString stringWithFormat:@"%@/weiq/user_record.jhtml",UrlPre];
+    NSString *aUrl = [NSString stringWithFormat:@"%@/md/user_record.jhtml",UrlPre];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
