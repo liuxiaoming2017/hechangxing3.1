@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,copy) NSString *picture;
 @property (nonatomic,copy) NSString *title;
-
+@property (nonatomic,copy) NSString *path;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -15,7 +15,7 @@
 #import "NSObject+SBJson.h"
 #import "WKWebController.h"
 #import "InformationViewController.h"
-#import "HCY_HomeImageModel.h"
+#import "HCY_ConsultingModel.h"
 
 @interface RecommendReadView()<UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -97,7 +97,7 @@
             }
 
             for (NSDictionary *dic in [[response valueForKey:@"data"] valueForKey:@"content"]) {
-                HCY_HomeImageModel *tipModel = [[HCY_HomeImageModel alloc] init];
+                HCY_ConsultingModel *tipModel = [[HCY_ConsultingModel alloc] init];
                 [tipModel yy_modelSetWithJSON:dic];
                 [weakSelf.recommendArr addObject:tipModel];
             }
@@ -131,10 +131,10 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    HCY_HomeImageModel *tipModel = self.recommendArr[indexPath.row];
+    HCY_ConsultingModel *tipModel = self.recommendArr[indexPath.row];
     RecommendCollectCell *cell = (RecommendCollectCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     cell.imageV.hidden = NO;
-    [cell.imageV sd_setImageWithURL:[NSURL URLWithString:tipModel.picurl]];
+    [cell.imageV sd_setImageWithURL:[NSURL URLWithString:tipModel.picture]];
     cell.titleLabel.text = tipModel.title;
     return cell;
 }
@@ -142,9 +142,10 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     //InformationDedailssViewController *vc = [[InformationDedailssViewController alloc] init];
+    HCY_ConsultingModel *tipModel = self.recommendArr[indexPath.row];
     WKWebController *vc = [[WKWebController alloc] init];
-    vc.titleStr = [self.recommendArr[indexPath.row] objectForKey:@"title"];
-    vc.dataStr = [self.recommendArr[indexPath.row] objectForKey:@"path"];
+    vc.titleStr =tipModel.title;
+    vc.dataStr = tipModel.path;
     vc.hidesBottomBarWhenPushed = YES;
     [self.viewController.navigationController pushViewController:vc animated:YES];
 }
