@@ -13,7 +13,7 @@
 #import "ASIFormDataRequest.h"
 #import "SBJson.h"
 #import "LPPopup.h"
-#import "NoMessageView.h"
+
 
 @interface WenYinFileViewController ()<UITableViewDelegate ,UITableViewDataSource,MBProgressHUDDelegate>
 {

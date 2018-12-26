@@ -9,13 +9,13 @@
 #import "UserShareOnce.h"
 
 static UserShareOnce *shareOnce = nil;
+static dispatch_once_t onceToken;
 
 @implementation UserShareOnce
 
 + (UserShareOnce *)shareOnce
 {
     
-    static dispatch_once_t onceToken;
     dispatch_once(&onceToken,^{
         shareOnce = [[UserShareOnce alloc] init];
     });
@@ -49,5 +49,8 @@ static UserShareOnce *shareOnce = nil;
              };
 }
 
++(void)attemptDealloc{
+     onceToken=0l;
+}
 
 @end

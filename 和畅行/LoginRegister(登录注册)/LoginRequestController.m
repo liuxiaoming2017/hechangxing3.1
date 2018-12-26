@@ -118,6 +118,7 @@
             userShare = [UserShareOnce mj_objectWithKeyValues:dic];
             userShare.JSESSIONID = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"JSESSIONID"];
             userShare.token = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"token"];
+            userShare.isRefresh = NO;
             userShare.passWord = self->passWordBox.text;
             NSArray *arrMem = [[[response objectForKey:@"data"] objectForKey:@"member"] objectForKey:@"mengberchild"];
             
@@ -159,6 +160,13 @@
         
         [weakself showAlertWarmMessage:requestErrorMessage];
     }];
+    
+}
+
+
+- (void)userLoginWithSMSParams:(NSDictionary *)paramDic {
+      NSString *aUrl = @"weiq/sms/login.jhtml";
+    
     
 }
 
@@ -209,11 +217,16 @@
 }
 
 
-//微信登录
+//微信登录 check == 2 or 短息登录 check == 3
 - (void)userLoginWithWeiXParams:(NSDictionary *)paramDic withCheck:(NSInteger)check{
+    NSString *aUrl = [NSString string];
+
+    if (check == 2) {
+        aUrl = @"/weiq/weiq/weix/authlogin.jhtml";
+    }else if (check == 3) {
+        aUrl = @"/weiq/sms/login.jhtml";
+    }
     
-    
-    NSString *aUrl = @"/weiq/weiq/weix/authlogin.jhtml";
     __weak typeof(self) weakself = self;
     
     [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:paramDic successBlock:^(id response) {
@@ -244,6 +257,7 @@
             userShare = [UserShareOnce mj_objectWithKeyValues:dic];
             userShare.JSESSIONID = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"JSESSIONID"];
             userShare.token = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"token"];
+            userShare.isRefresh = NO;
             NSArray *arrMem = [[[response objectForKey:@"data"] objectForKey:@"member"] objectForKey:@"mengberchild"];
             
             NSMutableArray *memberArr = [NSMutableArray arrayWithCapacity:0];
@@ -260,12 +274,14 @@
             }
             
             
-            if (check)
+            if (check == 2)
             {
                 NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
                 if (dicTmp) {
                     [dicTmp setObject:[paramDic valueForKey:@"unionid"] forKey:@"UNIONID"];
-                    [dicTmp setObject:[paramDic valueForKey:@"screen_name"] forKey:@"SCREENNAME"];
+                    if ([paramDic valueForKey:@"screen_name"] != nil) {
+                        [dicTmp setObject:[paramDic valueForKey:@"screen_name"] forKey:@"SCREENNAME"];
+                    }
                     [dicTmp setObject:[paramDic valueForKey:@"gender"] forKey:@"GENDER"];
                     [dicTmp setObject:[paramDic valueForKey:@"profile_image_url"] forKey:@"PROFILEIMAGEURL"];
                     [dicTmp setValue:@"2" forKey:@"ischeck"];

@@ -784,6 +784,7 @@
        
         LPPopup *popup = [LPPopup popupWithText:@"您的录音已成功上传，正在进行分析。分析报告审核完成后，会发送至您的手机上，请注意查收。"];
         imageHong.hidden = NO;
+        [UserShareOnce shareOnce].isRefresh = YES;
         CGPoint point=self.view.center;
         point.y=point.y+130;
         [popup showInView:self.view

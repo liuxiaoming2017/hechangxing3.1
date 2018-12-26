@@ -619,12 +619,8 @@
         mobile_Tf.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
         [mobile_Tf setValue:[UtilityFunc colorWithHexString:@"#666666"] forKeyPath:@"_placeholderLabel.textColor"];
         [mobile_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
-        if ([UserShareOnce shareOnce].phone== (id)[NSNull null]) {
-
-        }
-        else{
-            mobile_Tf.text=[UserShareOnce shareOnce].username;
-
+        if ([UserShareOnce shareOnce].phone!=nil || ![[UserShareOnce shareOnce].phone isKindOfClass:[NSNull class]]) {
+            mobile_Tf.text=[UserShareOnce shareOnce].phone;
         }
         mobile_Tf.font=[UIFont systemFontOfSize:14];
         [cell addSubview:mobile_Tf];

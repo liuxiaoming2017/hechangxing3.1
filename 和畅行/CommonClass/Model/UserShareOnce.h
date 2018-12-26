@@ -46,9 +46,12 @@
 
 @property (nonatomic,copy) NSString *uuid; //和缓id
 @property (nonatomic,copy) NSString *userToken; //和缓token
-
+@property (nonatomic,copy) NSString *myPhysical;
 @property (nonatomic,assign) BOOL isOnline;
 
-+ (UserShareOnce *)shareOnce;
 
+@property (nonatomic,assign) BOOL isRefresh; //一点一说一写 返回首页 刷新和畅提醒判断
+
++ (UserShareOnce *)shareOnce;
++(void)attemptDealloc;
 @end

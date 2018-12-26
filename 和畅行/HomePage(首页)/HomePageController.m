@@ -38,6 +38,11 @@
     [super viewWillAppear:YES];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.tabBarController.tabBar.hidden = NO;
+    
+    if ([UserShareOnce shareOnce].isRefresh){
+        [self requestPackgeNetWork];
+        [UserShareOnce shareOnce].isRefresh = NO;
+    }
 }
 
 -(void)viewDidDisappear:(BOOL)animated {

@@ -742,6 +742,8 @@
     [param appendFormat:@"&sex=%@",@(_sex)];
     [param appendFormat:@"&device=1"];
     
+    [UserShareOnce shareOnce].isRefresh = YES;
+    
     NSString *urlStr = [NSString stringWithFormat:@"%@%@?%@",URL_PRE,kCOMMIT,param];
     ResultWriteController *vc = [[ResultWriteController alloc] init];
     vc.urlStr = urlStr;

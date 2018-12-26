@@ -79,11 +79,11 @@
     
     passWordBox=[[UITextField alloc]init];
     passWordBox.frame=CGRectMake(welcomLabel.left, imageV2.bottom+10, 200 ,userNameBox.height );
-    passWordBox.secureTextEntry=YES;
     passWordBox.clearButtonMode=UITextFieldViewModeWhileEditing;
     passWordBox.delegate = self;
     passWordBox.font=[UIFont systemFontOfSize:13.0];
     passWordBox.placeholder=@"  请输入验证码";
+    passWordBox.keyboardType = UIKeyboardTypeNumberPad;
     passWordBox.returnKeyType=UIReturnKeyDone;
     [self.view addSubview:passWordBox];
     
@@ -132,7 +132,11 @@
     [registBtn setTitle:@"注册" forState:UIControlStateNormal];
     registBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
     [registBtn setTitleColor:UIColorFromHex(0xb8b8b8) forState:UIControlStateNormal];
+<<<<<<< Updated upstream
     //[self.view addSubview:registBtn];
+=======
+//    [self.view addSubview:registBtn];
+>>>>>>> Stashed changes
     
     
     
@@ -186,11 +190,15 @@
         [button setTitle:@"短信验证码登录" forState:UIControlStateNormal];
         userNameBox.placeholder = @"  请输入和畅账户";
         passWordBox.placeholder = @"  请输入密码";
+        passWordBox.secureTextEntry=YES;
+        passWordBox.keyboardType = UIKeyboardTypeDefault;
         [btn setTitle:@"忘记密码" forState:UIControlStateNormal];
     }else if ([button.titleLabel.text isEqualToString:@"短信验证码登录"]){
          //button.titleLabel.text = @"账户密码登录";
         userNameBox.placeholder = @"  请输入手机号";
         passWordBox.placeholder = @"  请输入验证码";
+        passWordBox.secureTextEntry=NO;
+        passWordBox.keyboardType = UIKeyboardTypeNumberPad;
         [button setTitle:@"账户密码登录" forState:UIControlStateNormal];
         [btn setTitle:@"获取验证码" forState:UIControlStateNormal];
     }
@@ -240,8 +248,8 @@
     [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:@"weiq/weiq/getWeiqSecret.jhtml" parameters:dic successBlock:^(id response) {
         
         NSString *str = [[response valueForKey:@"data"] valueForKey:@"secret"];
-        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:str redirectURL:nil];
-        
+        [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
+        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:APP_SECRET redirectURL:nil];
         
         [weakSelf loginByWeiXin];
         
@@ -274,9 +282,9 @@
             }
             
             NSDictionary *weiXDic = @{@"unionid":resp.uid,
-                                      @"screen_name":resp.name,
-                                      @"gender":str,
-                                      @"profile_image_url":resp.iconurl};
+                                                   @"screen_name":@"11111",
+                                                   @"gender":str,
+                                                   @"profile_image_url":resp.iconurl};
             
             [self userLoginWithWeiXParams:weiXDic withCheck:2];
             
@@ -426,7 +434,7 @@
     [paramDic setObject:userNameBox.text forKey:@"phone"];
     [paramDic setObject:passWordBox.text forKey:@"code"];
     
-    [self userLoginWithParams:paramDic withisCheck:isCheck];
+    [self userLoginWithWeiXParams:paramDic withCheck:3];
 }
 
 # pragma mark - 用户名密码登录
@@ -520,7 +528,10 @@
     return YES;
 }
 
-
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [userNameBox resignFirstResponder];
+    [passWordBox resignFirstResponder];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

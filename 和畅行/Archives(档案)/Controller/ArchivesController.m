@@ -42,6 +42,8 @@
 //请求页数
 @property (nonatomic,assign) NSInteger pageInteger;
 
+@property (nonatomic,strong)UIView *noView;
+
 @end
 
 @implementation ArchivesController
@@ -114,6 +116,9 @@
     
     self.timeLinvView = [[TimeLineView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, ScreenWidth, ScreenHeight-self.topView.bottom-kTabBarHeight) withData:self.dataListArray];
     [self.view addSubview:self.timeLinvView];
+    
+    self.noView = [NoMessageView createImageWith:100.0f];
+    [self.view addSubview:self.noView ];
     
  
 //下拉刷新
@@ -200,7 +205,7 @@
     else if([str isEqualToString:@"体温"])    self.typeUrlInteger = 8;
     else if([str isEqualToString:@"呼吸"])    self.typeUrlInteger = 9;
     else if([str isEqualToString:@"季度报告"]) self.typeUrlInteger = 10;
-    else if([str isEqualToString:@"病例"])    self.typeUrlInteger = 11;
+    else if([str isEqualToString:@"病历"])    self.typeUrlInteger = 11;
     
     self.pageInteger = 1;
     
@@ -353,6 +358,13 @@
                     [weakSelf.dataListArray addObject:tipModel];
                 }
             }
+            
+            
+            if (weakSelf.dataListArray.count < 1) {
+                weakSelf.noView.hidden = NO;
+            }else{
+                weakSelf.noView.hidden = YES;
+            }
             [self.timeLinvView relodTableViewWitDataArray:weakSelf.dataListArray withType:self.typeUrlInteger];
             
         }
@@ -472,6 +484,7 @@
     //NSLog(@"234214324%@",status);
     if ([status intValue]== 100) {
         
+        [self.dataListArray removeAllObjects];
         for (NSDictionary *dic in [dica valueForKey:@"data"]) {
             HealthTipsModel *tipModel = [[HealthTipsModel alloc] init];
             [tipModel yy_modelSetWithJSON:dic];
