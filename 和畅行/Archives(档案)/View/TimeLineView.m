@@ -164,6 +164,10 @@
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             
+            if ([model.subjectCategorySn isEqualToString:@"JLBS"]){
+                [UserShareOnce shareOnce].myPhysical = [model.subject valueForKey:@"name"];
+            }
+            
             if (_dataArr.count > 1) {
                  HealthTipsModel *nextmodel = _dataArr[indexPath.row+1];
                  if (![model.createTime isEqualToString:nextmodel.createTime]) {
@@ -172,7 +176,8 @@
                      cell.lineImageV2.hidden = NO;
                  }
             }else{
-                cell.lineImageV2.hidden = NO;
+             
+                cell.lineImageV2.hidden = YES;
             }
             
             [cell assignmentCellWithModel:model];
@@ -363,12 +368,14 @@
         
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = aUrlle;
+        vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
         
     }else  if ([model.subjectCategorySn isEqualToString:@"TZBS"]){
         
         ResultController *resultVC = [[ResultController alloc] init];
         resultVC.TZBSstr = [model.subject valueForKey:@"subject_sn"];
+        resultVC.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:resultVC animated:YES];
         
     }else {
@@ -381,6 +388,7 @@
             NSString *url = [[NSString alloc] initWithFormat:@"%@member/service/zf_report.jhtml?cust_id=%@&physique_id=%@&device=1",URL_PRE,idNim,model.physique_id];
             ResultSpeakController *vc = [[ResultSpeakController alloc] init];
             vc.urlStr = url;
+            vc.hidesBottomBarWhenPushed = YES;
             [[self viewController].navigationController pushViewController:vc animated:YES];
         }
         
@@ -403,6 +411,7 @@
            
             ResultSpeakController *vc = [[ResultSpeakController alloc] init];
             vc.urlStr = urlStr;
+            vc.hidesBottomBarWhenPushed = YES;
             [[self viewController].navigationController pushViewController:vc animated:YES];
             
             
@@ -416,6 +425,7 @@
 
             ResultSpeakController *vc = [[ResultSpeakController alloc] init];
             vc.urlStr = urlStr;
+            vc.hidesBottomBarWhenPushed = YES;
             [[self viewController].navigationController pushViewController:vc animated:YES];
             
         }
@@ -429,6 +439,7 @@
            
             ResultSpeakController *vc = [[ResultSpeakController alloc] init];
             vc.urlStr = urlStr;
+            vc.hidesBottomBarWhenPushed = YES;
             [[self viewController].navigationController pushViewController:vc animated:YES];
         }
     }
@@ -456,6 +467,7 @@
         NSString *url = [[NSString alloc] initWithFormat:@"%@/member/service/reports.jhtml?memberChildId=%@&quarter=%@&year=%@",URL_PRE,idNim,model.quarter,model.year];
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = url;
+        vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
         
     }

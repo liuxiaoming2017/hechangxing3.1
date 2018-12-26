@@ -623,6 +623,7 @@
     //NSLog(@"234214324%@",status);
     if ([status intValue]== 100) {
         
+        [UserShareOnce shareOnce].isRefresh = YES;
         ResultController *resultVC = [[ResultController alloc] init];
         resultVC.TZBSstr = self.str;
         [self.navigationController pushViewController:resultVC animated:YES];

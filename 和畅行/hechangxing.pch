@@ -34,6 +34,7 @@
 #import <SDWebImage/UIButton+WebCache.h>
 #import "UIImageView+WebCache.h"
 #import "SBJson.h"
+#import "NoMessageView.h"
 #endif /* ____pch */
 #endif
 

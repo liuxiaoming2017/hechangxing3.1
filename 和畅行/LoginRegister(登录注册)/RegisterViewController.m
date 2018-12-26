@@ -526,7 +526,7 @@
     [paramDic setObject:@"" forKey:@"devmodel"];
     [paramDic setObject:self.pregistrationTF.text forKey:@"username"];
     
-    [self userLoginWithParams:paramDic withisCheck:YES];
+//    [self userLoginWithParams:paramDic withisCheck:YES];
     
 }
 

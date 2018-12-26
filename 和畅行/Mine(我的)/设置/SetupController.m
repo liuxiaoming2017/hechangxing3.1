@@ -208,9 +208,11 @@
                             [dicTmp setObject:@"" forKey:@"PASSWORDAES"];
                             [dicTmp setValue:@"0" forKey:@"ischeck"];
                         }
+                        
+                        [UserShareOnce attemptDealloc];
                         [UtilityFunc updateAppConfigWithMutableDictionary:dicTmp];
                         CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:loginview];
-                        
+                        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"memberChirldArr"];
                         [UIApplication sharedApplication].keyWindow.rootViewController = nav;
                         //[self.navigationController pushViewController:loginview animated:YES];
                     }];

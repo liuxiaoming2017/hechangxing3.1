@@ -73,6 +73,8 @@
         _titleLabel.text = [NSString stringWithFormat:@"欢迎：%@",[UserShareOnce shareOnce].name];
     }else if (![[UserShareOnce shareOnce].username isKindOfClass:[NSNull class]] && [UserShareOnce shareOnce].username != nil){
         _titleLabel.text = [NSString stringWithFormat:@"欢迎：%@",[UserShareOnce shareOnce].username];
+    }else{
+        _titleLabel.text = @"欢迎您";
     }
     [_showView addSubview:_titleLabel];
     
@@ -165,24 +167,21 @@
     ageLabel.font = [UIFont systemFontOfSize:13];
     [cell addSubview:sexLabel];
     [cell addSubview:ageLabel];
-    if ([model.birthday isEqual:[NSNull null]] ) {
-        NSString *sex = @"";
-        if ([[UserShareOnce shareOnce].gender isEqual:[NSNull null]]||[[UserShareOnce shareOnce].gender isEqualToString:@"male"]) {
-            sex =@"男" ;
-        }else{
-            sex = @"女";
-        }
-        sexLabel.text = [NSString stringWithFormat:@"%@",sex];
-        ageLabel.text = [NSString stringWithFormat:@"%@岁",@"0"];
-        
+    
+    NSString *sex = @"";
+
+    if([UserShareOnce shareOnce].gender == nil||[[UserShareOnce shareOnce].gender isKindOfClass:[NSNull class]]){
+        sex =@"_" ;
+    }else if ([[UserShareOnce shareOnce].gender isEqualToString:@"male"]){
+        sex = @"男";
     }else{
-        NSString *sex = @"";
-        if ([model.gender isEqual:[NSNull null]]||[model.gender isEqualToString:@"male"]) {
-            sex =@"男" ;
-        }else{
-            sex = @"女";
-        }
-        
+        sex = @"女";
+    }
+    sexLabel.text = sex;
+
+    if ([model.birthday isKindOfClass:[NSNull class]] ||model.birthday == nil|| model.birthday.length ==0) {
+        ageLabel.text =@"未知";
+    }else{
         NSString *str = [model.birthday substringToIndex:4];
         sesss = [str intValue];
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
@@ -193,7 +192,6 @@
         now=[NSDate date];
         comps = [calendar components:unitFlags fromDate:now];
         age = (int)[comps year] - sesss;
-        sexLabel.text = [NSString stringWithFormat:@"%@",sex];
         ageLabel.text = [NSString stringWithFormat:@"%d岁",age];
     }
     UIImageView *lineView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 43, tableView.frame.size
