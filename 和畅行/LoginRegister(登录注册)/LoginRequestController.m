@@ -258,6 +258,7 @@
             userShare.JSESSIONID = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"JSESSIONID"];
             userShare.token = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"token"];
             userShare.isRefresh = NO;
+            userShare.wxName = paramDic[@"screen_name"];
             NSArray *arrMem = [[[response objectForKey:@"data"] objectForKey:@"member"] objectForKey:@"mengberchild"];
             
             NSMutableArray *memberArr = [NSMutableArray arrayWithCapacity:0];

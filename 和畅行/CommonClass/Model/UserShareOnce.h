@@ -47,7 +47,7 @@
 @property (nonatomic,copy) NSString *uuid; //和缓id
 @property (nonatomic,copy) NSString *userToken; //和缓token
 @property (nonatomic,assign) BOOL isOnline;
-
+@property (nonatomic,copy) NSString *wxName;
 
 @property (nonatomic,assign) BOOL isRefresh; //一点一说一写 返回首页 刷新和畅提醒判断
 
