@@ -16,12 +16,11 @@
 #import "WKWebController.h"
 #import "InformationViewController.h"
 #import "HCY_ConsultingModel.h"
+#import "XZMRefresh.h"
 
 @interface RecommendReadView()<UICollectionViewDataSource,UICollectionViewDelegate>
 
 @property (nonatomic,strong) UICollectionView *collectionV;
-//请求页数
-@property (nonatomic,assign) NSInteger pageInteger;
 
 @end
 
@@ -75,27 +74,26 @@
     
     [self.collectionV registerClass:[RecommendCollectCell class] forCellWithReuseIdentifier:@"cellId"];
     
-    self.pageInteger = 1;
     [self addSubview:self.collectionV];
-    [self requestHealthHintDataWithPageInteger:1];
+    [self requestHealthHintData];
+    
 
 }
-- (void)requestHealthHintDataWithPageInteger:(NSInteger )pageInteger
+
+
+
+
+- (void)requestHealthHintData
 {
     __weak typeof(self) weakSelf = self;
-    NSString *pageIntegerstr = [NSString stringWithFormat:@"%ld",(long)pageInteger];
     
-  NSString *aUrlle= [NSString stringWithFormat:@"/article/healthArticleList.jhtml?pageNumber=%@",pageIntegerstr];
+  NSString *aUrlle=@"/article/healthArticleList.jhtml?pageNumber=1";
     
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:aUrlle parameters:nil successBlock:^(id response) {
         
         NSLog(@"%@",response);
         if ([response[@"status"] integerValue] == 100){
             
-            if (self.pageInteger == 1) {
-                [weakSelf.recommendArr removeAllObjects];
-            }
-
             for (NSDictionary *dic in [[response valueForKey:@"data"] valueForKey:@"content"]) {
                 HCY_ConsultingModel *tipModel = [[HCY_ConsultingModel alloc] init];
                 [tipModel yy_modelSetWithJSON:dic];
@@ -104,16 +102,14 @@
             [weakSelf.collectionV reloadData];
         
         }
+      
+
     } failureBlock:^(NSError *error) {
         NSLog(@"%@",error);
         [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
     
-    if (weakSelf.pageInteger == 1) {
-//        [self.timeLinvView.tableView.mj_header endRefreshing];
-    }else {
-//        [self.timeLinvView.tableView.mj_footer endRefreshing];
-    }
+
 }
 
 -(void)moreAction {

@@ -156,7 +156,12 @@
 
     UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 10, 100, 24)];
     nameLabel.font = [UIFont systemFontOfSize:13];
-    nameLabel.text = model.name;
+    if ( model.name.length > 27) {
+        nameLabel.text =  [UserShareOnce shareOnce].wxName;
+    }else {
+        nameLabel.text = model.name;
+    }
+        
     [cell addSubview:nameLabel];
     
     int sesss ;

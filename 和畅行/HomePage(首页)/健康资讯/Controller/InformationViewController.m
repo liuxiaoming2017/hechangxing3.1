@@ -56,7 +56,7 @@
     _idArray = [NSMutableArray arrayWithObjects:@"hot",@"10",@"10", nil];
     [self huoquwenzhang:titleArr];
     
-    
+    [self huoquwenzhangCanshu];
 
 }
 
@@ -97,6 +97,12 @@
     NSString *aUrlle= [NSString stringWithFormat:@"%@/article/healthCategoryList.jhtml",UrlPre];
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:aUrlle];
+    
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:aUrlle parameters:nil successBlock:^(id response) {
+        
+    } failureBlock:^(NSError *error) {
+        
+    }];
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     [request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
