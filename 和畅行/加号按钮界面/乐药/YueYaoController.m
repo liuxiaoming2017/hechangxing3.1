@@ -116,14 +116,6 @@
     [segmentedControl addTarget:self action:@selector(valuesegChanged:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:segmentedControl];
     
-   
-        
-        
-        
-    
-   
-
-    
     hysegmentControl = [[HYSegmentedControl alloc] initWithOriginY:segmentedControl.frame.origin.y+segmentedControl.frame.size.height + 5 Titles:@[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"] delegate:self];
     [self.view addSubview:hysegmentControl];
 
@@ -222,7 +214,6 @@
             [downhander setButton:btn];
             
         }else{
-            
             
             for (int i=0; i<[btn subviews].count; i++)
             {

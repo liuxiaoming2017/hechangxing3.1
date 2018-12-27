@@ -77,7 +77,7 @@
    // NSString *aUrl = @"weiq/sms/login.jhtml";
     NSString *aUrl = @"login/commit.jhtml";
     __weak typeof(self) weakself = self;
-    
+    [GlobalCommon showMBHudTitleWithView:self.view];
     [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:paramDic successBlock:^(id response) {
         
         
@@ -154,10 +154,11 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             [weakself GetMemberChild];
         }else{
-            [weakself showAlertWarmMessage:[response objectForKey:@"data"]];
+            [GlobalCommon hideMBHudTitleWithView:weakself.view];
+            [weakself showAlertWarmMessage:[response objectForKey:@"message"]];
         }
     } failureBlock:^(NSError *error) {
-        
+        [GlobalCommon hideMBHudTitleWithView:weakself.view];
         [weakself showAlertWarmMessage:requestErrorMessage];
     }];
     
@@ -175,24 +176,25 @@
    
     NSString *aUrl = [NSString stringWithFormat:@"member/memberModifi/selectMemberChild.jhtml?mobile=%@",[UserShareOnce shareOnce].username];
     NSLog(@"name:%@,token:%@",[UserShareOnce shareOnce].username,[UserShareOnce shareOnce].token);
-    __weak typeof(self) weakSelf = self;
+    __weak typeof(self) weakself = self;
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:aUrl parameters:nil successBlock:^(id response) {
         if([[response objectForKey:@"status"] intValue] == 100){
-            id data = [response objectForKey:@"data"];
-            if (data && data != [NSNull null]) {
-//                [UserShareOnce shareOnce].mengberchild = [data objectForKey:@"id"];
+            [GlobalCommon hideMBHudTitleWithView:weakself.view];
+            //id data = [response objectForKey:@"data"];
+           // if (data && data != [NSNull null]) {
                 [UIApplication sharedApplication].keyWindow.rootViewController = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSuccessNotification object:nil];
                 
-            }
+           // }
         }else{
             
             [UIApplication sharedApplication].keyWindow.rootViewController = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
             [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSuccessNotification object:nil];
-            [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
+            [weakself showAlertWarmMessage:[response objectForKey:@"data"]];
         }
     } failureBlock:^(NSError *error) {
-        [weakSelf showAlertWarmMessage:requestErrorMessage];
+        [GlobalCommon hideMBHudTitleWithView:weakself.view];
+        [weakself showAlertWarmMessage:requestErrorMessage];
     }];
 }
 
@@ -228,7 +230,7 @@
     }
     
     __weak typeof(self) weakself = self;
-    
+    [GlobalCommon showMBHudTitleWithView:self.view];
     [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:paramDic successBlock:^(id response) {
         NSLog(@"%@",response);
 
@@ -309,11 +311,12 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             [weakself GetMemberChild];
         }else{
-            [weakself showAlertWarmMessage:[response objectForKey:@"data"]];
+            [GlobalCommon hideMBHudTitleWithView:weakself.view];
+            [weakself showAlertWarmMessage:[response objectForKey:@"message"]];
         }
     } failureBlock:^(NSError *error) {
         NSLog(@"%@",error);
-        
+        [GlobalCommon hideMBHudTitleWithView:weakself.view];
         [weakself showAlertWarmMessage:requestErrorMessage];
     }];
     

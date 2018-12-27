@@ -282,7 +282,7 @@
     ///member/service/zf_report.jhtml?cust_id=32&physique_id=181224175130815054&device=1
     NSString *str = [NSString new];
     NSString *pageIntegerstr = [NSString stringWithFormat:@"%ld",(long)pageInteger];
-    
+    self.currentIndex = tipyInteger;
     switch (tipyInteger) {
         case 0:   str = [NSString stringWithFormat:
                          @"/member/myreport/view/%@.jhtml?",memberId];
@@ -443,7 +443,7 @@
 }
 
 
-//病例的请求
+# pragma mark - 病例的请求
 
 -(void)getCasesList {
     
@@ -455,8 +455,8 @@
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
     
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    [request setPostValue:[UserShareOnce shareOnce].phone forKey:@"phone"];
+    [request setPostValue:[MemberUserShance shareOnce].idNum forKey:@"memberId"];
+    
     
     [request setTimeOutSeconds:20];
     [request setRequestMethod:@"POST"];
@@ -497,6 +497,9 @@
             self.noView.hidden = NO;
             self.timeLinvView.tableView.hidden = YES;
             return;
+        }else{
+            self.noView.hidden = YES;
+            self.timeLinvView.tableView.hidden = NO;
         }
         
         [self.timeLinvView relodTableViewWitDataArray:self.dataListArray withType:self.typeUrlInteger];

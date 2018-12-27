@@ -11,7 +11,7 @@
 #import "AdvisorysViewController.h"
 #import "AppDelegate.h"
 
-#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+//#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 
 @interface HCY_CallController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -64,7 +64,7 @@
 
 -(void)comeToNextBlockCellwithIndex:(NSIndexPath *)index {
     
-    
+    /*
      HHMSDK *hhmSdk = [[HHMSDK alloc] init];
     __weak typeof(self) weakSelf = self;
     if(index.row==0||index.row==1){
@@ -100,7 +100,7 @@
         [self.navigationController pushViewController:adVC animated:YES];
         
     }
-    
+    */
 }
 
 - (void)messageHintView

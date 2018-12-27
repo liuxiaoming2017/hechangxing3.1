@@ -120,6 +120,7 @@
     switchLoginType.frame = CGRectMake(welcomLabel.left, loginBtn.bottom+10, 140, 30);
     [switchLoginType addTarget:self action:@selector(switchLoginTypeAction:) forControlEvents:UIControlEventTouchUpInside];
     switchLoginType.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    switchLoginType.tag = 2019;
     [switchLoginType setTitle:@"账户密码登录" forState:UIControlStateNormal];
     switchLoginType.titleLabel.font = [UIFont systemFontOfSize:13.0];
     [switchLoginType setTitleColor:UIColorFromHex(0xb8b8b8) forState:UIControlStateNormal];
@@ -321,12 +322,13 @@
     /**
      *  MD5加密后的字符串
      */
+    [GlobalCommon showMBHudTitleWithView:self.view];
     NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",userNameBox.text];
     NSString *iPoneNumberMD5 = [GlobalCommon md5:iPoneNumber].uppercaseString;
     NSDictionary *dic = @{@"phone":userNameBox.text,@"token":iPoneNumberMD5};
     __weak typeof(self) weakSelf = self;
     [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:dic successBlock:^(id response) {
-        
+        [GlobalCommon hideMBHudTitleWithView:weakSelf.view];
         NSLog(@"%@",response);
         id status=[response objectForKey:@"status"];
         if (status!=nil)
@@ -353,6 +355,7 @@
             
         }
     } failureBlock:^(NSError *error) {
+        [GlobalCommon hideMBHudTitleWithView:weakSelf.view];
         [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
     
@@ -408,9 +411,9 @@
 # pragma mark - 登录按钮
 - (void)userLogin
 {
-    UIButton *button = (UIButton *)[self.view viewWithTag:2018];
+    UIButton *button = (UIButton *)[self.view viewWithTag:2019];
     //短信验证码登录
-    if([button.titleLabel.text isEqualToString:@"获取验证码"]){
+    if([button.titleLabel.text isEqualToString:@"账户密码登录"]){
         [self smsCodeLoginAction];
     }
     //用户名密码登录

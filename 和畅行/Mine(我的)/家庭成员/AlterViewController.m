@@ -125,7 +125,7 @@ SonAccount *sonAccount;
     if ([self.category isEqualToString:@"addMember"]) {
         aUrl = [NSString stringWithFormat:@"%@/member/memberModifi/save.jhtml",UrlPre];
     }
-    aUrl = [NSString stringWithFormat:@"%@/member/memberModifi/update.jhtml",UrlPre];
+    aUrl = [NSString stringWithFormat:@"%@/member/memberModifi/save.jhtml",UrlPre];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];

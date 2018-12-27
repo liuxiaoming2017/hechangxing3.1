@@ -122,12 +122,12 @@
     BOOL isExist = [fileManager fileExistsAtPath:dbPath];
     if(isExist){
         CacheManager *cacheManager = [[CacheManager alloc] initManage];
-        
+
         NSMutableArray *tempArr = [NSMutableArray arrayWithCapacity:0];
         tempArr = [cacheManager getQuestionModels];
-        
+
         [self handleQuestionDataWithArr:tempArr];
-        
+
     }else{
         [self requestQuestionListData];
     }
@@ -137,18 +137,24 @@
 - (void)handleQuestionDataWithArr:(NSMutableArray *)tempArr
 {
     NSMutableArray *repeatArr1 = [NSMutableArray arrayWithCapacity:0];
-    for(NSInteger i=0;i<tempArr.count;i++){
+    NSMutableArray *tempArr1 = [NSMutableArray arrayWithCapacity:0];
+    NSInteger arrCount = [tempArr count];
+    for(NSInteger i=0;i<arrCount;i++){
+        BOOL isRepeat = NO;
         QuestionModel *model1 = [tempArr objectAtIndex:i];
-        for(NSInteger j=i+1;j<tempArr.count;j++){
+        for(NSInteger j=i+1;j<arrCount;j++){
             QuestionModel *model2 = [tempArr objectAtIndex:j];
             if(model2.order == model1.order){
-                
-                [repeatArr1 addObject:model1];
-                [tempArr removeObject:model1];
+                isRepeat = YES;
             }
         }
+        if(isRepeat){
+            [repeatArr1 addObject:model1];
+        }else{
+            [tempArr1 addObject:model1];
+        }
     }
-    self.questionArr = [tempArr copy];
+    self.questionArr = [tempArr1 copy];
     self.repeatQuestionArr = [repeatArr1 copy];
     _pages = (NSInteger)ceil(self.questionArr.count/2.0);
     [self createUI];
@@ -192,6 +198,7 @@
                     QuestionModel *model = [[QuestionModel alloc] init];
                     model = [QuestionModel mj_objectWithKeyValues:dic2];
                     model.type = typeStr;
+                    model.order = [[dic2 objectForKey:@"order"] integerValue];
                     model.allIDStr = answerIDStr;
                     [mutabDataArr addObject:model];
                 }
