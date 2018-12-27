@@ -9,7 +9,6 @@
 #import "HCY_CallCell.h"
 
 @implementation HCY_CallCell
-
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self layoutView];
@@ -17,10 +16,13 @@
 
 -(void)layoutView{
     
-    self.backView.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.backView.layer.shadowOffset = CGSizeMake(5,5);
-    self.backView.layer.shadowOpacity = 0.2;
+    
+    self.backView.layer.shadowColor = [UIColor lightGrayColor].CGColor;
+    self.backView.layer.shadowOffset = CGSizeMake(0,1);
+    self.backView.layer.shadowOpacity = 0.4;
     self.backView.layer.shadowRadius = 4;
+    
+    
     
 }
 
@@ -52,6 +54,8 @@
     }
     
 }
+
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

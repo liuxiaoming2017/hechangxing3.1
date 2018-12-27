@@ -22,6 +22,7 @@ typedef void (^ComeToNextBlack) (HCY_CallCell *);
 @property (weak, nonatomic) IBOutlet UILabel *threeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *comeButton;
 
+
 @property (nonatomic,copy) ComeToNextBlack comeToNextBlock;
 -(void)cellsetAttributewithIndexPath:(NSIndexPath *)indexPath;
 @end

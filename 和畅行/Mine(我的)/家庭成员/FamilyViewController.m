@@ -187,6 +187,10 @@ NSString *isYiBao;
         }else{
             cell.nameLabel.text = [self.dataArray[indexPath.row] objectForKey:@"name"];
         }
+        
+        if( [[self.dataArray[indexPath.row] objectForKey:@"name"] length] > 26) {
+            cell.nameLabel.text = [UserShareOnce shareOnce].wxName;
+        }
     }
     
     int sesss = 0;

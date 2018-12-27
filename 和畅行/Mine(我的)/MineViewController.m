@@ -134,7 +134,10 @@
     }else{
         dispalyName = [UserShareOnce shareOnce].name;
     }
-    UILabel *userName = [Tools creatLabelWithFrame:CGRectMake(userIcon.right+20, userIcon.top+10, 100, 20) text:dispalyName textSize:14];
+    if([UserShareOnce shareOnce].wxName&&[UserShareOnce shareOnce].wxName.length!=0&&![[UserShareOnce shareOnce].wxName isKindOfClass:[NSNull class]]){
+        dispalyName = [UserShareOnce shareOnce].wxName;
+    }
+    UILabel *userName = [Tools creatLabelWithFrame:CGRectMake(userIcon.right+20, userIcon.top+10, 130, 20) text:dispalyName textSize:14];
     userName.textColor = [UIColor whiteColor];;
     [imageView addSubview:userName];
     

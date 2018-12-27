@@ -69,12 +69,18 @@
     _titleLabel.font = [UIFont systemFontOfSize:15];
     _titleLabel.textColor = UIColorFromHex(0x009ef3);
     _titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    
+   
     if (![[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]] && [UserShareOnce shareOnce].name != nil) {
         _titleLabel.text = [NSString stringWithFormat:@"欢迎：%@",[UserShareOnce shareOnce].name];
     }else if (![[UserShareOnce shareOnce].username isKindOfClass:[NSNull class]] && [UserShareOnce shareOnce].username != nil){
         _titleLabel.text = [NSString stringWithFormat:@"欢迎：%@",[UserShareOnce shareOnce].username];
     }else{
         _titleLabel.text = @"欢迎您";
+    }
+    if([UserShareOnce shareOnce].wxName&&[UserShareOnce shareOnce].wxName.length!=0&&![[UserShareOnce shareOnce].wxName isKindOfClass:[NSNull class]]){
+        _titleLabel.text = [NSString stringWithFormat:@"欢迎: %@",[UserShareOnce shareOnce].wxName] ;
     }
     [_showView addSubview:_titleLabel];
     

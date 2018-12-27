@@ -19,7 +19,7 @@
 
 #define currentMonth [currentMonthString integerValue]
 SonAccount *sonAccount;
-@interface AlterViewController ()<ZHPickViewDelegate,ASIHTTPRequestDelegate,ASIProgressDelegate>
+@interface AlterViewController ()<ZHPickViewDelegate,ASIHTTPRequestDelegate,ASIProgressDelegate,UITextFieldDelegate>
 @property(nonatomic,retain)ZHPickView *pickview;
 @property(nonatomic,retain)NSIndexPath *indexPath;
 @property (nonatomic ,retain) NSMutableArray *imagesArray;//图片数组
@@ -122,10 +122,13 @@ SonAccount *sonAccount;
     
     NSString *UrlPre=URL_PRE;
     NSString *aUrl = nil;
+    
     if ([self.category isEqualToString:@"addMember"]) {
         aUrl = [NSString stringWithFormat:@"%@/member/memberModifi/save.jhtml",UrlPre];
+    }else{
+        aUrl = [NSString stringWithFormat:@"%@/member/memberModifi/update.jhtml",UrlPre];
     }
-    aUrl = [NSString stringWithFormat:@"%@/member/memberModifi/save.jhtml",UrlPre];
+
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
@@ -233,7 +236,7 @@ SonAccount *sonAccount;
     tableview.delegate=self;
     tableview.dataSource=self;
     tableview.bounces = NO;
-    tableview.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
+    tableview.separatorStyle=UITableViewCellSeparatorStyleNone;
     tableview.backgroundColor=[UIColor clearColor];
     _PersonInfoTableView=tableview;
     [self.view addSubview:tableview];
@@ -307,6 +310,8 @@ SonAccount *sonAccount;
         [Yh_TF setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
         Yh_TF.returnKeyType=UIReturnKeyDone;
         Yh_TF.delegate=self;
+        [Yh_TF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+
         [cell addSubview:Yh_TF];
         Yh_TF.font=[UIFont systemFontOfSize:14];
     }
@@ -450,6 +455,10 @@ SonAccount *sonAccount;
         
         
     }
+    
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(10, cell.bottom-1, ScreenWidth - 20, 1)];
+    lineView.backgroundColor =RGB(230, 230, 230);
+    [cell addSubview:lineView];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor=[UIColor whiteColor];
     return cell;
@@ -611,7 +620,40 @@ SonAccount *sonAccount;
 }
 
 
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+    
+    [_pickview remove];
+}
 
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == Yh_TF) {
+        if (textField.text.length >= 10)
+        {
+            [self.view endEditing:YES];
+            return NO;
+        }
+    }
+    return YES;
+}
+
+
+-(void)textFieldDidChange:(UITextField * )textField
+{
+    if (textField == Yh_TF) {
+        if (textField.text.length > 8) {
+            textField.text = [textField.text substringToIndex:8];
+        }
+    }
+}
+
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [_pickview remove];
+}
 /*
 #pragma mark - Navigation
 

@@ -31,7 +31,7 @@
 @property (nonatomic ,strong) NSMutableArray *hotArray;
 @property (nonatomic ,strong) NSMutableArray *healthArray;
 @property (nonatomic ,strong) NSMutableArray *idArray;
-
+@property (nonatomic,strong)UIView *noView;
 @property (nonatomic ,strong) UIView *healthView;
 
 @end
@@ -43,18 +43,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //_idArray = [[NSMutableArray alloc]init];
+    _idArray = [[NSMutableArray alloc]init];
     self.navTitleLabel.text = @"健康资讯";
     self.hotArray = [[NSMutableArray alloc]init];
     self.healthArray = [[NSMutableArray alloc]init];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    
+    self.noView = [NoMessageView createImageWith:150.0f];
+    [self.view addSubview:self.noView ];
     //10
-    NSArray *titleArr = @[@"最新资讯",@"健康讲座",@"养生之道"];
-    _idArray = [NSMutableArray arrayWithObjects:@"hot",@"10",@"10", nil];
-    [self huoquwenzhang:titleArr];
+//    NSArray *titleArr = @[@"最新资讯",@"健康讲座"];
+//    _idArray = [NSMutableArray arrayWithObjects:@"hot",@"10", nil];
+//    [self huoquwenzhang:titleArr];
     
     [self huoquwenzhangCanshu];
 
@@ -92,61 +93,38 @@
 }
 
 - (void)huoquwenzhangCanshu{
-    NSString *UrlPre=URL_PRE;
+    NSString *headYUrl = @"/article/healthCategoryList.jhtml";
     
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/article/healthCategoryList.jhtml",UrlPre];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:aUrlle];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:BAHttpRequestTypeHeadGet urlString:headYUrl parameters:nil successBlock:^(id response) {
+        [self hudWasHidden];
+        id status=[response objectForKey:@"status"];
+        if ([status intValue] == 100)
+        {
+            NSArray *array = [response objectForKey:@"data"];
+            NSMutableArray *daArray = [[NSMutableArray alloc]init];
+            [weakSelf.idArray addObject:@"hot"];
+            [weakSelf.idArray addObject:@"10"];
+            [daArray addObject:@"最新资讯"];
+            [daArray addObject:@"健康讲座"];
+            for (NSDictionary *Dic in array) {
+                [daArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"name"]]];
+                [weakSelf.idArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"id"]]];
+            }
+            
+            [self huoquwenzhang:daArray];
+        }
+        else  {
+            [self showAlertWarmMessage:requestErrorMessage];
+        }
     
-    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:aUrlle parameters:nil successBlock:^(id response) {
-        
     } failureBlock:^(NSError *error) {
-        
+        [self hudWasHidden];
+        [self showAlertWarmMessage:requestErrorMessage];
     }];
-    
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
-    [request setRequestMethod:@"GET"];
-    [request setTimeOutSeconds:20];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestwenzhangResourceslisttssError:)];
-    [request setDidFinishSelector:@selector(requestwenzhangResourceslisttssCompleted:)];
-    [request startAsynchronous];
-}
-- (void)requestwenzhangResourceslisttssError:(ASIHTTPRequest *)request
-{
-    [self hudWasHidden];
-    [self showAlertWarmMessage:requestErrorMessage];
-    
+
 }
 
-- (void)requestwenzhangResourceslisttssCompleted:(ASIHTTPRequest *)request
-{
-    [self hudWasHidden];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    id status=[dic objectForKey:@"status"];
-    NSLog(@"%@",status);
-    if ([status intValue] == 100)
-    {
-        NSArray *array = [dic objectForKey:@"data"];
-        NSMutableArray *daArray = [[NSMutableArray alloc]init];
-        [_idArray addObject:@"hot"];
-        [daArray addObject:@"最新资讯"];
-        for (NSDictionary *Dic in array) {
-            [daArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"name"]]];
-            [_idArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"id"]]];
-        }
-        
-        [self huoquwenzhang:daArray];
-    }
-    else
-    {
-        NSString *str = [dic objectForKey:@"data"];
-        [self showAlertWarmMessage:str];
-        
-    }
-}
 
 - (void)huoquwenzhang:(NSArray *)array{
     
@@ -192,12 +170,13 @@
     }else if(index == 1){
         self.healthView.hidden = NO;
         self.healthTableView.hidden = YES;
-        
+        self.noView.hidden = YES;
     }else{
         self.healthView.hidden = YES;
         self.healthTableView.hidden = NO;
         [self healthArrayWithView:idStr];
     }
+
     
 }
 
@@ -327,6 +306,14 @@
         [self.healthTableView setContentSize:size];
         [self.healthTableView reloadData];
         
+        if (self.healthArray.count < 1){
+            self.noView.hidden = NO;
+            self.healthTableView.hidden = YES;
+        }else {
+            self.noView.hidden = YES;
+            self.healthTableView.hidden = NO;
+        }
+        
     }
     else if ([status intValue]==44)
     {
@@ -370,7 +357,7 @@
             }
 
     }
-        UIImageView *hotImage = [[UIImageView alloc]initWithFrame:CGRectMake(17, 15, 84, 54)];
+        UIImageView *hotImage = [[UIImageView alloc]initWithFrame:CGRectMake(17, 7, 80, 70)];
 
         [hotImage sd_setImageWithURL:[NSURL URLWithString:[self.healthArray[indexPath.row]objectForKey:@"picture"]]];
         [cell addSubview:hotImage];
