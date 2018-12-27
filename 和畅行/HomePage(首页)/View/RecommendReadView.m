@@ -17,7 +17,6 @@
 #import "InformationViewController.h"
 #import "HCY_ConsultingModel.h"
 
-
 @interface RecommendReadView()<UICollectionViewDataSource,UICollectionViewDelegate>
 
 @property (nonatomic,strong) UICollectionView *collectionV;

@@ -158,7 +158,7 @@
 //        av.tag=10007;
 //        _textField.text = @"";
         [GlobalCommon showMessage:@"服务卡添加成功" duration:1];
-        [self.navigationController popViewControllerAnimated:YES];
+//        [self.navigationController popViewControllerAnimated:YES];
         
     }
     else if ([status intValue]== 44)

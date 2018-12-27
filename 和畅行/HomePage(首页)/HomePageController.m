@@ -215,7 +215,11 @@
 
     NSString *urlStr = @"member/new_ins/current.jhtml";
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
-    [paramDic setObject:[MemberUserShance shareOnce].idNum forKey:@"memberChildId"];
+    if ([MemberUserShance shareOnce].idNum){
+        [paramDic setObject:[MemberUserShance shareOnce].idNum forKey:@"memberChildId"];
+    }else {
+        return;
+    }
     __weak typeof(self) weakSelf = self;
      [self.testActivityIndicator startAnimating];
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:paramDic successBlock:^(id response) {

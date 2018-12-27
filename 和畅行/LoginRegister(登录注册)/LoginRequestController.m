@@ -179,12 +179,12 @@
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:aUrl parameters:nil successBlock:^(id response) {
         if([[response objectForKey:@"status"] intValue] == 100){
             id data = [response objectForKey:@"data"];
-            if (data && data != [NSNull null]) {
+//            if (data && data != [NSNull null]) {
 //                [UserShareOnce shareOnce].mengberchild = [data objectForKey:@"id"];
                 [UIApplication sharedApplication].keyWindow.rootViewController = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSuccessNotification object:nil];
                 
-            }
+//            }
         }else{
             
             [UIApplication sharedApplication].keyWindow.rootViewController = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
