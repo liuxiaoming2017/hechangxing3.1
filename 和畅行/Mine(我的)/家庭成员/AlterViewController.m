@@ -420,7 +420,7 @@ SonAccount *sonAccount;
         [Certificates_Number_Tf setValue:[UtilityFunc colorWithHexString:@"#333333"] forKeyPath:@"_placeholderLabel.textColor"];
         [Certificates_Number_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
         [cell addSubview:Certificates_Number_Tf];
-        Certificates_Number_Tf.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
+        Certificates_Number_Tf.keyboardType=UIKeyboardTypeASCIICapable;
         Certificates_Number_Tf.textColor=[UtilityFunc colorWithHexString:@"#333333"];
         Certificates_Number_Tf.font=[UIFont systemFontOfSize:14];
        
@@ -447,7 +447,7 @@ SonAccount *sonAccount;
         }else{
             TelephoneLb_Tf.text=[self.dataDictionary objectForKey:@"mobile"];
         }
-        TelephoneLb_Tf.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
+        TelephoneLb_Tf.keyboardType=UIKeyboardTypeNumberPad;
         [TelephoneLb_Tf setValue:[UtilityFunc colorWithHexString:@"#333333"] forKeyPath:@"_placeholderLabel.textColor"];
         [TelephoneLb_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
         TelephoneLb_Tf.font=[UIFont systemFontOfSize:14];
@@ -573,7 +573,7 @@ SonAccount *sonAccount;
     if (textField == Yh_TF) {
         return;
     }
-    [ self resizeViewForInput:nil ];
+   // [ self resizeViewForInput:nil ];
     
 }
 -(void)resizeViewForInput:(id)sender

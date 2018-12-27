@@ -76,8 +76,9 @@
     leftBtn.frame = CGRectMake(15, 2+kStatusBarHeight+2.5, 32, 32);
     UIImage *personImg = [UIImage imageNamed:@"1我的_03"];
     
-    if([[UserShareOnce shareOnce].memberImage isKindOfClass:[NSNull class]]){
-       [leftBtn setImage:personImg forState:UIControlStateNormal];
+    if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].memberImage]){
+       //[leftBtn setImage:personImg forState:UIControlStateNormal];
+        [leftBtn sd_setImageWithURL:[NSURL URLWithString:@""] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"1我的_03"]];
     }else{
         [leftBtn sd_setImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage] forState:UIControlStateNormal placeholderImage:personImg];
         //[leftBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage] forState:UIControlStateNormal placeholderImage:personImg];
@@ -94,8 +95,9 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if([[UserShareOnce shareOnce].memberImage isKindOfClass:[NSNull class]]){
-        [leftBtn setImage:[UIImage imageNamed:@"1我的_03"] forState:UIControlStateNormal];
+    if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].memberImage]){
+        [leftBtn sd_setImageWithURL:[NSURL URLWithString:@""] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"1我的_03"]];
+        //[leftBtn setImage:[UIImage imageNamed:@"1我的_03"] forState:UIControlStateNormal];
     }else{
         [leftBtn sd_setImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"1我的_03"]];
     }

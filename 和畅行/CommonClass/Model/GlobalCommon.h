@@ -46,4 +46,6 @@
 + (BOOL)stringEqualNull:(NSString *)str;
 
 +(NSString *)getStringWithSubjectSn:(NSString *)nameStr;
+
++(NSString *)getNowTimeTimestamp;
 @end

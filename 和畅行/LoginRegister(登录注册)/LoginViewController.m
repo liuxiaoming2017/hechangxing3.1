@@ -292,18 +292,7 @@
             
             [self userLoginWithWeiXParams:weiXDic withCheck:2];
             
-            //            // 授权信息
-            //            NSLog(@"Wechat uid: %@", resp.uid);
-            //            NSLog(@"Wechat openid: %@", resp.openid);
-            //            NSLog(@"Wechat accessToken: %@", resp.accessToken);
-            //            NSLog(@"Wechat refreshToken: %@", resp.refreshToken);
-            //            NSLog(@"Wechat expiration: %@", resp.expiration);
-            //            // 用户信息
-            //            NSLog(@"Wechat name: %@", resp.name);
-            //            NSLog(@"Wechat iconurl: %@", resp.iconurl);
-            //            NSLog(@"Wechat gender: %@", resp.gender);
-            //            // 第三方平台SDK源数据
-            //            NSLog(@"Wechat originalResponse: %@", resp.originalResponse);
+           
         }
     }];
 }

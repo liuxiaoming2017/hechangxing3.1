@@ -82,7 +82,10 @@
         // __block typeof(self) blockSelf = self;
         [self userLoginWithWeiXParams:dic withCheck:2];
         
-    }else{
+    }else if ([strcheck isEqualToString:@"3"]){
+        [self userLoginWithShortMessage:[dicTmp valueForKey:@"PhoneShortMessage"]];
+    }
+    else{
         [appDelegate() returnMainPage];
     }
     

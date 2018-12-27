@@ -656,7 +656,7 @@
 
         CGFloat light= 0.70;
         CGFloat moderate = 1.0;
-        CGFloat heavy = 1.20;
+        CGFloat heavy = 1.50;
         if (selectedModel.extent == light) {
             extentLabel.text = @"轻度";
             extentLabel.textColor = [Tools colorWithHexString:@"#00bc00"];

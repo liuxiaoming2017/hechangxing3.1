@@ -644,7 +644,7 @@
                 [timerACC invalidate];
             }
             
-            if ( self.soundCount < 0.6) {
+            if ( self.soundCount < 1.0) {
                 [self soundTooLow];
             }else{
                 if([GlobalCommon isManyMember]){
@@ -717,8 +717,15 @@
     id status=[dic objectForKey:@"status"];
     if ([status intValue]==100)
     {
-       
-        LPPopup *popup = [LPPopup popupWithText:@"您的录音已成功上传，正在进行分析。分析报告审核完成后，会发送至您的手机上，请注意查收。"];
+        NSInteger code = [[[dic objectForKey:@"data"] objectForKey:@"code"] integerValue];
+        NSString *codeStr = [self stringWithCode:code];
+        LPPopup *popup = nil;
+        if([codeStr isEqualToString:@""]){
+            popup = [LPPopup popupWithText:@"未采集到有效声音,请重新采集。"];
+        }else{
+            popup = [LPPopup popupWithText:@"您的录音已成功上传，正在进行分析。分析报告审核完成后，会发送至您的手机上，请注意查收。"];
+        }
+        
         imageHong.hidden = NO;
         [UserShareOnce shareOnce].isRefresh = YES;
         CGPoint point=self.view.center;
@@ -740,8 +747,7 @@
         self.filePath = nil;
         recordButton.selected = NO;
         
-        NSInteger code = [[[dic objectForKey:@"data"] objectForKey:@"code"] integerValue];
-        NSString *codeStr = [self stringWithCode:code];
+        
         NSString *aUrlle= [NSString stringWithFormat:@"%@/member/service/reshow.jhtml?sn=%@&device=1",URL_PRE,codeStr];
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = aUrlle;

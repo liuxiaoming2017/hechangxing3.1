@@ -473,7 +473,7 @@
     
     CGFloat light= 0.7;
     CGFloat moderate = 1.0;
-    CGFloat heavy = 1.2;
+    CGFloat heavy = 1.5;
     if (selectedModel.extent == light) {
         extentLabel.text = @"轻度";
         extentLabel.textColor = [Tools colorWithHexString:@"#00bc00"];
@@ -747,6 +747,7 @@
     NSString *urlStr = [NSString stringWithFormat:@"%@%@?%@",URL_PRE,kCOMMIT,param];
     ResultWriteController *vc = [[ResultWriteController alloc] init];
     vc.urlStr = urlStr;
+    vc.isReturnTop = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

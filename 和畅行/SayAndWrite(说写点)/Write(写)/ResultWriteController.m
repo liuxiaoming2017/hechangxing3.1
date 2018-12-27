@@ -22,7 +22,11 @@
 
 - (void)goBack:(UIButton *)btn
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    if(self.isReturnTop){
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

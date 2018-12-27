@@ -71,6 +71,7 @@
 {
     
 }
+# pragma mark - 账号密码登录
 
 - (void)userLoginWithParams:(NSDictionary *)paramDic withisCheck:(BOOL)isCheck
 {
@@ -120,6 +121,9 @@
             userShare.token = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"token"];
             userShare.isRefresh = NO;
             userShare.passWord = self->passWordBox.text;
+            if([GlobalCommon stringEqualNull:[dic objectForKey:@"uuid"]] ){
+                userShare.uuid = nil;
+            }
             NSArray *arrMem = [[[response objectForKey:@"data"] objectForKey:@"member"] objectForKey:@"mengberchild"];
             
             NSMutableArray *memberArr = [NSMutableArray arrayWithCapacity:0];
@@ -155,7 +159,7 @@
             [weakself GetMemberChild];
         }else{
             [GlobalCommon hideMBHudTitleWithView:weakself.view];
-            [weakself showAlertWarmMessage:[response objectForKey:@"message"]];
+            [weakself showAlertWarmMessage:[response objectForKey:@"data"]];
         }
     } failureBlock:^(NSError *error) {
         [GlobalCommon hideMBHudTitleWithView:weakself.view];
@@ -164,12 +168,6 @@
     
 }
 
-
-- (void)userLoginWithSMSParams:(NSDictionary *)paramDic {
-      NSString *aUrl = @"weiq/sms/login.jhtml";
-    
-    
-}
 
 - (void)GetMemberChild
 {
@@ -220,6 +218,7 @@
 
 
 //微信登录 check == 2 or 短息登录 check == 3
+# pragma mark - 微信登录，短信验证码登录
 - (void)userLoginWithWeiXParams:(NSDictionary *)paramDic withCheck:(NSInteger)check{
     NSString *aUrl = [NSString string];
 
@@ -263,6 +262,9 @@
             userShare.wxName = paramDic[@"screen_name"];
             NSArray *arrMem = [[[response objectForKey:@"data"] objectForKey:@"member"] objectForKey:@"mengberchild"];
             
+            if([GlobalCommon stringEqualNull:[dic objectForKey:@"uuid"]] ){
+                userShare.uuid = nil;
+            }
             NSMutableArray *memberArr = [NSMutableArray arrayWithCapacity:0];
             
             for (NSDictionary *dic in  arrMem) {
@@ -291,6 +293,16 @@
 
                 }
                 [UtilityFunc updateAppConfigWithMutableDictionary:dicTmp];
+            }else{
+                NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
+                if (dicTmp) {
+                    
+                    [dicTmp setObject:[paramDic valueForKey:@"phone"] forKey:@"PhoneShortMessage"];
+                    [dicTmp setValue:@"3" forKey:@"ischeck"];
+                    
+                }
+                [UtilityFunc updateAppConfigWithMutableDictionary:dicTmp];
+                
             }
             
             if (![[dic objectForKey:@"isMarried"] isKindOfClass:[NSNull class]]) {
@@ -322,6 +334,85 @@
     
     
 }
+
+# pragma mark - 短信自动登录
+- (void)userLoginWithShortMessage:(NSString *)phoneStr
+{
+    
+    NSString *aUrl = @"weiq/sms/relogin.jhtml";
+    NSString *hhhh = [GlobalCommon getNowTimeTimestamp];
+    NSString *iPoneNumber = [NSString stringWithFormat:@"%@%@ky3h.com",phoneStr,hhhh];
+    NSString *iPoneNumberMD5 = [GlobalCommon md5:iPoneNumber].uppercaseString;
+    NSDictionary *paraDic = @{@"phone":phoneStr,@"token":iPoneNumberMD5,@"timestamp":hhhh};
+    __weak typeof(self) weakself = self;
+    [GlobalCommon showMBHudTitleWithView:self.view];
+    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:paraDic successBlock:^(id response) {
+        
+        NSLog(@"response:%@",response);
+        if([[response objectForKey:@"status"] intValue] == 100){
+            
+            
+            //发送登录成功的通知
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginCompleted" object:self userInfo:nil];
+            
+            
+            UserShareOnce *userShare = [UserShareOnce shareOnce];
+            NSDictionary *dic = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"member"];
+            
+            NSLog(@"%@",dic);
+            userShare = [UserShareOnce mj_objectWithKeyValues:dic];
+            userShare.JSESSIONID = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"JSESSIONID"];
+            userShare.token = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"token"];
+            
+            userShare.isRefresh = NO;
+            if([GlobalCommon stringEqualNull:[dic objectForKey:@"uuid"]] ){
+                userShare.uuid = nil;
+            }
+            NSArray *arrMem = [[[response objectForKey:@"data"] objectForKey:@"member"] objectForKey:@"mengberchild"];
+            
+            NSMutableArray *memberArr = [NSMutableArray arrayWithCapacity:0];
+            
+            for (NSDictionary *dic in  arrMem) {
+                ChildMemberModel *model = [ChildMemberModel mj_objectWithKeyValues:dic];
+                if([model.name isEqualToString:[[[response objectForKey:@"data"] objectForKey:@"member"] objectForKey:@"username"]]) {
+                    MemberUserShance *memberShance = [MemberUserShance shareOnce];
+                    memberShance = [MemberUserShance mj_objectWithKeyValues:dic];
+                    
+                }
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
+                [memberArr addObject:data];
+            }
+            
+            
+            
+            if (![[dic objectForKey:@"isMarried"] isKindOfClass:[NSNull class]]) {
+                if ([[dic objectForKey:@"isMarried"] boolValue] == YES) {
+                    userShare.marryState = @"未婚";
+                }else if ([[dic objectForKey:@"isMarried"] boolValue] == NO){
+                    userShare.marryState = @"未婚";
+                }
+            }
+            
+            NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberChirldArr"];
+            if (arr.count) {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"memberChirldArr"];
+            }
+            NSArray *modelArr = [[NSArray alloc] initWithArray:memberArr];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:modelArr forKey:@"memberChirldArr"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [weakself GetMemberChild];
+        }else{
+            [GlobalCommon hideMBHudTitleWithView:weakself.view];
+            [weakself showAlertWarmMessage:[response objectForKey:@"message"]];
+        }
+        
+    } failureBlock:^(NSError *error) {
+        [GlobalCommon hideMBHudTitleWithView:weakself.view];
+        [weakself showAlertWarmMessage:requestErrorMessage];
+    }];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
