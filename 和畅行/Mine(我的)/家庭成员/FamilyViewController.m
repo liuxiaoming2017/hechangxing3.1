@@ -181,14 +181,14 @@ NSString *isYiBao;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     NSString *nameStr = [self.dataArray[indexPath.row] objectForKey:@"name"];
-    if (![nameStr isKindOfClass:[NSNull class]]&&nameStr.length != 0&&nameStr!=nil) {
+    if (![GlobalCommon stringEqualNull:nameStr]) {
         cell.nameLabel.text = nameStr;
         if( nameStr.length > 26) {
             cell.nameLabel.text = [UserShareOnce shareOnce].wxName;
         }
     }else{
         NSString *name = [UserShareOnce shareOnce].name;
-        if (name!=nil&&name.length!=0&&[name isKindOfClass:[NSNull class]]){
+        if (![GlobalCommon stringEqualNull:name]){
             cell.nameLabel.text = name;
         }
         if( [[self.dataArray[indexPath.row] objectForKey:@"name"] length] > 26) {
@@ -227,9 +227,9 @@ NSString *isYiBao;
                 sex = @"女";
             }
         }
-    }else if ([[UserShareOnce shareOnce].gender isEqualToString:@"male"]) {
+    }else if ([[self.dataArray[indexPath.row] objectForKey:@"gender"] isEqualToString:@"male"]) {
         sex =@"男" ;
-    }else if([[UserShareOnce shareOnce].gender isEqualToString:@"female"]){
+    }else if([[self.dataArray[indexPath.row] objectForKey:@"gender"]isEqualToString:@"female"]){
         sex = @"女";
     }
     NSString *sexStr = [NSString string];
