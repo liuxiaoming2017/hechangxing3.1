@@ -217,6 +217,7 @@
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
     if ([MemberUserShance shareOnce].idNum){
         [paramDic setObject:[MemberUserShance shareOnce].idNum forKey:@"memberChildId"];
+        [paramDic setObject:@"1" forKey:@"isnew"];
     }else {
         return;
     }
@@ -227,9 +228,9 @@
         [weakSelf requestRemindNetWork];
         
         if([[response objectForKey:@"status"] integerValue] == 100){
-            NSInteger status = [[response objectForKey:@"data"] integerValue];
+            NSInteger status = [[[response objectForKey:@"data"] objectForKey:@"num"] integerValue];
             //status = arc4random() % 6 + 1;
-            [weakSelf.packgeView changePackgeTypeWithStatus:status];
+            [weakSelf.packgeView changePackgeTypeWithStatus:status withXingStr:[[response objectForKey:@"data"] objectForKey:@"name"]];
         }else{
             [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
         }

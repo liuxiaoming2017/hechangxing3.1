@@ -22,6 +22,7 @@
     [super viewDidLoad];
     
     //[self requestMemberInfo];
+    self.navTitleLabel.text = @"未激活卡片信息";
     /// 布局激活卡页面
     [self layoutAcitivaTionView];
     
@@ -46,10 +47,12 @@
     [imageV addSubview:carTitleLabel];
     
     
-    UITextView *contentTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, carTitleLabel.bottom ,imageV.width - 20, imageV.height - 65)];
     
     
-    contentTextView.text = self.model.card_no;
+    UITextView *contentTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, carTitleLabel.bottom ,imageV.width - 20, 25)];
+    
+    
+    contentTextView.text  = [NSString stringWithFormat:@"卡号：%@",_model.card_no];;
     
     contentTextView.font = [UIFont systemFontOfSize:15];
     [contentTextView setEditable:NO];
@@ -57,6 +60,35 @@
     contentTextView.backgroundColor = [UIColor clearColor];
     contentTextView.textColor = RGB(240, 240, 240);
     [imageV addSubview:contentTextView];
+    
+    
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    style.lineBreakMode = NSLineBreakByWordWrapping;
+    style.alignment = NSTextAlignmentLeft;
+    
+     NSString *descriptStr = _model.cardDescription;
+//    NSAttributedString *titleString = [[NSAttributedString alloc]initWithString:descriptStr attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15], NSParagraphStyleAttributeName:style}];
+//
+//    NSDictionary *dict = @{NSFontAttributeName:[UIFont systemFontOfSize:15]};
+//    CGRect rect = [titleString boundingRectWithSize:CGSizeMake(contentTextView.width, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil];
+
+    CGFloat textHeight = [Tools textHeightFromTextString:descriptStr width:contentTextView.width fontSize:15];
+    textHeight = ceil(textHeight) + 1;
+    if(textHeight>350){
+        textHeight = 350;
+    }
+    UILabel * descriptLabel = [[UILabel alloc] initWithFrame: CGRectMake(contentTextView.left, contentTextView.bottom+5, contentTextView.width, textHeight)];
+    //NSLog(@"hhh:%@",NSStringFromCGRect(descriptLabel.frame));
+    descriptLabel.backgroundColor = [UIColor clearColor];
+    descriptLabel.textColor = [UIColor whiteColor];
+    descriptLabel.textAlignment = NSTextAlignmentLeft;
+    descriptLabel.text = descriptStr;
+    descriptLabel.numberOfLines = 0;
+    imageV.height = contentTextView.bottom+5+textHeight+15;
+    [imageV addSubview:descriptLabel];
+    
+    
+    
     
     UIButton *activationBT = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - 75, imageV.bottom + 30, 150, 50) target:self sel:@selector(activationAction) tag:11111 image:nil title:@"激活"];
     [activationBT setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
@@ -219,6 +251,8 @@
     //NSLog(@"234214324%@",status);
     if ([status intValue]== 100) {
         [self.navigationController popViewControllerAnimated:YES];
+        [UserShareOnce shareOnce].uuid = [dic objectForKey:@"uuid"];
+        [UserShareOnce shareOnce].userToken = [dic objectForKey:@"userToken"];
         [GlobalCommon showMessage:@"服务卡激活成功" duration:1.0];
     }else{
         [self showAlertWarmMessage:[dic objectForKey:@"message"]];

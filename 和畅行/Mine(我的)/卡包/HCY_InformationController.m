@@ -28,7 +28,7 @@
 
 -(void)layoutView {
     
-    self.navigationItem.title = @"添加新卡";
+    //self.navigationItem.title = @"添加新卡";
     
     UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 130)];
     //添加渐变色

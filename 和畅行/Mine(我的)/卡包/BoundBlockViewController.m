@@ -33,7 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navTitleLabel.text = @"我的卡包";
+    self.navTitleLabel.text = @"添加至卡包";
     self.view.backgroundColor = [UIColor whiteColor];
   
     

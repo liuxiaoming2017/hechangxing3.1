@@ -48,11 +48,11 @@
     
     registrationTF.leftViewMode = UITextFieldViewModeAlways;  //左边距为15pix
     registrationTF.leftView = leftview1;
-    
+    registrationTF.tag = 111;
     registrationTF.delegate=self;
     registrationTF.placeholder=@"请输入您的手机号";
     registrationTF.returnKeyType=UIReturnKeyNext;
-    registrationTF.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
+    registrationTF.keyboardType=UIKeyboardTypeNumberPad;
     self.RepInputphoneTF=registrationTF;
     [self.view addSubview:self.RepInputphoneTF];
     
@@ -82,6 +82,7 @@
     
     Regist_Sec_TF.delegate=self;
     Regist_Sec_TF.secureTextEntry=YES;
+    Regist_Sec_TF.tag = 112;
     Regist_Sec_TF.placeholder=@"请输入您的新密码";
     self.TtempInputsecTF=Regist_Sec_TF;
     [self.view addSubview:Regist_Sec_TF];
@@ -116,6 +117,7 @@
     
     sureSecTF.secureTextEntry=YES;
     sureSecTF.returnKeyType=UIReturnKeyNext;
+    sureSecTF.tag = 113;
     sureSecTF.placeholder=@"请确认您的新密码";
     self.NewInputSecTF=sureSecTF;
     [self.view addSubview:sureSecTF];
@@ -149,7 +151,9 @@
     YZMTF.font=[UIFont systemFontOfSize:14];
     YZMTF.delegate=self;
     YZMTF.placeholder=@"请输入手机验证码";
+    YZMTF.tag = 114;
     YZMTF.returnKeyType=UIReturnKeyDone;
+    YZMTF.keyboardType=UIKeyboardTypeNumberPad;
     self.pYzmTF=YZMTF;
     [self.view addSubview:YZMTF];
     
@@ -176,7 +180,7 @@
     [findpsButton addTarget:self action:@selector(userfindpasswordButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:findpsButton];
     ptCenter= self.view.center;
-    pageNo=300;
+    pageNo=60;
     STtimeer=60;
 }
 
@@ -200,7 +204,7 @@
     NSString *iPoneNumber = [NSString stringWithFormat:@"%@",self.RepInputphoneTF.text];
     NSString *iPoneNumberMds = [GlobalCommon md5:iPoneNumber];
     
-    
+    [GlobalCommon showMBHudTitleWithView:self.view];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request setPostValue:self.RepInputphoneTF.text forKey:@"username"];
     [request setPostValue:timeSp forKey:@"time"];
@@ -265,12 +269,13 @@
 
 - (void)requestYZMError:(ASIHTTPRequest *)request
 {
+    [GlobalCommon hideMBHudTitleWithView:self.view];
    [self showAlertWarmMessage:@"短信验证码发送失败，请重试"];
     return;
 }
 - (void)requestYZMCompleted:(ASIHTTPRequest *)request
 {
- 
+    [GlobalCommon hideMBHudTitleWithView:self.view];
     NSString* reqstr=[request responseString];
     NSDictionary * dic=[reqstr JSONValue];
     NSLog(@"dic==%@",dic);
@@ -279,7 +284,7 @@
     {
         if ([status intValue]==100) {
             
-            LPPopup *popup = [LPPopup popupWithText:@"请在300秒内输入验证码"];
+            LPPopup *popup = [LPPopup popupWithText:@"请在60秒内输入验证码"];
             CGPoint point=self.view.center;
             point.y=point.y+130;
             [popup showInView:self.view
@@ -320,13 +325,13 @@
     if (pageNo==0)
     {
         [timer invalidate];
-        pageNo=300;
+        pageNo=60;
         YZMbtn.titleLabel.font=[UIFont systemFontOfSize:13];
         [YZMbtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         return;
     }
-    YZMbtn.titleLabel.font=[UIFont systemFontOfSize:7];
-    [YZMbtn setTitle:[NSString stringWithFormat:@"请在%i秒内输入验证码",pageNo--] forState:UIControlStateNormal];
+    YZMbtn.titleLabel.font=[UIFont systemFontOfSize:10];
+    [YZMbtn setTitle:[NSString stringWithFormat:@"%is后重新发送",pageNo--] forState:UIControlStateNormal];
 }
 
 # pragma mark - 提交按钮
@@ -391,7 +396,12 @@
     }];
 }
 
-
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    for(NSInteger i=111;i<115;i++){
+        UITextField *field = (UITextField *)[self.view viewWithTag:i];
+        [field resignFirstResponder];
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

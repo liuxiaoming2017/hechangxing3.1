@@ -28,7 +28,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
+    self.navTitleLabel.text = @"我的卡包";
     [self getDatawithpageInteger:self.pageInteger];
+    
     [self layoutView];
 }
 
