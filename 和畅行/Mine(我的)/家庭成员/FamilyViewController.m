@@ -179,15 +179,15 @@ NSString *isYiBao;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     FamilyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CELL" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if ([[self.dataArray[indexPath.row] objectForKey:@"name"] isKindOfClass:[NSNull class]]) {
-        cell.nameLabel.text = @"未知";
+    
+    NSString *nameStr = [self.dataArray[indexPath.row] objectForKey:@"name"];
+    if (![nameStr isKindOfClass:[NSNull class]]&&nameStr.length != 0&&nameStr!=nil) {
+        cell.nameLabel.text = nameStr;
     }else{
-        if ([[self.dataArray[indexPath.row] objectForKey:@"name"]isEqualToString:[UserShareOnce shareOnce].username]) {
-            cell.nameLabel.text = [[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]]? [UserShareOnce shareOnce].username:[UserShareOnce shareOnce].name;
-        }else{
-            cell.nameLabel.text = [self.dataArray[indexPath.row] objectForKey:@"name"];
+        NSString *name = [UserShareOnce shareOnce].name;
+        if (name!=nil&&name.length!=0&&[name isKindOfClass:[NSNull class]]){
+            cell.nameLabel.text = name;
         }
-        
         if( [[self.dataArray[indexPath.row] objectForKey:@"name"] length] > 26) {
             cell.nameLabel.text = [UserShareOnce shareOnce].wxName;
         }
@@ -198,8 +198,9 @@ NSString *isYiBao;
     
     NSString *birthdayStr =  [self.dataArray[indexPath.row]objectForKey:@"birthday"];
     NSString *birthday =   [UserShareOnce shareOnce].birthday;
-    if ( [GlobalCommon stringEqualNull:birthdayStr]) {
-        if ([GlobalCommon stringEqualNull:birthday]) {
+    
+    if ( birthdayStr==nil||[birthdayStr isKindOfClass:[NSNull class]]||birthday.length == 0) {
+        if (birthday ==nil||[birthday isKindOfClass:[NSNull class]]||birthday.length == 0) {
             age = 1111;
         }else{
             
@@ -229,7 +230,7 @@ NSString *isYiBao;
         }
         NSString *sexStr = [NSString string];
         if (age == 1111){
-            sexStr = [NSString stringWithFormat:@"(未知)"];
+            sexStr = [NSString stringWithFormat:@"(%@ 未知)",sex];
         }else {
             sexStr = [NSString stringWithFormat:@"(%@%d岁)",sex,age];
         }

@@ -180,12 +180,13 @@
         CGRect fixframe = imageV.frame;
         subLayer.frame= fixframe;
         subLayer.cornerRadius=8;
-        subLayer.backgroundColor=[UIColorFromHex(0xc5c5c5) colorWithAlphaComponent:1.0].CGColor;
+        subLayer.backgroundColor=[UIColorFromHex(0xffffff) colorWithAlphaComponent:1.0].CGColor;
+        
         subLayer.masksToBounds=NO;
-        subLayer.shadowColor = UIColorFromHex(0xc5c5c5).CGColor;//shadowColor阴影颜色
-        subLayer.shadowOffset = CGSizeMake(2,5);//shadowOffset阴影偏移,x向右偏移3，y向下偏移2，默认(0, -3),这个跟shadowRadius配合使用
-        subLayer.shadowOpacity = 0.6;//阴影透明度，默认0
-        subLayer.shadowRadius = 8;//阴影半径，默认3
+        subLayer.shadowColor = [UIColor lightGrayColor].CGColor;//shadowColor阴影颜色
+        subLayer.shadowOffset = CGSizeMake(0,1);//shadowOffset阴影偏移,x向右偏移3，y向下偏移2，默认(0, -3),这个跟shadowRadius配合使用
+        subLayer.shadowOpacity = 0.4;//阴影透明度，默认0
+        subLayer.shadowRadius = 4;//阴影半径，默认3
         [self.layer insertSublayer:subLayer below:imageV.layer];
     }else{
         subLayer.frame = imageV.frame;

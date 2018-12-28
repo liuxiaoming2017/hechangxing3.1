@@ -92,7 +92,7 @@
     [self.view addSubview:imageV3];
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightBtn.frame = CGRectMake(imageV3.right-80, passWordBox.top, 80, passWordBox.height);
+    rightBtn.frame = CGRectMake(imageV3.right-120, passWordBox.top, 120, passWordBox.height);
     rightBtn.tag = 2018;
     [rightBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
     
@@ -323,7 +323,7 @@
         if (status!=nil)
         {
             if ([status intValue]==100) {
-                self->pageNo = 300;
+                self->pageNo = 60;
                 self->timer=[NSTimer scheduledTimerWithTimeInterval:1
                                                        target:self
                                                      selector:@selector(getResults)
@@ -359,14 +359,14 @@
     if (pageNo==0)
     {
         [timer invalidate];
-        pageNo=300;
+        pageNo=60;
         YZMbtn.titleLabel.font=[UIFont systemFontOfSize:14];
         [YZMbtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         return;
     }
     YZMbtn.titleLabel.font=[UIFont systemFontOfSize:14];
     //[YZMbtn setTitle:[NSString stringWithFormat:@"%i秒内重新发送",pageNo--] forState:UIControlStateNormal];
-    [YZMbtn setTitle:[NSString stringWithFormat:@"%is后发送",pageNo--] forState:UIControlStateNormal];
+    [YZMbtn setTitle:[NSString stringWithFormat:@"%is后重新发送",pageNo--] forState:UIControlStateNormal];
 }
 
 -(void) CheckActive:(id)sender
