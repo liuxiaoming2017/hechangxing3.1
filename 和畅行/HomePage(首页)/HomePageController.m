@@ -243,8 +243,6 @@
 - (void)requestRemindNetWork
 {
     
-   
-    
     NSString *urlStr = @"member/new_ins/tips.jhtml";
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
     [paramDic setObject:[MemberUserShance shareOnce].idNum forKey:@"memberChildId"];

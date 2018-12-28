@@ -426,6 +426,7 @@
            
             ResultSpeakController *vc = [[ResultSpeakController alloc] init];
             vc.urlStr = urlStr;
+            vc.titleStr = @"血压详情";
             vc.hidesBottomBarWhenPushed = YES;
             [[self viewController].navigationController pushViewController:vc animated:YES];
             
@@ -440,6 +441,7 @@
 
             ResultSpeakController *vc = [[ResultSpeakController alloc] init];
             vc.urlStr = urlStr;
+            vc.titleStr = @"血氧详情";
             vc.hidesBottomBarWhenPushed = YES;
             [[self viewController].navigationController pushViewController:vc animated:YES];
             
@@ -454,6 +456,7 @@
            
             ResultSpeakController *vc = [[ResultSpeakController alloc] init];
             vc.urlStr = urlStr;
+            vc.titleStr = @"体温详情";
             vc.hidesBottomBarWhenPushed = YES;
             [[self viewController].navigationController pushViewController:vc animated:YES];
         }

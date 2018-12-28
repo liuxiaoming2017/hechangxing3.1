@@ -140,7 +140,7 @@
            
             NSArray *dataArray = [response valueForKey:@"attr_data"];
             
-            if (dataArray.count == 0){
+            if ([dataArray isKindOfClass:[NSNull class]] || dataArray.count == 0){
                 self.nullLabel.hidden = NO;
                 self.tableView.hidden = YES;
                 return ;

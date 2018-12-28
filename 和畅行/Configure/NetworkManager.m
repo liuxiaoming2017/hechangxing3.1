@@ -173,6 +173,7 @@ static NSMutableArray *tasks;
         
         //为网络请求添加请求头
         NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+       
         for(NSString *key in headers.allKeys){
             [manager.requestSerializer setValue:[headers objectForKey:key] forHTTPHeaderField:key];
         }

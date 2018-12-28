@@ -192,7 +192,7 @@
 //    [_BaoGaosegment changeSegmentedControlWithIndex:index];
     
 }
-
+# pragma mark - 最新资讯
 - (void)hotArrayWithView{
     [self showHUD];
     NSString *UrlPre=URL_PRE;
@@ -201,8 +201,8 @@
     NSURL *url = [NSURL URLWithString:aUrlle];
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
-    //[request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",g_userInfo.token,g_userInfo.JSESSIONID]];
+    [request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
+    //[request healthArticleList.jhtml:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",g_userInfo.token,g_userInfo.JSESSIONID]];
     //[request setValue:@"50" forKey:@"count"];
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
@@ -261,7 +261,7 @@
     progress_ = nil;
     
 }
-
+# pragma mark - 养生之道
 - (void)healthArrayWithView:(NSString*)string{
     [self showHUD];
     NSString *UrlPre=URL_PRE;
@@ -272,7 +272,7 @@
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     //[request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",g_userInfo.token,g_userInfo.JSESSIONID]];
-    [request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
+    [request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];

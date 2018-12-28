@@ -38,7 +38,7 @@
     
     NSString *strRequest = [navigationAction.request.URL.absoluteString stringByRemovingPercentEncoding];
     //NSString *ganyuStr = [NSString stringWithFormat:@"%@hcy/member/action/ganyufangan",URL_PRE];
-    NSString *ganyuStr = [NSString stringWithFormat:@"%@member/action/fangan",URL_PRE];
+    NSString *ganyuStr = [NSString stringWithFormat:@"%@member/action/ganyufangan",URL_PRE];
     if([strRequest isEqualToString:ganyuStr]){
         decisionHandler(WKNavigationActionPolicyCancel);
         GanYuSchemeController *vc = [[GanYuSchemeController alloc] init];

@@ -86,7 +86,8 @@
 {
     __weak typeof(self) weakSelf = self;
     
-  NSString *aUrlle=@"/article/healthArticleList.jhtml?pageNumber=1";
+    NSString *aUrlle=@"/article/healthArticleList.jhtml?pageNumber=1";
+    //NSString *aUrlle=@"/article/healthArticleList.jhtml";
     
     [[NetworkManager sharedNetworkManager] requestWithType:BAHttpRequestTypeHeadGet urlString:aUrlle parameters:nil successBlock:^(id response) {
         
@@ -99,6 +100,13 @@
                 [weakSelf.recommendArr addObject:tipModel];
             }
             [weakSelf.collectionV reloadData];
+            
+//            for (NSDictionary *dic in [response valueForKey:@"data"] ) {
+//                HCY_ConsultingModel *tipModel = [[HCY_ConsultingModel alloc] init];
+//                [tipModel yy_modelSetWithJSON:dic];
+//                [weakSelf.recommendArr addObject:tipModel];
+//            }
+//            [weakSelf.collectionV reloadData];
         
         }
       
@@ -111,9 +119,11 @@
 
 }
 
+
 -(void)moreAction {
     
     InformationViewController *vc = [[InformationViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
     [[self viewController].navigationController pushViewController:vc animated:YES];
     
 }

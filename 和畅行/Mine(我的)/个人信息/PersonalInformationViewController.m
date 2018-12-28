@@ -165,8 +165,9 @@
     tableview.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     // tableview.separatorColor =[UIColor clearColor];
     tableview.backgroundColor=[UIColor clearColor];
-    //_PersonInfoTableView=tableview;
+    
     tableview.tableHeaderView = infoView;
+    //self.PersonInfoTableView=tableview;
     [self.view addSubview:tableview];
     
     UITapGestureRecognizer *tapSCR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapScreen:)];
@@ -227,9 +228,6 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
     [backView addGestureRecognizer:tap];
    
-    
-    
-
 }
 
 -(void)tapClick:(UITapGestureRecognizer *)tap{
@@ -616,7 +614,7 @@
         mobile_Tf.returnKeyType=UIReturnKeyNext;
         mobile_Tf.delegate=self;
         mobile_Tf.placeholder=@"填写手机号码";
-        mobile_Tf.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
+        mobile_Tf.keyboardType=UIKeyboardTypeNumberPad;
         [mobile_Tf setValue:[UtilityFunc colorWithHexString:@"#666666"] forKeyPath:@"_placeholderLabel.textColor"];
         [mobile_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
         if ([UserShareOnce shareOnce].phone!=nil || ![[UserShareOnce shareOnce].phone isKindOfClass:[NSNull class]]) {
@@ -986,6 +984,7 @@
         [UserShareOnce shareOnce].idNumber=Certificates_Number_Tf.text;
         //[UserShareOnce shareOnce].isMedicare=IsYiBao;
         [UserShareOnce shareOnce].memberImage=self.UrlHttpImg;
+        [UserShareOnce shareOnce].nation = nation_Tf.text;
         
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"personalInfoUpdateSuccess" object:nil];

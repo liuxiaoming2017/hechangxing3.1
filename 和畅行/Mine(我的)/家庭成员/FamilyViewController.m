@@ -321,7 +321,7 @@ NSString *isYiBao;
     [self hudWasHidden];
     //[SSWaitViewEx removeWaitViewFrom:self.view];
     
-    [self showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+    [self showAlertWarmMessage:requestErrorMessage];
     
 }
 
