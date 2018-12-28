@@ -254,9 +254,13 @@
     //NSLog(@"234214324%@",status);
     if ([status intValue]== 100) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"cardNameSuccess" object:nil];
+        NSDictionary *dataDic = [dic objectForKey:@"data"];
+        if(dataDic){
+            [UserShareOnce shareOnce].uuid = [dataDic objectForKey:@"uuid"];
+            //NSLog(@"hahah:%@",[UserShareOnce shareOnce].uuid);
+            [UserShareOnce shareOnce].userToken = [dataDic objectForKey:@"userToken"];
+        }
         [self.navigationController popViewControllerAnimated:YES];
-        [UserShareOnce shareOnce].uuid = [dic objectForKey:@"uuid"];
-        [UserShareOnce shareOnce].userToken = [dic objectForKey:@"userToken"];
         [GlobalCommon showMessage:@"服务卡激活成功" duration:1.0];
     }else{
         [self showAlertWarmMessage:[dic objectForKey:@"message"]];

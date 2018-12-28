@@ -18,7 +18,7 @@
 @property(nonatomic,strong) UIButton *toViewButton ;
 @property(nonatomic,strong) HCY_HomeImageModel *pushModel;
 
-- (void)changePackgeTypeWithStatus:(NSInteger)status;
+//- (void)changePackgeTypeWithStatus:(NSInteger)status;
 
 -(void)changeBackImageWithStr:(NSString *)str;
 
