@@ -70,18 +70,20 @@
     _titleLabel.textColor = UIColorFromHex(0x009ef3);
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     
-    
-   
-    if (![[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]] && [UserShareOnce shareOnce].name != nil) {
-        _titleLabel.text = [NSString stringWithFormat:@"欢迎：%@",[UserShareOnce shareOnce].name];
-    }else if (![[UserShareOnce shareOnce].username isKindOfClass:[NSNull class]] && [UserShareOnce shareOnce].username != nil){
-        _titleLabel.text = [NSString stringWithFormat:@"欢迎：%@",[UserShareOnce shareOnce].username];
+    if ([UserShareOnce shareOnce].name!=nil &&! [[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]]) {
+        _titleLabel.text =[NSString stringWithFormat:@"欢迎：%@", [UserShareOnce shareOnce].name];
+    }else if (![[MemberUserShance shareOnce].name isKindOfClass:[NSNull class]] && [MemberUserShance shareOnce].name != nil){
+        if ([[MemberUserShance shareOnce].name length] > 26) {
+            _titleLabel.text = [NSString stringWithFormat:@"欢迎: %@",[UserShareOnce shareOnce].wxName] ;
+        }else{
+            _titleLabel.text = [NSString stringWithFormat:@"欢迎：%@", [MemberUserShance shareOnce].name];
+        }
+    }else  if([UserShareOnce shareOnce].wxName&&[UserShareOnce shareOnce].wxName.length!=0&&![[UserShareOnce shareOnce].wxName isKindOfClass:[NSNull class]]){
+        _titleLabel.text = [NSString stringWithFormat:@"欢迎: %@",[UserShareOnce shareOnce].wxName] ;
     }else{
         _titleLabel.text = @"欢迎您";
     }
-    if([UserShareOnce shareOnce].wxName&&[UserShareOnce shareOnce].wxName.length!=0&&![[UserShareOnce shareOnce].wxName isKindOfClass:[NSNull class]]){
-        _titleLabel.text = [NSString stringWithFormat:@"欢迎: %@",[UserShareOnce shareOnce].wxName] ;
-    }
+
     [_showView addSubview:_titleLabel];
     
    
@@ -180,10 +182,9 @@
     [cell addSubview:ageLabel];
     
     NSString *sex = @"";
-
-    if([UserShareOnce shareOnce].gender == nil||[[UserShareOnce shareOnce].gender isKindOfClass:[NSNull class]]){
+    if(model.gender == nil||[model.gender isKindOfClass:[NSNull class]]){
         sex =@"—" ;
-    }else if ([[UserShareOnce shareOnce].gender isEqualToString:@"male"]){
+    }else if ([model.gender isEqualToString:@"male"]){
         sex = @"男";
     }else{
         sex = @"女";
@@ -192,7 +193,9 @@
 
     if ([model.birthday isKindOfClass:[NSNull class]] ||model.birthday == nil|| model.birthday.length ==0) {
         ageLabel.text =@"未知";
-    }else{
+    }else if ([model.birthday isEqualToString:@"请选择您的出生日期"]){
+        ageLabel.text =@"未知";
+    } else{
         NSString *str = [model.birthday substringToIndex:4];
         sesss = [str intValue];
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];

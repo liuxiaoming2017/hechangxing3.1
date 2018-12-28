@@ -121,15 +121,7 @@ static DownloadHandler *sharedDownloadhandler = nil;
     
         if ([self.btnDic objectForKey:fileName] !=nil) {
            
-            for (int i=0; i<[btn subviews].count; i++)
-            {
-                
-                UIView *view = (UIView *)[[btn subviews] objectAtIndex:i];
-                if([view isKindOfClass:[ProgressIndicator class]]){
-                    [view removeFromSuperview];
-                }
-                
-            }
+           
             
           //  [btn removeFromSuperview];
             

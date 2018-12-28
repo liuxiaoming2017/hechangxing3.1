@@ -129,7 +129,19 @@
     [imageView addSubview:userIcon];
     
     NSString *dispalyName = nil;
-    if ([[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]] || [UserShareOnce shareOnce].name == nil) {
+    
+    if ([UserShareOnce shareOnce].name!=nil &&! [[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]]) {
+        dispalyName =[NSString stringWithFormat:@"欢迎：%@", [UserShareOnce shareOnce].name];
+    }else if (![[MemberUserShance shareOnce].name isKindOfClass:[NSNull class]] && [MemberUserShance shareOnce].name != nil){
+        if ([[MemberUserShance shareOnce].name length] > 26) {
+            dispalyName = [NSString stringWithFormat:@"欢迎: %@",[UserShareOnce shareOnce].wxName] ;
+        }else{
+            dispalyName = [NSString stringWithFormat:@"欢迎：%@", [MemberUserShance shareOnce].name];
+        }
+    }else  if([UserShareOnce shareOnce].wxName&&[UserShareOnce shareOnce].wxName.length!=0&&![[UserShareOnce shareOnce].wxName isKindOfClass:[NSNull class]]){
+        dispalyName = [NSString stringWithFormat:@"欢迎: %@",[UserShareOnce shareOnce].wxName] ;
+    }
+    if (![[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]] || [UserShareOnce shareOnce].name != nil) {
         dispalyName = [UserShareOnce shareOnce].username;
     }else{
         dispalyName = [UserShareOnce shareOnce].name;
@@ -146,6 +158,9 @@
     NSArray *member = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberChirldArr"];
     for (NSData *data in member) {
         ChildMemberModel *model = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        if (model.name.length > 26) {
+            model.name = [UserShareOnce shareOnce].wxName;
+        }
         [memberStr appendFormat:@",%@",model.name];
     }
     [memberStr deleteCharactersInRange:NSMakeRange(0, 1)];

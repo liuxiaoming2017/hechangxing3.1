@@ -434,6 +434,7 @@
     [GlobalCommon showMessage:[NSString stringWithFormat:@"%@下载完成",model.title] duration:2];
     SongListCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     [cell downloadSuccess];
+    
     //[cell.downloadBtn setImage:[UIImage imageNamed:@"New_yy_zt_zt"] forState:UIControlStateNormal];
 }
 
