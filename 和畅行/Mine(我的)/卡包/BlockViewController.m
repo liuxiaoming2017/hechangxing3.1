@@ -23,15 +23,24 @@
 
 @implementation BlockViewController
 
-
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"cardNameSuccess" object:nil];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
     self.navTitleLabel.text = @"我的卡包";
+    [[NSNotificationCenter defaultCenter] addObserver :self selector:@selector(cardNameSuccess) name:@"cardNameSuccess" object:nil];
     [self getDatawithpageInteger:self.pageInteger];
     
     [self layoutView];
+}
+
+- (void)cardNameSuccess
+{
+    [self getDatawithpageInteger:self.pageInteger];
 }
 
 -(void)viewWillAppear:(BOOL)animated {

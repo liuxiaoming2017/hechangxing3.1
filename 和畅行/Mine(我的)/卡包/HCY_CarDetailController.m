@@ -34,7 +34,7 @@
 
 -(void)layoutCarDetailView {
     
-    
+    self.navTitleLabel.text = @"消费记录";
     UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 240)];
     [imageV.layer addSublayer:[UIColor setGradualChangingColor:imageV fromColor:@"4294E1" toColor:@"D1BDFF"]];
     imageV.layer.cornerRadius = 10;

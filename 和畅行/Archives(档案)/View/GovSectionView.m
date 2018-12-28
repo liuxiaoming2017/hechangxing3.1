@@ -38,7 +38,7 @@
         bottomColor = @"F3D285";
         quarterStr = @"第三季度阶段报告";
         timeStr = [NSString stringWithFormat:@"%@.07.01-%@.09.30",model.year,model.year];
-    }else if (quarter==3){
+    }else if (quarter==4){
         topColor = @"6673EE";
         bottomColor = @"FCA6D1";
         quarterStr = @"第四季度阶段报告";

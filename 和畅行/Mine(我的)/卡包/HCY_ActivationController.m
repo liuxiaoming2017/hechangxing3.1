@@ -55,6 +55,7 @@
     contentTextView.text  = [NSString stringWithFormat:@"卡号：%@",_model.card_no];;
     
     contentTextView.font = [UIFont systemFontOfSize:15];
+    contentTextView.textAlignment = NSTextAlignmentLeft;
     [contentTextView setEditable:NO];
 
     contentTextView.backgroundColor = [UIColor clearColor];
@@ -66,13 +67,14 @@
     style.lineBreakMode = NSLineBreakByWordWrapping;
     style.alignment = NSTextAlignmentLeft;
     
-     NSString *descriptStr = _model.cardDescription;
-//    NSAttributedString *titleString = [[NSAttributedString alloc]initWithString:descriptStr attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15], NSParagraphStyleAttributeName:style}];
-//
-//    NSDictionary *dict = @{NSFontAttributeName:[UIFont systemFontOfSize:15]};
-//    CGRect rect = [titleString boundingRectWithSize:CGSizeMake(contentTextView.width, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil];
+    NSString *descriptStr = _model.cardDescription;
+    
+    NSAttributedString *titleString = [[NSAttributedString alloc]initWithString:descriptStr attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15], NSParagraphStyleAttributeName:style}];
+    CGSize rectSize = [titleString boundingRectWithSize:CGSizeMake(contentTextView.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
 
-    CGFloat textHeight = [Tools textHeightFromTextString:descriptStr width:contentTextView.width fontSize:15];
+    //CGFloat textHeight = [Tools textHeightFromTextString:descriptStr width:contentTextView.width fontSize:15];
+    
+    CGFloat textHeight = rectSize.height;
     textHeight = ceil(textHeight) + 1;
     if(textHeight>350){
         textHeight = 350;
@@ -82,6 +84,7 @@
     descriptLabel.backgroundColor = [UIColor clearColor];
     descriptLabel.textColor = [UIColor whiteColor];
     descriptLabel.textAlignment = NSTextAlignmentLeft;
+    descriptLabel.font = [UIFont systemFontOfSize:15.0];
     descriptLabel.text = descriptStr;
     descriptLabel.numberOfLines = 0;
     imageV.height = contentTextView.bottom+5+textHeight+15;
@@ -250,6 +253,7 @@
     id status=[dic objectForKey:@"status"];
     //NSLog(@"234214324%@",status);
     if ([status intValue]== 100) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"cardNameSuccess" object:nil];
         [self.navigationController popViewControllerAnimated:YES];
         [UserShareOnce shareOnce].uuid = [dic objectForKey:@"uuid"];
         [UserShareOnce shareOnce].userToken = [dic objectForKey:@"userToken"];
