@@ -11,7 +11,7 @@
 @implementation FamilyTableViewCell
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 70, 15)];
+        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 80, 15)];
         _nameLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
         _nameLabel.font = [UIFont systemFontOfSize:12];
         [self addSubview:_nameLabel];

@@ -88,7 +88,7 @@
     
   NSString *aUrlle=@"/article/healthArticleList.jhtml?pageNumber=1";
     
-    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:aUrlle parameters:nil successBlock:^(id response) {
+    [[NetworkManager sharedNetworkManager] requestWithType:BAHttpRequestTypeHeadGet urlString:aUrlle parameters:nil successBlock:^(id response) {
         
         NSLog(@"%@",response);
         if ([response[@"status"] integerValue] == 100){
