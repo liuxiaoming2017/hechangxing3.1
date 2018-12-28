@@ -240,7 +240,13 @@ SonAccount *sonAccount;
     tableview.backgroundColor=[UIColor clearColor];
     _PersonInfoTableView=tableview;
     [self.view addSubview:tableview];
-  
+    
+    UITapGestureRecognizer *tableViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewTouchInSide)];
+    tableViewGesture.numberOfTapsRequired = 1;//几个手指点击
+    tableViewGesture.cancelsTouchesInView = NO;//是否取消点击处的其他action
+    [_PersonInfoTableView addGestureRecognizer:tableViewGesture];
+    
+
     PersionInfoArray=[NSMutableArray new];
     [PersionInfoArray addObject:@"称呼："];
     //    [PersionInfoArray addObject:@"用户名"];
@@ -256,6 +262,13 @@ SonAccount *sonAccount;
     [self.view addSubview:commitBtn];
     [self.view bringSubviewToFront:commitBtn];
     
+}
+
+// ------tableView 上添加的自定义手势
+- (void)tableViewTouchInSide{
+    [self.view endEditing:YES];
+    [self restoreView];
+    [_pickview remove];
 }
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -304,7 +317,14 @@ SonAccount *sonAccount;
         
         Yh_TF=[[UITextField alloc] init];
         Yh_TF.frame=CGRectMake(YhLb.frame.origin.x+YhLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-YhLb.frame.origin.x-YhLb.frame.size.width-5-20.5, 21);
-        Yh_TF.text = [self.dataDictionary objectForKey:@"name"];
+        
+        if ([[self.dataDictionary objectForKey:@"name"]isEqualToString:[UserShareOnce shareOnce].username]) {
+            Yh_TF.text= [[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]]? [UserShareOnce shareOnce].username:[UserShareOnce shareOnce].name;
+        }else if ([[self.dataDictionary objectForKey:@"name"] length] > 26){
+            Yh_TF.text = [UserShareOnce shareOnce].wxName;
+        }else{
+            Yh_TF.text = [self.dataDictionary objectForKey:@"name"];
+        }
         Yh_TF.textAlignment = NSTextAlignmentRight;
         [Yh_TF setValue:[UtilityFunc colorWithHexString:@"#333333"] forKeyPath:@"_placeholderLabel.textColor"];
         [Yh_TF setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];

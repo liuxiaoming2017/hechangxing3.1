@@ -196,20 +196,28 @@ NSString *isYiBao;
     int sesss = 0;
     int age  = 0;
     
-    if ( [[self.dataArray[indexPath.row]objectForKey:@"birthday"] isEqual:[NSNull null]]) {
-        if ([[UserShareOnce shareOnce].birthday isEqual:[NSNull null]]) {
-            age = 0;
+    NSString *birthdayStr =  [self.dataArray[indexPath.row]objectForKey:@"birthday"];
+    NSString *birthday =   [UserShareOnce shareOnce].birthday;
+    if ( birthdayStr==nil||[birthdayStr isKindOfClass:[NSNull class]]) {
+        if (birthday ==nil||[birthday isKindOfClass:[NSNull class]]) {
+            age = 1111;
         }else{
-            NSString *str = [[UserShareOnce shareOnce].birthday substringToIndex:4];
-            sesss = [str intValue];
-            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-            NSDate *now;
-            NSDateComponents *comps = [[NSDateComponents alloc] init];
-            NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |
-            NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-            now=[NSDate date];
-            comps = [calendar components:unitFlags fromDate:now];
-            age = (int)[comps year] - sesss;
+            
+            if ([birthday isEqualToString:@"请选择您的出生日期"]){
+                 age = 1111;
+            }else {
+                
+                NSString *str = [[UserShareOnce shareOnce].birthday substringToIndex:4];
+                sesss = [str intValue];
+                NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+                NSDate *now;
+                NSDateComponents *comps = [[NSDateComponents alloc] init];
+                NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |
+                NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+                now=[NSDate date];
+                comps = [calendar components:unitFlags fromDate:now];
+                age = (int)[comps year] - sesss;
+            }
         }
         NSString *sex = @"";
         if ([[UserShareOnce shareOnce].gender isEqual:[NSNull null]]) {
@@ -219,8 +227,12 @@ NSString *isYiBao;
         }else if([[UserShareOnce shareOnce].gender isEqualToString:@"femal"]){
             sex = @"女";
         }
-        
-        NSString *sexStr = [NSString stringWithFormat:@"(%@%d岁)",sex,age];
+        NSString *sexStr = [NSString string];
+        if (age == 1111){
+            sexStr = [NSString stringWithFormat:@"(%@ 未知)",sex];
+        }else {
+            sexStr = [NSString stringWithFormat:@"(%@%d岁)",sex,age];
+        }
         
         cell.sexLabel.text = sexStr;
         
@@ -234,17 +246,28 @@ NSString *isYiBao;
             sex = @"女";
         }
         
-        NSString *str = [[self.dataArray[indexPath.row] objectForKey:@"birthday"] substringToIndex:4];
-        sesss = [str intValue];
-        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-        NSDate *now;
-        NSDateComponents *comps = [[NSDateComponents alloc] init];
-        NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |
-        NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-        now=[NSDate date];
-        comps = [calendar components:unitFlags fromDate:now];
-        age = (int)[comps year] - sesss;
-        NSString *sexStr = [NSString stringWithFormat:@"(%@%d岁)",sex,age];
+        if ([birthdayStr isEqualToString:@"请选择您的出生日期"]) {
+            age = 1111;
+        }else{
+            NSString *str = [[self.dataArray[indexPath.row] objectForKey:@"birthday"] substringToIndex:4];
+            sesss = [str intValue];
+            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+            NSDate *now;
+            NSDateComponents *comps = [[NSDateComponents alloc] init];
+            NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |
+            NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+            now=[NSDate date];
+            comps = [calendar components:unitFlags fromDate:now];
+            age = (int)[comps year] - sesss;
+        }
+            
+        NSString *sexStr = [NSString string];
+        if (age == 1111){
+            sexStr = [NSString stringWithFormat:@"(%@ 未知)",sex];
+        }else {
+            sexStr = [NSString stringWithFormat:@"(%@%d岁)",sex,age];
+        }
+       
         cell.sexLabel.text = sexStr;
         
     }
@@ -359,6 +382,9 @@ NSString *isYiBao;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    if (indexPath.row == 0) {
+        return;
+    }
     AlterViewController *alterVC = [[AlterViewController alloc]init];
     alterVC.dataDictionary = self.dataArray[indexPath.row];
     [self.navigationController pushViewController:alterVC animated:YES];

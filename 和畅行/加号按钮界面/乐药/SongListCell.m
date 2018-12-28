@@ -7,7 +7,7 @@
 //
 
 #import "SongListCell.h"
-
+#import "ProgressIndicator.h"
 @implementation SongListCell
 
 - (void)awakeFromNib {
@@ -55,6 +55,12 @@
 - (void)downloadSuccess
 {
     [self.downloadBtn setImage:[UIImage imageNamed:@"New_yy_zt_zt"] forState:UIControlStateNormal];
+    
+    [self.downloadBtn.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if([obj isKindOfClass:[ProgressIndicator class]]){
+            [obj removeFromSuperview];
+        }
+    }];
     self.PlayOrdownload = YES;
 }
 
