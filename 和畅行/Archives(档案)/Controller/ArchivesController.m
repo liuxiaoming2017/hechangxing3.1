@@ -304,7 +304,7 @@
             break;
             
         case 10:   str = [NSString stringWithFormat:
-                          @"/member/service/reportslist.jhtml?memberChildId=%@",@"24"];
+                          @"/member/service/reportslist.jhtml?memberChildId=%@",memberId];
             break;
             
         case 11:   [self getCasesList];

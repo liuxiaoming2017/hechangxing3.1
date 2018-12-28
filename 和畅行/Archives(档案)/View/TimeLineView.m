@@ -58,11 +58,13 @@
 -(void)relodTableViewWitDataArray:(NSMutableArray *)dataArray withType:(NSInteger)type {
     self.typeInteger = type;
    
-    if (dataArray.count > 0){
-        HealthTipsModel *model = dataArray[0];
-        if (model.quarter != nil && ![model.quarter isKindOfClass:[NSNull class]]&&model.quarter.length != 0) {
-            self.topModel = model;
-            [dataArray removeObjectAtIndex:0];
+    if (self.typeInteger == 0){
+        if (dataArray.count > 0){
+            HealthTipsModel *model = dataArray[0];
+            if (model.quarter != nil && ![model.quarter isKindOfClass:[NSNull class]]&&model.quarter.length != 0) {
+                self.topModel = model;
+                [dataArray removeObjectAtIndex:0];
+            }
         }
     }
     
