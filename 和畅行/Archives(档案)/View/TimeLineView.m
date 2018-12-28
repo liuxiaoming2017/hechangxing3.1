@@ -360,6 +360,8 @@
     NSString *url = [[NSString alloc] initWithFormat:@"%@/member/service/reports.jhtml?memberChildId=%@&quarter=%@&year=%@",URL_PRE,idNim,model.quarter,model.year];
     ResultSpeakController *vc = [[ResultSpeakController alloc] init];
     vc.urlStr = url;
+    vc.titleStr = @"季度报告详情";
+    vc.hidesBottomBarWhenPushed = YES;
     [[self viewController].navigationController pushViewController:vc animated:YES];
 
     
@@ -378,6 +380,7 @@
         
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = aUrlle;
+        vc.titleStr = @"健康档案";
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
         
@@ -385,6 +388,7 @@
         
         ResultController *resultVC = [[ResultController alloc] init];
         resultVC.TZBSstr = [model.subject valueForKey:@"subject_sn"];
+        //resultVC.titleStr = @"健康档案";
         resultVC.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:resultVC animated:YES];
         
@@ -398,6 +402,7 @@
             NSString *url = [[NSString alloc] initWithFormat:@"%@member/service/zf_report.jhtml?cust_id=%@&physique_id=%@&device=1",URL_PRE,idNim,model.physique_id];
             ResultSpeakController *vc = [[ResultSpeakController alloc] init];
             vc.urlStr = url;
+            vc.titleStr = @"健康档案";
             vc.hidesBottomBarWhenPushed = YES;
             [[self viewController].navigationController pushViewController:vc animated:YES];
         }
@@ -462,7 +467,7 @@
         NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:[UserShareOnce shareOnce].userToken medicId:model.medicRecordId];
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = resultStr;
-        vc.titleStr = @"病例详情";
+        vc.titleStr = @"病历详情";
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
         
@@ -478,6 +483,7 @@
         NSString *url = [[NSString alloc] initWithFormat:@"%@/member/service/reports.jhtml?memberChildId=%@&quarter=%@&year=%@",URL_PRE,idNim,model.quarter,model.year];
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = url;
+        vc.titleStr = @"季度报告详情";
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
         

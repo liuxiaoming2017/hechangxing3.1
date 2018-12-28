@@ -30,15 +30,32 @@
 
 -(void)layoutAcitivaTionView{
     
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10,kNavBarHeight + 20 ,ScreenWidth - 20, ScreenHeight -  kNavBarHeight - 200)];
-    imageV.userInteractionEnabled = YES;
+    CGFloat imageWidth = ScreenWidth - 20;
+    
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    style.lineBreakMode = NSLineBreakByWordWrapping;
+    style.alignment = NSTextAlignmentLeft;
+    
+    NSString *descriptStr = _model.cardDescription;
+    
+    NSAttributedString *titleString = [[NSAttributedString alloc]initWithString:descriptStr attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15], NSParagraphStyleAttributeName:style}];
+    CGSize rectSize = [titleString boundingRectWithSize:CGSizeMake(imageWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
+    
+    CGFloat textHeight = rectSize.height;
+    textHeight = ceil(textHeight) + 1;
+    if(textHeight>350){
+        textHeight = 350;
+    }
+    
     //添加渐变色
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10,kNavBarHeight + 20 ,ScreenWidth - 20, 80+5+textHeight+15)];
+    imageV.userInteractionEnabled = YES;
     [imageV.layer addSublayer:[UIColor setGradualChangingColor:imageV fromColor:@"4294E1" toColor:@"D1BDFF"]];
     imageV.layer.cornerRadius = 10;
     imageV.layer.masksToBounds = YES;
     [self.view addSubview:imageV];
     
-    UILabel *carTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0 , 10, imageV.width, 45)];
+    UILabel *carTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0 , 10, imageWidth, 45)];
     carTitleLabel.text = _model.card_name;
     carTitleLabel.backgroundColor = [UIColor clearColor];
     carTitleLabel.textColor = [UIColor whiteColor];
@@ -48,8 +65,7 @@
     
     
     
-    
-    UITextView *contentTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, carTitleLabel.bottom ,imageV.width - 20, 25)];
+    UITextView *contentTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, carTitleLabel.bottom ,imageWidth - 20, 25)];
     
     
     contentTextView.text  = [NSString stringWithFormat:@"卡号：%@",_model.card_no];;
@@ -63,32 +79,17 @@
     [imageV addSubview:contentTextView];
     
     
-    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    style.lineBreakMode = NSLineBreakByWordWrapping;
-    style.alignment = NSTextAlignmentLeft;
-    
-    NSString *descriptStr = _model.cardDescription;
-    
-    NSAttributedString *titleString = [[NSAttributedString alloc]initWithString:descriptStr attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15], NSParagraphStyleAttributeName:style}];
-    CGSize rectSize = [titleString boundingRectWithSize:CGSizeMake(contentTextView.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
-
-    //CGFloat textHeight = [Tools textHeightFromTextString:descriptStr width:contentTextView.width fontSize:15];
-    
-    CGFloat textHeight = rectSize.height;
-    textHeight = ceil(textHeight) + 1;
-    if(textHeight>350){
-        textHeight = 350;
-    }
     UILabel * descriptLabel = [[UILabel alloc] initWithFrame: CGRectMake(contentTextView.left, contentTextView.bottom+5, contentTextView.width, textHeight)];
-    //NSLog(@"hhh:%@",NSStringFromCGRect(descriptLabel.frame));
     descriptLabel.backgroundColor = [UIColor clearColor];
     descriptLabel.textColor = [UIColor whiteColor];
     descriptLabel.textAlignment = NSTextAlignmentLeft;
     descriptLabel.font = [UIFont systemFontOfSize:15.0];
     descriptLabel.text = descriptStr;
     descriptLabel.numberOfLines = 0;
-    imageV.height = contentTextView.bottom+5+textHeight+15;
+    //imageV.height = contentTextView.bottom+5+textHeight+15;
+    NSLog(@"contentTextView.bottom:%f",contentTextView.bottom);
     [imageV addSubview:descriptLabel];
+    
     
     
     
