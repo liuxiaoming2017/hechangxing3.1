@@ -69,8 +69,23 @@
     _titleLabel.font = [UIFont systemFontOfSize:15];
     _titleLabel.textColor = UIColorFromHex(0x009ef3);
     _titleLabel.textAlignment = NSTextAlignmentCenter;
-    if ([UserShareOnce shareOnce].name!=nil &&! [[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]]) {
+    //[GlobalCommon stringEqualNull:birthdayStr]
+    if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].name]){
         _titleLabel.text =[NSString stringWithFormat:@"欢迎：%@", [UserShareOnce shareOnce].name];
+
+    }else if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].username]){
+         _titleLabel.text =[NSString stringWithFormat:@"欢迎：%@", [UserShareOnce shareOnce].username];
+        if([[UserShareOnce shareOnce].username length] >26 ){
+            _titleLabel.text =[NSString stringWithFormat:@"欢迎：%@", [UserShareOnce shareOnce].wxName];
+        }
+    }else{
+        _titleLabel.text = [NSString stringWithFormat:@"欢迎：%@", [MemberUserShance shareOnce].name];
+        if ([[MemberUserShance shareOnce].name length] > 26) {
+            _titleLabel.text =[NSString stringWithFormat:@"欢迎：%@", [UserShareOnce shareOnce].wxName];
+        }
+    }
+    
+    if ([UserShareOnce shareOnce].name!=nil &&! [[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]]) {
     }else if (![[MemberUserShance shareOnce].name isKindOfClass:[NSNull class]] && [MemberUserShance shareOnce].name != nil){
         if ([[MemberUserShance shareOnce].name length] > 26) {
             _titleLabel.text = [NSString stringWithFormat:@"欢迎: %@",[UserShareOnce shareOnce].wxName] ;

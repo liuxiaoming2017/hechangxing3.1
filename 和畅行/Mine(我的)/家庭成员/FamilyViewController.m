@@ -199,13 +199,13 @@ NSString *isYiBao;
     NSString *birthdayStr =  [self.dataArray[indexPath.row]objectForKey:@"birthday"];
     NSString *birthday =   [UserShareOnce shareOnce].birthday;
     
-    if ( birthdayStr==nil||[birthdayStr isKindOfClass:[NSNull class]]||birthday.length == 0) {
-        if (birthday ==nil||[birthday isKindOfClass:[NSNull class]]||birthday.length == 0) {
+    if ( [GlobalCommon stringEqualNull:birthdayStr]) {
+        if ([GlobalCommon stringEqualNull:birthday]) {
             age = 1111;
         }else{
             
             if ([birthday isEqualToString:@"请选择您的出生日期"]){
-                 age = 1111;
+                age = 1111;
             }else {
                 
                 NSString *str = [[UserShareOnce shareOnce].birthday substringToIndex:4];
