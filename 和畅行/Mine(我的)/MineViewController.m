@@ -165,6 +165,31 @@
 #pragma mark - 点击全部订单、待付款、待评价
 -(void)MyBTnClick:(UIButton *)button{
     
+    NSString *urlStr =  @"";
+    NSString *titleStr = @"";
+    switch (button.tag - 666) {
+        case 0:
+            titleStr = @"全部订单";
+            urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=all",URL_PRE];
+            break;
+        case 1:
+            titleStr = @"待付款";
+            urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=unpaid",URL_PRE];
+            break;
+        case 2:
+            titleStr = @"待评价";
+            urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=completed",URL_PRE];
+            break;
+        default:
+            break;
+    }
+    EDWKWebViewController *vc = [[EDWKWebViewController alloc] initWithUrlString:urlStr];
+    vc.isCollect = YES;
+    vc.titleStr = titleStr;
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+    /*
     HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
     vc.noWebviewBack = YES;
     vc.progressType = progress2;
@@ -186,6 +211,7 @@
     }
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
+     */
 }
 
 #pragma mark  -------  UITableViewDelegate
@@ -424,6 +450,7 @@
             NSString *urlStr =  [NSString stringWithFormat:@"%@member/mobile/focus_ware/list.jhtml",URL_PRE];
             EDWKWebViewController *vc = [[EDWKWebViewController alloc] initWithUrlString:urlStr];
             vc.isCollect = YES;
+            vc.titleStr = @"收藏";
 //            HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
 //            vc.noWebviewBack = YES;
 //            vc.progressType = progress2;

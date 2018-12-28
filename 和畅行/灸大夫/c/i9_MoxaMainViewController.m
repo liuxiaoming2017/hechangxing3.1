@@ -1352,7 +1352,7 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
     
     NSString *jsonString = [self jsonStringWithArr:arr];
     
-    
+    /*
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
     [dic setObject:jsonString forKey:@"data"];
     [dic setObject:@"1234" forKey:@"qdbs"];
@@ -1363,6 +1363,34 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
     } failed:^(NSError *error) {
         
     }];
+     */
+    
+    NSString *aUrl = [NSString stringWithFormat:@"%@%@",URL_PRE,urlStr];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+    [request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
+    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    
+    [request setPostValue:jsonString forKey:@"data"];
+    [request setPostValue:@"1234" forKey:@"qdbs"];
+    [request setPostValue:[UserShareOnce shareOnce].username forKey:@"member"];
+    [request setTimeOutSeconds:20];
+    [request setRequestMethod:@"POST"];
+    [request setDelegate:self];
+    [request setDidFailSelector:@selector(requesstuserinfoError:)];
+    [request setDidFinishSelector:@selector(requesstCardCompleted:)];
+    [request startAsynchronous];
+}
+
+- (void)requesstuserinfoError:(ASIHTTPRequest *)request
+{
+    
+    
+}
+
+- (void)requesstCardCompleted:(ASIHTTPRequest *)request
+{
+    
 }
 
 - (NSString *)jsonStringWithArr:(NSArray *)arr

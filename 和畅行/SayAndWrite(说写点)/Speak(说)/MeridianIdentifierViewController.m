@@ -747,6 +747,9 @@
         self.filePath = nil;
         recordButton.selected = NO;
         
+        if([codeStr isEqualToString:@""]){
+            return ;
+        }
         
         NSString *aUrlle= [NSString stringWithFormat:@"%@/member/service/reshow.jhtml?sn=%@&device=1",URL_PRE,codeStr];
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];

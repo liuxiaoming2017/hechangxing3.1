@@ -197,9 +197,10 @@ NSString *isYiBao;
     int age  = 0;
     
     if ( [[self.dataArray[indexPath.row]objectForKey:@"birthday"] isEqual:[NSNull null]]) {
-        if ([[UserShareOnce shareOnce].birthday isEqual:[NSNull null]]) {
+        if ([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].birthday]) {
             age = 0;
         }else{
+            NSLog(@"hhh:%@",[UserShareOnce shareOnce].birthday);
             NSString *str = [[UserShareOnce shareOnce].birthday substringToIndex:4];
             sesss = [str intValue];
             NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
@@ -212,7 +213,7 @@ NSString *isYiBao;
             age = (int)[comps year] - sesss;
         }
         NSString *sex = @"";
-        if ([[UserShareOnce shareOnce].gender isEqual:[NSNull null]]) {
+        if ([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].gender]) {
             sex = @"未知";
         }else if ([[UserShareOnce shareOnce].gender isEqualToString:@"male"]) {
             sex =@"男" ;

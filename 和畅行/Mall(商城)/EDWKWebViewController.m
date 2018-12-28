@@ -69,7 +69,7 @@ typedef void(^EDLoadRequestAction)(void);
     if(self.isCollect){
         self.preBtn.hidden = NO;
         self.leftBtn.hidden = YES;
-        self.navTitleLabel.text = @"收藏";
+        self.navTitleLabel.text = self.titleStr;
     }else{
         self.preBtn.hidden = YES;
         self.leftBtn.hidden = NO;
