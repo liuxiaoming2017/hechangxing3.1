@@ -69,7 +69,6 @@
     _titleLabel.font = [UIFont systemFontOfSize:15];
     _titleLabel.textColor = UIColorFromHex(0x009ef3);
     _titleLabel.textAlignment = NSTextAlignmentCenter;
-    
     if ([UserShareOnce shareOnce].name!=nil &&! [[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]]) {
         _titleLabel.text =[NSString stringWithFormat:@"欢迎：%@", [UserShareOnce shareOnce].name];
     }else if (![[MemberUserShance shareOnce].name isKindOfClass:[NSNull class]] && [MemberUserShance shareOnce].name != nil){
@@ -182,7 +181,9 @@
     [cell addSubview:ageLabel];
     
     NSString *sex = @"";
-    if(model.gender == nil||[model.gender isKindOfClass:[NSNull class]]){
+    ;
+
+    if([GlobalCommon stringEqualNull:model.gender]){
         sex =@"—" ;
     }else if ([model.gender isEqualToString:@"male"]){
         sex = @"男";
