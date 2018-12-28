@@ -248,6 +248,7 @@
     NSString *urlStr = @"member/new_ins/tips.jhtml";
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
     [paramDic setObject:[MemberUserShance shareOnce].idNum forKey:@"memberChildId"];
+    
     __weak typeof(self) weakSelf = self;
     
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:paramDic successBlock:^(id response) {
