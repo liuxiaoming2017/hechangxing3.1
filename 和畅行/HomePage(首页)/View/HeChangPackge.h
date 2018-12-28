@@ -22,4 +22,5 @@
 
 -(void)changeBackImageWithStr:(NSString *)str;
 
+- (void)changePackgeTypeWithStatus:(NSInteger)status withXingStr:(NSString *)xingStr;
 @end

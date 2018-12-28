@@ -46,7 +46,7 @@
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 5+(imageHeight+30)*i, 200, 20)];
         titleLabel.font = [UIFont systemFontOfSize:15];
         titleLabel.textAlignment = NSTextAlignmentLeft;
-        titleLabel.textColor = UIColorFromHex(0X1E82D2);
+        titleLabel.textColor = [UIColor blackColor];
         titleLabel.text = [titleArr objectAtIndex:i];
         titleLabel.tag = 100+i;
         [scrollView addSubview:titleLabel];
@@ -57,7 +57,7 @@
     allBtn.frame = CGRectMake(ScreenWidth-60, 5, 50, 20);
     [allBtn setTitle:@"全部 >" forState:UIControlStateNormal];
     allBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-    [allBtn setTitleColor:UIColorFromHex(0X1E82D2) forState:UIControlStateNormal];
+    [allBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [allBtn addTarget:self action:@selector(allBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [scrollView addSubview:allBtn];
     

@@ -155,43 +155,59 @@
     
 }
 
-- (void)changePackgeTypeWithStatus:(NSInteger)status
+- (void)changePackgeTypeWithStatus:(NSInteger)status withXingStr:(NSString *)xingStr
 {
-    if(status == 7){
+    if(status >=0 && status <= 11){
+        
+    }else{
         [MemberUserShance shareOnce].isOpenPackge = NO;
         [self updateImageView];
         return;
     }
-    
+    NSString *bingTaiStr = @"";
     [MemberUserShance shareOnce].isOpenPackge = YES;
     switch (status) {
+        case 0:
+            bingTaiStr = @"未病态";
+            break;
         case 1:
-           // [self createShapeLayerWithColor:UIColorFromHex(0x61D179)];
-            [self joinStringWithstr1:@"健康" WithStr2:@"未病" withColor:UIColorFromHex(0x61D179)];
+            bingTaiStr = @"欲病态";
+           
             break;
         case 2:
-          //  [self createShapeLayerWithColor:UIColorFromHex(0xC5C5C5)];
-            [self joinStringWithstr1:@"轻度" WithStr2:@"欲病" withColor:UIColorFromHex(0xC5C5C5)];
+            bingTaiStr = @"欲病态";
             break;
         case 3:
-           // [self createShapeLayerWithColor:UIColorFromHex(0xED6363)];
-            [self joinStringWithstr1:@"重度" WithStr2:@"欲病" withColor:UIColorFromHex(0xED6363)];
+           bingTaiStr = @"中重度已病态";
             break;
         case 4:
-           // [self createShapeLayerWithColor:UIColorFromHex(0xC5C5C5)];
-            [self joinStringWithstr1:@"轻度" WithStr2:@"已病" withColor:UIColorFromHex(0xC5C5C5)];
+            bingTaiStr = @"高度已病态";
             break;
         case 5:
-           // [self createShapeLayerWithColor:UIColorFromHex(0xF68A3C)];
-            [self joinStringWithstr1:@"中度" WithStr2:@"已病" withColor:UIColorFromHex(0xF68A3C)];
+            bingTaiStr = @"轻度已病态";
             break;
         case 6:
-           // [self createShapeLayerWithColor:UIColorFromHex(0xED6363)];
-            [self joinStringWithstr1:@"重度" WithStr2:@"已病" withColor:UIColorFromHex(0xED6363)];
+            bingTaiStr = @"中度已病态";
+            break;
+        case 7:
+            bingTaiStr = @"中重度已病态";
+            break;
+        case 8:
+            bingTaiStr = @"高度已病态";
+            break;
+        case 9:
+            bingTaiStr = @"中度已病态";
+            break;
+        case 10:
+            bingTaiStr = @"中重度已病态";
+            break;
+        case 11:
+            bingTaiStr = @"高度已病态";
             break;
         default:
             break;
     }
+     [self showYiBingTianWithStr:bingTaiStr withStr:xingStr];
 }
 
 - (void)updateImageView
@@ -261,6 +277,18 @@
 //    }
     
     
+}
+
+- (void)showWeiBingTianWithStr:(NSString *)str2
+{
+    NSString *str = [NSString stringWithFormat:@"您当前处在%@",str2];
+    self.remindLabel.text = str;
+}
+
+- (void)showYiBingTianWithStr:(NSString *)str1 withStr:(NSString *)str2
+{
+    NSString *str = [NSString stringWithFormat:@"您属于%@的%@型，点击查看我们为您定制的和畅服务包",str1,str2];
+    self.remindLabel.text = str;
 }
 
 - (void)tapAction
