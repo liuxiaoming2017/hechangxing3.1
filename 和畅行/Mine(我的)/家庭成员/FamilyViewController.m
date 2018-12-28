@@ -220,7 +220,7 @@ NSString *isYiBao;
             }
         }
         NSString *sex = @"";
-        if ([[UserShareOnce shareOnce].gender isEqual:[NSNull null]]) {
+        if ([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].gender ]) {
             sex = @"未知";
         }else if ([[UserShareOnce shareOnce].gender isEqualToString:@"male"]) {
             sex =@"男" ;
@@ -238,7 +238,7 @@ NSString *isYiBao;
         
     }else{
         NSString *sex = @"";
-        if ([[self.dataArray[indexPath.row] objectForKey:@"gender"] isEqual:[NSNull null]]) {
+        if ([GlobalCommon stringEqualNull: [self.dataArray[indexPath.row] objectForKey:@"gender"]]) {
             sex =@"未知" ;
         }else if([[self.dataArray[indexPath.row] objectForKey:@"gender"] isEqualToString:@"male"]){
             sex = @"男";
@@ -272,7 +272,7 @@ NSString *isYiBao;
         
     }
     
-    if ([[self.dataArray[indexPath.row] objectForKey:@"mobile"]isEqual:[NSNull null]]) {
+    if ([GlobalCommon stringEqualNull:[self.dataArray[indexPath.row] objectForKey:@"mobile"]]) {
         cell.phoneLabel.text = @"无";
     }else{
         cell.phoneLabel.text = [self.dataArray[indexPath.row] objectForKey:@"mobile"];

@@ -106,7 +106,7 @@
     now=[NSDate date];
     comps = [calendar components:unitFlags fromDate:now];
     
-    if ([[[self.dataDic objectForKey:@"memberChild"]objectForKey:@"birthday"]isEqual:[NSNull null]]) {
+    if ([GlobalCommon stringEqualNull:[ [self.dataDic objectForKey:@"memberChild"]objectForKey:@"birthday"]]) {
         age = 0;
     }else{
         
