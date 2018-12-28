@@ -327,6 +327,7 @@
     
     if (self.topModel != nil && ![self.topModel isKindOfClass:[NSNull class]]) {
         
+        NSLog(@"%@",self.topModel);
         GovSectionView *sectionV = [GovSectionView showWithModel:self.topModel];
         sectionV.tableView = self.tableView;
         sectionV.section = section;
