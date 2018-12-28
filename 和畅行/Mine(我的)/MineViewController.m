@@ -163,7 +163,9 @@
         }
         [memberStr appendFormat:@",%@",model.name];
     }
-    [memberStr deleteCharactersInRange:NSMakeRange(0, 1)];
+    if(![GlobalCommon stringEqualNull:memberStr]){
+        [memberStr deleteCharactersInRange:NSMakeRange(0, 1)];
+    }
     NSString *childStr = [NSString stringWithFormat:@"家庭成员: %@",memberStr];
     UILabel *memberLabel = [Tools labelWith:childStr frame:CGRectMake(userName.left, userName.bottom+5, ScreenWidth-105, 20) textSize:14 textColor:[UIColor whiteColor] lines:1 aligment:NSTextAlignmentLeft];
     [imageView addSubview:memberLabel];

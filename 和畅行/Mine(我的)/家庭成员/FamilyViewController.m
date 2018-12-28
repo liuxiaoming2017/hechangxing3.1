@@ -198,8 +198,8 @@ NSString *isYiBao;
     
     NSString *birthdayStr =  [self.dataArray[indexPath.row]objectForKey:@"birthday"];
     NSString *birthday =   [UserShareOnce shareOnce].birthday;
-    if ( birthdayStr==nil||[birthdayStr isKindOfClass:[NSNull class]]) {
-        if (birthday ==nil||[birthday isKindOfClass:[NSNull class]]) {
+    if ( [GlobalCommon stringEqualNull:birthdayStr]) {
+        if ([GlobalCommon stringEqualNull:birthday]) {
             age = 1111;
         }else{
             
@@ -229,7 +229,7 @@ NSString *isYiBao;
         }
         NSString *sexStr = [NSString string];
         if (age == 1111){
-            sexStr = [NSString stringWithFormat:@"(%@ 未知)",sex];
+            sexStr = [NSString stringWithFormat:@"(未知)"];
         }else {
             sexStr = [NSString stringWithFormat:@"(%@%d岁)",sex,age];
         }
