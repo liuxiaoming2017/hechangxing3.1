@@ -284,7 +284,7 @@
             }else {
                 str = @"";
             }
-            
+            resp.name = [self removeEmoji:resp.name];
             NSDictionary *weiXDic = @{@"unionid":resp.uid,
                                                    @"screen_name":resp.name,
                                                    @"gender":str,
@@ -295,6 +295,28 @@
            
         }
     }];
+}
+- (NSString*)removeEmoji:(NSString *)username {
+    
+    NSString *regex = @"^[a-zA-Z0-9_\u4e00-\u9fa5]+$";
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    NSString *temp = nil;
+    
+    for(int i = 0; i < [username length]; i++)
+    {
+        temp = [username substringWithRange:NSMakeRange(i, 1)];
+        if ([predicate evaluateWithObject:temp]) {
+            NSLog(@"%@", temp);
+            NSLog(@"This character is OK");
+        } else {
+            NSRange range = NSMakeRange(i, 1);
+            username = [username stringByReplacingCharactersInRange:range withString:@" "];
+        }
+    }
+    
+    NSString *withoutEmojiUsername = [username stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    return withoutEmojiUsername;
 }
 
 # pragma mark - 获取验证码
