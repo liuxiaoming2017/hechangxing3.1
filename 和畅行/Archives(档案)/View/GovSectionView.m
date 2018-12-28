@@ -20,8 +20,9 @@
     NSString *quarterStr= [NSString string];
     NSString *timeStr= [NSString string];
     
+    NSString *str = [NSString stringWithFormat:@"%@",model.quarter];
     
-    int quarter = [model.quarter intValue];
+    int quarter = [str intValue];
     
     if (quarter==1){
         topColor = @"2BAD75";

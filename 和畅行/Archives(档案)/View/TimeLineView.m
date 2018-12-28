@@ -106,11 +106,17 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (self.topModel != nil && ![self.topModel isKindOfClass:[NSNull class]]) {
-        return 90;
+    
+    if (self.typeInteger == 0) {
+        if (self.topModel != nil && ![self.topModel isKindOfClass:[NSNull class]]) {
+            return 90;
+        }else{
+            return 0;
+        }
     }else{
         return 0;
     }
+
 }
 
 #pragma mark -- 每个cell的高度
@@ -327,6 +333,7 @@
     
     if (self.topModel != nil && ![self.topModel isKindOfClass:[NSNull class]]) {
         
+        NSLog(@"%@",self.topModel);
         GovSectionView *sectionV = [GovSectionView showWithModel:self.topModel];
         sectionV.tableView = self.tableView;
         sectionV.section = section;
