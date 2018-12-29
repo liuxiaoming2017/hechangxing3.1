@@ -204,6 +204,7 @@ NSString *isYiBao;
     
     
     if(![GlobalCommon stringEqualNull:birthdayStr]&&![birthdayStr isEqualToString:@"请选择您的出生日期"]){
+        NSLog(@"*****:%@",[UserShareOnce shareOnce].birthday);
         NSString *str = [[UserShareOnce shareOnce].birthday substringToIndex:4];
         sesss = [str intValue];
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];

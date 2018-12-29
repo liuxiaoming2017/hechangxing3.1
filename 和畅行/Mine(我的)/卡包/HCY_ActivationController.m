@@ -257,8 +257,12 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"cardNameSuccess" object:nil];
         NSDictionary *dataDic = [dic objectForKey:@"data"];
         if(dataDic){
-            [UserShareOnce shareOnce].uuid = [dataDic objectForKey:@"uuid"];
-            //NSLog(@"hahah:%@",[UserShareOnce shareOnce].uuid);
+            if([GlobalCommon stringEqualNull:[dataDic objectForKey:@"uuid"]]){
+                [UserShareOnce shareOnce].uuid = @"";
+            }else{
+                 [UserShareOnce shareOnce].uuid = [dataDic objectForKey:@"uuid"];
+            }
+            NSLog(@"hahah:%@",[UserShareOnce shareOnce].uuid);
             [UserShareOnce shareOnce].userToken = [dataDic objectForKey:@"userToken"];
         }
         [self.navigationController popViewControllerAnimated:YES];

@@ -72,6 +72,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
     [request addValue:[self getCookieValue] forHTTPHeaderField:@"Cookie"];
+    request.timeoutInterval = 20;
     [self.wkwebview loadRequest:request];
     [self.view addSubview:self.wkwebview];
     

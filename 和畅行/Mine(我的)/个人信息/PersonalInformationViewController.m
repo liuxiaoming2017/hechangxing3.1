@@ -102,7 +102,7 @@
     [request setPostValue:self.UrlHttpImg forKey:@"memberImage"];
     [request setPostValue:SexStr forKey:@"gender"];
     [request setPostValue:Yh_TF.text forKey:@"name"];
-    [request setPostValue:mobile_Tf.textColor forKey:@"mobile"];
+    [request setPostValue:mobile_Tf.text forKey:@"mobile"];
     [request setPostValue:TelephoneLb_Tf.text forKey:@"phone"];
     [request setPostValue:nation_Tf.text forKey:@"nation"];
     if ([[UserShareOnce shareOnce].marryState isEqualToString:@"已婚"]) {

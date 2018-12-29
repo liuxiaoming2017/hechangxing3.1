@@ -740,7 +740,7 @@
             break;
         case 2:
         {
-            model2.extent = 1.20;
+            model2.extent = 1.50;
         }
             break;
             

@@ -738,7 +738,7 @@
     }
     [param appendFormat:@"&level=%@",@(2)];
     [param appendFormat:@"&zxNum=%@",@(_upData.count)];
-    [param appendFormat:@"&disNum=%@",@(_selectedArr.count)];
+    [param appendFormat:@"&disNum=%@",@"5"];
     [param appendFormat:@"&sex=%@",@(_sex)];
     [param appendFormat:@"&device=1"];
     
