@@ -31,6 +31,7 @@
     
 @property(nonatomic,strong)ZHPickView *pickview;
 @property(nonatomic,strong)NSIndexPath *indexPath;
+@property (nonatomic,strong)UITableView *tableView;
 
 @end
 
@@ -157,23 +158,23 @@
     [infoView addSubview:sexBtn];
     
     
-    UITableView *tableview=[[UITableView alloc]initWithFrame:CGRectMake(0,kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-80) style:UITableViewStylePlain];
-    tableview.delegate=self;
-    tableview.dataSource=self;
-    tableview.bounces = NO;
-    tableview.showsVerticalScrollIndicator = NO;
-    tableview.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
+    self.tableView=[[UITableView alloc]initWithFrame:CGRectMake(0,kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-80) style:UITableViewStylePlain];
+     self.tableView.delegate=self;
+     self.tableView.dataSource=self;
+     self.tableView.bounces = NO;
+     self.tableView.showsVerticalScrollIndicator = NO;
+     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     // tableview.separatorColor =[UIColor clearColor];
-    tableview.backgroundColor=[UIColor clearColor];
+     self.tableView.backgroundColor=[UIColor clearColor];
     
-    tableview.tableHeaderView = infoView;
+     self.tableView.tableHeaderView = infoView;
     //self.PersonInfoTableView=tableview;
-    [self.view addSubview:tableview];
+    [self.view addSubview: self.tableView];
     
     UITapGestureRecognizer *tapSCR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapScreen:)];
-    [tableview addGestureRecognizer:tapSCR];
+    [ self.tableView addGestureRecognizer:tapSCR];
     
-    
+    [self.view addSubview:self.topView];
     
     
     PersionInfoArray=[NSMutableArray new];
@@ -186,7 +187,7 @@
     [PersionInfoArray addObject:@"证件类型"];
     [PersionInfoArray addObject:@"证件号码"];
     
-    ptCenterper=self.view.center;
+    ptCenterper=self.tableView.center;
     
     if ([UserShareOnce shareOnce].memberImage== (id)[NSNull null]) {
         
@@ -847,6 +848,25 @@
     return cell;
 }
 
+#pragma mark --------字数限制
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    if (textField == mobile_Tf) {
+        //这里的if时候为了获取删除操作,如果没有次if会造成当达到字数限制后删除键也不能使用的后果.
+        if (range.length == 1 && string.length == 0) {
+            return YES;
+        }
+        //so easy
+        else if (mobile_Tf.text.length >= 11) {
+            mobile_Tf.text = [textField.text substringToIndex:11];
+            return NO;
+        }
+    }
+    return YES;
+}
+
+
+
 //-(void)SegSexAction:(UISegmentedControl *)Seg{
 //    NSInteger Index = Seg.selectedSegmentIndex;
 //    switch (Index) {
@@ -1030,7 +1050,7 @@
     
 }
 
-
+#pragma mark -----键盘遮挡问题
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     //关闭键盘的方法
     //[[[UIApplication sharedApplication] keyWindow] endEditing:YES];
@@ -1056,7 +1076,7 @@
 {
     [UIView beginAnimations:@"resize for input" context:nil];
     [UIView setAnimationDuration:0.3f];
-    self.view.center = CGPointMake(ptCenterper.x, ptCenterper.y-170);
+    self.tableView.top = kNavBarHeight - 170;
     [UIView commitAnimations];
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -1067,9 +1087,10 @@
 }
 -(void)restoreView
 {
+    
     [UIView beginAnimations:@"resize for input" context:nil];
     [UIView setAnimationDuration:0.3f];
-    self.view.center = CGPointMake(ptCenterper.x, ptCenterper.y);
+    self.tableView.top = kNavBarHeight;
     [UIView commitAnimations];
 }
 -(void)toobarDonBtnHaveClick:(ZHPickView *)pickView resultString:(NSString *)resultString{
