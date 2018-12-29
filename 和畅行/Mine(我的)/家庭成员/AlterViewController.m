@@ -246,6 +246,7 @@ SonAccount *sonAccount;
     tableViewGesture.cancelsTouchesInView = NO;//是否取消点击处的其他action
     [_PersonInfoTableView addGestureRecognizer:tableViewGesture];
     
+    [self.view addSubview:self.topView];
 
     PersionInfoArray=[NSMutableArray new];
     [PersionInfoArray addObject:@"称呼："];
@@ -646,10 +647,32 @@ SonAccount *sonAccount;
     [_pickview remove];
 }
 
-
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    if (textField == TelephoneLb_Tf) {
+        //这里的if时候为了获取删除操作,如果没有次if会造成当达到字数限制后删除键也不能使用的后果.
+        if (range.length == 1 && string.length == 0) {
+            return YES;
+        }
+        //so easy
+        else if (TelephoneLb_Tf.text.length >= 11) {
+            TelephoneLb_Tf.text = [textField.text substringToIndex:11];
+            return NO;
+        }
+    }
+    
     if (textField == Yh_TF) {
+        
+        if (range.length == 1 && string.length == 0) {
+            return YES;
+        }
+        //so easy
+        else if (Yh_TF.text.length >= 11) {
+            Yh_TF.text = [textField.text substringToIndex:11];
+            return NO;
+        }
+        
+        
         if (textField.text.length >= 10)
         {
             [self.view endEditing:YES];
@@ -658,6 +681,7 @@ SonAccount *sonAccount;
     }
     return YES;
 }
+
 
 
 -(void)textFieldDidChange:(UITextField * )textField

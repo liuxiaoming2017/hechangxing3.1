@@ -228,7 +228,7 @@
  city = 石家庄
  country = 中国
  province = 河北
- sex = 1
+ sex = 1 男 2 女
  language = zh_CN
  
  */
@@ -278,9 +278,9 @@
             
             NSString *str = [NSString string];
             if ([resp.gender isEqualToString:@"m"]) {
-                str = @"男";
+                str = @"1";
             }else if([resp.gender isEqualToString:@"w"]) {
-                str = @"女";
+                str = @"2";
             }else {
                 str = @"";
             }

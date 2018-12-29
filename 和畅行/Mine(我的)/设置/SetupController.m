@@ -209,7 +209,17 @@
                             [dicTmp setValue:@"0" forKey:@"ischeck"];
                         }
                         
-                        [UserShareOnce attemptDealloc];
+//                        unsigned int count = 0;
+//                        Ivar *varc = class_copyIvarList([UserShareOnce class], &count);
+//                        NSString *key;
+//                        for(int i = 0; i < count; i++) {
+//                            Ivar thisIvar = varc[i];
+//                                    key = [NSString stringWithUTF8String:ivar_getName(thisIvar)];  //获取成员变量的名字
+//                            [[UserShareOnce shareOnce] setValue:@"" forKey:key];
+//                         }
+//                        free(varc);
+                        
+//                        [UserShareOnce attemptDealloc];
                         [UserShareOnce shareOnce].wxName = nil;
                         [UtilityFunc updateAppConfigWithMutableDictionary:dicTmp];
                         CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:loginview];
