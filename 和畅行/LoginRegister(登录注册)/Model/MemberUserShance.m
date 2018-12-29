@@ -10,13 +10,14 @@
 #import "ChildMemberModel.h"
 
 static MemberUserShance *shareOnce = nil;
+static dispatch_once_t onceToken;
+static dispatch_once_t onceToken1;
 
 @implementation MemberUserShance
 
 + (MemberUserShance *)shareOnce
 {
     
-    static dispatch_once_t onceToken;
     dispatch_once(&onceToken,^{
         shareOnce = [[MemberUserShance alloc] init];
     });
@@ -25,8 +26,7 @@ static MemberUserShance *shareOnce = nil;
 
 +(id)allocWithZone:(struct _NSZone *)zone
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+    dispatch_once(&onceToken1, ^{
         shareOnce = [super allocWithZone:zone];
     });
     
@@ -55,6 +55,13 @@ static MemberUserShance *shareOnce = nil;
 - (void)setMemberModel:(ChildMemberModel *)model
 {
     
+}
+
++(void)attemptDealloc{
+    
+    shareOnce =nil;
+    onceToken=0l;
+    onceToken1 =0l;
 }
 
 @end

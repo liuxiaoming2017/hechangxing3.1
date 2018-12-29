@@ -219,8 +219,8 @@
 //                         }
 //                        free(varc);
                         
-//                        [UserShareOnce attemptDealloc];
-                        [UserShareOnce shareOnce].wxName = nil;
+                        [UserShareOnce attemptDealloc];
+                        [MemberUserShance attemptDealloc];
                         [UtilityFunc updateAppConfigWithMutableDictionary:dicTmp];
                         CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:loginview];
                         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"memberChirldArr"];

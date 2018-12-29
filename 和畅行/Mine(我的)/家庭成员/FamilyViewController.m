@@ -17,6 +17,7 @@
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "ArchivesController.h"
+#import "HCY_FamilyListModel.h"
 //#import "MainViewController.h"
 
 //SSUserInfo* [UserShareOnce shareOnce];
@@ -105,6 +106,34 @@ NSString *isYiBao;
     __weak typeof(self) weakSelf = self;
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:@"/member/memberModifi/list.jhtml" parameters:@{@"memberId":[UserShareOnce shareOnce].uid} successBlock:^(id response) {
         [weakSelf hudWasHidden];
+        
+        id status=[response objectForKey:@"status"];
+        if ([status intValue]==100)   {
+            [self.dataArray removeAllObjects];
+            for (NSDictionary *dic  in [response objectForKey:@"data"]) {
+                HCY_FamilyListModel *model = [[HCY_FamilyListModel alloc]init];
+                [model yy_modelSetWithDictionary:dic];
+                [self.dataArray addObject:model];
+            }
+            [self.memberTable reloadData];
+        } else if ([status intValue]==44) {
+            
+            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"登录超时，请重新登录" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                LoginViewController *vc = [[LoginViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }];
+            [alertVC addAction:alertAct1];
+            [self presentViewController:alertVC animated:YES completion:NULL];
+            
+        }else{
+            NSString *str = [response objectForKey:@"data"];
+            [self showAlertWarmMessage:str];
+            
+        }
+        
+        
+        
         [weakSelf requestResourceslistCompletedWith:response];
     } failureBlock:^(NSError *error) {
         [weakSelf hudWasHidden];
@@ -144,33 +173,7 @@ NSString *isYiBao;
 
 - (void)requestResourceslistCompletedWith:(NSDictionary *)dic
 {
-    [self hudWasHidden];
-    id status=[dic objectForKey:@"status"];
-    NSLog(@"11111111%@",dic);
-    if ([status intValue]==100)
-    {
-//        [self.dataArray removeAllObjects];
-        self.dataArray=[dic objectForKey:@"data"];
-        [self.memberTable reloadData];
-    }
-    else if ([status intValue]==44)
-    {
-        
-        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"登录超时，请重新登录" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            LoginViewController *vc = [[LoginViewController alloc] init];
-            [self.navigationController pushViewController:vc animated:YES];
-        }];
-        [alertVC addAction:alertAct1];
-        [self presentViewController:alertVC animated:YES completion:NULL];
-        
-        
-    }else{
-        NSString *str = [dic objectForKey:@"data"];
-        [self showAlertWarmMessage:str];
-       
-    }
-    
+   
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -180,10 +183,11 @@ NSString *isYiBao;
     FamilyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CELL" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    NSString *nameStr = [self.dataArray[indexPath.row] objectForKey:@"name"];
-    if (![GlobalCommon stringEqualNull:nameStr]) {
-        cell.nameLabel.text = nameStr;
-        if( nameStr.length > 26) {
+    HCY_FamilyListModel *model = _dataArray[indexPath.row];
+    
+    if (![GlobalCommon stringEqualNull:model.name]) {
+        cell.nameLabel.text = model.name;
+        if( model.name.length > 26) {
             cell.nameLabel.text = [UserShareOnce shareOnce].wxName;
         }
     }else{
@@ -199,13 +203,10 @@ NSString *isYiBao;
     int sesss = 0;
     int age  = 0;
     
-    NSString *birthdayStr =  [self.dataArray[indexPath.row]objectForKey:@"birthday"];
-//    NSString *birthday =   [UserShareOnce shareOnce].birthday;
+//    NSString *birthdayStr =  model.birthday;
     
-    
-    if(![GlobalCommon stringEqualNull:birthdayStr]&&![birthdayStr isEqualToString:@"请选择您的出生日期"]){
-        NSLog(@"*****:%@",[UserShareOnce shareOnce].birthday);
-        NSString *str = [[UserShareOnce shareOnce].birthday substringToIndex:4];
+    if(![GlobalCommon stringEqualNull:model.birthday]&&![model.birthday isEqualToString:@"请选择您的出生日期"]){
+        NSString *str = [model.birthday substringToIndex:4];
         sesss = [str intValue];
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
         NSDate *now;
@@ -219,18 +220,11 @@ NSString *isYiBao;
         age = 1111;
     }
     
-    if ([GlobalCommon stringEqualNull: [self.dataArray[indexPath.row] objectForKey:@"gender"]]) {
+    if ([GlobalCommon stringEqualNull: model.gender]) {
         sex = @"未知";
-        if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].gender ]) {
-            if ([[UserShareOnce shareOnce].gender isEqualToString:@"male"]) {
-                sex =@"男" ;
-            }else if ([[UserShareOnce shareOnce].gender isEqualToString:@"female"]){
-                sex = @"女";
-            }
-        }
-    }else if ([[self.dataArray[indexPath.row] objectForKey:@"gender"] isEqualToString:@"male"]) {
+    }else if ([model.gender isEqualToString:@"male"]) {
         sex =@"男" ;
-    }else if([[self.dataArray[indexPath.row] objectForKey:@"gender"]isEqualToString:@"female"]){
+    }else if([model.gender isEqualToString:@"female"]){
         sex = @"女";
     }
     NSString *sexStr = [NSString string];
@@ -243,10 +237,10 @@ NSString *isYiBao;
     
 
     
-    if ([GlobalCommon stringEqualNull:[self.dataArray[indexPath.row] objectForKey:@"mobile"]]) {
+    if ([GlobalCommon stringEqualNull:model.mobile]) {
         cell.phoneLabel.text = @"无";
     }else{
-        cell.phoneLabel.text = [self.dataArray[indexPath.row] objectForKey:@"mobile"];
+        cell.phoneLabel.text = model.mobile;
     }
     UIImage* CellDeleImg=[UIImage imageNamed:@"2_1wq5.png"];
     UIButton* CellDeleImgView=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -273,12 +267,12 @@ NSString *isYiBao;
 -(void)checkBtnClick:(UIButton *) button{
     //NSLog(@"点击了第%ld个查看报告",button.tag - 500);
     //NSLog(@"%@",_dataArray);
-    NSDictionary *dic = _dataArray[button.tag - 500];
+    HCY_FamilyListModel *model = _dataArray[button.tag - 500];
     UITabBarController *main = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
     main.selectedIndex = 1;
     UINavigationController *nav = main.selectedViewController;
     ArchivesController *vc = (ArchivesController *)nav.topViewController;
-    vc.memberId = [NSString stringWithFormat:@"%@",dic[@"id"]];
+    vc.memberId = [NSString stringWithFormat:@"%@",model.familyID];
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     window.rootViewController = main;
 }
@@ -300,8 +294,9 @@ NSString *isYiBao;
 
 - (void)deleteAction
 {
+    HCY_FamilyListModel *model = _dataArray[_tag];
     NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/memberModifi/delete.jhtml?memberId=%@&id=%@",UrlPre,[UserShareOnce shareOnce].uid,[self.dataArray[_tag]objectForKey:@"id"]];
+    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/memberModifi/delete.jhtml?memberId=%@&id=%@",UrlPre,[UserShareOnce shareOnce].uid,model.familyID];
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     NSURL *url = [NSURL URLWithString:aUrlle];
@@ -378,8 +373,9 @@ NSString *isYiBao;
     if (indexPath.row == 0) {
         return;
     }
+    HCY_FamilyListModel *model = self.dataArray[indexPath.row];
     AlterViewController *alterVC = [[AlterViewController alloc]init];
-    alterVC.dataDictionary = self.dataArray[indexPath.row];
+    alterVC.model = model;
     [self.navigationController pushViewController:alterVC animated:YES];
 }
 

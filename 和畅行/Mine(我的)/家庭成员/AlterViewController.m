@@ -60,7 +60,7 @@ SonAccount *sonAccount;
 {
     self.dataArray = nil;
     self.datePicker = nil;
-    self.dataDictionary = nil;
+    self.model = nil;
     self.customPicker = nil;
 }
 
@@ -133,7 +133,7 @@ SonAccount *sonAccount;
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
     NSLog(@"---- >  %@",Certificates_Number_Tf.text);
-    [request setPostValue:[self.dataDictionary objectForKey:@"id"] forKey:@"Id"];
+    [request setPostValue:self.model.familyID forKey:@"Id"];
     [request setPostValue:Yh_TF.text forKey:@"name"];
     [request setPostValue:Certificates_Number_Tf.text forKey:@"IDCard"];
     [request setPostValue:IsYiBao forKey:@"isMedicare"];
@@ -338,12 +338,12 @@ SonAccount *sonAccount;
         Yh_TF=[[UITextField alloc] init];
         Yh_TF.frame=CGRectMake(YhLb.frame.origin.x+YhLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-YhLb.frame.origin.x-YhLb.frame.size.width-5-20.5, 21);
         
-        if ([[self.dataDictionary objectForKey:@"name"]isEqualToString:[UserShareOnce shareOnce].username]) {
+        if ([self.model.name isEqualToString:[UserShareOnce shareOnce].username]) {
             Yh_TF.text= [[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]]? [UserShareOnce shareOnce].username:[UserShareOnce shareOnce].name;
-        }else if ([[self.dataDictionary objectForKey:@"name"] length] > 26){
+        }else if (self.model.name.length> 26){
             Yh_TF.text = [UserShareOnce shareOnce].wxName;
         }else{
-            Yh_TF.text = [self.dataDictionary objectForKey:@"name"];
+            Yh_TF.text = self.model.name;
         }
         Yh_TF.textAlignment = NSTextAlignmentRight;
         [Yh_TF setValue:[UtilityFunc colorWithHexString:@"#333333"] forKeyPath:@"_placeholderLabel.textColor"];
@@ -367,8 +367,8 @@ SonAccount *sonAccount;
         
         NSArray *segmentedArray = [[NSArray alloc] initWithObjects:@"男",@"女",nil];
         _SegSex=[[UISegmentedControl alloc] initWithItems:segmentedArray];
-        if ([self.dataDictionary objectForKey:@"gender"] != [NSNull null]) {
-            if ([[self.dataDictionary objectForKey:@"gender"]isEqualToString:@"male"]) {
+        if (![GlobalCommon stringEqualNull:self.model.gender]) {
+            if ( [self.model.gender isEqualToString:@"male"]) {
                 _SegSex.selectedSegmentIndex = 0;
                 SexStr = @"male";
             }else{
@@ -397,10 +397,10 @@ SonAccount *sonAccount;
         BirthDay_btn=[UIButton buttonWithType:UIButtonTypeCustom];
         BirthDay_btn.frame=CGRectMake(BirthDayLb.frame.origin.x+BirthDayLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-BirthDayLb.frame.origin.x-BirthDayLb.frame.size.width-5-20.5, 21);
         BirthDay_btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-        if ([[self.dataDictionary objectForKey:@"birthday"]isEqual:[NSNull null]]) {
+        if ([GlobalCommon stringEqualNull:self.model.birthday]) {
             [BirthDay_btn setTitle:@"请输入出生日期" forState:UIControlStateNormal];
         }else{
-            [BirthDay_btn setTitle:[self.dataDictionary objectForKey:@"birthday"] forState:UIControlStateNormal];
+            [BirthDay_btn setTitle:self.model.birthday forState:UIControlStateNormal];
         }
         
         [BirthDay_btn addTarget:self action:@selector(BirthDayActive:) forControlEvents:UIControlEventTouchUpInside];
@@ -425,7 +425,7 @@ SonAccount *sonAccount;
         _YiHunSex.frame=CGRectMake(ScreenWidth-80-20.5, (cell.frame.size.height-26)/2, 80, 26);
         _YiHunSex.segmentedControlStyle = UISegmentedControlStyleBordered;//设置样
         _YiHunSex.tintColor = [UtilityFunc colorWithHexString:@"#5eb4fd"];
-        if ([[self.dataDictionary objectForKey:@"isMedicare"]isEqual:[NSNull null]]||[[self.dataDictionary objectForKey:@"isMedicare"]isEqualToString:@"no"]) {
+        if ([GlobalCommon stringEqualNull:self.model.isMedicare]||[self.model.isMedicare isEqualToString:@"no"]) {
             _YiHunSex.selectedSegmentIndex = 1;
             IsYiBao = @"no";
         }else{
@@ -452,10 +452,10 @@ SonAccount *sonAccount;
         Certificates_Number_Tf.delegate=self;
         Certificates_Number_Tf.textAlignment = NSTextAlignmentRight;
         Certificates_Number_Tf.returnKeyType=UIReturnKeyDone;
-        if ([[self.dataDictionary objectForKey:@"idcard"]isEqual:[NSNull null]]) {
+        if ([GlobalCommon stringEqualNull:self.model.idcard]) {
             Certificates_Number_Tf.text = @"请输入身份证号";
         }else{
-            Certificates_Number_Tf.text=[self.dataDictionary objectForKey:@"idcard"];
+            Certificates_Number_Tf.text=self.model.idcard;
         }
         [Certificates_Number_Tf setValue:[UtilityFunc colorWithHexString:@"#333333"] forKeyPath:@"_placeholderLabel.textColor"];
         [Certificates_Number_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
@@ -482,10 +482,10 @@ SonAccount *sonAccount;
         TelephoneLb_Tf.returnKeyType=UIReturnKeyDone;
         TelephoneLb_Tf.delegate=self;
         TelephoneLb_Tf.textAlignment = NSTextAlignmentRight;
-        if ([[self.dataDictionary objectForKey:@"mobile"]isEqual:[NSNull null]]) {
+        if ([GlobalCommon stringEqualNull:self.model.mobile]) {
             TelephoneLb_Tf.text = @"请输入手机号";
         }else{
-            TelephoneLb_Tf.text=[self.dataDictionary objectForKey:@"mobile"];
+            TelephoneLb_Tf.text=self.model.mobile;
         }
         TelephoneLb_Tf.keyboardType=UIKeyboardTypeNumberPad;
         [TelephoneLb_Tf setValue:[UtilityFunc colorWithHexString:@"#333333"] forKeyPath:@"_placeholderLabel.textColor"];

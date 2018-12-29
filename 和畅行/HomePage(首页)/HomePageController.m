@@ -212,7 +212,7 @@
 # pragma mark - 和畅包网络请求
 - (void)requestPackgeNetWork
 {
-
+    NSLog(@"------%@",[UserShareOnce shareOnce].uid);
     NSString *urlStr = @"member/new_ins/current.jhtml";
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
     if ([MemberUserShance shareOnce].idNum){

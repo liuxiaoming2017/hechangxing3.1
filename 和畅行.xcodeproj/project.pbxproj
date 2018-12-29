@@ -826,6 +826,7 @@
 		03FBDF9A2192B066006116FC /* TimeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF992192B066006116FC /* TimeLineView.m */; };
 		03FBDF9D2192B0B3006116FC /* TimeLineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF9C2192B0B3006116FC /* TimeLineCell.m */; };
 		835DB8DB21D3685D00B8DF99 /* HCY_ConsultingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 835DB8DA21D3685D00B8DF99 /* HCY_ConsultingModel.m */; };
+		835DB91C21D757C800B8DF99 /* HCY_FamilyListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 835DB91B21D757C800B8DF99 /* HCY_FamilyListModel.m */; };
 		83E23EE921C0A53100B43298 /* HCY_CallController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EE821C0A53000B43298 /* HCY_CallController.m */; };
 		83E23EED21C0AD2D00B43298 /* HCY_CallCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EEB21C0AD2D00B43298 /* HCY_CallCell.m */; };
 		83E23EEE21C0AD2D00B43298 /* HCY_CallCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E23EEC21C0AD2D00B43298 /* HCY_CallCell.xib */; };
@@ -2053,6 +2054,8 @@
 		432A80A6E0CB6A191C1F35C4 /* Pods-和畅行.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-和畅行.debug.xcconfig"; path = "Pods/Target Support Files/Pods-和畅行/Pods-和畅行.debug.xcconfig"; sourceTree = "<group>"; };
 		835DB8D921D3685D00B8DF99 /* HCY_ConsultingModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_ConsultingModel.h; sourceTree = "<group>"; };
 		835DB8DA21D3685D00B8DF99 /* HCY_ConsultingModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_ConsultingModel.m; sourceTree = "<group>"; };
+		835DB91A21D757C800B8DF99 /* HCY_FamilyListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_FamilyListModel.h; sourceTree = "<group>"; };
+		835DB91B21D757C800B8DF99 /* HCY_FamilyListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_FamilyListModel.m; sourceTree = "<group>"; };
 		83E23EE721C0A53000B43298 /* HCY_CallController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_CallController.h; sourceTree = "<group>"; };
 		83E23EE821C0A53000B43298 /* HCY_CallController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_CallController.m; sourceTree = "<group>"; };
 		83E23EEA21C0AD2D00B43298 /* HCY_CallCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_CallCell.h; sourceTree = "<group>"; };
@@ -2912,6 +2915,8 @@
 				036A66C92114023E0096A006 /* FamilyViewController.m */,
 				036A66C52114023C0096A006 /* SonAccount.h */,
 				036A66CC2114023F0096A006 /* SonAccount.m */,
+				835DB91A21D757C800B8DF99 /* HCY_FamilyListModel.h */,
+				835DB91B21D757C800B8DF99 /* HCY_FamilyListModel.m */,
 			);
 			path = "家庭成员";
 			sourceTree = "<group>";
@@ -5352,6 +5357,7 @@
 				03A07C0620EF5DD100002274 /* FindPassWordController.m in Sources */,
 				03DEBC6A210841FC008434BD /* HealthTipsModel.m in Sources */,
 				03F692EF20FF2DF000308E38 /* ASIDataDecompressor.m in Sources */,
+				835DB91C21D757C800B8DF99 /* HCY_FamilyListModel.m in Sources */,
 				03FBDF97219285A0006116FC /* NavBarViewController.m in Sources */,
 				034A4E84211A9AD900936A46 /* TZPhotoPreviewController.m in Sources */,
 				03FBDF872192829C006116FC /* UIImage+Units.m in Sources */,

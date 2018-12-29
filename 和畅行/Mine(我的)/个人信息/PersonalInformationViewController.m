@@ -76,6 +76,14 @@
 }
 #pragma mark ------ 提交按钮
 -(void)commitClick:(UIButton *)button{
+    
+    
+    if (mobile_Tf.text.length != 11||![mobile_Tf.text hasPrefix:@"1"]){
+        [self showAlertWarmMessage:@"请输入正确的手机号"];
+        return;
+    }
+    
+    
     if ([Certificates_btn.titleLabel.text isEqualToString:@"请选择证件类型"]) {
        
         [self showAlertWarmMessage:@"请选择证件类型"];
@@ -135,7 +143,6 @@
 {
     [super viewDidLoad];
     self.navTitleLabel.text = @"个人信息";
-    //self.view.backgroundColor=[UtilityFunc colorWithHexString:@"##f2f1ef"];
     self.view.backgroundColor = [UIColor whiteColor];
     _marryState = [[NSString alloc] init];
     
@@ -909,10 +916,10 @@
 //}
 -(void)AcceptAction:(id)sender
 {
-    
+
+ 
     if ([Certificates_btn.titleLabel.text isEqualToString:@"请选择证件类型"]) {
         [self showAlertWarmMessage:@"请选择证件类型"];
-        
         return;
     }
     
@@ -999,7 +1006,7 @@
         [UserShareOnce shareOnce].gender=SexStr;
         [UserShareOnce shareOnce].birthday=BirthDay_btn.titleLabel.text;
         [UserShareOnce shareOnce].address=AddressLb_Tf.text;
-        [UserShareOnce shareOnce].phone=TelephoneLb_Tf.text;
+        [UserShareOnce shareOnce].phone=mobile_Tf.text;
         [UserShareOnce shareOnce].identityType=CertificatesType;
         [UserShareOnce shareOnce].idNumber=Certificates_Number_Tf.text;
         //[UserShareOnce shareOnce].isMedicare=IsYiBao;
