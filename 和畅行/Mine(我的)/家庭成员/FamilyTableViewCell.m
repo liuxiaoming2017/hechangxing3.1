@@ -20,7 +20,7 @@
         _sexLabel.textAlignment = NSTextAlignmentCenter;
         _sexLabel.font = [UIFont systemFontOfSize:12];
         [self addSubview:_sexLabel];
-        _phoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth - 195, 20, 80, 15)];
+        _phoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth - 200, 20, 85, 15)];
         _phoneLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
         _phoneLabel.font = [UIFont systemFontOfSize:12];
         _phoneLabel.textAlignment = NSTextAlignmentRight;

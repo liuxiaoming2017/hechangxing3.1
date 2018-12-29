@@ -28,4 +28,5 @@
 
 - (void)setMemberModel:(ChildMemberModel *)model;
 
++(void)attemptDealloc;
 @end

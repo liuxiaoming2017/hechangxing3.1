@@ -10,7 +10,7 @@
 
 static UserShareOnce *shareOnce = nil;
 static dispatch_once_t onceToken;
-
+static dispatch_once_t onceToken1;
 @implementation UserShareOnce
 
 + (UserShareOnce *)shareOnce
@@ -24,8 +24,8 @@ static dispatch_once_t onceToken;
 
 +(id)allocWithZone:(struct _NSZone *)zone
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+//    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken1, ^{
         shareOnce = [super allocWithZone:zone];
     });
     
@@ -74,7 +74,10 @@ static dispatch_once_t onceToken;
 }
 
 +(void)attemptDealloc{
+    
+    shareOnce =nil;
      onceToken=0l;
+    onceToken1 =0l;
 }
 
 @end
