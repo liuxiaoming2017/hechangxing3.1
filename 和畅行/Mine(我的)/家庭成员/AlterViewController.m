@@ -168,7 +168,7 @@ SonAccount *sonAccount;
     id status=[dic objectForKey:@"status"];
     NSLog(@"%@",[dic objectForKey:@"status"]);
     if ([status intValue]==100) {
-        
+        [self changeMemberChildWithData:[dic objectForKey:@"data"]];
         [self showAlertWarmMessage:@"信息更新成功"];
         
         UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"信息更新成功" preferredStyle:UIAlertControllerStyleAlert];
@@ -188,6 +188,25 @@ SonAccount *sonAccount;
         [self showAlertWarmMessage:str];
     }
     
+}
+
+- (void)changeMemberChildWithData:(NSArray *)arrMem
+{
+    NSMutableArray *memberArr = [NSMutableArray arrayWithCapacity:0];
+    for (NSDictionary *dic in  arrMem) {
+        ChildMemberModel *model = [ChildMemberModel mj_objectWithKeyValues:dic];
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
+        [memberArr addObject:data];
+    }
+    
+    NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberChirldArr"];
+    if (arr.count) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"memberChirldArr"];
+    }
+    NSArray *modelArr = [[NSArray alloc] initWithArray:memberArr];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:modelArr forKey:@"memberChirldArr"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 //-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

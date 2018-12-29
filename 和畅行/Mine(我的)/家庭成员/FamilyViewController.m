@@ -339,6 +339,8 @@ NSString *isYiBao;
     id status=[dic objectForKey:@"status"];
     if ([status intValue] == 100)
     {
+
+        [self changeMemberChildWithData:[dic objectForKey:@"data"]];
         [self GetResource];
 //        NSLog(@"%@",[dic objectForKey:@"data"]);
 //        [self.memberTable reloadData];
@@ -350,6 +352,26 @@ NSString *isYiBao;
         //        [avv release];
     }
 }
+
+- (void)changeMemberChildWithData:(NSArray *)arrMem
+{
+     NSMutableArray *memberArr = [NSMutableArray arrayWithCapacity:0];
+    for (NSDictionary *dic in  arrMem) {
+        ChildMemberModel *model = [ChildMemberModel mj_objectWithKeyValues:dic];
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
+        [memberArr addObject:data];
+    }
+    
+    NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberChirldArr"];
+    if (arr.count) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"memberChirldArr"];
+    }
+    NSArray *modelArr = [[NSArray alloc] initWithArray:memberArr];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:modelArr forKey:@"memberChirldArr"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.row == 0) {

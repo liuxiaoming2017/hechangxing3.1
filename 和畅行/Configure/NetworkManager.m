@@ -313,7 +313,7 @@ static NSMutableArray *tasks;
         AFJSONResponseSerializer *rsSerializer = [AFJSONResponseSerializer serializer];
         
         rsSerializer.stringEncoding = NSUTF8StringEncoding;
-        
+        //manager.requestSerializer = [AFJSONRequestSerializer new];
         manager.requestSerializer = rqSerializer;
         manager.responseSerializer = rsSerializer;
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
