@@ -55,8 +55,11 @@
 
 - (void)createUI
 {
-    listNamesArr = @[@"健康顾问团队",@"退款记录",@"退货记录",@"我的卡包",@"我的积分",@"家庭成员",@"视频预约",@"健康讲座",@"我的乐药",@"运动示范音",@"未发出的声音文件",@"预约挂号",@"健康提示",@"我的咨询",@"收货地址",@"意见反馈",@"收藏",@"设置"];
-    listImagesArr = @[@"private",@"refundRecord",@"returedGoodsRecord",@"1我的_100",@"integral",@"1我的_101",@"1我的_102",@"1我的_103",@"1我的_104",@"1我的_105",@"1我的_106",@"1我的_107",@"1我的_108",@"1我的_109",@"1我的_110",@"feedback",@"1我的_111",@"1我的_112"];
+    //0
+//    listNamesArr = @[@"健康顾问团队",@"退款记录",@"退货记录",@"我的卡包",@"我的积分",@"家庭成员",@"视频预约",@"健康讲座",@"我的乐药",@"运动示范音",@"未发出的声音文件",@"预约挂号",@"健康提示",@"我的咨询",@"收货地址",@"意见反馈",@"收藏",@"设置"];
+//    listImagesArr = @[@"private",@"refundRecord",@"returedGoodsRecord",@"1我的_100",@"integral",@"1我的_101",@"1我的_102",@"1我的_103",@"1我的_104",@"1我的_105",@"1我的_106",@"1我的_107",@"1我的_108",@"1我的_109",@"1我的_110",@"feedback",@"1我的_111",@"1我的_112"];
+    listNamesArr = @[@"退款记录",@"退货记录",@"我的卡包",@"我的积分",@"家庭成员",@"健康讲座",@"我的乐药",@"未发出的声音文件",@"我的咨询",@"收货地址",@"意见反馈",@"收藏",@"设置"];
+    listImagesArr = @[@"refundRecord",@"returedGoodsRecord",@"1我的_100",@"integral",@"1我的_101",@"1我的_103",@"1我的_104",@"1我的_106",@"1我的_109",@"1我的_110",@"feedback",@"1我的_111",@"1我的_112"];
     
     if([UserShareOnce shareOnce].isOnline){
         listNamesArr = @[@"退款记录",@"退货记录",@"我的积分",@"家庭成员",@"收货地址",@"意见反馈",@"收藏",@"设置"];
@@ -266,7 +269,7 @@
     switch (indexPath.row) {
         case 0:
         {
-            if([UserShareOnce shareOnce].isOnline){
+           
                 HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
                 vc.noWebviewBack = YES;
                 vc.progressType = progress2;
@@ -274,18 +277,14 @@
                 vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/returns/list_refunds.jhtml",URL_PRE];
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
-            }else{
-                PrivateServiceViewController *vc = [[PrivateServiceViewController alloc] init];
-                [self.navigationController pushViewController:vc animated:YES];
-                vc.hidesBottomBarWhenPushed = YES;
-            }
+            
             
         }
             
             break;
         case 1:
         {
-            if([UserShareOnce shareOnce].isOnline){
+            
                 HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
                 vc.noWebviewBack = YES;
                 vc.progressType = progress2;
@@ -293,155 +292,74 @@
                 vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/returns/list_returns.jhtml",URL_PRE];
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
-            }else{
-                HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-                vc.noWebviewBack = YES;
-                vc.progressType = progress2;
-                vc.titleStr = @"退款记录";
-                vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/returns/list_refunds.jhtml",URL_PRE];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
+            
             
         }
             break;
         case 2:
         {
-            if([UserShareOnce shareOnce].isOnline){
-                HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-                vc.noWebviewBack = YES;
-                vc.progressType = progress2;
-                vc.titleStr = @"我的积分";
-                vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/order/pointList.jhtml",URL_PRE];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-            }else{
-                HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-                vc.noWebviewBack = YES;
-                vc.progressType = progress2;
-                vc.titleStr = @"退货记录";
-                vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/returns/list_returns.jhtml",URL_PRE];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
+            BlockViewController *vc = [[BlockViewController alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+            
+            
             
         }
             break;
         case 3:
         {
-            if([UserShareOnce shareOnce].isOnline){
-                FamilyViewController *vc = [[FamilyViewController alloc] init];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-            }else{
-                BlockViewController *vc = [[BlockViewController alloc] init];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
+            HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
+            vc.noWebviewBack = YES;
+            vc.progressType = progress2;
+            vc.titleStr = @"我的积分";
+            vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/order/pointList.jhtml",URL_PRE];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+            
             
         }
             break;
         case 4:
         {
-            if([UserShareOnce shareOnce].isOnline){
-                HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-                vc.noWebviewBack = YES;
-                vc.progressType = progress2;
-                vc.titleStr = @"收货地址";
-                vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/order/receiverlist.jhtml",URL_PRE];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-            }else{
-                HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-                vc.noWebviewBack = YES;
-                vc.progressType = progress2;
-                vc.titleStr = @"我的积分";
-                vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/order/pointList.jhtml",URL_PRE];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
+            FamilyViewController *vc = [[FamilyViewController alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
             
         }
             break;
         case 5:
         {
-            if([UserShareOnce shareOnce].isOnline){
-                FeedbackViewController *vc = [[FeedbackViewController alloc] init];
-                UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self presentViewController:nav animated:YES completion:nil];
-                });
-            }else{
-                FamilyViewController *vc = [[FamilyViewController alloc] init];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
+            HealthLectureOrderViewController *healthOrder = [[HealthLectureOrderViewController alloc] init];
+            healthOrder.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:healthOrder animated:YES];
+            
             
         }
             break;
         case 6:{
-            if([UserShareOnce shareOnce].isOnline){
-                HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-                vc.noWebviewBack = YES;
-                vc.progressType = progress2;
-                vc.titleStr = @"收藏";
-                vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/focus_ware/list.jhtml",URL_PRE];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-            }else{
-                
-            }
+            LeMedicineViewController *vc = [[LeMedicineViewController alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            
+            [self.navigationController pushViewController:vc animated:YES];
+            
         }
             break;
         case 7:
         {
-            if([UserShareOnce shareOnce].isOnline){
-                SetupController *vc = [[SetupController alloc] init];
-                CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:vc];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self presentViewController:nav animated:YES completion:nil];
-                });
-            }else{
-                HealthLectureOrderViewController *healthOrder = [[HealthLectureOrderViewController alloc] init];
-                UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:healthOrder];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self presentViewController:nav animated:YES completion:nil];
-                });
-            }
-            
-            
+            WenYinFileViewController *vc = [[WenYinFileViewController alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case 8:
         {
-            LeMedicineViewController *vc = [[LeMedicineViewController alloc] init];
-            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self presentViewController:nav animated:YES completion:nil];
-            });
-        }
-            break;
-        case 10:
-        {
-            WenYinFileViewController *vc = [[WenYinFileViewController alloc] init];
-            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self presentViewController:nav animated:YES completion:nil];
-            });
-            
-        }
-            break;
-        case 13:
-        {
             MyAvdisorysViewController *vc = [[MyAvdisorysViewController alloc] init];
-            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self presentViewController:nav animated:YES completion:nil];
-            });
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
             
         }
             break;
-        case 14:
+        case 9:
         {
             HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
             vc.noWebviewBack = YES;
@@ -450,12 +368,36 @@
             vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/order/receiverlist.jhtml",URL_PRE];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
+            
         }
             break;
-        case 15:
+        case 10:
         {
             FeedbackViewController *vc = [[FeedbackViewController alloc] init];
-            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+            
+        }
+            break;
+        case 11:
+        {
+            NSString *urlStr =  [NSString stringWithFormat:@"%@member/mobile/focus_ware/list.jhtml",URL_PRE];
+            EDWKWebViewController *vc = [[EDWKWebViewController alloc] initWithUrlString:urlStr];
+            vc.isCollect = YES;
+            vc.titleStr = @"收藏";
+            //            HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
+            //            vc.noWebviewBack = YES;
+            //            vc.progressType = progress2;
+            //            vc.titleStr = @"收藏";
+            //            vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/focus_ware/list.jhtml",URL_PRE];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+        case 12:
+        {
+            SetupController *vc = [[SetupController alloc] init];
+            CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:vc];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self presentViewController:nav animated:YES completion:nil];
             });
