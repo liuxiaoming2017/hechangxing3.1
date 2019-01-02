@@ -35,7 +35,7 @@
 #import <UMCommonLog/UMCommonLogManager.h>
 
 #import "SBJson.h"
-#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+//#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 
 
 @interface AppDelegate ()<WXApiDelegate>
@@ -61,9 +61,9 @@
     
     
 //和缓医疗SDK注册,8248是和缓分配给的productId
-    HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:@"8248" isDebug:NO isDevelop:NO];
-    hhSdk.cerName = @"2cDevTest";
-    [[HHMSDK alloc] startWithOption:hhSdk];
+//    HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:@"8248" isDebug:NO isDevelop:NO];
+//    hhSdk.cerName = @"2cDevTest";
+//    [[HHMSDK alloc] startWithOption:hhSdk];
 
     [UMCommonLogManager setUpUMCommonLogManager];
     [UMConfigure setLogEnabled:YES];
