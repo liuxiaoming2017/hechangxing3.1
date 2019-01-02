@@ -128,11 +128,10 @@
         self.departmentNameLabel.text = model.doctorDept;
         self.CCLabel.text =  [NSString stringWithFormat:@"主诉: %@",model.mainSuit];
         
-        NSString *strday = [model.createTime substringWithRange:NSMakeRange(5,5)];
-        self.timeLabel.text = strday;
-        
-        NSString *strtime = [model.createTime substringWithRange:NSMakeRange(model.createTime.length - 8,5)];
-        self.createDateLabel.text = strtime;
+        NSString *littletimestr = [NSString stringWithFormat:@"%@",model.createTime];
+        self.createDateLabel.text = [self getDateStringWithTimeStr:littletimestr];
+        self.timeLabel.text          =  [self getDateStringWithOtherTimeStr:littletimestr];
+
 
         self.doctorNameLabel.hidden = NO;
         self.departmentNameLabel.hidden = NO;
@@ -229,6 +228,16 @@
     return currentDateStr;
 }
 
+
+-(NSString *)getDateStringWithOtherTimeStr:(NSString *)str{
+    NSTimeInterval time=[str doubleValue]/1000;//传入的时间戳str如果是精确到毫秒的记得要/1000
+    NSDate *detailDate=[NSDate dateWithTimeIntervalSince1970:time];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; //实例化一个NSDateFormatter对象
+    //设定时间格式,这里可以设置成自己需要的格式
+    [dateFormatter setDateFormat:@"MM月dd日"];
+    NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
+    return currentDateStr;
+}
 
 -(void)insertSublayerWithImageView:(UIImageView *)imageV
 {
