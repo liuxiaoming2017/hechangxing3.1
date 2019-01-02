@@ -15,6 +15,7 @@
 #import "RecommendReadView.h"
 #import "HCY_HomeImageModel.h"
 
+
 @interface HomePageController ()<UIScrollViewDelegate>
 
 @property (nonatomic,strong) UIScrollView *bgScrollView;
@@ -341,5 +342,8 @@
     }
     
 }
+
+
+
 
 @end

@@ -16,6 +16,7 @@
 #import "WKWebController.h"
 #import "InformationViewController.h"
 #import "HCY_ConsultingModel.h"
+#import "VersionUpdateView.h"
 
 @interface RecommendReadView()<UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -109,10 +110,11 @@
 //            [weakSelf.collectionV reloadData];
         
         }
-      
+      //  [weakSelf checkHaveUpdate];
 
     } failureBlock:^(NSError *error) {
         NSLog(@"%@",error);
+      //  [weakSelf checkHaveUpdate];
         [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
     
@@ -166,6 +168,67 @@
 
 - (void)tapGesture:(UITapGestureRecognizer *)tap
 {
+    
+}
+
+# pragma mark - 检查更新
+- (void)checkHaveUpdate
+{
+    //ios_hcy-oem-1.0 hcy_android_oem-oem-1.0
+    NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString *headStr = [NSString stringWithFormat:@"ios_hcy-oem-%@",nowVersion];
+    //headStr = @"hcy_android_oem-oem-1.0";
+    //为网络请求添加请求头
+    NSDictionary *headDic = @{@"version":headStr,@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+    
+    __weak typeof(self) weakSelf = self;
+    
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:@"versions_update/updateVersion.jhtml" headParameters:headDic parameters:nil successBlock:^(id response2) {
+        NSError *error = NULL;
+        id response = [NSJSONSerialization JSONObjectWithData:response2 options:0 error:&error];
+        if([[response objectForKey:@"status"] intValue] == 100){
+            NSDictionary *dic = [response objectForKey:@"data"];
+            NSInteger isUpdate = [[dic objectForKey:@"isUpdate"] integerValue];
+            if(isUpdate == 1){
+                
+                NSString *downUrl = @"https://itunes.apple.com/cn/app/id1440487968";
+                if([[UserShareOnce shareOnce].username isEqualToString:@"13665541112"] || [[UserShareOnce shareOnce].username isEqualToString:@"18163865881"]){
+                    return ;
+                }
+                [weakSelf showUpdateView:downUrl];
+                
+                NSLog(@"升级了");
+            }else{
+                
+            }
+        }
+        
+        NSLog(@"haha:%@",response);
+        
+    } failureBlock:^(NSError *error) {
+        
+    }];
+}
+
+- (void)showUpdateView:(NSString *)downUrl
+{
+    
+    [GlobalCommon addMaskView];
+    VersionUpdateView *updateView = [VersionUpdateView versionUpdateViewWithContent:@"发现新版本,是否升级"];
+    __weak __typeof(updateView)wupdateView = updateView;
+    updateView.versionUpdateBlock = ^(BOOL isUpdate){
+        
+        if(isUpdate){
+            NSURL *url = [NSURL URLWithString:downUrl];
+            if (url) {
+                [[UIApplication sharedApplication] openURL:url];
+            }
+        }
+        
+        [GlobalCommon removeMaskView];
+        [wupdateView removeFromSuperview];
+    };
+    [[UIApplication sharedApplication].keyWindow addSubview:updateView];
     
 }
 

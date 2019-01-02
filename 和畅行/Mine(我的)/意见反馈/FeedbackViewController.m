@@ -36,7 +36,7 @@
 
 - (void)goBack:(UIButton *)btn
 {
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad

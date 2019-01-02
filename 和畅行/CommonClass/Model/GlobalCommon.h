@@ -48,4 +48,9 @@
 +(NSString *)getStringWithSubjectSn:(NSString *)nameStr;
 
 +(NSString *)getNowTimeTimestamp;
+
++ (void)addMaskView;
+
++ (void)removeMaskView;
+
 @end

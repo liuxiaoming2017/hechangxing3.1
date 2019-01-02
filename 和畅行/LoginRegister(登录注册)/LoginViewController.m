@@ -239,27 +239,32 @@
 # pragma mark - 微信登录
 - (void)weixinBtnAction
 {
+    
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:APP_SECRET redirectURL:nil];
+    [self loginByWeiXin];
+
     /**
      *  MD5加密后的字符串
      */
-    NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",@"weixinPayHcyPhonePlugin"];
-    NSString *iPoneNumberMD5 = [[GlobalCommon md5:iPoneNumber] uppercaseString];
-    NSDictionary *dic = @{@"pluginname":@"weixinPayHcyPhonePlugin",
-                          @"token":iPoneNumberMD5};
-    
-    NSLog(@"%@",dic);
-    __weak typeof(self) weakSelf = self;
-    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:@"weiq/weiq/getWeiqSecret.jhtml" parameters:dic successBlock:^(id response) {
-        
-        NSString *str = [[response valueForKey:@"data"] valueForKey:@"secret"];
-        [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
-        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:APP_SECRET redirectURL:nil];
-        
-        [weakSelf loginByWeiXin];
-        
-    } failureBlock:^(NSError *error) {
-        NSLog(@"%@",error);
-    }];
+//    NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",@"weixinPayHcyPhonePlugin"];
+//    NSString *iPoneNumberMD5 = [[GlobalCommon md5:iPoneNumber] uppercaseString];
+//    NSDictionary *dic = @{@"pluginname":@"weixinPayHcyPhonePlugin",
+//                          @"token":iPoneNumberMD5};
+//
+//    NSLog(@"%@",dic);
+//    __weak typeof(self) weakSelf = self;
+//    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:@"weiq/weiq/getWeiqSecret.jhtml" parameters:dic successBlock:^(id response) {
+//
+//        NSString *str = [[response valueForKey:@"data"] valueForKey:@"secret"];
+//        if([GlobalCommon stringEqualNull:str]){
+//            str = APP_SECRET;
+//        }
+//        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:str redirectURL:nil];
+//        [weakSelf loginByWeiXin];
+//
+//    } failureBlock:^(NSError *error) {
+//        NSLog(@"%@",error);
+//    }];
     
 }
 

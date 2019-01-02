@@ -455,7 +455,7 @@
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
     
-    [request setPostValue:[MemberUserShance shareOnce].idNum forKey:@"memberId"];
+    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
     
     
     [request setTimeOutSeconds:20];

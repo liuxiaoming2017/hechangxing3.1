@@ -468,6 +468,7 @@
 # pragma mark -  病例列表
         //NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:testToken medicId:testMedicId];
         NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:[UserShareOnce shareOnce].userToken medicId:model.medicRecordId];
+        NSLog(@"token:%@,iddddd:%@",[UserShareOnce shareOnce].userToken,model.medicRecordId);
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = resultStr;
         vc.titleStr = @"病历详情";
