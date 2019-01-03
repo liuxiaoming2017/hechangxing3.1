@@ -6,6 +6,7 @@
 //
 
 #import "CustomNavigationController.h"
+#import "MoxaHelpViewController.h"
 
 @interface CustomNavigationController ()<UIGestureRecognizerDelegate>
 
@@ -38,6 +39,12 @@
     
     if ([[self valueForKey:@"_isTransitioning"] boolValue]) {
         return NO;
+    }
+    
+    if(self.viewControllers>0){
+        if([[self.viewControllers objectAtIndex:[self.viewControllers count] - 1] isKindOfClass:[MoxaHelpViewController class]]){
+            return NO;
+        }
     }
     
     // 解决右滑和UITableView左滑删除的冲突

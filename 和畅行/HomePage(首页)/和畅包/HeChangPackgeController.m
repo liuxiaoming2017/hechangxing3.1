@@ -10,6 +10,7 @@
 #import "GanYuSchemeController.h"
 #import "MySportController.h"
 #import "YueYaoController.h"
+#import "i9_MoxaMainViewController.h"
 
 
 #define yueleyi [NSString stringWithFormat:@"%@hcy/member/action/erxue",URL_PRE]
@@ -17,6 +18,8 @@
 #define yundong [NSString stringWithFormat:@"%@hcy/member/action/yundong",URL_PRE]
 
 #define yinyue [NSString stringWithFormat:@"%@hcy/member/action/yinyue",URL_PRE]
+
+#define aijiu [NSString stringWithFormat:@"%@hcy/member/action/aijiu",URL_PRE]
 
 @interface HeChangPackgeController ()
 @property (nonatomic,strong) UIProgressView *progressView;
@@ -58,6 +61,11 @@
     }else if ([strRequest isEqualToString:yinyue]){ //进入音乐
         decisionHandler(WKNavigationActionPolicyCancel);
         YueYaoController *vc = [[YueYaoController alloc] initWithType:NO];
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }else if ([strRequest isEqualToString:aijiu]){ //进入艾灸
+        decisionHandler(WKNavigationActionPolicyCancel);
+        i9_MoxaMainViewController *vc = [[i9_MoxaMainViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
         return;
     }
