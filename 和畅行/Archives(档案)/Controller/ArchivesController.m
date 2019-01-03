@@ -54,6 +54,12 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.filterBtn.hidden = NO;
+    if ([[UserShareOnce shareOnce].wherePop isEqualToString:@"血压"]) {
+        UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:105];
+        self.memberId = [UserShareOnce shareOnce].bloodMemberID;
+        [self selectIndexWithString:@"血压" withButton:btn];
+        [UserShareOnce shareOnce].wherePop = @"";
+    }
 }
 
 
@@ -145,11 +151,6 @@
     footer.stateLabel.textColor = RGB_TextAppBlue;
     self.timeLinvView.tableView.mj_footer = footer;
     
-    self.filterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.filterBtn.frame = CGRectMake(ScreenWidth-37-14, ScreenHeight-120, 36, 36);
-    [self.filterBtn setImage:[UIImage imageNamed:@"筛选"] forState:UIControlStateNormal];
-    [self.filterBtn addTarget:self action:@selector(filterBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [[UIApplication sharedApplication].keyWindow addSubview:self.filterBtn];
     
     self.sidebarVC = [[SidebarViewController alloc] init];
     [self.sidebarVC setBgRGB:0x000000];
@@ -162,7 +163,15 @@
         memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
     }
     
-    [self selectIndexWithString:@"最新"];
+    self.filterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.filterBtn.frame = CGRectMake(ScreenWidth-37-14, ScreenHeight-120, 36, 36);
+    [self.filterBtn setImage:[UIImage imageNamed:@"筛选"] forState:UIControlStateNormal];
+    [self.filterBtn addTarget:self action:@selector(filterBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.filterBtn];
+    
+     UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:100];
+     [self selectIndexWithString:@"最新" withButton:btn];
+    
     
 }
 
@@ -192,8 +201,25 @@
 
 
 //点击筛选确定走的方法
-- (void)selectIndexWithString:(NSString *)str
+- (void)selectIndexWithString:(NSString *)str withButton:(UIButton *)button
 {
+    
+    button.selected = !button.selected;
+    if(button.selected){
+        [button.layer setBorderColor:[UIColor redColor].CGColor];
+        [button setTitleColor:[UIColor redColor] forState:(UIControlStateSelected)];
+        NSLog(@"%lu",(unsigned long)button.state);
+    }
+    for(NSInteger i=0;i<12;i++){
+        UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:100+i];
+        if(button.tag != 100+i){
+            [btn.layer setBorderColor:UIColorFromHex(0XEEEEEE).CGColor];
+            [button setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+            btn.selected = NO;
+        }
+    }
+    
+    
     if ([str isEqualToString:@"最新"])        self.typeUrlInteger = 0;
     else if([str isEqualToString:@"经络"])    self.typeUrlInteger = 1;
     else if([str isEqualToString:@"体质"])    self.typeUrlInteger = 2;

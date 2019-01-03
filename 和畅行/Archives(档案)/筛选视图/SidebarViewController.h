@@ -10,7 +10,7 @@
 
 @protocol SidebarViewDelegate<NSObject>
 
-- (void)selectIndexWithString:(NSString *)str;
+- (void)selectIndexWithString:(NSString *)str withButton:(UIButton *)button;
 
 @end
 
