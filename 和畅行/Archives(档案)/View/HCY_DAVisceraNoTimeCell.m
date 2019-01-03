@@ -117,8 +117,9 @@
         self.departmentNameLabel.text = model.doctorDept;
         self.CCLabel.text =  [NSString stringWithFormat:@"主诉: %@",model.mainSuit];
         
-        NSString *strtime = [model.createTime substringWithRange:NSMakeRange(model.createTime.length - 8,5)];
-        self.createDateLabel.text = strtime;
+        NSString *littletimestr = [NSString stringWithFormat:@"%@",model.createTime];
+        self.createDateLabel.text = [self getDateStringWithTimeStr:littletimestr];
+        
         self.doctorNameLabel.hidden = NO;
         self.departmentNameLabel.hidden = NO;
         self.CCLabel.hidden = NO;
