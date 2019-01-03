@@ -229,7 +229,7 @@ static int const tick = 80;
 //    [self.view addSubview:commitBtn];
     
     [self.startCheck setImage:[UIImage imageNamed:@"血压04"] forState:UIControlStateNormal];
-    
+    self.isHidden = NO;
     self.nonDeviceCheck.enabled = NO;
     
 //    UIButton *reCheckBtn = [Tools creatButtonWithFrame:CGRectMake(50, kScreenSize.height==480 ? 400:450, kScreenSize.width-100, 40) target:self sel:@selector(reChekBtnClick:) tag:14 image:@"血压04" title:nil];
