@@ -83,30 +83,30 @@
 
 - (void)selectBtnAction:(UIButton *)button
 {
-    button.selected = !button.selected;
-    if(button.selected){
+//    button.selected = !button.selected;
+//    if(button.selected){
         self.selectTag = button.tag-100;
-        [button.layer setBorderColor:[UIColor redColor].CGColor];
-    }
-//    else{
-//        self.selectTag = -1;
-//       [button.layer setBorderColor:UIColorFromHex(0XEEEEEE).CGColor];
+//        [button.layer setBorderColor:[UIColor redColor].CGColor];
 //    }
-    
-    for(NSInteger i=0;i<12;i++){
-        UIButton *btn = (UIButton *)[self.contentView viewWithTag:100+i];
-        if(button.tag != 100+i){
-            [btn.layer setBorderColor:UIColorFromHex(0XEEEEEE).CGColor];
-            btn.selected = NO;
-        }
-    }
-    
+////    else{
+////        self.selectTag = -1;
+////       [button.layer setBorderColor:UIColorFromHex(0XEEEEEE).CGColor];
+////    }
+//
+//    for(NSInteger i=0;i<12;i++){
+//        UIButton *btn = (UIButton *)[self.contentView viewWithTag:100+i];
+//        if(button.tag != 100+i){
+//            [btn.layer setBorderColor:UIColorFromHex(0XEEEEEE).CGColor];
+//            btn.selected = NO;
+//        }
+//    }
+//
     if(self.selectTag == -1){
         return;
     }else{
-        if([self.delegate respondsToSelector:@selector(selectIndexWithString:)]){
+        if([self.delegate respondsToSelector:@selector(selectIndexWithString:withButton:)]){
             NSString *str = [self.titleArr objectAtIndex:self.selectTag];
-            [self.delegate selectIndexWithString:str];
+            [self.delegate selectIndexWithString:str withButton:button];
             [self autoShowHideSidebar];
         }
     }

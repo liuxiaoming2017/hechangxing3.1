@@ -568,14 +568,22 @@
 //查看档案
 - (void)lookClickBtn:(UIButton *)btn{
     
-    UITabBarController *main = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
-    main.selectedIndex = 1;
-    UINavigationController *nav = main.selectedViewController;
-    ArchivesController *vc = (ArchivesController *)nav.topViewController;
-    vc.currentIndex = 5;
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    UIViewController *controller = app.window.rootViewController;
+    UITabBarController  *rvc = (UITabBarController  *)controller;
+    [rvc setSelectedIndex:1];
+    [UserShareOnce shareOnce].wherePop = @"血压";
+    [UserShareOnce shareOnce].bloodMemberID = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];;
+    [self.navigationController popToRootViewControllerAnimated:YES];
     
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    window.rootViewController = main;
+//    UITabBarController *main = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
+//    main.selectedIndex = 1;
+//    UINavigationController *nav = main.selectedViewController;
+//    ArchivesController *vc = (ArchivesController *)nav.topViewController;
+//    vc.currentIndex = 5;
+//
+//    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+//    window.rootViewController = main;
     
 }
 @end

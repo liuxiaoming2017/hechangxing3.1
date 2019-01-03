@@ -59,7 +59,6 @@
     
     [[UITabBar appearance] setTranslucent:NO];
     
-    
 //和缓医疗SDK注册,8248是和缓分配给的productId
 //    HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:@"8248" isDebug:NO isDevelop:NO];
 //    hhSdk.cerName = @"2cDevTest";

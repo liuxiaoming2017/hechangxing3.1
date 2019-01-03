@@ -51,6 +51,9 @@
 
 @property (nonatomic,assign) BOOL isRefresh; //一点一说一写 返回首页 刷新和畅提醒判断
 
+@property (nonatomic,copy) NSString *wherePop; //从哪里pop回来的
+@property (nonatomic,copy) NSString *bloodMemberID; //血压ID
+
 + (UserShareOnce *)shareOnce;
 +(void)attemptDealloc;
 @end

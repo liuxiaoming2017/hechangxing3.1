@@ -18,11 +18,10 @@
 static int const tick = 80;
 
 @interface PressureViewController ()<MBProgressHUDDelegate,ASIHTTPRequestDelegate,UITableViewDataSource,UITableViewDelegate>
-{
-    UILabel *_pulseLabel;
-    UILabel *_shrinkPressureLabel;
-    UILabel *_diastolicPressureLabel;
-}
+
+@property (nonatomic,strong)UILabel *pulseLabel;
+@property (nonatomic,strong)UILabel *shrinkPressureLabel;
+@property (nonatomic,strong)UILabel *diastolicPressureLabel;
 @property (nonatomic,strong)HHBlueToothManager *manager;
 /**imageViewImage*/
 @property (nonatomic,strong) UIImageView *imageViewImage;
@@ -48,16 +47,14 @@ static int const tick = 80;
 /**subId*/
 @property (nonatomic,copy) NSString *subId;
 
+@property (nonatomic,assign) BOOL isHidden;
+
 @end
 
 @implementation PressureViewController
 
 -(void)dealloc{
-    
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kPERIPHERAL_DATA object:nil];
-    
-    self.timer = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 //- (void)goBack:(UIButton *)btn
@@ -67,8 +64,10 @@ static int const tick = 80;
 
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+     [_timer invalidate];
     self.timer = nil;
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -78,6 +77,15 @@ static int const tick = 80;
     
     //血压检测
     [self bloodTest];
+    self.isHidden = NO;
+    
+//    UIButton *lookBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [lookBtn setBackgroundImage:[UIImage imageNamed:@"look"] forState:UIControlStateNormal];
+//    [lookBtn setTitle:@"查看档案" forState:UIControlStateNormal];
+//    lookBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+//    lookBtn.frame = CGRectMake(100 ,200, 100, 40);
+//    [lookBtn addTarget:self action:@selector(lookClickBtn:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:lookBtn];
 }
 
 -(void)backClick:(UIButton *)button{
@@ -192,6 +200,7 @@ static int const tick = 80;
     
     
     [self createButton];
+    
 }
 
 
@@ -220,7 +229,7 @@ static int const tick = 80;
 //    [self.view addSubview:commitBtn];
     
     [self.startCheck setImage:[UIImage imageNamed:@"血压04"] forState:UIControlStateNormal];
-    
+    self.isHidden = NO;
     self.nonDeviceCheck.enabled = NO;
     
 //    UIButton *reCheckBtn = [Tools creatButtonWithFrame:CGRectMake(50, kScreenSize.height==480 ? 400:450, kScreenSize.width-100, 40) target:self sel:@selector(reChekBtnClick:) tag:14 image:@"血压04" title:nil];
@@ -257,6 +266,7 @@ static int const tick = 80;
 
 -(void)commitBtnClick:(UIButton *)button{
   
+    
     if([GlobalCommon isManyMember]){
         __weak typeof(self) weakSelf = self;
         SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
@@ -327,34 +337,36 @@ static int const tick = 80;
     
     self.manager = [[HHBlueToothManager alloc] init];
     
+    
+    __weak typeof(self) weakSelf = self;
     [[NSNotificationCenter defaultCenter] addObserverForName:kCONNECTED_STATE_CHANGED object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-        NSLog(@"蓝牙连接状态：%@",self.manager.connectState);
-        if ([self.manager.connectState isEqualToString:kCONNECTED_POWERD_ON]) {
+        NSLog(@"蓝牙连接状态：%@",weakSelf.manager.connectState);
+        if ([weakSelf.manager.connectState isEqualToString:kCONNECTED_POWERD_ON]) {
             NSLog(@"蓝牙已经打开，等待搜寻设备的services和characteristics");
         }
     }];
     [[NSNotificationCenter defaultCenter] addObserverForName:kPERIPHERAL_CONNECTED object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
         NSLog(@"外设已连接，可以开始测量");
         
-        self.stateLabel.text = @"已连接";
-        self.imageViewImage.image = [UIImage imageNamed:@"connectedImage"];
-        self.startCheck.enabled = YES;
+        weakSelf.stateLabel.text = @"已连接";
+        weakSelf.imageViewImage.image = [UIImage imageNamed:@"connectedImage"];
+        weakSelf.startCheck.enabled = YES;
     }];
     
     [[NSNotificationCenter defaultCenter] addObserverForName:kPERIPHERAL_CONNECT_FAILED object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
         NSLog(@"外设连接失败");
         //        [SVProgressHUD showInfoWithStatus:@"设备连接失败"];
         
-        self.stateLabel.text = @"未连接";
-        self.imageViewImage.image = [UIImage imageNamed:@"unconnectedImage"];
-        self.startCheck.enabled = NO;
+        weakSelf.stateLabel.text = @"未连接";
+        weakSelf.imageViewImage.image = [UIImage imageNamed:@"unconnectedImage"];
+        weakSelf.startCheck.enabled = NO;
     }];
     [[NSNotificationCenter defaultCenter] addObserverForName:kPERIPHERAL_DISCONNECTED object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
         NSLog(@"外设断开连接");
         
-        self.stateLabel.text = @"未连接";
-        self.imageViewImage.image = [UIImage imageNamed:@"unconnectedImage"];
-        self.startCheck.enabled = NO;
+        weakSelf.stateLabel.text = @"未连接";
+        weakSelf.imageViewImage.image = [UIImage imageNamed:@"unconnectedImage"];
+        weakSelf.startCheck.enabled = NO;
         
     }];
     
@@ -366,7 +378,7 @@ static int const tick = 80;
         
         if (dataArray.count > 0) {
             
-            self.commitBtn.enabled = YES;
+            weakSelf.commitBtn.enabled = YES;
             NSString *pulseLabelStr = @"";
             NSString *shrinkPressureLabelStr = @"";
             NSString *diastolicPressureLabelStr = @"";
@@ -385,10 +397,15 @@ static int const tick = 80;
             if([pulseLabelStr isEqualToString:@"255"] && [shrinkPressureLabelStr isEqualToString:@"255"] && [diastolicPressureLabelStr isEqualToString:@"255"]){
                 
             }else{
-                self.boodArray = dataArray;
-                self->_pulseLabel.text = [NSString stringWithFormat:@"%@ /",pulseLabelStr];
-                self->_shrinkPressureLabel.text = [NSString stringWithFormat:@"%@ /",shrinkPressureLabelStr];
-                self->_diastolicPressureLabel.text = [NSString stringWithFormat:@"%@ /",diastolicPressureLabelStr];
+                weakSelf.boodArray = dataArray;
+                weakSelf.pulseLabel.text = [NSString stringWithFormat:@"%@ /",pulseLabelStr];
+                weakSelf.shrinkPressureLabel.text = [NSString stringWithFormat:@"%@ /",shrinkPressureLabelStr];
+                weakSelf.diastolicPressureLabel.text = [NSString stringWithFormat:@"%@ /",diastolicPressureLabelStr];
+                if(weakSelf.isHidden == NO){
+                    weakSelf.isHidden = YES;
+                    [weakSelf commitBtnClick:nil];
+                    [weakSelf stopTimer];
+                }
             }
         }
         
@@ -766,28 +783,21 @@ static int const tick = 80;
     
     if (self.timeCount == 1) {
         [self stopTimer];
-        
-        [self commitBtnClick:nil];
+       
     }
 }
 
 //查看档案
 - (void)lookClickBtn:(UIButton *)btn{
     
-    UITabBarController *main = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
-    main.selectedIndex = 1;
-    UINavigationController *nav = main.selectedViewController;
-    ArchivesController *vc = (ArchivesController *)nav.topViewController;
-    vc.memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
-    [vc selectIndexWithString:@"血压"];
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    window.rootViewController = main;
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    UIViewController *controller = app.window.rootViewController;
+    UITabBarController  *rvc = (UITabBarController  *)controller;
+    [rvc setSelectedIndex:1];
+    [UserShareOnce shareOnce].wherePop = @"血压";
+    [UserShareOnce shareOnce].bloodMemberID = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];;
+    [self.navigationController popToRootViewControllerAnimated:YES];
     
-//    MainViewController *main = [[MainViewController alloc] init];
-//    main.tabBarIndexSelected = 1;
-//    main.selectIndex = 5;//定位到血压
-//    main.memberId = [NSString stringWithFormat:@"%@",self.subId];
-//    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-//    window.rootViewController = main;
+
 }
 @end
