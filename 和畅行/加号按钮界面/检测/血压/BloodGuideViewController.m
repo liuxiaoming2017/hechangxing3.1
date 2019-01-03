@@ -15,6 +15,11 @@
 
 @implementation BloodGuideViewController
 
+- (void)dealloc
+{
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

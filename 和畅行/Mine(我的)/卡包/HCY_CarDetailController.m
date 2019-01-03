@@ -267,7 +267,7 @@
         HCY_CallController *vc = [[HCY_CallController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }else{
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4008118899"]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
     }
 }
 

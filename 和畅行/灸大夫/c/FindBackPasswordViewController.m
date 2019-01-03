@@ -99,7 +99,7 @@
 
 
 - (IBAction)mConnectServiceOnclinck:(id)sender {
-    NSMutableString * strPhone =[[NSMutableString alloc] initWithFormat:@"tel:%@",@"4009668187"];
+    NSMutableString * strPhone =[[NSMutableString alloc] initWithFormat:@"tel:%@",@"4006776668"];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strPhone]];
 }
 

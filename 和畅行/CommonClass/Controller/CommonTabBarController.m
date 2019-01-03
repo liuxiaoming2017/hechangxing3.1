@@ -83,7 +83,7 @@
             break;
         case 2:
             if([UserShareOnce shareOnce].isOnline){
-               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4008118899"]];
+               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
             }else{
                  vc = [[YueYaoController alloc] initWithType:NO];
             }
@@ -115,7 +115,7 @@
             vc = [[AdvisorysViewController alloc] init];
             break;
         case 5:
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4008118899"]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
             break;
         case 6:{
             i9_MoxaMainViewController * vc1 = [[i9_MoxaMainViewController alloc] init];

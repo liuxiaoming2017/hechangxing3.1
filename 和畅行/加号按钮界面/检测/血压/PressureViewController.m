@@ -14,7 +14,7 @@
 #import "LoginViewController.h"
 #import "SubMemberView.h"
 #import "NSObject+SBJson.h"
-
+#import "ArchivesController.h"
 static int const tick = 80;
 
 @interface PressureViewController ()<MBProgressHUDDelegate,ASIHTTPRequestDelegate,UITableViewDataSource,UITableViewDelegate>
@@ -365,22 +365,41 @@ static int const tick = 80;
         NSArray *dataArray = note.userInfo[@"dataArray"];
         
         if (dataArray.count > 0) {
-            self.boodArray = dataArray;
-            self.commitBtn.enabled = YES;
             
-            self->_pulseLabel.text = [NSString stringWithFormat:@"%@ /",dataArray[5]];
-            self->_shrinkPressureLabel.text = [NSString stringWithFormat:@"%@ /",dataArray[3]];
-            self->_diastolicPressureLabel.text = [NSString stringWithFormat:@"%@ /",dataArray[4]];
+            self.commitBtn.enabled = YES;
+            NSString *pulseLabelStr = @"";
+            NSString *shrinkPressureLabelStr = @"";
+            NSString *diastolicPressureLabelStr = @"";
+            if(dataArray.count>5){
+                pulseLabelStr = [dataArray[5] stringValue];
+               //self->_pulseLabel.text = [NSString stringWithFormat:@"%@ /",dataArray[5]];
+            }
+            if(dataArray.count>3){
+                shrinkPressureLabelStr = [dataArray[3] stringValue];
+                //self->_shrinkPressureLabel.text = [NSString stringWithFormat:@"%@ /",dataArray[3]];
+            }
+            if(dataArray.count>4){
+                diastolicPressureLabelStr = [dataArray[4] stringValue];
+                //self->_diastolicPressureLabel.text = [NSString stringWithFormat:@"%@ /",dataArray[4]];
+            }
+            if([pulseLabelStr isEqualToString:@"255"] && [shrinkPressureLabelStr isEqualToString:@"255"] && [diastolicPressureLabelStr isEqualToString:@"255"]){
+                
+            }else{
+                self.boodArray = dataArray;
+                self->_pulseLabel.text = [NSString stringWithFormat:@"%@ /",pulseLabelStr];
+                self->_shrinkPressureLabel.text = [NSString stringWithFormat:@"%@ /",shrinkPressureLabelStr];
+                self->_diastolicPressureLabel.text = [NSString stringWithFormat:@"%@ /",diastolicPressureLabelStr];
+            }
         }
         
     }];
     
     //开启一个线程接收数据
-    dispatch_queue_t queue = dispatch_queue_create("com.huaxinlongma.handleDataQueue", NULL);
-    dispatch_async(queue, ^{
-        
-        
-    }) ;
+//    dispatch_queue_t queue = dispatch_queue_create("com.huaxinlongma.handleDataQueue", NULL);
+//    dispatch_async(queue, ^{
+//        
+//        
+//    }) ;
     
 }
 
@@ -754,6 +773,15 @@ static int const tick = 80;
 
 //查看档案
 - (void)lookClickBtn:(UIButton *)btn{
+    
+    UITabBarController *main = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
+    main.selectedIndex = 1;
+    UINavigationController *nav = main.selectedViewController;
+    ArchivesController *vc = (ArchivesController *)nav.topViewController;
+    vc.memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
+    [vc selectIndexWithString:@"血压"];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    window.rootViewController = main;
     
 //    MainViewController *main = [[MainViewController alloc] init];
 //    main.tabBarIndexSelected = 1;
