@@ -58,10 +58,6 @@
         [selectBtn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
         [selectBtn addTarget:self action:@selector(selectBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         
-        if(i == 0) {
-            selectBtn.selected = YES;
-            [selectBtn.layer setBorderColor:[UIColor redColor].CGColor];
-        }
         [self.contentView addSubview:selectBtn];
         
     }
@@ -81,26 +77,9 @@
     
 }
 
-- (void)selectBtnAction:(UIButton *)button
-{
-//    button.selected = !button.selected;
-//    if(button.selected){
-        self.selectTag = button.tag-100;
-//        [button.layer setBorderColor:[UIColor redColor].CGColor];
-//    }
-////    else{
-////        self.selectTag = -1;
-////       [button.layer setBorderColor:UIColorFromHex(0XEEEEEE).CGColor];
-////    }
-//
-//    for(NSInteger i=0;i<12;i++){
-//        UIButton *btn = (UIButton *)[self.contentView viewWithTag:100+i];
-//        if(button.tag != 100+i){
-//            [btn.layer setBorderColor:UIColorFromHex(0XEEEEEE).CGColor];
-//            btn.selected = NO;
-//        }
-//    }
-//
+- (void)selectBtnAction:(UIButton *)button {
+    
+    self.selectTag = button.tag-100;
     if(self.selectTag == -1){
         return;
     }else{
@@ -110,6 +89,7 @@
             [self autoShowHideSidebar];
         }
     }
+    
 }
 
 - (void)sureBtnAction:(UIButton *)button

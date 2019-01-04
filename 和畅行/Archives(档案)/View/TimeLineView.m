@@ -164,7 +164,6 @@
     if (self.typeInteger == 1|| self.typeInteger == 2||self.typeInteger == 0) {
         
         HealthTipsModel *model = _dataArr[indexPath.row];
-        NSLog(@"========%@  ",model.createTime);
 
         if(indexPath.row == 0 ){
             TimeLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
@@ -195,8 +194,6 @@
         }else{
             
             HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
-            NSLog(@"--------%@  ",onAmodel.createTime);
-            NSLog(@"-=-=-=-=-=%@   %@",onAmodel.createTime,model.createTime);
             if ([model.createTime isEqualToString:onAmodel.createTime]) {
                 
                 NoTimeLineCell * cell =[tableView dequeueReusableCellWithIdentifier:@"cell2"];

@@ -53,7 +53,6 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.filterBtn.hidden = NO;
     if ([[UserShareOnce shareOnce].wherePop isEqualToString:@"血压"]) {
         UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:105];
         self.memberId = [UserShareOnce shareOnce].bloodMemberID;
@@ -167,7 +166,8 @@
     self.filterBtn.frame = CGRectMake(ScreenWidth-37-14, ScreenHeight-120, 36, 36);
     [self.filterBtn setImage:[UIImage imageNamed:@"筛选"] forState:UIControlStateNormal];
     [self.filterBtn addTarget:self action:@selector(filterBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [[UIApplication sharedApplication].keyWindow addSubview:self.filterBtn];
+    [self.view addSubview:self.filterBtn];
+//    [[UIApplication sharedApplication].keyWindow addSubview:self.filterBtn];
     
      UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:100];
      [self selectIndexWithString:@"最新" withButton:btn];
@@ -208,7 +208,6 @@
     if(button.selected){
         [button.layer setBorderColor:[UIColor redColor].CGColor];
         [button setTitleColor:[UIColor redColor] forState:(UIControlStateSelected)];
-        NSLog(@"%lu",(unsigned long)button.state);
     }
     for(NSInteger i=0;i<12;i++){
         UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:100+i];
@@ -460,6 +459,7 @@
                 break;
         }
         [self createWKWebviewWithUrlStr:urlStr];
+        [self.view addSubview:self.filterBtn];
         return;
     }
     
@@ -605,8 +605,6 @@
 
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    self.filterBtn.hidden = YES;
-    
     if (self.timeLinvView.hud){
         [self.timeLinvView.hud hideAnimated:YES];
     }
