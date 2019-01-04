@@ -164,6 +164,7 @@
     if (self.typeInteger == 1|| self.typeInteger == 2||self.typeInteger == 0) {
         
         HealthTipsModel *model = _dataArr[indexPath.row];
+        NSLog(@"========%@  ",model.createTime);
 
         if(indexPath.row == 0 ){
             TimeLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
@@ -193,8 +194,9 @@
             return cell;
         }else{
             
-           
             HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
+            NSLog(@"--------%@  ",onAmodel.createTime);
+            NSLog(@"-=-=-=-=-=%@   %@",onAmodel.createTime,model.createTime);
             if ([model.createTime isEqualToString:onAmodel.createTime]) {
                 
                 NoTimeLineCell * cell =[tableView dequeueReusableCellWithIdentifier:@"cell2"];
@@ -357,7 +359,7 @@
     
     NSString *idNim = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
     
-    NSString *url = [[NSString alloc] initWithFormat:@"%@/member/service/reports.jhtml?memberChildId=%@&quarter=%@&year=%@",URL_PRE,idNim,model.quarter,model.year];
+    NSString *url = [[NSString alloc] initWithFormat:@"%@/member/service/reports.jhtml?memberChildId=%@&quarter=%@&year=%@",URL_PRE,idNim,self.topModel.quarter,self.topModel.year];
     ResultSpeakController *vc = [[ResultSpeakController alloc] init];
     vc.urlStr = url;
     vc.titleStr = @"季度报告详情";
