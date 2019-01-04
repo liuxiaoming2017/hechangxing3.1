@@ -146,9 +146,9 @@
 {
     
     NSData *data = characteristic.value;
-    NSLog(@"data:%@",data);
+    //NSLog(@"data:%@",data);
     NSMutableArray *array = [self handleTheData:data];
-    NSLog(@"获取的血压数据：%@",array);
+    //NSLog(@"获取的血压数据：%@",array);
     
     if (array) {
         NSDictionary *dict = @{@"dataArray":array};

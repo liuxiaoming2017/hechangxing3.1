@@ -309,6 +309,7 @@
 
 -(void)pushAction {
     
+    NSLog(@"pushModel.link:%@",_pushModel.link);
     if(_pushModel.link==nil||[_pushModel.link isKindOfClass:[NSNull class]]||_pushModel.link.length == 0){
         
         [self tapAction];
