@@ -42,6 +42,7 @@
     
     if ([UserShareOnce shareOnce].isRefresh){
         [self requestPackgeNetWork];
+         [self requestUI];
         [UserShareOnce shareOnce].isRefresh = NO;
     }
 }
