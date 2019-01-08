@@ -141,9 +141,6 @@
         self.packgeView.toViewButton.frame = CGRectMake(ScreenWidth/2.0 - 136, self.imageV.bottom - 20, 272, 40);
 
         [self.packgeView.toViewButton sd_setBackgroundImageWithURL:url forState:UIControlStateNormal];
-    }else {
-        self.packgeView.toViewButton.frame = CGRectMake(ScreenWidth/2.0 - 136, self.imageV.bottom - 30, 272, 60);
-        [self.packgeView.toViewButton setBackgroundImage:[UIImage imageNamed:@"和畅包"] forState:(UIControlStateNormal)];
     }
     
     

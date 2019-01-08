@@ -80,7 +80,7 @@
     
     self.toViewButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [self.toViewButton addTarget:self action:@selector(pushAction) forControlEvents:(UIControlEventTouchUpInside)];
-    self.toViewButton.frame = CGRectMake(ScreenWidth/2.0 - 136, self.imageV.bottom - 20, 272, 40);
+    self.toViewButton.frame = CGRectMake(ScreenWidth/2.0 - 136, self.imageV.bottom - 25, 272, 60);
     [self addSubview:self.toViewButton];
 
     
