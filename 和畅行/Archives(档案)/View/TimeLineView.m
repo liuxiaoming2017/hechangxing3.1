@@ -498,6 +498,7 @@
     
     //血压
     if (![GlobalCommon stringEqualNull:model.highPressure ] ||[model.type isEqualToString:@"BLOOD"] ) {
+        
         NSString *urlStr;
         //            if ([model.type isEqualToString:@"BLOOD"]){
         //                if([GlobalCommon stringEqualNull:model.link]) return;
@@ -541,7 +542,7 @@
         //                if([GlobalCommon stringEqualNull:model.link]) return;
         //                urlStr= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
         //            }else{
-        urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(20)];
+        urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(40)];
         //            }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = urlStr;
@@ -558,7 +559,7 @@
         //                if([GlobalCommon stringEqualNull:model.link]) return;
         //                urlStr= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
         //            }else{
-        urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(40)];
+        urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(60)];
 
         //            }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
