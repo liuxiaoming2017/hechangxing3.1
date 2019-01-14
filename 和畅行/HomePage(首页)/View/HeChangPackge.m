@@ -80,7 +80,7 @@
     
     self.toViewButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [self.toViewButton addTarget:self action:@selector(pushAction) forControlEvents:(UIControlEventTouchUpInside)];
-    self.toViewButton.frame = CGRectMake(ScreenWidth/2.0 - 136, self.imageV.bottom - 20, 272, 40);
+    self.toViewButton.frame = CGRectMake(ScreenWidth/2.0 - 136, self.imageV.bottom - 25, 272, 60);
     [self addSubview:self.toViewButton];
 
     
@@ -224,6 +224,8 @@
 //    }
     NSString *str = @"您未完成和畅体检,全部完成体检后定制属于您的和畅服务包";
     self.remindLabel.text = str;
+    [self.toViewButton setBackgroundImage:[UIImage imageNamed:@"和畅包未检测"] forState:(UIControlStateNormal)];
+
 }
 
 
@@ -289,6 +291,8 @@
 {
     NSString *str = [NSString stringWithFormat:@"您属于%@的%@型，点击查看我们为您定制的和畅服务包",str1,str2];
     self.remindLabel.text = str;
+    [self.toViewButton setBackgroundImage:[UIImage imageNamed:@"和畅包"] forState:(UIControlStateNormal)];
+
 }
 
 - (void)tapAction
