@@ -124,7 +124,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    NSLog(@"hahha:%@",self.titleLabel.text);
 //    if(self.PlayOrdownload){
 //        if(selected){
 //            [self.downloadBtn setImage:[UIImage imageNamed:@"New_yy_zt_bf"] forState:UIControlStateNormal];

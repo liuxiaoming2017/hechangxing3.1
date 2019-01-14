@@ -122,8 +122,8 @@
 //为cell 赋值
 - (void)assignmentVisceraWithModel:(HealthTipsModel *)model{
     
-    
-    if (model.medicRecordId!=nil&&![model.medicRecordId isKindOfClass:[NSNull class]]&&model.medicRecordId.length!=0){
+//档案  病例
+    if (![GlobalCommon stringEqualNull:model.medicRecordId]){
         self.doctorNameLabel.text = model.doctorName;
         self.departmentNameLabel.text = model.doctorDept;
         self.CCLabel.text =  [NSString stringWithFormat:@"主诉: %@",model.mainSuit];
@@ -131,15 +131,13 @@
         NSString *littletimestr = [NSString stringWithFormat:@"%@",model.createTime];
         self.createDateLabel.text = [self getDateStringWithTimeStr:littletimestr];
         self.timeLabel.text          =  [self getDateStringWithOtherTimeStr:littletimestr];
-
-
+        
         self.doctorNameLabel.hidden = NO;
         self.departmentNameLabel.hidden = NO;
         self.CCLabel.hidden = NO;
         self.typeLabel.hidden = YES;
         self.topLabel.hidden = YES;
         self.lowLabel.hidden = YES;
-        
         
     }else {
         
@@ -182,35 +180,37 @@
         self.lowLabel.frame = CGRectMake(self.typeLabel.right, self.topLabel.bottom  , ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2-13);
         
         self.typeLabel.attributedText = attributedString1;
-    }else{
-        self.typeLabel.frame = CGRectMake(self.imageV.left+15, self.imageV.top, 80, self.imageV.height);
-        self.topLabel.frame = CGRectMake(self.typeLabel.right, self.imageV.top + 13, ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2 - 13);
-        self.lowLabel.frame = CGRectMake(self.typeLabel.right, self.topLabel.bottom  , ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2-13);
-
+        
+        if( model.zz_name_str == nil || [model.zz_name_str isKindOfClass:[NSNull class]]||model.zz_name_str.length == 0) {
+            self.topLabel.text = [model.subject valueForKey:@"name"];
+            if(model.content != nil&&![model.content isKindOfClass:[NSNull class]]&&model.content.length != 0){
+                self.lowLabel.text = model.content;
+            }else {
+                self.lowLabel.text =  @"暂无心电图医生提示";
+            }
+        }else {
+            self.topLabel.text = model.zz_name_str;
+            self.lowLabel.text = model.icd_name_str;
+        }
+        
     }
     
     if (![model.physique_id isKindOfClass:[NSNull class]]&&model.physique_id!=nil&&model.physique_id.length!=0) {
         
+        self.typeLabel.frame = CGRectMake(self.imageV.left+15, self.imageV.top, 80, self.imageV.height);
+        self.topLabel.frame = CGRectMake(self.typeLabel.right, self.imageV.top + 13, ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2 - 13);
+        self.lowLabel.frame = CGRectMake(self.typeLabel.right, self.topLabel.bottom  , ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2-13);
+
         NSMutableAttributedString * attributedString1 = [[NSMutableAttributedString alloc] initWithString:@"症状选择:\nICD-10:"];
         NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
         [paragraphStyle1 setLineSpacing:8];
         [attributedString1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [attributedString1 length])];
         
         self.typeLabel.attributedText = attributedString1;
-
-    }
-    
-    
-    if( model.zz_name_str == nil || [model.zz_name_str isKindOfClass:[NSNull class]]||model.zz_name_str.length == 0) {
-        self.topLabel.text = [model.subject valueForKey:@"name"];
-        if(model.content != nil&&![model.content isKindOfClass:[NSNull class]]&&model.content.length != 0){
-            self.lowLabel.text = model.content;
-        }else {
-            self.lowLabel.text =  @"暂无心电图医生提示";
-        }
-    }else {
+        
         self.topLabel.text = model.zz_name_str;
         self.lowLabel.text = model.icd_name_str;
+
     }
     
     

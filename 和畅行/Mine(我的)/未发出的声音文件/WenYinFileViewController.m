@@ -246,13 +246,13 @@
     NSLog(@"%@",dic);
     if ([status intValue]==100)
     {
-        LPPopup *popup = [LPPopup popupWithText:@"您的录音已成功上传，正在进行分析。分析报告审核完成后，会发送至您的手机上，请注意查收。"];
+//        LPPopup *popup = [LPPopup popupWithText:@"您的录音已成功上传，正在进行分析。分析报告审核完成后，会发送至您的手机上，请注意查收。"];
         CGPoint point=self.view.center;
-        point.y=point.y+130;
-        [popup showInView:self.view
-            centerAtPoint:point
-                 duration:5.0f
-               completion:nil];
+//        point.y=point.y+130;
+//        [popup showInView:self.view
+//            centerAtPoint:point
+//                 duration:5.0f
+//               completion:nil];
         NSFileManager *fileMgr = [NSFileManager defaultManager];
         BOOL bRet = [fileMgr fileExistsAtPath:self.fieldpath];
         if (bRet) {

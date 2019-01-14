@@ -245,6 +245,7 @@
 //    }
     NSString *memberId = [NSString stringWithFormat:@"%@",model.idNum];
     self.myBlock(memberId);
+    self.mynameBlock(model.name);
     [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%@",@(indexPath.row)] forKey:@"selectedMemberIndex"];
     [[NSUserDefaults standardUserDefaults] setObject:memberId forKey:@"selectedMemberId"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -265,6 +266,10 @@
     }
 }
 
-
+-(void)receiveNameWith:(SelectNameCellBlock)block{
+    if(!self.mynameBlock) {
+        self.mynameBlock = [block copy];
+    }
+}
 
 @end

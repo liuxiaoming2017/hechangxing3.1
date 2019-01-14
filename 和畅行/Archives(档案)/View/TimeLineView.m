@@ -57,41 +57,44 @@
 
 -(void)relodTableViewWitDataArray:(NSMutableArray *)dataArray withType:(NSInteger)type {
     self.typeInteger = type;
-   
-    if (self.typeInteger == 0){
-        if (dataArray.count > 0){
-            HealthTipsModel *model = dataArray[0];
-            if (model.quarter != nil && ![model.quarter isKindOfClass:[NSNull class]]&&model.quarter.length != 0) {
-                self.topModel = model;
-                [dataArray removeObjectAtIndex:0];
-            }
-        }
-    }
-    
     self.dataArr = dataArray;
-        
-    if (_typeInteger == 0) {
-         self.dataArr = [self.dataArr  sortedArrayUsingComparator:^(HealthTipsModel *model1, HealthTipsModel *model2) {
-             
-            NSTimeInterval time1=[model1.createDate doubleValue]/1000;
-            NSTimeInterval time2=[model2.createDate doubleValue]/1000;
-            NSDate *detailDate1=[NSDate dateWithTimeIntervalSince1970:time1];
-            NSDate *detailDate2=[NSDate dateWithTimeIntervalSince1970:time2];
-
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat: @"yyyy/MM/dd HH:mm"];
-             
-            if (detailDate1 == [detailDate1 earlierDate: detailDate2]) {
-                return NSOrderedDescending;
-            }else if (detailDate1 == [detailDate1 laterDate: detailDate2]) {
-                return NSOrderedAscending;//升序
-            }else{
-                
-                return NSOrderedSame;//相等
-            }
-        }];
-    }
     [self.tableView reloadData];
+    
+    //档案最新
+    //    if (self.typeInteger == 0){
+    //        if (dataArray.count > 0){
+    //            HealthTipsModel *model = dataArray[0];
+    //            if (model.quarter != nil && ![model.quarter isKindOfClass:[NSNull class]]&&model.quarter.length != 0) {
+    //                self.topModel = model;
+    //                [dataArray removeObjectAtIndex:0];
+    //            }
+    //        }
+    //    }
+    //
+    //    self.dataArr = dataArray;
+    //
+    //    if (_typeInteger == 0) {
+    //         self.dataArr = [self.dataArr  sortedArrayUsingComparator:^(HealthTipsModel *model1, HealthTipsModel *model2) {
+    //
+    //            NSTimeInterval time1=[model1.createDate doubleValue]/1000;
+    //            NSTimeInterval time2=[model2.createDate doubleValue]/1000;
+    //            NSDate *detailDate1=[NSDate dateWithTimeIntervalSince1970:time1];
+    //            NSDate *detailDate2=[NSDate dateWithTimeIntervalSince1970:time2];
+    //
+    //            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //            [dateFormatter setDateFormat: @"yyyy/MM/dd HH:mm"];
+    //
+    //            if (detailDate1 == [detailDate1 earlierDate: detailDate2]) {
+    //                return NSOrderedDescending;
+    //            }else if (detailDate1 == [detailDate1 laterDate: detailDate2]) {
+    //                return NSOrderedAscending;//升序
+    //            }else{
+    //
+    //                return NSOrderedSame;//相等
+    //            }
+    //        }];
+    //    }
+    //    [self.tableView reloadData];
 }
 
 #pragma mark -- tableView的代理方法
@@ -106,47 +109,62 @@
     return _dataArr.count;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    
-    if (self.typeInteger == 0) {
-        if (self.topModel != nil && ![self.topModel isKindOfClass:[NSNull class]]) {
-            return 90;
-        }else{
-            return 0;
-        }
-    }else{
-        return 0;
-    }
-
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//
+//    if (self.typeInteger == 0) {
+//        if (self.topModel != nil && ![self.topModel isKindOfClass:[NSNull class]]) {
+//            return 90;
+//        }else{
+//            return 0;
+//        }
+//    }else{
+//        return 0;
+//    }
+//
+//}
 
 #pragma mark -- 每个cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    if (self.typeInteger == 1 || self.typeInteger == 2||self.typeInteger == 0) {
-        if (indexPath.row == 0) {
-            return 105;
-        }else {
-            HealthTipsModel *model = _dataArr[indexPath.row];
-            HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
-
-            if ([model.createTime isEqualToString:onAmodel.createTime]) {
-                return 65;
-            }else {
+    HealthTipsModel *model = _dataArr[indexPath.row];
+    
+    if (self.typeInteger < 5 ) {
+        if (![model.type isEqualToString:@"REPORT"]){
+            if (indexPath.row == 0) {
                 return 105;
+            }else {
+                NSString *modelTimeStr = [NSString string];
+                if(self.typeInteger==0){
+                    modelTimeStr = model.date;
+                }else{
+                    modelTimeStr = model.createTime;
+                }
+                HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
+                NSString *onmodelTimeStr = [NSString string];
+                if(self.typeInteger==0){
+                    onmodelTimeStr = onAmodel.date;
+                }else{
+                    onmodelTimeStr = onAmodel.createTime;
+                }
+                
+                if ([modelTimeStr isEqualToString:onmodelTimeStr]) {
+                    return 65;
+                }else {
+                    return 105;
+                }
             }
+        }else{
+            return 120;
         }
+        
     }if (self.typeInteger == 10) {
-         return 120;
+        return 120;
     }else {
         
         if (indexPath.row == 0) {
             return 130;
         }else {
-            HealthTipsModel *model = _dataArr[indexPath.row];
             HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
-            
             if ([model.createTime isEqualToString:onAmodel.createTime]) {
                 return 95;
             }else {
@@ -155,88 +173,127 @@
         }
     }
     
-   
+    
 }
 #pragma mark -- 每个cell显示的内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-        
-    if (self.typeInteger == 1|| self.typeInteger == 2||self.typeInteger == 0) {
-        
+    
+    if (self.typeInteger < 5 ) {
         HealthTipsModel *model = _dataArr[indexPath.row];
-
-        if(indexPath.row == 0 ){
-            TimeLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
-            if(cell==nil){
-                cell = [[TimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            
-            if ([model.subjectCategorySn isEqualToString:@"JLBS"]){
-                [[NSUserDefaults standardUserDefaults]setValue: [model.subject valueForKey:@"name"] forKey:@"Physical"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-            }
-            
-            if (_dataArr.count > 1) {
-                 HealthTipsModel *nextmodel = _dataArr[indexPath.row+1];
-                 if (![model.createTime isEqualToString:nextmodel.createTime]) {
-                     cell.lineImageV2.hidden = YES;
-                 }else{
-                     cell.lineImageV2.hidden = NO;
-                 }
+        if(![model.type isEqualToString:@"REPORT"]) {
+            NSString *timeStr = [NSString string];
+            if (self.typeInteger == 0) {
+                timeStr = model.date;
             }else{
-             
-                cell.lineImageV2.hidden = YES;
+                timeStr = model.createTime;
             }
             
-            [cell assignmentCellWithModel:model];
-            return cell;
-        }else{
-            
-            HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
-            if ([model.createTime isEqualToString:onAmodel.createTime]) {
-                
-                NoTimeLineCell * cell =[tableView dequeueReusableCellWithIdentifier:@"cell2"];
-                if(cell==nil){
-                    cell = [[NoTimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                }
-                if (indexPath.row < _dataArr.count -1) {
-                    HealthTipsModel *nextAmodel = _dataArr[indexPath.row + 1];
-                    if (![model.createTime isEqualToString:nextAmodel.createTime]) {
-                        cell.lineImageV2.hidden = YES;
-                    }else{
-                        cell.lineImageV2.hidden = NO;
-                    }
-                }else if (indexPath.row == _dataArr.count -1){
-                    cell.lineImageV2.hidden = YES;
-                }
-
-                [cell assignmentNoCellWithModel:model];
-                return cell;
-            }else {
-                
+            if(indexPath.row == 0 ){
                 TimeLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
                 if(cell==nil){
                     cell = [[TimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 }
                 
-                if (indexPath.row < _dataArr.count -1) {
-                    HealthTipsModel *nextAmodel = _dataArr[indexPath.row + 1];
-                      if (![model.createTime isEqualToString:nextAmodel.createTime]) {
-                          cell.lineImageV2.hidden = YES;
-                      }else{
-                          cell.lineImageV2.hidden = NO;
-                      }
-                }else if (indexPath.row == _dataArr.count -1){
+                if ([model.subjectCategorySn isEqualToString:@"JLBS"]){
+                    [[NSUserDefaults standardUserDefaults]setValue: [model.subject valueForKey:@"name"] forKey:@"Physical"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }
+                
+                if (_dataArr.count > 1) {
+                    HealthTipsModel *nextmodel = _dataArr[indexPath.row+1];
+                    NSString *nextTimeStr = [NSString string];
+                    if (self.typeInteger == 0) {
+                        nextTimeStr = nextmodel.date;
+                    }else{
+                        nextTimeStr = nextmodel.createTime;
+                    }
+                    if (![timeStr isEqualToString:nextTimeStr]) {
+                        cell.lineImageV2.hidden = YES;
+                    }else{
+                        cell.lineImageV2.hidden = NO;
+                    }
+                }else{
+                    
                     cell.lineImageV2.hidden = YES;
                 }
                 
-                [cell assignmentCellWithModel:model];
+                [cell assignmentCellWithModel:model withType:self.typeInteger];
                 return cell;
+            }else{
+                
+                HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
+                NSString *onTimeStr = [NSString string];
+                if (self.typeInteger == 0) {
+                    onTimeStr = onAmodel.date;
+                }else{
+                    onTimeStr = onAmodel.createTime;
+                }
+                if ([timeStr isEqualToString:onTimeStr]) {
+                    
+                    NoTimeLineCell * cell =[tableView dequeueReusableCellWithIdentifier:@"cell2"];
+                    if(cell==nil){
+                        cell = [[NoTimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    }
+                    if (indexPath.row < _dataArr.count -1) {
+                        HealthTipsModel *nextAmodel = _dataArr[indexPath.row + 1];
+                        NSString *nextTimeStr = [NSString string];
+                        if (self.typeInteger == 0) {
+                            nextTimeStr = nextAmodel.date;
+                        }else{
+                            nextTimeStr = nextAmodel.createTime;
+                        }
+                        if (![timeStr isEqualToString:nextTimeStr]) {
+                            cell.lineImageV2.hidden = YES;
+                        }else{
+                            cell.lineImageV2.hidden = NO;
+                        }
+                    }else if (indexPath.row == _dataArr.count -1){
+                        cell.lineImageV2.hidden = YES;
+                    }
+                    
+                    [cell assignmentNoCellWithModel:model withType:self.typeInteger];
+                    return cell;
+                }else {
+                    
+                    TimeLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
+                    if(cell==nil){
+                        cell = [[TimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    }
+                    
+                    if (indexPath.row < _dataArr.count -1) {
+                        HealthTipsModel *nextAmodel = _dataArr[indexPath.row + 1];
+                        NSString *nextTimeStr = [NSString string];
+                        if (self.typeInteger == 0) {
+                            nextTimeStr = nextAmodel.date;
+                        }else{
+                            nextTimeStr = nextAmodel.createTime;
+                        }
+                        if (![timeStr isEqualToString:nextTimeStr]) {
+                            cell.lineImageV2.hidden = YES;
+                        }else{
+                            cell.lineImageV2.hidden = NO;
+                        }
+                    }else if (indexPath.row == _dataArr.count -1){
+                        cell.lineImageV2.hidden = YES;
+                    }
+                    
+                    [cell assignmentCellWithModel:model withType:self.typeInteger];
+                    return cell;
+                }
             }
+        }else{
+            HealthTipsModel *model = _dataArr[indexPath.row];
+            HCY_ReportCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HCY_ReportCell"];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell setReportModel:model withIndex:indexPath];
+            return cell;
         }
+        
         
     }
     if (self.typeInteger == 10) {
@@ -246,7 +303,7 @@
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell setReportModel:model withIndex:indexPath];
-
+        
         return cell;
         
         
@@ -272,7 +329,7 @@
                 cell.lineImageV2.hidden = NO;
             }
             
-           
+            
             [cell assignmentVisceraWithModel:model];
             return cell;
         }else{
@@ -320,30 +377,25 @@
                 
             }
         }
-        
-    }
-   
-    
-    
-    
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-
-    
-    if (self.topModel != nil && ![self.topModel isKindOfClass:[NSNull class]]) {
-        
-        NSLog(@"%@",self.topModel);
-        GovSectionView *sectionV = [GovSectionView showWithModel:self.topModel];
-        sectionV.tableView = self.tableView;
-        sectionV.section = section;
-        sectionV.delegate=self;
-        return sectionV;
-    }else{
-        return nil;
     }
 }
+
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//
+//
+//    if (self.topModel != nil && ![self.topModel isKindOfClass:[NSNull class]]) {
+//
+//        NSLog(@"%@",self.topModel);
+//        GovSectionView *sectionV = [GovSectionView showWithModel:self.topModel];
+//        sectionV.tableView = self.tableView;
+//        sectionV.section = section;
+//        sectionV.delegate=self;
+//        return sectionV;
+//    }else{
+//        return nil;
+//    }
+//}
 
 #pragma mark - 自定义sectionView的代理方法
 - (void)sectionGestTap:(NSInteger)section withTapGesture:(UITapGestureRecognizer *)gest
@@ -362,7 +414,7 @@
     vc.titleStr = @"季度报告详情";
     vc.hidesBottomBarWhenPushed = YES;
     [[self viewController].navigationController pushViewController:vc animated:YES];
-
+    
     
 }
 
@@ -370,96 +422,182 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     
-    
     HealthTipsModel *model = [self.dataArr objectAtIndex:indexPath.row];
     
     ////经络
-    if ([model.subjectCategorySn isEqualToString:@"JLBS"]) {
-        NSString *aUrlle= [NSString stringWithFormat:@"%@member/service/reshow.jhtml?sn=%@&device=1",URL_PRE,[model.subject valueForKey:@"subject_sn"]];
-        
+    if ([model.subjectCategorySn isEqualToString:@"JLBS"] ||[model.type isEqualToString:@"JLBS"]) {
+        NSString *aUrlle;
+        if ([model.type isEqualToString:@"JLBS"]){
+            if([GlobalCommon stringEqualNull:model.link]) return;
+            aUrlle= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
+        }else{
+            aUrlle= [NSString stringWithFormat:@"%@member/service/reshow.jhtml?sn=%@&device=1",URL_PRE,[model.subject valueForKey:@"subject_sn"]];
+        }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = aUrlle;
         vc.titleStr = @"健康档案";
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
+    }
+    
+    //体质
+    if ([model.subjectCategorySn isEqualToString:@"TZBS"] ||[model.type isEqualToString:@"TZBS"]){
         
-    }else  if ([model.subjectCategorySn isEqualToString:@"TZBS"]){
-        
-        ResultController *resultVC = [[ResultController alloc] init];
-        resultVC.TZBSstr = [model.subject valueForKey:@"subject_sn"];
-        //resultVC.titleStr = @"健康档案";
-        resultVC.hidesBottomBarWhenPushed = YES;
-        [[self viewController].navigationController pushViewController:resultVC animated:YES];
-        
-    }else {
-            
-        //// 脏腑
-        if (![model.physique_id isKindOfClass:[NSNull class]]&&model.physique_id!=nil&&model.physique_id.length!=0) {
-            
-            NSString *idNim = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
-            //member/service/zf_report.jhtml?cust_id=32&physique_id=181224175130815054&device=1
-            NSString *url = [[NSString alloc] initWithFormat:@"%@member/service/zf_report.jhtml?cust_id=%@&physique_id=%@&device=1",URL_PRE,idNim,model.physique_id];
+        NSString *aUrlle;
+        if ([model.type isEqualToString:@"TZBS"]){
+            if([GlobalCommon stringEqualNull:model.link]) return;
+            aUrlle= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
             ResultSpeakController *vc = [[ResultSpeakController alloc] init];
-            vc.urlStr = url;
+            vc.urlStr = aUrlle;
             vc.titleStr = @"健康档案";
             vc.hidesBottomBarWhenPushed = YES;
             [[self viewController].navigationController pushViewController:vc animated:YES];
-        }
-        
-        //心电图
-        if ([model.subject valueForKey:@"subject_sn"] != nil&&![[model.subject valueForKey:@"subject_sn"] isKindOfClass:[NSNull class]]) {
-            
-            EEGDetailController *detail = [[EEGDetailController alloc] init];
-            detail.dataPath = model.path;
-            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:detail];
-            self.hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
-            self.hud.label.text = @"加载中...";
-            [[self viewController] presentViewController:nav animated:YES completion:nil];
-            
-        }
-        
-        //血压
-        if (model.highPressure != nil&&![model.highPressure isKindOfClass:[NSNull class]]&&model.highPressure.length != 0) {
-            
-            NSString *urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(30)];
-           
-            ResultSpeakController *vc = [[ResultSpeakController alloc] init];
-            vc.urlStr = urlStr;
-            vc.titleStr = @"血压详情";
-            vc.hidesBottomBarWhenPushed = YES;
-            [[self viewController].navigationController pushViewController:vc animated:YES];
-            
-            
-        }
-        
-        //血氧
-        
-        if (model.density != nil&&![model.density isKindOfClass:[NSNull class]]&&model.density.length != 0) {
-            
-            NSString *urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(20)];
-
-            ResultSpeakController *vc = [[ResultSpeakController alloc] init];
-            vc.urlStr = urlStr;
-            vc.titleStr = @"血氧详情";
-            vc.hidesBottomBarWhenPushed = YES;
-            [[self viewController].navigationController pushViewController:vc animated:YES];
-            
-        }
-        
-        //体温
-        
-        if (model.temperature != nil&&![model.temperature isKindOfClass:[NSNull class]]&&model.temperature.length != 0) {
-            
-            
-             NSString *urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(20)];
-           
-            ResultSpeakController *vc = [[ResultSpeakController alloc] init];
-            vc.urlStr = urlStr;
-            vc.titleStr = @"体温详情";
-            vc.hidesBottomBarWhenPushed = YES;
-            [[self viewController].navigationController pushViewController:vc animated:YES];
+        }else{
+            ResultController *resultVC = [[ResultController alloc] init];
+            resultVC.TZBSstr = [model.subject valueForKey:@"subject_sn"];
+            //resultVC.titleStr = @"健康档案";
+            resultVC.hidesBottomBarWhenPushed = YES;
+            [[self viewController].navigationController pushViewController:resultVC animated:YES];
         }
     }
+    
+    //// 脏腑
+    if (![GlobalCommon stringEqualNull:model.physique_id] ||[model.type isEqualToString:@"ZFBS"] ) {
+        NSString *url;
+        if ([model.type isEqualToString:@"ZFBS"]){
+            
+            if([GlobalCommon stringEqualNull:model.link]) return;
+            url = model.link;
+        }else{
+            NSString *idNim = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
+            url = [[NSString alloc] initWithFormat:@"%@member/service/zf_report.jhtml?cust_id=%@&physique_id=%@&device=1",URL_PRE,idNim,model.physique_id];
+        }
+        //member/service/zf_report.jhtml?cust_id=32&physique_id=181224175130815054&device=1
+        ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+        vc.urlStr = url;
+        vc.titleStr = @"健康档案";
+        vc.hidesBottomBarWhenPushed = YES;
+        [[self viewController].navigationController pushViewController:vc animated:YES];
+    }
+    
+    //心电图
+    if ( ![GlobalCommon stringEqualNull:model.path] ||[model.type isEqualToString:@"ECG"]  ) {
+        EEGDetailController *detail = [[EEGDetailController alloc] init];
+        
+        if ([model.type isEqualToString:@"ECG"]){
+            if([GlobalCommon stringEqualNull:model.link]) return;
+            detail.dataPath = model.link;
+        }else{
+            detail.dataPath = model.path;
+        }
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:detail];
+        self.hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
+        self.hud.label.text = @"加载中...";
+        [[self viewController] presentViewController:nav animated:YES completion:nil];
+    }
+    
+    //血压
+    if (![GlobalCommon stringEqualNull:model.highPressure ] ||[model.type isEqualToString:@"BLOOD"] ) {
+        NSString *urlStr;
+        //            if ([model.type isEqualToString:@"BLOOD"]){
+        //                if([GlobalCommon stringEqualNull:model.link]) return;
+        //                urlStr= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
+        //            }else{
+        urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(30)];
+        //            }
+        ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+        vc.urlStr = urlStr;
+        vc.titleStr = @"血压详情";
+        vc.hidesBottomBarWhenPushed = YES;
+        [[self viewController].navigationController pushViewController:vc animated:YES];
+        
+    }
+    
+    //血氧
+    if (![GlobalCommon stringEqualNull:model.density] ||[model.type isEqualToString:@"OXYGEN"]  ) {
+        
+        NSString *urlStr;
+        //            if ([model.type isEqualToString:@"OXYGEN"]){
+        //                if([GlobalCommon stringEqualNull:model.link]) return;
+        //                urlStr= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
+        //            }else{
+        urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(20)];
+        //            }
+        
+        ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+        vc.urlStr = urlStr;
+        vc.titleStr = @"血氧详情";
+        vc.hidesBottomBarWhenPushed = YES;
+        [[self viewController].navigationController pushViewController:vc animated:YES];
+        
+    }
+    
+    //体温
+    
+    if (![GlobalCommon stringEqualNull:model.temperature] ||[model.type isEqualToString:@"BODY"] ) {
+        
+        NSString *urlStr;
+        //            if ([model.type isEqualToString:@"BODY"]){
+        //                if([GlobalCommon stringEqualNull:model.link]) return;
+        //                urlStr= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
+        //            }else{
+        urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(20)];
+        //            }
+        ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+        vc.urlStr = urlStr;
+        vc.titleStr = @"体温详情";
+        vc.hidesBottomBarWhenPushed = YES;
+        [[self viewController].navigationController pushViewController:vc animated:YES];
+    }
+    
+    //血糖
+    if ([model.type isEqualToString:@"SUGAR"] ) {
+        
+        NSString *urlStr;
+        //            if ([model.type isEqualToString:@"BODY"]){
+        //                if([GlobalCommon stringEqualNull:model.link]) return;
+        //                urlStr= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
+        //            }else{
+        urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(40)];
+
+        //            }
+        ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+        vc.urlStr = urlStr;
+        vc.titleStr = @"血糖详情";
+        vc.hidesBottomBarWhenPushed = YES;
+        [[self viewController].navigationController pushViewController:vc animated:YES];
+    }
+    
+    //呼吸
+    if ([model.type isEqualToString:@"BREATH"] ) {
+        
+        NSString *urlStr;
+        //            if ([model.type isEqualToString:@"BODY"]){
+        //                if([GlobalCommon stringEqualNull:model.link]) return;
+        //                urlStr= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
+        //            }else{
+        urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(50)];
+        
+        //            }
+        ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+        vc.urlStr = urlStr;
+        vc.titleStr = @"呼吸详情";
+        vc.hidesBottomBarWhenPushed = YES;
+        [[self viewController].navigationController pushViewController:vc animated:YES];
+    }
+    
+    if ([model.type isEqualToString:@"REPORT"] ) {
+        
+        NSString *idNim = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
+        if([GlobalCommon stringEqualNull:model.link]) return;
+        NSString *url = [[NSString alloc] initWithFormat:@"%@%@",URL_PRE,model.link];
+        ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+        vc.urlStr = url;
+        vc.titleStr = @"季度报告详情";
+        vc.hidesBottomBarWhenPushed = YES;
+        [[self viewController].navigationController pushViewController:vc animated:YES];
+    }
+    
     
     
     //病例列表
@@ -477,15 +615,14 @@
     }
     
     
- //季度报告
+    //季度报告
     if (model.quarter != nil && ![model.quarter isKindOfClass:[NSNull class]]&&model.quarter.length != 0) {
-        
         
         NSString *idNim = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
         
-        NSString *url = [[NSString alloc] initWithFormat:@"%@/member/service/reports.jhtml?memberChildId=%@&quarter=%@&year=%@",URL_PRE,idNim,model.quarter,model.year];
+        NSString *resulturl = [[NSString alloc] initWithFormat:@"%@/member/service/reports.jhtml?memberChildId=%@&quarter=%@&year=%@",URL_PRE,idNim,model.quarter,model.year];
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
-        vc.urlStr = url;
+        vc.urlStr = resulturl;
         vc.titleStr = @"季度报告详情";
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
@@ -542,3 +679,4 @@
 //}
 
 @end
+

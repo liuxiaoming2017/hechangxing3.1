@@ -837,13 +837,13 @@
 		03FBDF9D2192B0B3006116FC /* TimeLineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF9C2192B0B3006116FC /* TimeLineCell.m */; };
 		835DB8DB21D3685D00B8DF99 /* HCY_ConsultingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 835DB8DA21D3685D00B8DF99 /* HCY_ConsultingModel.m */; };
 		835DB91C21D757C800B8DF99 /* HCY_FamilyListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 835DB91B21D757C800B8DF99 /* HCY_FamilyListModel.m */; };
+		83D54E6821E7165100474F58 /* HCY_ReportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D54E6721E7165100474F58 /* HCY_ReportCell.m */; };
 		83E23EE921C0A53100B43298 /* HCY_CallController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EE821C0A53000B43298 /* HCY_CallController.m */; };
 		83E23EED21C0AD2D00B43298 /* HCY_CallCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EEB21C0AD2D00B43298 /* HCY_CallCell.m */; };
 		83E23EEE21C0AD2D00B43298 /* HCY_CallCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E23EEC21C0AD2D00B43298 /* HCY_CallCell.xib */; };
 		83E23EF121C0DC2700B43298 /* HCY_HelpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EF021C0DC2700B43298 /* HCY_HelpController.m */; };
 		83E23EF421C202B100B43298 /* HCY_HomeImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EF321C202B100B43298 /* HCY_HomeImageModel.m */; };
 		83E23EF721C24F7F00B43298 /* HCY_ActivityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EF621C24F7F00B43298 /* HCY_ActivityController.m */; };
-		83E23EFA21C34C1800B43298 /* HCY_ReportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EF921C34C1800B43298 /* HCY_ReportCell.m */; };
 		83E23F0021C76CE800B43298 /* HYC_CardsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EFF21C76CE800B43298 /* HYC_CardsModel.m */; };
 		C973089A21B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C973089921B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m */; };
 		C97308E221BA0E9800060447 /* UIColor+Gradient.m in Sources */ = {isa = PBXBuildFile; fileRef = C97308E121BA0E9800060447 /* UIColor+Gradient.m */; };
@@ -2083,6 +2083,8 @@
 		835DB8DA21D3685D00B8DF99 /* HCY_ConsultingModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_ConsultingModel.m; sourceTree = "<group>"; };
 		835DB91A21D757C800B8DF99 /* HCY_FamilyListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_FamilyListModel.h; sourceTree = "<group>"; };
 		835DB91B21D757C800B8DF99 /* HCY_FamilyListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_FamilyListModel.m; sourceTree = "<group>"; };
+		83D54E6621E7165000474F58 /* HCY_ReportCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCY_ReportCell.h; sourceTree = "<group>"; };
+		83D54E6721E7165100474F58 /* HCY_ReportCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCY_ReportCell.m; sourceTree = "<group>"; };
 		83E23EE721C0A53000B43298 /* HCY_CallController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_CallController.h; sourceTree = "<group>"; };
 		83E23EE821C0A53000B43298 /* HCY_CallController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_CallController.m; sourceTree = "<group>"; };
 		83E23EEA21C0AD2D00B43298 /* HCY_CallCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_CallCell.h; sourceTree = "<group>"; };
@@ -2094,8 +2096,6 @@
 		83E23EF321C202B100B43298 /* HCY_HomeImageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_HomeImageModel.m; sourceTree = "<group>"; };
 		83E23EF521C24F7F00B43298 /* HCY_ActivityController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_ActivityController.h; sourceTree = "<group>"; };
 		83E23EF621C24F7F00B43298 /* HCY_ActivityController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_ActivityController.m; sourceTree = "<group>"; };
-		83E23EF821C34C1700B43298 /* HCY_ReportCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_ReportCell.h; sourceTree = "<group>"; };
-		83E23EF921C34C1800B43298 /* HCY_ReportCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_ReportCell.m; sourceTree = "<group>"; };
 		83E23EFE21C76CE800B43298 /* HYC_CardsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HYC_CardsModel.h; sourceTree = "<group>"; };
 		83E23EFF21C76CE800B43298 /* HYC_CardsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HYC_CardsModel.m; sourceTree = "<group>"; };
 		C3992630D9BF859D26B53112 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2417,8 +2417,8 @@
 				C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */,
 				C973089821B91C4B00060447 /* HCY_DAVisceraNoTimeCell.h */,
 				C973089921B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m */,
-				83E23EF821C34C1700B43298 /* HCY_ReportCell.h */,
-				83E23EF921C34C1800B43298 /* HCY_ReportCell.m */,
+				83D54E6621E7165000474F58 /* HCY_ReportCell.h */,
+				83D54E6721E7165100474F58 /* HCY_ReportCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5174,7 +5174,6 @@
 				034A4E8A211A9AD900936A46 /* TZProgressView.m in Sources */,
 				03F6931C20FF30B700308E38 /* JSONKit.m in Sources */,
 				03E36FE920EDB882000974E1 /* UtilityFunc.m in Sources */,
-				83E23EFA21C34C1800B43298 /* HCY_ReportCell.m in Sources */,
 				039B2AFB212564C100D558F5 /* SugerViewController.m in Sources */,
 				C97308FC21BA50FB00060447 /* SGQRCodeTool.m in Sources */,
 				030F51442101C2B5003C918F /* MLAudioRecorder.m in Sources */,
@@ -5221,6 +5220,7 @@
 				03F6931020FF2FD400308E38 /* SBJsonStreamParserState.m in Sources */,
 				03EE3C3D21D3982B00647E53 /* WenYinFileCell.m in Sources */,
 				036A66A52113FEAB0096A006 /* BlockTableViewCell.m in Sources */,
+				83D54E6821E7165100474F58 /* HCY_ReportCell.m in Sources */,
 				036E85AE2186EB6E001B9BB4 /* MySwitchBtn.m in Sources */,
 				03FBDF6321928039006116FC /* HomePageController.m in Sources */,
 				03A24C9921142BE0005B5BA1 /* NoMessageView.m in Sources */,

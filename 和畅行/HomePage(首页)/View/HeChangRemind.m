@@ -10,6 +10,15 @@
 #import "RemindCell.h"
 #import "RemindModel.h"
 #import "HeChangPackgeController.h"
+#import "SayAndWriteController.h"
+#import "MeridianIdentifierViewController.h"
+#import "TipSpeakController.h"
+#import "WriteListController.h"
+#import "TipWriteController.h"
+#import "QuestionListController.h"
+#import "TipClickController.h"
+
+
 
 @interface HeChangRemind()<UITableViewDelegate,UITableViewDataSource>
 
@@ -75,6 +84,7 @@
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
+    self.tableView.scrollEnabled = NO;
     
     [self addSubview:self.tableView];
     
@@ -120,6 +130,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    SayAndWriteController *vc = nil;
     RemindCell *cell = (RemindCell *)[tableView cellForRowAtIndexPath:indexPath];
     
     NSString *type = @"";
@@ -127,30 +138,59 @@
     NSString *titleStr = @"";
     NSString *urlStr = @"";
     
-    if([cell.typeLabel.text isEqualToString:@"一说"]||[cell.typeLabel.text isEqualToString:@"一写"]||[cell.typeLabel.text isEqualToString:@"一点"]){
-        return;
-    }else if ([cell.typeLabel.text isEqualToString:@"一听"]){
-        type = @"/member/service/view/fang/JLBS/1/";
-        fangtype = @"yiting";
-        titleStr = @"音乐处方";
-    }else if ([cell.typeLabel.text isEqualToString:@"一站"]){
-        type = @"/member/service/view/fang/JLBS/1/";
-        fangtype = @"yizhan";
-        titleStr = @"运动处方";
-    }else if ([cell.typeLabel.text isEqualToString:@"一推"]){
-        type = @"/member/service/view/fang/JLBS/1/";
-        fangtype = @"yitui";
-        titleStr = @"推拿处方";
+    if([cell.typeLabel.text isEqualToString:@"一说"]){
+        
+        if([self isFirestClickThePageWithString:@"speak"]){
+            vc = [[MeridianIdentifierViewController alloc] init];
+        }else{
+            vc = [[TipSpeakController alloc] init];
+        }
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.viewController.navigationController pushViewController:vc animated:YES];
+        
+    }else if ([cell.typeLabel.text isEqualToString:@"一写"]){
+        
+        if([self isFirestClickThePageWithString:@"write"]){
+            vc = [[WriteListController alloc] init];
+        }else{
+            vc = [[TipWriteController alloc] init];
+        }
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.viewController.navigationController pushViewController:vc animated:YES];
+        
+    }else if ([cell.typeLabel.text isEqualToString:@"一点"]){
+        
+        if([self isFirestClickThePageWithString:@"click"]){
+            vc = [[QuestionListController alloc] init];
+        }else{
+            vc = [[TipClickController alloc] init];
+        }
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.viewController.navigationController pushViewController:vc animated:YES];
+        
+    }else {
+        if ([cell.typeLabel.text isEqualToString:@"一听"]){
+            type = @"/member/service/view/fang/JLBS/1/";
+            fangtype = @"yiting";
+            titleStr = @"音乐处方";
+        }else if ([cell.typeLabel.text isEqualToString:@"一站"]){
+            type = @"/member/service/view/fang/JLBS/1/";
+            fangtype = @"yizhan";
+            titleStr = @"运动处方";
+        }else if ([cell.typeLabel.text isEqualToString:@"一推"]){
+            type = @"/member/service/view/fang/JLBS/1/";
+            fangtype = @"yitui";
+            titleStr = @"推拿处方";
+        }
+        
+        urlStr = [NSString stringWithFormat:@"%@%@%@.jhtml?type=%@",URL_PRE,type,[MemberUserShance shareOnce].idNum,fangtype];
+        HeChangPackgeController *hechangVc = [[HeChangPackgeController alloc] init];
+        hechangVc.progressType = progress2;
+        hechangVc.urlStr = urlStr;
+        hechangVc.titleStr = titleStr;
+        hechangVc.hidesBottomBarWhenPushed = YES;
+        [self.viewController.navigationController pushViewController:hechangVc animated:YES];
     }
-    
-    urlStr = [NSString stringWithFormat:@"%@%@%@.jhtml?type=%@",URL_PRE,type,[MemberUserShance shareOnce].idNum,fangtype];
-    HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-    vc.progressType = progress2;
-    vc.urlStr = urlStr;
-    vc.titleStr = titleStr;
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.viewController.navigationController pushViewController:vc animated:YES];
-    
 }
 
 - (void)updateViewWithData:(NSArray *)arr withHeight:(CGFloat)height
@@ -192,6 +232,21 @@
         subLayer.frame = imageV.frame;
     }
     
+}
+
+- (BOOL)isFirestClickThePageWithString:(NSString *)string
+{
+    NSString *userName = [UserShareOnce shareOnce].username;
+    NSString *writeKey = [NSString stringWithFormat:@"%@_%@",userName,string];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if([[userDefaults objectForKey:writeKey] isEqualToString:@"1"]){
+        return YES;
+    }else{
+        [userDefaults setObject:@"1" forKey:writeKey];
+        [userDefaults synchronize];
+        return NO;
+    }
+    return NO;
 }
 
 @end

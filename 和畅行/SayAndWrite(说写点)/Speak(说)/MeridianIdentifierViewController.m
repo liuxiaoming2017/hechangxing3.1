@@ -723,7 +723,7 @@
         if([codeStr isEqualToString:@""]){
             popup = [LPPopup popupWithText:@"未采集到有效声音,请重新采集。"];
         }else{
-            popup = [LPPopup popupWithText:@"您的录音已成功上传，正在进行分析。分析报告审核完成后，会发送至您的手机上，请注意查收。"];
+//            popup = [LPPopup popupWithText:@"您的录音已成功上传，正在进行分析。分析报告审核完成后，会发送至您的手机上，请注意查收。"];
         }
         
         imageHong.hidden = NO;
@@ -858,13 +858,13 @@
     if ([status intValue]==100)
     {
         
-        LPPopup *popup = [LPPopup popupWithText:@"您的录音已成功上传，正在进行分析。分析报告审核完成后，会发送至您的手机上，请注意查收。"];
+//        LPPopup *popup = [LPPopup popupWithText:@"您的录音已成功上传，正在进行分析。分析报告审核完成后，会发送至您的手机上，请注意查收。"];
         CGPoint point=self.view.center;
         point.y=point.y+130;
-        [popup showInView:self.view
-            centerAtPoint:point
-                 duration:5.0f
-               completion:nil];
+//        [popup showInView:self.view
+//            centerAtPoint:point
+//                 duration:5.0f
+//               completion:nil];
         NSFileManager *fileMgr = [NSFileManager defaultManager];
         
         BOOL bRet = [fileMgr fileExistsAtPath:self.filePath];

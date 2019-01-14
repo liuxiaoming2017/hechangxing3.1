@@ -44,7 +44,7 @@
     lbname.backgroundColor=[UIColor clearColor];
     lbname.textColor=[UtilityFunc colorWithHexString:@"#666666"];
     lbname.font=[UIFont systemFontOfSize:12];
-    lbname.text=@"经络辨识";
+    lbname.text=@"经络";
     [self addSubview:lbname];
     
     lbDate=[[UILabel alloc] init];

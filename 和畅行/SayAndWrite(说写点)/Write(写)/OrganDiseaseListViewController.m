@@ -68,7 +68,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navTitleLabel.text = @"疾病列表";
+    self.navTitleLabel.text = @"已患疾病";
     [self customsearchBar];
     [self createTableView];
     
@@ -202,7 +202,7 @@
     view2.backgroundColor = [Tools colorWithHexString:@"#f2f1ef"];
     UIImageView *diseaseIcon = [Tools creatImageViewWithFrame:CGRectMake(20, 14, 17.5, 18) imageName:@"ICD10_病"];
     [view2 addSubview:diseaseIcon];
-    UILabel *symptomLabel = [Tools labelWith:@"可能的疾病" frame:CGRectMake(48, 14, 120, 18) textSize:13 textColor:[Tools colorWithHexString:@"#333"] lines:1 aligment:NSTextAlignmentLeft];
+    UILabel *symptomLabel = [Tools labelWith:@"现病史" frame:CGRectMake(48, 14, 120, 18) textSize:13 textColor:[Tools colorWithHexString:@"#333"] lines:1 aligment:NSTextAlignmentLeft];
     UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 45.5, ScreenWidth, 0.5)];
     line.image = [UIImage imageNamed:@"ICD10_leftGrayLine"];
     [view2 addSubview:line];

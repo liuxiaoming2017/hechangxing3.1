@@ -139,7 +139,6 @@
         NSString *imageUrl = [NSString stringWithFormat:@"%@%@",URL_PRE,self.pushModel.picurl];
         NSURL *url = [NSURL URLWithString:imageUrl];
         self.packgeView.toViewButton.frame = CGRectMake(ScreenWidth/2.0 - 136, self.imageV.bottom - 20, 272, 40);
-
         [self.packgeView.toViewButton sd_setBackgroundImageWithURL:url forState:UIControlStateNormal];
     }
     
@@ -189,7 +188,7 @@
     [self.bgScrollView addSubview:self.testActivityIndicator];
     self.testActivityIndicator.color = RGB_TextAppBlue;
     
-    [self requestUI];
+
 
     ///SelectCellBlock
 }
@@ -225,6 +224,7 @@
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:paramDic successBlock:^(id response) {
         
         [weakSelf requestRemindNetWork];
+        [weakSelf requestUI];
         
         if([[response objectForKey:@"status"] integerValue] == 100){
             NSInteger status = [[[response objectForKey:@"data"] objectForKey:@"num"] integerValue];
@@ -268,6 +268,7 @@
                 model.advice = jlbsAdvice;
                 [mutableArr addObject:model];
                 NSLog(@"jlbs");
+                
             }
             if([[response objectForKey:@"data"] objectForKey:@"tzbs"] == nil || [[[response objectForKey:@"data"] objectForKey:@"tzbs"] isKindOfClass:[NSNull class]]){
                 RemindModel *model = [[RemindModel alloc] init];

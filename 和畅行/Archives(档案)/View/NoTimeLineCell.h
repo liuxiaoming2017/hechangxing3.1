@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 
-- (void)assignmentNoCellWithModel:(HealthTipsModel *)model;
+- (void)assignmentNoCellWithModel:(HealthTipsModel *)model withType:(NSInteger )typeInteger;
 
 @end
 

@@ -250,9 +250,7 @@
         }];
     }else{
         [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
-    }
-    
-   
+    }   
 }
 
 - (void)requestNetworkData:(NSString *)subId

@@ -13,7 +13,7 @@
 @property (nonatomic,strong) HealthTipsModel*topModel;
 @property (nonatomic,strong)  MBProgressHUD *hud;
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSArray *dataArr;
+@property (nonatomic, strong) NSMutableArray *dataArr;
 @property (nonatomic,assign)  NSInteger typeInteger;
 
 -(void)relodTableViewWitDataArray:(NSMutableArray *)dataArray withType:(NSInteger)type;

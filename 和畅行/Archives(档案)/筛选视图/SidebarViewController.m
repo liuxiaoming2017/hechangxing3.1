@@ -41,8 +41,10 @@
     [self.contentView addSubview:titleLabel];
     
     self.selectTag = -1;
-    
-    self.titleArr = [NSArray arrayWithObjects:@"最新",@"经络",@"体质",@"脏腑",@"心率",@"血压",@"血氧",@"血糖",@"体温",@"呼吸",@"季度报告",@"病历", nil];
+    //档案最新
+//    self.titleArr = [NSArray arrayWithObjects:@"最新",@"经络",@"体质",@"脏腑",@"心率",@"血压",@"血氧",@"血糖",@"体温",@"呼吸",@"季度报告",@"病历", nil];
+    self.titleArr = [NSArray arrayWithObjects:@"全部",@"经络",@"体质",@"脏腑",@"心率",@"血压",@"血氧",@"血糖",@"体温",@"呼吸",@"季度报告",@"病历", nil];
+
     for(NSInteger i=0;i<self.titleArr.count;i++){
         UIButton *selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         selectBtn.frame = CGRectMake(titleLabel.left+(72+26)*(i%2), titleLabel.bottom+20+(32+26)*(i/2), 72, 32);

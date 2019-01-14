@@ -49,8 +49,6 @@
 @implementation ArchivesController
 @synthesize currentIndex,memberId;
 
-
-
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if ([[UserShareOnce shareOnce].wherePop isEqualToString:@"血压"]) {
@@ -62,16 +60,68 @@
 }
 
 
-
-- (void)dealloc
-{
-    self.titleArr = nil;
-    self.archiveArr = nil;
-    self.progressView = nil;
-    self.wkwebview = nil;
-    self.healthTipsData = nil;
+- (void)viewDidLoad {
+    [super viewDidLoad];
     
-    [_wkwebview removeObserver:self forKeyPath:@"estimatedProgress"];
+    self.healthTipsData = [NSMutableArray array];
+    self.dataListArray  = [NSMutableArray array];
+    self.typeUrlInteger = 0;
+    self.pageInteger    = 1;
+    
+    if(!memberId){
+        memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
+    }
+    
+    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
+    self.navTitleLabel.text = @"健康档案";
+    self.navTitleLabel.textColor = [UIColor whiteColor];
+    [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
+    
+    self.timeLinvView = [[TimeLineView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, ScreenWidth, ScreenHeight-self.topView.bottom-kTabBarHeight) withData:self.dataListArray];
+    [self.view addSubview:self.timeLinvView];
+    
+    self.noView = [NoMessageView createImageWith:100.0f];
+    [self.view addSubview:self.noView ];
+    
+    //下拉刷新
+    MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    [header setTitle:@"下拉刷新" forState:MJRefreshStateIdle];
+    [header setTitle:@"努力加载中..." forState:MJRefreshStateRefreshing];
+    [header setTitle:@"松开即可刷新..." forState:MJRefreshStatePulling];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    header.stateLabel.font = [UIFont systemFontOfSize:14];
+    header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:14];
+    header.stateLabel.textColor = RGB_TextAppBlue;
+    header.lastUpdatedTimeLabel.textColor = RGB_TextAppBlue;
+    self.timeLinvView.tableView.mj_header = header;
+    
+    //上拉加载
+    MJRefreshBackGifFooter *footer = [MJRefreshBackGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataOther)];
+    [footer setTitle:@"上拉加载"   forState:MJRefreshStateIdle];
+    [footer setTitle:@"加载中..."  forState:MJRefreshStateRefreshing];
+    [footer setTitle:@"没有更多了"  forState:MJRefreshStateNoMoreData];
+    [footer setTitle:@"松开即可加载..."  forState:MJRefreshStatePulling];
+    footer.stateLabel.font = [UIFont systemFontOfSize:14];
+    footer.stateLabel.textColor = RGB_TextAppBlue;
+    self.timeLinvView.tableView.mj_footer = footer;
+    
+    self.sidebarVC = [[SidebarViewController alloc] init];
+    [self.sidebarVC setBgRGB:0x000000];
+    self.sidebarVC.delegate = self;
+    [[UIApplication sharedApplication].keyWindow addSubview:self.sidebarVC.view];
+    self.sidebarVC.view.frame  = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+    
+   //档案筛选按钮
+    self.filterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.filterBtn.frame = CGRectMake(ScreenWidth-37-14, ScreenHeight-120, 36, 36);
+    [self.filterBtn setImage:[UIImage imageNamed:@"筛选"] forState:UIControlStateNormal];
+    [self.filterBtn addTarget:self action:@selector(filterBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.filterBtn];
+    //    [[UIApplication sharedApplication].keyWindow addSubview:self.filterBtn];
+    
+    //默认选择
+    UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:100];
+    [self selectIndexWithString:@"全部" withButton:btn];
     
 }
 
@@ -90,7 +140,6 @@
     
 }
 
-
 - (void)setCurrentIndex:(NSInteger)currentInde
 {
     currentIndex = currentInde;
@@ -101,91 +150,23 @@
     self = [super init];
     if(self){
         currentIndex = index;
-        
     }
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    self.healthTipsData = [NSMutableArray array];
-    self.dataListArray  = [NSMutableArray array];
-    self.typeUrlInteger = 0;
-    self.pageInteger    = 1;
-    
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
-    self.navTitleLabel.text = @"健康档案";
-    self.navTitleLabel.textColor = [UIColor whiteColor];
-    [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
-    
-    self.timeLinvView = [[TimeLineView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, ScreenWidth, ScreenHeight-self.topView.bottom-kTabBarHeight) withData:self.dataListArray];
-    [self.view addSubview:self.timeLinvView];
-    
-    self.noView = [NoMessageView createImageWith:100.0f];
-    [self.view addSubview:self.noView ];
-    
- 
-//下拉刷新
-    
-    MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
-    [header setTitle:@"下拉刷新" forState:MJRefreshStateIdle];
-    [header setTitle:@"努力加载中..." forState:MJRefreshStateRefreshing];
-    [header setTitle:@"松开即可刷新..." forState:MJRefreshStatePulling];
-    header.lastUpdatedTimeLabel.hidden = YES;
-    header.stateLabel.font = [UIFont systemFontOfSize:14];
-    header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:14];
-    header.stateLabel.textColor = RGB_TextAppBlue;
-    header.lastUpdatedTimeLabel.textColor = RGB_TextAppBlue;
-    self.timeLinvView.tableView.mj_header = header;
-    
-//上拉加载
-    MJRefreshBackGifFooter *footer = [MJRefreshBackGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataOther)];
-    
-    [footer setTitle:@"上拉加载"   forState:MJRefreshStateIdle];
-    [footer setTitle:@"加载中..."  forState:MJRefreshStateRefreshing];
-    [footer setTitle:@"没有更多了"  forState:MJRefreshStateNoMoreData];
-    [footer setTitle:@"松开即可加载..."  forState:MJRefreshStatePulling];
-    footer.stateLabel.font = [UIFont systemFontOfSize:14];
-    footer.stateLabel.textColor = RGB_TextAppBlue;
-    self.timeLinvView.tableView.mj_footer = footer;
-    
-    
-    self.sidebarVC = [[SidebarViewController alloc] init];
-    [self.sidebarVC setBgRGB:0x000000];
-    self.sidebarVC.delegate = self;
-    [[UIApplication sharedApplication].keyWindow addSubview:self.sidebarVC.view];
-    //    [self.view addSubview:self.sidebarVC.view];
-    self.sidebarVC.view.frame  = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
-    
-    if(!memberId){
-        memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
-    }
-    
-    self.filterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.filterBtn.frame = CGRectMake(ScreenWidth-37-14, ScreenHeight-120, 36, 36);
-    [self.filterBtn setImage:[UIImage imageNamed:@"筛选"] forState:UIControlStateNormal];
-    [self.filterBtn addTarget:self action:@selector(filterBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.filterBtn];
-//    [[UIApplication sharedApplication].keyWindow addSubview:self.filterBtn];
-    
-     UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:100];
-     [self selectIndexWithString:@"最新" withButton:btn];
-    
-    
-}
 
-//下拉加载
+# pragma mark ----- 下拉加载
 -(void)loadNewData {
     
     self.pageInteger = 1;
    [self requestHealthHintDataWithTipyInteger:self.typeUrlInteger withPageInteger:self.pageInteger];
 }
 
-//上拉刷新
+# pragma mark ----- 上拉刷新
 -(void)loadMoreDataOther {
-    
-    if (_typeUrlInteger == 10||_typeUrlInteger == 0){
+    //档案最新
+//    if (_typeUrlInteger == 10||_typeUrlInteger == 0){
+    if (_typeUrlInteger == 10){
         [self.timeLinvView.tableView.mj_footer endRefreshing];
         return;
     };
@@ -200,9 +181,8 @@
 }
 
 
-//点击筛选确定走的方法
-- (void)selectIndexWithString:(NSString *)str withButton:(UIButton *)button
-{
+# pragma mark ----- 点击筛选走的方法
+- (void)selectIndexWithString:(NSString *)str withButton:(UIButton *)button{
     
     button.selected = !button.selected;
     if(button.selected){
@@ -218,8 +198,8 @@
         }
     }
     
-    
-    if ([str isEqualToString:@"最新"])        self.typeUrlInteger = 0;
+//    if ([str isEqualToString:@"最新"])        self.typeUrlInteger = 0;
+    if ([str isEqualToString:@"全部"])        self.typeUrlInteger = 0;
     else if([str isEqualToString:@"经络"])    self.typeUrlInteger = 1;
     else if([str isEqualToString:@"体质"])    self.typeUrlInteger = 2;
     else if([str isEqualToString:@"脏腑"])    self.typeUrlInteger = 3;
@@ -233,7 +213,6 @@
     else if([str isEqualToString:@"病历"])    self.typeUrlInteger = 11;
     
     self.pageInteger = 1;
-    
     
     [_dataListArray removeAllObjects];
     [self.timeLinvView.tableView reloadData];
@@ -255,8 +234,7 @@
 }
 
 # pragma mark - wkwebview的设置
-- (void)createWKWebviewWithUrlStr:(NSString *)urlStr
-{
+- (void)createWKWebviewWithUrlStr:(NSString *)urlStr {
     
     if(!self.wkwebview){
         WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
@@ -309,8 +287,12 @@
     NSString *pageIntegerstr = [NSString stringWithFormat:@"%ld",(long)pageInteger];
     self.currentIndex = tipyInteger;
     switch (tipyInteger) {
-        case 0:   str = [NSString stringWithFormat:
-                         @"/member/myreport/view/%@.jhtml?",memberId];
+        case 0:
+            //档案最新
+//            str = [NSString stringWithFormat:
+//                         @"/member/myreport/view/%@.jhtml?",memberId];
+            str = [NSString stringWithFormat:
+                   @"/member/new_ins/all.jhtml?memberChildId=%@&pageNumber=%@",memberId,pageIntegerstr];
             break;
         case 1:   str = [NSString stringWithFormat:
                          @"/member/myreport/list/JLBS/%@.jhtml?pageNumber=%@",memberId,pageIntegerstr];
@@ -353,24 +335,22 @@
                 [weakSelf.dataListArray removeAllObjects];
             }
             
-
-            if (tipyInteger == 0) {
-                
-                NSArray *array = @[@"report",@"JLBS",@"TZBS",@"ZFBS",@"ecg",@"bloodPressure",@"oxygen",@"bodyTemperature"];
-                
-                for (int i = 0 ; i<array.count; i++) {
-                     NSDictionary *dic  = [[response valueForKey:@"data"] valueForKey:array[i]];
-                    HealthTipsModel *tipModel = [[HealthTipsModel alloc] init];
-                    
-                    if (dic != nil && ![dic isKindOfClass:[NSNull class]]) {
-                        [tipModel yy_modelSetWithJSON:dic];
-                        tipModel.typeStr = array[i];
-                        [weakSelf.dataListArray addObject:tipModel];
-                    }
-                }
-         
-                
-            }else if (tipyInteger == 4) {
+            ///档案最新
+//            if (tipyInteger == 0) {
+//                NSArray *array = @[@"report",@"JLBS",@"TZBS",@"ZFBS",@"ecg",@"bloodPressure",@"oxygen",@"bodyTemperature"];
+//
+//                for (int i = 0 ; i<array.count; i++) {
+//                     NSDictionary *dic  = [[response valueForKey:@"data"] valueForKey:array[i]];
+//                    HealthTipsModel *tipModel = [[HealthTipsModel alloc] init];
+//
+//                    if (dic != nil && ![dic isKindOfClass:[NSNull class]]) {
+//                        [tipModel yy_modelSetWithJSON:dic];
+//                        tipModel.typeStr = array[i];
+//                        [weakSelf.dataListArray addObject:tipModel];
+//                    }
+//                }
+//            }else
+            if (tipyInteger == 4) {
                 for (NSDictionary *dic in [[response valueForKey:@"data"] valueForKey:@"content"]) {
                     HealthTipsModel *tipModel = [[HealthTipsModel alloc] init];
                     [tipModel yy_modelSetWithJSON:dic];
@@ -384,7 +364,6 @@
                 }
             }
             
-            
             if (weakSelf.dataListArray.count < 1) {
                 weakSelf.noView.hidden = NO;
                 weakSelf.timeLinvView.tableView.hidden = YES;
@@ -393,12 +372,9 @@
                 weakSelf.timeLinvView.tableView.hidden = NO;
             }
             [self.timeLinvView relodTableViewWitDataArray:weakSelf.dataListArray withType:self.typeUrlInteger];
-            
         }
     } failureBlock:^(NSError *error) {
-        
         [hud hideAnimated:YES];
-        NSLog(@"%@",error);
         [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
     
@@ -443,7 +419,6 @@
                 urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(30)];
                 break;
             case 6:
-                
                 urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(20)];
                 break;
             case 7:
@@ -505,11 +480,8 @@
 - (void)requesstuserinfoCompleted11:(ASIHTTPRequest *)request
 {
     NSString* reqstr=[request responseString];
-    //NSLog(@"dic==%@",reqstr);
     NSDictionary * dica=[reqstr JSONValue];
-    NSLog(@"dic==%@",reqstr);
     id status=[dica objectForKey:@"status"];
-    //NSLog(@"234214324%@",status);
     if ([status intValue]== 100) {
         
         [self.dataListArray removeAllObjects];
@@ -608,6 +580,18 @@
     if (self.timeLinvView.hud){
         [self.timeLinvView.hud hideAnimated:YES];
     }
+}
+
+- (void)dealloc
+{
+    self.titleArr = nil;
+    self.archiveArr = nil;
+    self.progressView = nil;
+    self.wkwebview = nil;
+    self.healthTipsData = nil;
+    
+    [_wkwebview removeObserver:self forKeyPath:@"estimatedProgress"];
+    
 }
 
 

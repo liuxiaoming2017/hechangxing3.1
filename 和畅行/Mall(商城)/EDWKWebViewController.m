@@ -136,7 +136,13 @@ typedef void(^EDLoadRequestAction)(void);
     
     if(self.isCollect){
         if([strRequest isEqualToString:[NSString stringWithFormat:@"%@mobileIndex.html",URL_PRE]]){
-            self.navTitleLabel.text = @"和畅商城";
+            
+            //修改位置
+            AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            UIViewController *controller = app.window.rootViewController;
+            UITabBarController  *rvc = (UITabBarController  *)controller;
+            [rvc setSelectedIndex:2];
+            [self.navigationController popToRootViewControllerAnimated:YES];
         }
     }
     

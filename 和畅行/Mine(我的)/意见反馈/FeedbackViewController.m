@@ -17,6 +17,7 @@
 @interface FeedbackViewController ()<UITextViewDelegate>
 @property(nonatomic,retain) UITextView* acceptTV;
 @property (nonatomic ,retain) UILabel *textLabel;
+@property (nonatomic,strong)UIButton *submitBT;
 
 @end
 
@@ -54,7 +55,7 @@
    
     UILabel* UserNameLb=[[UILabel alloc ] init];
     UserNameLb.frame=CGRectMake(UserImgView.frame.origin.x+UserImgView.frame.size.width+8.5, kNavBarHeight+10.5, 200, userImg.size.height/2);
-    UserNameLb.text=@"感谢您提出宝贵意见";
+    UserNameLb.text=@"感谢您提出的宝贵意见";
     UserNameLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
     UserNameLb.font=[UIFont systemFontOfSize:12];
     [self.view addSubview:UserNameLb];
@@ -73,7 +74,7 @@
     [self.view addSubview:Linelb1];
     
     _textLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, kNavBarHeight+41, ScreenWidth-20, 20)];
-    _textLabel.text = @" 请提出宝贵意见";
+    _textLabel.text = @" 请提出您的宝贵意见";
     _textLabel.font = [UIFont systemFontOfSize:13];
     _textLabel.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     [self.view addSubview:_textLabel];
@@ -116,12 +117,23 @@
     [findpsButton setImage:findImg forState:UIControlStateNormal];
     findpsButton.frame=CGRectMake((ScreenWidth-findImg.size.width/2)/2,Linelb2.frame.origin.y+Linelb2.frame.size.height+(((ScreenHeight-kNavBarHeight-36)/2)-findImg.size.height/2)/2, findImg.size.width/2,findImg.size.height/2);
     [findpsButton addTarget:self action:@selector(userFeedbackButton) forControlEvents:UIControlEventTouchUpInside];
+    findpsButton.userInteractionEnabled = NO;
+    findpsButton.alpha = 0.4;
+    _submitBT = findpsButton;
     [self.view addSubview:findpsButton];
        // Do any additional setup after loading the view.
 }
 - (void)textDidChanges:(NSNotificationCenter*)notifi{
     _textLabel.hidden = [_acceptTV hasText];
+    if([_acceptTV hasText]){
+        _submitBT.userInteractionEnabled = YES;
+        _submitBT.alpha = 1;
+    }else{
+        _submitBT.userInteractionEnabled = NO;
+        _submitBT.alpha = 0.4;
+    }
 }
+
 
 - (void)doneButtonAction:(UIButton *)sender{
     NSLog(@"%s",__FUNCTION__);
@@ -159,8 +171,7 @@
 -(void)userFeedbackButton
 {
     if (_acceptTV.text.length==0) {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请填写反馈意见" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-        av.tag = 1000;
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请填写反馈意见" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
         [av show];
         
         return;

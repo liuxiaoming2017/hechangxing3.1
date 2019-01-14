@@ -24,7 +24,7 @@
 ///脏腑
 @property (nonatomic,copy)   NSString *zz_name_str;
 @property (nonatomic,copy)   NSString *icd_name_str;
-
+@property (nonatomic,copy)   NSString *zz_name;
 @property (nonatomic,copy)   NSString *physique_id;
 
 @property (nonatomic,copy)   NSString *cust_id;
@@ -63,6 +63,16 @@
 @property (nonatomic,copy)   NSString *mainSuit;
 @property (nonatomic,copy)   NSString *doctorDept;
 @property (nonatomic,copy)   NSString *doctorName;
+
+
+//档案全量
+@property (nonatomic,copy)   NSString *name;
+@property (nonatomic,copy)   NSString *type;
+@property (nonatomic,copy)   NSString *typeName;
+@property (nonatomic,copy)   NSString *link;
+@property (nonatomic,copy)   NSString *sn;
+@property (nonatomic,copy)   NSString *date;
+@property (nonatomic,copy)   NSString *time;
 
 
 @end

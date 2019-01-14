@@ -19,7 +19,7 @@
 @property (nonatomic, strong)UIImageView *lineImageV2;
 
 
-- (void)assignmentCellWithModel:(HealthTipsModel *)model;
+- (void)assignmentCellWithModel:(HealthTipsModel *)model withType:(NSInteger )typeInteger;
 - (void)configCellWithModel1;
 - (void)configCellWithModel2;
 

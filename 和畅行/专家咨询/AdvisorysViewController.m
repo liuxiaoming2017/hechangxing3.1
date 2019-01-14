@@ -20,6 +20,7 @@
 #import "TZImagePickerController.h"
 #import "PYPhotoBrowser.h"
 #import "AFNetworking.h"
+#import"AdvisoryTableViewCell.h"
 
 
 ///弱引用/强引用
@@ -58,7 +59,11 @@
 @property(nonatomic,strong)NSMutableArray *photos;//放图片的数组
 @property (nonatomic, weak) PYPhotosView *publishPhotosView;//属性 保存选择的图片
 @property(nonatomic,assign)int repeatClickInt;
-
+@property (nonatomic,strong)NSMutableArray *dataArr;
+/**subId*/
+@property (nonatomic,copy) NSString *subId;
+@property (nonatomic,strong)UIButton *finishButton;
+@property (nonatomic,strong)UIButton *choseButton;
 @end
 
 @implementation AdvisorysViewController
@@ -81,26 +86,44 @@
     self.navTitleLabel.text = @"专家咨询";
     
     self.headArray = [[NSMutableArray alloc]init];
-    
+    self.dataArr = [NSMutableArray array];
     _memberChildId = [UserShareOnce shareOnce].mengberchildId;
+    NSString *nameStr = [UserShareOnce shareOnce].name;
     
     self.view.backgroundColor = [UIColor whiteColor];
-    
 
-    _textView = [[CPTextViewPlaceholder alloc]initWithFrame:CGRectMake(10, kNavBarHeight+10, self.view.frame.size.width - 20, 100)];
-    UIView *grayView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40)];
+    
+    UIButton *choseButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    choseButton.backgroundColor = RGB(224, 224, 224);
+    choseButton.frame = CGRectMake(0, kNavBarHeight, ScreenWidth, 50);
+    [choseButton setTitle:nameStr forState:(UIControlStateNormal)];
+    [choseButton setTitleColor: [UtilityFunc colorWithHexString:@"#666666"] forState:(UIControlStateNormal)];
+    [choseButton addTarget:self action:@selector(chosePeople) forControlEvents:(UIControlEventTouchUpInside)];
+    [choseButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
+    [self.view addSubview:choseButton];
+    self.choseButton = choseButton;
+    choseButton.titleEdgeInsets = UIEdgeInsetsMake(0, -ScreenWidth + 150, 0, 0);
+    
+    UIImageView *leftImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 15.5, 30, 21)];
+    leftImageView.image = [UIImage imageNamed:@"221323_03.png"];
+    [choseButton addSubview:leftImageView];
+  
+    UIImageView *peopleImageView = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth - 40 , 18, 18, 16)];
+    peopleImageView.image = [UIImage imageNamed:@"HCY_right"];
+    [choseButton addSubview:peopleImageView];
+    
+    _textView = [[CPTextViewPlaceholder alloc]initWithFrame:CGRectMake(10, choseButton.bottom+10, self.view.frame.size.width - 20, 100)];
+    UIView *grayView=[[UIView alloc]initWithFrame:CGRectMake(0, choseButton.bottom, self.view.bounds.size.width, 40)];
     _textView.delegate = self;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChangess) name:UITextViewTextDidChangeNotification object:self.textView];
     
     grayView.backgroundColor=[UtilityFunc colorWithHexString:@"#f1f3f6"];
     _textView.tag = 123;
-    
     _textView.inputAccessoryView=grayView;
-    
     _textView.font = [UIFont systemFontOfSize:15];
     _textView.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     
-    _textViews = [[UITextView alloc]initWithFrame:CGRectMake(10, kNavBarHeight+10, self.view.frame.size.width - 20, 100)];
+    _textViews = [[UITextView alloc]initWithFrame:CGRectMake(10, choseButton.bottom+10, self.view.frame.size.width - 20, 100)];
     _textView.keyboardType = UIKeyboardTypeDefault;
     _textView.returnKeyType = UIReturnKeyDone;
     _textViews.text = @"请详细描述您的症状、疾病和身体状况。我们根据病情分诊到对应的大夫为您解答。";
@@ -145,17 +168,32 @@
     [finishButton setTitle:@"提交" forState:UIControlStateNormal];
     finishButton.layer.cornerRadius = 5.0;
     finishButton.clipsToBounds = YES;
-    [finishButton addTarget:self action:@selector(finishButton) forControlEvents:UIControlEventTouchUpInside];
+    finishButton.alpha = 0.4;
+    finishButton.userInteractionEnabled = NO;
+    [finishButton addTarget:self action:@selector(finishButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:finishButton];
-
+    self.finishButton = finishButton;
     
 }
 
 - (void)textDidChangess{
     _textViews.hidden = [_textViews hasText];
+    if([_textView hasText]){
+        self.finishButton.alpha = 1;
+        self.finishButton.userInteractionEnabled = YES;
+    }else{
+        self.finishButton.alpha = 0.4;
+        self.finishButton.userInteractionEnabled = NO;
+    }
 }
 
 
+#pragma mark ----------   选择子成员
+-(void)chosePeople {
+    
+    [self GetWithModifi];
+    
+}
 
 #pragma mark ----------  收键盘
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -165,6 +203,7 @@
 
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     // 不让输入表情
+    
     if ([textView isFirstResponder]) {
         if ([[[textView textInputMode] primaryLanguage] isEqualToString:@"emoji"] || ![[textView textInputMode] primaryLanguage]) {
             NSLog(@"输入的是表情，返回NO");
@@ -184,7 +223,7 @@
 
 
 
-- (void)finishButton{
+- (void)finishButtonAction{
     if ([_textView.text isEqual:[NSNull null]]||_textView.text == nil||[_textView.text isEqualToString:@""]) {
         [self showAlertWarmMessage:@"抱歉，请填写你的症状"];
         
@@ -812,7 +851,69 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     return timeSp;
 }
 
+#pragma mark -------- 选择子账户
+-(void)GetWithModifi
+{
+    
+    if([GlobalCommon isManyMember]){
+        __weak typeof(self) weakSelf = self;
+        SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
+        [subMember receiveSubIdWith:^(NSString *subId) {
+            NSLog(@"%@",subId);
+            if ([subId isEqualToString:@"user is out of date"]) {
+                //登录超时
+                
+            }else{
+                [weakSelf requestNetworkData:subId];
+            }
+            [subMember hideHintView];
+        }];
+        
+        [subMember receiveNameWith:^(NSString *nameString) {
+            [weakSelf.choseButton setTitle:nameString forState:(UIControlStateNormal)];
 
+        }];
+    }else{
+        [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+    }
+}
+
+- (void)requestNetworkData:(NSString *)subId
+{
+    //得到子账户的id
+    self.subId = subId;
+}
+
+
+- (void)requestResourceslistFinish:(ASIHTTPRequest *)request
+{
+    // [self hudWasHidden:nil];
+    NSString* reqstr=[request responseString];
+    NSDictionary * dic=[reqstr JSONValue];
+    id status=[dic objectForKey:@"status"];
+    if ([status intValue]==100)
+    {
+        _personView.hidden = NO;
+        _showView.hidden = NO;
+        [self.view bringSubviewToFront:_personView];
+        [self.view bringSubviewToFront:_showView];
+        
+        self.dataArr=[dic objectForKey:@"data"];
+        [self.tableView reloadData];
+    }
+    else
+    {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.removeFromSuperViewOnHide =YES;
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = @"当前账户已过期，请重新登录";  //提示的内容
+        hud.minSize = CGSizeMake(132.f, 108.0f);
+        [hud hideAnimated:YES afterDelay:2];
+        
+        LoginViewController *login = [[LoginViewController alloc] init];
+        [self.navigationController pushViewController:login animated:YES];
+    }
+}
 
 
 - (void)didReceiveMemoryWarning {
