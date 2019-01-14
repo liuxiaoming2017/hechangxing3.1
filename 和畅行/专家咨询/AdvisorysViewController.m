@@ -871,7 +871,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         
         [subMember receiveNameWith:^(NSString *nameString) {
             [weakSelf.choseButton setTitle:nameString forState:(UIControlStateNormal)];
-
         }];
     }else{
         [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
