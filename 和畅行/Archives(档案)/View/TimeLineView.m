@@ -21,7 +21,7 @@
 
 @interface TimeLineView()<UITableViewDelegate,UITableViewDataSource,govSectionViewDelegate>
 
-
+@property (nonatomic,strong)NSString *memberIDStr;
 
 @end
 
@@ -55,9 +55,10 @@
     [self.tableView registerClass:[HCY_ReportCell class] forCellReuseIdentifier:@"HCY_ReportCell"];
 }
 
--(void)relodTableViewWitDataArray:(NSMutableArray *)dataArray withType:(NSInteger)type {
+-(void)relodTableViewWitDataArray:(NSMutableArray *)dataArray withType:(NSInteger)type withMemberID:(NSString *)memberID {
     self.typeInteger = type;
     self.dataArr = dataArray;
+    self.memberIDStr = memberID;
     [self.tableView reloadData];
     
     //档案最新
@@ -406,7 +407,7 @@
         model = _dataArr[0];
     }
     
-    NSString *idNim = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
+    NSString *idNim = [NSString stringWithFormat:@"%@",self.memberIDStr];
     
     NSString *url = [[NSString alloc] initWithFormat:@"%@/member/service/reports.jhtml?memberChildId=%@&quarter=%@&year=%@",URL_PRE,idNim,self.topModel.quarter,self.topModel.year];
     ResultSpeakController *vc = [[ResultSpeakController alloc] init];
@@ -426,7 +427,7 @@
     
     ////经络
     if ([model.subjectCategorySn isEqualToString:@"JLBS"] ||[model.type isEqualToString:@"JLBS"]) {
-        NSString *aUrlle;
+        NSString *aUrlle =  [NSString string];
         if ([model.type isEqualToString:@"JLBS"]){
             if([GlobalCommon stringEqualNull:model.link]) return;
             aUrlle= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
@@ -443,12 +444,12 @@
     //体质
     if ([model.subjectCategorySn isEqualToString:@"TZBS"] ||[model.type isEqualToString:@"TZBS"]){
         
-        NSString *aUrlle;
+        NSString *tzUrlle = [NSString string];
         if ([model.type isEqualToString:@"TZBS"]){
             if([GlobalCommon stringEqualNull:model.link]) return;
-            aUrlle= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
+            tzUrlle= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
             ResultSpeakController *vc = [[ResultSpeakController alloc] init];
-            vc.urlStr = aUrlle;
+            vc.urlStr = tzUrlle;
             vc.titleStr = @"健康档案";
             vc.hidesBottomBarWhenPushed = YES;
             [[self viewController].navigationController pushViewController:vc animated:YES];
@@ -463,18 +464,18 @@
     
     //// 脏腑
     if (![GlobalCommon stringEqualNull:model.physique_id] ||[model.type isEqualToString:@"ZFBS"] ) {
-        NSString *url;
+        NSString *zfStr = [NSString string];
         if ([model.type isEqualToString:@"ZFBS"]){
             
             if([GlobalCommon stringEqualNull:model.link]) return;
-            url = model.link;
+            zfStr = [NSString stringWithFormat:@"%@%@",URL_PRE,model.link] ;
         }else{
-            NSString *idNim = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
-            url = [[NSString alloc] initWithFormat:@"%@member/service/zf_report.jhtml?cust_id=%@&physique_id=%@&device=1",URL_PRE,idNim,model.physique_id];
+            NSString *idNim = [NSString stringWithFormat:@"%@",self.memberIDStr];
+            zfStr = [[NSString alloc] initWithFormat:@"%@member/service/zf_report.jhtml?cust_id=%@&physique_id=%@&device=1",URL_PRE,idNim,model.physique_id];
         }
         //member/service/zf_report.jhtml?cust_id=32&physique_id=181224175130815054&device=1
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
-        vc.urlStr = url;
+        vc.urlStr = zfStr;
         vc.titleStr = @"健康档案";
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
@@ -499,15 +500,15 @@
     //血压
     if (![GlobalCommon stringEqualNull:model.highPressure ] ||[model.type isEqualToString:@"BLOOD"] ) {
         
-        NSString *urlStr;
+        NSString *xyurlStr = [NSString string];
         //            if ([model.type isEqualToString:@"BLOOD"]){
         //                if([GlobalCommon stringEqualNull:model.link]) return;
         //                urlStr= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
         //            }else{
-        urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(30)];
+        xyurlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,self.memberIDStr,@(30)];
         //            }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
-        vc.urlStr = urlStr;
+        vc.urlStr = xyurlStr;
         vc.titleStr = @"血压详情";
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
@@ -517,16 +518,16 @@
     //血氧
     if (![GlobalCommon stringEqualNull:model.density] ||[model.type isEqualToString:@"OXYGEN"]  ) {
         
-        NSString *urlStr;
+        NSString *xyurlStr = [NSString string];
         //            if ([model.type isEqualToString:@"OXYGEN"]){
         //                if([GlobalCommon stringEqualNull:model.link]) return;
         //                urlStr= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
         //            }else{
-        urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(20)];
+        xyurlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,self.memberIDStr,@(20)];
         //            }
         
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
-        vc.urlStr = urlStr;
+        vc.urlStr = xyurlStr;
         vc.titleStr = @"血氧详情";
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
@@ -537,15 +538,15 @@
     
     if (![GlobalCommon stringEqualNull:model.temperature] ||[model.type isEqualToString:@"BODY"] ) {
         
-        NSString *urlStr;
+        NSString *twurlStr = [NSString string];
         //            if ([model.type isEqualToString:@"BODY"]){
         //                if([GlobalCommon stringEqualNull:model.link]) return;
         //                urlStr= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
         //            }else{
-        urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(40)];
+        twurlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,self.memberIDStr,@(40)];
         //            }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
-        vc.urlStr = urlStr;
+        vc.urlStr = twurlStr;
         vc.titleStr = @"体温详情";
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
@@ -554,16 +555,16 @@
     //血糖
     if ([model.type isEqualToString:@"SUGAR"] ) {
         
-        NSString *urlStr;
+        NSString *xturlStr = [NSString string];
         //            if ([model.type isEqualToString:@"BODY"]){
         //                if([GlobalCommon stringEqualNull:model.link]) return;
         //                urlStr= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
         //            }else{
-        urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(60)];
+        xturlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,self.memberIDStr,@(60)];
 
         //            }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
-        vc.urlStr = urlStr;
+        vc.urlStr = xturlStr;
         vc.titleStr = @"血糖详情";
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
@@ -572,16 +573,16 @@
     //呼吸
     if ([model.type isEqualToString:@"BREATH"] ) {
         
-        NSString *urlStr;
+        NSString *hxurlStr = [NSString string];
         //            if ([model.type isEqualToString:@"BODY"]){
         //                if([GlobalCommon stringEqualNull:model.link]) return;
         //                urlStr= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
         //            }else{
-        urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(50)];
+        hxurlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,self.memberIDStr,@(50)];
         
         //            }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
-        vc.urlStr = urlStr;
+        vc.urlStr = hxurlStr;
         vc.titleStr = @"呼吸详情";
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
@@ -589,7 +590,7 @@
     
     if ([model.type isEqualToString:@"REPORT"] ) {
         
-        NSString *idNim = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
+        NSString *idNim = [NSString stringWithFormat:@"%@",self.memberIDStr];
         if([GlobalCommon stringEqualNull:model.link]) return;
         NSString *url = [[NSString alloc] initWithFormat:@"%@%@",URL_PRE,model.link];
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
@@ -619,7 +620,7 @@
     //季度报告
     if (model.quarter != nil && ![model.quarter isKindOfClass:[NSNull class]]&&model.quarter.length != 0) {
         
-        NSString *idNim = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
+        NSString *idNim = [NSString stringWithFormat:@"%@",self.memberIDStr];
         
         NSString *resulturl = [[NSString alloc] initWithFormat:@"%@/member/service/reports.jhtml?memberChildId=%@&quarter=%@&year=%@",URL_PRE,idNim,model.quarter,model.year];
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];

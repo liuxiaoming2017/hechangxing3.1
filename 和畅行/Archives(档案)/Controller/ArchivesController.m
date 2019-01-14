@@ -371,7 +371,7 @@
                 weakSelf.noView.hidden = YES;
                 weakSelf.timeLinvView.tableView.hidden = NO;
             }
-            [self.timeLinvView relodTableViewWitDataArray:weakSelf.dataListArray withType:self.typeUrlInteger];
+            [self.timeLinvView relodTableViewWitDataArray:weakSelf.dataListArray withType:self.typeUrlInteger withMemberID:self->memberId];
         }
     } failureBlock:^(NSError *error) {
         [hud hideAnimated:YES];
@@ -500,7 +500,7 @@
             self.timeLinvView.tableView.hidden = NO;
         }
         
-        [self.timeLinvView relodTableViewWitDataArray:self.dataListArray withType:self.typeUrlInteger];
+        [self.timeLinvView relodTableViewWitDataArray:self.dataListArray withType:self.typeUrlInteger withMemberID:memberId];
 
     }
     else if ([status intValue]== 44)
