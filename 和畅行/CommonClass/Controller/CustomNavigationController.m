@@ -7,6 +7,7 @@
 
 #import "CustomNavigationController.h"
 #import "MoxaHelpViewController.h"
+#import "MySportController.h"
 
 @interface CustomNavigationController ()<UIGestureRecognizerDelegate>
 
@@ -42,7 +43,7 @@
     }
     
     if(self.viewControllers>0){
-        if([[self.viewControllers objectAtIndex:[self.viewControllers count] - 1] isKindOfClass:[MoxaHelpViewController class]]){
+        if([[self.viewControllers objectAtIndex:[self.viewControllers count] - 1] isKindOfClass:[MoxaHelpViewController class]] || [[self.viewControllers objectAtIndex:[self.viewControllers count] - 1] isKindOfClass:[MySportController class]]){
             return NO;
         }
     }

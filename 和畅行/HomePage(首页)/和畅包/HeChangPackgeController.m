@@ -55,8 +55,16 @@
         return;
     }else if ([strRequest isEqualToString:yundong]){ //进入运动
         decisionHandler(WKNavigationActionPolicyCancel);
-        MySportController *vc = [[MySportController alloc] initWithAllSport];
-        [self.navigationController pushViewController:vc animated:YES];
+        NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
+        NSString *yueyaoIndex = [GlobalCommon getSportTypeFrom:physicalStr];
+        if(yueyaoIndex == nil){
+            MySportController *vc = [[MySportController alloc] initWithAllSport];
+            [self.navigationController pushViewController:vc animated:YES];
+        }else{
+            MySportController *vc = [[MySportController alloc] initWithSportType:[yueyaoIndex integerValue]];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        
         return;
     }else if ([strRequest isEqualToString:yinyue]){ //进入音乐
         decisionHandler(WKNavigationActionPolicyCancel);

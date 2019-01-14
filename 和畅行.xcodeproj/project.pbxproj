@@ -94,8 +94,8 @@
 		030F51F12101CEBE003C918F /* WinZhi_Img_sao_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 030F51A12101CEBE003C918F /* WinZhi_Img_sao_1.png */; };
 		030F51F22101CEBE003C918F /* WinZhi_Img_la_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 030F51A22101CEBE003C918F /* WinZhi_Img_la_1.png */; };
 		030F51F32101CEBE003C918F /* WY_bs.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 030F51A32101CEBE003C918F /* WY_bs.mp3 */; };
+		0310F5B021EB7FB60005731F /* MySportController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310F5AF21EB7FB60005731F /* MySportController.m */; };
 		0325A5EC210995F100275671 /* EEGDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0325A5EB210995F100275671 /* EEGDetailController.m */; };
-		0325A5F82109C29900275671 /* MySportController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0325A5F32109C29800275671 /* MySportController.m */; };
 		0325A5F92109C29900275671 /* MySportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0325A5F42109C29900275671 /* MySportCell.m */; };
 		0325A5FA2109C29900275671 /* MenuTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0325A5F72109C29900275671 /* MenuTypeView.m */; };
 		0325A5FD2109C2D300275671 /* sportImageType.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0325A5FB2109C2D300275671 /* sportImageType.plist */; };
@@ -112,6 +112,9 @@
 		032A7A2220EA1E43003D4952 /* UIViewExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A2120EA1E43003D4952 /* UIViewExt.m */; };
 		032A7A2720EA20FF003D4952 /* UIView+ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A2520EA20FF003D4952 /* UIView+ViewController.m */; };
 		032AB49F211AB48800CF40D3 /* healthLec.png in Resources */ = {isa = PBXBuildFile; fileRef = 032AB49E211AB48700CF40D3 /* healthLec.png */; };
+		032ED6C021E729D80020275E /* SportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032ED6BE21E729D80020275E /* SportViewController.m */; };
+		032ED6C321E729F80020275E /* AMPopTip.m in Sources */ = {isa = PBXBuildFile; fileRef = 032ED6C221E729F80020275E /* AMPopTip.m */; };
+		032ED6C621E72A2F0020275E /* NIDropDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 032ED6C521E72A2F0020275E /* NIDropDown.m */; };
 		0334105820EDBDB800BD68C2 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334105720EDBDB800BD68C2 /* NetworkManager.m */; };
 		0337A714218ACE22005A4693 /* ReplaceSec_BTN.png in Resources */ = {isa = PBXBuildFile; fileRef = 0337A713218ACE22005A4693 /* ReplaceSec_BTN.png */; };
 		0337A723218ADC6C005A4693 /* PECropRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337A71B218ADC6B005A4693 /* PECropRectView.m */; };
@@ -149,7 +152,7 @@
 		03439094210AC23200B57142 /* YY_ShangIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0343908C210AC23100B57142 /* YY_ShangIcon.png */; };
 		03439095210AC23200B57142 /* New_yy_zt_bf.png in Resources */ = {isa = PBXBuildFile; fileRef = 0343908D210AC23200B57142 /* New_yy_zt_bf.png */; };
 		03439098210AC2A400B57142 /* SongListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03439096210AC2A300B57142 /* SongListCell.m */; };
-		0343909B210AC3AB00B57142 /* DownloadHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0343909A210AC3AB00B57142 /* DownloadHandler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0343909B210AC3AB00B57142 /* DownloadHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0343909A210AC3AB00B57142 /* DownloadHandler.m */; };
 		0343909E210ACAFF00B57142 /* ProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0343909C210ACAFF00B57142 /* ProgressIndicator.m */; };
 		034390A1210ACCA500B57142 /* SongListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 034390A0210ACCA500B57142 /* SongListModel.m */; };
 		034A4E61211A7FF200936A46 /* 专家咨询11_023.png in Resources */ = {isa = PBXBuildFile; fileRef = 034A4E60211A7FF200936A46 /* 专家咨询11_023.png */; };
@@ -545,6 +548,10 @@
 		038A65542112B5360055C760 /* 我的待评价.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A65512112B5350055C760 /* 我的待评价.png */; };
 		038A65552112B5360055C760 /* 我的全部订单.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A65522112B5360055C760 /* 我的全部订单.png */; };
 		038A65562112B5360055C760 /* 我的待付款.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A65532112B5360055C760 /* 我的待付款.png */; };
+		038B52FC21E83C8C00D592C9 /* DownLoadHandlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 038B52F821E83C8C00D592C9 /* DownLoadHandlers.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		038B52FD21E83C8C00D592C9 /* SportDemonstratesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 038B52FA21E83C8C00D592C9 /* SportDemonstratesViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		038B52FF21E842D100D592C9 /* quanbuxiazai.png in Resources */ = {isa = PBXBuildFile; fileRef = 038B52FE21E842D000D592C9 /* quanbuxiazai.png */; };
+		038B530121E844FA00D592C9 /* 运动示范音_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 038B530021E844F900D592C9 /* 运动示范音_03.png */; };
 		038CE87420EDE8F9005E9219 /* UserShareOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = 038CE87320EDE8F9005E9219 /* UserShareOnce.m */; };
 		038CE87720EDF1BF005E9219 /* RootRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 038CE87620EDF1BF005E9219 /* RootRequestController.m */; };
 		038CE88020EDF4F3005E9219 /* Find_Btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 038CE87920EDF4F2005E9219 /* Find_Btn.png */; };
@@ -666,6 +673,7 @@
 		03B1A19E2119966A00B23339 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B1A19C2119966A00B23339 /* NSString+Emoji.m */; };
 		03B1A1A12119969E00B23339 /* CPTextViewPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B1A1A02119969E00B23339 /* CPTextViewPlaceholder.m */; };
 		03C1F50720F491B700A341A8 /* RemindModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C1F50620F491B700A341A8 /* RemindModel.m */; };
+		03C2319821EC20E6003F0FCC /* sportShiFanYin.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03C2319721EC20E6003F0FCC /* sportShiFanYin.plist */; };
 		03C4D1F220F44DF800D7BF02 /* NSString+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C4D1F120F44DF800D7BF02 /* NSString+Utility.m */; };
 		03CECBF5210EF00700A443B8 /* AVPlayerObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CECBF4210EF00700A443B8 /* AVPlayerObject.m */; };
 		03CEFC0A21A64B6B0097CB17 /* moxibustion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CEFC0921A64B6A0097CB17 /* moxibustion.framework */; };
@@ -683,6 +691,7 @@
 		03DEBC74210863CC008434BD /* LeadPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DEBC72210863CB008434BD /* LeadPlayer.m */; };
 		03DEBC772108641D008434BD /* Helper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03DEBC752108641C008434BD /* Helper.mm */; };
 		03E36FE920EDB882000974E1 /* UtilityFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE820EDB882000974E1 /* UtilityFunc.m */; };
+		03EB041921E86B96000AA88B /* ZYAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB041721E86B95000AA88B /* ZYAudioManager.m */; };
 		03EE3C3D21D3982B00647E53 /* WenYinFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EE3C3C21D3982B00647E53 /* WenYinFileCell.m */; };
 		03F692D020FEEE9500308E38 /* ResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F692CF20FEEE9500308E38 /* ResultController.m */; };
 		03F692E920FF2DF000308E38 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F692D720FF2DED00308E38 /* ASIDownloadCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -958,10 +967,10 @@
 		030F51A12101CEBE003C918F /* WinZhi_Img_sao_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WinZhi_Img_sao_1.png; sourceTree = "<group>"; };
 		030F51A22101CEBE003C918F /* WinZhi_Img_la_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WinZhi_Img_la_1.png; sourceTree = "<group>"; };
 		030F51A32101CEBE003C918F /* WY_bs.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = WY_bs.mp3; sourceTree = "<group>"; };
+		0310F5AF21EB7FB60005731F /* MySportController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySportController.m; sourceTree = "<group>"; };
 		0325A5EA210995F100275671 /* EEGDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EEGDetailController.h; sourceTree = "<group>"; };
 		0325A5EB210995F100275671 /* EEGDetailController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EEGDetailController.m; sourceTree = "<group>"; };
 		0325A5F22109C29800275671 /* MySportController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySportController.h; sourceTree = "<group>"; };
-		0325A5F32109C29800275671 /* MySportController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySportController.m; sourceTree = "<group>"; };
 		0325A5F42109C29900275671 /* MySportCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySportCell.m; sourceTree = "<group>"; };
 		0325A5F52109C29900275671 /* MySportCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySportCell.h; sourceTree = "<group>"; };
 		0325A5F62109C29900275671 /* MenuTypeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTypeView.h; sourceTree = "<group>"; };
@@ -993,6 +1002,12 @@
 		032A7A2520EA20FF003D4952 /* UIView+ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ViewController.m"; sourceTree = "<group>"; };
 		032A7A2620EA20FF003D4952 /* UIView+ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ViewController.h"; sourceTree = "<group>"; };
 		032AB49E211AB48700CF40D3 /* healthLec.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = healthLec.png; sourceTree = "<group>"; };
+		032ED6BE21E729D80020275E /* SportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SportViewController.m; sourceTree = "<group>"; };
+		032ED6BF21E729D80020275E /* SportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SportViewController.h; sourceTree = "<group>"; };
+		032ED6C121E729F80020275E /* AMPopTip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPopTip.h; sourceTree = "<group>"; };
+		032ED6C221E729F80020275E /* AMPopTip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPopTip.m; sourceTree = "<group>"; };
+		032ED6C421E72A2F0020275E /* NIDropDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIDropDown.h; sourceTree = "<group>"; };
+		032ED6C521E72A2F0020275E /* NIDropDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIDropDown.m; sourceTree = "<group>"; };
 		0334105620EDBDB800BD68C2 /* NetworkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
 		0334105720EDBDB800BD68C2 /* NetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
 		0337A713218ACE22005A4693 /* ReplaceSec_BTN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ReplaceSec_BTN.png; sourceTree = "<group>"; };
@@ -1650,6 +1665,12 @@
 		038A65512112B5350055C760 /* 我的待评价.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我的待评价.png"; sourceTree = "<group>"; };
 		038A65522112B5360055C760 /* 我的全部订单.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我的全部订单.png"; sourceTree = "<group>"; };
 		038A65532112B5360055C760 /* 我的待付款.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我的待付款.png"; sourceTree = "<group>"; };
+		038B52F821E83C8C00D592C9 /* DownLoadHandlers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownLoadHandlers.m; sourceTree = "<group>"; };
+		038B52F921E83C8C00D592C9 /* SportDemonstratesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SportDemonstratesViewController.h; sourceTree = "<group>"; };
+		038B52FA21E83C8C00D592C9 /* SportDemonstratesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SportDemonstratesViewController.m; sourceTree = "<group>"; };
+		038B52FB21E83C8C00D592C9 /* DownLoadHandlers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownLoadHandlers.h; sourceTree = "<group>"; };
+		038B52FE21E842D000D592C9 /* quanbuxiazai.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quanbuxiazai.png; sourceTree = "<group>"; };
+		038B530021E844F900D592C9 /* 运动示范音_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "运动示范音_03.png"; sourceTree = "<group>"; };
 		038CE86E20EDE75D005E9219 /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Global.h; sourceTree = "<group>"; };
 		038CE87220EDE8F9005E9219 /* UserShareOnce.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserShareOnce.h; sourceTree = "<group>"; };
 		038CE87320EDE8F9005E9219 /* UserShareOnce.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserShareOnce.m; sourceTree = "<group>"; };
@@ -1823,6 +1844,7 @@
 		03B1A1A02119969E00B23339 /* CPTextViewPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPTextViewPlaceholder.m; sourceTree = "<group>"; };
 		03C1F50520F491B700A341A8 /* RemindModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemindModel.h; sourceTree = "<group>"; };
 		03C1F50620F491B700A341A8 /* RemindModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemindModel.m; sourceTree = "<group>"; };
+		03C2319721EC20E6003F0FCC /* sportShiFanYin.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = sportShiFanYin.plist; sourceTree = "<group>"; };
 		03C4D1F020F44DF800D7BF02 /* NSString+Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Utility.h"; sourceTree = "<group>"; };
 		03C4D1F120F44DF800D7BF02 /* NSString+Utility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utility.m"; sourceTree = "<group>"; };
 		03CECBF3210EF00700A443B8 /* AVPlayerObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVPlayerObject.h; sourceTree = "<group>"; };
@@ -1852,6 +1874,8 @@
 		03DEBC762108641D008434BD /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 		03E36FE720EDB882000974E1 /* UtilityFunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UtilityFunc.h; sourceTree = "<group>"; };
 		03E36FE820EDB882000974E1 /* UtilityFunc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UtilityFunc.m; sourceTree = "<group>"; };
+		03EB041721E86B95000AA88B /* ZYAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYAudioManager.m; sourceTree = "<group>"; };
+		03EB041821E86B96000AA88B /* ZYAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYAudioManager.h; sourceTree = "<group>"; };
 		03EE3C3B21D3982B00647E53 /* WenYinFileCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WenYinFileCell.h; sourceTree = "<group>"; };
 		03EE3C3C21D3982B00647E53 /* WenYinFileCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WenYinFileCell.m; sourceTree = "<group>"; };
 		03F692CE20FEEE9500308E38 /* ResultController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResultController.h; sourceTree = "<group>"; };
@@ -2345,14 +2369,18 @@
 		0325A5F12109C27800275671 /* Sport(运动) */ = {
 			isa = PBXGroup;
 			children = (
+				032ED6BD21E729C10020275E /* 之前运动 */,
 				0325A5FC2109C2D300275671 /* sportImageText.plist */,
 				0325A5FB2109C2D300275671 /* sportImageType.plist */,
+				03C2319721EC20E6003F0FCC /* sportShiFanYin.plist */,
 				0325A5F62109C29900275671 /* MenuTypeView.h */,
 				0325A5F72109C29900275671 /* MenuTypeView.m */,
 				0325A5F52109C29900275671 /* MySportCell.h */,
 				0325A5F42109C29900275671 /* MySportCell.m */,
 				0325A5F22109C29800275671 /* MySportController.h */,
-				0325A5F32109C29800275671 /* MySportController.m */,
+				0310F5AF21EB7FB60005731F /* MySportController.m */,
+				03EB041821E86B96000AA88B /* ZYAudioManager.h */,
+				03EB041721E86B95000AA88B /* ZYAudioManager.m */,
 			);
 			path = "Sport(运动)";
 			sourceTree = "<group>";
@@ -2459,6 +2487,7 @@
 		032A7A1420E9F9C0003D4952 /* Mine(我的) */ = {
 			isa = PBXGroup;
 			children = (
+				038B52F721E83C7500D592C9 /* 运动示范音 */,
 				036FC0E6211827F600C1A793 /* 设置 */,
 				036FC0DE2118245900C1A793 /* 意见反馈 */,
 				036FC0CD21181AE300C1A793 /* 我的资讯 */,
@@ -2517,6 +2546,19 @@
 				036A66872113F6A20096A006 /* ZYGASINetworking.m */,
 			);
 			path = Configure;
+			sourceTree = "<group>";
+		};
+		032ED6BD21E729C10020275E /* 之前运动 */ = {
+			isa = PBXGroup;
+			children = (
+				032ED6C421E72A2F0020275E /* NIDropDown.h */,
+				032ED6C521E72A2F0020275E /* NIDropDown.m */,
+				032ED6C121E729F80020275E /* AMPopTip.h */,
+				032ED6C221E729F80020275E /* AMPopTip.m */,
+				032ED6BF21E729D80020275E /* SportViewController.h */,
+				032ED6BE21E729D80020275E /* SportViewController.m */,
+			);
+			path = "之前运动";
 			sourceTree = "<group>";
 		};
 		0337A719218ADC5C005A4693 /* PEPhotoCropEditor */ = {
@@ -2595,6 +2637,8 @@
 		03439068210AB5EB00B57142 /* 乐药 */ = {
 			isa = PBXGroup;
 			children = (
+				038B530021E844F900D592C9 /* 运动示范音_03.png */,
+				038B52FE21E842D000D592C9 /* quanbuxiazai.png */,
 				0389890B21D36CCB004A6CBD /* My_upIcon.png */,
 				0389890921D36CC5004A6CBD /* My_DeleIcon.png */,
 				0343907A210AB81800B57142 /* YY_seg_bg.png */,
@@ -3672,6 +3716,17 @@
 			path = "我的";
 			sourceTree = "<group>";
 		};
+		038B52F721E83C7500D592C9 /* 运动示范音 */ = {
+			isa = PBXGroup;
+			children = (
+				038B52FB21E83C8C00D592C9 /* DownLoadHandlers.h */,
+				038B52F821E83C8C00D592C9 /* DownLoadHandlers.m */,
+				038B52F921E83C8C00D592C9 /* SportDemonstratesViewController.h */,
+				038B52FA21E83C8C00D592C9 /* SportDemonstratesViewController.m */,
+			);
+			path = "运动示范音";
+			sourceTree = "<group>";
+		};
 		038CE87820EDF4B3005E9219 /* OtherImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -4678,6 +4733,7 @@
 				039C23C9212403E400F9AFA3 /* sure.png in Resources */,
 				038A653F2112ADCE0055C760 /* refundRecord@2x.png in Resources */,
 				036E852B2186EB1A001B9BB4 /* moxiRecord.png in Resources */,
+				038B530121E844FA00D592C9 /* 运动示范音_03.png in Resources */,
 				036E856F2186EB2A001B9BB4 /* BlueToothList.xib in Resources */,
 				036E851B2186EB1A001B9BB4 /* ic_switch_model.png in Resources */,
 				03F97C9121005A9E00A0F842 /* ICD10_limps_closed.png in Resources */,
@@ -4848,6 +4904,7 @@
 				036285AD2106F3D50090020D /* 知己档案_心理.png in Resources */,
 				036E85792186EB2A001B9BB4 /* AcupointPrescriptionListCell.xib in Resources */,
 				03439092210AC23200B57142 /* YY_ZhiIcon.png in Resources */,
+				03C2319821EC20E6003F0FCC /* sportShiFanYin.plist in Resources */,
 				038CE88A20EDF622005E9219 /* checkboxyes.png in Resources */,
 				036E85022186EB1A001B9BB4 /* 68MoxaHead_yellow.png in Resources */,
 				039C23942123D05000F9AFA3 /* 不再提醒.png in Resources */,
@@ -4857,6 +4914,7 @@
 				03B1A1902119690400B23339 /* ReplaceSec_FSec.png in Resources */,
 				039C23B32123FA3100F9AFA3 /* 血压01.png in Resources */,
 				035FD3FC21881F03008CD7E7 /* zhifuwancheng.png in Resources */,
+				038B52FF21E842D100D592C9 /* quanbuxiazai.png in Resources */,
 				03F97C8D21005A9E00A0F842 /* ICD10_popSelectedBack.png in Resources */,
 				036E851C2186EB1A001B9BB4 /* channel_num5.png in Resources */,
 				039C23AF2123FA3100F9AFA3 /* 血压14.png in Resources */,
@@ -5131,6 +5189,7 @@
 				036E85AC2186EB6E001B9BB4 /* TYWaveProgressView.m in Sources */,
 				035BBC6021ABDF2300AB537D /* GovSectionView.m in Sources */,
 				03F6931520FF2FD400308E38 /* SBJsonStreamWriterAccumulator.m in Sources */,
+				032ED6C621E72A2F0020275E /* NIDropDown.m in Sources */,
 				039C239A2123D80900F9AFA3 /* BloodPressureNonDeviceViewController.m in Sources */,
 				032735982105CE0900554516 /* ArchivesCell.m in Sources */,
 				03FBDF9521928509006116FC /* RemindCell.m in Sources */,
@@ -5158,6 +5217,7 @@
 				034390A1210ACCA500B57142 /* SongListModel.m in Sources */,
 				03CEFC0D21A64BA80097CB17 /* i9_MoxaMainViewController.m in Sources */,
 				83E23EE921C0A53100B43298 /* HCY_CallController.m in Sources */,
+				03EB041921E86B96000AA88B /* ZYAudioManager.m in Sources */,
 				03F6931020FF2FD400308E38 /* SBJsonStreamParserState.m in Sources */,
 				03EE3C3D21D3982B00647E53 /* WenYinFileCell.m in Sources */,
 				036A66A52113FEAB0096A006 /* BlockTableViewCell.m in Sources */,
@@ -5192,7 +5252,6 @@
 				0385401920EF06AB002AC776 /* NSDictionary+Extension.m in Sources */,
 				036A66892113F6A30096A006 /* ZYGASINetworking.m in Sources */,
 				039B2AD4212522D000D558F5 /* TestViewController.m in Sources */,
-				0325A5F82109C29900275671 /* MySportController.m in Sources */,
 				0390CF8B20ECB975000ECA53 /* RegisterViewController.m in Sources */,
 				03CEFC1321A64EF40097CB17 /* ZKIndxView.m in Sources */,
 				036E84362186EAD3001B9BB4 /* UIBlueToothInfo.m in Sources */,
@@ -5253,6 +5312,7 @@
 				0303BDF820F34FFD006A9EDF /* MemberUserShance.m in Sources */,
 				036285992106BB020090020D /* CellUtil.m in Sources */,
 				039B2AD72125247100D558F5 /* TestCell.m in Sources */,
+				038B52FC21E83C8C00D592C9 /* DownLoadHandlers.m in Sources */,
 				036A66822113ECE70096A006 /* BaseModel.m in Sources */,
 				036E840E2186EAB1001B9BB4 /* i9_UISetTTViewController.m in Sources */,
 				036E859E2186EB5A001B9BB4 /* ASValueTrackingSlider.m in Sources */,
@@ -5287,6 +5347,7 @@
 				03513ACD20E9CAD3004E2805 /* AppDelegate.m in Sources */,
 				03FBDF5B21927F8C006116FC /* SidebarViewController.m in Sources */,
 				03C4D1F220F44DF800D7BF02 /* NSString+Utility.m in Sources */,
+				032ED6C021E729D80020275E /* SportViewController.m in Sources */,
 				03B1A1862119687D00B23339 /* WYViewController.m in Sources */,
 				037B5A4021097BC00076D3AA /* HeartLive.m in Sources */,
 				03535EF320F7262C00664FA9 /* TipClickController.m in Sources */,
@@ -5315,6 +5376,7 @@
 				036A66D02114023F0096A006 /* SonAccount.m in Sources */,
 				034A4E80211A9AD900936A46 /* TZLocationManager.m in Sources */,
 				036E85932186EB4C001B9BB4 /* ImgTextView.m in Sources */,
+				038B52FD21E83C8C00D592C9 /* SportDemonstratesViewController.m in Sources */,
 				038516832186AAB3001DD2B7 /* PayViewController.m in Sources */,
 				03FBDF9321928509006116FC /* HeChangPackge.m in Sources */,
 				03FBDF772192806F006116FC /* WKWebController.m in Sources */,
@@ -5364,6 +5426,7 @@
 				03DEBC6A210841FC008434BD /* HealthTipsModel.m in Sources */,
 				03F692EF20FF2DF000308E38 /* ASIDataDecompressor.m in Sources */,
 				835DB91C21D757C800B8DF99 /* HCY_FamilyListModel.m in Sources */,
+				032ED6C321E729F80020275E /* AMPopTip.m in Sources */,
 				03FBDF97219285A0006116FC /* NavBarViewController.m in Sources */,
 				034A4E84211A9AD900936A46 /* TZPhotoPreviewController.m in Sources */,
 				03FBDF872192829C006116FC /* UIImage+Units.m in Sources */,
@@ -5374,6 +5437,7 @@
 				0385167921869EDB001DD2B7 /* IXAttributeTapLabel.m in Sources */,
 				C97308F821BA50FB00060447 /* ScanSuccessJumpVC.m in Sources */,
 				03F692EA20FF2DF000308E38 /* ASIFormDataRequest.m in Sources */,
+				0310F5B021EB7FB60005731F /* MySportController.m in Sources */,
 				038516A82186AB39001DD2B7 /* MD5DataSigner.m in Sources */,
 				038516822186AAB3001DD2B7 /* AppPayViewController.m in Sources */,
 				03C1F50720F491B700A341A8 /* RemindModel.m in Sources */,
@@ -5524,7 +5588,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3X65BCYVHU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5568,7 +5632,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = com.ky3h.hechangxing;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};
@@ -5582,7 +5646,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3X65BCYVHU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5626,7 +5690,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = com.ky3h.hechangxing;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};

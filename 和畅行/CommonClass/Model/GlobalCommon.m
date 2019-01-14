@@ -504,7 +504,7 @@
     if(!maskView){
         UIView *maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
         maskView.backgroundColor = [UIColor blackColor];
-        maskView.alpha = 0.7;
+        maskView.alpha = 0.5;
         maskView.tag = 111111112;
         
         [[UIApplication sharedApplication].keyWindow addSubview:maskView];

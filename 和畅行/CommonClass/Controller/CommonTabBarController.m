@@ -77,7 +77,14 @@
                     return;
                 }
             }else{
-                vc = [[MySportController alloc] initWithAllSport];
+                NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
+                NSString *yueyaoIndex = [GlobalCommon getSportTypeFrom:physicalStr];
+                if(yueyaoIndex == nil){
+                    vc = [[MySportController alloc] initWithAllSport];
+                   
+                }else{
+                    vc = [[MySportController alloc] initWithSportType:[yueyaoIndex integerValue]];
+                }
             }
             
             break;

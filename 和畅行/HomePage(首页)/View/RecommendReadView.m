@@ -110,11 +110,11 @@
 //            [weakSelf.collectionV reloadData];
         
         }
-      //  [weakSelf checkHaveUpdate];
+        [weakSelf checkHaveUpdate];
 
     } failureBlock:^(NSError *error) {
         NSLog(@"%@",error);
-      //  [weakSelf checkHaveUpdate];
+        [weakSelf checkHaveUpdate];
         [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
     

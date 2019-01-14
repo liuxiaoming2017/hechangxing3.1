@@ -112,6 +112,7 @@
     [self cutCircleByAngle:affirmBtn AngleType:UIRectCornerBottomRight];
     [self addSubview:affirmBtn];
     
+    /*
     UIView *line3 = [[UIView alloc] init];
     line3.frame = CGRectMake(line2.left, CGRectGetMaxY(line2.frame), 0.5, 30);
     line3.backgroundColor = UIColorFromHex(0X7f7f7f);
@@ -123,10 +124,11 @@
     [cancelBtn2 setImage:cancelImage forState:UIControlStateNormal];
     [cancelBtn2 addTarget:self action:@selector(cancelUpdate) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:cancelBtn2];
- 
+     */
     
     
-    CGFloat viewHeight = contentBgView.height  + line1.height + affirmBtn.height + line3.height + cancelBtn2.height;
+    //CGFloat viewHeight = contentBgView.height  + line1.height + affirmBtn.height + line3.height + cancelBtn2.height;
+    CGFloat viewHeight = contentBgView.height  + line1.height + affirmBtn.height;
     self.frame = CGRectMake((ScreenWidth-viewWidth)/2.0f, (ScreenHeight-viewHeight)/2.0f, viewWidth, viewHeight);
 }
 

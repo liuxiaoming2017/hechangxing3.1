@@ -144,6 +144,7 @@
     
     //根据个人经络最新一条信息展示
     NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
+    
     if (physicalStr.length != 0 && physicalStr !=nil &&![physicalStr isKindOfClass:[NSNull class]]) {
         
         NSArray * segmentedArray = @[
