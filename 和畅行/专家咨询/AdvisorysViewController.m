@@ -89,7 +89,9 @@
     self.dataArr = [NSMutableArray array];
     _memberChildId = [UserShareOnce shareOnce].mengberchildId;
     NSString *nameStr = [UserShareOnce shareOnce].name;
-    
+    if ([GlobalCommon stringEqualNull:nameStr]) {
+        nameStr = [MemberUserShance shareOnce].name;
+    }
     self.view.backgroundColor = [UIColor whiteColor];
 
     

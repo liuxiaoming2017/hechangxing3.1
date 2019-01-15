@@ -145,12 +145,12 @@
     }else  if([UserShareOnce shareOnce].wxName&&[UserShareOnce shareOnce].wxName.length!=0&&![[UserShareOnce shareOnce].wxName isKindOfClass:[NSNull class]]){
         dispalyName = [NSString stringWithFormat:@"欢迎: %@",[UserShareOnce shareOnce].wxName] ;
     }
-    if (![[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]] || [UserShareOnce shareOnce].name != nil) {
-        dispalyName = [UserShareOnce shareOnce].username;
-    }else{
+    if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].name]) {
         dispalyName = [UserShareOnce shareOnce].name;
+    }else{
+        dispalyName = [UserShareOnce shareOnce].username;
     }
-    if([UserShareOnce shareOnce].wxName&&[UserShareOnce shareOnce].wxName.length!=0&&![[UserShareOnce shareOnce].wxName isKindOfClass:[NSNull class]]){
+    if(![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].wxName]){
         dispalyName = [UserShareOnce shareOnce].wxName;
     }
     UILabel *userName = [Tools creatLabelWithFrame:CGRectMake(userIcon.right+20, userIcon.top+10, 130, 20) text:dispalyName textSize:14];
