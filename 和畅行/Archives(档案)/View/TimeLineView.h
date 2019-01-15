@@ -16,7 +16,7 @@
 @property (nonatomic, strong) NSMutableArray *dataArr;
 @property (nonatomic,assign)  NSInteger typeInteger;
 
--(void)relodTableViewWitDataArray:(NSMutableArray *)dataArray withType:(NSInteger)type;
+-(void)relodTableViewWitDataArray:(NSMutableArray *)dataArray withType:(NSInteger)type withMemberID:(NSString *)memberID;
 
 - (id)initWithFrame:(CGRect)frame withData:(NSArray *)dataArr;
 @end

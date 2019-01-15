@@ -371,7 +371,7 @@
                 weakSelf.noView.hidden = YES;
                 weakSelf.timeLinvView.tableView.hidden = NO;
             }
-            [self.timeLinvView relodTableViewWitDataArray:weakSelf.dataListArray withType:self.typeUrlInteger];
+            [self.timeLinvView relodTableViewWitDataArray:weakSelf.dataListArray withType:self.typeUrlInteger withMemberID:self->memberId];
         }
     } failureBlock:^(NSError *error) {
         [hud hideAnimated:YES];
@@ -413,7 +413,7 @@
     NSString *urlStr = @"";
     
     if(index > 4){
-        
+       
         switch (index) {
             case 5:
                 urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(30)];
@@ -422,10 +422,10 @@
                 urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(20)];
                 break;
             case 7:
-                urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(40)];
+                urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(60)];
                 break;
             case 8:
-                urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(20)];
+                urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(40)];
                 break;
             case 9:
                 urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(50)];
@@ -500,7 +500,7 @@
             self.timeLinvView.tableView.hidden = NO;
         }
         
-        [self.timeLinvView relodTableViewWitDataArray:self.dataListArray withType:self.typeUrlInteger];
+        [self.timeLinvView relodTableViewWitDataArray:self.dataListArray withType:self.typeUrlInteger withMemberID:memberId];
 
     }
     else if ([status intValue]== 44)
