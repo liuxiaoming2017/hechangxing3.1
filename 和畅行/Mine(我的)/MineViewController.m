@@ -59,8 +59,8 @@
     //0
 //    listNamesArr = @[@"健康顾问团队",@"退款记录",@"退货记录",@"我的卡包",@"我的积分",@"家庭成员",@"视频预约",@"健康讲座",@"我的乐药",@"运动示范音",@"未发出的声音文件",@"预约挂号",@"健康提示",@"我的咨询",@"收货地址",@"意见反馈",@"收藏",@"设置"];
 //    listImagesArr = @[@"private",@"refundRecord",@"returedGoodsRecord",@"1我的_100",@"integral",@"1我的_101",@"1我的_102",@"1我的_103",@"1我的_104",@"1我的_105",@"1我的_106",@"1我的_107",@"1我的_108",@"1我的_109",@"1我的_110",@"feedback",@"1我的_111",@"1我的_112"];
-    listNamesArr = @[@"退款记录",@"退货记录",@"我的卡包",@"我的积分",@"家庭成员",@"健康讲座",@"我的乐药",@"运动示范音",@"未发出的声音文件",@"我的咨询",@"收货地址",@"意见反馈",@"收藏",@"设置"];
-    listImagesArr = @[@"refundRecord",@"returedGoodsRecord",@"1我的_100",@"integral",@"1我的_101",@"1我的_103",@"1我的_104",@"1我的_105",@"1我的_106",@"1我的_109",@"1我的_110",@"feedback",@"1我的_111",@"1我的_112"];
+    listNamesArr = @[@"退款记录",@"退货记录",@"我的卡包",@"我的积分",@"家庭成员",@"健康讲座",@"运动示范音",@"未发出的声音文件",@"我的咨询",@"收货地址",@"意见反馈",@"收藏",@"设置"];
+    listImagesArr = @[@"refundRecord",@"returedGoodsRecord",@"1我的_100",@"integral",@"1我的_101",@"1我的_103",@"1我的_105",@"1我的_106",@"1我的_109",@"1我的_110",@"feedback",@"1我的_111",@"1我的_112"];
     
     if([UserShareOnce shareOnce].isOnline){
         listNamesArr = @[@"退款记录",@"退货记录",@"我的积分",@"家庭成员",@"收货地址",@"意见反馈",@"收藏",@"设置"];
@@ -337,15 +337,15 @@
             
         }
             break;
-        case 6:{
-            LeMedicineViewController *vc = [[LeMedicineViewController alloc] init];
-            vc.hidesBottomBarWhenPushed = YES;
-            
-            [self.navigationController pushViewController:vc animated:YES];
-            
-        }
-            break;
-        case 7:{
+//        case 6:{
+//            LeMedicineViewController *vc = [[LeMedicineViewController alloc] init];
+//            vc.hidesBottomBarWhenPushed = YES;
+//
+//            [self.navigationController pushViewController:vc animated:YES];
+//
+//        }
+//            break;
+        case 7-1:{
             SportDemonstratesViewController *vc = [[SportDemonstratesViewController alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             
@@ -353,14 +353,14 @@
             
         }
             break;
-        case 8:
+        case 8-1:
         {
             WenYinFileViewController *vc = [[WenYinFileViewController alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
-        case 8+1:
+        case 8:
         {
             MyAvdisorysViewController *vc = [[MyAvdisorysViewController alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
@@ -368,7 +368,7 @@
             
         }
             break;
-        case 9+1:
+        case 9:
         {
             HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
             vc.noWebviewBack = YES;
@@ -380,7 +380,7 @@
             
         }
             break;
-        case 10+1:
+        case 10:
         {
             FeedbackViewController *vc = [[FeedbackViewController alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
@@ -388,7 +388,7 @@
             
         }
             break;
-        case 11+1:
+        case 11:
         {
             NSString *urlStr =  [NSString stringWithFormat:@"%@member/mobile/focus_ware/list.jhtml",URL_PRE];
             EDWKWebViewController *vc = [[EDWKWebViewController alloc] initWithUrlString:urlStr];
@@ -403,7 +403,7 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
-        case 12+1:
+        case 12:
         {
             SetupController *vc = [[SetupController alloc] init];
             CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:vc];

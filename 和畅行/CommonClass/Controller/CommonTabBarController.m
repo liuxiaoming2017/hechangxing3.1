@@ -16,7 +16,8 @@
 #import "BloodGuideViewController.h"
 #import "PressureViewController.h"
 #import "i9_MoxaMainViewController.h"
-//#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+#import "HCY_CallController.h"
+
 
 @interface CommonTabBarController ()<HSTabBarDelegate,ZKIndexViewDelegate>
 
@@ -58,46 +59,38 @@
     NSInteger index = tag - 100;
     switch (index) {
         case 0:
-            if([UserShareOnce shareOnce].isOnline){
-                 vc = [[MySportController alloc] initWithAllSport];
-            }else{
-                vc = [[YueYaoController alloc] initWithType:YES];
-            }
+                vc = [[YueYaoController alloc] initWithType:NO];
             
             break;
         case 1:
-            if([UserShareOnce shareOnce].isOnline){
-                if([[[NSUserDefaults standardUserDefaults] objectForKey:@"bloodNeverCaution"] isEqualToString:@"1"]){
-                    vc = [[PressureViewController alloc] init];
-                }else{
-                    BloodGuideViewController * vc1 = [[BloodGuideViewController alloc] init];
-                    vc1.isBottom = YES;
-                    vc1.hidesBottomBarWhenPushed = YES;
-                    [[self selectedViewController] pushViewController:vc1 animated:YES];
-                    return;
-                }
+        {
+            NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
+            NSString *yueyaoIndex = [GlobalCommon getSportTypeFrom:physicalStr];
+            if(yueyaoIndex == nil){
+                vc = [[MySportController alloc] initWithAllSport];
+                
             }else{
-                NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
-                NSString *yueyaoIndex = [GlobalCommon getSportTypeFrom:physicalStr];
-                if(yueyaoIndex == nil){
-                    vc = [[MySportController alloc] initWithAllSport];
-                   
-                }else{
-                    vc = [[MySportController alloc] initWithSportType:[yueyaoIndex integerValue]];
-                }
+                vc = [[MySportController alloc] initWithSportType:[yueyaoIndex integerValue]];
             }
+        }
             
             break;
         case 2:
-            if([UserShareOnce shareOnce].isOnline){
-               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
-            }else{
-                 vc = [[YueYaoController alloc] initWithType:NO];
-            }
+            
+        {
+            i9_MoxaMainViewController * vc1 = [[i9_MoxaMainViewController alloc] init];
+            vc1.hidesBottomBarWhenPushed = YES;
+            [[self selectedViewController] pushViewController:vc1 animated:YES];
+            return ;
+        }
+           
            
             break;
         case 3:
         {
+            
+             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
+            
             if([UserShareOnce shareOnce].isOnline){
                 i9_MoxaMainViewController * vc1 = [[i9_MoxaMainViewController alloc] init];
                 vc1.hidesBottomBarWhenPushed = YES;
@@ -107,11 +100,7 @@
                 if([[[NSUserDefaults standardUserDefaults] objectForKey:@"bloodNeverCaution"] isEqualToString:@"1"]){
                     vc = [[PressureViewController alloc] init];
                 }else{
-                    BloodGuideViewController * vc1 = [[BloodGuideViewController alloc] init];
-                    vc1.isBottom = YES;
-                    vc1.hidesBottomBarWhenPushed = YES;
-                    [[self selectedViewController] pushViewController:vc1 animated:YES];
-                    return;
+                    
                 }
             }
             
@@ -119,16 +108,24 @@
             
             break;
         case 4:
-            vc = [[AdvisorysViewController alloc] init];
+            vc = [[HCY_CallController alloc] init];
             break;
         case 5:
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
-            break;
-        case 6:{
-            i9_MoxaMainViewController * vc1 = [[i9_MoxaMainViewController alloc] init];
+        {
+            BloodGuideViewController * vc1 = [[BloodGuideViewController alloc] init];
+            vc1.isBottom = YES;
             vc1.hidesBottomBarWhenPushed = YES;
             [[self selectedViewController] pushViewController:vc1 animated:YES];
+            return;
         }
+            
+            break;
+        case 6:{
+            vc = [[AdvisorysViewController alloc] init];
+        }
+            break;
+        case 7:
+            vc = [[YueYaoController alloc] initWithType:YES];
             break;
         default:
             break;

@@ -143,6 +143,7 @@ typedef void(^EDLoadRequestAction)(void);
             UITabBarController  *rvc = (UITabBarController  *)controller;
             [rvc setSelectedIndex:2];
             [self.navigationController popToRootViewControllerAnimated:YES];
+            
         }
     }
     
