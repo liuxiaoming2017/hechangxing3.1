@@ -89,7 +89,9 @@
     self.dataArr = [NSMutableArray array];
     _memberChildId = [UserShareOnce shareOnce].mengberchildId;
     NSString *nameStr = [UserShareOnce shareOnce].name;
-    
+    if ([GlobalCommon stringEqualNull:nameStr]) {
+        nameStr = [MemberUserShance shareOnce].name;
+    }
     self.view.backgroundColor = [UIColor whiteColor];
 
     
@@ -100,7 +102,7 @@
     [choseButton setTitleColor: [UtilityFunc colorWithHexString:@"#666666"] forState:(UIControlStateNormal)];
     [choseButton addTarget:self action:@selector(chosePeople) forControlEvents:(UIControlEventTouchUpInside)];
     [choseButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
-    [self.view addSubview:choseButton];
+    [self.view addSubview:choseButton];  
     self.choseButton = choseButton;
     choseButton.titleEdgeInsets = UIEdgeInsetsMake(0, -ScreenWidth + 150, 0, 0);
     

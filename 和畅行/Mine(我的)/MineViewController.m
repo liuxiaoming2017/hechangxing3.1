@@ -133,26 +133,7 @@
     [imageView addSubview:userIcon];
     
     NSString *dispalyName = nil;
-    
-    if ([UserShareOnce shareOnce].name!=nil &&! [[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]]) {
-        dispalyName =[NSString stringWithFormat:@"欢迎：%@", [UserShareOnce shareOnce].name];
-    }else if (![[MemberUserShance shareOnce].name isKindOfClass:[NSNull class]] && [MemberUserShance shareOnce].name != nil){
-        if ([[MemberUserShance shareOnce].name length] > 26) {
-            dispalyName = [NSString stringWithFormat:@"欢迎: %@",[UserShareOnce shareOnce].wxName] ;
-        }else{
-            dispalyName = [NSString stringWithFormat:@"欢迎：%@", [MemberUserShance shareOnce].name];
-        }
-    }else  if([UserShareOnce shareOnce].wxName&&[UserShareOnce shareOnce].wxName.length!=0&&![[UserShareOnce shareOnce].wxName isKindOfClass:[NSNull class]]){
-        dispalyName = [NSString stringWithFormat:@"欢迎: %@",[UserShareOnce shareOnce].wxName] ;
-    }
-    if (![[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]] || [UserShareOnce shareOnce].name != nil) {
-        dispalyName = [UserShareOnce shareOnce].username;
-    }else{
-        dispalyName = [UserShareOnce shareOnce].name;
-    }
-    if([UserShareOnce shareOnce].wxName&&[UserShareOnce shareOnce].wxName.length!=0&&![[UserShareOnce shareOnce].wxName isKindOfClass:[NSNull class]]){
-        dispalyName = [UserShareOnce shareOnce].wxName;
-    }
+    dispalyName = [MemberUserShance shareOnce].name;
     UILabel *userName = [Tools creatLabelWithFrame:CGRectMake(userIcon.right+20, userIcon.top+10, 130, 20) text:dispalyName textSize:14];
     userName.textColor = [UIColor whiteColor];;
     [imageView addSubview:userName];

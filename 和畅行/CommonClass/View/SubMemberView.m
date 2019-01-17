@@ -69,33 +69,12 @@
     _titleLabel.font = [UIFont systemFontOfSize:15];
     _titleLabel.textColor = UIColorFromHex(0x009ef3);
     _titleLabel.textAlignment = NSTextAlignmentCenter;
-    //[GlobalCommon stringEqualNull:birthdayStr]
-    if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].name]){
-        _titleLabel.text =[NSString stringWithFormat:@"欢迎：%@", [UserShareOnce shareOnce].name];
-
-    }else if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].username]){
-         _titleLabel.text =[NSString stringWithFormat:@"欢迎：%@", [UserShareOnce shareOnce].username];
-        if([[UserShareOnce shareOnce].username length] >26 ){
-            _titleLabel.text =[NSString stringWithFormat:@"欢迎：%@", [UserShareOnce shareOnce].wxName];
-        }
-    }else{
-        _titleLabel.text = [NSString stringWithFormat:@"欢迎：%@", [MemberUserShance shareOnce].name];
-        if ([[MemberUserShance shareOnce].name length] > 26) {
-            _titleLabel.text =[NSString stringWithFormat:@"欢迎：%@", [UserShareOnce shareOnce].wxName];
-        }
-    }
     
-    if ([UserShareOnce shareOnce].name!=nil &&! [[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]]) {
-    }else if (![[MemberUserShance shareOnce].name isKindOfClass:[NSNull class]] && [MemberUserShance shareOnce].name != nil){
-        if ([[MemberUserShance shareOnce].name length] > 26) {
-            _titleLabel.text = [NSString stringWithFormat:@"欢迎: %@",[UserShareOnce shareOnce].wxName] ;
-        }else{
-            _titleLabel.text = [NSString stringWithFormat:@"欢迎：%@", [MemberUserShance shareOnce].name];
-        }
-    }else  if([UserShareOnce shareOnce].wxName&&[UserShareOnce shareOnce].wxName.length!=0&&![[UserShareOnce shareOnce].wxName isKindOfClass:[NSNull class]]){
-        _titleLabel.text = [NSString stringWithFormat:@"欢迎: %@",[UserShareOnce shareOnce].wxName] ;
+    
+    if ([MemberUserShance shareOnce].name.length < 26){
+        _titleLabel.text =[NSString stringWithFormat:@"欢迎：%@", [MemberUserShance shareOnce].name];
     }else{
-        _titleLabel.text = @"欢迎您";
+        _titleLabel.text =[NSString stringWithFormat:@"欢迎：%@", [UserShareOnce shareOnce].wxName];
     }
 
     [_showView addSubview:_titleLabel];
