@@ -61,6 +61,9 @@
 
 - (void)goBack:(UIButton *)btn
 {
+    if(_pickview){
+        [_pickview remove];
+    }
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -78,10 +81,10 @@
 -(void)commitClick:(UIButton *)button{
     
     
-    if (mobile_Tf.text.length != 11||![mobile_Tf.text hasPrefix:@"1"]){
-        [self showAlertWarmMessage:@"请输入正确的手机号"];
-        return;
-    }
+//    if (mobile_Tf.text.length != 11||![mobile_Tf.text hasPrefix:@"1"]){
+//        [self showAlertWarmMessage:@"请输入正确的手机号"];
+//        return;
+//    }
     
     
     if ([Certificates_btn.titleLabel.text isEqualToString:@"请选择证件类型"]) {
@@ -117,6 +120,9 @@
         [request setPostValue:@(YES) forKey:@"isMarried"];
     }else if ([[UserShareOnce shareOnce].marryState isEqualToString:@"未婚"]){
         [request setPostValue:@(NO) forKey:@"isMarried"];
+    }
+    if ([BirthDay_btn.titleLabel.text isEqualToString:@"请选择您的出生日期"]) {
+        BirthDay_btn.titleLabel.text=@"";
     }
     if (nation_Tf.text) {
         [request setPostValue:nation_Tf.text forKey:@"nation"];
@@ -187,6 +193,7 @@
     PersionInfoArray=[NSMutableArray new];
     [PersionInfoArray addObject:@"手机号码"];
     [PersionInfoArray addObject:@"真实姓名"];
+    [PersionInfoArray addObject:@"出生日期"];
     [PersionInfoArray addObject:@"婚姻状况"];
     [PersionInfoArray addObject:@"民       族"];
     [PersionInfoArray addObject:@"居住地址"];
@@ -625,8 +632,13 @@
         mobile_Tf.keyboardType=UIKeyboardTypeNumberPad;
         [mobile_Tf setValue:[UtilityFunc colorWithHexString:@"#666666"] forKeyPath:@"_placeholderLabel.textColor"];
         [mobile_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
-        if ([UserShareOnce shareOnce].phone!=nil || ![[UserShareOnce shareOnce].phone isKindOfClass:[NSNull class]]) {
-            mobile_Tf.text=[UserShareOnce shareOnce].phone;
+        mobile_Tf.userInteractionEnabled = NO;
+        if ([UserShareOnce shareOnce].username!=nil || ![[UserShareOnce shareOnce].username isKindOfClass:[NSNull class]]) {
+            if([self deptNumInputShouldNumber:[UserShareOnce shareOnce].username]){
+                mobile_Tf.text = [UserShareOnce shareOnce].username;
+            }else{
+                mobile_Tf.text= @"";
+            }
         }
         mobile_Tf.font=[UIFont systemFontOfSize:14];
         [cell addSubview:mobile_Tf];
@@ -663,6 +675,38 @@
     }
     else if (indexPath.row==2)
     {
+        UILabel* BirthDayLb=[[UILabel alloc] init];
+        BirthDayLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
+        BirthDayLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
+        BirthDayLb.font=[UIFont systemFontOfSize:14];
+        BirthDayLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
+        [cell addSubview:BirthDayLb];
+        BirthDayLb.backgroundColor=[UIColor whiteColor];
+        
+        BirthDay_btn=[UIButton buttonWithType:UIButtonTypeCustom];
+     BirthDay_btn.frame=CGRectMake(BirthDayLb.frame.origin.x+BirthDayLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-BirthDayLb.frame.origin.x-BirthDayLb.frame.size.width-5-20.5, 21);
+        BirthDay_btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        BirthDay_btn.titleLabel.textAlignment = NSTextAlignmentLeft;
+        
+        if ([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].birthday]) {
+            
+            [BirthDay_btn setTitle:@"请选择您的出生日期" forState:UIControlStateNormal];
+            [BirthDay_btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        }
+        else
+        {
+            [BirthDay_btn setTitle:[UserShareOnce shareOnce].birthday forState:UIControlStateNormal];
+            [BirthDay_btn setTitleColor:[UtilityFunc colorWithHexString:@"#333333"] forState:UIControlStateNormal];
+            
+        }
+        
+        [BirthDay_btn addTarget:self action:@selector(BirthDayActive:) forControlEvents:UIControlEventTouchUpInside];
+        
+        BirthDay_btn.titleLabel.font=[UIFont systemFontOfSize:14];
+        [cell addSubview:BirthDay_btn];
+    }
+    else if (indexPath.row==2+1)
+    {
         UILabel* marryLabel=[[UILabel alloc] init];
         marryLabel.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
         marryLabel.text=[PersionInfoArray objectAtIndex:indexPath.row];
@@ -688,7 +732,7 @@
 
 
     }
-    else if (indexPath.row==3)
+    else if (indexPath.row==3+1)
     {
         UILabel* nationLabel=[[UILabel alloc] init];
         nationLabel.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
@@ -716,7 +760,7 @@
 
 
     }
-    else if (indexPath.row==4)
+    else if (indexPath.row==4+1)
     {
         UILabel* AddressLb=[[UILabel alloc] init];
         AddressLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
@@ -749,7 +793,7 @@
 
 
     }
-    else if (indexPath.row==5)
+    else if (indexPath.row==5+1)
     {
         UILabel* TelephoneLb=[[UILabel alloc] init];
         TelephoneLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
@@ -780,7 +824,7 @@
 
 
     }
-    else if (indexPath.row==6)
+    else if (indexPath.row==6+1)
     {
         UILabel* CertificatesLb=[[UILabel alloc] init];
         CertificatesLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
@@ -819,7 +863,7 @@
             [Certificates_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         }
     }
-    else if (indexPath.row==7)
+    else if (indexPath.row==7+1)
     {
         UILabel* Certificates_NumberLb=[[UILabel alloc] init];
         Certificates_NumberLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
@@ -987,7 +1031,7 @@
         [SelectTF resignFirstResponder];
         [self restoreView];
     }
-    NSDate *date=[NSDate dateWithTimeIntervalSinceNow:9000000];
+    NSDate *date=[NSDate date];
     _pickview=[[ZHPickView alloc] initDatePickWithDate:date datePickerMode:UIDatePickerModeDate isHaveNavControler:NO];
     _pickview.delegate=self;
     [_pickview show];
@@ -1006,7 +1050,7 @@
         [UserShareOnce shareOnce].gender=SexStr;
         [UserShareOnce shareOnce].birthday=BirthDay_btn.titleLabel.text;
         [UserShareOnce shareOnce].address=AddressLb_Tf.text;
-        [UserShareOnce shareOnce].phone=mobile_Tf.text;
+        [UserShareOnce shareOnce].username=mobile_Tf.text;
         [UserShareOnce shareOnce].identityType=CertificatesType;
         [UserShareOnce shareOnce].idNumber=Certificates_Number_Tf.text;
         //[UserShareOnce shareOnce].isMedicare=IsYiBao;
@@ -1104,10 +1148,23 @@
     
     NSLog(@"ddfdfd=%@",resultString);
     [BirthDay_btn setTitle:resultString forState:UIControlStateNormal];
+    [BirthDay_btn setTitleColor:[UtilityFunc colorWithHexString:@"#333333"] forState:UIControlStateNormal];
     // UITableViewCell * cell=[self.tableView cellForRowAtIndexPath:_indexPath];
     //cell.detailTextLabel.text=resultString;
 }
 
+- (BOOL) deptNumInputShouldNumber:(NSString *)str
+{
+    if (str.length == 0) {
+        return NO;
+    }
+    NSString *regex = @"[0-9]*";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    if ([pred evaluateWithObject:str]) {
+        return YES;
+    }
+    return NO;
+}
 
 
 

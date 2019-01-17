@@ -237,6 +237,18 @@
         [hud hideAnimated:YES afterDelay:2];
         
     }else{
+        NSString *str = @"";
+        if([GlobalCommon stringEqualNull:_breathCountTF.text]){
+            str =@"温度值不能为空";
+        }else if([self->_breathCountTF.text integerValue] == 0){
+            str = @"您的输入有误,请重新输入";
+        }
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.removeFromSuperViewOnHide =YES;
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = str;
+        hud.minSize = CGSizeMake(132.f, 108.0f);
+        [hud hideAnimated:YES afterDelay:2];
         if([GlobalCommon isManyMember]){
             __weak typeof(self) weakSelf = self;
             SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];

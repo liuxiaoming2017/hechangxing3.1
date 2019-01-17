@@ -18,7 +18,7 @@ typedef void(^addCheckBlock)(void);
     UIButton *_leftButton;
     UIButton *_rightButton;
     UIImageView *_lineView;//蓝线
-    int _sex;  //  0男，  1女
+    int _sex;  //  2男，  1女
     BOOL _isFront;//是否是身体的正面
     BOOL _isBodyTouched;//点击身体的某部位
     NSString *_touchedPart;//点击的部位

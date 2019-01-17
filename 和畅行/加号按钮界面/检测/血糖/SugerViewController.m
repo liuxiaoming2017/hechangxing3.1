@@ -176,7 +176,13 @@
 #pragma mark ------ 提交数据
 -(void)commitClick:(UIButton *)button{
     NSLog(@"点击提交按钮");
-    if ([self isBlankString:_textFiled.text]) {
+    if ([self isBlankString:_textFiled.text] || [_textFiled.text integerValue] == 0) {
+        NSString *str = @"血糖值不能为空";
+        if([self isBlankString:_textFiled.text]){
+            str = @"血糖值不能为空";
+        }else if ([_textFiled.text integerValue] == 0){
+            str = @"您的输入有误,请重新输入";
+        }
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;

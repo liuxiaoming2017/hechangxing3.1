@@ -129,6 +129,7 @@
     SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
     [subMember receiveSubIdWith:^(NSString *subId) {
         NSLog(@"%@",subId);
+        [[NSNotificationCenter defaultCenter] postNotificationName:exchangeMemberChildNotify object:nil];
         if ([subId isEqualToString:@"user is out of date"]) {
             //登录超时
             

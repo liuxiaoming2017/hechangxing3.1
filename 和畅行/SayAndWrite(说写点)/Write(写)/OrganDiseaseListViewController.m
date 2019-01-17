@@ -193,7 +193,20 @@
     _searchBar.tag = 100;
     _searchBar.placeholder = @"搜索疾病名称";
     //searchBar.showsCancelButton = YES;
+    
+    for(UIView *searchBarSubview in [_searchBar subviews]){
+        for(UIView *subView in [searchBarSubview subviews]){
+            if([subView conformsToProtocol:@protocol(UITextInputTraits)]){
+                [(UITextField *)subView setReturnKeyType:UIReturnKeyDone];
+            }
+        }
+    }
+    
+    
+    
     [view addSubview:_searchBar];
+    
+    
     //[_searchBar release];
     
     
@@ -234,14 +247,24 @@
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:YES];
 }
-//开始搜索
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    [searchBar resignFirstResponder];
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
     NSArray *arr = [[DBManager sharedManager] readModelsWith:_searchBar.text];
     NSMutableArray *marr = [[NSMutableArray alloc] initWithArray:arr];
     _dataArr = [marr mutableCopy];
     
     [_tableView reloadData];
+}
+
+//开始搜索
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [searchBar resignFirstResponder];
+//    NSArray *arr = [[DBManager sharedManager] readModelsWith:_searchBar.text];
+//    NSMutableArray *marr = [[NSMutableArray alloc] initWithArray:arr];
+//    _dataArr = [marr mutableCopy];
+//
+//    [_tableView reloadData];
 }
 #pragma mark- tableView相关
 -(void)createTableView{

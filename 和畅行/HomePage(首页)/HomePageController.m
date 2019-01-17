@@ -60,6 +60,17 @@
     [self createTopView];
    
     [self requestPackgeNetWork];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exchangeMemberChild:) name:exchangeMemberChildNotify object:nil];
+    
+}
+
+- (void)exchangeMemberChild:(NSNotification *)notify
+{
+    if([[notify object] isKindOfClass:[self class]]){
+        return;
+    }
+   [self requestPackgeNetWork];
 }
 
 
@@ -323,6 +334,7 @@
     __weak typeof(self) weakself = self;
     [subMember receiveSubIdWith:^(NSString *subId) {
         NSLog(@"%@",subId);
+        [[NSNotificationCenter defaultCenter] postNotificationName:exchangeMemberChildNotify object:self];
         [weakself requestPackgeNetWork];
         [subMember hideHintView];
     }];

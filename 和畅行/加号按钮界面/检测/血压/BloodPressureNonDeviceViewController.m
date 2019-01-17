@@ -128,6 +128,7 @@
         UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(90, 0, kScreenSize.width-8-40-90, 40)];
         textField.delegate = self;
         textField.tag = 21+i;
+        textField.keyboardType = UIKeyboardTypeNumberPad;
         [_TextFieldArr addObject:textField];
         [inputImageView addSubview:textField];
         [textField release];
@@ -179,25 +180,40 @@
     BOOL ret1 = [self isBlankString:tf1.text];
     BOOL ret2 = [self isBlankString:tf2.text];
     BOOL ret3 = [self isBlankString:tf3.text];
-    if (ret1) {
+    if (ret1 || [tf1.text integerValue] == 0) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"收缩压不能为空";
+        if(ret1){
+            hud.label.text = @"收缩压不能为空";
+        }else{
+            hud.label.text = @"收缩压输入有误,请重新输入";
+        }
+        //hud.label.text = @"收缩压不能为空";
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hideAnimated:YES afterDelay:2];
-    }else if (ret2){
+    }else if (ret2 || [tf2.text integerValue] == 0){
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"舒张压不能为空";
+        if(ret2){
+            hud.label.text = @"舒张压不能为空";
+        }else{
+            hud.label.text = @"舒张压输入有误,请重新输入";
+        }
+        
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hideAnimated:YES afterDelay:2];
-    }else if (ret3){
+    }else if (ret3 || [tf3.text integerValue] == 0){
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"脉搏次数不能为空";
+        if(ret3){
+            hud.label.text = @"脉搏次数不能为空";
+        }else{
+            hud.label.text = @"脉搏输入有误,请重新输入";
+        }
+        
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hideAnimated:YES afterDelay:2];
     }else{

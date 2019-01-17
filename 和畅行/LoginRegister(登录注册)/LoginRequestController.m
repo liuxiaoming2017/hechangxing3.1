@@ -130,13 +130,17 @@
             
             for (NSDictionary *dic in  arrMem) {
                 ChildMemberModel *model = [ChildMemberModel mj_objectWithKeyValues:dic];
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
+                [memberArr addObject:data];
                 if([model.mobile isEqualToString:[paramDic objectForKey:@"username"]]) {
                     MemberUserShance *memberShance = [MemberUserShance shareOnce];
                     memberShance = [MemberUserShance mj_objectWithKeyValues:dic];
-                    
+                    if(memberArr.count>1){
+                        [memberArr exchangeObjectAtIndex:0 withObjectAtIndex:[memberArr count] - 1];
+                    }
                 }
-                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
-                [memberArr addObject:data];
+               
+                
             }
             
             
@@ -148,14 +152,7 @@
                 }
             }
             
-            NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberChirldArr"];
-            if (arr.count) {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"memberChirldArr"];
-            }
-            NSArray *modelArr = [[NSArray alloc] initWithArray:memberArr];
-            
-            [[NSUserDefaults standardUserDefaults] setObject:modelArr forKey:@"memberChirldArr"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            [weakself saveLocalWithArr:memberArr];
             [weakself GetMemberChild];
         }else{
             [GlobalCommon hideMBHudTitleWithView:weakself.view];
@@ -269,13 +266,16 @@
             
             for (NSDictionary *dic in  arrMem) {
                 ChildMemberModel *model = [ChildMemberModel mj_objectWithKeyValues:dic];
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
+                [memberArr addObject:data];
                 if([model.name isEqualToString:[[[response objectForKey:@"data"] objectForKey:@"member"] objectForKey:@"username"]]) {
                     MemberUserShance *memberShance = [MemberUserShance shareOnce];
                     memberShance = [MemberUserShance mj_objectWithKeyValues:dic];
-                    
+                    if(memberArr.count>1){
+                         [memberArr exchangeObjectAtIndex:0 withObjectAtIndex:[memberArr count] - 1];
+                    }
                 }
-                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
-                [memberArr addObject:data];
+                
             }
             
             
@@ -313,14 +313,7 @@
                 }
             }
             
-            NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberChirldArr"];
-            if (arr.count) {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"memberChirldArr"];
-            }
-            NSArray *modelArr = [[NSArray alloc] initWithArray:memberArr];
-            
-            [[NSUserDefaults standardUserDefaults] setObject:modelArr forKey:@"memberChirldArr"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+           [weakself saveLocalWithArr:memberArr];
             [weakself GetMemberChild];
         }else{
             [GlobalCommon hideMBHudTitleWithView:weakself.view];
@@ -374,13 +367,15 @@
             
             for (NSDictionary *dic in  arrMem) {
                 ChildMemberModel *model = [ChildMemberModel mj_objectWithKeyValues:dic];
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
+                [memberArr addObject:data];
                 if([model.name isEqualToString:[[[response objectForKey:@"data"] objectForKey:@"member"] objectForKey:@"username"]]) {
                     MemberUserShance *memberShance = [MemberUserShance shareOnce];
                     memberShance = [MemberUserShance mj_objectWithKeyValues:dic];
-                    
+                    if(memberArr.count>1){
+                         [memberArr exchangeObjectAtIndex:0 withObjectAtIndex:[memberArr count] - 1];
+                    }
                 }
-                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
-                [memberArr addObject:data];
             }
             
             
@@ -393,14 +388,7 @@
                 }
             }
             
-            NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberChirldArr"];
-            if (arr.count) {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"memberChirldArr"];
-            }
-            NSArray *modelArr = [[NSArray alloc] initWithArray:memberArr];
-            
-            [[NSUserDefaults standardUserDefaults] setObject:modelArr forKey:@"memberChirldArr"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            [weakself saveLocalWithArr:memberArr];
             [weakself GetMemberChild];
         }else{
             [GlobalCommon hideMBHudTitleWithView:weakself.view];
@@ -411,6 +399,18 @@
         [GlobalCommon hideMBHudTitleWithView:weakself.view];
         [weakself showAlertWarmMessage:requestErrorMessage];
     }];
+}
+
+- (void)saveLocalWithArr:(NSArray *)memberArr
+{
+    NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberChirldArr"];
+    if (arr.count) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"memberChirldArr"];
+    }
+    NSArray *modelArr = [[NSArray alloc] initWithArray:memberArr];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:modelArr forKey:@"memberChirldArr"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)didReceiveMemoryWarning {

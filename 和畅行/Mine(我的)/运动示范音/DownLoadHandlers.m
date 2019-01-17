@@ -79,6 +79,7 @@ static DownLoadHandlers *sharedDownloadhandler = nil;
     _request.downloadDestinationPath = [self actualSavePath];
     _request.downloadProgressDelegate = _progress;
     _request.allowResumeForFileDownloads = YES;
+    
     _request.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:_name, @"Name", nil];
     [_queue addOperation:_request];
 }

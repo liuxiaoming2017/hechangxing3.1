@@ -549,7 +549,7 @@
 		038A65552112B5360055C760 /* 我的全部订单.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A65522112B5360055C760 /* 我的全部订单.png */; };
 		038A65562112B5360055C760 /* 我的待付款.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A65532112B5360055C760 /* 我的待付款.png */; };
 		038B52FC21E83C8C00D592C9 /* DownLoadHandlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 038B52F821E83C8C00D592C9 /* DownLoadHandlers.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		038B52FD21E83C8C00D592C9 /* SportDemonstratesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 038B52FA21E83C8C00D592C9 /* SportDemonstratesViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		038B52FD21E83C8C00D592C9 /* SportDemonstratesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 038B52FA21E83C8C00D592C9 /* SportDemonstratesViewController.m */; };
 		038B52FF21E842D100D592C9 /* quanbuxiazai.png in Resources */ = {isa = PBXBuildFile; fileRef = 038B52FE21E842D000D592C9 /* quanbuxiazai.png */; };
 		038B530121E844FA00D592C9 /* 运动示范音_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 038B530021E844F900D592C9 /* 运动示范音_03.png */; };
 		038CE87420EDE8F9005E9219 /* UserShareOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = 038CE87320EDE8F9005E9219 /* UserShareOnce.m */; };
@@ -5588,7 +5588,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3X65BCYVHU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5632,7 +5632,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = com.ky3h.hechangxing;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};
@@ -5646,7 +5646,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3X65BCYVHU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5690,7 +5690,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = com.ky3h.hechangxing;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};

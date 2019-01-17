@@ -96,13 +96,22 @@
             
             //血糖
             TestValueModel *model2 = [[TestValueModel alloc] init];
-            model2.createDate = 0;
-            model2.valueStr = @"尚未检测";
+            if(![[data objectForKey:@"bloodPressure"] isKindOfClass:[NSNull class]]){
+            }else{
+                model2.createDate = 0;
+                model2.valueStr = @"尚未检测";
+            }
+           
             [weakSelf.dataArr addObject:model2];
             //呼吸
             TestValueModel *model3 = [[TestValueModel alloc] init];
-            model3.createDate = 0;
-            model3.valueStr = @"尚未检测";
+            if(![[data objectForKey:@"bloodPressure"] isKindOfClass:[NSNull class]]){
+                
+            }else{
+                model3.createDate = 0;
+                model3.valueStr = @"尚未检测";
+            }
+            
             [weakSelf.dataArr addObject:model3];
 //            if(![[data objectForKey:@"bodyTemperature"] isKindOfClass:[NSNull class]]){
 //                TestValueModel *model = [[TestValueModel alloc] init];

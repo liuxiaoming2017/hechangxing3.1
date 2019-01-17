@@ -398,8 +398,11 @@
             
         }else{
             sender.selected = NO;
-            [timer setFireDate:[NSDate distantPast]];
-            
+            if(timer.isValid){
+                [timer setFireDate:[NSDate distantPast]];
+            }else{
+                [self startTimer];
+            }
         }
     }else{
         if (shifanyinButton.selected || yueYaoButton.selected) {
@@ -670,6 +673,8 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     MySportCell *cell = (MySportCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     cell.imageV.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[self.imageArr objectAtIndex:indexPath.row]]];
     NSString *titleStr = [self.titleArr objectAtIndex:indexPath.row];
@@ -736,7 +741,6 @@
 - (void)timerRefreshedWithAnimated:(BOOL)animate{
     if (_pageIndex == [self.imageArr count]) {
         [self stopTimer];
-        
     }else
     {
         [self.collectionV scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:_pageIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:animate];
@@ -747,11 +751,16 @@
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    [self stopTimer];
+    if(timer){
+        [timer setFireDate:[NSDate distantFuture]];
+    }
+    
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    [self startTimer];
+    if(!voiceButton.selected){
+        [timer setFireDate:[NSDate distantPast]];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

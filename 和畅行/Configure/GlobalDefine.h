@@ -202,6 +202,8 @@
 
 #define kOXYGEN_DATA @"BLEOxygenData"//血氧数据
 
+#define exchangeMemberChildNotify @"exchangeMemberChildNotify"
+
 //档案cell的类型
 typedef enum {
     cellType_new = 0,

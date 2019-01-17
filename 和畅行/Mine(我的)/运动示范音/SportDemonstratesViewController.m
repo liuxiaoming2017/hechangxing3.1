@@ -23,16 +23,7 @@
 
 @synthesize LeMdicinaTab;
 - (void)dealloc{
-    [super dealloc];
-    [btnbfzt release];
-    [_LeMedicArray release];
-    [_LeMedicArrayId release];
-    [_shiFanYinArr release];
-    [LeMdicinaTab release];
-    [playmp3 release];
-    [playTime release];
-    
-    
+
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -58,7 +49,7 @@
         UIImageView* statusviewImgview=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, statusviewImg.size.width/2  , statusviewImg.size.height/2)];
         statusviewImgview.image=statusviewImg;
         [self.bfztbutton addSubview:statusviewImgview];
-        [statusviewImgview release];
+        
         self.fileurl=@"";
         [[UserShareOnce shareOnce].mp3 stop];
     }
@@ -68,10 +59,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     counts = 0;
-    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
-    [session setActive:YES error:nil];
+    
     self.view.backgroundColor=[UtilityFunc colorWithHexString:@"#ffffff"];
     self.navTitleLabel.text = @"运动示范音";
     
@@ -85,10 +73,9 @@
     self.LeMdicinaTab=tableview;
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:tableview];
-    [tableview release];
-    NSMutableArray*  datatarray=[NSMutableArray new];
-    self.LeMedicArray=datatarray;
-    [datatarray release];
+    
+    self.LeMedicArray= [NSMutableArray arrayWithCapacity:0];
+   
     [self GetResourceslist];
     
     UIView *diView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 56, self.view.frame.size.width, 56)];
@@ -125,13 +112,13 @@
         UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"你已经全部下载。" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
         
         [av show];
-        [av release];
+        
         return;
     }
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"你确定要全部下载运动示范音吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
     av.tag = 34567;
     [av show];
-    [av release];
+   
 }
 -(void)GetResourceslist
 {
@@ -177,7 +164,7 @@
         UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"登录超时，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
         av.tag = 100008;
         [av show];
-        [av release];
+        
     }else {
         NSString *strStr = [dic objectForKey:@"data"];
         [self showAlertWarmMessage:strStr];
@@ -190,7 +177,7 @@
     {
         LoginViewController *loginVC = [[LoginViewController alloc]init];
         [self.navigationController pushViewController:loginVC animated:YES];
-        [loginVC release];
+        
     }
     if (alertView.tag == 34567 &&buttonIndex == 1) {
         
@@ -207,7 +194,7 @@
             // NSURL *url = [NSURL URLWithString:urlpath];
             
             NSString* NewFileNamess=[[[[self.LeMedicArray objectAtIndex:i] objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"source"];
-            
+            ProgressIndicator *progressBar = [[ProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 30, 33)];
             _downloadHanlder = [DownLoadHandlers sharedInstance];
             [_downloadHanlder.downloadingDic setValue:@"downloading" forKey:[NSString stringWithFormat:@"%@",[[[[self.LeMedicArray objectAtIndex:i] objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"title"]]];
             NSLog(@"不存在");
@@ -222,12 +209,7 @@
             
             xiazaiCount ++;
         }
-//        if (xiazaiCount == 35) {
-//            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"你已全部下载完成" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-//            av.tag = 200008;
-//            [av show];
-//            [av release];
-//        }
+
         
     }
     if (alertView.tag == 200008) {
@@ -278,7 +260,7 @@
                 
                 _downloadHanlder.url = aurl;
                 [_downloadHanlder setButton:self.bfztbutton];
-                [_progress release];
+                
                 
                 
                 _downloadHanlder.fileType =@"mp3";
@@ -316,8 +298,8 @@
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if (cell == nil)
     {
-        cell = [[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1
-                                      reuseIdentifier:CellIdentifier]autorelease];
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1
+                                      reuseIdentifier:CellIdentifier];
         cell.backgroundColor=[UIColor clearColor];
         cell.textLabel.font = [UIFont systemFontOfSize:15];
     }
@@ -336,7 +318,7 @@
     lbname.font=[UIFont systemFontOfSize:11];
     lbname.text=[[self.LeMedicArray objectAtIndex:indexPath.row] objectForKey:@"name"];
     [cell addSubview:lbname];
-    [lbname release];
+   
     
     NSDate *d = [[NSDate alloc]initWithTimeIntervalSince1970:[[[self.LeMedicArray objectAtIndex:indexPath.row] objectForKey:@"createDate"] doubleValue]/1000.00];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -354,7 +336,7 @@
     lbBuy_Date.font=[UIFont systemFontOfSize:11];
     lbBuy_Date.text=confromTimespStr;
     [cell addSubview:lbBuy_Date];
-    [lbBuy_Date release];
+   
     
     
     UIImage* statusviewImg = nil;
@@ -408,14 +390,14 @@
         
         [statusbtn addSubview:statusviewImgview];
         
-        [statusviewImgview release];
+        
         [cell addSubview:statusbtn];
     }
     UILabel* Linebg=[[UILabel alloc] init];
     Linebg.frame=CGRectMake(5, cell.frame.size.height-0.5, ScreenWidth-10, 0.5);
     Linebg.backgroundColor=[UtilityFunc colorWithHexString:@"#d8d8d8"];
     [cell addSubview:Linebg];
-    [Linebg release];
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -441,7 +423,7 @@
         UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定下载该曲目吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
         av.tag = 1999;
         [av show];
-        [av release];
+       
         
     }
 }
@@ -454,7 +436,7 @@
 # pragma mark - 下载成功的代理回调
 - (void)DownloadHandlerSelectAtIndex:(NSInteger)inde
 {
-    
+    NSLog(@"下载完成了");
 }
 
 - (void)didReceiveMemoryWarning

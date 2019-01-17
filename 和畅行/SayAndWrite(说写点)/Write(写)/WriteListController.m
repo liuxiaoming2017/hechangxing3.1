@@ -104,13 +104,16 @@
     _leftView.userInteractionEnabled = YES;
     _rightView.userInteractionEnabled = YES;
     _rightView.hidden = YES;
+    
     [self createBodyView];
+    
     [self createSymptom];
     
 }
 
 #pragma mark-人体图解界面
 -(void)createBodyView{
+    
     UIButton *sexButton = [Tools creatButtonWithFrame:CGRectMake(25, 28, 74, 35) target:self sel:@selector(sexBtnClick:) tag:13 image:@"ICD10_man" title:nil];
     _sex = 0;
     [_leftView addSubview:sexButton];
@@ -132,6 +135,7 @@
     [_leftView addSubview:_rightArmBtn];
     _hipBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2-41, 220, 82, 60.5) target:self sel:@selector(bodyClick:) tag:19 image:@"" title:nil];
     [_leftView addSubview:_hipBtn];
+    
     _legsBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2-41, 280.5, 82, ScreenHeight == 568? 180: 201.5) target:self sel:@selector(bodyClick:) tag:20 image:@"" title:nil];
     [_leftView addSubview:_legsBtn];
     
@@ -178,25 +182,29 @@
 
 #pragma mark-左tableView的数据以及右tableView、popTableView的初始化
 -(void)createDataSource{
-    NSArray *section = @[@"背部",@"病因",@"腹部",@"全身",@"四肢部",@"头面部",@"胸部",@"腰股部"];
+    
+    //NSArray *section = @[@"背部",@"病因",@"腹部",@"全身",@"四肢部",@"头面部",@"胸部",@"腰股部"];
+    NSArray *section = @[@"全身",@"头面部",@"胸部",@"腹部",@"四肢部",@"背部",@"腰股部",@"病因"];
     _sectionDataArr = [[NSMutableArray alloc] initWithArray:section];
-    NSArray *openImages = @[@"ICD10_back_open",@"ICD10_reason_open",@"ICD10_stomach_open",@"ICD10_body_open",@"ICD10_limps_open",@"ICD10_head_open",@"ICD10_chest_open",@"ICD10_waist_open"];
+//    NSArray *openImages = @[@"ICD10_back_open",@"ICD10_reason_open",@"ICD10_stomach_open",@"ICD10_body_open",@"ICD10_limps_open",@"ICD10_head_open",@"ICD10_chest_open",@"ICD10_waist_open"];
+    NSArray *openImages = @[@"ICD10_body_open",@"ICD10_head_open",@"ICD10_chest_open",@"ICD10_stomach_open",@"ICD10_limps_open",@"ICD10_back_open",@"ICD10_waist_open",@"ICD10_reason_open"];
     _sectionOpenImageArr = [[NSMutableArray alloc] initWithArray:openImages];
-    NSArray *closedImages = @[@"ICD10_back_closed",@"ICD10_reason_closed",@"ICD10_stomach_closed",@"ICD10_body_closed",@"ICD10_limps_closed",@"ICD10_head_closed",@"ICD10_chest_closed",@"ICD10_waist_closed"];
+//    NSArray *closedImages = @[@"ICD10_back_closed",@"ICD10_reason_closed",@"ICD10_stomach_closed",@"ICD10_body_closed",@"ICD10_limps_closed",@"ICD10_head_closed",@"ICD10_chest_closed",@"ICD10_waist_closed"];
+    NSArray *closedImages = @[@"ICD10_body_closed",@"ICD10_head_closed",@"ICD10_chest_closed",@"ICD10_stomach_closed",@"ICD10_limps_closed",@"ICD10_back_closed",@"ICD10_waist_closed",@"ICD10_reason_closed"];
     _sectionClosedImageArr = [[NSMutableArray alloc] initWithArray:closedImages];
     _sectionStatus = [[NSMutableArray alloc] init];
     for (int i=0; i<section.count; i++) {
         [_sectionStatus addObject:@NO];
     }
     
-    NSArray *arr1 = @[@"背部"];
-    NSArray *arr2 = @[@"病因"];
-    NSArray *arr3 = @[@"腹部",@"生殖部",@"生殖器",@"小便"];
-    NSArray *arr4 = @[@"出汗",@"出血",@"精神状态",@"皮肤",@"身体",@"食欲",@"睡眠",@"体温",@"形态",@"肿块"];
+    NSArray *arr6 = @[@"背部"];
+    NSArray *arr8 = @[@"病因"];
+    NSArray *arr4 = @[@"腹部",@"生殖部",@"生殖器",@"小便"];
+    NSArray *arr1 = @[@"出汗",@"出血",@"精神状态",@"皮肤",@"身体",@"食欲",@"睡眠",@"体温",@"形态",@"肿块"];
     NSArray *arr5 = @[@"关节",@"脉",@"四肢",@"指/趾/掌"];
-    NSArray *arr6 = @[@"鼻",@"耳",@"呼吸",@"颈",@"咳嗽",@"口腔",@"面部",@"面色",@"呕吐",@"舌",@"痰",@"头",@"头发",@"牙",@"咽喉",@"眼",@"声音"];
-    NSArray *arr7 = @[@"乳房",@"胁肋",@"心脏",@"胸部"];
-    NSArray *arr8 = @[@"大便",@"肛门",@"腰"];
+    NSArray *arr2 = @[@"鼻",@"耳",@"呼吸",@"颈",@"咳嗽",@"口腔",@"面部",@"面色",@"呕吐",@"舌",@"痰",@"头",@"头发",@"牙",@"咽喉",@"眼",@"声音"];
+    NSArray *arr3 = @[@"乳房",@"胁肋",@"心脏",@"胸部"];
+    NSArray *arr7 = @[@"大便",@"肛门",@"腰"];
     _leftDataArr = [[NSMutableArray alloc] initWithObjects:arr1,arr2,arr3,arr4,arr5,arr6,arr7,arr8, nil];
     
     NSString *symptomPath = [[NSBundle mainBundle] pathForResource:@"symptom" ofType:@"txt"];
@@ -296,6 +304,7 @@
         [button setImage:[UIImage imageNamed:@"ICD10_man"] forState:UIControlStateNormal];
     }
     [self reloadLeftView];
+    
     [self cancelledSelected];
 }
 #pragma mark- 点击正反面
@@ -390,14 +399,20 @@
     [self rightBtnClick:nil];
     
 }
-//取消所有的身体部位的选中状态
+# pragma mark - 取消所有的身体部位的选中状态
 -(void)cancelledSelected{
     [_headBtn setSelected:NO];
+    _headBtn.userInteractionEnabled = YES;
     [_leftArmBtn setSelected:NO];
+    _leftArmBtn.userInteractionEnabled = YES;
     [_rightArmBtn setSelected:NO];
+    _rightArmBtn.userInteractionEnabled = YES;
     [_chestBtn setSelected:NO];
+    _chestBtn.userInteractionEnabled = YES;
     [_hipBtn setSelected:NO];
+    _hipBtn.userInteractionEnabled = YES;
     [_legsBtn setSelected:NO];
+    _legsBtn.userInteractionEnabled = YES;
 }
 
 # pragma mark - 隐藏弹出视图
@@ -638,17 +653,18 @@
             [view removeFromSuperview];
         }
         SymptomModel *selectedModel = _selectedArr[indexPath.row];
-        NSString *iconImage = [[NSString alloc] init];
-        for (int i=0;i<_sectionDataArr.count;i++) {
-            NSString *str = _sectionDataArr[i];
-            if ([str isEqualToString:selectedModel.personPart]) {
-                iconImage = _sectionOpenImageArr[i];
-                break;
-            }
-        }
-//        UIImageView *icon = [Tools creatImageViewWithFrame:CGRectMake(25, (popCellHeight-26)/2.0, 26, 26) imageName:iconImage];
-//        [cell.contentView addSubview:icon];
-        UILabel *symptomName = [Tools labelWith:selectedModel.symptom frame:CGRectMake(25, (popCellHeight-40)/2.0, _contentView.frame.size.width-70-25-11-20-30, 40) textSize:14 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentLeft];
+//        NSString *iconImage = [[NSString alloc] init];
+//        for (int i=0;i<_sectionDataArr.count;i++) {
+//            NSString *str = _sectionDataArr[i];
+//            if ([str isEqualToString:selectedModel.personPart]) {
+//                iconImage = _sectionOpenImageArr[i];
+//                break;
+//            }
+//        }
+        UIImageView *icon = [Tools creatImageViewWithFrame:CGRectMake(25, (popCellHeight-22)/2.0, 22, 22) imageName:[self imageStrWithPartName:selectedModel.personPart]];
+        [cell.contentView addSubview:icon];
+        
+        UILabel *symptomName = [Tools labelWith:selectedModel.symptom frame:CGRectMake(icon.right+8, (popCellHeight-40)/2.0, _contentView.frame.size.width-70-25-11-20-30, 40) textSize:14 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentLeft];
         [cell.contentView addSubview:symptomName];
         UILabel *extentLabel = [[UILabel alloc] initWithFrame:CGRectMake(_contentView.frame.size.width-25-11-20-30, (popCellHeight-30)/2.0, 30, 30)];
         extentLabel.font = [UIFont systemFontOfSize:14];
@@ -704,7 +720,13 @@
                 SymptomModel *model = [[SymptomModel alloc] init];
                 [model setValuesForKeysWithDictionary:dic];
                 //model.fPrivate = @NO;
-                [self.rightDataArr addObject:model];
+                if([model.sexType intValue] == 2){
+                    [self.rightDataArr addObject:model];
+                }else{
+                    if([model.sexType intValue] == _sex){
+                        [self.rightDataArr addObject:model];
+                    }
+                }
                 //[model release];
             }
         }
@@ -827,11 +849,13 @@
     //    [view release];
     
     UIButton *backBtn = [Tools creatButtonWithFrame:CGRectMake(_contentView.frame.size.width/4-43.25, _contentView.frame.size.height-46, 86.5, 32) target:self sel:@selector(backBtnClick:) tag:60 image:@"ICD10_back" title:nil];
+    backBtn.tag = 2001;
     [_contentView addSubview:backBtn];
     if(_selectedArr.count==0){
         backBtn.frame = CGRectMake((_contentView.width-86.5)/2.0, _contentView.height-46, 86.5, 32);
     }else{
         UIButton *commitBtn = [Tools creatButtonWithFrame:CGRectMake(_contentView.frame.size.width/4*3-43.25, _contentView.frame.size.height-46, 86.5, 32) target:self sel:@selector(commitBtnClick:) tag:61 image:@"ICD10_commit" title:nil];
+        commitBtn.tag = 2002;
         [_contentView addSubview:commitBtn];
     }
     
@@ -874,6 +898,17 @@
             }
         }
         [_rightTableView reloadData];
+        
+        //没有已选症状不让提交
+        if(_selectedArr.count == 0){
+            UIButton *backBtn = (UIButton *)[_contentView viewWithTag:2001];
+            UIButton *commitBtn = (UIButton *)[_contentView viewWithTag:2002];
+            commitBtn.hidden = YES;
+             [_contentView setFrame:CGRectMake(0, 0, ScreenWidth-80,30+60)];
+            _contentView.center = self.view.center;
+            backBtn.frame = CGRectMake((_contentView.width-86.5)/2.0, _contentView.height-46, 86.5, 32);
+        }
+        
     }
     
 }
@@ -896,6 +931,23 @@
 }
 -(void)addCheckWithBlock:(addCheckBlock)block{
     self.checkBlock = [block copy];
+}
+
+
+- (NSString *)imageStrWithPartName:(NSString *)partName
+{
+    if([GlobalCommon stringEqualNull:partName]){
+        return nil;
+    }else{
+        if([_sectionDataArr containsObject:partName]){
+            NSInteger index = [_sectionDataArr indexOfObject:partName];
+            if(_sectionOpenImageArr.count > index){
+                return [_sectionOpenImageArr objectAtIndex:index];
+            }
+            return nil;
+        }
+    }
+    return nil;
 }
 
 @end

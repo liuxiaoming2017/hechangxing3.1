@@ -123,8 +123,19 @@
     UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:100];
     [self selectIndexWithString:@"全部" withButton:btn];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exchangeMemberChild:) name:exchangeMemberChildNotify object:nil];
+    
 }
 
+- (void)exchangeMemberChild:(NSNotification *)notify
+{
+    if([[notify object] isKindOfClass:[self class]]){
+        return;
+    }
+    self->memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
+    self.pageInteger = 1;
+    [self requestHealthHintDataWithTipyInteger:self->currentIndex withPageInteger:self.pageInteger];
+}
 
 //获取其他成员
 - (void)userBtnAction:(UIButton *)btn
@@ -134,6 +145,7 @@
     [subMember receiveSubIdWith:^(NSString *subId) {
         self->memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
         weakSelf.pageInteger = 1;
+        [[NSNotificationCenter defaultCenter] postNotificationName:exchangeMemberChildNotify object:self];
         [weakSelf requestHealthHintDataWithTipyInteger:self->currentIndex withPageInteger:weakSelf.pageInteger];
         [subMember hideHintView];
     }];
