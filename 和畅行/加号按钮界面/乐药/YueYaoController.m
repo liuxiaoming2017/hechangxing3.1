@@ -38,6 +38,8 @@
 
 @property (assign, nonatomic) BOOL isYueLuoyi;
 
+@property (nonatomic,strong) NSMutableArray *goumaiArr;
+
 /**
  *  蓝牙连接必要对象
  */
@@ -78,6 +80,8 @@
     }else{
         self.navTitleLabel.text = @"樂藥";
     }
+    
+    self.goumaiArr = [NSMutableArray arrayWithCapacity:0];
     
     [self createTopGongView];
     
@@ -202,8 +206,14 @@
                 [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
         }else{
-            [cell downloadFail];
-            
+            NSString *imageStr = @"";
+            if(model.price>0){ //需要付费leyaoweigoumai
+                imageStr = @"leyaoweigoumai";
+                [cell downloadFailWithImageStr:imageStr];
+            }else{
+                imageStr = @"New_yy_zt_xz";
+                [cell downloadFailWithImageStr:imageStr];
+            }
         }
         //判断当前cell是否处在下载中
         UIButton *btn = cell.downloadBtn;
@@ -313,6 +323,7 @@
             NSMutableArray *arr2 = [NSMutableArray arrayWithCapacity:0];
             for(NSDictionary *dic in arr){
                 SongListModel *model = [SongListModel mj_objectWithKeyValues:[[dic objectForKey:@"resourcesWarehouses"] objectAtIndex:0]];
+                model.price = [[dic objectForKey:@"price"] floatValue];
                 [arr2 addObject:model];
                 }
             weakSelf.dataArr = arr2;
@@ -332,8 +343,34 @@
     }];
 }
 
+#pragma mark - 下载按钮的代理事件
 - (void)downloadWithIndex:(NSInteger)index withBtn:(UIButton *)btn
 {
+    if([[btn imageForState:UIControlStateNormal] isEqual:[UIImage imageNamed:@"leyaoweigoumai"]]){ //未购买
+        
+        SongListModel *model = [self.dataArr objectAtIndex:index];
+        if([self.goumaiArr containsObject:model]){
+            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"你已经添加此产品" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:NULL];
+            [alertVC addAction:alertAct1];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self presentViewController:alertVC animated:YES completion:nil];
+            });
+        }else{
+            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定购买曲目吗？" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:NULL];
+            UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self.goumaiArr addObject:model];
+            }];
+            [alertVC addAction:alertAct1];
+            [alertVC addAction:alertAct12];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self presentViewController:alertVC animated:YES completion:nil];
+            });
+        }
+        return;
+    }
+    
     SongListModel *model = [self.dataArr objectAtIndex:index];
     NSString* NewFileName=model.source; //leyaoPath
     
@@ -359,7 +396,7 @@
     [downhander start];
 }
 
-#pragma mark - 下载按钮的代理事件
+
 - (void)downLoadButton:(UIButton *)btn withDownload:(BOOL)isplay;
 {
     
@@ -446,7 +483,7 @@
     SongListModel *model = [self.dataArr objectAtIndex:index];
     [GlobalCommon showMessage:[NSString stringWithFormat:@"%@下载失败",model.title] duration:2];
     SongListCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-    [cell downloadFail];
+    [cell downloadFailWithImageStr:@"New_yy_zt_xz"];
     //[cell.downloadBtn setImage:[UIImage imageNamed:@"New_yy_zt_xz"] forState:UIControlStateNormal];
     
 }

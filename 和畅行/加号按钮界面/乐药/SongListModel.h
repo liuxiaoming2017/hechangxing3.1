@@ -13,4 +13,6 @@
 @property (nonatomic,copy) NSString *title;
 @property (nonatomic,copy) NSString *source;
 
+@property (nonatomic,assign) float price;
+
 @end

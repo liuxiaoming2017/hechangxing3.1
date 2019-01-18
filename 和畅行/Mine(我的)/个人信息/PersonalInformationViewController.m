@@ -131,7 +131,7 @@
     [request setPostValue:AddressLb_Tf.text forKey:@"address"];
     [request setPostValue:CertificatesType forKey:@"identityType"];
     [request setPostValue:Certificates_Number_Tf.text forKey:@"idNumber"];
- 
+    [request setPostValue:BirthDay_btn.titleLabel.text forKey:@"birthday"];
     [request setTimeOutSeconds:20];
     [request setRequestMethod:@"POST"];
     [request setDelegate:self];
@@ -996,7 +996,7 @@
     [request setPostValue:CertificatesType forKey:@"identityType"];
     [request setPostValue:Certificates_Number_Tf.text forKey:@"idNumber"];
     //[request setPostValue:IsYiBao forKey:@"isMedicare"];
-    if ([BirthDay_btn.titleLabel.text isEqualToString:@"请选择生日"]) {
+    if ([BirthDay_btn.titleLabel.text isEqualToString:@"请选择您的出生日期"]) {
         BirthDay_btn.titleLabel.text=@"";
     }
     [request setPostValue:BirthDay_btn.titleLabel.text forKey:@"birthday"];
@@ -1144,6 +1144,7 @@
     self.tableView.top = kNavBarHeight;
     [UIView commitAnimations];
 }
+
 -(void)toobarDonBtnHaveClick:(ZHPickView *)pickView resultString:(NSString *)resultString{
     
     NSLog(@"ddfdfd=%@",resultString);

@@ -64,9 +64,9 @@
     self.PlayOrdownload = YES;
 }
 
-- (void)downloadFail
+- (void)downloadFailWithImageStr:(NSString *)nameStr
 {
-    [self.downloadBtn setImage:[UIImage imageNamed:@"New_yy_zt_xz"] forState:UIControlStateNormal];
+    [self.downloadBtn setImage:[UIImage imageNamed:nameStr] forState:UIControlStateNormal];
     self.PlayOrdownload = NO;
 }
 

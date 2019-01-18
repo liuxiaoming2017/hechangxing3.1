@@ -35,5 +35,5 @@
 
 - (void)downloadSuccess;
 
-- (void)downloadFail;
+- (void)downloadFailWithImageStr:(NSString *)nameStr;
 @end

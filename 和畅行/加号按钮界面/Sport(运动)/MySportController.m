@@ -694,7 +694,7 @@
 
 - (void)startTimer {
     [self stopTimer];
-    self.timer = [NSTimer timerWithTimeInterval:2.0
+    self.timer = [NSTimer timerWithTimeInterval:6.0
                                                    target:self
                                                  selector:@selector(timerRefreshed)
                                                  userInfo:nil

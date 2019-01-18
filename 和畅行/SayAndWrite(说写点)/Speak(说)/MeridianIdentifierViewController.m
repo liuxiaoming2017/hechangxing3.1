@@ -91,7 +91,7 @@
 - (void)goBack:(UIButton *)btn
 {
     [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 

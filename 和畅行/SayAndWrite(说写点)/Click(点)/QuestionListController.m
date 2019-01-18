@@ -51,6 +51,11 @@
     
 }
 
+- (void)goBack:(UIButton *)btn
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 - (void)createUI
 {
     
