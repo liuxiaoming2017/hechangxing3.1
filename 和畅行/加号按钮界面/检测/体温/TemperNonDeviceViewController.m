@@ -95,6 +95,7 @@
     
     _textField = [[UITextField alloc] initWithFrame:CGRectMake(30, 0, kScreenSize.width-8-40-30, 40)];
     _textField.font = [UIFont systemFontOfSize:16];
+    _textField.keyboardType = UIKeyboardTypeDecimalPad;
     _textField.placeholder = @"当前体温";
     _textField.delegate = self;
     
@@ -245,7 +246,7 @@
             hintLabel.font = [UIFont systemFontOfSize:12];
             NSMutableAttributedString *hintString = nil;
             NSRange range;
-            if (tempNum >38) {
+            if (tempNum >=37.3) {
                 hintString = [[NSMutableAttributedString alloc] initWithString:kHigh];
                 range = [[hintString string] rangeOfString:@"偏高"];
             }else{

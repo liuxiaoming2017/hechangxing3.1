@@ -119,6 +119,7 @@
     _textFiled.delegate = self;
     _textFiled.tag = 100;
     _textFiled.borderStyle = UITextBorderStyleRoundedRect;
+    _textFiled.keyboardType = UIKeyboardTypeDecimalPad;
     _textFiled.placeholder = @"--mmol/L";
     _textFiled.font = [UIFont systemFontOfSize:14];
     _textFiled.textColor = [Tools colorWithHexString:@"#3fcadb"];

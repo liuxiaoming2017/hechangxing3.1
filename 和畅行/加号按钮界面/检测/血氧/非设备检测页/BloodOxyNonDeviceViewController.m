@@ -89,6 +89,7 @@
     UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(90, 0, kScreenSize.width-8-40-90, 40)];
     textField.delegate = self;
     textField.placeholder = @"请输入0~100整数值";
+    textField.keyboardType = UIKeyboardTypeNumberPad;
     [_TextFieldArr addObject:textField];
     [inputImageView addSubview:textField];
     self.textField  = textField;
@@ -266,10 +267,10 @@
     UIView *v2 = [self.view viewWithTag:32];
     [v1 removeFromSuperview];
     [v2 removeFromSuperview];
-    if (self.abock){
-        self.abock();
-    }
-    [self.navigationController popViewControllerAnimated:YES];
+//    if (self.abock){
+//        self.abock();
+//    }
+//    [self.navigationController popViewControllerAnimated:YES];
 }
 
 //查看档案
