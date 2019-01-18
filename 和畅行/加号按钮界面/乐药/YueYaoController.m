@@ -207,13 +207,13 @@
             }
         }else{
             NSString *imageStr = @"";
-            if(model.price>0){ //需要付费leyaoweigoumai
-                imageStr = @"leyaoweigoumai";
-                [cell downloadFailWithImageStr:imageStr];
-            }else{
+//            if(model.price>0){ //需要付费leyaoweigoumai
+//                imageStr = @"leyaoweigoumai";
+//                [cell downloadFailWithImageStr:imageStr];
+//            }else{
                 imageStr = @"New_yy_zt_xz";
                 [cell downloadFailWithImageStr:imageStr];
-            }
+          //  }
         }
         //判断当前cell是否处在下载中
         UIButton *btn = cell.downloadBtn;
