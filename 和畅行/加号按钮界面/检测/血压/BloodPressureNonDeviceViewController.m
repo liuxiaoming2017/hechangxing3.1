@@ -587,7 +587,7 @@
     UITabBarController  *rvc = (UITabBarController  *)controller;
     [rvc setSelectedIndex:1];
     [UserShareOnce shareOnce].wherePop = @"血压";
-    [UserShareOnce shareOnce].bloodMemberID = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];;
+    [UserShareOnce shareOnce].bloodMemberID = [NSString stringWithFormat:@"%@",self.subId];
     [self.navigationController popToRootViewControllerAnimated:YES];
     
 //    UITabBarController *main = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];

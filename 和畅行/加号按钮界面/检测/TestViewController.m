@@ -13,6 +13,7 @@
 #import "TemperNonDeviceViewController.h"
 #import "BreathCheckViewController.h"
 #import "SugerViewController.h"
+#import "BloodOxyNonDeviceViewController.h"
 
 
 
@@ -37,8 +38,8 @@
     [super viewDidLoad];
     self.navTitleLabel.text = @"体征监检测";
     
-    self.titleArr = @[@"血压",@"血糖",@"呼吸",@"体温"];
-    self.imageArr = @[@"检测_血压",@"检测_血糖",@"检测_呼吸",@"检测_体温"];
+    self.titleArr = @[@"血压",@"血糖",@"血氧",@"呼吸",@"体温"];
+    self.imageArr = @[@"检测_血压",@"检测_血糖",@"检测_血氧",@"检测_呼吸",@"检测_体温"];
     self.dataArr = [NSMutableArray arrayWithCapacity:0];
     
     [self createUI];
@@ -80,61 +81,17 @@
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
         [hud hideAnimated:YES];
         if([[response objectForKey:@"status"] integerValue] == 100){
-            //血压
-            TestValueModel *model = [[TestValueModel alloc] init];
+            
             NSDictionary *data = [response objectForKey:@"data"];
-            if(![[data objectForKey:@"bloodPressure"] isKindOfClass:[NSNull class]]){
-                
-                model.createDate = [[[data objectForKey:@"bloodPressure"] objectForKey:@"createDate"] longValue];
-                model.valueStr = [NSString stringWithFormat:@"%@—%@",[[data objectForKey:@"bloodPressure"] objectForKey:@"lowPressure"],[[data objectForKey:@"bloodPressure"] objectForKey:@"highPressure"]];
-            }else{
-                
-                model.createDate = 0;
-                model.valueStr = @"尚未检测";
+ 
+            [self.dataArr removeAllObjects];
+            NSArray *typeArray = @[@"bloodPressure",@"bloodSugar",@"oxygen",@"breathe",@"bodyTemperature"];
+            for (int i = 0; i < typeArray.count; i++) {
+                TestValueModel *model = [[TestValueModel alloc] init];
+                [model yy_modelSetWithDictionary:[data valueForKey:typeArray[i]]];
+                [weakSelf.dataArr addObject:model];
             }
-            [weakSelf.dataArr addObject:model];
-            
-            //血糖
-            TestValueModel *model2 = [[TestValueModel alloc] init];
-            if(![[data objectForKey:@"bloodPressure"] isKindOfClass:[NSNull class]]){
-            }else{
-                model2.createDate = 0;
-                model2.valueStr = @"尚未检测";
-            }
-           
-            [weakSelf.dataArr addObject:model2];
-            //呼吸
-            TestValueModel *model3 = [[TestValueModel alloc] init];
-            if(![[data objectForKey:@"bloodPressure"] isKindOfClass:[NSNull class]]){
-                
-            }else{
-                model3.createDate = 0;
-                model3.valueStr = @"尚未检测";
-            }
-            
-            [weakSelf.dataArr addObject:model3];
-//            if(![[data objectForKey:@"bodyTemperature"] isKindOfClass:[NSNull class]]){
-//                TestValueModel *model = [[TestValueModel alloc] init];
-//                model.createDate = [[[data objectForKey:@"bodyTemperature"] objectForKey:@"createDate"] longValue];
-//                model.valueStr = [[data objectForKey:@"bodyTemperature"] objectForKey:@"temperature"];
-//            }else{
-//                TestValueModel *model = [[TestValueModel alloc] init];
-//                model.createDate = 0;
-//                model.valueStr = @"";
-//            }
-            
-            //体温
-            TestValueModel *model4 = [[TestValueModel alloc] init];
-            if(![[data objectForKey:@"bodyTemperature"] isKindOfClass:[NSNull class]]){
-                model4.createDate = [[[data objectForKey:@"bodyTemperature"] objectForKey:@"createDate"] longValue];
-                model4.valueStr = [NSString stringWithFormat:@"%@",[[data objectForKey:@"bodyTemperature"] objectForKey:@"temperature"]];
-            }else{
-                
-                model4.createDate = 0;
-                model4.valueStr = @"尚未检测";
-            }
-            [weakSelf.dataArr addObject:model4];
-            [weakSelf.tableView reloadData];
+            [ weakSelf.tableView reloadData];
         }else{
             [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
         }
@@ -151,7 +108,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -170,7 +127,40 @@
         }else{
             cell.dateLabel.text = [self intervalSinceNow:[NSString stringWithFormat:@"%ld",model.createDate]];
         }
-        cell.descriptionLabel.text = model.valueStr;
+       
+        NSString *descrioTionStr = [NSString string];
+        if (indexPath.row == 0) {
+            if (![GlobalCommon stringEqualNull:model.highPressure]) {
+                descrioTionStr = [NSString stringWithFormat:@"%@ - %@",model.highPressure,model.lowPressure];
+            }else{
+                descrioTionStr = @"尚未检测";
+            }
+        }else if (indexPath.row == 1) {
+            if (![GlobalCommon stringEqualNull:model.levels]) {
+                descrioTionStr = model.levels;
+            }else{
+                descrioTionStr = @"尚未检测";
+            }
+        }else if (indexPath.row == 2) {
+            if (![GlobalCommon stringEqualNull:model.density]) {
+                descrioTionStr = model.density;
+            }else{
+                descrioTionStr = @"尚未检测";
+            }
+        }else if (indexPath.row == 3) {
+            if (![GlobalCommon stringEqualNull:model.nums]) {
+                descrioTionStr = model.nums;
+            }else{
+                descrioTionStr = @"尚未检测";
+            }
+        }else if (indexPath.row == 4) {
+            if (![GlobalCommon stringEqualNull:model.temperature]) {
+                descrioTionStr = model.temperature;
+            }else{
+                descrioTionStr = @"尚未检测";
+            }
+        }
+        cell.descriptionLabel.text = descrioTionStr;
     }
     return cell;
 }
@@ -178,6 +168,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIViewController *vc = nil;
+    
+    //[@"血压",@"血糖",@"血氧",@"呼吸",@"体温"];
     
     switch (indexPath.row) {
         case 0:
@@ -200,14 +192,26 @@
             break;
         case 2:
         {
-            vc = [[BreathCheckViewController alloc] init];
+         BloodOxyNonDeviceViewController * vc = [[BloodOxyNonDeviceViewController alloc] init];
+             __weak typeof(self) weakSelf = self;
+            vc.myBlock = ^{
+                [weakSelf requestNetwork];
+            };
+            [self.navigationController pushViewController:vc animated:YES];
+            return;
         }
             break;
         case 3:
         {
+            vc = [[BreathCheckViewController alloc] init];
+        }
+            break;
+        case 4:
+        {
             vc = [[TemperNonDeviceViewController alloc] init];
         }
             break;
+            
         default:
             break;
     }
