@@ -204,6 +204,8 @@
         self.typeUrlInteger = 0;
         self.firstButton.selected = YES;
         [self.firstButton.layer setBorderColor:[UIColor redColor].CGColor];
+        self.wkwebview.hidden = YES;
+        self.timeLinvView.hidden = NO;
         [self requestHealthHintDataWithTipyInteger:0  withPageInteger:1];
         return;
     }

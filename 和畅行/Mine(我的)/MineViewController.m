@@ -133,7 +133,13 @@
     [imageView addSubview:userIcon];
     
     NSString *dispalyName = nil;
-    dispalyName = [MemberUserShance shareOnce].name;
+    
+    if ([MemberUserShance shareOnce].name.length <  26) {
+        dispalyName = [MemberUserShance shareOnce].name;
+    }else{
+        dispalyName = [UserShareOnce shareOnce].wxName;
+    }
+    
     UILabel *userName = [Tools creatLabelWithFrame:CGRectMake(userIcon.right+20, userIcon.top+10, 130, 20) text:dispalyName textSize:14];
     userName.textColor = [UIColor whiteColor];;
     [imageView addSubview:userName];
