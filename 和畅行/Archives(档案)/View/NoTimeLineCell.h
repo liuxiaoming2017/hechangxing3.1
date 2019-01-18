@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) UILabel *createDateLabel;
 @property (nonatomic,strong) UILabel *typeLabel;
 @property (nonatomic, strong)UIImageView *lineImageV2;
-
+@property (nonatomic, strong) UILabel *kindLabel;
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 

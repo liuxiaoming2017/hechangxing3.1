@@ -59,43 +59,41 @@
     self.typeInteger = type;
     self.dataArr = dataArray;
     self.memberIDStr = memberID;
-    [self.tableView reloadData];
     
     //档案最新
-    //    if (self.typeInteger == 0){
-    //        if (dataArray.count > 0){
-    //            HealthTipsModel *model = dataArray[0];
-    //            if (model.quarter != nil && ![model.quarter isKindOfClass:[NSNull class]]&&model.quarter.length != 0) {
-    //                self.topModel = model;
-    //                [dataArray removeObjectAtIndex:0];
-    //            }
-    //        }
-    //    }
-    //
-    //    self.dataArr = dataArray;
-    //
-    //    if (_typeInteger == 0) {
-    //         self.dataArr = [self.dataArr  sortedArrayUsingComparator:^(HealthTipsModel *model1, HealthTipsModel *model2) {
-    //
-    //            NSTimeInterval time1=[model1.createDate doubleValue]/1000;
-    //            NSTimeInterval time2=[model2.createDate doubleValue]/1000;
-    //            NSDate *detailDate1=[NSDate dateWithTimeIntervalSince1970:time1];
-    //            NSDate *detailDate2=[NSDate dateWithTimeIntervalSince1970:time2];
-    //
-    //            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    //            [dateFormatter setDateFormat: @"yyyy/MM/dd HH:mm"];
-    //
-    //            if (detailDate1 == [detailDate1 earlierDate: detailDate2]) {
-    //                return NSOrderedDescending;
-    //            }else if (detailDate1 == [detailDate1 laterDate: detailDate2]) {
-    //                return NSOrderedAscending;//升序
-    //            }else{
-    //
-    //                return NSOrderedSame;//相等
-    //            }
-    //        }];
-    //    }
-    //    [self.tableView reloadData];
+        if (self.typeInteger == 1){
+            if (dataArray.count > 0){
+                HealthTipsModel *model = dataArray[0];
+                if (model.quarter != nil && ![model.quarter isKindOfClass:[NSNull class]]&&model.quarter.length != 0) {
+                    self.topModel = model;
+                    [dataArray removeObjectAtIndex:0];
+                }
+            }
+        }
+    
+        self.dataArr = dataArray;
+    
+        if (_typeInteger == 1) {
+             self.dataArr = [self.dataArr  sortedArrayUsingComparator:^(HealthTipsModel *model1, HealthTipsModel *model2) {
+    
+                NSTimeInterval time1=[model1.createDate doubleValue]/1000;
+                NSTimeInterval time2=[model2.createDate doubleValue]/1000;
+                NSDate *detailDate1=[NSDate dateWithTimeIntervalSince1970:time1];
+                NSDate *detailDate2=[NSDate dateWithTimeIntervalSince1970:time2];
+    
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat: @"yyyy/MM/dd HH:mm"];
+    
+                if (detailDate1 == [detailDate1 earlierDate: detailDate2]) {
+                    return NSOrderedDescending;
+                }else if (detailDate1 == [detailDate1 laterDate: detailDate2]) {
+                    return NSOrderedAscending;//升序
+                }else{
+                    return NSOrderedSame;//相等
+                }
+            }];
+        }
+        [self.tableView reloadData];
 }
 
 #pragma mark -- tableView的代理方法
@@ -110,26 +108,26 @@
     return _dataArr.count;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//
-//    if (self.typeInteger == 0) {
-//        if (self.topModel != nil && ![self.topModel isKindOfClass:[NSNull class]]) {
-//            return 90;
-//        }else{
-//            return 0;
-//        }
-//    }else{
-//        return 0;
-//    }
-//
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+
+    if (self.typeInteger == 1) {
+        if (self.topModel != nil && ![self.topModel isKindOfClass:[NSNull class]]) {
+            return 90;
+        }else{
+            return 0;
+        }
+    }else{
+        return 0;
+    }
+
+}
 
 #pragma mark -- 每个cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     HealthTipsModel *model = _dataArr[indexPath.row];
     
-    if (self.typeInteger < 5 ) {
+    if (self.typeInteger < 7 &&self.typeInteger!=2) {
         if (![model.type isEqualToString:@"REPORT"]){
             if (indexPath.row == 0) {
                 return 105;
@@ -158,7 +156,7 @@
             return 120;
         }
         
-    }if (self.typeInteger == 10) {
+    }if (self.typeInteger == 2) {
         return 120;
     }else {
         
@@ -180,7 +178,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (self.typeInteger < 5 ) {
+    if (self.typeInteger < 7 &&self.typeInteger !=2 ) {
         HealthTipsModel *model = _dataArr[indexPath.row];
         if(![model.type isEqualToString:@"REPORT"]) {
             NSString *timeStr = [NSString string];
@@ -294,10 +292,8 @@
             [cell setReportModel:model withIndex:indexPath];
             return cell;
         }
-        
-        
-    }
-    if (self.typeInteger == 10) {
+    
+    }else if (self.typeInteger ==2) {
         
         HealthTipsModel *model = _dataArr[indexPath.row];
         HCY_ReportCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HCY_ReportCell"];
@@ -381,22 +377,20 @@
     }
 }
 
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//
-//
-//    if (self.topModel != nil && ![self.topModel isKindOfClass:[NSNull class]]) {
-//
-//        NSLog(@"%@",self.topModel);
-//        GovSectionView *sectionV = [GovSectionView showWithModel:self.topModel];
-//        sectionV.tableView = self.tableView;
-//        sectionV.section = section;
-//        sectionV.delegate=self;
-//        return sectionV;
-//    }else{
-//        return nil;
-//    }
-//}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+
+    if (self.topModel != nil && ![self.topModel isKindOfClass:[NSNull class]]) {
+        NSLog(@"%@",self.topModel);
+        GovSectionView *sectionV = [GovSectionView showWithModel:self.topModel];
+        sectionV.tableView = self.tableView;
+        sectionV.section = section;
+        sectionV.delegate=self;
+        return sectionV;
+    }else{
+        return nil;
+    }
+}
 
 #pragma mark - 自定义sectionView的代理方法
 - (void)sectionGestTap:(NSInteger)section withTapGesture:(UITapGestureRecognizer *)gest
@@ -602,9 +596,9 @@
     
     
     
-    //病例列表
+    //病历列表
     if (model.medicRecordId!=nil&&![model.medicRecordId isKindOfClass:[NSNull class]]&&model.medicRecordId.length!=0){
-# pragma mark -  病例列表
+# pragma mark -  病历列表
         
 //        NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:[UserShareOnce shareOnce].userToken medicId:model.medicRecordId];
 //        NSLog(@"token:%@,iddddd:%@",[UserShareOnce shareOnce].userToken,model.medicRecordId);

@@ -43,6 +43,7 @@
 @property (nonatomic,assign) NSInteger pageInteger;
 
 @property (nonatomic,strong)UIView *noView;
+@property (nonatomic,strong)UIButton *firstButton;
 
 @end
 
@@ -120,8 +121,8 @@
     //    [[UIApplication sharedApplication].keyWindow addSubview:self.filterBtn];
     
     //默认选择
-    UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:100];
-    [self selectIndexWithString:@"全部" withButton:btn];
+    self.firstButton = (UIButton *)[self.sidebarVC.contentView viewWithTag:100];
+    [self selectIndexWithString:@"全部" withButton:self.firstButton];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exchangeMemberChild:) name:exchangeMemberChildNotify object:nil];
     
@@ -177,8 +178,7 @@
 # pragma mark ----- 上拉刷新
 -(void)loadMoreDataOther {
     //档案最新
-//    if (_typeUrlInteger == 10||_typeUrlInteger == 0){
-    if (_typeUrlInteger == 10){
+    if (_typeUrlInteger == 2||_typeUrlInteger == 1){
         [self.timeLinvView.tableView.mj_footer endRefreshing];
         return;
     };
@@ -199,37 +199,42 @@
     button.selected = !button.selected;
     if(button.selected){
         [button.layer setBorderColor:[UIColor redColor].CGColor];
-        [button setTitleColor:[UIColor redColor] forState:(UIControlStateSelected)];
+    }else{
+        [button.layer setBorderColor:UIColorFromHex(0XEEEEEE).CGColor];
+        self.typeUrlInteger = 0;
+        self.firstButton.selected = YES;
+        [self.firstButton.layer setBorderColor:[UIColor redColor].CGColor];
+        [self requestHealthHintDataWithTipyInteger:0  withPageInteger:1];
+        return;
     }
     for(NSInteger i=0;i<12;i++){
         UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:100+i];
         if(button.tag != 100+i){
             [btn.layer setBorderColor:UIColorFromHex(0XEEEEEE).CGColor];
-            [button setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+            [btn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
             btn.selected = NO;
         }
     }
     
-//    if ([str isEqualToString:@"最新"])        self.typeUrlInteger = 0;
-    if ([str isEqualToString:@"全部"])        self.typeUrlInteger = 0;
-    else if([str isEqualToString:@"经络"])    self.typeUrlInteger = 1;
-    else if([str isEqualToString:@"体质"])    self.typeUrlInteger = 2;
-    else if([str isEqualToString:@"脏腑"])    self.typeUrlInteger = 3;
-    else if([str isEqualToString:@"心率"])    self.typeUrlInteger = 4;
-    else if([str isEqualToString:@"血压"])    self.typeUrlInteger = 5;
-    else if([str isEqualToString:@"血氧"])    self.typeUrlInteger = 6;
-    else if([str isEqualToString:@"血糖"])    self.typeUrlInteger = 7;
-    else if([str isEqualToString:@"体温"])    self.typeUrlInteger = 8;
-    else if([str isEqualToString:@"呼吸"])    self.typeUrlInteger = 9;
-    else if([str isEqualToString:@"季度报告"]) self.typeUrlInteger = 10;
-    else if([str isEqualToString:@"病历"])    self.typeUrlInteger = 11;
-    
+    if ([str isEqualToString:@"全部"])  self.typeUrlInteger = 0;
+    else if([str isEqualToString:@"最新"])    self.typeUrlInteger = 1;
+    else if([str isEqualToString:@"阶段报告"])    self.typeUrlInteger = 2;
+    else if([str isEqualToString:@"病历"])    self.typeUrlInteger = 3;
+    else if([str isEqualToString:@"经络"])    self.typeUrlInteger = 4;
+    else if([str isEqualToString:@"脏腑"])    self.typeUrlInteger = 5;
+    else if([str isEqualToString:@"体质"])    self.typeUrlInteger = 6;
+    else if([str isEqualToString:@"血压"])    self.typeUrlInteger = 7;
+    else if([str isEqualToString:@"血氧"])    self.typeUrlInteger = 8;
+    else if([str isEqualToString:@"血糖"])    self.typeUrlInteger = 9;
+    else if([str isEqualToString:@"心率"])    self.typeUrlInteger = 10;
+    else if([str isEqualToString:@"呼吸"])    self.typeUrlInteger = 11;
+    else if([str isEqualToString:@"体温"])    self.typeUrlInteger = 12;
+    NSLog(@"%@",str);
     self.pageInteger = 1;
-    
     [_dataListArray removeAllObjects];
     [self.timeLinvView.tableView reloadData];
     
-    if(self.typeUrlInteger < 5 || self.typeUrlInteger > 9) {
+    if(self.typeUrlInteger < 7 || self.typeUrlInteger == 10) {
         if (self.wkwebview) {
             self.wkwebview.hidden = YES;
         }
@@ -295,40 +300,66 @@
 {
     __weak typeof(self) weakSelf = self;
     ///member/service/zf_report.jhtml?cust_id=32&physique_id=181224175130815054&device=1
+    
+    /*
+     全部          0;
+    最新           1;
+    阶段报告    2;
+    病历           3;
+    经络           4;
+    脏腑           5;
+    体质           6;
+    心率          10;
+     */
     NSString *str = [NSString new];
     NSString *pageIntegerstr = [NSString stringWithFormat:@"%ld",(long)pageInteger];
     self.currentIndex = tipyInteger;
+    
     switch (tipyInteger) {
         case 0:
-            //档案最新
-//            str = [NSString stringWithFormat:
-//                         @"/member/myreport/view/%@.jhtml?",memberId];
             str = [NSString stringWithFormat:
                    @"/member/new_ins/all.jhtml?memberChildId=%@&pageNumber=%@",memberId,pageIntegerstr];
             break;
-        case 1:   str = [NSString stringWithFormat:
-                         @"/member/myreport/list/JLBS/%@.jhtml?pageNumber=%@",memberId,pageIntegerstr];
+        case 1:
+            //最新
+            str = [NSString stringWithFormat:
+                   @"/member/myreport/view/%@.jhtml?",memberId];
             break;
             
-        case 2:   str = [NSString stringWithFormat:
-                         @"/member/myreport/list/TZBS/%@.jhtml?pageNumber=%@",memberId,pageIntegerstr];
+        case 2:
+            
+            //阶段报告
+            str = [NSString stringWithFormat:
+                   @"/member/service/reportslist.jhtml?memberChildId=%@",memberId];
             break;
             
-        case 3:   str = [NSString stringWithFormat:
-                         @"/result/IdentificationList.jhtml?cust_id=%@&pageNumber=%@",memberId,pageIntegerstr];
-            break;
-            
-        case 4:   str = [NSString stringWithFormat:
-                         @"/member/myreport/getEcgList/%@.jhtml?pageNumber=%@",memberId,pageIntegerstr];
-            break;
-            
-        case 10:   str = [NSString stringWithFormat:
-                          @"/member/service/reportslist.jhtml?memberChildId=%@",memberId];
-            break;
-            
-        case 11:   [self getCasesList];
-            
+        case 3:
+            //病历
+            [self getCasesList];
             return;
+            break;
+            
+        case 4:
+            //经络
+            str = [NSString stringWithFormat:
+                   @"/member/myreport/list/JLBS/%@.jhtml?pageNumber=%@",memberId,pageIntegerstr];
+         
+            break;
+            
+        case 5:
+            //脏腑
+            str = [NSString stringWithFormat:
+                   @"/result/IdentificationList.jhtml?cust_id=%@&pageNumber=%@",memberId,pageIntegerstr];
+            break;
+        case 6:
+            //体质
+            str = [NSString stringWithFormat:
+                   @"/member/myreport/list/TZBS/%@.jhtml?pageNumber=%@",memberId,pageIntegerstr];
+             break;
+        case 10:
+            //心率
+            str = [NSString stringWithFormat:
+                   @"/member/myreport/getEcgList/%@.jhtml?pageNumber=%@",memberId,pageIntegerstr];
             break;
             
         default:
@@ -347,22 +378,21 @@
                 [weakSelf.dataListArray removeAllObjects];
             }
             
-            ///档案最新
-//            if (tipyInteger == 0) {
-//                NSArray *array = @[@"report",@"JLBS",@"TZBS",@"ZFBS",@"ecg",@"bloodPressure",@"oxygen",@"bodyTemperature"];
-//
-//                for (int i = 0 ; i<array.count; i++) {
-//                     NSDictionary *dic  = [[response valueForKey:@"data"] valueForKey:array[i]];
-//                    HealthTipsModel *tipModel = [[HealthTipsModel alloc] init];
-//
-//                    if (dic != nil && ![dic isKindOfClass:[NSNull class]]) {
-//                        [tipModel yy_modelSetWithJSON:dic];
-//                        tipModel.typeStr = array[i];
-//                        [weakSelf.dataListArray addObject:tipModel];
-//                    }
-//                }
-//            }else
-            if (tipyInteger == 4) {
+            ///最新
+            if (tipyInteger == 1) {
+                NSArray *array = @[@"report",@"JLBS",@"TZBS",@"ZFBS",@"ecg",@"bloodPressure",@"oxygen",@"bodyTemperature"];
+
+                for (int i = 0 ; i<array.count; i++) {
+                     NSDictionary *dic  = [[response valueForKey:@"data"] valueForKey:array[i]];
+                    HealthTipsModel *tipModel = [[HealthTipsModel alloc] init];
+
+                    if (dic != nil && ![dic isKindOfClass:[NSNull class]]) {
+                        [tipModel yy_modelSetWithJSON:dic];
+                        tipModel.typeStr = array[i];
+                        [weakSelf.dataListArray addObject:tipModel];
+                    }
+                }
+            }else if (tipyInteger == 10) {
                 for (NSDictionary *dic in [[response valueForKey:@"data"] valueForKey:@"content"]) {
                     HealthTipsModel *tipModel = [[HealthTipsModel alloc] init];
                     [tipModel yy_modelSetWithJSON:dic];
@@ -422,25 +452,38 @@
 - (void)requestNetworkWithIndex:(NSInteger)index
 {
     
+    /*
+     血压          7;
+     血氧           8;
+     血糖           9;
+     心率          10;
+     呼吸          11;
+     体温         12;
+     */
     NSString *urlStr = @"";
     
     if(index > 4){
        
         switch (index) {
-            case 5:
+            case 7:
+                //血压
                 urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(30)];
                 break;
-            case 6:
+            case 8:
+                //血氧
                 urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(20)];
                 break;
-            case 7:
+            case 9:
+                //血糖
                 urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(60)];
                 break;
-            case 8:
-                urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(40)];
-                break;
-            case 9:
+            case 11:
+                //体温
                 urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(50)];
+                break;
+            case 12:
+                //呼吸
+                urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(40)];
                 break;
             default:
                 break;
@@ -456,7 +499,7 @@
 }
 
 
-# pragma mark - 病例的请求
+# pragma mark - 病历的请求
 
 -(void)getCasesList {
     

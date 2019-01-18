@@ -78,7 +78,7 @@
     [self addSubview:self.lowLabel];
     
     
-    //病例
+    //病历
     self.doctorNameLabel = [[UILabel alloc]initWithFrame:CGRectMake( 15, 5, 130, self.imageV.height/2)];
     self.doctorNameLabel.textColor = RGB(55, 55, 55);
     self.doctorNameLabel.font = [UIFont systemFontOfSize:15];
@@ -122,7 +122,7 @@
 //为cell 赋值
 - (void)assignmentVisceraWithModel:(HealthTipsModel *)model{
     
-//档案  病例
+//档案  病历
     if (![GlobalCommon stringEqualNull:model.medicRecordId]){
         self.doctorNameLabel.text = model.doctorName;
         self.departmentNameLabel.text = model.doctorDept;
