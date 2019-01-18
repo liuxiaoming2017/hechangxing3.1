@@ -131,6 +131,7 @@
     _breathCountTF.delegate = self;
     _breathCountTF.placeholder = @"- -";
     _breathCountTF.textAlignment = NSTextAlignmentCenter;
+    _breathCountTF.keyboardType = UIKeyboardTypeNumberPad;
     _breathCountTF.textColor = [Tools colorWithHexString:@"#1ca5ed"];
     _breathCountTF.font = [UIFont systemFontOfSize:18];
     [self.view addSubview:_breathCountTF];

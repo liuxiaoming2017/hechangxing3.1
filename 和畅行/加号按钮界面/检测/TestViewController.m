@@ -43,6 +43,11 @@
     self.dataArr = [NSMutableArray arrayWithCapacity:0];
     
     [self createUI];
+  
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self requestNetwork];
 }
 
@@ -125,7 +130,7 @@
         if(model.createDate == 0){
             cell.dateLabel.text = @"";
         }else{
-            cell.dateLabel.text = [self intervalSinceNow:[NSString stringWithFormat:@"%ld",model.createDate]];
+            cell.dateLabel.text = [self updateTimeForRow:[NSString stringWithFormat:@"%ld",model.createDate]];
         }
        
         NSString *descrioTionStr = [NSString string];
@@ -192,13 +197,13 @@
             break;
         case 2:
         {
-         BloodOxyNonDeviceViewController * vc = [[BloodOxyNonDeviceViewController alloc] init];
-             __weak typeof(self) weakSelf = self;
-            vc.abock = ^{
-                [weakSelf requestNetwork];
-            };
-            [self.navigationController pushViewController:vc animated:YES];
-            return;
+            vc = [[BloodOxyNonDeviceViewController alloc] init];
+//             __weak typeof(self) weakSelf = self;
+//            vc.abock = ^{
+////                [weakSelf requestNetwork];
+//            };
+//            [self.navigationController pushViewController:vc animated:YES];
+//            return;
         }
             break;
         case 3:
@@ -218,75 +223,42 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
--(NSString *)intervalSinceNow:(NSString *)aDate
-{
-    if (!aDate.length || [aDate isKindOfClass:[NSNull class]]) {
-        return @"0";
-    }
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-//
-//    NSDate *date = [dateFormatter dateFromString:aDate];
-//
-//
-//    NSTimeInterval interval_1 = [date timeIntervalSince1970];
-    aDate = [aDate substringToIndex:10];
-    NSTimeInterval interval_1 = [aDate doubleValue];
+- (NSString *)updateTimeForRow:(NSString *)createTimeString {
+    // 获取当前时时间戳 1466386762.345715 十位整数 6位小数
+    NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+    // 创建歌曲时间戳(后台返回的时间 一般是13位数字)
+    NSTimeInterval createTime = [createTimeString longLongValue]/1000;
+    // 时间差
+    NSTimeInterval time = currentTime - createTime;
     
-    NSDate *nowdate = [NSDate date];
-    NSTimeInterval interval_2 = [nowdate timeIntervalSince1970];
-    
-    NSTimeInterval diff  = interval_2 - interval_1;
-    if (diff < 0)
-        diff = 0;
-    NSString *timeString = nil;
-    
-    if (diff/60 <= 1) {
-        timeString = [NSString stringWithFormat:@"%f", diff];
-        timeString = [timeString substringToIndex:timeString.length-7];
-        timeString = [NSString stringWithFormat:NSLocalizedString(@"刚刚",nil)];
+    NSInteger sec = time/60;
+    if (sec<60) {
+        if (sec == 0){
+            return [NSString stringWithFormat:@"刚刚"];
+        }
+        return [NSString stringWithFormat:@"%ld分钟前",sec];
     }
     
-    if (diff/60 > 1 && diff/3600 <= 1) {
-        timeString = [NSString stringWithFormat:@"%f", diff/60];
-        timeString = [timeString substringToIndex:timeString.length-7];
-        timeString = [NSString stringWithFormat:@"%@%@", timeString, NSLocalizedString(@"分钟前",nil)];
+    // 秒转小时
+    NSInteger hours = time/3600;
+    if (hours<24) {
+        return [NSString stringWithFormat:@"%ld小时前",hours];
     }
-    
-    if (diff/3600 > 1 && diff/86400 <= 1) {
-        timeString = [NSString stringWithFormat:@"%f", diff/3600];
-        timeString = [timeString substringToIndex:timeString.length-7];
-        timeString = [NSString stringWithFormat:@"%@%@", timeString, NSLocalizedString(@"小时前",nil)];
+    //秒转天数
+    NSInteger days = time/3600/24;
+    if (days < 30) {
+        return [NSString stringWithFormat:@"%ld天前",days];
     }
-    
-    if (diff/86400 > 1 && diff/86400 <= 7)  {
-        timeString = [NSString stringWithFormat:@"%f", diff/86400];
-        timeString = [timeString substringToIndex:timeString.length-7];
-        timeString = [NSString stringWithFormat:@"%@%@", timeString, NSLocalizedString(@"天前",nil)];
-    }else{
-        timeString = @"7天前";
+    //秒转月
+    NSInteger months = time/3600/24/30;
+    if (months < 12) {
+        return [NSString stringWithFormat:@"%ld月前",months];
     }
-    
-    
-//    if (diff/86400 > 2){
-//        NSRange range;
-//        range.length = 11;
-//        range.location = 5;
-//        {
-//            timeString = [NSString stringWithFormat:@"%@", [aDate substringWithRange:range]];
-//        }
-//
-//    }
-//
-//    if (diff/86400 >= 30) {
-//        NSRange range;
-//        range.length = 10;
-//        range.location = 0;
-//        timeString = [NSString stringWithFormat:@"%@", [aDate substringWithRange:range]];
-//    }
-    
-    return timeString;
+    //秒转年
+    NSInteger years = time/3600/24/30/12;
+    return [NSString stringWithFormat:@"%ld年前",years];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
