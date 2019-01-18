@@ -72,7 +72,7 @@
     
     
     
-    //病例
+    //病历
     self.doctorNameLabel = [[UILabel alloc]initWithFrame:CGRectMake( 15, 5, 130, self.imageV.height/2)];
     self.doctorNameLabel.textColor = RGB(55, 55, 55);
     self.doctorNameLabel.font = [UIFont systemFontOfSize:15];

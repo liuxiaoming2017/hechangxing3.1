@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong)UIImageView *lineImageV2;
 
 
-//病例
+//病历
 @property (nonatomic, strong) UILabel *doctorNameLabel;
 @property (nonatomic, strong) UILabel *departmentNameLabel;
 @property (nonatomic, strong) UILabel *CCLabel;

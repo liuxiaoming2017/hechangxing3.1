@@ -33,7 +33,7 @@
 
 - (void)initWithView
 {
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((kSidebarWidth-72*2-26)/2.0, kNavBarHeight+60, 100, 25)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((kSidebarWidth-72*2-26)/2.0, kNavBarHeight, 100, 25)];
     titleLabel.font = [UIFont systemFontOfSize:20];
     titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.textColor = UIColorFromHex(0X000000);
@@ -42,14 +42,13 @@
     
     self.selectTag = -1;
     //档案最新
-//    self.titleArr = [NSArray arrayWithObjects:@"最新",@"经络",@"体质",@"脏腑",@"心率",@"血压",@"血氧",@"血糖",@"体温",@"呼吸",@"季度报告",@"病历", nil];
-    self.titleArr = [NSArray arrayWithObjects:@"全部",@"经络",@"体质",@"脏腑",@"心率",@"血压",@"血氧",@"血糖",@"体温",@"呼吸",@"季度报告",@"病历", nil];
+    self.titleArr = [NSArray arrayWithObjects:@"全部",@"最新",@"阶段报告",@"病历",@"经络",@"脏腑",@"体质",@"血压",@"血氧",@"血糖",@"心率",@"呼吸",@"体温", nil];
 
     for(NSInteger i=0;i<self.titleArr.count;i++){
         UIButton *selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        selectBtn.frame = CGRectMake(titleLabel.left+(72+26)*(i%2), titleLabel.bottom+20+(32+26)*(i/2), 72, 32);
+        selectBtn.frame = CGRectMake(titleLabel.left+(72+17)*(i%2), titleLabel.bottom+26+(42+23)*(i/2), 72, 42);
         selectBtn.tag = i+100;
-        selectBtn.layer.cornerRadius = 16;
+        selectBtn.layer.cornerRadius = 21;
         selectBtn.layer.masksToBounds = YES;
         [selectBtn.layer setBorderColor:UIColorFromHex(0XEEEEEE).CGColor];
         [selectBtn.layer setBorderWidth:1.0];
@@ -75,7 +74,7 @@
     [sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     sureBtn.titleLabel.font = [UIFont systemFontOfSize:20];
     [sureBtn addTarget:self action:@selector(sureBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:sureBtn];
+//    [self.contentView addSubview:sureBtn];
     
 }
 

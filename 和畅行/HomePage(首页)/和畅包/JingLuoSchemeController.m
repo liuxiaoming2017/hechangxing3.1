@@ -104,7 +104,7 @@
         case 205:
             type = @"/member/service/view/fang/JLBS/1/";
             fangtype = @"yishan";
-            titleStr = @"砭法处方";
+            titleStr = @"砭石处方";
             break;
         case 206:
             type = @"/member/service/view/fang/JLBS/1/";

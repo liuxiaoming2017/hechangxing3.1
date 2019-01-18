@@ -57,7 +57,7 @@
 @property (nonatomic,copy)   NSString *temperature;
 
 
-//病例
+//病历
 
 @property (nonatomic,copy)   NSString *medicRecordId;
 @property (nonatomic,copy)   NSString *mainSuit;
