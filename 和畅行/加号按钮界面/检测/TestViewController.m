@@ -194,7 +194,7 @@
         {
          BloodOxyNonDeviceViewController * vc = [[BloodOxyNonDeviceViewController alloc] init];
              __weak typeof(self) weakSelf = self;
-            vc.myBlock = ^{
+            vc.abock = ^{
                 [weakSelf requestNetwork];
             };
             [self.navigationController pushViewController:vc animated:YES];
