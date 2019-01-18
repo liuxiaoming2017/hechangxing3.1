@@ -17,6 +17,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "MuisicNoraml.h"
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "ShoppingController.h"
 
 @interface YueYaoController ()<UITableViewDelegate,UITableViewDataSource,songListCellDelegate,DownloadHandlerDelegate,CBCentralManagerDelegate,CBPeripheralDelegate,MuscicNoramlDeleaget>
 
@@ -40,6 +41,10 @@
 
 @property (nonatomic,strong) NSMutableArray *goumaiArr;
 
+@property (nonatomic,strong) UILabel *jinerLabel;
+
+@property (nonatomic,assign) float allPrice;
+
 /**
  *  蓝牙连接必要对象
  */
@@ -61,7 +66,7 @@
 @end
 
 @implementation YueYaoController
-@synthesize segmentedControl,hysegmentControl,downhander;
+@synthesize segmentedControl,hysegmentControl,downhander,jinerLabel,allPrice;
 
 - (void)dealloc
 {
@@ -84,6 +89,8 @@
     self.goumaiArr = [NSMutableArray arrayWithCapacity:0];
     
     [self createTopGongView];
+    
+    allPrice = 0;
     
 //    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
 //    //默认情况下扬声器播放
@@ -171,8 +178,59 @@
             }
         }
     }
+    
+    [self createConsumeView];
+    
 }
 
+# pragma mark - 下方金额视图
+- (void)createConsumeView
+{
+    UIImageView *xiaofeijinerImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width - 105, 44)];
+    xiaofeijinerImage.image = [UIImage imageNamed:@"leyaoxiaofeijiner.png"];
+    [self.view addSubview:xiaofeijinerImage];
+    
+    
+    UIImageView *jiesuanImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width -  105, self.view.frame.size.height - 44, 105, 44)];
+    jiesuanImage.image = [UIImage imageNamed:@"leyaojiesuan.png"];
+    [self.view addSubview:jiesuanImage];
+    
+    UIImageView *gouwucheImage = [[UIImageView alloc]initWithFrame:CGRectMake(15, self.view.frame.size.height - 32, 20, 20)];
+    gouwucheImage.image = [UIImage imageNamed:@"leyaogouwuche.png"];
+    [self.view addSubview:gouwucheImage];
+    
+    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, self.view.frame.size.height - 32, 90, 20)];
+    zongjinerLabel.text = @"消费总金额：";
+    zongjinerLabel.textColor = [UIColor whiteColor];
+    zongjinerLabel.font = [UIFont systemFontOfSize:13];
+    [self.view addSubview:zongjinerLabel];
+    
+    jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, self.view.frame.size.height - 32, 60, 20)];
+    jinerLabel.textColor = [UIColor whiteColor];
+    jinerLabel.font = [UIFont boldSystemFontOfSize:13];
+    [self.view addSubview:jinerLabel];
+    
+    UILabel *qujiesuanLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 105, self.view.frame.size.height - 32, 105, 20)];
+    qujiesuanLabel.textColor = [UIColor whiteColor];
+    qujiesuanLabel.text = @"去结算";
+    qujiesuanLabel.font = [UIFont systemFontOfSize:13];
+    qujiesuanLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:qujiesuanLabel];
+    
+    UIButton *jiesuanButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    jiesuanButton.frame = CGRectMake(self.view.frame.size.width - 105, self.view.frame.size.height - 44, 105, 44);
+    [jiesuanButton addTarget:self action:@selector(jiesuanButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:jiesuanButton];
+}
+
+# pragma mark - 去结算按钮
+- (void)jiesuanButton
+{
+    ShoppingController *vc = [[ShoppingController alloc] init];
+    vc.dataArr = self.goumaiArr;
+    vc.prices = self.allPrice;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 #pragma mark - tableview代理方法
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -207,13 +265,13 @@
             }
         }else{
             NSString *imageStr = @"";
-//            if(model.price>0){ //需要付费leyaoweigoumai
-//                imageStr = @"leyaoweigoumai";
-//                [cell downloadFailWithImageStr:imageStr];
-//            }else{
+            if(model.price>0){ //需要付费leyaoweigoumai
+                imageStr = @"leyaoweigoumai";
+                [cell downloadFailWithImageStr:imageStr];
+            }else{
                 imageStr = @"New_yy_zt_xz";
                 [cell downloadFailWithImageStr:imageStr];
-          //  }
+            }
         }
         //判断当前cell是否处在下载中
         UIButton *btn = cell.downloadBtn;
@@ -357,10 +415,17 @@
                 [self presentViewController:alertVC animated:YES completion:nil];
             });
         }else{
-            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定购买曲目吗？" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"确定购买曲目吗？" message:[NSString stringWithFormat:@"¥%.2f",model.price] preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:NULL];
             UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [self.goumaiArr addObject:model];
+                self->allPrice = self->allPrice + model.price;
+                self->jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",self->allPrice];
+//                NSString* filepath=[self createYueYaoZhiFufilepath];
+//                NSFileManager *fileManager = [NSFileManager defaultManager];
+//                NSString *urlpath= [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", @"arrayText.txt"]];
+//                NSString *namePath = [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"nameText.txt"]];
+//                BOOL fileExists = [fileManager fileExistsAtPath:urlpath];
             }];
             [alertVC addAction:alertAct1];
             [alertVC addAction:alertAct12];
@@ -618,6 +683,32 @@
         default:
             break;
     }
+}
+
+-(NSString*)createYueYaoZhiFufilepath
+{
+    NSString *path = [ NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *folderPath = [path stringByAppendingPathComponent:@"yueyaozhifuTemp"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL fileExists = [fileManager fileExistsAtPath:folderPath];
+    if(!fileExists)
+    {
+        [fileManager createDirectoryAtPath:folderPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    [self addSkipBackupAttributeToItemAtPath:folderPath];
+    return folderPath;
+}
+
+- (BOOL)addSkipBackupAttributeToItemAtPath:(NSString *) filePathString
+{
+    NSURL* URL= [NSURL fileURLWithPath: filePathString];
+    NSError *error = nil;
+    BOOL success = [URL setResourceValue: [NSNumber numberWithBool: YES]
+                                  forKey: NSURLIsExcludedFromBackupKey error: &error];
+    if(!success){
+        NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
+    }
+    return success;
 }
 
 # pragma mark - ----------------蓝牙相关--------------------

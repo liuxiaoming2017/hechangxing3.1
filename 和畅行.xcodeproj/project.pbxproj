@@ -569,6 +569,7 @@
 		0390CF8820ECB94F000ECA53 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0390CF8720ECB94F000ECA53 /* LoginViewController.m */; };
 		0390CF8B20ECB975000ECA53 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0390CF8A20ECB975000ECA53 /* RegisterViewController.m */; };
 		0391D0F920F5ACE4001B52F1 /* SubMemberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391D0F720F5ACE4001B52F1 /* SubMemberView.m */; };
+		039661EB21F1736100754AAA /* ShoppingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039661EA21F1736100754AAA /* ShoppingController.m */; };
 		039B2AD4212522D000D558F5 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039B2AD3212522D000D558F5 /* TestViewController.m */; };
 		039B2AD72125247100D558F5 /* TestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 039B2AD62125247100D558F5 /* TestCell.m */; };
 		039B2ADA2125586200D558F5 /* TemperNonDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039B2AD92125586100D558F5 /* TemperNonDeviceViewController.m */; };
@@ -1696,6 +1697,8 @@
 		0391D0F420F5A4AD001B52F1 /* NavBarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NavBarViewController.h; sourceTree = "<group>"; };
 		0391D0F720F5ACE4001B52F1 /* SubMemberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubMemberView.m; sourceTree = "<group>"; };
 		0391D0F820F5ACE4001B52F1 /* SubMemberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubMemberView.h; sourceTree = "<group>"; };
+		039661E921F1736100754AAA /* ShoppingController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShoppingController.h; sourceTree = "<group>"; };
+		039661EA21F1736100754AAA /* ShoppingController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShoppingController.m; sourceTree = "<group>"; };
 		039B2AD2212522D000D558F5 /* TestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		039B2AD3212522D000D558F5 /* TestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		039B2AD52125247100D558F5 /* TestCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestCell.h; sourceTree = "<group>"; };
@@ -2626,6 +2629,8 @@
 				03439096210AC2A300B57142 /* SongListCell.m */,
 				03439077210AB6B200B57142 /* YueYaoController.h */,
 				03439078210AB6B200B57142 /* YueYaoController.m */,
+				039661E921F1736100754AAA /* ShoppingController.h */,
+				039661EA21F1736100754AAA /* ShoppingController.m */,
 				0343909F210ACCA500B57142 /* SongListModel.h */,
 				034390A0210ACCA500B57142 /* SongListModel.m */,
 				03CECBF3210EF00700A443B8 /* AVPlayerObject.h */,
@@ -5353,6 +5358,7 @@
 				03535EF320F7262C00664FA9 /* TipClickController.m in Sources */,
 				036E84352186EAD3001B9BB4 /* PlanAlasnNameItem.m in Sources */,
 				034A4E85211A9AD900936A46 /* TZAssetModel.m in Sources */,
+				039661EB21F1736100754AAA /* ShoppingController.m in Sources */,
 				036E84422186EAD3001B9BB4 /* PubFunc.m in Sources */,
 				036A66D3211403DA0096A006 /* NSString+Extesion.m in Sources */,
 				03F692EC20FF2DF000308E38 /* ASIInputStream.m in Sources */,
