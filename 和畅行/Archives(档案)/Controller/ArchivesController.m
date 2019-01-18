@@ -52,10 +52,19 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    //血压
     if ([[UserShareOnce shareOnce].wherePop isEqualToString:@"血压"]) {
-        UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:105];
+        UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:107];
         self.memberId = [UserShareOnce shareOnce].bloodMemberID;
         [self selectIndexWithString:@"血压" withButton:btn];
+        [UserShareOnce shareOnce].wherePop = @"";
+    }
+    //血氧
+    if ([[UserShareOnce shareOnce].wherePop isEqualToString:@"血氧"]) {
+        UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:108];
+        self.memberId = [UserShareOnce shareOnce].bloodMemberID;
+        [self selectIndexWithString:@"血氧" withButton:btn];
         [UserShareOnce shareOnce].wherePop = @"";
     }
 }

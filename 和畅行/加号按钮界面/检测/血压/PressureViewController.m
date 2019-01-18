@@ -79,6 +79,7 @@ static int const tick = 80;
     [self bloodTest];
     self.isHidden = NO;
     
+    
 //    UIButton *lookBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //    [lookBtn setBackgroundImage:[UIImage imageNamed:@"look"] forState:UIControlStateNormal];
 //    [lookBtn setTitle:@"查看档案" forState:UIControlStateNormal];
@@ -795,7 +796,7 @@ static int const tick = 80;
     UITabBarController  *rvc = (UITabBarController  *)controller;
     [rvc setSelectedIndex:1];
     [UserShareOnce shareOnce].wherePop = @"血压";
-    [UserShareOnce shareOnce].bloodMemberID = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];;
+    [UserShareOnce shareOnce].bloodMemberID = [NSString stringWithFormat:@"%@",self.subId];
     [self.navigationController popToRootViewControllerAnimated:YES];
     
 
