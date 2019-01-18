@@ -18,6 +18,8 @@
 
 +(NSString*) Createfilepath;
 
++ (NSString*)createYueYaoZhiFufilepath;
+
 +(NSString *)getSportTypeFrom:(NSString *)nameStr;
 
 +(NSString *)getSportNameWithIndex:(NSInteger)index;

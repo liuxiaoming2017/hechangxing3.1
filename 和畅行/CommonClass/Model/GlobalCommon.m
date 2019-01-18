@@ -310,6 +310,19 @@
     return folderPath;
 }
 
++ (NSString*)createYueYaoZhiFufilepath
+{
+    NSString *path = [ NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *folderPath = [path stringByAppendingPathComponent:@"yueyaozhifuTemp"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL fileExists = [fileManager fileExistsAtPath:folderPath];
+    if(!fileExists)
+    {
+        [fileManager createDirectoryAtPath:folderPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    return folderPath;
+}
+
 + (BOOL)addSkipBackupAttributeToItemAtPath:(NSString *) filePathString
 {
     NSURL* URL= [NSURL fileURLWithPath: filePathString];
