@@ -313,7 +313,8 @@
 + (NSString*)createYueYaoZhiFufilepath
 {
     NSString *path = [ NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-    NSString *folderPath = [path stringByAppendingPathComponent:@"yueyaozhifuTemp"];
+    NSString *str = [NSString stringWithFormat:@"yueyaozhifuTemp/%@/", [MemberUserShance shareOnce].name];
+    NSString *folderPath = [path stringByAppendingPathComponent:str];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL fileExists = [fileManager fileExistsAtPath:folderPath];
     if(!fileExists)

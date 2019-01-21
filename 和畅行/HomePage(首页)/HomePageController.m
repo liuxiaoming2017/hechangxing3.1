@@ -269,6 +269,9 @@
                 NSString *jlbsName = [jlbsDic objectForKey:@"name"];
                 [[NSUserDefaults standardUserDefaults]setValue: jlbsName forKey:@"Physical"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
+            }else{
+                [[NSUserDefaults standardUserDefaults]setValue: @"" forKey:@"Physical"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
             }
             
             id listData = [[response objectForKey:@"data"] objectForKey:@"todolist"];
