@@ -63,9 +63,9 @@
     
     NSArray *imageArr = @[];
     if(self.notYiChi){
-        imageArr = @[@"一戴",@"一站",@"一坐2",@"一饮",@"一呼",@"一助",@"一测",@"一阅"];
+        imageArr = @[@"一戴",@"一站",@"一坐2",@"一饮",@"一测",@"一呼",@"一助",@"一阅"];
     }else{
-        imageArr = @[@"一戴",@"一站",@"一吃",@"一坐",@"一饮",@"一呼",@"一助",@"一测",@"一阅"];
+        imageArr = @[@"一戴",@"一站",@"一吃",@"一坐",@"一饮",@"一测",@"一呼",@"一助",@"一阅"];
     }
     
     for(NSInteger i = 0;i<imageArr.count;i++){
@@ -183,28 +183,29 @@
             break;
         case 205:
         {
-            HCY_CallController *callVC = [[HCY_CallController alloc]init];
-            [self.navigationController pushViewController:callVC animated:YES];
-            
+            //一测
+            TestViewController *vc = [[TestViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
           
             return;
         }
-            
             break;
+            
         case 206:
         {
             
-            HCY_HelpController *helpVC = [[HCY_HelpController alloc]init];
-            [self.navigationController pushViewController:helpVC animated:YES];
+            HCY_CallController *callVC = [[HCY_CallController alloc]init];
+            [self.navigationController pushViewController:callVC animated:YES];
+          
             return;
            
         }
            
         case 207:
         {
-            //一测
-            TestViewController *vc = [[TestViewController alloc] init];
-            [self.navigationController pushViewController:vc animated:YES];
+            HCY_HelpController *helpVC = [[HCY_HelpController alloc]init];
+            [self.navigationController pushViewController:helpVC animated:YES];
+           
             return;
         }
             break;

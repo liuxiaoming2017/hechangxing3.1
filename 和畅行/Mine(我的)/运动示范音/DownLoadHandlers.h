@@ -19,7 +19,7 @@
 @end
 
 @interface DownLoadHandlers : NSObject<ASIHTTPRequestDelegate, ASIProgressDelegate>
-@property (assign, nonatomic) id<DownloadHandlersDelegate> downdelegate;
+@property (weak, nonatomic) id<DownloadHandlersDelegate> downdelegate;
 @property(nonatomic,copy)NSString *url;
 //下载资源的名称
 @property(nonatomic,copy)NSString *name;
