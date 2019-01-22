@@ -54,6 +54,10 @@
 @property (nonatomic,copy) NSString *wherePop; //从哪里pop回来的
 @property (nonatomic,copy) NSString *bloodMemberID; //血压ID
 
+@property (nonatomic,strong) NSMutableArray *yueYaoBuyArr;
+
+@property (nonatomic,assign) float allYueYaoPrice;
+
 + (UserShareOnce *)shareOnce;
 +(void)attemptDealloc;
 @end

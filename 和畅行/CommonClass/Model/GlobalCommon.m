@@ -73,7 +73,7 @@
 //                                labelSize.width+40,
 //                                labelSize.height+30);
     showview.frame = CGRectMake((screenSize.width - labelSize.width - 40)/2,
-                                ScreenHeight-labelSize.height-65,
+                                ScreenHeight-labelSize.height-65-10,
                                 labelSize.width+40,
                                 labelSize.height+30);
     

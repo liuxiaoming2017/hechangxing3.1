@@ -56,6 +56,8 @@
     [session setActive:YES error:&error];
     
     [UserShareOnce shareOnce].isOnline = NO;
+    [UserShareOnce shareOnce].yueYaoBuyArr = [NSMutableArray arrayWithCapacity:0];
+    [UserShareOnce shareOnce].allYueYaoPrice = 0;
     
     [[UITabBar appearance] setTranslucent:NO];
     
@@ -289,10 +291,7 @@
     if ([url.host isEqualToString:@"safepay"]) {
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
             NSLog(@"result = %@",[resultDic objectForKey:@"memo"]);
-            NSString *str = [NSString stringWithFormat:@"%@",[resultDic objectForKey:@"memo"]];
-            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-            [av show];
-            
+           
             if ([[resultDic objectForKey:@"resultStatus"]integerValue] == 9000 ) {
                 
                 NSDictionary * dic = @{@"count":@"1"};

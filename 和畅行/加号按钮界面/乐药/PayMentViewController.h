@@ -12,6 +12,6 @@
 @property (nonatomic ,copy) NSString *price;
 @property (nonatomic ,strong) NSMutableArray *pricesArr;
 @property (nonatomic ,strong) NSMutableArray *namesArr;
-@property (nonatomic ,strong) NSMutableArray *idArr;
+//@property (nonatomic ,strong) NSMutableArray *idArr;
 @property (nonatomic ,assign) NSInteger count;
 @end

@@ -16,6 +16,7 @@
 #import "PayAbnormalViewController.h"
 #import "PayViewController.h"
 #import "LoginViewController.h"
+#import "SongListModel.h"
 @interface PayMentViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UIScrollView *scrollView;
@@ -36,9 +37,14 @@
 @property (nonatomic ,strong) UILabel        *jinerLabel;
 @property (nonatomic ,assign) float          priceYuer;
 @property (nonatomic ,assign) float          priceCountt;
+
+@property (nonatomic,strong) UIView *cashcardView;
+
 @end
 
 @implementation PayMentViewController
+@synthesize cashcardView;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,79 +52,140 @@
    
     xianjika = 0.0;
     self.view.backgroundColor = [UIColor whiteColor];
-    self.pricesArr = [[NSMutableArray alloc]init];
-    self.namesArr = [[NSMutableArray alloc]init];
-    self.idArr = [[NSMutableArray alloc]init];
-    NSString* filepath=[GlobalCommon createYueYaoZhiFufilepath];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
     
-    NSString *urlpath= [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", @"arrayText.txt"]];
-    NSString *namePath = [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"nameText.txt"]];
-    NSString *idPath = [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"idText.txt"]];
-    BOOL fileExists = [fileManager fileExistsAtPath:urlpath];
-    if (fileExists) {
-        NSArray *arr3 = [NSArray arrayWithContentsOfFile:idPath];
-        NSArray *arr2 = [NSArray arrayWithContentsOfFile:namePath];
-        NSArray *arr = [NSArray arrayWithContentsOfFile:urlpath];
-       
-        for (NSString *str in arr) {
-            [self.pricesArr addObject:[NSString stringWithFormat:@"%@",str]];
-        }
-        for (NSString *str2 in arr2) {
-            [self.namesArr addObject:[NSString stringWithFormat:@"%@",str2]];
-        }
-        for (NSString *str3 in arr3) {
-            [self.idArr addObject:[NSString stringWithFormat:@"%@",str3]];
-        }
-    }
-    self.navTitleLabel.text =  @"现金卡支付";
+    self.navTitleLabel.text =  @"结算信息";
     
     self.dataArray = [[NSMutableArray alloc]init];
-    // Do any additional setup after loading the view.
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, 110) style:UITableViewStylePlain];
-    _tableView.tableFooterView = [[UIView alloc]init];
-    _tableView.dataSource = self;
-    _tableView.delegate = self;
-    _tableView.rowHeight = 55;
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    [self.view addSubview:_tableView];
     
-    scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 230, self.view.frame.size.width, self.view.frame.size.height - 338)];
+    scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height - kNavBarHeight - 44-65)];
+    scrollView.backgroundColor = [UIColor whiteColor];
+    scrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:scrollView];
     
-    [self payMentWithBlock];
-    UIImageView *xiaofeijinerImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width - 105, 44)];
-    xiaofeijinerImage.image = [UIImage imageNamed:@"leyaoxiaofeijiner.png"];
-    [self.view addSubview:xiaofeijinerImage];
+    // Do any additional setup after loading the view.
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, [UserShareOnce shareOnce].yueYaoBuyArr.count*55) style:UITableViewStylePlain];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    _tableView.scrollEnabled = NO;
+    //_tableView.rowHeight = 55;
+    //self.automaticallyAdjustsScrollViewInsets = NO;
+    [scrollView addSubview:_tableView];
     
-    UIImageView *jiesuanImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width -  105, self.view.frame.size.height - 44, 105, 44)];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, _tableView.bottom, ScreenWidth, 10)];
+    lineView.backgroundColor = [UIColor colorWithRed:242/255.0 green:241/255.0 blue:239/255.0 alpha:1.0];
+    [scrollView addSubview:lineView];
+    
+    //现金卡视图
+    cashcardView = [[UIView alloc] initWithFrame:CGRectMake(0, _tableView.bottom+15, ScreenWidth, 245)];
+    cashcardView.backgroundColor = [UIColor whiteColor];
+    [scrollView addSubview:cashcardView];
+    
+    UILabel *cardTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 200, 25)];
+    cardTitleLabel.font = [UIFont systemFontOfSize:18];
+    cardTitleLabel.textAlignment = NSTextAlignmentLeft;
+    cardTitleLabel.textColor = [UIColor grayColor];
+    cardTitleLabel.text = @"现金卡支付";
+    [cashcardView addSubview:cardTitleLabel];
+    
+    UIImageView *cardBackImg = [[UIImageView alloc]initWithFrame:CGRectMake(22, cardTitleLabel.bottom+5, self.view.frame.size.width - 44, 200)];
+    cardBackImg.image = [UIImage imageNamed:@"cashcardBack.png"];
+    [cashcardView addSubview:cardBackImg];
+    
+    
+    UIImageView *no_CardImage = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth/2.0-50, cardBackImg.top+(cardBackImg.height-65)/2.0, 100, 40)];
+    no_CardImage.image = [UIImage imageNamed:@"no_card.png"];
+    [cashcardView addSubview:no_CardImage];
+    
+    UILabel *nocardLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth/2.0-100, no_CardImage.bottom+5, 200, 25)];
+    nocardLabel.font = [UIFont systemFontOfSize:17];
+    nocardLabel.textAlignment = NSTextAlignmentCenter;
+    nocardLabel.textColor = [UIColor grayColor];
+    nocardLabel.text = @"您当前还没有现金卡哦";
+    [cashcardView addSubview:nocardLabel];
+    
+    UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(0, cashcardView.bottom, ScreenWidth, 10)];
+    lineView2.backgroundColor = [UIColor colorWithRed:242/255.0 green:241/255.0 blue:239/255.0 alpha:1.0];
+    [scrollView addSubview:lineView2];
+    
+    
+    
+    
+    scrollView.contentSize = CGSizeMake(1, lineView2.bottom);
+    
+    
+  //  [self payMentWithBlock];
+    
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, scrollView.bottom, ScreenWidth, 65)];
+    bottomView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:bottomView];
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 120, 25)];
+    titleLabel.font = [UIFont systemFontOfSize:16];
+    titleLabel.textAlignment = NSTextAlignmentRight;
+    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.text = @"消费金额： ";
+    [bottomView addSubview:titleLabel];
+    
+    UILabel *ciaofeiLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.right, 10, 200, 25)];
+    ciaofeiLabel.font = [UIFont systemFontOfSize:16];
+    ciaofeiLabel.textAlignment = NSTextAlignmentLeft;
+    ciaofeiLabel.textColor = [UtilityFunc colorWithHexString:@"#ff9933"];
+    ciaofeiLabel.text = [NSString stringWithFormat:@"¥%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
+    [bottomView addSubview:ciaofeiLabel];
+    
+    UILabel *cardLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.left, titleLabel.bottom, 120, 25)];
+    cardLabel.font = [UIFont systemFontOfSize:16];
+    cardLabel.textAlignment = NSTextAlignmentRight;
+    cardLabel.textColor = [UIColor blackColor];
+    cardLabel.text = @"现金卡支付： ";
+    [bottomView addSubview:cardLabel];
+    
+    UILabel *cardxiaofeiLabel = [[UILabel alloc] initWithFrame:CGRectMake(cardLabel.right, cardLabel.top, 200, 25)];
+    cardxiaofeiLabel.font = [UIFont systemFontOfSize:16];
+    cardxiaofeiLabel.textAlignment = NSTextAlignmentLeft;
+    cardxiaofeiLabel.textColor = [UtilityFunc colorWithHexString:@"#ff9933"];
+    cardxiaofeiLabel.text = [NSString stringWithFormat:@"¥%.2f",0.00];
+    [bottomView addSubview:cardxiaofeiLabel];
+    
+    
+    UIView *zhifuView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-44, ScreenWidth, 44)];
+    zhifuView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:zhifuView];
+    
+    UIImageView *xiaofeijinerImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 105, zhifuView.height)];
+    xiaofeijinerImage.image = [UIImage imageNamed:@"leyaoxiaofeijiner.png"];
+    [zhifuView addSubview:xiaofeijinerImage];
+    
+    UIImageView *jiesuanImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width -  105, 0, 105, 44)];
     jiesuanImage.image = [UIImage imageNamed:@"zhifudetu.png"];
-    [self.view addSubview:jiesuanImage];
-    UIImageView *gouwucheImage = [[UIImageView alloc]initWithFrame:CGRectMake(15, self.view.frame.size.height - 32, 20, 20)];
+    [zhifuView addSubview:jiesuanImage];
+    
+    UIImageView *gouwucheImage = [[UIImageView alloc]initWithFrame:CGRectMake(35, 12, 20, 20)];
     gouwucheImage.image = [UIImage imageNamed:@"qianbao.png"];
-    [self.view addSubview:gouwucheImage];
-    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, self.view.frame.size.height - 32, 50, 20)];
-    zongjinerLabel.text = @"总计：";
+    [zhifuView addSubview:gouwucheImage];
+    
+    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 12, 90, 20)];
+    zongjinerLabel.text = @"还需支付：";
+    zongjinerLabel.textAlignment = NSTextAlignmentRight;
     zongjinerLabel.textColor = [UIColor whiteColor];
-    zongjinerLabel.font = [UIFont systemFontOfSize:13];
-    [self.view addSubview:zongjinerLabel];
-    _jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(100, self.view.frame.size.height - 32, 60, 20)];
-    float price = 0.0;
-    for (int i = 0; i < self.pricesArr.count; i++) {
-        price += [self.pricesArr[i] floatValue];
-    }
-    _jinerLabel.text = [NSString stringWithFormat:@"¥%.1f",price];
+    zongjinerLabel.font = [UIFont systemFontOfSize:16];
+    [zhifuView addSubview:zongjinerLabel];
+    
+    _jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(zongjinerLabel.right, 12, 60, 20)];
+   
+    
+    _jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
     _jinerLabel.textColor = [UIColor whiteColor];
-    _jinerLabel.font = [UIFont boldSystemFontOfSize:13];
-    [self.view addSubview:_jinerLabel];
+    _jinerLabel.font = [UIFont boldSystemFontOfSize:16];
+    [zhifuView addSubview:_jinerLabel];
+    
     UIButton *jiesuanButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    jiesuanButton.frame = CGRectMake(self.view.frame.size.width - 105, self.view.frame.size.height - 44, 105, 44);
+    jiesuanButton.frame = CGRectMake(self.view.frame.size.width - 105, 0, 105, 44);
     [jiesuanButton addTarget:self action:@selector(zhifuqujiesuanButton) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:jiesuanButton];
-    self.priceCountt = 0.0;
-    for (int i = 0; i < self.pricesArr.count; i++) {
-        self.priceCountt += [self.pricesArr[i] floatValue];
-    }
+    [zhifuView addSubview:jiesuanButton];
+    
+    self.priceCountt = [UserShareOnce shareOnce].allYueYaoPrice;
+    /*
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 104, self.view.frame.size.width, 60)];
     [self.view addSubview:view];
     UILabel *xiaofeiLabel = [[UILabel alloc]initWithFrame:CGRectMake(17, 10, 200, 20)];
@@ -127,7 +194,7 @@
     xiaofeiLabel.font = [UIFont systemFontOfSize:10];
     [view addSubview:xiaofeiLabel];
     UILabel *jineLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 35, 70, 20)];
-    jineLabel.text = [NSString stringWithFormat:@"%.1f",price];
+    jineLabel.text = [NSString stringWithFormat:@"%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
     jineLabel.font = [UIFont systemFontOfSize:10];
     jineLabel.textAlignment = NSTextAlignmentCenter;
     jineLabel.textColor = [UtilityFunc colorWithHexString:@"#ff9933"];
@@ -139,17 +206,16 @@
     xianjinkaLabel.textColor = [UtilityFunc colorWithHexString:@"#ff9933"];
     [view addSubview:xianjinkaLabel];
     zongjiLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 35, 80, 20)];
-    zongjiLabel.text = [NSString stringWithFormat:@"%.1f",price];
+    zongjiLabel.text = [NSString stringWithFormat:@"%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
     zongjiLabel.font = [UIFont systemFontOfSize:10];
     zongjiLabel.textAlignment = NSTextAlignmentCenter;
     zongjiLabel.textColor = [UtilityFunc colorWithHexString:@"#ff9933"];
     [view addSubview:zongjiLabel];
+     */
 }
 - (void)zhifuqujiesuanButton{
-    float price = 0.0;
-    for (int i = 0; i < self.pricesArr.count; i++) {
-        price += [self.pricesArr[i] floatValue];
-    }
+    float price = [UserShareOnce shareOnce].allYueYaoPrice;
+    
     if (price == 0) {
         [self showAlertWarmMessage:@"你还没有添加产品"];
         
@@ -159,17 +225,24 @@
     NSString *UrlPre=URL_PRE;
     NSString *idStr = @"";
     
-    for (int i = 0; i < self.idArr.count; i ++) {
-        if (self.idArr.count == 1) {
-            idStr = [idStr stringByAppendingString:[NSString stringWithFormat:@"%@",self.idArr[0]]];
+    NSMutableArray *idArr = [NSMutableArray arrayWithCapacity:0];
+    self.namesArr = [NSMutableArray arrayWithCapacity:0];
+    for(SongListModel *model in [UserShareOnce shareOnce].yueYaoBuyArr){
+        [idArr addObject:model.idStr];
+        [self.namesArr addObject:model.title];
+    }
+    
+    for (int i = 0; i < idArr.count; i ++) {
+        if (idArr.count == 1) {
+            idStr = [idStr stringByAppendingString:[NSString stringWithFormat:@"%@",idArr[0]]];
         }else{
-            if (i == self.idArr.count - 1) {
-                idStr = [idStr stringByAppendingString:[NSString stringWithFormat:@"%@",self.idArr[i]]];
+            if (i == idArr.count - 1) {
+                idStr = [idStr stringByAppendingString:[NSString stringWithFormat:@"%@",idArr[i]]];
             }else{
                 if (i == 0) {
-                    idStr = [idStr stringByAppendingString:[NSString stringWithFormat:@"%@,",self.idArr[i]]];
+                    idStr = [idStr stringByAppendingString:[NSString stringWithFormat:@"%@,",idArr[i]]];
                 }else{
-                    idStr = [idStr stringByAppendingString:[NSString stringWithFormat:@"%@,",self.idArr[i]]];
+                    idStr = [idStr stringByAppendingString:[NSString stringWithFormat:@"%@,",idArr[i]]];
                 }
             }
         }
@@ -222,10 +295,11 @@
     
 }
 - (void)zhifufangshidequeding{
-    float price = 0.0;
-    for (int i = 0; i < self.pricesArr.count; i++) {
-        price += [self.pricesArr[i] floatValue];
-    }
+    float price = [UserShareOnce shareOnce].allYueYaoPrice;
+    //清理z选中的订单
+    [UserShareOnce shareOnce].allYueYaoPrice = 0;
+    [[UserShareOnce shareOnce].yueYaoBuyArr removeAllObjects];
+    
     NSMutableArray *arrayBlock = [[NSMutableArray alloc]init];
     if (price > 0 ) {
         if (self.dataArray.count > 0) {
@@ -250,11 +324,12 @@
                         //                        跳转到支付宝页面
                         PayViewController *appPayVC = [[PayViewController alloc]init];
                         appPayVC.idStr = _idString;
-//                        appPayVC.nameArr = [[NSMutableArray alloc]init];
-//                        appPayVC.nameArr = self.namesArr;
+                        appPayVC.nameArr = [[NSMutableArray alloc]init];
+                        appPayVC.nameArr = self.namesArr;
                         appPayVC.priceStr = [NSString stringWithFormat:@"%@:%@",[self.dataArray[tagCount]objectForKey:@"id"],[self.dataArray[tagCount]objectForKey:@"balance"]];
                         appPayVC.priceAPPStr = [NSString stringWithFormat:@"%f",(price - [[self.dataArray[tagCount]objectForKey:@"balance"] floatValue])];
                         [self.navigationController pushViewController:appPayVC animated:YES];
+                        
                         
                     }
                 }else{
@@ -291,11 +366,12 @@
                         //                        跳转到支付宝页面
                         PayViewController *appPayVC = [[PayViewController alloc]init];
                         appPayVC.idStr = _idString;
-//                        appPayVC.nameArr = [[NSMutableArray alloc]init];
-//                        appPayVC.nameArr = self.namesArr;
+                        appPayVC.nameArr = [[NSMutableArray alloc]init];
+                        appPayVC.nameArr = self.namesArr;
                         appPayVC.priceStr = priceCounts ;
                         appPayVC.priceAPPStr = [NSString stringWithFormat:@"%f",(price - xianjinkazhifuPrice)];
                         [self.navigationController pushViewController:appPayVC animated:YES];
+                        
                     }
                     
                 }
@@ -303,22 +379,24 @@
                 //跳转页面支付宝页面
                 PayViewController *appPayVC = [[PayViewController alloc]init];
                 appPayVC.idStr = _idString;
-//                appPayVC.nameArr = [[NSMutableArray alloc]init];
-//                appPayVC.nameArr = self.namesArr;
+                appPayVC.nameArr = [[NSMutableArray alloc]init];
+                appPayVC.nameArr = self.namesArr;
                 appPayVC.priceStr = @"0" ;
                 appPayVC.priceAPPStr = [NSString stringWithFormat:@"%f",price];
                 [self.navigationController pushViewController:appPayVC animated:YES];
+               
             }
             
         }else{
             //            跳转到支付宝页面
             PayViewController *appPayVC = [[PayViewController alloc]init];
             appPayVC.idStr = _idString;
-//            appPayVC.nameArr = [[NSMutableArray alloc]init];
-//            appPayVC.nameArr = self.namesArr;
+            appPayVC.nameArr = [[NSMutableArray alloc]init];
+            appPayVC.nameArr = self.namesArr;
             appPayVC.priceStr = @"0" ;
             appPayVC.priceAPPStr = [NSString stringWithFormat:@"%f",price];
             [self.navigationController pushViewController:appPayVC animated:YES];
+            
         }
     }else{
         return;
@@ -369,15 +447,15 @@
     {
         
         //            跳转到支付成功界面
-        NSString* filepath = [GlobalCommon createYueYaoZhiFufilepath];
-        NSString *arrayPath=[filepath stringByAppendingPathComponent:@"arrayText.txt"];
-        NSString *namesPath = [filepath stringByAppendingPathComponent:@"nameText.txt"];
-        NSString *idPath = [filepath stringByAppendingPathComponent:@"idText.txt"];
-        NSMutableArray *arr1 = [[NSMutableArray alloc]init];
-        
-        [arr1 writeToFile:arrayPath atomically:YES];
-        [arr1 writeToFile:namesPath atomically:YES];
-        [arr1 writeToFile:idPath atomically:YES];
+//        NSString* filepath = [GlobalCommon createYueYaoZhiFufilepath];
+//        NSString *arrayPath=[filepath stringByAppendingPathComponent:@"arrayText.txt"];
+//        NSString *namesPath = [filepath stringByAppendingPathComponent:@"nameText.txt"];
+//        NSString *idPath = [filepath stringByAppendingPathComponent:@"idText.txt"];
+//        NSMutableArray *arr1 = [[NSMutableArray alloc]init];
+//
+//        [arr1 writeToFile:arrayPath atomically:YES];
+//        [arr1 writeToFile:namesPath atomically:YES];
+//        [arr1 writeToFile:idPath atomically:YES];
         PaySuccessViewController *paySuccessVC = [[PaySuccessViewController alloc]init];
         [self.navigationController pushViewController:paySuccessVC animated:YES];
     }
@@ -420,6 +498,7 @@
     [self showAlertWarmMessage:requestErrorMessage];
     
 }
+# pragma mark - 现金卡
 -(void)requestpayMentCompleted:(ASIHTTPRequest *)request
 {
     [GlobalCommon hideMBHudWithView:self.view];
@@ -589,9 +668,15 @@
     }
     
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 55.0;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView == _tableView) {
-        return self.pricesArr.count;
+        return [UserShareOnce shareOnce].yueYaoBuyArr.count;
     }
     
     return 0;
@@ -619,14 +704,15 @@
         nameLabel.text = @"乐药名称：";
         nameLabel.textColor = [UtilityFunc colorWithHexString:@"#666666"];
         nameLabel.font = [UIFont systemFontOfSize:14];
-        [cell addSubview:nameLabel];
+        //[cell addSubview:nameLabel];
         UILabel *leyaoLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 20, 150, 15)];
         leyaoLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
         leyaoLabel.font = [UIFont systemFontOfSize:14];
-        leyaoLabel.text = [self.namesArr objectAtIndex:indexPath.row];
+        SongListModel *model = [[UserShareOnce shareOnce].yueYaoBuyArr objectAtIndex:indexPath.row];
+        leyaoLabel.text = model.title;
         [cell addSubview:leyaoLabel];
         UILabel *moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 96, 20, 60, 15)];
-        moneyLabel.text = self.pricesArr[indexPath.row];
+        moneyLabel.text = [NSString stringWithFormat:@"¥%.2f",model.price];
         //    moneyLabel.text = [self.dataArray[0] objectForKey:@"price"];
         moneyLabel.textAlignment = NSTextAlignmentCenter;
         moneyLabel.textColor = [UtilityFunc colorWithHexString:@"#ff9933"];
@@ -689,62 +775,11 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     _count = 0;
-    if (self.pricesArr.count == 0) {
-        NSString* filepath=[GlobalCommon createYueYaoZhiFufilepath];
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        
-        NSString *urlpath= [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", @"arrayText.txt"]];
-        NSString *namePath = [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"nameText.txt"]];
-        NSString *idPath = [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"idText.txt"]];
-        BOOL fileExists = [fileManager fileExistsAtPath:urlpath];
-        if (fileExists) {
-            NSArray *arr3 = [NSArray arrayWithContentsOfFile:idPath];
-            NSArray *arr2 = [NSArray arrayWithContentsOfFile:namePath];
-            NSArray *arr = [NSArray arrayWithContentsOfFile:urlpath];
-            for (NSString *str in arr) {
-                [self.pricesArr addObject:[NSString stringWithFormat:@"%@",str]];
-            }
-            for (NSString *str2 in arr2) {
-                [self.namesArr addObject:[NSString stringWithFormat:@"%@",str2]];
-            }
-            for (NSString *str3 in arr3) {
-                [self.idArr addObject:[NSString stringWithFormat:@"%@",str3]];
-            }
-            
-        }
-        [_tableView reloadData];
-    }  
+    
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [_pricesArr removeAllObjects];
-    [_namesArr removeAllObjects];
-    [_idArr removeAllObjects];
-    if (self.pricesArr.count == 0) {
-        NSString* filepath=[GlobalCommon createYueYaoZhiFufilepath];
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        
-        NSString *urlpath= [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", @"arrayText.txt"]];
-        NSString *namePath = [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"nameText.txt"]];
-        NSString *idPath = [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"idText.txt"]];
-        BOOL fileExists = [fileManager fileExistsAtPath:urlpath];
-        if (fileExists) {
-            NSArray *arr3 = [NSArray arrayWithContentsOfFile:idPath];
-            NSArray *arr2 = [NSArray arrayWithContentsOfFile:namePath];
-            NSArray *arr = [NSArray arrayWithContentsOfFile:urlpath];
-            for (NSString *str in arr) {
-                [self.pricesArr addObject:[NSString stringWithFormat:@"%@",str]];
-            }
-            for (NSString *str2 in arr2) {
-                [self.namesArr addObject:[NSString stringWithFormat:@"%@",str2]];
-            }
-            for (NSString *str3 in arr3) {
-                [self.idArr addObject:[NSString stringWithFormat:@"%@",str3]];
-            }
-            
-        }
-        [_tableView reloadData];
-    }
+    
 }
 -(void)backClick:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];

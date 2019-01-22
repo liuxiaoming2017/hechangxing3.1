@@ -12,7 +12,10 @@
 
 @property (nonatomic,copy) NSString *title;
 @property (nonatomic,copy) NSString *source;
+@property (nonatomic,copy) NSString *idStr;
 
 @property (nonatomic,assign) float price;
+
+@property (nonatomic,copy) NSString *status;
 
 @end

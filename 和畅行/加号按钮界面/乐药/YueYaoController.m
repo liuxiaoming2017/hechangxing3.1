@@ -45,6 +45,7 @@
 
 @property (nonatomic,assign) float allPrice;
 
+@property (nonatomic,copy) NSString *typeStr;
 /**
  *  蓝牙连接必要对象
  */
@@ -76,6 +77,7 @@
     self.tableView = nil;
     self.segmentedControl = nil;
     self.hysegmentControl = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PayStatues" object:nil];
 }
 
 - (void)viewDidLoad {
@@ -92,11 +94,25 @@
     
     allPrice = 0;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(PaySuccess) name:@"PayStatues" object:nil];
+    
 //    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
 //    //默认情况下扬声器播放
 //    [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
 //    [audioSession setActive:YES error:nil];
     
+}
+
+- (void)PaySuccess
+{
+    [self requestYueyaoListWithType:self.typeStr];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self->jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
 }
 
 - (id)initWithType:(BOOL )isYueLuoyi
@@ -150,7 +166,7 @@
         [self BluBluetoothView];
         [self BluetoothConnection];
     }
-    [self requestYueyaoListWithType:@"大宫"];
+   // [self requestYueyaoListWithType:@"大宫"];
     
     
     //根据个人经络最新一条信息展示
@@ -174,6 +190,7 @@
                     [self valuesegChanged:nil];
                     [hysegmentControl changeSegmentedControlWithIndex:j];
                     [self requestYueyaoListWithType:physicalStr];
+                    self.typeStr = physicalStr; //用于支付成功刷新
                 }
             }
         }
@@ -199,13 +216,13 @@
     gouwucheImage.image = [UIImage imageNamed:@"leyaogouwuche.png"];
     [self.view addSubview:gouwucheImage];
     
-    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, self.view.frame.size.height - 32, 90, 20)];
-    zongjinerLabel.text = @"消费总金额：";
+    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, self.view.frame.size.height - 32, 40, 20)];
+    zongjinerLabel.text = @"总计: ";
     zongjinerLabel.textColor = [UIColor whiteColor];
     zongjinerLabel.font = [UIFont systemFontOfSize:13];
     [self.view addSubview:zongjinerLabel];
     
-    jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, self.view.frame.size.height - 32, 60, 20)];
+    jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(zongjinerLabel.right, self.view.frame.size.height - 32, 60, 20)];
     jinerLabel.textColor = [UIColor whiteColor];
     jinerLabel.font = [UIFont boldSystemFontOfSize:13];
     [self.view addSubview:jinerLabel];
@@ -226,9 +243,12 @@
 # pragma mark - 去结算按钮
 - (void)jiesuanButton
 {
+    if([UserShareOnce shareOnce].yueYaoBuyArr.count == 0){
+        [GlobalCommon showMessage:@"请去添加商品" duration:1.0];
+        return;
+    }
     ShoppingController *vc = [[ShoppingController alloc] init];
-    vc.dataArr = self.goumaiArr;
-    vc.prices = self.allPrice;
+    vc.dataArr = [UserShareOnce shareOnce].yueYaoBuyArr;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -265,10 +285,17 @@
             }
         }else{
             NSString *imageStr = @"";
-            if(model.price>0){ //需要付费leyaoweigoumai
+            if (model.price == 0){
+                imageStr = @"New_yy_zt_xz";
+                [cell downloadFailWithImageStr:imageStr];
+            }else if([model.status isKindOfClass:[NSNull class]] || [model.status isEqualToString:@"unpaid"]){  //需要付费leyaoweigoumai
                 imageStr = @"leyaoweigoumai";
                 [cell downloadFailWithImageStr:imageStr];
-            }else{
+            }else if ([model.status isEqualToString:@"paid"]){
+                imageStr = @"New_yy_zt_xz";
+                [cell downloadFailWithImageStr:imageStr];
+            }
+            else{
                 imageStr = @"New_yy_zt_xz";
                 [cell downloadFailWithImageStr:imageStr];
             }
@@ -380,8 +407,16 @@
             NSArray *arr = [response objectForKey:@"data"];
             NSMutableArray *arr2 = [NSMutableArray arrayWithCapacity:0];
             for(NSDictionary *dic in arr){
-                SongListModel *model = [SongListModel mj_objectWithKeyValues:[[dic objectForKey:@"resourcesWarehouses"] objectAtIndex:0]];
-                model.price = [[dic objectForKey:@"price"] floatValue];
+                SongListModel *model = [[SongListModel alloc] init];
+                model.idStr = [dic objectForKey:@"id"];
+                if([[dic objectForKey:@"price"] isKindOfClass:[NSNull class]]){
+                    model.price = 0;
+                }else{
+                    model.price = [[dic objectForKey:@"price"] floatValue];
+                }
+                model.status = [dic objectForKey:@"status"];
+                model.title = [dic objectForKey:@"name"];
+                model.source = [[[dic objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"source"];
                 [arr2 addObject:model];
                 }
             weakSelf.dataArr = arr2;
@@ -405,9 +440,11 @@
 - (void)downloadWithIndex:(NSInteger)index withBtn:(UIButton *)btn
 {
     if([[btn imageForState:UIControlStateNormal] isEqual:[UIImage imageNamed:@"leyaoweigoumai"]]){ //未购买
-        
+        if(![UserShareOnce shareOnce].yueYaoBuyArr){
+            [UserShareOnce shareOnce].yueYaoBuyArr = [NSMutableArray arrayWithCapacity:0];
+        }
         SongListModel *model = [self.dataArr objectAtIndex:index];
-        if([self.goumaiArr containsObject:model]){
+        if([[UserShareOnce shareOnce].yueYaoBuyArr containsObject:model]){
             UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"你已经添加此产品" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:NULL];
             [alertVC addAction:alertAct1];
@@ -418,9 +455,10 @@
             UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"确定购买曲目吗？" message:[NSString stringWithFormat:@"¥%.2f",model.price] preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:NULL];
             UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                [self.goumaiArr addObject:model];
-                self->allPrice = self->allPrice + model.price;
-                self->jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",self->allPrice];
+                [[UserShareOnce shareOnce].yueYaoBuyArr addObject:model];
+                [UserShareOnce shareOnce].allYueYaoPrice = [UserShareOnce shareOnce].allYueYaoPrice + model.price;
+                //self->allPrice = self->allPrice + model.price;
+                self->jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
 //                NSString* filepath=[self createYueYaoZhiFufilepath];
 //                NSFileManager *fileManager = [NSFileManager defaultManager];
 //                NSString *urlpath= [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", @"arrayText.txt"]];
@@ -598,6 +636,7 @@
 - (void)hySegmentedControlSelectAtIndex:(NSInteger)index
 {
     UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:index];
+    self.typeStr = btn.titleLabel.text;
     [self requestYueyaoListWithType:btn.titleLabel.text];
 }
 

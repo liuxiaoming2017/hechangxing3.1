@@ -31,7 +31,6 @@
 		030F51AA2101CEBE003C918F /* WinZhi_Img_duo_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 030F515A2101CEAE003C918F /* WinZhi_Img_duo_2.png */; };
 		030F51AB2101CEBE003C918F /* 0闻音辨2识11960_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 030F515B2101CEAE003C918F /* 0闻音辨2识11960_01.png */; };
 		030F51AC2101CEBE003C918F /* 2_06 -111122.png in Resources */ = {isa = PBXBuildFile; fileRef = 030F515C2101CEAE003C918F /* 2_06 -111122.png */; };
-		030F51AD2101CEBE003C918F /* no_card.png in Resources */ = {isa = PBXBuildFile; fileRef = 030F515D2101CEAE003C918F /* no_card.png */; };
 		030F51AE2101CEBE003C918F /* Wybs_duo_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 030F515E2101CEAE003C918F /* Wybs_duo_1.png */; };
 		030F51AF2101CEBE003C918F /* Wybs_la_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 030F515F2101CEAF003C918F /* Wybs_la_1.png */; };
 		030F51B12101CEBE003C918F /* Wybs_start_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 030F51612101CEAF003C918F /* Wybs_start_btn.png */; };
@@ -564,6 +563,8 @@
 		038CE88920EDF622005E9219 /* checkboxno.png in Resources */ = {isa = PBXBuildFile; fileRef = 038CE88720EDF622005E9219 /* checkboxno.png */; };
 		038CE88A20EDF622005E9219 /* checkboxyes.png in Resources */ = {isa = PBXBuildFile; fileRef = 038CE88820EDF622005E9219 /* checkboxyes.png */; };
 		038CE88C20EDF63D005E9219 /* UserBoxImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 038CE88B20EDF63D005E9219 /* UserBoxImg.png */; };
+		038EAB2821F6F94500B07EFC /* cashcardBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 038EAB2721F6F94500B07EFC /* cashcardBack.png */; };
+		038EAB2A21F6FF5900B07EFC /* no_card.png in Resources */ = {isa = PBXBuildFile; fileRef = 038EAB2921F6FF5900B07EFC /* no_card.png */; };
 		0390CF7F20ECB5D0000ECA53 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0390CF7C20ECB5D0000ECA53 /* CoreFoundation.framework */; };
 		0390CF8020ECB5D0000ECA53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0390CF7D20ECB5D0000ECA53 /* Foundation.framework */; };
 		0390CF8820ECB94F000ECA53 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0390CF8720ECB94F000ECA53 /* LoginViewController.m */; };
@@ -908,7 +909,6 @@
 		030F515A2101CEAE003C918F /* WinZhi_Img_duo_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WinZhi_Img_duo_2.png; sourceTree = "<group>"; };
 		030F515B2101CEAE003C918F /* 0闻音辨2识11960_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "0闻音辨2识11960_01.png"; sourceTree = "<group>"; };
 		030F515C2101CEAE003C918F /* 2_06 -111122.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2_06 -111122.png"; sourceTree = "<group>"; };
-		030F515D2101CEAE003C918F /* no_card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_card.png; sourceTree = "<group>"; };
 		030F515E2101CEAE003C918F /* Wybs_duo_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wybs_duo_1.png; sourceTree = "<group>"; };
 		030F515F2101CEAF003C918F /* Wybs_la_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wybs_la_1.png; sourceTree = "<group>"; };
 		030F51612101CEAF003C918F /* Wybs_start_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wybs_start_btn.png; sourceTree = "<group>"; };
@@ -1690,6 +1690,8 @@
 		038CE88720EDF622005E9219 /* checkboxno.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkboxno.png; sourceTree = "<group>"; };
 		038CE88820EDF622005E9219 /* checkboxyes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkboxyes.png; sourceTree = "<group>"; };
 		038CE88B20EDF63D005E9219 /* UserBoxImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UserBoxImg.png; sourceTree = "<group>"; };
+		038EAB2721F6F94500B07EFC /* cashcardBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cashcardBack.png; sourceTree = "<group>"; };
+		038EAB2921F6FF5900B07EFC /* no_card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_card.png; sourceTree = "<group>"; };
 		0390CF7C20ECB5D0000ECA53 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		0390CF7D20ECB5D0000ECA53 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0390CF7E20ECB5D0000ECA53 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -2293,7 +2295,6 @@
 		030F51532101CE94003C918F /* 经络辨识 */ = {
 			isa = PBXGroup;
 			children = (
-				030F515D2101CEAE003C918F /* no_card.png */,
 				030F519F2101CEBD003C918F /* qianbao.png */,
 				030F51792101CEB5003C918F /* block_card.png */,
 				030F518F2101CEBA003C918F /* 111_106.png */,
@@ -2991,6 +2992,8 @@
 		036E83DB2186D83B001B9BB4 /* 支付 */ = {
 			isa = PBXGroup;
 			children = (
+				038EAB2921F6FF5900B07EFC /* no_card.png */,
+				038EAB2721F6F94500B07EFC /* cashcardBack.png */,
 				035FD3F621881F03008CD7E7 /* zhifubao.png */,
 				035FD3F121881F03008CD7E7 /* weixin.png */,
 				035FD3ED21881F02008CD7E7 /* zhifubeijingtupian.png */,
@@ -4642,7 +4645,6 @@
 				03F97CEF21005AFC00A0F842 /* ICD10__back_head_nomal.png in Resources */,
 				030F51E12101CEBE003C918F /* yundongyueyaoting.png in Resources */,
 				036E856B2186EB2A001B9BB4 /* MoxaSetting.xib in Resources */,
-				030F51AD2101CEBE003C918F /* no_card.png in Resources */,
 				036A66AE2113FEF80096A006 /* wodekabaoxia.png in Resources */,
 				83E23EEE21C0AD2D00B43298 /* HCY_CallCell.xib in Resources */,
 				030F51CF2101CEBE003C918F /* pinggushibai.png in Resources */,
@@ -4669,6 +4671,7 @@
 				036E84C72186EB1A001B9BB4 /* btn_aijiu_recipe_3.png in Resources */,
 				036E84522186EAF5001B9BB4 /* wd54.mp3 in Resources */,
 				030F51AF2101CEBE003C918F /* Wybs_la_1.png in Resources */,
+				038EAB2821F6F94500B07EFC /* cashcardBack.png in Resources */,
 				036E85182186EB1A001B9BB4 /* chufang.png in Resources */,
 				03439076210AB64E00B57142 /* leyaojiesuan.png in Resources */,
 				03F97CD421005AE900A0F842 /* ICD10_front_rightArm_nomal.png in Resources */,
@@ -4696,6 +4699,7 @@
 				036A66AF2113FEF80096A006 /* wodekabaoxu.png in Resources */,
 				03F97CDD21005AE900A0F842 /* ICD10_front_chest_hilighted.png in Resources */,
 				038A654C2112B39B0055C760 /* 我的vLine.png in Resources */,
+				038EAB2A21F6FF5900B07EFC /* no_card.png in Resources */,
 				036E851D2186EB1A001B9BB4 /* help_picture_three.png in Resources */,
 				038A65472112AF910055C760 /* feedback.png in Resources */,
 				036A66A02113FB8C0096A006 /* 私人医生预加载.png in Resources */,

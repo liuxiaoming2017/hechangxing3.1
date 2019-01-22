@@ -8,6 +8,8 @@
 
 #import "ShoppingController.h"
 #import "SongListModel.h"
+#import "PayMentViewController.h"
+
 @interface ShoppingController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong) UITableView *listTable;
@@ -44,15 +46,15 @@
     gouwucheImage.image = [UIImage imageNamed:@"leyaogouwuche.png"];
     [self.view addSubview:gouwucheImage];
     
-    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, self.view.frame.size.height - 32, 90, 20)];
-    zongjinerLabel.text = @"消费总金额：";
+    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, self.view.frame.size.height - 32, 40, 20)];
+    zongjinerLabel.text = @"总计: ";
     zongjinerLabel.textColor = [UIColor whiteColor];
     zongjinerLabel.font = [UIFont systemFontOfSize:13];
     [self.view addSubview:zongjinerLabel];
     
-    jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, self.view.frame.size.height - 32, 60, 20)];
+    jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(zongjinerLabel.right, self.view.frame.size.height - 32, 60, 20)];
     
-    jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",self.prices];
+    jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
     jinerLabel.textColor = [UIColor whiteColor];
     jinerLabel.font = [UIFont boldSystemFontOfSize:13];
     [self.view addSubview:jinerLabel];
@@ -72,7 +74,9 @@
 }
 
 - (void)qujiesuanButton{
-    
+    PayMentViewController *payMentVC = [[PayMentViewController alloc]init];
+    payMentVC.count = 12;
+    [self.navigationController pushViewController:payMentVC animated:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -102,7 +106,7 @@
     nameLabel.text = @"乐药名称：";
     nameLabel.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     nameLabel.font = [UIFont systemFontOfSize:14];
-    [cell addSubview:nameLabel];
+   // [cell addSubview:nameLabel];
     UILabel *leyaoLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 20, 150, 15)];
     leyaoLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
     leyaoLabel.font = [UIFont systemFontOfSize:14];
@@ -131,11 +135,39 @@
 
 - (void)deleteButton:(UIButton *)sender{
     
-    CGPoint point = sender.center;
-    point = [self.listTable convertPoint:point fromView:sender.superview];
-    NSIndexPath* indexpath = [self.listTable indexPathForRowAtPoint:point];
-    [self.dataArr removeObjectAtIndex:indexpath.row];
-    [listTable reloadData];
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:nil message:@"确定删除吗？" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:NULL];
+    UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        CGPoint point = sender.center;
+        point = [self.listTable convertPoint:point fromView:sender.superview];
+        NSIndexPath* indexpath = [self.listTable indexPathForRowAtPoint:point];
+        
+        SongListModel *model = [self.dataArr objectAtIndex:indexpath.row];
+        
+        [UserShareOnce shareOnce].allYueYaoPrice = [UserShareOnce shareOnce].allYueYaoPrice - model.price;
+        
+        if([UserShareOnce shareOnce].allYueYaoPrice <= 0){
+            [UserShareOnce shareOnce].allYueYaoPrice = 0;
+        }
+        
+        [self.dataArr removeObjectAtIndex:indexpath.row];
+        
+        [UserShareOnce shareOnce].yueYaoBuyArr = self.dataArr;
+        
+        self->jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
+        [self->listTable reloadData];
+        
+    }];
+    [alertVC addAction:alertAct1];
+    [alertVC addAction:alertAct12];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self presentViewController:alertVC animated:YES completion:nil];
+    });
+    
+    
+    
+    
 }
 
 

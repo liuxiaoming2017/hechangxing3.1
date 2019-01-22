@@ -9,7 +9,7 @@
 #import "PaySuccessViewController.h"
 
 #import "EDWKWebViewController.h"
-//#import "PersonContentssViewController.h"
+#import "YueYaoController.h"
 
 @interface PaySuccessViewController ()
 
@@ -65,15 +65,15 @@
         /**
          *  通过点击乐药界面push出的购物车界面
          */
-//        if ([vcHome isKindOfClass:[LeyaoZKViewController class]]) {
-//            /**
-//             *  乐药购买成功后将购物车清空
-//             */
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"PayStatues" object:nil];
-//            [self.navigationController popToViewController:vcHome animated:YES];
-//
-//
-//        }
+        if ([vcHome isKindOfClass:[YueYaoController class]]) {
+            /**
+             *  乐药购买成功后将购物车清空
+             */
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PayStatues" object:nil];
+            [self.navigationController popToViewController:vcHome animated:YES];
+
+
+        }
         /**
          *  通过点击健康商城界面push出的购物车界面
          */

@@ -112,7 +112,7 @@
     _jinerLabel.textColor = [UIColor whiteColor];
     _jinerLabel.font = [UIFont boldSystemFontOfSize:13];
     if (self.dingdanStr.length == 0) {
-        _jinerLabel.text  = [NSString stringWithFormat:@"¥%.1f",[_priceAPPStr floatValue]];
+        _jinerLabel.text  = [NSString stringWithFormat:@"¥%.2f",[_priceAPPStr floatValue]];
     }
     [self.view addSubview:_jinerLabel];
 
@@ -166,7 +166,7 @@
                 [self dingdanhaozhifu:@"alipayNativeAppPlugin"];
             }else if(tagCount == 6001){
                 // [self WXPayButton];
-                [self dingdanhaozhifu:@"weixinPayPlugin"];
+                [self dingdanhaozhifu:@"weixinPayHcyPhonePlugin"];
             }
         }else{
         if (tagCount == 6000) {
@@ -203,6 +203,9 @@
     NSURL *url = [NSURL URLWithString:aUrlle];
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    //ios_hcy-yh-1.0//andriod_phone_hcy-yh-33
+    [request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
+    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
     [request setRequestMethod:@"POST"];
     //[request setPostValue:idStr forKey:@"id"];
@@ -217,8 +220,8 @@
     }else{
         [request setPostValue:_priceStr forKey:@"cardFees"];
     }
-    [request setPostValue:_priceAPPStr forKey:@"balance"];
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+    [request addPostValue:_priceAPPStr forKey:@"balance"];
+   // [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];
     [request setDidFailSelector:@selector(requestIsAPPpayReaderError:)];
@@ -259,8 +262,8 @@
       // }
         if ([self.paymentPluginId isEqualToString:@"alipayNativeAppPlugin"]) {
             
-            [AlipayRequestConfig alipayWithPartner:kPartnerID seller:kSellerAccount tradeNO:[AlipayToolKit genTradeNoWithTime] productName:self.namePay   productDescription:self.namePay amount:[self.shoukuandanDic objectForKey:@"amount"] notifyURL:[NSString stringWithFormat:@"http://app.ky3h.com:8001/healthlm/notify/sync/%@.jhtml",[_shoukuandanDic objectForKey:@"sn"]] itBPay:@"30m"];
-        }else if([self.paymentPluginId isEqualToString:@"weixinPayPlugin"]){
+            [AlipayRequestConfig alipayWithPartner:kPartnerID seller:kSellerAccount tradeNO:[_shoukuandanDic objectForKey:@"sn"] productName:self.namePay   productDescription:self.namePay amount:[self.shoukuandanDic objectForKey:@"amount"] notifyURL:[NSString stringWithFormat:@"%@payment/notify/async/%@.jhtml",URL_PRE,[_shoukuandanDic objectForKey:@"sn"]] itBPay:@"30m"];
+        }else if([self.paymentPluginId isEqualToString:@"weixinPayHcyPhonePlugin"]){
             
             
             [self sendPay_demoName:self.namePay Dictionary:self.shoukuandanDic];
@@ -327,7 +330,7 @@
 - (void)WXPayButton{
     [self showHUD];
     NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/mobile/order/payment/submit.jhtml?sn=%@&paymentPluginId=%@&token=%@&JESSONID=%@",UrlPre,_dingdanStr,@"weixinPayPlugin",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID];
+    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/mobile/order/payment/submit.jhtml?sn=%@&paymentPluginId=%@&token=%@&JESSONID=%@",UrlPre,_dingdanStr,@"weixinPayHcyPhonePlugin",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID];
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:aUrlle];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
@@ -363,9 +366,7 @@
             self.dingdanDic = [dic objectForKey:@"data"];
             _jinerLabel.text = [NSString stringWithFormat:@"¥%@",[self.dingdanDic  objectForKey:@"amount"]];
             [self sendPay_demoName:[self.dataDic objectForKey:@"name"] Dictionary:self.dingdanDic];
-//            if (_delegate) {
-//                [_delegate sendPay_demoName:[self.dataDic objectForKey:@"name"] Dictionary:self.dingdanDic];
-//            }
+
         }
         else if ([status intValue]==44) {
             UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"登录超时，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
@@ -583,7 +584,7 @@
             self.dingdanDic = [dic objectForKey:@"data"];
             NSLog(@"dic*******%@",dic);
             _jinerLabel.text = [NSString stringWithFormat:@"¥%@",[self.dingdanDic  objectForKey:@"amount"]];
-            [AlipayRequestConfig alipayWithPartner:kPartnerID seller:kSellerAccount tradeNO:[self.dataDic objectForKey:@"sn"] productName:[self.dataDic objectForKey:@"name"]   productDescription:[self.dataDic objectForKey:@"name"] amount:[self.dingdanDic objectForKey:@"amount"] notifyURL:[NSString stringWithFormat:@"http://app.ky3h.com:8001/healthlm/notify/sync/%@.jhtml",[_dingdanDic objectForKey:@"sn"]] itBPay:@"30m"];
+            [AlipayRequestConfig alipayWithPartner:kPartnerID seller:kSellerAccount tradeNO:[self.dataDic objectForKey:@"sn"] productName:[self.dataDic objectForKey:@"name"]   productDescription:[self.dataDic objectForKey:@"name"] amount:[self.dingdanDic objectForKey:@"amount"] notifyURL:[NSString stringWithFormat:@"%@payment/notify/async/%@.jhtml",URL_PRE,[_dingdanDic objectForKey:@"sn"]] itBPay:@"30m"];
         }
         else if ([status intValue]==44) {
             UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"登录超时，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];

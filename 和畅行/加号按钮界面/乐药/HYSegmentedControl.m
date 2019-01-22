@@ -122,6 +122,7 @@
 //
 //  btn clicked
 //
+
 - (void)segmentedControlChange:(UIButton *)btn
 {
     btn.selected = YES;
@@ -180,7 +181,48 @@
     }
     
     UIButton *btn = [_array4Btn objectAtIndex:index];
-    [self segmentedControlChange:btn];
+    [self segmentedControlChange2:btn];
+}
+
+
+- (void)segmentedControlChange2:(UIButton *)btn
+{
+    btn.selected = YES;
+    for (UIButton *subBtn in _array4Btn) {
+        if (subBtn != btn) {
+            subBtn.selected = NO;
+        }
+    }
+    
+    CGRect rect4boottomLine = self.bottomLineView.frame;
+    rect4boottomLine.origin.x = btn.frame.origin.x +5;
+    
+    CGPoint pt = CGPointZero;
+    BOOL canScrolle = NO;
+    if ((btn.tag - Define_Tag_add) >= 2 && [_array4Btn count] > 4 && [_array4Btn count] > (btn.tag - Define_Tag_add + 2)) {
+        pt.x = btn.frame.origin.x - Min_Width_4_Button*1.5f;
+        canScrolle = NO;
+    }else if ([_array4Btn count] > 4 && (btn.tag - Define_Tag_add + 2) >= [_array4Btn count]){
+        pt.x = (_array4Btn.count - 4) * Min_Width_4_Button;
+        canScrolle = NO;
+    }else if (_array4Btn.count > 4 && (btn.tag - Define_Tag_add) < 2){
+        pt.x = 0;
+        canScrolle = NO;
+    }
+    
+    if (canScrolle) {
+        [UIView animateWithDuration:0.3 animations:^{
+            _scrollView.contentOffset = pt;
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.2 animations:^{
+                self.bottomLineView.frame = rect4boottomLine;
+            }];
+        }];
+    }else{
+        [UIView animateWithDuration:0.2 animations:^{
+            self.bottomLineView.frame = rect4boottomLine;
+        }];
+    }
 }
 
 /*
