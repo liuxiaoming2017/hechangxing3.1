@@ -203,6 +203,7 @@
 # pragma mark - 下方金额视图
 - (void)createConsumeView
 {
+    
     UIImageView *xiaofeijinerImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width - 105, 44)];
     xiaofeijinerImage.image = [UIImage imageNamed:@"leyaoxiaofeijiner.png"];
     [self.view addSubview:xiaofeijinerImage];

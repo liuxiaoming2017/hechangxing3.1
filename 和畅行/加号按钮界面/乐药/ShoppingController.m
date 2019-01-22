@@ -74,6 +74,10 @@
 }
 
 - (void)qujiesuanButton{
+    if([UserShareOnce shareOnce].yueYaoBuyArr.count == 0){
+        [GlobalCommon showMessage:@"请去添加商品" duration:1.0];
+        return;
+    }
     PayMentViewController *payMentVC = [[PayMentViewController alloc]init];
     payMentVC.count = 12;
     [self.navigationController pushViewController:payMentVC animated:YES];
