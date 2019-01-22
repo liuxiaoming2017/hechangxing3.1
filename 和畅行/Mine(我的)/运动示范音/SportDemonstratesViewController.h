@@ -24,8 +24,6 @@
 }
 @property (nonatomic, copy) NSString *fileurl;
 @property(nonatomic,strong) NSMutableArray* LeMedicArray;
-@property(nonatomic,strong) NSMutableArray* LeMedicArrayId;
 @property (nonatomic, strong) UIButton* bfztbutton;
 @property( nonatomic,strong) UITableView *LeMdicinaTab;
-@property(nonatomic,strong) NSMutableArray* shiFanYinArr;
 @end

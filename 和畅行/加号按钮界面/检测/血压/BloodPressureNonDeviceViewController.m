@@ -187,7 +187,7 @@
         if(ret1){
             hud.label.text = @"收缩压不能为空";
         }else{
-            hud.label.text = @"收缩压输入有误,请重新输入";
+            hud.label.text = @"您的输入有误，请重新输入";
         }
         //hud.label.text = @"收缩压不能为空";
         hud.minSize = CGSizeMake(132.f, 108.0f);
@@ -199,7 +199,7 @@
         if(ret2){
             hud.label.text = @"舒张压不能为空";
         }else{
-            hud.label.text = @"舒张压输入有误,请重新输入";
+            hud.label.text = @"您的输入有误，请重新输入";
         }
         
         hud.minSize = CGSizeMake(132.f, 108.0f);
@@ -211,7 +211,7 @@
         if(ret3){
             hud.label.text = @"脉搏次数不能为空";
         }else{
-            hud.label.text = @"脉搏输入有误,请重新输入";
+            hud.label.text = @"您的输入有误，请重新输入";
         }
         
         hud.minSize = CGSizeMake(132.f, 108.0f);

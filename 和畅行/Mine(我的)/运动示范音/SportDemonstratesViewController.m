@@ -12,11 +12,15 @@
 #import "SBJson.h"
 #import "LoginViewController.h"
 
+
 @interface SportDemonstratesViewController ()<UITableViewDelegate,UITableViewDataSource,ASIHTTPRequestDelegate,AVAudioPlayerDelegate,MBProgressHUDDelegate,DownloadHandlersDelegate>
 {
     UIButton* btnbfzt;
     int counts;
 }
+@property (nonatomic,strong)NSMutableSet *buttonSet;
+@property (nonatomic,strong)NSArray *buttonArray;
+@property (nonatomic,assign)BOOL isReload;
 @end
 
 @implementation SportDemonstratesViewController
@@ -36,6 +40,9 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    
+    [super viewWillDisappear:animated];
+    
     if ([UserShareOnce shareOnce].mp3.playing) {
         
         if (self.bfztbutton!=nil)
@@ -57,9 +64,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    
     // Do any additional setup after loading the view.
     counts = 0;
-    
+    self.isReload = YES;
+    _buttonSet = [NSMutableSet set];
+    _buttonArray = [NSArray array];
     self.view.backgroundColor=[UtilityFunc colorWithHexString:@"#ffffff"];
     self.navTitleLabel.text = @"运动示范音";
     
@@ -73,8 +84,10 @@
     self.LeMdicinaTab=tableview;
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:tableview];
+    tableview.tableFooterView = [UIView new];
     
-    self.LeMedicArray= [NSMutableArray arrayWithCapacity:0];
+    self.LeMedicArray= [NSMutableArray array];
+    
    
     [self GetResourceslist];
     
@@ -89,7 +102,13 @@
     [imageButton addTarget:self action:@selector(imageButton) forControlEvents:UIControlEventTouchUpInside];
     [diView addSubview:imageButton];
     
-    self.shiFanYinArr = [NSMutableArray arrayWithCapacity:0];
+    
+    UIButton *removAllButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    removAllButton.frame = CGRectMake(ScreenWidth  - 120, 12, 100, 32);
+    [removAllButton setTitle:@"删除全部" forState:(UIControlStateNormal)];
+    [removAllButton addTarget:self action:@selector(removeAll) forControlEvents:(UIControlEventTouchUpInside)];
+//    [diView addSubview:removAllButton];
+    
 }
 - (void)imageButton{
     NSString* filepath=[self Createfilepath];
@@ -157,6 +176,7 @@
     if ([status intValue]==100)
     {
         self.LeMedicArray=[[dic objectForKey:@"data"]objectForKey:@"content"];
+       
         [self.LeMdicinaTab reloadData];
     }
     else if ([status intValue]==44)
@@ -181,8 +201,17 @@
     }
     if (alertView.tag == 34567 &&buttonIndex == 1) {
         
+        
+        for (NSInteger i = self.buttonArray.count; i < self.LeMedicArray.count; i ++) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:1];
+            [self tableView: LeMdicinaTab cellForRowAtIndexPath: indexPath];
+        }
+        
         int xiazaiCount = 0;
         
+        self.buttonArray = [_buttonSet allObjects];
+        
+
         for (int i = 0; i < self.LeMedicArray.count; i ++) {
             
             NSString* filepath=[self Createfilepath];
@@ -194,25 +223,48 @@
             // NSURL *url = [NSURL URLWithString:urlpath];
             
             NSString* NewFileNamess=[[[[self.LeMedicArray objectAtIndex:i] objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"source"];
-            ProgressIndicator *progressBar = [[ProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 30, 33)];
-            _downloadHanlder = [DownLoadHandlers sharedInstance];
-            [_downloadHanlder.downloadingDic setValue:@"downloading" forKey:[NSString stringWithFormat:@"%@",[[[[self.LeMedicArray objectAtIndex:i] objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"title"]]];
-            NSLog(@"不存在");
-            NSString* aurl=[NSString stringWithFormat:@"%@",NewFileNamess];
-            aurl = [aurl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-            _downloadHanlder.name = [NSString stringWithFormat:@"%@",[[[[self.LeMedicArray objectAtIndex:i] objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"title"]];
-            _downloadHanlder.url = aurl;
-            _downloadHanlder.fileType =@"mp3";
-            _downloadHanlder.downdelegate = self;
-            _downloadHanlder.savePath = [self Createfilepath];
-            [_downloadHanlder start];
+          
             
-            xiazaiCount ++;
-        }
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            BOOL fileExists = [fileManager fileExistsAtPath:urlpath];
+            
+            if (!fileExists) {
+                _downloadHanlder = [DownLoadHandlers sharedInstance];
+                [_downloadHanlder.downloadingDic setValue:@"downloading" forKey:[NSString stringWithFormat:@"%@",[[[[self.LeMedicArray objectAtIndex:i] objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"title"]]];
+                NSLog(@"不存在");
+                NSString* aurl=[NSString stringWithFormat:@"%@",NewFileNamess];
+                aurl = [aurl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+                _downloadHanlder.name = [NSString stringWithFormat:@"%@",[[[[self.LeMedicArray objectAtIndex:i] objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"title"]];
+                
+                _downloadHanlder.url = aurl;
+                _downloadHanlder.fileType =@"mp3";
+                _downloadHanlder.downdelegate = self;
+                _downloadHanlder.savePath = [self Createfilepath];
+            
+               
+                UIButton *button = self.buttonArray[i];
+                ProgressIndicator *progressBar = [[ProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 30, 33)];
+                progressBar.frame=button.bounds;
+                [button addSubview:progressBar];
+                [_downloadHanlder setButton:button];
+                [_downloadHanlder setProgress:progressBar] ;
+                [_downloadHanlder start];
+                
+                if (i == 0) {
+                    [LeMdicinaTab reloadData];
+                }
+                
+                xiazaiCount ++;
+            }
+            }
+    
+           
 
         
     }
     if (alertView.tag == 200008) {
+        _downloadHanlder.downdelegate = nil;
+        _downloadHanlder = nil;
         [self.navigationController popViewControllerAnimated:YES];
     }
     if (alertView.tag == 1999 &&buttonIndex == 1) {
@@ -296,18 +348,14 @@
     static NSString *CellIdentifier = @"LeMedicineCell";
     // UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:UITableViewCellStyleDefault];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if (cell == nil)
-    {
+    if (cell == nil)  {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1
                                       reuseIdentifier:CellIdentifier];
         cell.backgroundColor=[UIColor clearColor];
         cell.textLabel.font = [UIFont systemFontOfSize:15];
-    }
-    else
-    {
+    }  else  {
         while ([cell.contentView.subviews lastObject] != nil)
         {
-            
             [(UIView*)[cell.contentView.subviews lastObject] removeFromSuperview];
         }
     }
@@ -345,28 +393,23 @@
     NSString* NewFileNames=[[[[self.LeMedicArray objectAtIndex:indexPath.row] objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"title"];
     NSString* urlpath= [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3", NewFileNames]];
     BOOL fileExists = [fileManager fileExistsAtPath:urlpath];
+    
     if (fileExists) {
         NSLog(@"已存在");
-        if (self.bfztbutton!=nil)
-        {
+        if (self.bfztbutton!=nil)   {
             if (self.bfztbutton.tag==indexPath.row+10000&&self.fileurl.length>0) {
                 statusviewImg=[UIImage imageNamed:@"运动示范音_03.png"];
-            }
-            else
-            {
+            } else  {
                 statusviewImg=[UIImage imageNamed:@"运动示范音_03.png"];
             }
-        }
-        else
-        {
+        }  else  {
             statusviewImg=[UIImage imageNamed:@"运动示范音_03.png"];
         }
         
-    }
-    else
-    {
+    } else {
         statusviewImg=[UIImage imageNamed:@"New_yy_zt_xz.png"];
         NSLog(@"不存在");
+        
     }
     if ([[_downloadHanlder.downloadingDic objectForKey:[NSString stringWithFormat:@"%@",[[[[self.LeMedicArray objectAtIndex:indexPath.row] objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"title"]]] length]>0)
     {
@@ -378,9 +421,7 @@
         
         [statusbtn addSubview:[_downloadHanlder.progressDic objectForKey:[NSString stringWithFormat:@"%@",[[[[self.LeMedicArray objectAtIndex:indexPath.row] objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"title"]]]];
         [cell addSubview:statusbtn];
-    }
-    else
-    {
+    } else  {
         UIImageView* statusviewImgview=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, statusviewImg.size.width/2  , statusviewImg.size.height/2)];
         statusviewImgview.image=statusviewImg;
         UIButton* statusbtn=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -389,8 +430,9 @@
         [statusbtn addTarget:self action:@selector(DownloadButton:) forControlEvents:UIControlEventTouchUpInside];
         
         [statusbtn addSubview:statusviewImgview];
-        
-        
+        if (!fileExists) {
+            [_buttonSet addObject:statusbtn];
+        }
         [cell addSubview:statusbtn];
     }
     UILabel* Linebg=[[UILabel alloc] init];
@@ -436,6 +478,9 @@
 # pragma mark - 下载成功的代理回调
 - (void)DownloadHandlerSelectAtIndex:(NSInteger)inde
 {
+    
+    [LeMdicinaTab reloadData];
+
     NSLog(@"下载完成了");
 }
 
@@ -445,6 +490,26 @@
     // Dispose of any resources that can be recreated.
 }
 
+//删除全部
+-(void)removeAll {
+    
+    for (int i =  0;  i < _LeMedicArray.count ; i++) {
+        UIImage* statusviewImg = nil;
+        NSString* filepath=[self Createfilepath];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString* NewFileNames=[[[[self.LeMedicArray objectAtIndex:i] objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"title"];
+        NSString* urlpath= [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3", NewFileNames]];
+        BOOL fileExists = [fileManager fileExistsAtPath:urlpath];
+        
+        //删除全部
+        NSError * error = nil ;
+        if ([[NSFileManager defaultManager ] fileExistsAtPath :urlpath]) {
+            [[NSFileManager defaultManager ] removeItemAtPath :urlpath error :&error];
+        }
+    }
+    [self.LeMdicinaTab reloadData];
+  
+}
 
 
 @end
