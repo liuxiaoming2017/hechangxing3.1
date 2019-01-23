@@ -111,7 +111,8 @@
     nameLabel.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     nameLabel.font = [UIFont systemFontOfSize:14];
    // [cell addSubview:nameLabel];
-    UILabel *leyaoLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 20, 150, 15)];
+    
+    UILabel *leyaoLabel = [[UILabel alloc]initWithFrame:CGRectMake((ScreenWidth-150)/2.0, 20, 150, 15)];
     leyaoLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
     leyaoLabel.font = [UIFont systemFontOfSize:14];
     SongListModel *model = [self.dataArr objectAtIndex:indexPath.row];
