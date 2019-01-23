@@ -96,11 +96,8 @@
 
 
 - (void)viewDidLoad {
-    
-     [self setupContentView];
-    
     [super viewDidLoad];
-    
+     [self setupContentView];    
     self.topView.backgroundColor = [UIColor clearColor];
     self.navTitleLabel.text = @"经络功能状态评估";
     self.navTitleLabel.textColor = [UIColor whiteColor];
