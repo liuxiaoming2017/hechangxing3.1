@@ -130,7 +130,7 @@
 #define IS_IPHONE_6 (IS_IPHONE && [[UIScreen mainScreen] bounds].size.width == 375.0f)
 
 #define iPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
-#define kTabBarHeight (iPhoneX ? 83 : 49)
+#define kTabBarHeight (iPhoneX ? 83 : 44)
 #define kNavBarHeight (iPhoneX ? 88 : 64)
 #define kNavHeight 44
 #define kStatusBarHeight (iPhoneX ? 44 : 20)

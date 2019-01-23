@@ -57,7 +57,7 @@
     
     self.dataArray = [[NSMutableArray alloc]init];
     
-    scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height - kNavBarHeight - 44-65)];
+    scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height - kNavBarHeight - kTabBarHeight-65)];
     scrollView.backgroundColor = [UIColor whiteColor];
     scrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:scrollView];
@@ -148,7 +148,7 @@
     [bottomView addSubview:cardxiaofeiLabel];
     
     
-    UIView *zhifuView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-44, ScreenWidth, 44)];
+    UIView *zhifuView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-kTabBarHeight, ScreenWidth, 44)];
     zhifuView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:zhifuView];
     
