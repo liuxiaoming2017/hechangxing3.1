@@ -24,25 +24,25 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
 
-    
+    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.navTitleLabel.text = @"支付信息";
     
-    UIImageView *beijingImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 280)];
+    UIImageView *beijingImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, 300)];
     beijingImage.image = [UIImage imageNamed:@"zhifubeijingtupian.png"];
     [self.view addSubview:beijingImage];
    
-    UIImageView *zhifuchenggongImage = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width - 158.5) / 2, 84, 158.5, 158.5)];
+    UIImageView *zhifuchenggongImage = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width - 158.5) / 2, kNavBarHeight + 20, 158.5, 158.5)];
     zhifuchenggongImage.image = [UIImage imageNamed:@"zhifuchenggong.png"];
     [self.view addSubview:zhifuchenggongImage];
    
-    UILabel *chenggongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 84 + 158.5 + 20, self.view.frame.size.width, 20)];
+    UILabel *chenggongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  zhifuchenggongImage.bottom + 20, self.view.frame.size.width, 20)];
     chenggongLabel.textAlignment = NSTextAlignmentCenter;
     chenggongLabel.text = @"支付成功";
     chenggongLabel.textColor = [UIColor whiteColor];
     chenggongLabel.font = [UIFont systemFontOfSize:22];
     [self.view addSubview:chenggongLabel];
    
-    UILabel *chashouLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 84 + 158.5 + 60, self.view.frame.size.width, 20)];
+    UILabel *chashouLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  chenggongLabel.bottom + 10, self.view.frame.size.width, 20)];
     chashouLabel.textColor = [UIColor whiteColor];
     chashouLabel.text = @"您已成功购买商品，请注意查收";
     chashouLabel.textAlignment = NSTextAlignmentCenter;

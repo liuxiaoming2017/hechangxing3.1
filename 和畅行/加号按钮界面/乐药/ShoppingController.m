@@ -26,7 +26,7 @@
     
     self.navTitleLabel.text = @"购物车";
     
-    listTable = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height - kNavBarHeight - 32) style:UITableViewStylePlain];
+    listTable = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height - kNavBarHeight ) style:UITableViewStylePlain];
     listTable.delegate = self;
     listTable.dataSource = self;
     listTable.rowHeight = 55;
@@ -34,42 +34,34 @@
     [self.view addSubview:listTable];
     
     //[_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"CELL"];
-    UIImageView *xiaofeijinerImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width - 105, 44)];
+    UIImageView *xiaofeijinerImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - kTabBarHeight, self.view.frame.size.width - 105, 44)];
     xiaofeijinerImage.image = [UIImage imageNamed:@"leyaoxiaofeijiner.png"];
     [self.view addSubview:xiaofeijinerImage];
    
-    UIImageView *jiesuanImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width -  105, self.view.frame.size.height - 44, 105, 44)];
-    jiesuanImage.image = [UIImage imageNamed:@"leyaojiesuan.png"];
-    [self.view addSubview:jiesuanImage];
+    UIButton *jiesuanButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    jiesuanButton.frame = CGRectMake(self.view.frame.size.width -  105, self.view.frame.size.height - kTabBarHeight, 105, 44);
+    [jiesuanButton addTarget:self action:@selector(qujiesuanButton) forControlEvents:(UIControlEventTouchUpInside)];
+    [jiesuanButton setTitle:@"去结算" forState:(UIControlStateNormal)];
+    [jiesuanButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    jiesuanButton.backgroundColor = RGB(68, 204, 82);
+    [self.view addSubview:jiesuanButton];
     
-    UIImageView *gouwucheImage = [[UIImageView alloc]initWithFrame:CGRectMake(15, self.view.frame.size.height - 32, 20, 20)];
+    UIImageView *gouwucheImage = [[UIImageView alloc]initWithFrame:CGRectMake(15, 12, 20, 20)];
     gouwucheImage.image = [UIImage imageNamed:@"leyaogouwuche.png"];
-    [self.view addSubview:gouwucheImage];
+    [xiaofeijinerImage addSubview:gouwucheImage];
     
-    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, self.view.frame.size.height - 32, 40, 20)];
+    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 12, 40, 20)];
     zongjinerLabel.text = @"总计: ";
     zongjinerLabel.textColor = [UIColor whiteColor];
     zongjinerLabel.font = [UIFont systemFontOfSize:13];
-    [self.view addSubview:zongjinerLabel];
+    [xiaofeijinerImage addSubview:zongjinerLabel];
     
-    jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(zongjinerLabel.right, self.view.frame.size.height - 32, 60, 20)];
+    jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(zongjinerLabel.right, 12, 60, 20)];
     
     jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
     jinerLabel.textColor = [UIColor whiteColor];
     jinerLabel.font = [UIFont boldSystemFontOfSize:13];
-    [self.view addSubview:jinerLabel];
-    
-    UILabel *qujiesuanLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 105, self.view.frame.size.height - 32, 105, 20)];
-    qujiesuanLabel.textColor = [UIColor whiteColor];
-    qujiesuanLabel.text = @"去结算";
-    qujiesuanLabel.font = [UIFont systemFontOfSize:13];
-    qujiesuanLabel.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:qujiesuanLabel];
-    
-    UIButton *jiesuanButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    jiesuanButton.frame = CGRectMake(self.view.frame.size.width - 105, self.view.frame.size.height - 44, 105, 44);
-    [jiesuanButton addTarget:self action:@selector(qujiesuanButton) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:jiesuanButton];
+    [xiaofeijinerImage addSubview:jinerLabel];
     
 }
 
