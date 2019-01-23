@@ -719,93 +719,10 @@
 		03F6931820FF2FD400308E38 /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F6930820FF2FD300308E38 /* SBJsonUTF8Stream.m */; };
 		03F6931920FF2FD400308E38 /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F6930D20FF2FD400308E38 /* SBJsonStreamParser.m */; };
 		03F6931C20FF30B700308E38 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F6931A20FF30B700308E38 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		03F97C7621005A9E00A0F842 /* ICD10_head_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C5521005A9900A0F842 /* ICD10_head_closed.png */; };
-		03F97C7721005A9E00A0F842 /* ICD10_woman.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C5621005A9900A0F842 /* ICD10_woman.png */; };
-		03F97C7821005A9E00A0F842 /* ICD10_19_front.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C5721005A9900A0F842 /* ICD10_19_front.png */; };
-		03F97C7921005A9E00A0F842 /* selectedSymDisease.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C5821005A9900A0F842 /* selectedSymDisease.png */; };
-		03F97C7A21005A9E00A0F842 /* ICD10_waist_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C5921005A9A00A0F842 /* ICD10_waist_closed.png */; };
-		03F97C7B21005A9E00A0F842 /* ICD10_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C5A21005A9A00A0F842 /* ICD10_delete.png */; };
-		03F97C7C21005A9E00A0F842 /* ICD10_man.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C5B21005A9A00A0F842 /* ICD10_man.png */; };
-		03F97C7D21005A9E00A0F842 /* ICD10_07_症.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C5C21005A9A00A0F842 /* ICD10_07_症.png */; };
-		03F97C7E21005A9E00A0F842 /* ICD10_reason_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C5D21005A9A00A0F842 /* ICD10_reason_closed.png */; };
-		03F97C7F21005A9E00A0F842 /* popback.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C5E21005A9A00A0F842 /* popback.png */; };
-		03F97C8021005A9E00A0F842 /* ICD10_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C5F21005A9A00A0F842 /* ICD10_selected.png */; };
-		03F97C8121005A9E00A0F842 /* ICD10_stomach_open.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C6021005A9B00A0F842 /* ICD10_stomach_open.png */; };
-		03F97C8221005A9E00A0F842 /* ICD10_limps_open.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C6121005A9B00A0F842 /* ICD10_limps_open.png */; };
-		03F97C8321005A9E00A0F842 /* 2_19_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C6221005A9B00A0F842 /* 2_19_back.png */; };
-		03F97C8421005A9E00A0F842 /* ICD10_back_open.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C6321005A9B00A0F842 /* ICD10_back_open.png */; };
-		03F97C8521005A9E00A0F842 /* ICD10_selectedSymptom.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C6421005A9B00A0F842 /* ICD10_selectedSymptom.png */; };
-		03F97C8621005A9E00A0F842 /* ICD10_waist_open.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C6521005A9B00A0F842 /* ICD10_waist_open.png */; };
-		03F97C8721005A9E00A0F842 /* ICD10_head_open.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C6621005A9C00A0F842 /* ICD10_head_open.png */; };
-		03F97C8821005A9E00A0F842 /* ICD10_stomach_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C6721005A9C00A0F842 /* ICD10_stomach_closed.png */; };
-		03F97C8921005A9E00A0F842 /* ICD10_body_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C6821005A9C00A0F842 /* ICD10_body_closed.png */; };
-		03F97C8A21005A9E00A0F842 /* ICD10_back_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C6921005A9C00A0F842 /* ICD10_back_closed.png */; };
-		03F97C8B21005A9E00A0F842 /* ICD10_body_open.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C6A21005A9C00A0F842 /* ICD10_body_open.png */; };
-		03F97C8C21005A9E00A0F842 /* ICD10_commit.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C6B21005A9C00A0F842 /* ICD10_commit.png */; };
-		03F97C8D21005A9E00A0F842 /* ICD10_popSelectedBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C6C21005A9D00A0F842 /* ICD10_popSelectedBack.png */; };
-		03F97C8E21005A9E00A0F842 /* ICD10_reason_open.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C6D21005A9D00A0F842 /* ICD10_reason_open.png */; };
-		03F97C8F21005A9E00A0F842 /* ICD10_chest_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C6E21005A9D00A0F842 /* ICD10_chest_closed.png */; };
-		03F97C9021005A9E00A0F842 /* ICD10_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C6F21005A9D00A0F842 /* ICD10_02.png */; };
-		03F97C9121005A9E00A0F842 /* ICD10_limps_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C7021005A9D00A0F842 /* ICD10_limps_closed.png */; };
-		03F97C9221005A9E00A0F842 /* ICD10_chest_open.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C7121005A9D00A0F842 /* ICD10_chest_open.png */; };
-		03F97C9321005A9E00A0F842 /* ICD10_leftGrayLine.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C7221005A9E00A0F842 /* ICD10_leftGrayLine.png */; };
-		03F97C9421005A9E00A0F842 /* ICD10_leftLine.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C7321005A9E00A0F842 /* ICD10_leftLine.png */; };
-		03F97C9521005A9E00A0F842 /* ICD10_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C7421005A9E00A0F842 /* ICD10_back.png */; };
-		03F97C9621005A9E00A0F842 /* ICD10_病.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C7521005A9E00A0F842 /* ICD10_病.png */; };
-		03F97CA321005ACD00A0F842 /* ICD11_back_head_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C9721005ACB00A0F842 /* ICD11_back_head_highlighted.png */; };
-		03F97CA421005ACD00A0F842 /* ICD11_back_head_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C9821005ACB00A0F842 /* ICD11_back_head_nomal.png */; };
-		03F97CA521005ACD00A0F842 /* ICD11_back_hip_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C9921005ACB00A0F842 /* ICD11_back_hip_highlighted.png */; };
-		03F97CA621005ACD00A0F842 /* ICD11_back_lefArm_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C9A21005ACB00A0F842 /* ICD11_back_lefArm_highlighted.png */; };
-		03F97CA721005ACD00A0F842 /* ICD11_back_legs_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C9B21005ACB00A0F842 /* ICD11_back_legs_nomal.png */; };
-		03F97CA821005ACD00A0F842 /* ICD11_back_leftArm_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C9C21005ACB00A0F842 /* ICD11_back_leftArm_nomal.png */; };
-		03F97CA921005ACD00A0F842 /* ICD11_back_rightArm_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C9D21005ACC00A0F842 /* ICD11_back_rightArm_nomal.png */; };
-		03F97CAA21005ACD00A0F842 /* ICD11_back_rightArm_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C9E21005ACC00A0F842 /* ICD11_back_rightArm_highlighted.png */; };
-		03F97CAB21005ACD00A0F842 /* ICD11_back_legs_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97C9F21005ACC00A0F842 /* ICD11_back_legs_highlighted.png */; };
-		03F97CAC21005ACD00A0F842 /* ICD11_back_back_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CA021005ACC00A0F842 /* ICD11_back_back_highlighted.png */; };
-		03F97CAD21005ACD00A0F842 /* ICD11_back_chest_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CA121005ACC00A0F842 /* ICD11_back_chest_nomal.png */; };
-		03F97CAE21005ACD00A0F842 /* ICD11_back_hip_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CA221005ACC00A0F842 /* ICD11_back_hip_nomal.png */; };
-		03F97CBB21005ADA00A0F842 /* ICD11_front_legs_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CAF21005AD900A0F842 /* ICD11_front_legs_highlighted.png */; };
-		03F97CBC21005ADA00A0F842 /* ICD11_front_chest_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CB021005AD900A0F842 /* ICD11_front_chest_nomal.png */; };
-		03F97CBD21005ADA00A0F842 /* ICD11_front_rightArm_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CB121005AD900A0F842 /* ICD11_front_rightArm_highlighted.png */; };
-		03F97CBE21005ADB00A0F842 /* ICD11_front_chest_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CB221005AD900A0F842 /* ICD11_front_chest_highlighted.png */; };
-		03F97CBF21005ADB00A0F842 /* ICD11_front_hip_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CB321005AD900A0F842 /* ICD11_front_hip_nomal.png */; };
-		03F97CC021005ADB00A0F842 /* ICD11_front_leftArm_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CB421005AD900A0F842 /* ICD11_front_leftArm_highlighted.png */; };
-		03F97CC121005ADB00A0F842 /* ICD11_front_head_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CB521005ADA00A0F842 /* ICD11_front_head_highlighted.png */; };
-		03F97CC221005ADB00A0F842 /* ICD11_front_head_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CB621005ADA00A0F842 /* ICD11_front_head_nomal.png */; };
-		03F97CC321005ADB00A0F842 /* ICD11_front_hip_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CB721005ADA00A0F842 /* ICD11_front_hip_highlighted.png */; };
-		03F97CC421005ADB00A0F842 /* ICD11_front_leftArm_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CB821005ADA00A0F842 /* ICD11_front_leftArm_nomal.png */; };
-		03F97CC521005ADB00A0F842 /* ICD11_front_legs_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CB921005ADA00A0F842 /* ICD11_front_legs_nomal.png */; };
-		03F97CC621005ADB00A0F842 /* ICD11_front_rightArm_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CBA21005ADA00A0F842 /* ICD11_front_rightArm_nomal.png */; };
-		03F97CD321005AE900A0F842 /* ICD10_front_legs_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CC721005AE800A0F842 /* ICD10_front_legs_nomal.png */; };
-		03F97CD421005AE900A0F842 /* ICD10_front_rightArm_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CC821005AE800A0F842 /* ICD10_front_rightArm_nomal.png */; };
-		03F97CD521005AE900A0F842 /* ICD10_front_hip_hilighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CC921005AE800A0F842 /* ICD10_front_hip_hilighted.png */; };
-		03F97CD621005AE900A0F842 /* ICD10_front_leftArm_hilighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CCA21005AE800A0F842 /* ICD10_front_leftArm_hilighted.png */; };
-		03F97CD721005AE900A0F842 /* ICD10_front_head_hilighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CCB21005AE800A0F842 /* ICD10_front_head_hilighted.png */; };
-		03F97CD821005AE900A0F842 /* ICD10_front_hip_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CCC21005AE800A0F842 /* ICD10_front_hip_nomal.png */; };
-		03F97CD921005AE900A0F842 /* ICD10_front_leftArm_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CCD21005AE900A0F842 /* ICD10_front_leftArm_nomal.png */; };
-		03F97CDA21005AE900A0F842 /* ICD10_front_legs_hilighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CCE21005AE900A0F842 /* ICD10_front_legs_hilighted.png */; };
-		03F97CDB21005AE900A0F842 /* ICD10_front_rightArm_hilighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CCF21005AE900A0F842 /* ICD10_front_rightArm_hilighted.png */; };
-		03F97CDC21005AE900A0F842 /* ICD10_front_head_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CD021005AE900A0F842 /* ICD10_front_head_nomal.png */; };
-		03F97CDD21005AE900A0F842 /* ICD10_front_chest_hilighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CD121005AE900A0F842 /* ICD10_front_chest_hilighted.png */; };
-		03F97CDE21005AE900A0F842 /* ICD10_front_chest_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CD221005AE900A0F842 /* ICD10_front_chest_nomal.png */; };
-		03F97CEB21005AFC00A0F842 /* ICD10_back_head_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CDF21005AFA00A0F842 /* ICD10_back_head_highlighted.png */; };
-		03F97CEC21005AFC00A0F842 /* ICD10_back_leftArm_hilighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CE021005AFA00A0F842 /* ICD10_back_leftArm_hilighted.png */; };
-		03F97CED21005AFC00A0F842 /* ICD10_back_rightArm_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CE121005AFA00A0F842 /* ICD10_back_rightArm_nomal.png */; };
-		03F97CEE21005AFC00A0F842 /* ICD10_back_hip_hilighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CE221005AFA00A0F842 /* ICD10_back_hip_hilighted.png */; };
-		03F97CEF21005AFC00A0F842 /* ICD10__back_head_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CE321005AFA00A0F842 /* ICD10__back_head_nomal.png */; };
-		03F97CF021005AFC00A0F842 /* ICD10_back_back_hilighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CE421005AFB00A0F842 /* ICD10_back_back_hilighted.png */; };
-		03F97CF121005AFC00A0F842 /* ICD10_back_leftArm_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CE521005AFB00A0F842 /* ICD10_back_leftArm_nomal.png */; };
-		03F97CF221005AFC00A0F842 /* ICD10_back_legs_hilighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CE621005AFB00A0F842 /* ICD10_back_legs_hilighted.png */; };
-		03F97CF321005AFC00A0F842 /* ICD10_back_rightArm_hilighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CE721005AFB00A0F842 /* ICD10_back_rightArm_hilighted.png */; };
-		03F97CF421005AFC00A0F842 /* ICD10_back_hip_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CE821005AFB00A0F842 /* ICD10_back_hip_nomal.png */; };
-		03F97CF521005AFC00A0F842 /* ICD10_back_back_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CE921005AFB00A0F842 /* ICD10_back_back_nomal.png */; };
-		03F97CF621005AFC00A0F842 /* ICD10_back_legs_nomal.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97CEA21005AFC00A0F842 /* ICD10_back_legs_nomal.png */; };
 		03F97CFA21005DE300A0F842 /* WriteListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F97CF921005DE200A0F842 /* WriteListController.m */; };
 		03F97D0021005EBE00A0F842 /* Mybutton.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F97CFF21005EBE00A0F842 /* Mybutton.m */; };
 		03F97D0321005EE300A0F842 /* SymptomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F97D0121005EE300A0F842 /* SymptomModel.m */; };
 		03F97D082100676F00A0F842 /* symptom.txt in Resources */ = {isa = PBXBuildFile; fileRef = 03F97D072100676F00A0F842 /* symptom.txt */; };
-		03F97D0A210072A700A0F842 /* 预约挂号专题页_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97D09210072A600A0F842 /* 预约挂号专题页_03.png */; };
-		03F97D0C210072B300A0F842 /* 预约挂号专题页_04.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F97D0B210072B300A0F842 /* 预约挂号专题页_04.png */; };
 		03F97D0F21007F7900A0F842 /* OrganDiseaseListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F97D0E21007F7900A0F842 /* OrganDiseaseListViewController.m */; };
 		03F97D1321007FB700A0F842 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F97D1121007FB600A0F842 /* DBManager.m */; };
 		03F97D1421007FB700A0F842 /* ICD10.db in Resources */ = {isa = PBXBuildFile; fileRef = 03F97D1221007FB600A0F842 /* ICD10.db */; };
@@ -1938,87 +1855,6 @@
 		03F6930D20FF2FD400308E38 /* SBJsonStreamParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParser.m; sourceTree = "<group>"; };
 		03F6931A20FF30B700308E38 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		03F6931B20FF30B700308E38 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		03F97C5521005A9900A0F842 /* ICD10_head_closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_head_closed.png; sourceTree = "<group>"; };
-		03F97C5621005A9900A0F842 /* ICD10_woman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_woman.png; sourceTree = "<group>"; };
-		03F97C5721005A9900A0F842 /* ICD10_19_front.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_19_front.png; sourceTree = "<group>"; };
-		03F97C5821005A9900A0F842 /* selectedSymDisease.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selectedSymDisease.png; sourceTree = "<group>"; };
-		03F97C5921005A9A00A0F842 /* ICD10_waist_closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_waist_closed.png; sourceTree = "<group>"; };
-		03F97C5A21005A9A00A0F842 /* ICD10_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_delete.png; sourceTree = "<group>"; };
-		03F97C5B21005A9A00A0F842 /* ICD10_man.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_man.png; sourceTree = "<group>"; };
-		03F97C5C21005A9A00A0F842 /* ICD10_07_症.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ICD10_07_症.png"; sourceTree = "<group>"; };
-		03F97C5D21005A9A00A0F842 /* ICD10_reason_closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_reason_closed.png; sourceTree = "<group>"; };
-		03F97C5E21005A9A00A0F842 /* popback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popback.png; sourceTree = "<group>"; };
-		03F97C5F21005A9A00A0F842 /* ICD10_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_selected.png; sourceTree = "<group>"; };
-		03F97C6021005A9B00A0F842 /* ICD10_stomach_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_stomach_open.png; sourceTree = "<group>"; };
-		03F97C6121005A9B00A0F842 /* ICD10_limps_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_limps_open.png; sourceTree = "<group>"; };
-		03F97C6221005A9B00A0F842 /* 2_19_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2_19_back.png; sourceTree = "<group>"; };
-		03F97C6321005A9B00A0F842 /* ICD10_back_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_back_open.png; sourceTree = "<group>"; };
-		03F97C6421005A9B00A0F842 /* ICD10_selectedSymptom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_selectedSymptom.png; sourceTree = "<group>"; };
-		03F97C6521005A9B00A0F842 /* ICD10_waist_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_waist_open.png; sourceTree = "<group>"; };
-		03F97C6621005A9C00A0F842 /* ICD10_head_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_head_open.png; sourceTree = "<group>"; };
-		03F97C6721005A9C00A0F842 /* ICD10_stomach_closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_stomach_closed.png; sourceTree = "<group>"; };
-		03F97C6821005A9C00A0F842 /* ICD10_body_closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_body_closed.png; sourceTree = "<group>"; };
-		03F97C6921005A9C00A0F842 /* ICD10_back_closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_back_closed.png; sourceTree = "<group>"; };
-		03F97C6A21005A9C00A0F842 /* ICD10_body_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_body_open.png; sourceTree = "<group>"; };
-		03F97C6B21005A9C00A0F842 /* ICD10_commit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_commit.png; sourceTree = "<group>"; };
-		03F97C6C21005A9D00A0F842 /* ICD10_popSelectedBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_popSelectedBack.png; sourceTree = "<group>"; };
-		03F97C6D21005A9D00A0F842 /* ICD10_reason_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_reason_open.png; sourceTree = "<group>"; };
-		03F97C6E21005A9D00A0F842 /* ICD10_chest_closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_chest_closed.png; sourceTree = "<group>"; };
-		03F97C6F21005A9D00A0F842 /* ICD10_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_02.png; sourceTree = "<group>"; };
-		03F97C7021005A9D00A0F842 /* ICD10_limps_closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_limps_closed.png; sourceTree = "<group>"; };
-		03F97C7121005A9D00A0F842 /* ICD10_chest_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_chest_open.png; sourceTree = "<group>"; };
-		03F97C7221005A9E00A0F842 /* ICD10_leftGrayLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_leftGrayLine.png; sourceTree = "<group>"; };
-		03F97C7321005A9E00A0F842 /* ICD10_leftLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_leftLine.png; sourceTree = "<group>"; };
-		03F97C7421005A9E00A0F842 /* ICD10_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_back.png; sourceTree = "<group>"; };
-		03F97C7521005A9E00A0F842 /* ICD10_病.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ICD10_病.png"; sourceTree = "<group>"; };
-		03F97C9721005ACB00A0F842 /* ICD11_back_head_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_back_head_highlighted.png; sourceTree = "<group>"; };
-		03F97C9821005ACB00A0F842 /* ICD11_back_head_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_back_head_nomal.png; sourceTree = "<group>"; };
-		03F97C9921005ACB00A0F842 /* ICD11_back_hip_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_back_hip_highlighted.png; sourceTree = "<group>"; };
-		03F97C9A21005ACB00A0F842 /* ICD11_back_lefArm_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_back_lefArm_highlighted.png; sourceTree = "<group>"; };
-		03F97C9B21005ACB00A0F842 /* ICD11_back_legs_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_back_legs_nomal.png; sourceTree = "<group>"; };
-		03F97C9C21005ACB00A0F842 /* ICD11_back_leftArm_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_back_leftArm_nomal.png; sourceTree = "<group>"; };
-		03F97C9D21005ACC00A0F842 /* ICD11_back_rightArm_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_back_rightArm_nomal.png; sourceTree = "<group>"; };
-		03F97C9E21005ACC00A0F842 /* ICD11_back_rightArm_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_back_rightArm_highlighted.png; sourceTree = "<group>"; };
-		03F97C9F21005ACC00A0F842 /* ICD11_back_legs_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_back_legs_highlighted.png; sourceTree = "<group>"; };
-		03F97CA021005ACC00A0F842 /* ICD11_back_back_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_back_back_highlighted.png; sourceTree = "<group>"; };
-		03F97CA121005ACC00A0F842 /* ICD11_back_chest_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_back_chest_nomal.png; sourceTree = "<group>"; };
-		03F97CA221005ACC00A0F842 /* ICD11_back_hip_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_back_hip_nomal.png; sourceTree = "<group>"; };
-		03F97CAF21005AD900A0F842 /* ICD11_front_legs_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_front_legs_highlighted.png; sourceTree = "<group>"; };
-		03F97CB021005AD900A0F842 /* ICD11_front_chest_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_front_chest_nomal.png; sourceTree = "<group>"; };
-		03F97CB121005AD900A0F842 /* ICD11_front_rightArm_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_front_rightArm_highlighted.png; sourceTree = "<group>"; };
-		03F97CB221005AD900A0F842 /* ICD11_front_chest_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_front_chest_highlighted.png; sourceTree = "<group>"; };
-		03F97CB321005AD900A0F842 /* ICD11_front_hip_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_front_hip_nomal.png; sourceTree = "<group>"; };
-		03F97CB421005AD900A0F842 /* ICD11_front_leftArm_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_front_leftArm_highlighted.png; sourceTree = "<group>"; };
-		03F97CB521005ADA00A0F842 /* ICD11_front_head_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_front_head_highlighted.png; sourceTree = "<group>"; };
-		03F97CB621005ADA00A0F842 /* ICD11_front_head_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_front_head_nomal.png; sourceTree = "<group>"; };
-		03F97CB721005ADA00A0F842 /* ICD11_front_hip_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_front_hip_highlighted.png; sourceTree = "<group>"; };
-		03F97CB821005ADA00A0F842 /* ICD11_front_leftArm_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_front_leftArm_nomal.png; sourceTree = "<group>"; };
-		03F97CB921005ADA00A0F842 /* ICD11_front_legs_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_front_legs_nomal.png; sourceTree = "<group>"; };
-		03F97CBA21005ADA00A0F842 /* ICD11_front_rightArm_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD11_front_rightArm_nomal.png; sourceTree = "<group>"; };
-		03F97CC721005AE800A0F842 /* ICD10_front_legs_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_front_legs_nomal.png; sourceTree = "<group>"; };
-		03F97CC821005AE800A0F842 /* ICD10_front_rightArm_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_front_rightArm_nomal.png; sourceTree = "<group>"; };
-		03F97CC921005AE800A0F842 /* ICD10_front_hip_hilighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_front_hip_hilighted.png; sourceTree = "<group>"; };
-		03F97CCA21005AE800A0F842 /* ICD10_front_leftArm_hilighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_front_leftArm_hilighted.png; sourceTree = "<group>"; };
-		03F97CCB21005AE800A0F842 /* ICD10_front_head_hilighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_front_head_hilighted.png; sourceTree = "<group>"; };
-		03F97CCC21005AE800A0F842 /* ICD10_front_hip_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_front_hip_nomal.png; sourceTree = "<group>"; };
-		03F97CCD21005AE900A0F842 /* ICD10_front_leftArm_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_front_leftArm_nomal.png; sourceTree = "<group>"; };
-		03F97CCE21005AE900A0F842 /* ICD10_front_legs_hilighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_front_legs_hilighted.png; sourceTree = "<group>"; };
-		03F97CCF21005AE900A0F842 /* ICD10_front_rightArm_hilighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_front_rightArm_hilighted.png; sourceTree = "<group>"; };
-		03F97CD021005AE900A0F842 /* ICD10_front_head_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_front_head_nomal.png; sourceTree = "<group>"; };
-		03F97CD121005AE900A0F842 /* ICD10_front_chest_hilighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_front_chest_hilighted.png; sourceTree = "<group>"; };
-		03F97CD221005AE900A0F842 /* ICD10_front_chest_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_front_chest_nomal.png; sourceTree = "<group>"; };
-		03F97CDF21005AFA00A0F842 /* ICD10_back_head_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_back_head_highlighted.png; sourceTree = "<group>"; };
-		03F97CE021005AFA00A0F842 /* ICD10_back_leftArm_hilighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_back_leftArm_hilighted.png; sourceTree = "<group>"; };
-		03F97CE121005AFA00A0F842 /* ICD10_back_rightArm_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_back_rightArm_nomal.png; sourceTree = "<group>"; };
-		03F97CE221005AFA00A0F842 /* ICD10_back_hip_hilighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_back_hip_hilighted.png; sourceTree = "<group>"; };
-		03F97CE321005AFA00A0F842 /* ICD10__back_head_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10__back_head_nomal.png; sourceTree = "<group>"; };
-		03F97CE421005AFB00A0F842 /* ICD10_back_back_hilighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_back_back_hilighted.png; sourceTree = "<group>"; };
-		03F97CE521005AFB00A0F842 /* ICD10_back_leftArm_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_back_leftArm_nomal.png; sourceTree = "<group>"; };
-		03F97CE621005AFB00A0F842 /* ICD10_back_legs_hilighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_back_legs_hilighted.png; sourceTree = "<group>"; };
-		03F97CE721005AFB00A0F842 /* ICD10_back_rightArm_hilighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_back_rightArm_hilighted.png; sourceTree = "<group>"; };
-		03F97CE821005AFB00A0F842 /* ICD10_back_hip_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_back_hip_nomal.png; sourceTree = "<group>"; };
-		03F97CE921005AFB00A0F842 /* ICD10_back_back_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_back_back_nomal.png; sourceTree = "<group>"; };
-		03F97CEA21005AFC00A0F842 /* ICD10_back_legs_nomal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICD10_back_legs_nomal.png; sourceTree = "<group>"; };
 		03F97CF821005DE200A0F842 /* WriteListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WriteListController.h; sourceTree = "<group>"; };
 		03F97CF921005DE200A0F842 /* WriteListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WriteListController.m; sourceTree = "<group>"; };
 		03F97CFD21005E7600A0F842 /* WriteDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WriteDefine.h; sourceTree = "<group>"; };
@@ -2027,8 +1863,6 @@
 		03F97D0121005EE300A0F842 /* SymptomModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SymptomModel.m; sourceTree = "<group>"; };
 		03F97D0221005EE300A0F842 /* SymptomModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SymptomModel.h; sourceTree = "<group>"; };
 		03F97D072100676F00A0F842 /* symptom.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = symptom.txt; sourceTree = "<group>"; };
-		03F97D09210072A600A0F842 /* 预约挂号专题页_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "预约挂号专题页_03.png"; sourceTree = "<group>"; };
-		03F97D0B210072B300A0F842 /* 预约挂号专题页_04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "预约挂号专题页_04.png"; sourceTree = "<group>"; };
 		03F97D0D21007F7900A0F842 /* OrganDiseaseListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrganDiseaseListViewController.h; sourceTree = "<group>"; };
 		03F97D0E21007F7900A0F842 /* OrganDiseaseListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrganDiseaseListViewController.m; sourceTree = "<group>"; };
 		03F97D1021007FB600A0F842 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
@@ -3754,7 +3588,6 @@
 				0362859A2106F3C30090020D /* 档案 */,
 				030F51532101CE94003C918F /* 经络辨识 */,
 				03F97CF721005B0C00A0F842 /* 登录注册 */,
-				03F97C4F21005A4500A0F842 /* 脏腑辨识 */,
 			);
 			path = OtherImage;
 			sourceTree = "<group>";
@@ -4169,136 +4002,6 @@
 			path = SBJson;
 			sourceTree = "<group>";
 		};
-		03F97C4F21005A4500A0F842 /* 脏腑辨识 */ = {
-			isa = PBXGroup;
-			children = (
-				03F97C5421005A8500A0F842 /* 其它 */,
-				03F97C5321005A7500A0F842 /* 女正面 */,
-				03F97C5221005A6C00A0F842 /* 女背面 */,
-				03F97C5121005A6300A0F842 /* 男正面 */,
-				03F97C5021005A5D00A0F842 /* 男背面 */,
-			);
-			path = "脏腑辨识";
-			sourceTree = "<group>";
-		};
-		03F97C5021005A5D00A0F842 /* 男背面 */ = {
-			isa = PBXGroup;
-			children = (
-				03F97CE321005AFA00A0F842 /* ICD10__back_head_nomal.png */,
-				03F97CE421005AFB00A0F842 /* ICD10_back_back_hilighted.png */,
-				03F97CE921005AFB00A0F842 /* ICD10_back_back_nomal.png */,
-				03F97CDF21005AFA00A0F842 /* ICD10_back_head_highlighted.png */,
-				03F97CE221005AFA00A0F842 /* ICD10_back_hip_hilighted.png */,
-				03F97CE821005AFB00A0F842 /* ICD10_back_hip_nomal.png */,
-				03F97CE021005AFA00A0F842 /* ICD10_back_leftArm_hilighted.png */,
-				03F97CE521005AFB00A0F842 /* ICD10_back_leftArm_nomal.png */,
-				03F97CE621005AFB00A0F842 /* ICD10_back_legs_hilighted.png */,
-				03F97CEA21005AFC00A0F842 /* ICD10_back_legs_nomal.png */,
-				03F97CE721005AFB00A0F842 /* ICD10_back_rightArm_hilighted.png */,
-				03F97CE121005AFA00A0F842 /* ICD10_back_rightArm_nomal.png */,
-			);
-			path = "男背面";
-			sourceTree = "<group>";
-		};
-		03F97C5121005A6300A0F842 /* 男正面 */ = {
-			isa = PBXGroup;
-			children = (
-				03F97CD121005AE900A0F842 /* ICD10_front_chest_hilighted.png */,
-				03F97CD221005AE900A0F842 /* ICD10_front_chest_nomal.png */,
-				03F97CCB21005AE800A0F842 /* ICD10_front_head_hilighted.png */,
-				03F97CD021005AE900A0F842 /* ICD10_front_head_nomal.png */,
-				03F97CC921005AE800A0F842 /* ICD10_front_hip_hilighted.png */,
-				03F97CCC21005AE800A0F842 /* ICD10_front_hip_nomal.png */,
-				03F97CCA21005AE800A0F842 /* ICD10_front_leftArm_hilighted.png */,
-				03F97CCD21005AE900A0F842 /* ICD10_front_leftArm_nomal.png */,
-				03F97CCE21005AE900A0F842 /* ICD10_front_legs_hilighted.png */,
-				03F97CC721005AE800A0F842 /* ICD10_front_legs_nomal.png */,
-				03F97CCF21005AE900A0F842 /* ICD10_front_rightArm_hilighted.png */,
-				03F97CC821005AE800A0F842 /* ICD10_front_rightArm_nomal.png */,
-			);
-			path = "男正面";
-			sourceTree = "<group>";
-		};
-		03F97C5221005A6C00A0F842 /* 女背面 */ = {
-			isa = PBXGroup;
-			children = (
-				03F97CA021005ACC00A0F842 /* ICD11_back_back_highlighted.png */,
-				03F97CA121005ACC00A0F842 /* ICD11_back_chest_nomal.png */,
-				03F97C9721005ACB00A0F842 /* ICD11_back_head_highlighted.png */,
-				03F97C9821005ACB00A0F842 /* ICD11_back_head_nomal.png */,
-				03F97C9921005ACB00A0F842 /* ICD11_back_hip_highlighted.png */,
-				03F97CA221005ACC00A0F842 /* ICD11_back_hip_nomal.png */,
-				03F97C9A21005ACB00A0F842 /* ICD11_back_lefArm_highlighted.png */,
-				03F97C9C21005ACB00A0F842 /* ICD11_back_leftArm_nomal.png */,
-				03F97C9F21005ACC00A0F842 /* ICD11_back_legs_highlighted.png */,
-				03F97C9B21005ACB00A0F842 /* ICD11_back_legs_nomal.png */,
-				03F97C9E21005ACC00A0F842 /* ICD11_back_rightArm_highlighted.png */,
-				03F97C9D21005ACC00A0F842 /* ICD11_back_rightArm_nomal.png */,
-			);
-			path = "女背面";
-			sourceTree = "<group>";
-		};
-		03F97C5321005A7500A0F842 /* 女正面 */ = {
-			isa = PBXGroup;
-			children = (
-				03F97CB221005AD900A0F842 /* ICD11_front_chest_highlighted.png */,
-				03F97CB021005AD900A0F842 /* ICD11_front_chest_nomal.png */,
-				03F97CB521005ADA00A0F842 /* ICD11_front_head_highlighted.png */,
-				03F97CB621005ADA00A0F842 /* ICD11_front_head_nomal.png */,
-				03F97CB721005ADA00A0F842 /* ICD11_front_hip_highlighted.png */,
-				03F97CB321005AD900A0F842 /* ICD11_front_hip_nomal.png */,
-				03F97CB421005AD900A0F842 /* ICD11_front_leftArm_highlighted.png */,
-				03F97CB821005ADA00A0F842 /* ICD11_front_leftArm_nomal.png */,
-				03F97CAF21005AD900A0F842 /* ICD11_front_legs_highlighted.png */,
-				03F97CB921005ADA00A0F842 /* ICD11_front_legs_nomal.png */,
-				03F97CB121005AD900A0F842 /* ICD11_front_rightArm_highlighted.png */,
-				03F97CBA21005ADA00A0F842 /* ICD11_front_rightArm_nomal.png */,
-			);
-			path = "女正面";
-			sourceTree = "<group>";
-		};
-		03F97C5421005A8500A0F842 /* 其它 */ = {
-			isa = PBXGroup;
-			children = (
-				03F97D0B210072B300A0F842 /* 预约挂号专题页_04.png */,
-				03F97D09210072A600A0F842 /* 预约挂号专题页_03.png */,
-				03F97C6221005A9B00A0F842 /* 2_19_back.png */,
-				03F97C6F21005A9D00A0F842 /* ICD10_02.png */,
-				03F97C5C21005A9A00A0F842 /* ICD10_07_症.png */,
-				03F97C5721005A9900A0F842 /* ICD10_19_front.png */,
-				03F97C7521005A9E00A0F842 /* ICD10_病.png */,
-				03F97C6921005A9C00A0F842 /* ICD10_back_closed.png */,
-				03F97C6321005A9B00A0F842 /* ICD10_back_open.png */,
-				03F97C7421005A9E00A0F842 /* ICD10_back.png */,
-				03F97C6821005A9C00A0F842 /* ICD10_body_closed.png */,
-				03F97C6A21005A9C00A0F842 /* ICD10_body_open.png */,
-				03F97C6E21005A9D00A0F842 /* ICD10_chest_closed.png */,
-				03F97C7121005A9D00A0F842 /* ICD10_chest_open.png */,
-				03F97C6B21005A9C00A0F842 /* ICD10_commit.png */,
-				03F97C5A21005A9A00A0F842 /* ICD10_delete.png */,
-				03F97C5521005A9900A0F842 /* ICD10_head_closed.png */,
-				03F97C6621005A9C00A0F842 /* ICD10_head_open.png */,
-				03F97C7221005A9E00A0F842 /* ICD10_leftGrayLine.png */,
-				03F97C7321005A9E00A0F842 /* ICD10_leftLine.png */,
-				03F97C7021005A9D00A0F842 /* ICD10_limps_closed.png */,
-				03F97C6121005A9B00A0F842 /* ICD10_limps_open.png */,
-				03F97C5B21005A9A00A0F842 /* ICD10_man.png */,
-				03F97C6C21005A9D00A0F842 /* ICD10_popSelectedBack.png */,
-				03F97C5D21005A9A00A0F842 /* ICD10_reason_closed.png */,
-				03F97C6D21005A9D00A0F842 /* ICD10_reason_open.png */,
-				03F97C5F21005A9A00A0F842 /* ICD10_selected.png */,
-				03F97C6421005A9B00A0F842 /* ICD10_selectedSymptom.png */,
-				03F97C6721005A9C00A0F842 /* ICD10_stomach_closed.png */,
-				03F97C6021005A9B00A0F842 /* ICD10_stomach_open.png */,
-				03F97C5921005A9A00A0F842 /* ICD10_waist_closed.png */,
-				03F97C6521005A9B00A0F842 /* ICD10_waist_open.png */,
-				03F97C5621005A9900A0F842 /* ICD10_woman.png */,
-				03F97C5E21005A9A00A0F842 /* popback.png */,
-				03F97C5821005A9900A0F842 /* selectedSymDisease.png */,
-			);
-			path = "其它";
-			sourceTree = "<group>";
-		};
 		03F97CF721005B0C00A0F842 /* 登录注册 */ = {
 			isa = PBXGroup;
 			children = (
@@ -4575,35 +4278,21 @@
 				036E84D72186EB1A001B9BB4 /* ic_electricity_cyan.png in Resources */,
 				0325A5FE2109C2D300275671 /* sportImageText.plist in Resources */,
 				03A24C932114261B005B5BA1 /* 专家咨询_06.png in Resources */,
-				03F97CBD21005ADA00A0F842 /* ICD11_front_rightArm_highlighted.png in Resources */,
 				03F97D1421007FB700A0F842 /* ICD10.db in Resources */,
 				030F51A62101CEBE003C918F /* yundongbofang1.png in Resources */,
 				036A668D2113FB5A0096A006 /* 星星_未点亮.png in Resources */,
 				036E851A2186EB1A001B9BB4 /* add_device.png in Resources */,
 				036FC0E52118249D00C1A793 /* Feedback_btn.png in Resources */,
 				036A66B92113FF1F0096A006 /* 家庭成员_提交.png in Resources */,
-				03F97CD521005AE900A0F842 /* ICD10_front_hip_hilighted.png in Resources */,
-				03F97CA621005ACD00A0F842 /* ICD11_back_lefArm_highlighted.png in Resources */,
 				039C238D2123D02600F9AFA3 /* bloodguide3.png in Resources */,
 				0389890A21D36CC5004A6CBD /* My_DeleIcon.png in Resources */,
-				03F97CC421005ADB00A0F842 /* ICD11_front_leftArm_nomal.png in Resources */,
-				03F97C9421005A9E00A0F842 /* ICD10_leftLine.png in Resources */,
 				036E84502186EAF5001B9BB4 /* wd55.mp3 in Resources */,
-				03F97CF321005AFC00A0F842 /* ICD10_back_rightArm_hilighted.png in Resources */,
-				03F97C8921005A9E00A0F842 /* ICD10_body_closed.png in Resources */,
-				03F97C9021005A9E00A0F842 /* ICD10_02.png in Resources */,
-				03F97CAC21005ACD00A0F842 /* ICD11_back_back_highlighted.png in Resources */,
 				030F51D62101CEBE003C918F /* WinZhi_Img_ruai_2.png in Resources */,
-				03F97C8B21005A9E00A0F842 /* ICD10_body_open.png in Resources */,
 				036E85222186EB1A001B9BB4 /* channel_num1.png in Resources */,
-				03F97CF421005AFC00A0F842 /* ICD10_back_hip_nomal.png in Resources */,
 				036285B22106FC630090020D /* jinluo_default_icon.png in Resources */,
 				035FD3FF21881F03008CD7E7 /* zhongxinzhifu.png in Resources */,
 				039B2AEF2125623800D558F5 /* recheck_blue.png in Resources */,
 				036E84DE2186EB1A001B9BB4 /* pulldownMoxaSet.png in Resources */,
-				03F97CC321005ADB00A0F842 /* ICD11_front_hip_highlighted.png in Resources */,
-				03F97C9221005A9E00A0F842 /* ICD10_chest_open.png in Resources */,
-				03F97CC521005ADB00A0F842 /* ICD11_front_legs_nomal.png in Resources */,
 				038A65362112AC130055C760 /* 1我的_105.png in Resources */,
 				036E84F42186EB1A001B9BB4 /* clock@2x.png in Resources */,
 				035FD3FD21881F03008CD7E7 /* zhifuweishiyong.png in Resources */,
@@ -4636,8 +4325,6 @@
 				036E85582186EB2A001B9BB4 /* moxaTopView.xib in Resources */,
 				036285AA2106F3D50090020D /* 知己档案_体质.png in Resources */,
 				03B1A1972119690400B23339 /* ReplaceSec_NSecS.png in Resources */,
-				03F97CED21005AFC00A0F842 /* ICD10_back_rightArm_nomal.png in Resources */,
-				03F97CEF21005AFC00A0F842 /* ICD10__back_head_nomal.png in Resources */,
 				030F51E12101CEBE003C918F /* yundongyueyaoting.png in Resources */,
 				036E856B2186EB2A001B9BB4 /* MoxaSetting.xib in Resources */,
 				036A66AE2113FEF80096A006 /* wodekabaoxia.png in Resources */,
@@ -4647,7 +4334,6 @@
 				036E85062186EB1A001B9BB4 /* btn_dec_click.png in Resources */,
 				036E84D42186EB1A001B9BB4 /* btn_aijiu_recipe_1.png in Resources */,
 				030F51B32101CEBE003C918F /* 2-经络_08.png in Resources */,
-				03F97C8621005A9E00A0F842 /* ICD10_waist_open.png in Resources */,
 				035FD3FE21881F03008CD7E7 /* zhifushibai.png in Resources */,
 				038A65432112AF550055C760 /* integral.png in Resources */,
 				039C23B02123FA3100F9AFA3 /* 血压03.png in Resources */,
@@ -4657,7 +4343,6 @@
 				036E855E2186EB2A001B9BB4 /* UISetAlertViewController.xib in Resources */,
 				030F51C52101CEBE003C918F /* 2-经络_02.png in Resources */,
 				036285A82106F3D50090020D /* 知己档案_脏腑.png in Resources */,
-				03F97C7D21005A9E00A0F842 /* ICD10_07_症.png in Resources */,
 				030F51E82101CEBE003C918F /* 乐药购物车1及支付_03.png in Resources */,
 				036A669C2113FB8C0096A006 /* 私人服务_line.png in Resources */,
 				036E85732186EB2A001B9BB4 /* WriteExperience.xib in Resources */,
@@ -4669,7 +4354,6 @@
 				038EAB2821F6F94500B07EFC /* cashcardBack.png in Resources */,
 				036E85182186EB1A001B9BB4 /* chufang.png in Resources */,
 				03439076210AB64E00B57142 /* leyaojiesuan.png in Resources */,
-				03F97CD421005AE900A0F842 /* ICD10_front_rightArm_nomal.png in Resources */,
 				030F51D12101CEBE003C918F /* WY_bssf.mp3.wav in Resources */,
 				030F51F32101CEBE003C918F /* WY_bs.mp3 in Resources */,
 				03731DD52112DF4900994C53 /* 个人信息_上传头像.png in Resources */,
@@ -4679,10 +4363,8 @@
 				038A65332112AC130055C760 /* 1我的_109.png in Resources */,
 				030F51C82101CEBE003C918F /* 2-经络_06.png in Resources */,
 				030F51E22101CEBE003C918F /* WinZhi_Img_mi_1.png in Resources */,
-				03F97C8721005A9E00A0F842 /* ICD10_head_open.png in Resources */,
 				036E850A2186EB1A001B9BB4 /* bluetooth_add.png in Resources */,
 				036E85752186EB2A001B9BB4 /* MoxaEndView.xib in Resources */,
-				03F97C8821005A9E00A0F842 /* ICD10_stomach_closed.png in Resources */,
 				036E85662186EB2A001B9BB4 /* FindBackPasswordView.xib in Resources */,
 				036E84FB2186EB1A001B9BB4 /* longclick_drag_guide.png in Resources */,
 				038A65542112B5360055C760 /* 我的待评价.png in Resources */,
@@ -4692,7 +4374,6 @@
 				03FBDF4421927DB3006116FC /* UMCommonLog.bundle in Resources */,
 				0389890C21D36CCB004A6CBD /* My_upIcon.png in Resources */,
 				036A66AF2113FEF80096A006 /* wodekabaoxu.png in Resources */,
-				03F97CDD21005AE900A0F842 /* ICD10_front_chest_hilighted.png in Resources */,
 				038A654C2112B39B0055C760 /* 我的vLine.png in Resources */,
 				038EAB2A21F6FF5900B07EFC /* no_card.png in Resources */,
 				036E851D2186EB1A001B9BB4 /* help_picture_three.png in Resources */,
@@ -4711,7 +4392,6 @@
 				036E85572186EB2A001B9BB4 /* recipelcell.xib in Resources */,
 				036E852D2186EB1A001B9BB4 /* ajys_bluetooth_normal@3x.png in Resources */,
 				03B1A1922119690400B23339 /* Regist_surepass.png in Resources */,
-				03F97C7721005A9E00A0F842 /* ICD10_woman.png in Resources */,
 				036A66BC2113FF1F0096A006 /* 221323_03.png in Resources */,
 				036E84C52186EB1A001B9BB4 /* btn_confirm_normal.png in Resources */,
 				036E855C2186EB2A001B9BB4 /* WriteExperienceCell.xib in Resources */,
@@ -4724,10 +4404,6 @@
 				036E85002186EB1A001B9BB4 /* AllSwitch.png in Resources */,
 				039C23AD2123FA3100F9AFA3 /* 血压07.png in Resources */,
 				038A652E2112AC130055C760 /* 1我的_107.png in Resources */,
-				03F97C8221005A9E00A0F842 /* ICD10_limps_open.png in Resources */,
-				03F97C7A21005A9E00A0F842 /* ICD10_waist_closed.png in Resources */,
-				03F97CF221005AFC00A0F842 /* ICD10_back_legs_hilighted.png in Resources */,
-				03F97CA521005ACD00A0F842 /* ICD11_back_hip_highlighted.png in Resources */,
 				0325A5FD2109C2D300275671 /* sportImageType.plist in Resources */,
 				036E85272186EB1A001B9BB4 /* btn_add_nor.png in Resources */,
 				036E84E62186EB1A001B9BB4 /* icon_unhappy.png in Resources */,
@@ -4740,21 +4416,15 @@
 				03A24C952114261B005B5BA1 /* 专家咨询_13.png in Resources */,
 				036A66B82113FF1F0096A006 /* 2_1wq5.png in Resources */,
 				036E852C2186EB1A001B9BB4 /* ic_recipe_pressed.png in Resources */,
-				03F97CA321005ACD00A0F842 /* ICD11_back_head_highlighted.png in Resources */,
 				036E85282186EB1A001B9BB4 /* swtichIcon.png in Resources */,
-				03F97CAB21005ACD00A0F842 /* ICD11_back_legs_highlighted.png in Resources */,
 				039B2AF42125623800D558F5 /* commit_green.png in Resources */,
-				03F97CA921005ACD00A0F842 /* ICD11_back_rightArm_nomal.png in Resources */,
 				030F51AE2101CEBE003C918F /* Wybs_duo_1.png in Resources */,
 				030F51EC2101CEBE003C918F /* Wybs_ruai_3.png in Resources */,
 				036E852A2186EB1A001B9BB4 /* channel_num2.png in Resources */,
 				039B2B0C2125689E00D558F5 /* 血糖7.png in Resources */,
 				03B1A1952119690400B23339 /* ReplaceSec_Tele.png in Resources */,
-				03F97CDA21005AE900A0F842 /* ICD10_front_legs_hilighted.png in Resources */,
-				03F97C7B21005A9E00A0F842 /* ICD10_delete.png in Resources */,
 				03A24C922114261B005B5BA1 /* 专家咨询1_03.png in Resources */,
 				030F51A42101CEBE003C918F /* 2_06 -11122@2x.png in Resources */,
-				03F97CA721005ACD00A0F842 /* ICD11_back_legs_nomal.png in Resources */,
 				03A07BF220EF436500002274 /* Regist_SMS.png in Resources */,
 				035FD3FA21881F03008CD7E7 /* zhifuchenggong.png in Resources */,
 				030F51BD2101CEBE003C918F /* Wybs_mi_2.png in Resources */,
@@ -4771,7 +4441,6 @@
 				038B530121E844FA00D592C9 /* 运动示范音_03.png in Resources */,
 				036E856F2186EB2A001B9BB4 /* BlueToothList.xib in Resources */,
 				036E851B2186EB1A001B9BB4 /* ic_switch_model.png in Resources */,
-				03F97C9121005A9E00A0F842 /* ICD10_limps_closed.png in Resources */,
 				036E85542186EB2A001B9BB4 /* recipeldetailcell.xib in Resources */,
 				030F51BA2101CEBE003C918F /* yundongtupian2.png in Resources */,
 				036E844F2186EAF5001B9BB4 /* moxastart.mp3 in Resources */,
@@ -4795,34 +4464,25 @@
 				036E85712186EB2A001B9BB4 /* CreatRecipeViewController.xib in Resources */,
 				036E84CD2186EB1A001B9BB4 /* ic_experience.png in Resources */,
 				036E84F22186EB1A001B9BB4 /* ajys_bluetooth_tick@3x.png in Resources */,
-				03F97CC021005ADB00A0F842 /* ICD11_front_leftArm_highlighted.png in Resources */,
 				03B1A1962119690400B23339 /* ReplaceSec_User.png in Resources */,
 				036E850C2186EB1A001B9BB4 /* help_picture_two.png in Resources */,
 				036E84E92186EB1A001B9BB4 /* bluetooth_reduce.png in Resources */,
 				036E84CE2186EB1A001B9BB4 /* switch_ongrey.png in Resources */,
-				03F97CEE21005AFC00A0F842 /* ICD10_back_hip_hilighted.png in Resources */,
 				030F51AA2101CEBE003C918F /* WinZhi_Img_duo_2.png in Resources */,
 				038A652F2112AC130055C760 /* 1我的_106.png in Resources */,
 				030F51B72101CEBE003C918F /* YD_YInYueSF.png in Resources */,
 				036E85562186EB2A001B9BB4 /* NewShareView.xib in Resources */,
 				030F51EF2101CEBE003C918F /* qianbao.png in Resources */,
 				039C23C12123FB0100F9AFA3 /* 使用规范.png in Resources */,
-				03F97C8121005A9E00A0F842 /* ICD10_stomach_open.png in Resources */,
-				03F97CD921005AE900A0F842 /* ICD10_front_leftArm_nomal.png in Resources */,
-				03F97CC121005ADB00A0F842 /* ICD11_front_head_highlighted.png in Resources */,
 				039B2B13212568CB00D558F5 /* 0_15.png in Resources */,
 				036E84DF2186EB1A001B9BB4 /* icon_jiuyouquan.png in Resources */,
-				03F97C8A21005A9E00A0F842 /* ICD10_back_closed.png in Resources */,
-				03F97CEC21005AFC00A0F842 /* ICD10_back_leftArm_hilighted.png in Resources */,
 				030F51EE2101CEBE003C918F /* Wybs_WinZhi_Img_bg.png in Resources */,
 				039C23B52123FA3100F9AFA3 /* 血压10.png in Resources */,
-				03F97CA421005ACD00A0F842 /* ICD11_back_head_nomal.png in Resources */,
 				036E84E42186EB1A001B9BB4 /* img_first.png in Resources */,
 				036E84EB2186EB1A001B9BB4 /* icon_ble.png in Resources */,
 				038CE88C20EDF63D005E9219 /* UserBoxImg.png in Resources */,
 				030F51A82101CEBE003C918F /* WinZhi_Img_sao_2.png in Resources */,
 				036E84D92186EB1A001B9BB4 /* btn_machine_red.png in Resources */,
-				03F97C7C21005A9E00A0F842 /* ICD10_man.png in Resources */,
 				036E85622186EB2A001B9BB4 /* RecipelPopoverCell.xib in Resources */,
 				038A653A2112AC130055C760 /* 1我的_110.png in Resources */,
 				030F51B12101CEBE003C918F /* Wybs_start_btn.png in Resources */,
@@ -4832,8 +4492,6 @@
 				03439074210AB64E00B57142 /* leyaogouwuche.png in Resources */,
 				03A24CB421143A01005B5BA1 /* LeMedicineType_img.png in Resources */,
 				036E85012186EB1A001B9BB4 /* ic_no_experience.png in Resources */,
-				03F97D0C210072B300A0F842 /* 预约挂号专题页_04.png in Resources */,
-				03F97CDE21005AE900A0F842 /* ICD10_front_chest_nomal.png in Resources */,
 				036E85042186EB1A001B9BB4 /* icon_gou.png in Resources */,
 				036E844D2186EAF5001B9BB4 /* wd53.mp3 in Resources */,
 				030F51B42101CEBE003C918F /* pinggukaishiyanshi.png in Resources */,
@@ -4861,7 +4519,6 @@
 				038CE88120EDF4F3005E9219 /* LoginBtn.png in Resources */,
 				039C23B42123FA3100F9AFA3 /* 血压08.png in Resources */,
 				03A07BED20EF436500002274 /* Regist_Tele.png in Resources */,
-				03F97CDB21005AE900A0F842 /* ICD10_front_rightArm_hilighted.png in Resources */,
 				03513AD820E9CAD4004E2805 /* LaunchScreen.storyboard in Resources */,
 				036E84D32186EB1A001B9BB4 /* btn_addrecipel_click.png in Resources */,
 				035FD3FB21881F03008CD7E7 /* weixin.png in Resources */,
@@ -4871,22 +4528,16 @@
 				0343908E210AC23200B57142 /* New_yy_zt_zt.png in Resources */,
 				036E84FF2186EB1A001B9BB4 /* ic_manage_pressed.png in Resources */,
 				030F51CD2101CEBE003C918F /* Wybs_ruai_2.png in Resources */,
-				03F97CA821005ACD00A0F842 /* ICD11_back_leftArm_nomal.png in Resources */,
 				03731DD82112E31500994C53 /* orderLine.png in Resources */,
-				03F97CF621005AFC00A0F842 /* ICD10_back_legs_nomal.png in Resources */,
 				038A65412112ADDC0055C760 /* returedGoodsRecord@2x.png in Resources */,
 				036E85162186EB1A001B9BB4 /* btn_machine_blue.png in Resources */,
-				03F97C7F21005A9E00A0F842 /* popback.png in Resources */,
 				039C23C7212403CB00F9AFA3 /* look.png in Resources */,
-				03F97C8E21005A9E00A0F842 /* ICD10_reason_open.png in Resources */,
 				036E84F92186EB1A001B9BB4 /* 68MoxaHead.png in Resources */,
 				036E85552186EB2A001B9BB4 /* channel.xib in Resources */,
 				03A07BF120EF436500002274 /* Regist_btn.png in Resources */,
-				03F97CC621005ADB00A0F842 /* ICD11_front_rightArm_nomal.png in Resources */,
 				036E85632186EB2A001B9BB4 /* MoxibustionExperience.xib in Resources */,
 				0338E50F212C059100BBF576 /* MessageCell.xib in Resources */,
 				036A669E2113FB8C0096A006 /* 私人医生_查看.png in Resources */,
-				03F97D0A210072A700A0F842 /* 预约挂号专题页_03.png in Resources */,
 				036285B42106FFD00090020D /* tizhi_default_icon.png in Resources */,
 				03439091210AC23200B57142 /* YY_JueIcon.png in Resources */,
 				038A65552112B5360055C760 /* 我的全部订单.png in Resources */,
@@ -4900,15 +4551,11 @@
 				0385168F2186AB0F001DD2B7 /* AlipaySDK.bundle in Resources */,
 				039B2B102125689E00D558F5 /* 血糖5.png in Resources */,
 				030F51C12101CEBE003C918F /* Wybs_mi.png in Resources */,
-				03F97CBF21005ADB00A0F842 /* ICD11_front_hip_nomal.png in Resources */,
-				03F97CEB21005AFC00A0F842 /* ICD10_back_head_highlighted.png in Resources */,
 				030F51DC2101CEBE003C918F /* Wybs_duo.png in Resources */,
 				039B2B0D2125689E00D558F5 /* 血糖2.png in Resources */,
-				03F97C7921005A9E00A0F842 /* selectedSymDisease.png in Resources */,
 				030F51A92101CEBE003C918F /* Wybs_sao_2.png in Resources */,
 				036A66A22113FB8C0096A006 /* 私人医生_头像线.png in Resources */,
 				036E85672186EB2A001B9BB4 /* MoxiHeadInfView_i9.xib in Resources */,
-				03F97C7E21005A9E00A0F842 /* ICD10_reason_closed.png in Resources */,
 				03439093210AC23200B57142 /* YY_YuIcon.png in Resources */,
 				036E85172186EB1A001B9BB4 /* i9MoxaHeadblue.png in Resources */,
 				036285AE2106F3D50090020D /* 知己档案_血压.png in Resources */,
@@ -4916,7 +4563,6 @@
 				036E855F2186EB2A001B9BB4 /* MoxiaExperienceCell.xib in Resources */,
 				036E84D12186EB1A001B9BB4 /* ic_manage_normal.png in Resources */,
 				036E85112186EB1A001B9BB4 /* i9MoxaHead_yellow.png in Resources */,
-				03F97C7621005A9E00A0F842 /* ICD10_head_closed.png in Resources */,
 				030F51C92101CEBE003C918F /* block_card.png in Resources */,
 				0343907F210AB84700B57142 /* 2YY_btn_bg.png in Resources */,
 				03A24CAE211431AB005B5BA1 /* noMessage.png in Resources */,
@@ -4924,10 +4570,8 @@
 				036285A52106F3D50090020D /* 知己档案_心电.png in Resources */,
 				039B2AED2125623800D558F5 /* 呼吸02.png in Resources */,
 				030F51DB2101CEBE003C918F /* YD_JingYin.png in Resources */,
-				03F97CC221005ADB00A0F842 /* ICD11_front_head_nomal.png in Resources */,
 				030F51E32101CEBE003C918F /* navBigBackImage@2x.png in Resources */,
 				036E84ED2186EB1A001B9BB4 /* ic_password_pressed.png in Resources */,
-				03F97C9521005A9E00A0F842 /* ICD10_back.png in Resources */,
 				039C238E2123D02600F9AFA3 /* bloodguide1.png in Resources */,
 				036E84C92186EB1A001B9BB4 /* ic_electricity_yellow.png in Resources */,
 				03439095210AC23200B57142 /* New_yy_zt_bf.png in Resources */,
@@ -4950,17 +4594,13 @@
 				039C23B32123FA3100F9AFA3 /* 血压01.png in Resources */,
 				035FD3FC21881F03008CD7E7 /* zhifuwancheng.png in Resources */,
 				038B52FF21E842D100D592C9 /* quanbuxiazai.png in Resources */,
-				03F97C8D21005A9E00A0F842 /* ICD10_popSelectedBack.png in Resources */,
 				036E851C2186EB1A001B9BB4 /* channel_num5.png in Resources */,
 				039C23AF2123FA3100F9AFA3 /* 血压14.png in Resources */,
-				03F97CF121005AFC00A0F842 /* ICD10_back_leftArm_nomal.png in Resources */,
 				030F51D72101CEBE003C918F /* Wybs_PinYinImg.png in Resources */,
-				03F97C8C21005A9E00A0F842 /* ICD10_commit.png in Resources */,
 				039B2B112125689E00D558F5 /* 血糖3.png in Resources */,
 				036A66BA2113FF1F0096A006 /* 我的咨询_21.png in Resources */,
 				039C23BA2123FA3100F9AFA3 /* 血压12.png in Resources */,
 				036A66C3211400060096A006 /* xinkabao.png in Resources */,
-				03F97C8321005A9E00A0F842 /* 2_19_back.png in Resources */,
 				030F51F02101CEBE003C918F /* 2_0-126.png in Resources */,
 				030F51F22101CEBE003C918F /* WinZhi_Img_la_1.png in Resources */,
 				0343907E210AB84700B57142 /* YY_btn_bg.png in Resources */,
@@ -4979,14 +4619,12 @@
 				036E84F32186EB1A001B9BB4 /* connect_device.png in Resources */,
 				036E85642186EB2A001B9BB4 /* I9_BlueToothListView.xib in Resources */,
 				036285A62106F3D50090020D /* 知己档案_血氧.png in Resources */,
-				03F97C8421005A9E00A0F842 /* ICD10_back_open.png in Resources */,
 				030F51BE2101CEBE003C918F /* Wybs_sao_1.png in Resources */,
 				038A65352112AC130055C760 /* 1我的_111.png in Resources */,
 				035FD3F721881F03008CD7E7 /* zhifubeijingtupian.png in Resources */,
 				036E856D2186EB2A001B9BB4 /* MoxaHelp.xib in Resources */,
 				036E85092186EB1A001B9BB4 /* click_guide.png in Resources */,
 				030F51A72101CEBE003C918F /* 演示前1.png in Resources */,
-				03F97CBC21005ADA00A0F842 /* ICD11_front_chest_nomal.png in Resources */,
 				036E85602186EB2A001B9BB4 /* setviewcell.xib in Resources */,
 				038A65562112B5360055C760 /* 我的待付款.png in Resources */,
 				036E850B2186EB1A001B9BB4 /* ic_recipe_normal.png in Resources */,
@@ -4998,17 +4636,13 @@
 				039C23B12123FA3100F9AFA3 /* 血压02.png in Resources */,
 				036E850D2186EB1A001B9BB4 /* i9MoxaHead.png in Resources */,
 				036E85102186EB1A001B9BB4 /* 68MoxaHead_red.png in Resources */,
-				03F97C8F21005A9E00A0F842 /* ICD10_chest_closed.png in Resources */,
 				038A65392112AC130055C760 /* 1我的_100.png in Resources */,
 				03A24C942114261B005B5BA1 /* 专家咨询_08.png in Resources */,
 				036A668C2113FB5A0096A006 /* 星星_点亮.png in Resources */,
-				03F97C8521005A9E00A0F842 /* ICD10_selectedSymptom.png in Resources */,
 				036FC0D82118204200C1A793 /* zixundishitu.png in Resources */,
 				036A66992113FB8C0096A006 /* 个人信息_私人服务.png in Resources */,
 				036E85082186EB1A001B9BB4 /* img_fenxiang_bg.png in Resources */,
 				03513AD320E9CAD3004E2805 /* Main.storyboard in Resources */,
-				03F97CD321005AE900A0F842 /* ICD10_front_legs_nomal.png in Resources */,
-				03F97CD721005AE900A0F842 /* ICD10_front_head_hilighted.png in Resources */,
 				036A66AD2113FEF80096A006 /* wodekabaobao.png in Resources */,
 				036E84E22186EB1A001B9BB4 /* btn_aijiu_recipe_day_add.png in Resources */,
 				0343906C210AB5FA00B57142 /* 乐药112_01.png in Resources */,
@@ -5017,16 +4651,11 @@
 				036E85142186EB1A001B9BB4 /* ic_electricity_01_green.png in Resources */,
 				036E85032186EB1A001B9BB4 /* i9MoxaHead_red.png in Resources */,
 				038A65302112AC130055C760 /* 1我的_05.png in Resources */,
-				03F97CD621005AE900A0F842 /* ICD10_front_leftArm_hilighted.png in Resources */,
 				039B2B092125689E00D558F5 /* 血糖8.png in Resources */,
 				03439094210AC23200B57142 /* YY_ShangIcon.png in Resources */,
-				03F97CBB21005ADA00A0F842 /* ICD11_front_legs_highlighted.png in Resources */,
-				03F97CAE21005ACD00A0F842 /* ICD11_back_hip_nomal.png in Resources */,
 				036A66C1211400060096A006 /* xinkadi.png in Resources */,
-				03F97CF021005AFC00A0F842 /* ICD10_back_back_hilighted.png in Resources */,
 				039B2AF32125623800D558F5 /* bounceView.png in Resources */,
 				038CE88420EDF4F3005E9219 /* CheckBoxImg.png in Resources */,
-				03F97CF521005AFC00A0F842 /* ICD10_back_back_nomal.png in Resources */,
 				036E84D82186EB1A001B9BB4 /* icon_wechat_share.png in Resources */,
 				030F51DF2101CEBE003C918F /* 111_106.png in Resources */,
 				036E85242186EB1A001B9BB4 /* ic_password.png in Resources */,
@@ -5034,12 +4663,10 @@
 				039B2ADC21255C2300D558F5 /* 确定.png in Resources */,
 				032AB49F211AB48800CF40D3 /* healthLec.png in Resources */,
 				03439075210AB64E00B57142 /* leyaozhifuxianjinka.png in Resources */,
-				03F97CBE21005ADB00A0F842 /* ICD11_front_chest_highlighted.png in Resources */,
 				039C23B72123FA3100F9AFA3 /* 血压13.png in Resources */,
 				036E84532186EAF5001B9BB4 /* wd56.mp3 in Resources */,
 				036285A92106F3D50090020D /* 知己档案_体温.png in Resources */,
 				030F51D52101CEBE003C918F /* Wybs_ruai.png in Resources */,
-				03F97C9621005A9E00A0F842 /* ICD10_病.png in Resources */,
 				038CE88020EDF4F3005E9219 /* Find_Btn.png in Resources */,
 				03B1A1942119690400B23339 /* ReplaceSec_NSec.png in Resources */,
 				039C23882123CCB600F9AFA3 /* 流程介绍页_02.png in Resources */,
@@ -5051,18 +4678,15 @@
 				030F51E72101CEBE003C918F /* yudongbofang2.png in Resources */,
 				036E851E2186EB1A001B9BB4 /* ic_manage.png in Resources */,
 				036E84CA2186EB1A001B9BB4 /* btn_addrecipel_normal.png in Resources */,
-				03F97CAA21005ACD00A0F842 /* ICD11_back_rightArm_highlighted.png in Resources */,
 				036E84E72186EB1A001B9BB4 /* btn_aijiu_none_choose.png in Resources */,
 				036E84F52186EB1A001B9BB4 /* channel_num3.png in Resources */,
 				038A65322112AC130055C760 /* 1我的_108.png in Resources */,
 				03439073210AB64E00B57142 /* leyaoweigoumai.png in Resources */,
 				03A07BF020EF436500002274 /* Regist_passwork.png in Resources */,
-				03F97CD821005AE900A0F842 /* ICD10_front_hip_nomal.png in Resources */,
 				03B1A1912119690400B23339 /* ReplaceSec_TF_bg.png in Resources */,
 				036285B8210717610090020D /* archiveElec.png in Resources */,
 				039C23B82123FA3100F9AFA3 /* 血压04.png in Resources */,
 				030F51E02101CEBE003C918F /* WinZhi_Img_mi_2.png in Resources */,
-				03F97CAD21005ACD00A0F842 /* ICD11_back_chest_nomal.png in Resources */,
 				036A66C2211400060096A006 /* xinkabang.png in Resources */,
 				030F51CA2101CEBE003C918F /* YD_BF.png in Resources */,
 				036E85762186EB2A001B9BB4 /* Recipel.xib in Resources */,
@@ -5070,7 +4694,6 @@
 				039B2B0A2125689E00D558F5 /* 血糖9.png in Resources */,
 				030F51BF2101CEBE003C918F /* pinggulangdu.png in Resources */,
 				030F51B82101CEBE003C918F /* Wybs_la_2.png in Resources */,
-				03F97C8021005A9E00A0F842 /* ICD10_selected.png in Resources */,
 				036E85132186EB1A001B9BB4 /* channel_num4.png in Resources */,
 				036A66A12113FB8C0096A006 /* 私人医生_更改.png in Resources */,
 				03439090210AC23200B57142 /* New_yy_zt_xz.png in Resources */,
@@ -5081,9 +4704,6 @@
 				036A66B72113FF1F0096A006 /* 我的卡包_04.png in Resources */,
 				036E84EE2186EB1A001B9BB4 /* icon_qq_share.png in Resources */,
 				036E85652186EB2A001B9BB4 /* MoxiHeadInfView.xib in Resources */,
-				03F97CDC21005AE900A0F842 /* ICD10_front_head_nomal.png in Resources */,
-				03F97C7821005A9E00A0F842 /* ICD10_19_front.png in Resources */,
-				03F97C9321005A9E00A0F842 /* ICD10_leftGrayLine.png in Resources */,
 				036E84CF2186EB1A001B9BB4 /* switch_onblue.png in Resources */,
 				0337A725218ADC6C005A4693 /* PEPhotoCropEditor.bundle in Resources */,
 			);
