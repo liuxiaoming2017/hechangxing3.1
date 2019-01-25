@@ -459,6 +459,8 @@
                 [UserShareOnce shareOnce].allYueYaoPrice = [UserShareOnce shareOnce].allYueYaoPrice + model.price;
                 //self->allPrice = self->allPrice + model.price;
                 self->jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
+                 [GlobalCommon showMessage:@"乐药已加入购物车" duration:2.0];
+                
 //                NSString* filepath=[self createYueYaoZhiFufilepath];
 //                NSFileManager *fileManager = [NSFileManager defaultManager];
 //                NSString *urlpath= [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", @"arrayText.txt"]];

@@ -21,7 +21,6 @@
 {
     UIScrollView *scrollView;
     UILabel      *xianjinkaLabel;
-    UILabel      *zongjiLabel;
     float         xianjika;
 }
 @property (nonatomic ,strong) UIImageView    *imageV;
@@ -37,7 +36,9 @@
 @property (nonatomic ,strong) UILabel        *jinerLabel;
 @property (nonatomic ,assign) float          priceYuer;
 @property (nonatomic ,assign) float          priceCountt;
-
+@property (nonatomic ,strong)UIImageView *cardBackImg;
+@property (nonatomic ,strong)UIImageView *no_CardImage;
+@property (nonatomic ,strong)UILabel *nocardLabel;
 @property (nonatomic,strong) UIView *cashcardView;
 
 @end
@@ -90,11 +91,13 @@
     UIImageView *cardBackImg = [[UIImageView alloc]initWithFrame:CGRectMake(22, cardTitleLabel.bottom+5, self.view.frame.size.width - 44, 200)];
     cardBackImg.image = [UIImage imageNamed:@"cashcardBack.png"];
     [cashcardView addSubview:cardBackImg];
+    self.cardBackImg = cardBackImg;
     
     
     UIImageView *no_CardImage = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth/2.0-50, cardBackImg.top+(cardBackImg.height-65)/2.0, 100, 40)];
     no_CardImage.image = [UIImage imageNamed:@"no_card.png"];
     [cashcardView addSubview:no_CardImage];
+    self.no_CardImage = no_CardImage;
     
     UILabel *nocardLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth/2.0-100, no_CardImage.bottom+5, 200, 25)];
     nocardLabel.font = [UIFont systemFontOfSize:17];
@@ -102,6 +105,7 @@
     nocardLabel.textColor = [UIColor grayColor];
     nocardLabel.text = @"您当前还没有现金卡哦";
     [cashcardView addSubview:nocardLabel];
+    self.nocardLabel = nocardLabel;
     
     UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(0, cashcardView.bottom, ScreenWidth, 10)];
     lineView2.backgroundColor = [UIColor colorWithRed:242/255.0 green:241/255.0 blue:239/255.0 alpha:1.0];
@@ -113,7 +117,7 @@
     scrollView.contentSize = CGSizeMake(1, lineView2.bottom);
     
     
-  //  [self payMentWithBlock];
+    [self payMentWithBlock];
     
     UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, scrollView.bottom, ScreenWidth, 65)];
     bottomView.backgroundColor = [UIColor whiteColor];
@@ -146,6 +150,7 @@
     cardxiaofeiLabel.textColor = [UtilityFunc colorWithHexString:@"#ff9933"];
     cardxiaofeiLabel.text = [NSString stringWithFormat:@"¥%.2f",0.00];
     [bottomView addSubview:cardxiaofeiLabel];
+    xianjinkaLabel  =  cardxiaofeiLabel;
     
     
     UIView *zhifuView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-kTabBarHeight, ScreenWidth, 44)];
@@ -296,9 +301,6 @@
 }
 - (void)zhifufangshidequeding{
     float price = [UserShareOnce shareOnce].allYueYaoPrice;
-    //清理z选中的订单
-    [UserShareOnce shareOnce].allYueYaoPrice = 0;
-    [[UserShareOnce shareOnce].yueYaoBuyArr removeAllObjects];
     
     NSMutableArray *arrayBlock = [[NSMutableArray alloc]init];
     if (price > 0 ) {
@@ -513,12 +515,17 @@
         {
             self.dataArray = [dic objectForKey:@"data"];
             if (self.dataArray.count == 0) {
-                UIImageView *no_CardImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 300, self.view.frame.size.width, self.view.frame.size.height - 344)];
-                no_CardImage.image = [UIImage imageNamed:@"no_card.png"];
-                [self.view addSubview:no_CardImage];
+                self.cardBackImg.hidden = NO;
+                self.no_CardImage.hidden = NO;
+                self.nocardLabel.hidden = NO;
+                 cashcardView.frame =  CGRectMake(0, _tableView.bottom+15, ScreenWidth, 245);
                 return;
             }
-            scrollView.contentSize = CGSizeMake(0, self.dataArray.count*(139 / 2 +10));
+            self.cardBackImg.hidden = YES;
+            self.no_CardImage.hidden = YES;
+            self.nocardLabel.hidden = YES;
+            cashcardView.frame =  CGRectMake(0, _tableView.bottom+15, ScreenWidth, self.dataArray.count*(139 / 2 +10));
+            scrollView.contentSize = CGSizeMake(0, _tableView.bottom+65+self.dataArray.count*(139 / 2 +10));
             [self payWithBlockDetails];
             //[_blockTableView reloadData];
         }
@@ -537,7 +544,7 @@
 }
 - (void)payWithBlockDetails{
     for (int i = 0; i < self.dataArray.count; i++) {
-        UIView *diView = [[UIView alloc]initWithFrame:CGRectMake(0,(139 / 2 +10)*i, self.view.frame.size.width, 139 / 2 +10)];
+        UIView *diView = [[UIView alloc]initWithFrame:CGRectMake(0,_tableView.bottom+65+(139 / 2 +10)*i, self.view.frame.size.width, 139 / 2 +10)];
         [scrollView addSubview:diView];
         
         NSDate *datas = [[NSDate alloc]initWithTimeIntervalSince1970:[[self.dataArray[i] objectForKey:@"bindDate"] doubleValue]/1000.00];
@@ -558,7 +565,7 @@
         _imageV.image = [UIImage imageNamed:@"我的咨询_21.png"];
         [diView addSubview:_imageV];
         _mLabel = [[UILabel alloc] init];
-        _mLabel.text = [NSString stringWithFormat:@"%.1f",[[self.dataArray[i]objectForKey:@"balance"]floatValue]];
+        _mLabel.text = [NSString stringWithFormat:@"%.2f",[[self.dataArray[i]objectForKey:@"balance"]floatValue]];
         _mLabel.textAlignment = NSTextAlignmentCenter;
         _mLabel.font = [UIFont systemFontOfSize:17];
         _mLabel.textColor = [UIColor whiteColor];
@@ -620,38 +627,34 @@
         button.selected = NO;
         if (self.priceCountt > 0) {
             xianjika -= [[self.dataArray[tagg]objectForKey:@"balance"]floatValue];
-            
         }else{
             xianjika = xianjika - [[self.dataArray[tagg]objectForKey:@"balance"]floatValue] - self.priceCountt;
         }
         if (xianjika>0) {
-            
-            xianjinkaLabel.text = [NSString stringWithFormat:@"%.1f",xianjika];
+            xianjinkaLabel.text = [NSString stringWithFormat:@"%.2f",xianjika];
         }else{
             xianjika = 0.0;
-            xianjinkaLabel.text = [NSString stringWithFormat:@"%.1f",xianjika];
+            xianjinkaLabel.text = [NSString stringWithFormat:@"%.2f",xianjika];
         }
         self.priceCountt += [[self.dataArray[tagg]objectForKey:@"balance"]floatValue];
-        zongjiLabel.text = [NSString stringWithFormat:@"%.1f",self.priceCountt];
-        _jinerLabel.text = [NSString stringWithFormat:@"¥%.1f",self.priceCountt];
+        _jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",self.priceCountt];
         
     }else{
         if (self.priceCountt>0) {
             self.priceCountt -= [[self.dataArray[tagg]objectForKey:@"balance"]floatValue];
             if (self.priceCountt>0) {
                 xianjika += [[self.dataArray[tagg]objectForKey:@"balance"]floatValue];
-                zongjiLabel.text = [NSString stringWithFormat:@"%.1f",self.priceCountt];
-                _jinerLabel.text = [NSString stringWithFormat:@"¥%.1f",self.priceCountt];
-                xianjinkaLabel.text = [NSString stringWithFormat:@"%.1f",xianjika];
-                
+                xianjinkaLabel.text = [NSString stringWithFormat:@"%.2f",xianjika];
+                _jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",self.priceCountt];
             }else{
-                zongjiLabel.text = [NSString stringWithFormat:@"%.1f",0.0];
-                _jinerLabel.text = [NSString stringWithFormat:@"¥%.1f",0.0];
                 xianjika += self.priceCountt + [[self.dataArray[tagg]objectForKey:@"balance"]floatValue];
-                xianjinkaLabel.text = [NSString stringWithFormat:@"%.1f",xianjika];
+                xianjinkaLabel.text = [NSString stringWithFormat:@"%.2f",xianjika];
+                _jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",0.0];
+
             }
             button.selected = YES;
         }else{
+            [GlobalCommon showMessage:@"已选卡已经能支付消费金额" duration:2.0];
             button.selected = NO;
         }
         
@@ -740,29 +743,26 @@
         }
         if (xianjika>0) {
             
-            xianjinkaLabel.text = [NSString stringWithFormat:@"%.1f",xianjika];
+            xianjinkaLabel.text = [NSString stringWithFormat:@"%.2f",xianjika];
         }else{
             xianjika = 0.0;
-            xianjinkaLabel.text = [NSString stringWithFormat:@"%.1f",xianjika];
+            xianjinkaLabel.text = [NSString stringWithFormat:@"%.2f",xianjika];
         }
         self.priceCountt += [[self.dataArray[sender.tag - 2000]objectForKey:@"balance"]floatValue];
-        zongjiLabel.text = [NSString stringWithFormat:@"%.1f",self.priceCountt];
-        _jinerLabel.text = [NSString stringWithFormat:@"%.1f",self.priceCountt];
+        _jinerLabel.text = [NSString stringWithFormat:@"%.2f",self.priceCountt];
         
     }else{
         if (self.priceCountt>0) {
             self.priceCountt -= [[self.dataArray[sender.tag - 2000]objectForKey:@"balance"]floatValue];
             if (self.priceCountt>0) {
                 xianjika += [[self.dataArray[sender.tag - 2000]objectForKey:@"balance"]floatValue];
-                zongjiLabel.text = [NSString stringWithFormat:@"%.1f",self.priceCountt];
-                _jinerLabel.text = [NSString stringWithFormat:@"%.1f",self.priceCountt];
-                xianjinkaLabel.text = [NSString stringWithFormat:@"%.1f",xianjika];
+                _jinerLabel.text = [NSString stringWithFormat:@"%.2f",self.priceCountt];
+                xianjinkaLabel.text = [NSString stringWithFormat:@"%.2f",xianjika];
                 
             }else{
-                zongjiLabel.text = [NSString stringWithFormat:@"%.1f",0.0];
-                _jinerLabel.text = [NSString stringWithFormat:@"%.1f",0.0];
+                _jinerLabel.text = [NSString stringWithFormat:@"%.2f",0.0];
                 xianjika += self.priceCountt + [[self.dataArray[sender.tag - 2000]objectForKey:@"balance"]floatValue];
-                xianjinkaLabel.text = [NSString stringWithFormat:@"%.1f",xianjika];
+                xianjinkaLabel.text = [NSString stringWithFormat:@"%.2f",xianjika];
             }
             sender.selected = YES;
         }else{

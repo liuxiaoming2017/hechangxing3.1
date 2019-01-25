@@ -144,16 +144,13 @@
         }
     } else if (typeInteger == 5){
         self.typeLabel.text = @"脏腑";
-        if([GlobalCommon stringEqualNull:model.zz_name]){
+        if([GlobalCommon stringEqualNull:model.name]){
             self.contentLabel.text = @"无症状";
         }else{
-            self.contentLabel.text = [model.subject valueForKey:@"zz_name"];
+            self.contentLabel.text = model.name;
         }
-        NSString *timerStr = [NSString stringWithFormat:@"%@",model.createDate];
-        timerStr = [self getDateStringWithOtherTimeStr:timerStr];
-        self.timeLabel.text = timerStr;
-        NSString *str = [NSString stringWithFormat:@"%@",model.createDate];
-        self.createDateLabel.text = [self getDateStringWithTimeStr:str];
+        self.timeLabel.text = model.date;
+        self.createDateLabel.text = model.time;
     }else  if (typeInteger == 10){
         self.typeLabel.text = @"心率";
         self.contentLabel.text = [model.subject valueForKey:@"name"];

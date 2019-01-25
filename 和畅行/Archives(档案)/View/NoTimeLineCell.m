@@ -151,20 +151,19 @@
             self.contentLabel.text = [model.subject valueForKey:@"name"];
         }else if ([model.typeStr isEqualToString:@"ZFBS"]){
             self.typeLabel.text = @"脏腑";
-            self.contentLabel.text = model.zz_name_str;
+            self.contentLabel.text = model.name;
         }else if ([model.typeStr isEqualToString:@"bodyTemperature"]){
             self.typeLabel.text = @"体温";
             self.contentLabel.text = model.temperature;
         }
     }else if (typeInteger == 5){
         self.typeLabel.text = @"脏腑";
-        if([GlobalCommon stringEqualNull:model.zz_name]){
+        if([GlobalCommon stringEqualNull:model.name]){
             self.contentLabel.text = @"无症状";
         }else{
-            self.contentLabel.text = [model.subject valueForKey:@"zz_name"];
+            self.contentLabel.text = model.name;
         }
-        NSString *str = [NSString stringWithFormat:@"%@",model.createDate];
-        self.createDateLabel.text = [self getDateStringWithTimeStr:str];
+        self.createDateLabel.text = model.time;
     }else  if (typeInteger == 10){
         self.typeLabel.text = @"心率";
         self.contentLabel.text = [model.subject valueForKey:@"name"];
