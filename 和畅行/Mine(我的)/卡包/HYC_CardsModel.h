@@ -28,6 +28,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy)   NSString *status;
 @property (nonatomic,copy)   NSString *service_name;
 @property (nonatomic,copy)   NSString *exprise_time;
+
+
+
+//卡类型
+@property (nonatomic,copy)  NSString*kindStr;
+//现金卡总额
+@property (nonatomic,copy)  NSString*amount;
+//现价卡余额
+@property (nonatomic,copy)   NSString *balance;
+//现金卡结束日期 ?
+@property (nonatomic,copy)   NSString *endDate;
+//现金卡数据
+@property (nonatomic,copy)   NSDictionary *cashcard;
 @end
 
 NS_ASSUME_NONNULL_END

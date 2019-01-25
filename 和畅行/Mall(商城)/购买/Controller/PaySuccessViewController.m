@@ -23,6 +23,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
+    //清理z选中的订单
+    [UserShareOnce shareOnce].allYueYaoPrice = 0;
+    [[UserShareOnce shareOnce].yueYaoBuyArr removeAllObjects];
 
     self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.navTitleLabel.text = @"支付信息";

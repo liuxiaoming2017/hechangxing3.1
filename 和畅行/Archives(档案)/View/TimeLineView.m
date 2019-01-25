@@ -133,14 +133,14 @@
                 return 105;
             }else {
                 NSString *modelTimeStr = [NSString string];
-                if(self.typeInteger==0){
+                if(self.typeInteger==0||self.typeInteger == 5){
                     modelTimeStr = model.date;
                 }else{
                     modelTimeStr = model.createTime;
                 }
                 HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
                 NSString *onmodelTimeStr = [NSString string];
-                if(self.typeInteger==0){
+                 if(self.typeInteger==0||self.typeInteger == 5){
                     onmodelTimeStr = onAmodel.date;
                 }else{
                     onmodelTimeStr = onAmodel.createTime;
@@ -182,7 +182,7 @@
         HealthTipsModel *model = _dataArr[indexPath.row];
         if(![model.type isEqualToString:@"REPORT"]) {
             NSString *timeStr = [NSString string];
-            if (self.typeInteger == 0) {
+            if (self.typeInteger == 0||self.typeInteger == 5) {
                 timeStr = model.date;
             }else{
                 timeStr = model.createTime;
@@ -203,7 +203,7 @@
                 if (_dataArr.count > 1) {
                     HealthTipsModel *nextmodel = _dataArr[indexPath.row+1];
                     NSString *nextTimeStr = [NSString string];
-                    if (self.typeInteger == 0) {
+                    if (self.typeInteger == 0||self.typeInteger == 5) {
                         nextTimeStr = nextmodel.date;
                     }else{
                         nextTimeStr = nextmodel.createTime;
@@ -224,7 +224,7 @@
                 
                 HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
                 NSString *onTimeStr = [NSString string];
-                if (self.typeInteger == 0) {
+                if (self.typeInteger == 0||self.typeInteger == 5) {
                     onTimeStr = onAmodel.date;
                 }else{
                     onTimeStr = onAmodel.createTime;

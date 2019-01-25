@@ -50,6 +50,7 @@
     _imageV = [[UIImageView alloc]init];
     _imageV.frame  =CGRectMake(imageV.width - 60,  5, 50, 45);
     _imageV.image = [UIImage imageNamed:@"未激活.png"];
+    _imageV.hidden  = YES;
     [imageV addSubview:_imageV];
    
     _yLabel = [[UILabel alloc] init];
@@ -64,28 +65,33 @@
 
 
 -(void)setCarListDataWithModel:(HYC_CardsModel *)model {
-    
-    _hLabel.text = model.card_name;
-    
-    
-    if (model.cardDescription==nil || [model.cardDescription isKindOfClass:[NSNull class]]||model.cardDescription.length == 0) {
-         _mLabel.text = @"暂无";
+    NSString *timeStr = [NSString string];
+    if ([model.kindStr isEqualToString:@"现金卡"]){
+        NSString *str = [model.cashcard valueForKey:@"name"];
+          _hLabel.text = str;
+        _mLabel.text = [NSString stringWithFormat:@"余额 : %@元",model.balance];
+        timeStr = [NSString stringWithFormat:@"%@",[model.cashcard valueForKey:@"endDate"]];
+        _yLabel.text  = [self getDateStringWithTimeStr:timeStr];
     }else{
-        _mLabel.text = model.cardDescription;
+        _hLabel.text = model.card_name;
+        if (model.cardDescription==nil || [model.cardDescription isKindOfClass:[NSNull class]]||model.cardDescription.length == 0) {
+            _mLabel.text = @"暂无";
+        }else{
+            _mLabel.text = model.cardDescription;
+        }
+        
+        if ([model.status  isEqualToString:@"1"]&&![model.kindStr isEqualToString:@"现金卡"]) {
+            _imageV.hidden = NO;
+        }else {
+            _imageV.hidden = YES;
+        }
+        timeStr = model.exprise_time;
+        if(![GlobalCommon stringEqualNull:timeStr]){
+            NSString *endTimeStr =  [NSString stringWithFormat:@"%@到期",timeStr];
+            _yLabel.text = endTimeStr;
+        }
     }
-    
-    
-    if ([model.status  isEqualToString:@"1"]) {
-        _imageV.hidden = NO;
-    }else {
-        _imageV.hidden = YES;
-    }
-
-    NSString *timeStr = model.exprise_time;
-    if(![GlobalCommon stringEqualNull:timeStr]){
-        NSString *endTimeStr =  [NSString stringWithFormat:@"%@到期",timeStr];
-        _yLabel.text = endTimeStr;
-    }
+   
 
 }
 

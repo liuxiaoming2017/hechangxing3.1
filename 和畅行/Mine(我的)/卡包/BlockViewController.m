@@ -138,22 +138,32 @@
         if ([response[@"status"] integerValue] == 100){
                 [self.dataArray removeAllObjects];
            
+            NSArray *oneArray = [response valueForKey:@"data"];
             NSArray *dataArray = [response valueForKey:@"attr_data"];
             
-            if ([dataArray isKindOfClass:[NSNull class]] || dataArray.count == 0){
+            if ( dataArray.count == 0 && oneArray.count == 0){
                 self.nullLabel.hidden = NO;
                 self.tableView.hidden = YES;
                 return ;
             }
+            
+            for (NSDictionary *dic in oneArray ) {
+                HYC_CardsModel *model = [[HYC_CardsModel alloc]init];
+                [model yy_modelSetWithJSON:dic];
+                model.kindStr = @"现金卡";
+                [self.dataArray addObject:model];
+            }
+            
             for (NSDictionary *dic in dataArray ) {
                 HYC_CardsModel *model = [[HYC_CardsModel alloc]init];
+                model.kindStr = @"卡";
                 [model yy_modelSetWithJSON:dic];
                 [self.dataArray addObject:model];
             }
             
             
             if(self.dataArray.count < 1) {
-                self.nullLabel.hidden = NO;
+                self.nullLabel.hidden  = NO;
                 self.tableView.hidden = YES;
             }else{
                 self.nullLabel.hidden = YES;
@@ -195,6 +205,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     HYC_CardsModel *model = self.dataArray[indexPath.row];
+    
+    if([model.kindStr isEqualToString:@"现金卡"] )return;
     
     if ([model.status isEqualToString:@"1"]) {
         
