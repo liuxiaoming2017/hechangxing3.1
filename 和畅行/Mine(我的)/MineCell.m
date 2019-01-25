@@ -27,7 +27,7 @@
 - (void)setupUI
 {
     self.iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(15, 7.5, 35, 35)];
-    self.iconImage.image = [UIImage imageNamed:@"YY_GongIcon"];
+    //self.iconImage.image = [UIImage imageNamed:@"YY_GongIcon"];
     self.iconImage.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:self.iconImage];
     

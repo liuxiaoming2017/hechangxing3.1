@@ -165,6 +165,9 @@ extern BOOL isBF;
 
 #define requestErrorMessage @"服务器开小差了,请稍后重试!"
 
+ #define Localized(key)  [[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"appLanguage"]] ofType:@"lproj"]] localizedStringForKey:(key) value:nil table:@"Language"]
+
+
 // 心电数据保存路径
 #define HealthDataPath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"HealthData.ecg"]
 

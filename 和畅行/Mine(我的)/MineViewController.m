@@ -59,7 +59,7 @@
     //0
 //    listNamesArr = @[@"健康顾问团队",@"退款记录",@"退货记录",@"我的卡包",@"我的积分",@"家庭成员",@"视频预约",@"健康讲座",@"我的乐药",@"运动示范音",@"未发出的声音文件",@"预约挂号",@"健康提示",@"我的咨询",@"收货地址",@"意见反馈",@"收藏",@"设置"];
 //    listImagesArr = @[@"private",@"refundRecord",@"returedGoodsRecord",@"1我的_100",@"integral",@"1我的_101",@"1我的_102",@"1我的_103",@"1我的_104",@"1我的_105",@"1我的_106",@"1我的_107",@"1我的_108",@"1我的_109",@"1我的_110",@"feedback",@"1我的_111",@"1我的_112"];
-    listNamesArr = @[@"退款记录",@"退货记录",@"我的卡包",@"我的积分",@"家庭成员",@"健康讲座",@"运动示范音",@"未发出的声音文件",@"我的咨询",@"收货地址",@"意见反馈",@"收藏",@"设置"];
+    listNamesArr = @[Localized(@"Refund Record"),Localized(@"Return Record"),@"我的卡包",@"我的积分",@"家庭成员",@"健康讲座",@"运动示范音",@"未发出的声音文件",@"我的咨询",@"收货地址",@"意见反馈",@"收藏",@"设置"];
     listImagesArr = @[@"refundRecord",@"returedGoodsRecord",@"1我的_100",@"integral",@"1我的_101",@"1我的_103",@"1我的_105",@"1我的_106",@"1我的_109",@"1我的_110",@"feedback",@"1我的_111",@"1我的_112"];
     
     if([UserShareOnce shareOnce].isOnline){
@@ -97,7 +97,7 @@
     lineView.image = [UIImage imageNamed:@"healthLec"];
     [self.view addSubview:lineView];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+   // dispatch_async(dispatch_get_main_queue(), ^{
         self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, lineView.bottom, ScreenWidth, ScreenHeight-lineView.bottom-kNavBarHeight) style:UITableViewStylePlain];
         self.tableView.showsVerticalScrollIndicator = NO;
         self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
@@ -105,7 +105,7 @@
         self.tableView.dataSource = self;
         [self.view addSubview:self.tableView];
         
-    });
+  //  });
     
     
 }

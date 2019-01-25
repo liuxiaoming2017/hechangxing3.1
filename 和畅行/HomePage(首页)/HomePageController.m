@@ -342,6 +342,9 @@
 # pragma mark - 用户信息按钮
 - (void)userBtnAction:(UIButton *)btn
 {
+    
+    
+    
     SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
     __weak typeof(self) weakself = self;
     [subMember receiveSubIdWith:^(NSString *subId) {

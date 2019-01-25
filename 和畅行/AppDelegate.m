@@ -35,6 +35,7 @@
 #import <UMCommonLog/UMCommonLogManager.h>
 
 #import "SBJson.h"
+#import "ChangeLanguageObject.h"
 //#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 
 
@@ -75,6 +76,8 @@
      [self returnMainPage2];
     
     [self.window makeKeyAndVisible];
+    
+    [ChangeLanguageObject initUserLanguage];
     
     
     return YES;
