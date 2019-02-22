@@ -1,0 +1,320 @@
+/* 
+  ModuleZW.strings
+  和畅行
+
+  Created by 出神入化 on 2019/2/13.
+  Copyright © 2019 刘晓明. All rights reserved.
+*/
+
+
+///                                                          登录页面
+
+
+"账户密码登录"                   = "Login via password";
+"  请输入手机号"                 = "  Phone number" ;
+"请输入手机号"                 = "Phone number" ;
+"  请输入和畅账户"                 = "  Phone number" ;
+"  请输入密码"                     = "  Password";
+"忘记密码"                          = "Forgot password?";
+"忘记密码1"                          = "Forgot password";
+"登录"                                  = "Log in";
+"短信验证码登录"                = "Log in via SMS"  ;
+"其他登录方式"                    = "OR";
+"微信"                                   = "WeChat";
+"欢迎登录"                            =  "Welcome";
+"获取验证码"                        = "Send SMS code";
+"已向您的手机发送验证码,收到后请输入"                     = "Check SMS";
+"60s后重新发送"                     = "60s Resend";
+"后重新发送"                     = " Resend";
+"  请输入验证码"                     = "  Verification Code";
+"请输入验证码"                     = "Verification Code";
+"提示"                         = "提示";
+"确定"                         = "sure";
+"取消"                         = "cancel";
+"返回"                         = "back";
+
+
+////                                                             首页
+
+"和畅包"                                                                         = "Harmony package";
+"您当前处在健康的未病状态的"                                     = "Healthy ";
+"您当前属于未病态"                                                         = "Healthy";
+"您当前属于欲病态"                                                         = "Sub-healthy";
+"您当前属于轻度已病态"                                                    = "Mild illness";
+"当前属于中度已病态"                                                         = "Moderate illness";
+"您当前属于中重度已病态"                                                 = "Severe illness";
+"您当前属于重度已病态"                                                    = "Critical illness";
+
+"针对您目前的状况，优先进行经络梳理"                         = "Suggetsion: Do meridian regulation in priority";
+"点击查看我们为您定制的和畅服务包"                           = "Get personlized services";
+"一说 经络梳理"                                                    = "ONE Speaking:meridian test";
+"一写 调理脏腑"                                                    = "ONE Writing: Zang-fu organs test";
+"一点 调和体质"                                                    = "ONE Clicking: constitution test ";
+"和畅提醒"                         = "Reminder";
+"您的经络状态已有7天以上为测评"                         = "Test my meridian state";
+"推荐阅读"                         = "Info";
+"一听   30分钟/次，3次/日"                         = "ONE Listening 30min*3/day";
+"一站   全套和畅八式2次"                         = "ONE Standing 2 times Harmony exercise";
+"一站   重复第二式“剑指后仰式”3次"                         = "ONE Standing exercise part2  3 times";
+"一站   复第六式“俯身下探加强式”3次"                         = "ONE Standing exercise part6  3 times";
+"一站   重复第五式“体侧弯腰式”3次"                                                              = "ONE Standing exercise part5  3 times";
+"一站   重复第四式“左右扭转式”3次"                                                              = "ONE Standing exercise part4  3 times";
+"一站   重复第三式“俯身下探式”3次"                                                              = "ONE Standing exercise part3  3 times";
+"一听 15分钟/次，2次/日"                                                              = "ONE Listening 15 min*2/day";
+"一说   早、中、晚3次"                                                              = "ONE Speaking Morning-Noon-Evenin";
+"一说"                                                              = "ONE Speaking";
+"一写"                                                              = "ONE Writing";
+"一点"                                                              = "ONE Clicking";
+"一听"                                                              = "ONE Listening";
+"一站"                                                              = "ONE Standing";
+"readImage"                                                        =  "一说";
+"writeImage"                                                       =  "一写";
+"hitImage"                                                           =  "一点";
+"我的"                                                                 =  "My";
+
+"消息中心"                                                         ="Message Center";
+
+"在线咨询" = "Online Consultation";
+
+"儿童咨询" ="Children consultation";
+"1.不用跑医院" ="1.No need to go to the hospital";
+"2.和医生面对面问诊" ="2.Face-to-face consultation with doctor";
+"3.咨询更方便" ="3.More convenient consultation";
+"进入" ="Enter";
+
+"成人咨询"= "Adult consultation";
+"图文咨询" = "Graphic consultation";
+"1.可以通过文字的形式" = "1.By means of text";
+"2.对小病进行咨询" =  "2.Consultation on minor illness can be done";
+"就医更方便" =  "More convenient medical care";
+
+
+///=========================运动=======================
+"sportImageText" = "sportImageText_en";
+"轮播暂停"   =  "Suspend Slider";
+"播放乐药"  =   "Play Treatment Music";
+"动作示范音"  =  "Audio for Demonstration";
+"全部"  =  "All";
+"全部   "  =  "All  ";
+"预备   " =   "Prepare  ";
+"第一式   起式"  =  "Exercise One: Warm-up";
+"第二式   剑指后仰式"  =  "Exercise Two: LeanBackward";
+"第三式   俯身下探式"   = "Exercise Three: BendDown";
+"第四式   左右扭转式"   = "Exercise Four: TurnLeft and Right";
+"第五式   体侧弯腰式"   = "Exercise Five:Lateral Bending";
+"第六式   俯身下探加强式"  =  "Exercise Six:Strengthened Bend Over";
+"第七式   婴儿环抱式" =   "Exercise Seven: BabyCradle";
+"第八式   收式"  =  "Exercise Eight:Unwind";
+"第一式"  =  "Exercise One";
+"第二式"  =  "Exercise Two";
+"第三式"   = "Exercise Three";
+"第四式"   = "Exercise Four";
+"第五式"   = "Exercise Five";
+"第六式"  =  "Exercise Six";
+"第七式" =   "Exercise Seven";
+"第八式"  =  "Exercise Eight";
+
+//ModuleZW(@"全部   "),ModuleZW(@"预备   "),ModuleZW( @"第一式   起式"), ModuleZW(@"第二式   剑指后仰式"), ModuleZW(@"第三式   俯身下探式"), ModuleZW(@"第四式   左右扭转式"), ModuleZW(@"第五式   体侧弯腰式"), ModuleZW(@"第六式   俯身下探加强式"), ModuleZW(@"第七式   婴儿环抱式"), ModuleZW(@"第八式   收式"), nil];
+
+///////                                                            档案
+"筛选"          =  "Filter";
+"最新"          =  "Lastest";
+"经络"          =  "Meridian";
+"体质"          =  "Constitution";
+"脏腑"          =  "Zang-fu";
+"心率"          =  "Heart rate";
+"血压"          =  "Blood pressure";
+"血氧"          =  "Blood oxygen";
+"血糖"          =  "Blood sugar";
+"体温"          =  "Body temp";
+"呼吸"          =  "Breath";
+"阶段报告"   =  "Periodic report";
+//"确定"          =  "Confirm";
+"全部"          =  "All";
+"病历"          =  "Record";
+
+"收缩压"      = "SBP";
+"舒张压"       ="DBP";
+"最近一周"   = "Recent Week";
+"最近两周"   = "Recent 2 Weeks";
+"最近一月"   = "Recent Month";
+"第一季度阶段报告"   = "The 1st quarter report";
+"第二季度阶段报告"   = "The 2nd quarter report";
+"第三季度阶段报告"   = "The 3rd quarter report";
+"第四季度阶段报告"    ="The 4th quarter report";
+
+
+///////                                                            我的
+
+"设置"                         = "Settings";
+"关于我们"                  ="About Us";
+"隐私条款"                  =  "Privacy Policy";
+"会员章程"                  =  "Terms & Conditions";
+"官方微信"                  = "Official WeChat";
+"官方微博"                  = "Official Weibo";
+"声明"                          =  "Statement";
+"帮助"                          =  "Help";
+"修改密码"                   = "Change password";
+"注销"                          = "Logout";
+"全部订单"                   =  "All Orders";
+"待付款"                       =  "Pending Payment";
+"待评价"                       =  "Pending Comment";
+"退款记录"                    =  "Refund Record";
+"退货记录"                    =  "Return Record";
+"我的卡包"                    =  "My Card Pack";
+"我的积分"                    =  "My Points";
+"家庭成员"                    =  "Family Member";
+"健康讲座"                    =  "Health Lecture";
+"我的乐药"                    =  "My Treatment Music";
+"运动示范音"                 =  "Exercise Demonstration Recording";
+"未发出的声音文件"      =  "Unsent sound file";
+"我的咨询"                    =   "My Consulation";
+"收货地址"                    =  "Delivery Address";
+"意见反馈"                    = "Feedback";
+"收藏"                           = "Collect";
+
+
+/////            =============卡包=================
+"还没有卡\n快去添加新卡吧~"    ="Not having a card";
+"您将激活"   = "Continue to activate the";
+"是否继续"    ="";
+"是" = "";
+"否"= "";
+"激活" =  "Activate";
+"否" = " No";
+"是" = " Yes";
+
+"设置"                                                              = "Harmony package";
+"关于我们"                                                              = "Harmony package";
+"修改密码"                   = "Change Password";
+"用 户 名:"                       =   "User Name:";
+"手机号码:"                       =   "Phone number:";
+"请输入原密码"            = "Original password";
+"请输入新密码"            = "New password";
+"请确认新密码"             = "Confirm";
+"授权并登录"                 =  "Submit & Login";
+"确认注销用户"             ="Sure to logout";
+"注销"    = "Logout";
+
+"手机号码"                          =  "Phone Number ";
+"手机号码："                          =  "Phone Number: ";
+
+"姓名"                                =  "Name ";
+"出生日期"                          =  "Date of Birth ";
+"婚姻状况"                          = "Marital Status ";
+"民       族"                                    = "Nationality ";
+"居住地址"                          =  "Residential Address ";
+"固定电话"                          ="Fixed-line Telephone ";
+"证件类型"                          =   "Type of ID ";
+"证件号码"                          = "ID No. ";
+"消息中心"                          ="Message Center ";
+"家庭成员"                          = "Family Member ";
+"称呼："                                =   "Salutation:  ";
+"性别："                                = "Sex:  ";
+"出生日期"                          = "Date of Birth ";
+"出生日期："                       = "Date of Birth:  ";
+"证件号码"                          =  "ID No. ";
+"证件号码："                          =  "ID No.: ";
+
+"手机号码"                          = "Phone Number ";
+"男"                                   =  "Male";
+"女"                                   =  "Femal";
+"加载中..."                        = "Loading…";
+"添加家庭成员"                        =  "Add Family Member";
+"和畅包"                                                              = "Harmony package";
+"和畅包"                                                              = "Harmony package";
+"和畅包"                                                              = "Harmony package";
+"和畅包"                                                              = "Harmony package";
+"和畅包"                                                              = "Harmony package";
+"和畅包"                                                              = "Harmony package";
+"和畅包"                                                              = "Harmony package";
+"和畅包"                                                              = "Harmony package";
+"和畅包"                                                              = "Harmony package";
+
+///////             =====================                   通用 ===================
+"音乐"                                                              = "Treatment Music";
+"运动"                                                              = "Exercise";
+"艾灸"                                                              = "Moxibustion";
+"电话"                                                              = "Tel";
+"视频"                                                              = "Video";
+"血压"                                                              = "Blood Pressure";
+"留言"                                                              = "Harmony package";
+"耳穴"                                                              = "Ear Acupuncture";
+"留言"                                                              = "Message";
+//============================专家咨询===========================
+"专家咨询"   = "Expert Advice";
+"请详细描述您的症状、疾病和身体状况。我们根据病情分诊到对应的大夫为您解答。"  =  "Please describe your symptoms, illness and physical condition in detail, and we will arrange corresponding doctor as per your condition";
+"提交"  =  "Submit";
+"选取照片"    ="Choose from album";
+"拍照"       = "Camera";
+"待解决"   =  "Pending";
+"已解决"   = "Solved";
+//============================健康资讯===========================
+"健康资讯"  =  "Health Info";
+"最新资讯"  =  "Latest";
+"健康讲座"   = "Lecture";
+"养生之道"   = "Way to Health";
+"讲座说明："  =  "Lecture Description: ";
+"在线预约养生类、慢病类、职业防护类、两性保健类、亲子健康类等健康主题的讲座或沙龙服务。"=    "Make an online appointment to health-themed lectures or service s like health preservation, chronic diseases, occupational protection, sexual healthcare, parent-kid healthcare, etc.";
+"主讲人"  =  "Speaker";
+"讲座地址"    ="Lecture Address";
+"讲座课题"  =  "Lecture Topic";
+"开讲日期" =   "Date";
+"时间|价格"   = "Time / Price";
+
+//                                                              干预方案
+"一吃Ch"                                                              = "一吃En";
+"一坐Ch"                                                              = "一坐En";
+"一饮Ch"                                                              = "一饮En";
+//"一测Ch"                                                              = "一测En";
+//"一呼Ch"                                                              = "一呼En";
+//"一助Ch"                                                              = "一助En";
+//"一阅Ch"                                                              = "一阅En";
+"一戴Ch"                                                              = "一戴En";
+"一站Ch"                                                              = "一站En";
+"一听Ch"                                                              = "一听En";
+"一贴Ch"                                                              = "一贴En";
+"一选Ch"                                                               = "一选En";
+"一砭Ch"                                                               = "一砭En";
+"一灸Ch"                                                               = "一灸En";
+"一推Ch"                                                               = "一推En";
+"一刮Ch"                                                               = "一刮En";
+"hcy_helpcontent"                                                 = "一助切图";
+"干预方案"                                                             = "Intervention Solution";
+"经络梳理方案"                                                    = "Meridian Regulation Solution";
+"全部"                                                                  = "All";
+"耳穴处方"                                                           = "Ear Acupuncture";
+"运动处方"                                                            = "Meridian Exercise";
+"食疗处方"                                                            = "Dietary Therapy";
+"脏腑运动处方"                                                     = "Zang-fu Exercise";
+"音乐处方"                                                            = "Treatment Music";
+"磁贴处方"                                                            = "Magnetic-Sticker Prescription";
+"膳食处方"                                                            = "Medicinal food";
+"砭石处方"                                                             = "Bian-stone therapy";
+"艾灸处方"                                                             = "ONE Moxibustion";
+"推拿处方"                                                             = "Massage Prescription";
+"刮痧处方"                                                             = "Scrapping Prescription";
+"体质调理方案"                                                      = "Constitution Regulation Solution";
+"体质处方"                                                             = "Constitution Prescription";
+"状态护理方案"                                                       = "State Nursing Solution";
+"体征监测"                                                               = " Sign Monitoring";
+"体检建议"                                                               = "Checkup Suggestion";
+"视频问诊"                                                               = "Video";
+"图文咨询"                                                               = "Graphic Consultation ";
+"预约挂号"                                                               = "Appointment";
+"名医导诊"                                                               = "Medical Guide";
+"健康资讯"                                                               = "Health Information";
+"中医养生"                                                               = "TCM Health Preservation";
+"一刮Ch"                                                               = "一刮En";
+"一刮Ch"                                                               = "一刮En";
+"一刮Ch"                                                               = "一刮En";
+"一刮Ch"                                                               = "一刮En";
+"一刮Ch"                                                               = "一刮En";
+"一刮Ch"                                                               = "一刮En";
+"一刮Ch"                                                               = "一刮En";
+"一刮Ch"                                                               = "一刮En";
+"一刮Ch"                                                               = "一刮En";
+
+
+
+
