@@ -23,15 +23,15 @@
 
 -(void)layoutHelpView {
     
-    self.navTitleLabel.text = @"一助";
+    self.navTitleLabel.text = ModuleZW(@"一助");
     
     UIImageView *contentImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, kNavBarHeight + 20, ScreenWidth - 20, (ScreenWidth - 20)*1.233)];
     contentImageView.userInteractionEnabled = YES;
-    contentImageView.image = [UIImage imageNamed:@"hcy_helpcontent"];
+    contentImageView.image = [UIImage imageNamed: ModuleZW(@"hcy_helpcontent") ];
     [self.view addSubview:contentImageView];
     
     
-    UILabel *titleLabel = [Tools creatLabelWithFrame:CGRectMake(0, contentImageView.height - 85, contentImageView.width, 20) text:@"咨询预约敬请致电" textSize:16];
+    UILabel *titleLabel = [Tools creatLabelWithFrame:CGRectMake(0, contentImageView.height - 85, contentImageView.width, 20) text:ModuleZW(@"咨询预约敬请致电") textSize:16];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [contentImageView addSubview:titleLabel];

@@ -69,7 +69,7 @@
         NSArray *fileArr = [NSArray arrayWithContentsOfFile:filePath];
         self.imageArr = [fileArr objectAtIndex:index];
         
-        NSString *filePath2 = [[NSBundle mainBundle] pathForResource:@"sportImageText" ofType:@"plist"];
+        NSString *filePath2 = [[NSBundle mainBundle] pathForResource:ModuleZW(@"sportImageText") ofType:@"plist"];
         NSArray *fileArr2 = [NSArray arrayWithContentsOfFile:filePath2];
         self.titleArr = [fileArr2 objectAtIndex:index];
         //self.titleShiFanYinArr = self.titleArr;
@@ -93,7 +93,7 @@
         }
         self.imageArr = [mutableArr copy];
         
-        NSString *filePath2 = [[NSBundle mainBundle] pathForResource:@"sportImageText" ofType:@"plist"];
+        NSString *filePath2 = [[NSBundle mainBundle] pathForResource:ModuleZW(@"sportImageText") ofType:@"plist"];
         NSArray *fileArr2 = [NSArray arrayWithContentsOfFile:filePath2];
         NSMutableArray *mutableArr2 = [NSMutableArray arrayWithCapacity:0];
         for(NSInteger i=0;i<fileArr2.count;i++){
@@ -131,7 +131,7 @@
 
 - (void)createUI
 {
-    self.navTitleLabel.text = @"和畅经络运动";
+    self.navTitleLabel.text = ModuleZW(@"和畅经络运动");
     
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -168,7 +168,7 @@
     
     UILabel *lunbotu = [[UILabel alloc]initWithFrame:CGRectMake((ScreenWidth - 28 * 3) / 6 - 26, 35-2, (ScreenWidth - 28 * 3) / 6 + 34, 15)];
     lunbotu.textColor = [UtilityFunc colorWithHexString:@"#666666"];
-    lunbotu.text = @"轮播暂停";
+    lunbotu.text =ModuleZW(@"轮播暂停");
     lunbotu.textAlignment = NSTextAlignmentCenter;
     lunbotu.font = [UIFont systemFontOfSize:12];
     [footView addSubview:lunbotu];
@@ -189,7 +189,7 @@
     UILabel *bofangyueYao = [[UILabel alloc]initWithFrame:CGRectMake((ScreenWidth - 28 * 3) / 2 + 18, 35-2, (ScreenWidth - 28 * 3) / 2 + 62, 15)];
     bofangyueYao.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     
-    bofangyueYao.text = @"播放乐药";
+    bofangyueYao.text = ModuleZW(@"播放乐药");
     //bofangyueYao.textAlignment = NSTextAlignmentCenter;
     bofangyueYao.font = [UIFont systemFontOfSize:12];
     [footView addSubview:bofangyueYao];
@@ -201,7 +201,7 @@
     [footView addSubview:shifanyinButton];
     UILabel *shifanyin = [[UILabel alloc]initWithFrame:CGRectMake((ScreenWidth - 28 * 3) * 5 / 6 + 39, 35-2, (ScreenWidth - 28 * 3) * 5 / 6 + 90, 15)];
     shifanyin.textColor = [UtilityFunc colorWithHexString:@"#666666"];
-    shifanyin.text = @"动作示范音";
+    shifanyin.text = ModuleZW(@"动作示范音");
     
     shifanyin.font = [UIFont systemFontOfSize:12];
     [footView addSubview:shifanyin];
@@ -215,7 +215,7 @@
     [self.view addSubview:countImageV];
 
     UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 3, countImageV.width, 15)];
-    label1.text = [GlobalCommon getSportNameWithIndex:self.titleIndex+1];
+    label1.text =ModuleZW([GlobalCommon getSportNameWithIndex:self.titleIndex+1]);
     label1.tag = 2002;
     label1.textAlignment = NSTextAlignmentCenter;
     label1.font = [UIFont systemFontOfSize:15];
@@ -418,7 +418,7 @@
 - (void)yueYaoAction:(UIButton *)button
 {
     if(self.yueYaoArray.count==0){
-        [self showAlertWarmMessage:@"你还没有乐药产品"];
+        [self showAlertWarmMessage:ModuleZW(@"你还没有乐药产品")];
         return;
     }
     
@@ -455,7 +455,7 @@
 - (void)shifanyinAction:(UIButton *)sender
 {
     if (self.shifanyinPlayArr.count == 0) {
-        [self showAlertWarmMessage:@"你还没有音乐示范音产品"];
+        [self showAlertWarmMessage:ModuleZW(@"你还没有音乐示范音产品")];
         return;
     }
      if (sender.selected){
@@ -572,7 +572,7 @@
     UIImageView *countV = (UIImageView *)[self.view viewWithTag:2001];
     UILabel *label1 = (UILabel *)[countV viewWithTag:2002];
     if(index == 0){
-        label1.text = @"全部";
+        label1.text = ModuleZW(@"全部");
     }else{
         label1.text = [GlobalCommon getSportNameWithIndex:index];
     }
@@ -586,7 +586,7 @@
     if(shifanyinButton.selected){
         return;
     }
-    NSArray *arr = [NSArray arrayWithObjects:@"全部   ",@"预备   ", @"第一式   起式", @"第二式   剑指后仰式", @"第三式   俯身下探式", @"第四式   左右扭转式", @"第五式   体侧弯腰式", @"第六式   俯身下探加强式", @"第七式   婴儿环抱式", @"第八式   收式", nil];
+    NSArray *arr = [NSArray arrayWithObjects:ModuleZW(@"全部   "),ModuleZW(@"预备   "),ModuleZW( @"第一式   起式"), ModuleZW(@"第二式   剑指后仰式"), ModuleZW(@"第三式   俯身下探式"), ModuleZW(@"第四式   左右扭转式"), ModuleZW(@"第五式   体侧弯腰式"), ModuleZW(@"第六式   俯身下探加强式"), ModuleZW(@"第七式   婴儿环抱式"), ModuleZW(@"第八式   收式"), nil];
     MenuTypeView *menuView = [[MenuTypeView alloc] initWithFrame:CGRectMake(10, kNavBarHeight, 220, 320)];
     menuView.menuArr = arr;
     menuView.delegate = self;
@@ -627,7 +627,7 @@
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"sportImageType" ofType:@"plist"];
     NSArray *fileArr = [NSArray arrayWithContentsOfFile:filePath];
     
-    NSString *filePath2 = [[NSBundle mainBundle] pathForResource:@"sportImageText" ofType:@"plist"];
+    NSString *filePath2 = [[NSBundle mainBundle] pathForResource:ModuleZW(@"sportImageText") ofType:@"plist"];
     NSArray *fileArr2 = [NSArray arrayWithContentsOfFile:filePath2];
     if(index==0){
         if(self.imageArr.count==35){

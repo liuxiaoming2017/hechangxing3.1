@@ -11,7 +11,7 @@
 #import "AdvisorysViewController.h"
 #import "AppDelegate.h"
 
-//#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 
 @interface HCY_CallController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -22,9 +22,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navTitleLabel.text = @"在线咨询";
+    self.navTitleLabel.text = ModuleZW(@"在线咨询");
     
-    UILabel *label = [Tools creatLabelWithFrame:CGRectMake(10,kNavBarHeight + 10, ScreenWidth - 10, 40) text:@"在线咨询" textSize:24];
+    UILabel *label = [Tools creatLabelWithFrame:CGRectMake(10,kNavBarHeight + 10, ScreenWidth - 10, 40) text:ModuleZW(@"在线咨询") textSize:24];
     [self.view addSubview:label];
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -66,45 +66,42 @@
 
 -(void)comeToNextBlockCellwithIndex:(NSIndexPath *)index {
     
-    /*
-     HHMSDK *hhmSdk = [[HHMSDK alloc] init];
-    __weak typeof(self) weakSelf = self;
-    if(index.row==0||index.row==1){
-        if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].uuid]){
-            [self messageHintView];
-            return;
-        }
-    }
-    NSInteger uuid = [[UserShareOnce shareOnce].uuid integerValue];
-    //uuid = 100002514;
-    if(index.row == 0) {
-        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
-            if(error){
-                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
-            }else{
-                [hhmSdk startCall:HHCallTypeChild];
-            }
-        }];
-        
-    }else if (index.row == 1) {
-        
-        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
-            if(error){
-                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
-            }else{
-                [hhmSdk startCall:HHCallTypeAdult];
-            }
-        }];
-        
-    }else {
-        
-        AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
-        [self.navigationController pushViewController:adVC animated:YES];
-        
-    }
-    */
+//     HHMSDK *hhmSdk = [[HHMSDK alloc] init];
+//    __weak typeof(self) weakSelf = self;
+//    if(index.row==0||index.row==1){
+//        if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].uuid]){
+//            [self messageHintView];
+//            return;
+//        }
+//    }
+//    NSInteger uuid = [[UserShareOnce shareOnce].uuid integerValue];
+//    //uuid = 100002514;
+//    if(index.row == 0) {
+//        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
+//            if(error){
+//                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
+//            }else{
+//                [hhmSdk startCall:HHCallTypeChild];
+//            }
+//        }];
+//        
+//    }else if (index.row == 1) {
+//        
+//        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
+//            if(error){
+//                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
+//            }else{
+//                [hhmSdk startCall:HHCallTypeAdult];
+//            }
+//        }];
+//        
+//    }else {
+//        
+//        AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
+//        [self.navigationController pushViewController:adVC animated:YES];
+//        
+//    }
 }
-
 - (void)messageHintView
 {
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"您还没有购买视频咨询服务，是否前去购买？" preferredStyle:UIAlertControllerStyleAlert];

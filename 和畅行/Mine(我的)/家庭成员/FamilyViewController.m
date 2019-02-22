@@ -45,7 +45,7 @@ NSString *isYiBao;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navTitleLabel.text = @"家庭成员";
+    self.navTitleLabel.text =ModuleZW(@"家庭成员") ;
     [self createView];
     
 }
@@ -58,8 +58,8 @@ NSString *isYiBao;
     UIImageView *personImage = [[UIImageView alloc]initWithFrame:CGRectMake(20, 14.25, 61 / 2, 43 / 2)];
     personImage.image = [UIImage imageNamed:@"221323_03.png"];
     [addFamilyView addSubview:personImage];
-    UILabel *addLabel = [[UILabel alloc]initWithFrame:CGRectMake(65, 17.5, 100, 15)];
-    addLabel.text = @"添加家庭成员";
+    UILabel *addLabel = [[UILabel alloc]initWithFrame:CGRectMake(65, 17.5, 170, 15)];
+    addLabel.text = ModuleZW(@"添加家庭成员");
     addLabel.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     addLabel.font = [UIFont systemFontOfSize:14];
     [addFamilyView addSubview:addLabel];
@@ -118,8 +118,8 @@ NSString *isYiBao;
             [self.memberTable reloadData];
         } else if ([status intValue]==44) {
             
-            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"登录超时，请重新登录" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                 LoginViewController *vc = [[LoginViewController alloc] init];
                 [self.navigationController pushViewController:vc animated:YES];
             }];
@@ -138,7 +138,7 @@ NSString *isYiBao;
     } failureBlock:^(NSError *error) {
         [weakSelf hudWasHidden];
 
-        [weakSelf showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+        [weakSelf showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
     }];
     
 //    [ZYGASINetworking GET_Path:@"/member/memberModifi/list.jhtml" params:@{@"memberId":[UserShareOnce shareOnce].uid} completed:^(id JSON, NSString *stringData) {
@@ -157,7 +157,7 @@ NSString *isYiBao;
     [self.view addSubview:progress_];
     [self.view bringSubviewToFront:progress_];
     progress_.delegate = self;
-    progress_.label.text = @"加载中...";
+    progress_.label.text = ModuleZW(@"加载中...");
     [progress_ showAnimated:YES];
 }
 
@@ -205,7 +205,7 @@ NSString *isYiBao;
     
 //    NSString *birthdayStr =  model.birthday;
     
-    if(![GlobalCommon stringEqualNull:model.birthday]&&![model.birthday isEqualToString:@"请选择您的出生日期"]){
+    if(![GlobalCommon stringEqualNull:model.birthday]&&![model.birthday isEqualToString:ModuleZW(@"请选择您的出生日期")]){
         NSString *str = [model.birthday substringToIndex:4];
         sesss = [str intValue];
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
@@ -221,24 +221,24 @@ NSString *isYiBao;
     }
     
     if ([GlobalCommon stringEqualNull: model.gender]) {
-        sex = @"未知";
+        sex = ModuleZW(@"未知");
     }else if ([model.gender isEqualToString:@"male"]) {
-        sex =@"男" ;
+        sex =ModuleZW(@"男");
     }else if([model.gender isEqualToString:@"female"]){
-        sex = @"女";
+        sex = ModuleZW(@"女");
     }
     NSString *sexStr = [NSString string];
     if (age == 1111){
-        sexStr = [NSString stringWithFormat:@"(%@ 未知)",sex];
+        sexStr = [NSString stringWithFormat:@"(%@ %@)",sex,ModuleZW(@"未知")];
     }else {
-        sexStr = [NSString stringWithFormat:@"(%@%d岁)",sex,age];
+        sexStr = [NSString stringWithFormat:@"(%@%d%@)",sex,age,ModuleZW(@"岁")];
     }
     cell.sexLabel.text = sexStr;
     
 
     
     if ([GlobalCommon stringEqualNull:model.mobile]) {
-        cell.phoneLabel.text = @"无";
+        cell.phoneLabel.text = ModuleZW(@"无");
     }else{
         cell.phoneLabel.text = model.mobile;
     }
@@ -281,9 +281,9 @@ NSString *isYiBao;
 {
     _tag = (float)sender.tag - 10000 ;
     
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"确认删除吗" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:NULL];
-    UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"确认删除吗") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:NULL];
+    UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self deleteAction];
     }];
     [alertVC addAction:alertAct1];

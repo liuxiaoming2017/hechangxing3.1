@@ -31,7 +31,7 @@
     self.iconImage.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:self.iconImage];
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.iconImage.right+15, 10, 160, 30)];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.iconImage.right+15, 10, 250, 30)];
     self.titleLabel.textAlignment=NSTextAlignmentLeft;
     self.titleLabel.font=[UIFont systemFontOfSize:15.0];
     self.titleLabel.textColor = UIColorFromHex(0x333333);

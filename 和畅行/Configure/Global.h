@@ -21,16 +21,18 @@ extern BOOL isBF;
 
 //#define URL_PRE @"http://10.1.71.62:8080/healthlm/"
 
-//测试环境
-#define URL_PRE @"http://119.254.24.4:7006/"
 
-//#define URL_PRE @"http://10.1.71.38:8888/hcy-system/"
-//生产环境
-//#define URL_PRE @"http://eky3h.com/healthlm/"
+//#define URL_PRE @"http://47.92.80.253:8080/healthlm/"
+
 
 //#define URL_PRE @"http://10.1.71.104:8080/hcy/"
 
 
+//生产环境
+#define URL_PRE @"http://eky3h.com/healthlm/"
+
+//测试环境
+//#define URL_PRE @"http://119.254.24.4:7006/"
 
 //#define URL_PRE22 @"http://10.1.71.50:8080/hcy/"
 //#define URL_PRE22 @"http://10.1.71.104:8080/hcy/"
@@ -200,3 +202,5 @@ extern BOOL isBF;
 #define IOS7 ([[[UIDevice currentDevice] systemVersion] floatValue]>=7.0 ? YES : NO)
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 
+
+#define  ModuleZW(zwString)          NSLocalizedStringFromTable(zwString, @"ModuleZW", nil)

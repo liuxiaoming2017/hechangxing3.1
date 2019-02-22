@@ -79,7 +79,6 @@
 	CGRect bubbleRect = [self bubbleFrame];
 	
 	CGContextRef c = UIGraphicsGetCurrentContext(); 
-	
 	CGContextSetRGBStrokeColor(c, 0.0, 0.0, 0.0, 1.0);	// black
 	CGContextSetLineWidth(c, 1.0);
     

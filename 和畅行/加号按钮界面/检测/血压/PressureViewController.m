@@ -72,7 +72,7 @@ static int const tick = 80;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navTitleLabel.text = @"血压脉搏检测";
+    self.navTitleLabel.text =  ModuleZW(@"血压脉搏检测");
     [self initWithController];
     
     //血压检测
@@ -108,7 +108,7 @@ static int const tick = 80;
     countdownView.image = [UIImage imageNamed:@"0_06"];
     [self.view addSubview:countdownView];
     
-    UILabel *countdownLabel = [Tools creatLabelWithFrame:CGRectMake(0, 13, countdownView.frame.size.width, 15) text:@"80 秒" textSize:16];
+    UILabel *countdownLabel = [Tools creatLabelWithFrame:CGRectMake(0, 13, countdownView.frame.size.width, 15) text:ModuleZW(@"80 秒") textSize:16];
     countdownLabel.textAlignment = NSTextAlignmentCenter;
     countdownLabel.textColor = [UIColor whiteColor];
     self.countdownLabel = countdownLabel;
@@ -123,7 +123,7 @@ static int const tick = 80;
     [stateImageView addSubview:imageViewImage];
     self.imageViewImage = imageViewImage;
     
-    UILabel *stateLabel = [Tools creatLabelWithFrame:CGRectMake(0, 25, stateImageView.frame.size.width, 15) text:@"未连接" textSize:14];
+    UILabel *stateLabel = [Tools creatLabelWithFrame:CGRectMake(0, 25, stateImageView.frame.size.width, 15) text:ModuleZW(@"未连接") textSize:14];
     stateLabel.textAlignment = NSTextAlignmentCenter;
     stateLabel.font = [UIFont boldSystemFontOfSize:10];
     stateLabel.textColor = [UIColor whiteColor];
@@ -140,7 +140,7 @@ static int const tick = 80;
     imageView.image = [UIImage imageNamed:@"血压02"];
     [self.view addSubview:imageView];
     //脉搏
-    UILabel *pulse = [Tools creatLabelWithFrame:CGRectMake(15, 30, 80, 46.7) text:@"脉搏" textSize:19];
+    UILabel *pulse = [Tools creatLabelWithFrame:CGRectMake(15, 30, 80, 46.7) text:ModuleZW(@"脉搏") textSize:19];
     pulse.font = [UIFont systemFontOfSize:19];
     pulse.textAlignment = NSTextAlignmentRight;
     pulse.textColor = [UIColor whiteColor];
@@ -154,7 +154,7 @@ static int const tick = 80;
     [imageView addSubview:_pulseLabel];
     //_pulseLabel.backgroundColor = [UIColor redColor];
     
-    UILabel *pulseUnit = [Tools creatLabelWithFrame:CGRectMake(180, 35, 30, 46.7) text:@"分" textSize:16];
+    UILabel *pulseUnit = [Tools creatLabelWithFrame:CGRectMake(180, 35, 30, 46.7) text:ModuleZW(@"分") textSize:16];
     pulseUnit.font = [UIFont systemFontOfSize:16];
     pulseUnit.textAlignment = NSTextAlignmentLeft;
     pulseUnit.textColor = [UIColor whiteColor];
@@ -162,7 +162,7 @@ static int const tick = 80;
     //pulseUnit.backgroundColor = [UIColor redColor];
     
     //收缩压
-    UILabel *shrink = [Tools creatLabelWithFrame:CGRectMake(15, 81.7, 80, 46.7) text:@"收缩压" textSize:19];
+    UILabel *shrink = [Tools creatLabelWithFrame:CGRectMake(15, 81.7, 80, 46.7) text:ModuleZW(@"收缩压") textSize:19];
     shrink.font = [UIFont systemFontOfSize:19];
     shrink.textAlignment = NSTextAlignmentRight;
     shrink.textColor = [UIColor whiteColor];
@@ -181,7 +181,7 @@ static int const tick = 80;
     [imageView addSubview:shrinkUnit];
     
     //舒张压
-    UILabel *diastolic = [Tools creatLabelWithFrame:CGRectMake(15, 133.4, 80, 46.7) text:@"舒张压" textSize:19];
+    UILabel *diastolic = [Tools creatLabelWithFrame:CGRectMake(15, 133.4, 80, 46.7) text:ModuleZW(@"舒张压") textSize:19];
     diastolic.font = [UIFont systemFontOfSize:19];
     diastolic.textAlignment = NSTextAlignmentRight;
     diastolic.textColor = [UIColor whiteColor];
@@ -349,7 +349,7 @@ static int const tick = 80;
     [[NSNotificationCenter defaultCenter] addObserverForName:kPERIPHERAL_CONNECTED object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
         NSLog(@"外设已连接，可以开始测量");
         
-        weakSelf.stateLabel.text = @"已连接";
+        weakSelf.stateLabel.text = ModuleZW(@"已连接");
         weakSelf.imageViewImage.image = [UIImage imageNamed:@"connectedImage"];
         weakSelf.startCheck.enabled = YES;
     }];
@@ -358,14 +358,14 @@ static int const tick = 80;
         NSLog(@"外设连接失败");
         //        [SVProgressHUD showInfoWithStatus:@"设备连接失败"];
         
-        weakSelf.stateLabel.text = @"未连接";
+        weakSelf.stateLabel.text = ModuleZW(@"未连接");
         weakSelf.imageViewImage.image = [UIImage imageNamed:@"unconnectedImage"];
         weakSelf.startCheck.enabled = NO;
     }];
     [[NSNotificationCenter defaultCenter] addObserverForName:kPERIPHERAL_DISCONNECTED object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
         NSLog(@"外设断开连接");
         
-        weakSelf.stateLabel.text = @"未连接";
+        weakSelf.stateLabel.text = ModuleZW(@"未连接");
         weakSelf.imageViewImage.image = [UIImage imageNamed:@"unconnectedImage"];
         weakSelf.startCheck.enabled = NO;
         
@@ -494,7 +494,7 @@ static int const tick = 80;
 - (void)requestResourceslistail:(ASIHTTPRequest *)request
 {
     
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"获取子账户信息失败!" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"获取子账户信息失败!") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
     av.tag = 100008;
     [av show];
     
@@ -521,7 +521,7 @@ static int const tick = 80;
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"当前账户已过期，请重新登录";  //提示的内容
+        hud.label.text = ModuleZW(@"当前账户已过期，请重新登录");  //提示的内容
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hideAnimated:YES afterDelay:2];
         
@@ -557,9 +557,9 @@ static int const tick = 80;
     if ([[self.dataArr[indexPath.row] objectForKey:@"birthday"]isEqual:[NSNull null]] ) {
         NSString *sex = @"";
         if ([[UserShareOnce shareOnce].gender isEqual:[NSNull null]]||[[UserShareOnce shareOnce].gender isEqualToString:@"male"]) {
-            sex =@"男" ;
+            sex =ModuleZW(@"男");
         }else{
-            sex = @"女";
+            sex = ModuleZW(@"女");
         }
         
         cell.sexLabel.text = [NSString stringWithFormat:@"%@",sex];
@@ -568,9 +568,9 @@ static int const tick = 80;
     }else{
         NSString *sex = @"";
         if ([[self.dataArr[indexPath.row] objectForKey:@"gender"]isEqual:[NSNull null]]||[[self.dataArr[indexPath.row] objectForKey:@"gender"] isEqualToString:@"male"]) {
-            sex =@"男" ;
+            sex =ModuleZW(@"男");
         }else{
-            sex = @"女";
+            sex = ModuleZW(@"女");
         }
         
         NSString *str = [[self.dataArr[indexPath.row] objectForKey:@"birthday"] substringToIndex:4];
@@ -603,9 +603,9 @@ static int const tick = 80;
     }
     NSString *sex = @"";
     if ([[self.dataArr[indexPath.row] objectForKey:@"gender"]isEqual:[NSNull null]]||[[self.dataArr[indexPath.row] objectForKey:@"gender"] isEqualToString:@"male"]) {
-        sex =@"男" ;
+        sex =ModuleZW(@"男") ;
     }else{
-        sex = @"女";
+        sex = ModuleZW(@"女");
     }
     _memberChildId = [self.dataArr[indexPath.row] objectForKey:@"id"];
     NSString *str = @"";
@@ -686,7 +686,7 @@ static int const tick = 80;
         
         UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [sureBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
-        [sureBtn setTitle:@"返回检测" forState:UIControlStateNormal];
+        [sureBtn setTitle:ModuleZW(@"返回检测") forState:UIControlStateNormal];
         sureBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         sureBtn.frame = CGRectMake(20, kScreenSize.height/2+90, imageView.frame.size.width * 0.5, 40);
         [sureBtn addTarget:self action:@selector(confirmBtnClick2:) forControlEvents:UIControlEventTouchUpInside];
@@ -694,38 +694,38 @@ static int const tick = 80;
         
         UIButton *lookBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [lookBtn setBackgroundImage:[UIImage imageNamed:@"look"] forState:UIControlStateNormal];
-        [lookBtn setTitle:@"查看档案" forState:UIControlStateNormal];
+        [lookBtn setTitle:ModuleZW(@"查看档案") forState:UIControlStateNormal];
         lookBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         lookBtn.frame = CGRectMake(CGRectGetMaxX(sureBtn.frame), sureBtn.frame.origin.y, imageView.frame.size.width * 0.5, 40);
         [lookBtn addTarget:self action:@selector(lookClickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [view2 addSubview:lookBtn];
         
-        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:@"您当前脉搏%ld次/分\n收缩压  %ldmmHg\n舒张压  %ldmmhg",(long)pulseCount,(long)highCount,(long)lowCount] frame:CGRectMake(0, 50, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
+        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:@"%@%ld%@\n  %@%ldmmHg\n%@ %ldmmhg",ModuleZW(@"您当前脉搏"),(long)pulseCount,ModuleZW(@"次/分"),ModuleZW(@"收缩压"),(long)highCount,ModuleZW(@"舒张压 "),(long)lowCount] frame:CGRectMake(0, 50, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
 
         
         UILabel *label0 = [[UILabel alloc] init];
-        label0.text = @"血压、脉搏正常范围参考值：";
+        label0.text = ModuleZW(@"血压、脉搏正常范围参考值：");
         label0.textAlignment = NSTextAlignmentCenter;
         label0.font = [UIFont systemFontOfSize:13];
         label0.frame = CGRectMake(20, 110, imageView.bounds.size.width-40, 20);
         [imageView addSubview:label0];
         
         UILabel *label1 = [[UILabel alloc] init];
-        label1.text = @"脉搏：60－100次/分";
+        label1.text = ModuleZW(@"脉搏：60－100次/分");
         label1.textAlignment = NSTextAlignmentCenter;
         label1.font = [UIFont systemFontOfSize:12];
         label1.frame = CGRectMake(20, CGRectGetMaxY(label0.frame), imageView.bounds.size.width-40, 16);
         [imageView addSubview:label1];
         
         UILabel *label2 = [[UILabel alloc] init];
-        label2.text = @"90 < 高压 / 收缩压（mmHg）< 140";
+        label2.text =ModuleZW( @"90 < 高压 / 收缩压（mmHg）< 140");
         label2.textAlignment = NSTextAlignmentCenter;
         label2.font = [UIFont systemFontOfSize:12];
         label2.frame = CGRectMake(20, CGRectGetMaxY(label1.frame), imageView.bounds.size.width-40, 16);
         [imageView addSubview:label2];
         
         UILabel *label3 = [[UILabel alloc] init];
-        label3.text = @"60 < 低压 / 舒张压（mmHg）< 90";
+        label3.text = ModuleZW(@"60 < 低压 / 舒张压（mmHg）< 90");
         label3.textAlignment = NSTextAlignmentCenter;
         label3.font = [UIFont systemFontOfSize:12];
         label3.frame = CGRectMake(20, CGRectGetMaxY(label2.frame), imageView.bounds.size.width-40, 16);
@@ -739,7 +739,7 @@ static int const tick = 80;
        
         
     }else{
-        [self showAlertWarmMessage:@"提交数据失败"];
+        [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
         
     }
     
@@ -749,7 +749,7 @@ static int const tick = 80;
 
 -(void)requestError:(ASIHTTPRequest *)request{
     [self hidePreogressView];
-    [self showAlertWarmMessage:@"提交数据失败"];
+    [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
     
 }
 
@@ -761,7 +761,7 @@ static int const tick = 80;
     [self stopTimer];
     
     self.timeCount = tick;
-    self.countdownLabel.text = [NSString stringWithFormat:@"%d 秒",self.timeCount];
+    self.countdownLabel.text = [NSString stringWithFormat:@"%d %@",self.timeCount,ModuleZW(@"秒")];
     
     _timer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(countDown:) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
@@ -780,7 +780,7 @@ static int const tick = 80;
 
 - (void)countDown:(NSTimer *)timer{
     self.timeCount -= 1;
-    self.countdownLabel.text = [NSString stringWithFormat:@"%d 秒",self.timeCount];
+    self.countdownLabel.text = [NSString stringWithFormat:@"%d %@",self.timeCount,ModuleZW(@"秒")];
     
     if (self.timeCount == 1) {
         [self stopTimer];
@@ -795,7 +795,7 @@ static int const tick = 80;
     UIViewController *controller = app.window.rootViewController;
     UITabBarController  *rvc = (UITabBarController  *)controller;
     [rvc setSelectedIndex:1];
-    [UserShareOnce shareOnce].wherePop = @"血压";
+    [UserShareOnce shareOnce].wherePop = ModuleZW(@"血压");
     [UserShareOnce shareOnce].bloodMemberID = [NSString stringWithFormat:@"%@",self.subId];
     [self.navigationController popToRootViewControllerAnimated:YES];
     

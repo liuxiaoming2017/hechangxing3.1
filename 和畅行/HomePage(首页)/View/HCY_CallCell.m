@@ -30,21 +30,22 @@
 
 -(void)cellsetAttributewithIndexPath:(NSIndexPath *)indexPath {
     
-    self.oneLabel.text       = @"1.不用跑医院";
-    self.twoLabel.text       = @"2.和医生面对面问诊";
-    self.threeLabel.text     = @"3.咨询更方便";
+    self.oneLabel.text       = ModuleZW(@"1.不用跑医院");
+    self.twoLabel.text       = ModuleZW(@"2.和医生面对面问诊");
+    self.threeLabel.text     = ModuleZW(@"3.咨询更方便");
     if (indexPath.row == 0) {
         self.typeImageView.image = [UIImage imageNamed:@"儿童咨询"];
-        self.typeLabel.text      = @"儿童咨询";
+        self.typeLabel.text      = ModuleZW(@"儿童咨询");
     }else if (indexPath.row == 1) {
         self.typeImageView.image = [UIImage imageNamed:@"成人咨询"];
-        self.typeLabel.text      = @"成人咨询";
+        self.typeLabel.text      = ModuleZW(@"成人咨询");
     }else{
         self.typeImageView.image = [UIImage imageNamed:@"图文"];
-        self.typeLabel.text      = @"图文咨询";
-        self.oneLabel.text       = @"1.可以通过文字的形式";
-        self.twoLabel.text       = @"2.对小病进行咨询";
+        self.typeLabel.text      = ModuleZW(@"图文咨询");
+        self.oneLabel.text       = ModuleZW(@"1.可以通过文字的形式");
+        self.twoLabel.text       = ModuleZW(@"2.对小病进行咨询");
     }
+    [self.comeButton setTitle:ModuleZW(@"进入") forState:(UIControlStateNormal)];
     
 }
 - (IBAction)comeAction:(id)sender {

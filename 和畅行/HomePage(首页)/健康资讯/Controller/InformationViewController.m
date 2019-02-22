@@ -44,7 +44,7 @@
     [super viewDidLoad];
     
     _idArray = [[NSMutableArray alloc]init];
-    self.navTitleLabel.text = @"健康资讯";
+    self.navTitleLabel.text = ModuleZW(@"健康资讯");
     self.hotArray = [[NSMutableArray alloc]init];
     self.healthArray = [[NSMutableArray alloc]init];
     
@@ -70,17 +70,17 @@
         [self.healthView addSubview:lineView];
         
         
-        UILabel *titleLabel = [Tools labelWith:@"讲座说明：" frame:CGRectMake(5, lineView.bottom+10, 100, 10) textSize:11 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentLeft];
+        UILabel *titleLabel = [Tools labelWith:ModuleZW(@"讲座说明：") frame:CGRectMake(5, lineView.bottom+10, 100, 10) textSize:11 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentLeft];
         [self.healthView addSubview:titleLabel];
         
-        UILabel *contentLabel = [Tools labelWith:@"在线预约养生类、慢病类、职业防护类、两性保健类、亲子健康类等健康主题的讲座或沙龙服务。" frame:CGRectMake(15, titleLabel.bottom, kScreenSize.width-25, 30) textSize:11 textColor:[Tools colorWithHexString:@"#333"] lines:0 aligment:NSTextAlignmentLeft];
+        UILabel *contentLabel = [Tools labelWith:ModuleZW(@"在线预约养生类、慢病类、职业防护类、两性保健类、亲子健康类等健康主题的讲座或沙龙服务。") frame:CGRectMake(15, titleLabel.bottom, kScreenSize.width-25, 30) textSize:11 textColor:[Tools colorWithHexString:@"#333"] lines:0 aligment:NSTextAlignmentLeft];
         [self.healthView addSubview:contentLabel];
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, contentLabel.bottom+20, kScreenSize.width, 25)];
         imageView.backgroundColor = [Tools colorWithHexString:@"#616161"];
         [self.healthView addSubview:imageView];
         
-        NSArray *categoryLabel = @[@"主讲人",@"讲座地址",@"讲座课题",@"开讲日期",@"时间",@"价格"];
+        NSArray *categoryLabel = @[ModuleZW(@"主讲人"),ModuleZW(@"讲座地址"),ModuleZW(@"讲座课题"),ModuleZW(@"开讲日期"),ModuleZW(@"时间"),ModuleZW(@"价格")];
         CGFloat width = kScreenSize.width/6.0f;
         for (int i=0; i<6; i++) {
             UILabel *label = [Tools labelWith:categoryLabel[i] frame:CGRectMake(width*i, 0, width, 25) textSize:11 textColor:[Tools colorWithHexString:@"#abafaf"] lines:1 aligment:NSTextAlignmentCenter];
@@ -105,8 +105,8 @@
             NSMutableArray *daArray = [[NSMutableArray alloc]init];
             [weakSelf.idArray addObject:@"hot"];
             [weakSelf.idArray addObject:@"10"];
-            [daArray addObject:@"最新资讯"];
-            [daArray addObject:@"健康讲座"];
+            [daArray addObject:ModuleZW(@"最新资讯")];
+            [daArray addObject:ModuleZW(@"健康讲座")];
             for (NSDictionary *Dic in array) {
                 [daArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"name"]]];
                 [weakSelf.idArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"id"]]];
@@ -216,7 +216,7 @@
     [self hudWasHidden];
     //[SSWaitViewEx removeWaitViewFrom:self.view];
     
-    [self showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+    [self showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
     
 }
 
@@ -248,7 +248,7 @@
     [self.view addSubview:progress_];
     [self.view bringSubviewToFront:progress_];
     progress_.delegate = self;
-    progress_.label.text = @"加载中...";
+    progress_.label.text = ModuleZW(@"加载中...");
     [progress_ showAnimated:YES];
 }
 
@@ -285,7 +285,7 @@
     [self hudWasHidden];
     //[SSWaitViewEx removeWaitViewFrom:self.view];
     
-    [self showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+    [self showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
     
 }
 
@@ -318,7 +318,7 @@
     else if ([status intValue]==44)
     {
         
-        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"登录超时,请重新登录" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时,请重新登录") preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             LoginViewController *vc = [[LoginViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
@@ -403,7 +403,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-    vc.titleStr = @"健康文化";
+    vc.titleStr = ModuleZW(@"健康文化");
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,[self.healthArray[indexPath.row] objectForKey:@"path"]];
     vc.urlStr = urlStr;
     [self.navigationController pushViewController:vc animated:YES];

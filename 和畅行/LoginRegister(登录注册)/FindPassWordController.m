@@ -22,7 +22,7 @@
     [super viewDidLoad];
     self.view.backgroundColor=[UtilityFunc colorWithHexString:@"##f2f1ef"];
     navView.backgroundColor = UIColorFromHex(0x009ef3);
-    titleLabel.text = @"忘记密码";
+    titleLabel.text = ModuleZW(@"忘记密码1");
     [self addBackBtn];
     
     UIImage *registrationImageTextField = [UIImage imageNamed:@"RegistTF_bg.png"];
@@ -50,7 +50,7 @@
     registrationTF.leftView = leftview1;
     registrationTF.tag = 111;
     registrationTF.delegate=self;
-    registrationTF.placeholder=@"请输入您的手机号";
+    registrationTF.placeholder=ModuleZW(@"请输入您的手机号");
     registrationTF.returnKeyType=UIReturnKeyNext;
     registrationTF.keyboardType=UIKeyboardTypeNumberPad;
     self.RepInputphoneTF=registrationTF;
@@ -83,7 +83,7 @@
     Regist_Sec_TF.delegate=self;
     Regist_Sec_TF.secureTextEntry=YES;
     Regist_Sec_TF.tag = 112;
-    Regist_Sec_TF.placeholder=@"请输入您的新密码";
+    Regist_Sec_TF.placeholder=ModuleZW(@"请输入您的新密码");
     self.TtempInputsecTF=Regist_Sec_TF;
     [self.view addSubview:Regist_Sec_TF];
     
@@ -118,7 +118,7 @@
     sureSecTF.secureTextEntry=YES;
     sureSecTF.returnKeyType=UIReturnKeyNext;
     sureSecTF.tag = 113;
-    sureSecTF.placeholder=@"请确认您的新密码";
+    sureSecTF.placeholder=ModuleZW(@"请确认您的新密码");
     self.NewInputSecTF=sureSecTF;
     [self.view addSubview:sureSecTF];
     
@@ -150,7 +150,7 @@
     
     YZMTF.font=[UIFont systemFontOfSize:14];
     YZMTF.delegate=self;
-    YZMTF.placeholder=@"请输入手机验证码";
+    YZMTF.placeholder=ModuleZW(@"请输入验证码");
     YZMTF.tag = 114;
     YZMTF.returnKeyType=UIReturnKeyDone;
     YZMTF.keyboardType=UIKeyboardTypeNumberPad;
@@ -160,12 +160,12 @@
     //
     UIImage* ObtainYzm_img=[UIImage imageNamed:@"Regist_YZM"];
     UIButton *YZMButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    YZMButton.frame=CGRectMake(YZMTF.frame.origin.x+YZMTF.frame.size.width+23.5,  sureSecTF.frame.origin.y+sureSecTF.frame.size.height+8, ObtainYzm_img.size.width/2,ObtainYzm_img.size.height/2);
+    YZMButton.frame=CGRectMake(YZMTF.frame.origin.x+YZMTF.frame.size.width+10.5,  sureSecTF.frame.origin.y+sureSecTF.frame.size.height+8, ObtainYzm_img.size.width/2 + 13,ObtainYzm_img.size.height/2);
     [YZMButton setBackgroundImage:ObtainYzm_img forState:UIControlStateNormal];
-    [YZMButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+    [YZMButton setTitle:ModuleZW(@"获取验证码") forState:UIControlStateNormal];
     [YZMButton addTarget:self action:@selector(userYZMButton) forControlEvents:UIControlEventTouchUpInside];
     [YZMButton setTitleColor:[UIColor colorWithRed:112.0f/255.0f green:0 blue:0 alpha:1] forState:UIControlStateNormal];
-    YZMButton.titleLabel.font=[UIFont systemFontOfSize:13];
+    YZMButton.titleLabel.font=[UIFont systemFontOfSize:12];
     YZMbtn=YZMButton;
     [self.view addSubview:YZMbtn];
     
@@ -189,7 +189,7 @@
 {
     if (self.RepInputphoneTF.text.length==0) {
         
-        [self showAlertWarmMessage:@"登录手机号不能为空"];
+        [self showAlertWarmMessage:ModuleZW(@"登录手机号不能为空")];
         return;
     }
     
@@ -270,7 +270,7 @@
 - (void)requestYZMError:(ASIHTTPRequest *)request
 {
     [GlobalCommon hideMBHudTitleWithView:self.view];
-   [self showAlertWarmMessage:@"短信验证码发送失败，请重试"];
+   [self showAlertWarmMessage:ModuleZW(@"短信验证码发送失败，请重试")];
     return;
 }
 - (void)requestYZMCompleted:(ASIHTTPRequest *)request
@@ -284,7 +284,7 @@
     {
         if ([status intValue]==100) {
             
-            LPPopup *popup = [LPPopup popupWithText:@"请在60秒内输入验证码"];
+            LPPopup *popup = [LPPopup popupWithText:ModuleZW(@"请在60秒内输入验证码")];
             CGPoint point=self.view.center;
             point.y=point.y+130;
             [popup showInView:self.view
@@ -302,7 +302,7 @@
         
         else if ([status intValue]==44)
         {
-            [self showAlertWarmMessage:@"登录超时，请重新登录"];
+            [self showAlertWarmMessage:ModuleZW(@"登录超时，请重新登录")];
             return;
         }else{
             
@@ -313,7 +313,7 @@
     }
     else
     {
-        [self showAlertWarmMessage:@"短信验证码发送失败，请重试"];
+        [self showAlertWarmMessage:ModuleZW(@"短信验证码发送失败，请重试")];
         
         return;
         
@@ -327,39 +327,39 @@
         [timer invalidate];
         pageNo=60;
         YZMbtn.titleLabel.font=[UIFont systemFontOfSize:13];
-        [YZMbtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [YZMbtn setTitle:ModuleZW(@"获取验证码") forState:UIControlStateNormal];
         return;
     }
     YZMbtn.titleLabel.font=[UIFont systemFontOfSize:10];
-    [YZMbtn setTitle:[NSString stringWithFormat:@"%is后重新发送",pageNo--] forState:UIControlStateNormal];
+    [YZMbtn setTitle:[NSString stringWithFormat:@"%is%@",pageNo--,ModuleZW(@"后重新发送")] forState:UIControlStateNormal];
 }
 
 # pragma mark - 提交按钮
 -(void)userfindpasswordButton
 {
     if (self.TtempInputsecTF.text.length==0) {
-        [self showAlertWarmMessage:@"临时密码不能为空"];
+        [self showAlertWarmMessage:ModuleZW(@"临时密码不能为空")];
         return;
     }
     if (self.TtempInputsecTF.text.length<6||self.TtempInputsecTF.text.length>20)
     {
-        [self showAlertWarmMessage:@"请输入6-20位字符，可使用字母，数字或字符组合！"];
+        [self showAlertWarmMessage:ModuleZW(@"请输入6-20位字符，可使用字母，数字或字符组合！")];
         return;
     }
     
     
     if (self.NewInputSecTF.text.length==0) {
-        [self showAlertWarmMessage:@"新密码不能为空"];
+        [self showAlertWarmMessage:ModuleZW(@"新密码不能为空")];
         return;
     }
     if (self.NewInputSecTF.text.length<6||self.NewInputSecTF.text.length>20) {
-        [self showAlertWarmMessage:@"请输入6-20位字符，可使用字母，数字或字符组合！"];
+        [self showAlertWarmMessage:ModuleZW(@"请输入6-20位字符，可使用字母，数字或字符组合！")];
         return;
     }
     
     
     if (![self.NewInputSecTF.text isEqualToString:self.TtempInputsecTF.text]) {
-        [self showAlertWarmMessage:@"两次输入的密码不一致"];
+        [self showAlertWarmMessage:ModuleZW(@"两次输入的密码不一致")];
         return;
     }
     // NSString* md5str=[UtilityFunc md5:self.AgainInputSecTF.text];
@@ -383,7 +383,7 @@
         {
             if ([status intValue]==100) {
                 [weakSelf.navigationController popViewControllerAnimated:YES];
-                [GlobalCommon showMessage:@"密码修改成功" duration:2.0];
+                [GlobalCommon showMessage:ModuleZW(@"密码修改成功") duration:2.0];
             }
             else
             {

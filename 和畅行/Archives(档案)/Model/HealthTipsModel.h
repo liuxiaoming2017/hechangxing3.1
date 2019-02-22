@@ -24,7 +24,7 @@
 ///脏腑
 @property (nonatomic,copy)   NSString *zz_name_str;
 @property (nonatomic,copy)   NSString *icd_name_str;
-@property (nonatomic,copy)   NSString *zz_name;
+@property (nonatomic,copy)   NSString *cert_name;
 @property (nonatomic,copy)   NSString *physique_id;
 
 @property (nonatomic,copy)   NSString *cust_id;

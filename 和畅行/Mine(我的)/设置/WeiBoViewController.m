@@ -34,7 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navTitleLabel.text = @"官方微博";
+    self.navTitleLabel.text =ModuleZW( @"官方微博");
     self.view.backgroundColor=[UtilityFunc colorWithHexString:@"#f2f1ef"];
     
     LBReadingTimeScrollPanel *scrollPanel1 = [[LBReadingTimeScrollPanel alloc] initWithFrame:CGRectZero];
@@ -43,7 +43,7 @@
     
     UITextView* weiboTV=[[UITextView alloc] init];
     weiboTV.frame=CGRectMake(15, kNavBarHeight+5, ScreenWidth-30, ScreenHeight-310);
-    weiboTV.text=weiboSpace;
+    weiboTV.text=ModuleZW(weiboSpace);
     weiboTV.enableReadingTime = YES;
     weiboTV.userInteractionEnabled=YES;
     weiboTV.scrollEnabled=NO;

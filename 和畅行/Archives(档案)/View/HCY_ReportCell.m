@@ -69,24 +69,24 @@
     if ([model.quarter isEqualToString:@"1"]) {
         topColor = @"2BAD75";
         bottomColor = @"DBCC61";
-        quartertitleStr = @"第一季度阶段报告";
+        quartertitleStr = ModuleZW(@"第一季度阶段报告");
         timeStr =  [NSString stringWithFormat:@"%@.01.01-%@.3.31",yearStr,yearStr];
     }else if ([model.quarter isEqualToString:@"2"]) {
         topColor = @"4294E1";
         bottomColor = @"D1BDFF";
-        quartertitleStr = @"第二季度阶段报告";
+        quartertitleStr = ModuleZW(@"第二季度阶段报告");
         timeStr =  [NSString stringWithFormat:@"%@.04.01-%@.06.30",yearStr,yearStr];
         timeStr = @"2018.04.01-2018.06.30";
     }else if ([model.quarter isEqualToString:@"3"]) {
         topColor = @"E2862C";
         bottomColor = @"F3D285";
-        quartertitleStr = @"第三季度阶段报告";
+        quartertitleStr = ModuleZW(@"第三季度阶段报告");
         timeStr =  [NSString stringWithFormat:@"%@.07.01-%@.09.30",yearStr,yearStr];
         timeStr = @"2018.07.01-2018.09.30";
     }else{
         topColor = @"6673EE";
         bottomColor = @"FCA6D1";
-        quartertitleStr = @"第四季度阶段报告";
+        quartertitleStr = ModuleZW(@"第四季度阶段报告");
         timeStr =  [NSString stringWithFormat:@"%@.10.01-%@.12.31",yearStr,yearStr];
         timeStr = @"2018.10.01-2018.12.31";
     }

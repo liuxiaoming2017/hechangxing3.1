@@ -737,6 +737,8 @@
 		835DB8DB21D3685D00B8DF99 /* HCY_ConsultingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 835DB8DA21D3685D00B8DF99 /* HCY_ConsultingModel.m */; };
 		835DB91C21D757C800B8DF99 /* HCY_FamilyListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 835DB91B21D757C800B8DF99 /* HCY_FamilyListModel.m */; };
 		837D822321F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837D822121F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m */; };
+		839E0C552213E0540090F179 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 839E0C572213E0540090F179 /* InfoPlist.strings */; };
+		83D4C50F221FE1C700006CA9 /* sportImageText_en.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83D4C50E221FE1C700006CA9 /* sportImageText_en.plist */; };
 		83D54E6821E7165100474F58 /* HCY_ReportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D54E6721E7165100474F58 /* HCY_ReportCell.m */; };
 		83E23EE921C0A53100B43298 /* HCY_CallController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EE821C0A53000B43298 /* HCY_CallController.m */; };
 		83E23EED21C0AD2D00B43298 /* HCY_CallCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EEB21C0AD2D00B43298 /* HCY_CallCell.m */; };
@@ -745,6 +747,7 @@
 		83E23EF421C202B100B43298 /* HCY_HomeImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EF321C202B100B43298 /* HCY_HomeImageModel.m */; };
 		83E23EF721C24F7F00B43298 /* HCY_ActivityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EF621C24F7F00B43298 /* HCY_ActivityController.m */; };
 		83E23F0021C76CE800B43298 /* HYC_CardsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EFF21C76CE800B43298 /* HYC_CardsModel.m */; };
+		83E644912213E883004D286C /* ModuleZW.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83E644932213E883004D286C /* ModuleZW.strings */; };
 		C973089A21B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C973089921B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m */; };
 		C97308E221BA0E9800060447 /* UIColor+Gradient.m in Sources */ = {isa = PBXBuildFile; fileRef = C97308E121BA0E9800060447 /* UIColor+Gradient.m */; };
 		C97308F621BA50FB00060447 /* SGGenerateQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C97308E521BA50FB00060447 /* SGGenerateQRCodeVC.m */; };
@@ -1890,6 +1893,8 @@
 		835DB91B21D757C800B8DF99 /* HCY_FamilyListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_FamilyListModel.m; sourceTree = "<group>"; };
 		837D822121F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BloodOxyNonDeviceViewController.m; sourceTree = "<group>"; };
 		837D822221F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BloodOxyNonDeviceViewController.h; sourceTree = "<group>"; };
+		839E0C562213E0540090F179 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83D4C50E221FE1C700006CA9 /* sportImageText_en.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sportImageText_en.plist; sourceTree = "<group>"; };
 		83D54E6621E7165000474F58 /* HCY_ReportCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCY_ReportCell.h; sourceTree = "<group>"; };
 		83D54E6721E7165100474F58 /* HCY_ReportCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCY_ReportCell.m; sourceTree = "<group>"; };
 		83E23EE721C0A53000B43298 /* HCY_CallController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_CallController.h; sourceTree = "<group>"; };
@@ -1905,6 +1910,7 @@
 		83E23EF621C24F7F00B43298 /* HCY_ActivityController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_ActivityController.m; sourceTree = "<group>"; };
 		83E23EFE21C76CE800B43298 /* HYC_CardsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HYC_CardsModel.h; sourceTree = "<group>"; };
 		83E23EFF21C76CE800B43298 /* HYC_CardsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HYC_CardsModel.m; sourceTree = "<group>"; };
+		83E644922213E883004D286C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ModuleZW.strings; sourceTree = "<group>"; };
 		C3992630D9BF859D26B53112 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C973089821B91C4B00060447 /* HCY_DAVisceraNoTimeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_DAVisceraNoTimeCell.h; sourceTree = "<group>"; };
 		C973089921B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_DAVisceraNoTimeCell.m; sourceTree = "<group>"; };
@@ -2177,6 +2183,7 @@
 			children = (
 				032ED6BD21E729C10020275E /* 之前运动 */,
 				0325A5FC2109C2D300275671 /* sportImageText.plist */,
+				83D4C50E221FE1C700006CA9 /* sportImageText_en.plist */,
 				0325A5FB2109C2D300275671 /* sportImageType.plist */,
 				03C2319721EC20E6003F0FCC /* sportShiFanYin.plist */,
 				0325A5F62109C29900275671 /* MenuTypeView.h */,
@@ -2550,6 +2557,8 @@
 				03513AD420E9CAD4004E2805 /* Assets.xcassets */,
 				03513AD620E9CAD4004E2805 /* LaunchScreen.storyboard */,
 				03513AD920E9CAD4004E2805 /* Info.plist */,
+				839E0C572213E0540090F179 /* InfoPlist.strings */,
+				83E644932213E883004D286C /* ModuleZW.strings */,
 				03513ADA20E9CAD4004E2805 /* main.m */,
 				032A7A1E20EA1DAA003D4952 /* hechangxing.pch */,
 			);
@@ -4224,6 +4233,7 @@
 				030F51A62101CEBE003C918F /* yundongbofang1.png in Resources */,
 				036A668D2113FB5A0096A006 /* 星星_未点亮.png in Resources */,
 				036E851A2186EB1A001B9BB4 /* add_device.png in Resources */,
+				839E0C552213E0540090F179 /* InfoPlist.strings in Resources */,
 				036FC0E52118249D00C1A793 /* Feedback_btn.png in Resources */,
 				036A66B92113FF1F0096A006 /* 家庭成员_提交.png in Resources */,
 				039C238D2123D02600F9AFA3 /* bloodguide3.png in Resources */,
@@ -4421,6 +4431,7 @@
 				030F51C02101CEBE003C918F /* Wybs_ma3.mp3 in Resources */,
 				03439074210AB64E00B57142 /* leyaogouwuche.png in Resources */,
 				03A24CB421143A01005B5BA1 /* LeMedicineType_img.png in Resources */,
+				83D4C50F221FE1C700006CA9 /* sportImageText_en.plist in Resources */,
 				036E85012186EB1A001B9BB4 /* ic_no_experience.png in Resources */,
 				036E85042186EB1A001B9BB4 /* icon_gou.png in Resources */,
 				036E844D2186EAF5001B9BB4 /* wd53.mp3 in Resources */,
@@ -4540,6 +4551,7 @@
 				030F51D02101CEBE003C918F /* Wybs_ruai_1.png in Resources */,
 				039C23922123D04300F9AFA3 /* 立即检测.png in Resources */,
 				036E84C32186EB1A001B9BB4 /* btn_pressed.png in Resources */,
+				83E644912213E883004D286C /* ModuleZW.strings in Resources */,
 				038A653D2112ADB00055C760 /* private.png in Resources */,
 				03A24C902114261B005B5BA1 /* 专家咨询_16.png in Resources */,
 				030F51D22101CEBE003C918F /* WinZhi_Img_la_2.png in Resources */,
@@ -5055,6 +5067,22 @@
 				030126C621F96290000FA318 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		839E0C572213E0540090F179 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				839E0C562213E0540090F179 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		83E644932213E883004D286C /* ModuleZW.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				83E644922213E883004D286C /* en */,
+			);
+			name = ModuleZW.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

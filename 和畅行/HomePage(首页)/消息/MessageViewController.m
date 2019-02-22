@@ -30,7 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navTitleLabel.text = @"消息中心";
+    self.navTitleLabel.text =ModuleZW(@"消息中心");
     self.preBtn.hidden = NO;
     self.rightBtn.hidden = YES;
     self.leftBtn.hidden = YES;

@@ -39,6 +39,8 @@
 
 @property (assign, nonatomic) BOOL isYueLuoyi;
 
+@property (assign, nonatomic) BOOL isOnPay;
+
 @property (nonatomic,strong) NSMutableArray *goumaiArr;
 
 @property (nonatomic,strong) UILabel *jinerLabel;
@@ -82,6 +84,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.isOnPay = NO;
     if(self.isYueLuoyi){
         self.navTitleLabel.text = @"樂絡怡";
     }else{
@@ -196,10 +199,29 @@
         }
     }
     
-    [self createConsumeView];
+    [self getPayRequest];
+    
+    
     
 }
 
+
+-(void)getPayRequest {
+    
+    NSString *urlStr = @"/resources/isfree.jhtml";
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
+        id status=[response objectForKey:@"status"];
+        if([status intValue] == 200){
+            [weakSelf createConsumeView];
+            weakSelf.isOnPay = YES;
+        }else{
+            weakSelf.isOnPay = NO;
+        }
+    } failureBlock:^(NSError *error) {
+        weakSelf.isOnPay = NO;
+    }];
+}
 # pragma mark - 下方金额视图
 - (void)createConsumeView
 {
@@ -287,18 +309,20 @@
             NSString *imageStr = @"";
             if (model.price == 0){
                 imageStr = @"New_yy_zt_xz";
-                [cell downloadFailWithImageStr:imageStr];
             }else if([model.status isKindOfClass:[NSNull class]] || [model.status isEqualToString:@"unpaid"]){  //需要付费leyaoweigoumai
-                imageStr = @"leyaoweigoumai";
-                [cell downloadFailWithImageStr:imageStr];
+                if (self.isOnPay == YES){
+                    imageStr = @"leyaoweigoumai";
+                }else{
+                    imageStr = @"New_yy_zt_xz";
+                }
             }else if ([model.status isEqualToString:@"paid"]){
                 imageStr = @"New_yy_zt_xz";
-                [cell downloadFailWithImageStr:imageStr];
-            }
-            else{
+            } else{
                 imageStr = @"New_yy_zt_xz";
-                [cell downloadFailWithImageStr:imageStr];
             }
+            
+            [cell downloadFailWithImageStr:imageStr];
+
         }
         //判断当前cell是否处在下载中
         UIButton *btn = cell.downloadBtn;
@@ -540,7 +564,6 @@
     downhander.downdelegate = self;
     downhander.fileType =@"mp3";
     downhander.savePath = [GlobalCommon Createfilepath];
-    
     [downhander setProgress:progress] ;
     [downhander start];
 }

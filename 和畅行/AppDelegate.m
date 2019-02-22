@@ -36,7 +36,7 @@
 
 #import "SBJson.h"
 #import "ChangeLanguageObject.h"
-//#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+
 
 
 @interface AppDelegate ()<WXApiDelegate>
@@ -78,6 +78,16 @@
     [self.window makeKeyAndVisible];
     
     [ChangeLanguageObject initUserLanguage];
+    
+    
+    NSArray *languages = [[NSUserDefaults standardUserDefaults] valueForKey:@"AppleLanguages"];
+    if ([languages.firstObject isEqualToString:@"zh-Hans-US"]){
+        [[NSUserDefaults standardUserDefaults]setValue:@"Chinese" forKey:@"Language"];
+    }else {
+         [[NSUserDefaults standardUserDefaults]setValue:@"Other" forKey:@"Language"];
+    }
+    
+
     
     
     return YES;

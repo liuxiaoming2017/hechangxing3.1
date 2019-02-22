@@ -24,9 +24,16 @@
 
 - (void)createUI
 {
-    NSArray *imageArr = @[@"一戴",@"一站",@"一听",@"一贴",@"一选",@"一砭",@"一灸",@"一推",@"一刮"];
+    NSArray *imageArr = @[ModuleZW(@"一戴Ch") ,ModuleZW(@"一站Ch"),
+                                            ModuleZW( @"一听Ch"),ModuleZW(@"一贴Ch"),
+                                            ModuleZW( @"一选Ch"),ModuleZW(@"一砭Ch"),
+                                            ModuleZW( @"一灸Ch"),ModuleZW(@"一推Ch"),
+                                            ModuleZW( @"一刮Ch")];
     if([UserShareOnce shareOnce].isOnline){
-        imageArr = @[@"一站",@"一贴",@"一选",@"一砭",@"一灸",@"一推",@"一刮"];
+        imageArr = @[ModuleZW(@"一站Ch"),ModuleZW(@"一贴Ch"),
+                               ModuleZW(@"一选Ch"),ModuleZW(@"一砭Ch"),
+                               ModuleZW(@"一灸Ch"),ModuleZW(@"一推Ch"),
+                               ModuleZW(@"一刮Ch")];
     }
     CGFloat imageWidth = (ScreenWidth-50)/2.0;
     CGFloat imageHeight = imageWidth/2.16;
@@ -75,36 +82,36 @@
         case 200:
             type = @"/member/service/view/fang/JLBS/1/";
             fangtype = @"yidai";
-            titleStr = @"耳穴处方";
+            titleStr = ModuleZW(@"耳穴处方");
             break;
         case 201:
             type = @"/member/service/view/fang/JLBS/1/";
             fangtype = @"yizhan";
             
-            titleStr = @"运动处方";
+            titleStr = ModuleZW(@"运动处方");
             break;
         case 202:
             type = @"/member/service/view/fang/JLBS/1/";
             fangtype = @"yiting";
             
-            titleStr = @"音乐处方";
+            titleStr = ModuleZW(@"音乐处方");
             break;
             ///member/service/view/fang/sn/2/
         case 203:
             type = @"/member/service/view/fang/JLBS/1/";
             fangtype = @"yitei";
             
-            titleStr = @"磁贴处方";
+            titleStr = ModuleZW(@"磁贴处方");
             break;
         case 204:
             type = @"/member/service/view/fang/JLBS/1/";
             fangtype = @"yixuan";
-            titleStr = @"膳食处方";
+            titleStr = ModuleZW(@"膳食处方");
             break;
         case 205:
             type = @"/member/service/view/fang/JLBS/1/";
             fangtype = @"yishan";
-            titleStr = @"砭石处方";
+            titleStr =ModuleZW( @"砭石处方");
             break;
         case 206:
             type = @"/member/service/view/fang/JLBS/1/";
@@ -119,12 +126,12 @@
         case 207:
             type = @"/member/service/view/fang/JLBS/1/";
             fangtype = @"yitui";
-            titleStr = @"推拿处方";
+            titleStr = ModuleZW(@"推拿处方");
             break;
         case 208:
             type = @"/member/service/view/fang/JLBS/1/";
             fangtype = @"yigua";
-            titleStr = @"刮痧处方";
+            titleStr =ModuleZW( @"刮痧处方");
             break;
         default:
             break;

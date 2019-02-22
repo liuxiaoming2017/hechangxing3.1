@@ -33,12 +33,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navTitleLabel.text = @"添加至卡包";
+    self.navTitleLabel.text = ModuleZW(@"添加至卡包");
     self.view.backgroundColor = [UIColor whiteColor];
   
     
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, kNavBarHeight + 70, ScreenWidth, 30)];
-    titleLabel.text = @"请在输入框输入服务卡号";
+    titleLabel.text = ModuleZW(@"请在输入框输入服务卡号");
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.font = [UIFont systemFontOfSize:17];
@@ -51,7 +51,7 @@
     _textField.textAlignment = NSTextAlignmentCenter;
     _textField.layer.borderWidth =1.0f;
     _textField.layer.borderColor = RGB_TextAppBlue.CGColor;;
-    _textField.placeholder = @"请输入卡号";
+    _textField.placeholder = ModuleZW(@"请输入卡号");
     _textField.borderStyle = UITextBorderStyleRoundedRect;
     _textField.returnKeyType=UIReturnKeyDone;
     [self.view addSubview:_textField];
@@ -59,7 +59,7 @@
     
     UIButton *bangButton = [UIButton buttonWithType:UIButtonTypeCustom];
     bangButton.frame = CGRectMake(ScreenWidth/2 - 75, _textField.bottom+50, 150, 50);
-    [bangButton setTitle:@"添加至卡包" forState:(UIControlStateNormal)];
+    [bangButton setTitle:ModuleZW(@"添加至卡包") forState:(UIControlStateNormal)];
     [bangButton setBackgroundColor:RGB_ButtonBlue];
     bangButton.layer.cornerRadius = 25;
     bangButton.layer.masksToBounds = YES;
@@ -80,7 +80,7 @@
 }
 - (void)bangButton{
     if ([_textField.text isEqualToString:@""]) {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"卡号不能为空" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"卡号不能为空") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         [av show];
         
         return;
@@ -138,7 +138,7 @@
     [self hudWasHidden];
     //[SSWaitViewEx removeWaitViewFrom:self.view];
     
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉，请检查您的网络是否畅通" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉，请检查您的网络是否畅通") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
     [av show];
     [av release];
 }
@@ -158,20 +158,20 @@
 //        av.tag=10007;
 //        _textField.text = @"";
         [[NSNotificationCenter defaultCenter] postNotificationName:@"cardNameSuccess" object:nil];
-        [GlobalCommon showMessage:@"服务卡添加成功" duration:1];
+        [GlobalCommon showMessage:ModuleZW(@"服务卡添加成功") duration:1];
         [self.navigationController popViewControllerAnimated:YES];
         
     }
     else if ([status intValue]== 44)
     {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"登录超时，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         av.tag  = 100008;
         [av show];
         [av release];
     }
     else  {
         NSString *str = [dic objectForKey:@"data"];
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:str delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         
         [av show];
         [av release];
@@ -183,7 +183,7 @@
     [self.view addSubview:progress_];
     [self.view bringSubviewToFront:progress_];
     progress_.delegate = self;
-    progress_.label.text = @"加载中...";
+    progress_.label.text = ModuleZW(@"加载中...");
     [progress_ showAnimated:YES];
 }
 

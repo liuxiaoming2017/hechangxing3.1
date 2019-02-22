@@ -61,14 +61,14 @@
     titleLabel.font = [UIFont systemFontOfSize:18];
     titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.textColor = [UIColor blackColor];
-    titleLabel.text = titleStr;
+    titleLabel.text = ModuleZW( @"和畅提醒");
     [self addSubview:titleLabel];
     
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.right+6, titleLabel.top, 200, strSize.height)];
     timeLabel.font = [UIFont systemFontOfSize:13];
     timeLabel.textAlignment = NSTextAlignmentLeft;
     timeLabel.textColor = UIColorFromHex(0X8E8E93);
-    timeLabel.text = @"和畅提醒";
+    timeLabel.text = titleStr;
     [self addSubview:timeLabel];
     
 //    UIImageView *lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(80, 51, ScreenWidth-14*2-80-5, 1)];
@@ -114,10 +114,13 @@
     }
     if(self.dataArr.count>indexPath.row){
         RemindModel *model = [self.dataArr objectAtIndex:indexPath.row];
-        cell.typeLabel.text = model.type;
-        if([model.type isEqualToString:@"一说"]){
+        cell.typeLabel.text =ModuleZW(model.type);
+        [cell.typeLabel sizeToFit];
+        cell.contentLabel.left = cell.typeLabel.right + 10;
+        
+        if([model.type isEqualToString:ModuleZW(@"一说")]){
             cell.lineImageV.backgroundColor = UIColorFromHex(0X66A8E9);
-        }else if ([model.type isEqualToString:@"一写"]){
+        }else if ([model.type isEqualToString:ModuleZW(@"一写")]){
              cell.lineImageV.backgroundColor = UIColorFromHex(0XF0B764);
         }else{
              cell.lineImageV.backgroundColor = UIColorFromHex(0X8992F0);
@@ -138,7 +141,7 @@
     NSString *titleStr = @"";
     NSString *urlStr = @"";
     
-    if([cell.typeLabel.text isEqualToString:@"一说"]){
+    if([cell.typeLabel.text isEqualToString:ModuleZW(@"一说")]){
         
         if([self isFirestClickThePageWithString:@"speak"]){
             vc = [[MeridianIdentifierViewController alloc] init];
@@ -148,7 +151,7 @@
         vc.hidesBottomBarWhenPushed = YES;
         [self.viewController.navigationController pushViewController:vc animated:YES];
         
-    }else if ([cell.typeLabel.text isEqualToString:@"一写"]){
+    }else if ([cell.typeLabel.text isEqualToString:ModuleZW(@"一写")]){
         
         if([self isFirestClickThePageWithString:@"write"]){
             vc = [[WriteListController alloc] init];
@@ -158,7 +161,7 @@
         vc.hidesBottomBarWhenPushed = YES;
         [self.viewController.navigationController pushViewController:vc animated:YES];
         
-    }else if ([cell.typeLabel.text isEqualToString:@"一点"]){
+    }else if ([cell.typeLabel.text isEqualToString:ModuleZW(@"一点")]){
         
         if([self isFirestClickThePageWithString:@"click"]){
             vc = [[QuestionListController alloc] init];
@@ -169,18 +172,18 @@
         [self.viewController.navigationController pushViewController:vc animated:YES];
         
     }else {
-        if ([cell.typeLabel.text isEqualToString:@"一听"]){
+        if ([cell.typeLabel.text isEqualToString:ModuleZW(@"一听")]){
             type = @"/member/service/view/fang/JLBS/1/";
             fangtype = @"yiting";
-            titleStr = @"音乐处方";
-        }else if ([cell.typeLabel.text isEqualToString:@"一站"]){
+            titleStr = ModuleZW(@"音乐处方");
+        }else if ([cell.typeLabel.text isEqualToString:ModuleZW(@"一站")]){
             type = @"/member/service/view/fang/JLBS/1/";
             fangtype = @"yizhan";
-            titleStr = @"运动处方";
-        }else if ([cell.typeLabel.text isEqualToString:@"一推"]){
+            titleStr = ModuleZW(@"运动处方");
+        }else if ([cell.typeLabel.text isEqualToString:ModuleZW(@"一推")]){
             type = @"/member/service/view/fang/JLBS/1/";
             fangtype = @"yitui";
-            titleStr = @"推拿处方";
+            titleStr = ModuleZW(@"推拿处方");
         }
         
         urlStr = [NSString stringWithFormat:@"%@%@%@.jhtml?type=%@",URL_PRE,type,[MemberUserShance shareOnce].idNum,fangtype];

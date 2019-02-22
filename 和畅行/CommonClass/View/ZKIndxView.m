@@ -30,7 +30,10 @@
        
         //NSArray *imagesData = @[@"erxue",@"yundong",@"yinyue",@"xueya",@"liuyan",@"dianhua",@"aijiu"];
         NSArray *imagesData = @[@"yinyue",@"yundong",@"aijiu",@"dianhua",@"shipin",@"xueya",@"liuyan",@"erxue"];
-        NSArray *imagesNameData = @[@"音乐",@"运动",@"艾灸",@"电话",@"视频",@"血压",@"留言",@"耳穴"];
+        NSArray *imagesNameData = @[ModuleZW(@"音乐"),ModuleZW(@"运动"),
+                                                            ModuleZW(@"艾灸"),ModuleZW(@"电话"),
+                                                            ModuleZW(@"视频"),ModuleZW(@"血压"),
+                                                            ModuleZW(@"留言"),ModuleZW(@"耳穴")];
         if([UserShareOnce shareOnce].isOnline){
 
         }
@@ -66,7 +69,7 @@
             
             UILabel *name = [[UILabel alloc]init];
             name.text = imagesNameData[i];
-            name.frame = CGRectMake(30 + col * (40+MARGIN), CGRectGetMaxY(button.frame )+ 12, 80, 15);
+            name.frame = CGRectMake(30 + col * (40+MARGIN), CGRectGetMaxY(button.frame )+ 12, 120, 15);
             name.font =[UIFont systemFontOfSize:15];
             name.textColor = [UIColor whiteColor];
             name.centerX = button.centerX;

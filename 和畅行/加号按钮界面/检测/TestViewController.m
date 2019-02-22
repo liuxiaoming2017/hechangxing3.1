@@ -36,9 +36,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navTitleLabel.text = @"体征监检测";
+    self.navTitleLabel.text = ModuleZW(@"体征监检测");
     
-    self.titleArr = @[@"血压",@"血糖",@"血氧",@"呼吸",@"体温"];
+    self.titleArr = @[ModuleZW(@"血压"),
+                              ModuleZW(@"血糖"),
+                              ModuleZW(@"血氧"),
+                              ModuleZW(@"呼吸"),
+                              ModuleZW(@"体温")];
     self.imageArr = @[@"检测_血压",@"检测_血糖",@"检测_血氧",@"检测_呼吸",@"检测_体温"];
     self.dataArr = [NSMutableArray arrayWithCapacity:0];
     
@@ -55,7 +59,7 @@
 {
     
     UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, kNavBarHeight, 160, 39)];
-    topLabel.text = @"近期检测";
+    topLabel.text = ModuleZW(@"近期检测");
     topLabel.textAlignment=NSTextAlignmentLeft;
     topLabel.font=[UIFont systemFontOfSize:16.0];
     topLabel.textColor = UIColorFromHex(0x333333);
@@ -69,8 +73,7 @@
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, lineImageV.bottom, ScreenWidth, ScreenHeight-lineImageV.bottom) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
-    self.tableView.backgroundColor=[UIColor clearColor];
+       self.tableView.backgroundColor=[UIColor clearColor];
     self.tableView.bounces = NO;
     [self.view addSubview:self.tableView];
 }
@@ -81,7 +84,7 @@
     __weak typeof(self) weakSelf = self;
     //[self.archiveArr removeAllObjects];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.label.text = @"加载中...";
+    hud.label.text = ModuleZW(@"加载中...");
     
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
         [hud hideAnimated:YES];
@@ -138,31 +141,31 @@
             if (![GlobalCommon stringEqualNull:model.highPressure]) {
                 descrioTionStr = [NSString stringWithFormat:@"%@ - %@",model.highPressure,model.lowPressure];
             }else{
-                descrioTionStr = @"尚未检测";
+                descrioTionStr = ModuleZW(@"尚未检测");
             }
         }else if (indexPath.row == 1) {
             if (![GlobalCommon stringEqualNull:model.levels]) {
                 descrioTionStr = model.levels;
             }else{
-                descrioTionStr = @"尚未检测";
+                descrioTionStr = ModuleZW(@"尚未检测");
             }
         }else if (indexPath.row == 2) {
             if (![GlobalCommon stringEqualNull:model.density]) {
                 descrioTionStr = model.density;
             }else{
-                descrioTionStr = @"尚未检测";
+                descrioTionStr = ModuleZW(@"尚未检测");
             }
         }else if (indexPath.row == 3) {
             if (![GlobalCommon stringEqualNull:model.nums]) {
                 descrioTionStr = model.nums;
             }else{
-                descrioTionStr = @"尚未检测";
+                descrioTionStr = ModuleZW(@"尚未检测");
             }
         }else if (indexPath.row == 4) {
             if (![GlobalCommon stringEqualNull:model.temperature]) {
                 descrioTionStr = model.temperature;
             }else{
-                descrioTionStr = @"尚未检测";
+                descrioTionStr = ModuleZW(@"尚未检测");
             }
         }
         cell.descriptionLabel.text = descrioTionStr;
@@ -234,29 +237,29 @@
     NSInteger sec = time/60;
     if (sec<60) {
         if (sec == 0){
-            return [NSString stringWithFormat:@"刚刚"];
+            return [NSString stringWithFormat:ModuleZW(@"刚刚")];
         }
-        return [NSString stringWithFormat:@"%ld分钟前",sec];
+        return [NSString stringWithFormat:@"%ld%@",sec,ModuleZW(@"分钟前")];
     }
     
     // 秒转小时
     NSInteger hours = time/3600;
     if (hours<24) {
-        return [NSString stringWithFormat:@"%ld小时前",hours];
+        return [NSString stringWithFormat:@"%ld%@",hours,ModuleZW(@"小时前")];
     }
     //秒转天数
     NSInteger days = time/3600/24;
     if (days < 30) {
-        return [NSString stringWithFormat:@"%ld天前",days];
+        return [NSString stringWithFormat:@"%ld%@",days,ModuleZW(@"天前")];
     }
     //秒转月
     NSInteger months = time/3600/24/30;
     if (months < 12) {
-        return [NSString stringWithFormat:@"%ld月前",months];
+        return [NSString stringWithFormat:@"%ld%@",months,ModuleZW(@"月前")];
     }
     //秒转年
     NSInteger years = time/3600/24/30/12;
-    return [NSString stringWithFormat:@"%ld年前",years];
+    return [NSString stringWithFormat:@"%ld%@",years,ModuleZW(@"年前")];
 }
 
 

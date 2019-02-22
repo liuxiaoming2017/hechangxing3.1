@@ -78,7 +78,7 @@
     
     preBtn.frame = CGRectMake(20, kStatusBarHeight+5, 80, 30);
     [preBtn setImage:[UIImage imageNamed:@"nav_bar_back"] forState:UIControlStateNormal];
-    [preBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [preBtn setTitle:ModuleZW(@"返回") forState:UIControlStateNormal];
     [preBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [preBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     preBtn.titleEdgeInsets = UIEdgeInsetsMake(1, -5, 0, 0);

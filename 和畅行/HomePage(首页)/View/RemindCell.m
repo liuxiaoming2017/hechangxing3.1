@@ -44,7 +44,7 @@
     
     self.backgroundColor = [UIColor clearColor];
     
-    self.typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 8+7, 40, 30)];
+    self.typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 8+14, 80, 16)];
     self.typeLabel.textAlignment=NSTextAlignmentLeft;
     self.typeLabel.font=[UIFont systemFontOfSize:13.0];
     self.typeLabel.textColor=UIColorFromHex(0x8E8E93);

@@ -31,7 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
-    self.navTitleLabel.text = @"我的卡包";
+    self.navTitleLabel.text = ModuleZW(@"我的卡包");
     [[NSNotificationCenter defaultCenter] addObserver :self selector:@selector(cardNameSuccess) name:@"cardNameSuccess" object:nil];
     [self getDatawithpageInteger:self.pageInteger];
     
@@ -54,14 +54,14 @@
     UIButton *marryStateBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth - 55, kNavBarHeight + 13, 36, 36) target:self sel:@selector(addAction) tag:1000 image:@"HCY_addcard" title:nil];
     [self.view addSubview:marryStateBtn];
     
-    UILabel *blockLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, marryStateBtn.top, 100, 36)];
-    blockLabel.text = @"我的卡包";
+    UILabel *blockLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, marryStateBtn.top, 200, 36)];
+    blockLabel.text = ModuleZW(@"我的卡包");
     blockLabel.textColor = [UtilityFunc colorWithHexString:@"#000000"];
     blockLabel.font = [UIFont systemFontOfSize:21];
     [self.view addSubview:blockLabel];
     
     self.nullLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, marryStateBtn.bottom , ScreenWidth, 200)];
-    self.nullLabel.text = @"还没有卡\n快去添加新卡吧~";
+    self.nullLabel.text = ModuleZW(@"还没有卡\n快去添加新卡吧~");
     self.nullLabel.numberOfLines = 2;
     self.nullLabel.font = [UIFont systemFontOfSize:17];
     self.nullLabel.textAlignment = NSTextAlignmentCenter;
@@ -126,7 +126,7 @@
 -(void)getDatawithpageInteger:(NSInteger)integer {
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.label.text = @"加载中...";
+    hud.label.text = ModuleZW(@"加载中...");
     
     NSString *memberId = [NSString stringWithFormat:@"%@",[UserShareOnce shareOnce].uid];
     
@@ -150,13 +150,13 @@
             for (NSDictionary *dic in oneArray ) {
                 HYC_CardsModel *model = [[HYC_CardsModel alloc]init];
                 [model yy_modelSetWithJSON:dic];
-                model.kindStr = @"现金卡";
+                model.kindStr = ModuleZW(@"现金卡");
                 [self.dataArray addObject:model];
             }
             
             for (NSDictionary *dic in dataArray ) {
                 HYC_CardsModel *model = [[HYC_CardsModel alloc]init];
-                model.kindStr = @"卡";
+                model.kindStr = ModuleZW(@"卡");
                 [model yy_modelSetWithJSON:dic];
                 [self.dataArray addObject:model];
             }
@@ -206,7 +206,7 @@
     
     HYC_CardsModel *model = self.dataArray[indexPath.row];
     
-    if([model.kindStr isEqualToString:@"现金卡"] )return;
+    if([model.kindStr isEqualToString:ModuleZW(@"现金卡")] )return;
     
     if ([model.status isEqualToString:@"1"]) {
         

@@ -62,7 +62,7 @@
     _yLabel.textColor = [UIColor whiteColor];
     [self.view addSubview:_yLabel];
     
-    UIButton *addButton = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2-70, imageV.bottom + 70, 140, 50) target:self sel:@selector(addCarAction) tag:3333 image:nil title:@"添加"];
+    UIButton *addButton = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2-70, imageV.bottom + 70, 140, 50) target:self sel:@selector(addCarAction) tag:3333 image:nil title:ModuleZW(@"添加")];
     [addButton setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
     [addButton setBackgroundColor:RGB_ButtonBlue];
     addButton.layer.cornerRadius = 25;

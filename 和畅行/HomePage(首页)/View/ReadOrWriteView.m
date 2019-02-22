@@ -35,7 +35,7 @@
     imageHeight = imageWidth*76.8/97.7;
     
     
-    NSArray *imageArr = @[@"readImage",@"writeImage",@"hitImage"];
+    NSArray *imageArr = @[ModuleZW(@"readImage"),ModuleZW(@"writeImage"),ModuleZW(@"hitImage")];
     
     for(NSInteger i = 0;i<3;i++){
         
@@ -62,8 +62,8 @@
     imageWidth = (ScreenWidth - 10*4)/3.0;
     imageHeight = imageWidth*76.8/97.7;
     
-    NSArray *imageArr = @[@"readImage",@"writeImage",@"hitImage"];
-    
+    NSArray *imageArr = @[ModuleZW(@"readImage"),ModuleZW(@"writeImage"),ModuleZW(@"hitImage")];
+
     for(NSInteger i = 0;i<3;i++){
         
         HCY_HomeImageModel *model;
@@ -134,7 +134,6 @@
             break;
     }
 }
-
 # pragma mark - 写按钮点击
 - (void)writeBtnBtnAction:(UIButton *)btn
 {

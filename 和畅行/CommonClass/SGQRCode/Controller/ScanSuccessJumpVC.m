@@ -49,7 +49,7 @@
 
 - (void)setupNavigationItem {
     UIButton *left_Button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
-    [left_Button setTitle:@"返回" forState:UIControlStateNormal];
+    [left_Button setTitle:ModuleZW(@"返回") forState:UIControlStateNormal];
     [left_Button addTarget:self action:@selector(left_BarButtonItemAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *left_BarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:left_Button];
     self.navigationItem.leftBarButtonItem = left_BarButtonItem;

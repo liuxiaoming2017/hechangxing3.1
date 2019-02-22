@@ -66,28 +66,28 @@
 
 -(void)setCarListDataWithModel:(HYC_CardsModel *)model {
     NSString *timeStr = [NSString string];
-    if ([model.kindStr isEqualToString:@"现金卡"]){
+    if ([model.kindStr isEqualToString:ModuleZW(@"现金卡")]){
         NSString *str = [model.cashcard valueForKey:@"name"];
           _hLabel.text = str;
-        _mLabel.text = [NSString stringWithFormat:@"余额 : %@元",model.balance];
+        _mLabel.text = [NSString stringWithFormat:@"%@ : %@元",ModuleZW(@"余额"),model.balance];
         timeStr = [NSString stringWithFormat:@"%@",[model.cashcard valueForKey:@"endDate"]];
         _yLabel.text  = [self getDateStringWithTimeStr:timeStr];
     }else{
         _hLabel.text = model.card_name;
         if (model.cardDescription==nil || [model.cardDescription isKindOfClass:[NSNull class]]||model.cardDescription.length == 0) {
-            _mLabel.text = @"暂无";
+            _mLabel.text = ModuleZW(@"暂无");
         }else{
             _mLabel.text = model.cardDescription;
         }
         
-        if ([model.status  isEqualToString:@"1"]&&![model.kindStr isEqualToString:@"现金卡"]) {
+        if ([model.status  isEqualToString:@"1"]&&![model.kindStr isEqualToString:ModuleZW(@"现金卡")]) {
             _imageV.hidden = NO;
         }else {
             _imageV.hidden = YES;
         }
         timeStr = model.exprise_time;
         if(![GlobalCommon stringEqualNull:timeStr]){
-            NSString *endTimeStr =  [NSString stringWithFormat:@"%@到期",timeStr];
+            NSString *endTimeStr =  [NSString stringWithFormat:@"%@%@",timeStr,ModuleZW(@"到期")];
             _yLabel.text = endTimeStr;
         }
     }

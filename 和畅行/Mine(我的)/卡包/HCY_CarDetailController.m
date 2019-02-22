@@ -34,7 +34,7 @@
 
 -(void)layoutCarDetailView {
     
-    self.navTitleLabel.text = @"消费记录";
+    self.navTitleLabel.text = ModuleZW(@"消费记录");
     UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 240)];
     [imageV.layer addSublayer:[UIColor setGradualChangingColor:imageV fromColor:@"4294E1" toColor:@"D1BDFF"]];
     imageV.layer.cornerRadius = 10;
@@ -53,7 +53,7 @@
     _mLabel = [[UILabel alloc] init];
     _mLabel.frame = CGRectMake(20,_hLabel.bottom , imageV.width -  40, 30 );
     _mLabel.numberOfLines = 2;
-    _mLabel.text = [NSString stringWithFormat:@"卡号：%@",self.model.card_no];
+    _mLabel.text = [NSString stringWithFormat:@"%@：%@",ModuleZW(@"卡号"),self.model.card_no];
     _mLabel.font = [UIFont systemFontOfSize:16];
     _mLabel.textColor = [UIColor whiteColor];
     [imageV addSubview:_mLabel];
@@ -62,7 +62,7 @@
     
     _yLabel = [[UILabel alloc] init];
     _yLabel.frame = CGRectMake(_mLabel.left , _mLabel.bottom , 160, 30);
-    _yLabel.text = @"剩余服务";
+    _yLabel.text = ModuleZW(@"剩余服务");
     _yLabel.font = [UIFont systemFontOfSize:16];
     _yLabel.textColor = [UIColor whiteColor];
     [imageV addSubview:_yLabel];
@@ -81,7 +81,7 @@
     
     
     UILabel *listLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, imageV.bottom + 23, 200, 30)];
-    listLabel.text = @"消费记录";
+    listLabel.text = ModuleZW(@"消费记录");
     listLabel.font = [UIFont systemFontOfSize:16];
     listLabel.textColor = RGB_TextDarkGray;
     [self.view addSubview:listLabel];
@@ -147,7 +147,7 @@
 - (void)requesstuserinfoError:(ASIHTTPRequest *)request
 {
     [GlobalCommon hideMBHudWithView:self.view];
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉，请检查您的网络是否畅通" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉，请检查您的网络是否畅通") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
     [av show];
 }
 - (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
@@ -227,12 +227,12 @@
             
             if(![GlobalCommon stringEqualNull:[dic objectForKey:@"serviceCode"]]){
                 if([[dic objectForKey:@"serviceCode"] isEqualToString:@"10006"]){
-                    [cell.tradeBtn setTitle:@"去咨询" forState:UIControlStateNormal];
+                    [cell.tradeBtn setTitle:ModuleZW(@"去咨询") forState:UIControlStateNormal];
                 }else{
-                    [cell.tradeBtn setTitle:@"去预约" forState:UIControlStateNormal];
+                    [cell.tradeBtn setTitle:ModuleZW(@"去预约") forState:UIControlStateNormal];
                 }
             }else{
-                [cell.tradeBtn setTitle:@"去咨询" forState:UIControlStateNormal];
+                [cell.tradeBtn setTitle:ModuleZW(@"去咨询") forState:UIControlStateNormal];
             }
             
         }
@@ -263,7 +263,7 @@
 - (void)selectTradeButton:(NSString *)btnStr
 {
     
-    if([btnStr isEqualToString:@"去咨询"]){
+    if([btnStr isEqualToString:ModuleZW(@"去咨询")]){
         HCY_CallController *vc = [[HCY_CallController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }else{

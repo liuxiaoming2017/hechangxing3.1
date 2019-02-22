@@ -22,10 +22,10 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ySm-uF-GrQ">
                         <rect key="frame" x="20" y="10" width="424" height="149.5"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="儿童咨询" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NxU-gi-LKu">
-                                <rect key="frame" x="10" y="110" width="90" height="29.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="儿童咨询" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NxU-gi-LKu">
+                                <rect key="frame" x="20" y="110" width="200" height="29.5"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="90" id="L33-PZ-HLm"/>
+                                    <constraint firstAttribute="width" constant="200" id="L33-PZ-HLm"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.37473015803747223" green="0.37473015803747223" blue="0.37473015803747223" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -92,7 +92,7 @@
                             <constraint firstAttribute="trailing" secondItem="ZJO-QI-x6h" secondAttribute="trailing" constant="20" id="FDK-mg-cLd"/>
                             <constraint firstItem="LR6-79-hBO" firstAttribute="leading" secondItem="ySm-uF-GrQ" secondAttribute="leading" constant="10" id="JDb-FJ-wPb"/>
                             <constraint firstItem="ZJO-QI-x6h" firstAttribute="top" secondItem="yiN-m0-ogJ" secondAttribute="bottom" constant="6" id="S3M-9X-AdE"/>
-                            <constraint firstItem="NxU-gi-LKu" firstAttribute="leading" secondItem="ySm-uF-GrQ" secondAttribute="leading" constant="10" id="TTm-Co-i9a"/>
+                            <constraint firstItem="NxU-gi-LKu" firstAttribute="leading" secondItem="ySm-uF-GrQ" secondAttribute="leading" constant="20" id="TTm-Co-i9a"/>
                             <constraint firstItem="ZJO-QI-x6h" firstAttribute="leading" secondItem="LR6-79-hBO" secondAttribute="trailing" constant="15" id="d9X-tx-C8A"/>
                             <constraint firstAttribute="bottom" secondItem="XP9-90-dKO" secondAttribute="bottom" constant="10" id="dqa-hZ-7IA"/>
                             <constraint firstItem="yoC-iQ-KfJ" firstAttribute="leading" secondItem="LR6-79-hBO" secondAttribute="trailing" constant="15" id="fcl-th-ivf"/>
@@ -128,7 +128,7 @@
                 <outlet property="typeImageView" destination="LR6-79-hBO" id="PBN-hK-uEn"/>
                 <outlet property="typeLabel" destination="NxU-gi-LKu" id="rKK-1D-YyV"/>
             </connections>
-            <point key="canvasLocation" x="-388" y="29"/>
+            <point key="canvasLocation" x="-442" y="26"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -68,6 +68,7 @@
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, tableView.width, 20)];
     titleLabel.textAlignment = NSTextAlignmentLeft;
+    titleLabel.numberOfLines = 0;
     titleLabel.font = [UIFont systemFontOfSize:15];
     if(_menuArr.count > indexPath.row){
         titleLabel.text = [_menuArr objectAtIndex:indexPath.row];

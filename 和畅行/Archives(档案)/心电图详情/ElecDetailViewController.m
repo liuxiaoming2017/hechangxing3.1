@@ -43,7 +43,7 @@
     UIButton *leftBtn = [[UIButton alloc] init];
     //    [leftBtn setImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
     [leftBtn setImage:[UIImage imageNamed:@"nav_bar_back"] forState:UIControlStateNormal];
-    [leftBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [leftBtn setTitle:ModuleZW(@"返回") forState:UIControlStateNormal];
     [leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     leftBtn.frame = CGRectMake(0, 0, 50, 50);
     leftBtn.adjustsImageWhenHighlighted = NO;

@@ -17,7 +17,7 @@
 #import "ResultController.h"
 #import "EEGDetailController.h"
 #import "HCY_ReportCell.h"
-//#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 
 @interface TimeLineView()<UITableViewDelegate,UITableViewDataSource,govSectionViewDelegate>
 
@@ -127,7 +127,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     HealthTipsModel *model = _dataArr[indexPath.row];
     
-    if (self.typeInteger < 7 &&self.typeInteger!=2) {
+    if (self.typeInteger < 7 &&self.typeInteger!=2&&self.typeInteger!=3) {
         if (![model.type isEqualToString:@"REPORT"]){
             if (indexPath.row == 0) {
                 return 105;
@@ -178,7 +178,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (self.typeInteger < 7 &&self.typeInteger !=2 ) {
+    if (self.typeInteger < 7 &&self.typeInteger !=2 &&self.typeInteger!=3) {
         HealthTipsModel *model = _dataArr[indexPath.row];
         if(![model.type isEqualToString:@"REPORT"]) {
             NSString *timeStr = [NSString string];
@@ -214,7 +214,6 @@
                         cell.lineImageV2.hidden = NO;
                     }
                 }else{
-                    
                     cell.lineImageV2.hidden = YES;
                 }
                 
@@ -239,7 +238,7 @@
                     if (indexPath.row < _dataArr.count -1) {
                         HealthTipsModel *nextAmodel = _dataArr[indexPath.row + 1];
                         NSString *nextTimeStr = [NSString string];
-                        if (self.typeInteger == 0) {
+                        if (self.typeInteger == 0||self.typeInteger == 5) {
                             nextTimeStr = nextAmodel.date;
                         }else{
                             nextTimeStr = nextAmodel.createTime;
@@ -266,7 +265,7 @@
                     if (indexPath.row < _dataArr.count -1) {
                         HealthTipsModel *nextAmodel = _dataArr[indexPath.row + 1];
                         NSString *nextTimeStr = [NSString string];
-                        if (self.typeInteger == 0) {
+                        if (self.typeInteger == 0||self.typeInteger == 5) {
                             nextTimeStr = nextAmodel.date;
                         }else{
                             nextTimeStr = nextAmodel.createTime;
@@ -406,7 +405,7 @@
     NSString *url = [[NSString alloc] initWithFormat:@"%@/member/service/reports.jhtml?memberChildId=%@&quarter=%@&year=%@",URL_PRE,idNim,self.topModel.quarter,self.topModel.year];
     ResultSpeakController *vc = [[ResultSpeakController alloc] init];
     vc.urlStr = url;
-    vc.titleStr = @"季度报告详情";
+    vc.titleStr = ModuleZW(@"季度报告详情");
     vc.hidesBottomBarWhenPushed = YES;
     [[self viewController].navigationController pushViewController:vc animated:YES];
     
@@ -430,7 +429,7 @@
         }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = aUrlle;
-        vc.titleStr = @"健康档案";
+        vc.titleStr = ModuleZW(@"健康档案");
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
     }
@@ -444,7 +443,7 @@
             tzUrlle= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
             ResultSpeakController *vc = [[ResultSpeakController alloc] init];
             vc.urlStr = tzUrlle;
-            vc.titleStr = @"健康档案";
+            vc.titleStr = ModuleZW(@"健康档案");
             vc.hidesBottomBarWhenPushed = YES;
             [[self viewController].navigationController pushViewController:vc animated:YES];
         }else{
@@ -470,7 +469,7 @@
         //member/service/zf_report.jhtml?cust_id=32&physique_id=181224175130815054&device=1
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = zfStr;
-        vc.titleStr = @"健康档案";
+        vc.titleStr = ModuleZW(@"健康档案");
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
     }
@@ -487,7 +486,7 @@
         }
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:detail];
         self.hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
-        self.hud.label.text = @"加载中...";
+        self.hud.label.text = ModuleZW(@"加载中...");
         [[self viewController] presentViewController:nav animated:YES completion:nil];
     }
     
@@ -503,7 +502,7 @@
         //            }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = xyurlStr;
-        vc.titleStr = @"血压详情";
+        vc.titleStr =ModuleZW( @"血压详情");
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
         
@@ -522,7 +521,7 @@
         
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = xyurlStr;
-        vc.titleStr = @"血氧详情";
+        vc.titleStr = ModuleZW(@"血氧详情");
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
         
@@ -541,7 +540,7 @@
         //            }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = twurlStr;
-        vc.titleStr = @"体温详情";
+        vc.titleStr = ModuleZW(@"体温详情");
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
     }
@@ -559,7 +558,7 @@
         //            }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = xturlStr;
-        vc.titleStr = @"血糖详情";
+        vc.titleStr = ModuleZW(@"血糖详情");
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
     }
@@ -577,7 +576,7 @@
         //            }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = hxurlStr;
-        vc.titleStr = @"呼吸详情";
+        vc.titleStr = ModuleZW(@"呼吸详情");
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
     }
@@ -589,11 +588,10 @@
         NSString *url = [[NSString alloc] initWithFormat:@"%@%@",URL_PRE,model.link];
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = url;
-        vc.titleStr = @"季度报告详情";
+        vc.titleStr = ModuleZW(@"季度报告详情");
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
     }
-    
     
     
     //病历列表
@@ -607,6 +605,7 @@
 //        vc.titleStr = @"病历详情";
 //        vc.hidesBottomBarWhenPushed = YES;
 //        [[self viewController].navigationController pushViewController:vc animated:YES];
+         
         
     }
     
@@ -619,7 +618,7 @@
         NSString *resulturl = [[NSString alloc] initWithFormat:@"%@/member/service/reports.jhtml?memberChildId=%@&quarter=%@&year=%@",URL_PRE,idNim,model.quarter,model.year];
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = resulturl;
-        vc.titleStr = @"季度报告详情";
+        vc.titleStr = ModuleZW(@"季度报告详情");
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
         

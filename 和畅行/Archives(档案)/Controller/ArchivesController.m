@@ -54,14 +54,14 @@
     [super viewWillAppear:animated];
     
     //血压
-    if ([[UserShareOnce shareOnce].wherePop isEqualToString:@"血压"]) {
+    if ([[UserShareOnce shareOnce].wherePop isEqualToString:ModuleZW(@"血压")]) {
         UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:107];
         self.memberId = [UserShareOnce shareOnce].bloodMemberID;
-        [self selectIndexWithString:@"血压" withButton:btn];
+        [self selectIndexWithString:ModuleZW(@"血压") withButton:btn];
         [UserShareOnce shareOnce].wherePop = @"";
     }
     //血氧
-    if ([[UserShareOnce shareOnce].wherePop isEqualToString:@"血氧"]) {
+    if ([[UserShareOnce shareOnce].wherePop isEqualToString:ModuleZW(@"血氧")]) {
         UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:108];
         self.memberId = [UserShareOnce shareOnce].bloodMemberID;
         [self selectIndexWithString:@"血氧" withButton:btn];
@@ -227,19 +227,19 @@
         }
     }
     
-    if ([str isEqualToString:@"全部"])  self.typeUrlInteger = 0;
-    else if([str isEqualToString:@"最新"])    self.typeUrlInteger = 1;
-    else if([str isEqualToString:@"阶段报告"])    self.typeUrlInteger = 2;
-    else if([str isEqualToString:@"病历"])    self.typeUrlInteger = 3;
-    else if([str isEqualToString:@"经络"])    self.typeUrlInteger = 4;
-    else if([str isEqualToString:@"脏腑"])    self.typeUrlInteger = 5;
-    else if([str isEqualToString:@"体质"])    self.typeUrlInteger = 6;
-    else if([str isEqualToString:@"血压"])    self.typeUrlInteger = 7;
-    else if([str isEqualToString:@"血氧"])    self.typeUrlInteger = 8;
-    else if([str isEqualToString:@"血糖"])    self.typeUrlInteger = 9;
-    else if([str isEqualToString:@"心率"])    self.typeUrlInteger = 10;
-    else if([str isEqualToString:@"呼吸"])    self.typeUrlInteger = 11;
-    else if([str isEqualToString:@"体温"])    self.typeUrlInteger = 12;
+    if ([str isEqualToString:ModuleZW(@"全部")])  self.typeUrlInteger = 0;
+    else if([str isEqualToString:ModuleZW(@"最新")])    self.typeUrlInteger = 1;
+    else if([str isEqualToString:ModuleZW(@"阶段报告")])    self.typeUrlInteger = 2;
+    else if([str isEqualToString:ModuleZW(@"病历")])    self.typeUrlInteger = 3;
+    else if([str isEqualToString:ModuleZW(@"经络")])    self.typeUrlInteger = 4;
+    else if([str isEqualToString:ModuleZW(@"脏腑")])    self.typeUrlInteger = 5;
+    else if([str isEqualToString:ModuleZW(@"体质")])    self.typeUrlInteger = 6;
+    else if([str isEqualToString:ModuleZW(@"血压")])    self.typeUrlInteger = 7;
+    else if([str isEqualToString:ModuleZW(@"血氧")])    self.typeUrlInteger = 8;
+    else if([str isEqualToString:ModuleZW(@"血糖")])    self.typeUrlInteger = 9;
+    else if([str isEqualToString:ModuleZW(@"心率")])    self.typeUrlInteger = 10;
+    else if([str isEqualToString:ModuleZW(@"呼吸")])    self.typeUrlInteger = 11;
+    else if([str isEqualToString:ModuleZW(@"体温")])    self.typeUrlInteger = 12;
     NSLog(@"%@",str);
     self.pageInteger = 1;
     [_dataListArray removeAllObjects];
@@ -260,7 +260,6 @@
         
     }
 }
-
 # pragma mark - wkwebview的设置
 - (void)createWKWebviewWithUrlStr:(NSString *)urlStr {
     
@@ -540,7 +539,7 @@
 {
     //[SSWaitViewEx removeWaitViewFrom:self.view];
     
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉，请检查您的网络是否畅通" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉，请检查您的网络是否畅通") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
     [av show];
 }
 - (void)requesstuserinfoCompleted11:(ASIHTTPRequest *)request
@@ -571,13 +570,13 @@
     }
     else if ([status intValue]== 44)
     {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"登录超时，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         av.tag  = 100008;
         [av show];
     }
     else  {
         NSString *str = [dica objectForKey:@"data"];
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:str delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         
         [av show];
     }
@@ -636,7 +635,7 @@
 - (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
     NSLog(@"加载失败");
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-    [GlobalCommon showMessage:@"请求失败!" duration:2];
+    [GlobalCommon showMessage:ModuleZW(@"请求失败!") duration:2];
     //[self addFailView];
 }
 

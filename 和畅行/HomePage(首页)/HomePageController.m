@@ -287,7 +287,7 @@
             }
             if([[response objectForKey:@"data"] objectForKey:@"jlbs"] == nil || [[[response objectForKey:@"data"] objectForKey:@"jlbs"] isKindOfClass:[NSNull class]]){
                 RemindModel *model = [[RemindModel alloc] init];
-                model.type = @"一说";
+                model.type =ModuleZW(@"一说");
                 model.advice = jlbsAdvice;
                 [mutableArr addObject:model];
                 NSLog(@"jlbs");
@@ -295,14 +295,14 @@
             }
             if([[response objectForKey:@"data"] objectForKey:@"tzbs"] == nil || [[[response objectForKey:@"data"] objectForKey:@"tzbs"] isKindOfClass:[NSNull class]]){
                 RemindModel *model = [[RemindModel alloc] init];
-                model.type = @"一点";
+                model.type = ModuleZW(@"一点");
                 model.advice = tzbsAdvice;
                 [mutableArr addObject:model];
                 NSLog(@"tzbs");
             }
             if([[response objectForKey:@"data"] objectForKey:@"zfbs"] == nil || [[[response objectForKey:@"data"] objectForKey:@"zfbs"] isKindOfClass:[NSNull class]]){
                 RemindModel *model = [[RemindModel alloc] init];
-                model.type = @"一写";
+                model.type =ModuleZW( @"一写");
                 model.advice = zfbsAdvice;
                 [mutableArr addObject:model];
                 NSLog(@"zfbs");

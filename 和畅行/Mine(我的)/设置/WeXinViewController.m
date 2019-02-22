@@ -25,7 +25,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor=[UtilityFunc colorWithHexString:@"##f2f1ef"];
-    self.navTitleLabel.text = @"官方微信";
+    self.navTitleLabel.text = ModuleZW(@"官方微信");
     UIScrollView*  WeiXinScrollView=[[UIScrollView alloc] init];
     WeiXinScrollView.frame=CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight);
     WeiXinScrollView.backgroundColor=[UIColor clearColor];
@@ -36,7 +36,7 @@
     Lb_weixin.font=[UIFont systemFontOfSize:13];
     Lb_weixin.textAlignment=1;
     Lb_weixin.textColor=[UtilityFunc colorWithHexString:@"#333333"];
-    Lb_weixin.text=@"炎黄东方微信号：ky3h_yh";
+    Lb_weixin.text=ModuleZW(@"炎黄东方微信号：ky3h_yh");
     [WeiXinScrollView addSubview:Lb_weixin];
     
     
@@ -58,7 +58,7 @@
     Lb_weixin1.frame=CGRectMake(15, yhBtn.frame.origin.y+yhBtn.frame.size.height+15, ScreenWidth-30, 21);
     Lb_weixin1.font=[UIFont systemFontOfSize:13];
     Lb_weixin1.textColor=[UtilityFunc colorWithHexString:@"#333333"];
-    Lb_weixin1.text=@"知己KY3H服务微信号：ky3h_zjfw";
+    Lb_weixin1.text=ModuleZW(@"知己KY3H服务微信号：ky3h_zjfw");
     Lb_weixin1.textAlignment=1;
     [WeiXinScrollView addSubview:Lb_weixin1];
     
@@ -99,14 +99,14 @@
 {
     NSString *msg = nil ;
     if(error != NULL){
-        msg = @"保存图片失败" ;
+        msg = ModuleZW(@"保存图片失败");
     }else{
-        msg = @"已收藏到手机相册请进入微信扫描！" ;
+        msg = ModuleZW(@"已收藏到手机相册请进入微信扫描！" );
     }
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:msg preferredStyle:UIAlertControllerStyleAlert];
 //    [self showViewController:alert sender:nil];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleDefault handler:nil]];
     
     [self presentViewController:alert animated:YES completion:nil];
 }

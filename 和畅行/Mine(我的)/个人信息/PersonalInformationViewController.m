@@ -32,6 +32,7 @@
 @property(nonatomic,strong)ZHPickView *pickview;
 @property(nonatomic,strong)NSIndexPath *indexPath;
 @property (nonatomic,strong)UITableView *tableView;
+@property (nonatomic,strong)NSMutableArray *sizeArray;
 
 @end
 
@@ -148,8 +149,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navTitleLabel.text = @"个人信息";
+    self.navTitleLabel.text = ModuleZW(@"个人信息");
     self.view.backgroundColor = [UIColor whiteColor];
+    self.sizeArray = [NSMutableArray array];
     _marryState = [[NSString alloc] init];
     
     UIImageView *infoView = [Tools creatImageViewWithFrame:CGRectMake(0, 0, ScreenWidth, 92.5) imageName:@"个人信息_背景"];
@@ -191,15 +193,24 @@
     
     
     PersionInfoArray=[NSMutableArray new];
-    [PersionInfoArray addObject:@"手机号码"];
-    [PersionInfoArray addObject:@"真实姓名"];
-    [PersionInfoArray addObject:@"出生日期"];
-    [PersionInfoArray addObject:@"婚姻状况"];
-    [PersionInfoArray addObject:@"民       族"];
-    [PersionInfoArray addObject:@"居住地址"];
-    [PersionInfoArray addObject:@"固定电话"];
-    [PersionInfoArray addObject:@"证件类型"];
-    [PersionInfoArray addObject:@"证件号码"];
+    [PersionInfoArray addObject:ModuleZW(@"手机号码")];
+    [PersionInfoArray addObject:ModuleZW(@"真实姓名")];
+    [PersionInfoArray addObject:ModuleZW(@"出生日期")];
+    [PersionInfoArray addObject:ModuleZW(@"婚姻状况")];
+    [PersionInfoArray addObject:ModuleZW(@"民       族")];
+    [PersionInfoArray addObject:ModuleZW(@"居住地址")];
+    [PersionInfoArray addObject:ModuleZW(@"固定电话")];
+    [PersionInfoArray addObject:ModuleZW(@"证件类型")];
+    [PersionInfoArray addObject:ModuleZW(@"证件号码")];
+    
+    for (int i = 0 ; i<PersionInfoArray.count; i++) {
+        CGRect textRect = [PersionInfoArray[i] boundingRectWithSize:CGSizeMake(MAXFLOAT, 21)
+                                                options:NSStringDrawingUsesLineFragmentOrigin
+                                             attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
+                                                context:nil];
+        
+        [self.sizeArray addObject:[NSNumber numberWithFloat:textRect.size.width]];
+    }
     
     ptCenterper=self.tableView.center;
     
@@ -274,7 +285,7 @@
     [imageView addSubview:line];
     imageView.userInteractionEnabled = YES;
     
-    NSArray *arr = @[@"男",@"女"];
+    NSArray *arr = @[ModuleZW(@"男"),ModuleZW(@"女")];
     for (int i=0; i<2; i++) {
         UIButton *btn = [Tools creatButtonWithFrame:CGRectMake(0, 60*i, 220, 59) target:self sel:@selector(chooseSax:) tag:61+i image:nil title:arr[i]];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -325,7 +336,7 @@
     [imageView addSubview:line];
     imageView.userInteractionEnabled = YES;
     
-    NSArray *arr = @[@"已婚",@"未婚"];
+    NSArray *arr = @[ModuleZW(@"已婚"),ModuleZW(@"未婚")];
     for (int i=0; i<2; i++) {
         UIButton *btn = [Tools creatButtonWithFrame:CGRectMake(0, 60*i, 220, 59) target:self sel:@selector(chooseMarry:) tag:51+i image:nil title:arr[i]];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -341,14 +352,14 @@
     switch (button.tag) {
         case 51:
         {//已婚
-            [marryStatuBtn setTitle:@"已婚" forState:UIControlStateNormal];
-            [UserShareOnce shareOnce].marryState = @"已婚";
+            [marryStatuBtn setTitle:ModuleZW(@"已婚") forState:UIControlStateNormal];
+            [UserShareOnce shareOnce].marryState =ModuleZW(@"已婚");
         }
             break;
         case 52:
         {//未婚
-            [marryStatuBtn setTitle:@"未婚" forState:UIControlStateNormal];
-            [UserShareOnce shareOnce].marryState = @"未婚";
+            [marryStatuBtn setTitle:ModuleZW(@"未婚") forState:UIControlStateNormal];
+            [UserShareOnce shareOnce].marryState = ModuleZW(@"未婚");
         }
             break;
             
@@ -371,8 +382,8 @@
     }
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@""
-                                                             delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"拍照", @"选取照片", nil];
+                                                             delegate:self cancelButtonTitle:ModuleZW(@"取消") destructiveButtonTitle:nil
+                                                    otherButtonTitles:ModuleZW(@"拍照"), ModuleZW(@"选取照片"), nil];
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     [actionSheet showInView:self.view]; // show from our table view (pops up in the middle of the table)
     
@@ -605,6 +616,7 @@
     static NSString *CellIdentifier = @"LeMedicineCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
+    NSNumber *floatNumber  =  self.sizeArray[indexPath.row];
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1
@@ -615,7 +627,7 @@
     if (indexPath.row==0) {
 
         UILabel* TxLb=[[UILabel alloc] init];
-        TxLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
+        TxLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
         TxLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
         TxLb.font=[UIFont systemFontOfSize:14];
         TxLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
@@ -628,7 +640,7 @@
         mobile_Tf.frame=CGRectMake(TxLb.frame.origin.x+TxLb.frame.size.width+5, (cell.frame.size.height-21)/2, ScreenWidth-TxLb.frame.origin.x-TxLb.frame.size.width-5-20.5, 21);
         mobile_Tf.returnKeyType=UIReturnKeyNext;
         mobile_Tf.delegate=self;
-        mobile_Tf.placeholder=@"填写手机号码";
+        mobile_Tf.placeholder=ModuleZW(@"填写手机号码");
         mobile_Tf.keyboardType=UIKeyboardTypeNumberPad;
         [mobile_Tf setValue:[UtilityFunc colorWithHexString:@"#666666"] forKeyPath:@"_placeholderLabel.textColor"];
         [mobile_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
@@ -647,7 +659,7 @@
     else  if(indexPath.row==1){
 
         UILabel* nameLb=[[UILabel alloc] init];
-        nameLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
+        nameLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
         nameLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
         nameLb.font=[UIFont systemFontOfSize:14];
         nameLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
@@ -656,7 +668,7 @@
 
         Yh_TF=[[UITextField alloc] init];
         Yh_TF.frame=CGRectMake(nameLb.frame.origin.x+nameLb.frame.size.width+5, (cell.frame.size.height-21)/2, ScreenWidth-nameLb.frame.origin.x-nameLb.frame.size.width-5-20.5, 21);
-        Yh_TF.placeholder=@"填写您的真实姓名";
+        Yh_TF.placeholder=ModuleZW(@"填写您的真实姓名");
         NSString *str = [UserShareOnce shareOnce].name;
         if (str == nil || [str isKindOfClass:[NSNull class]] ||str.length == 0) {
             //Yh_TF.text=@"";
@@ -676,7 +688,7 @@
     else if (indexPath.row==2)
     {
         UILabel* BirthDayLb=[[UILabel alloc] init];
-        BirthDayLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
+        BirthDayLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
         BirthDayLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
         BirthDayLb.font=[UIFont systemFontOfSize:14];
         BirthDayLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
@@ -690,7 +702,7 @@
         
         if ([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].birthday]) {
             
-            [BirthDay_btn setTitle:@"请选择您的出生日期" forState:UIControlStateNormal];
+            [BirthDay_btn setTitle:ModuleZW(@"请选择您的出生日期") forState:UIControlStateNormal];
             [BirthDay_btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         }
         else
@@ -708,14 +720,14 @@
     else if (indexPath.row==2+1)
     {
         UILabel* marryLabel=[[UILabel alloc] init];
-        marryLabel.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
+        marryLabel.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
         marryLabel.text=[PersionInfoArray objectAtIndex:indexPath.row];
         marryLabel.font=[UIFont systemFontOfSize:14];
         marryLabel.textColor=[UtilityFunc colorWithHexString:@"#333333"];
         [cell addSubview:marryLabel];
         marryLabel.backgroundColor=[UIColor whiteColor];
 
-        UIButton *marryStateBtn = [Tools creatButtonWithFrame:CGRectMake(marryLabel.frame.origin.x+marryLabel.frame.size.width+5, (cell.frame.size.height-21)/2, ScreenWidth-marryLabel.frame.origin.x-marryLabel.frame.size.width-5-20.5, 21) target:self sel:@selector(marryBtnClick:) tag:31 image:nil title:@"请选择您的婚否情况"];
+        UIButton *marryStateBtn = [Tools creatButtonWithFrame:CGRectMake(marryLabel.frame.origin.x+marryLabel.frame.size.width+5, (cell.frame.size.height-21)/2, ScreenWidth-marryLabel.frame.origin.x-marryLabel.frame.size.width-5-20.5, 21) target:self sel:@selector(marryBtnClick:) tag:31 image:nil title:ModuleZW(@"请选择您的婚否情况")];
         
         marryStateBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         [marryStateBtn setTitleColor:[UtilityFunc colorWithHexString:@"#666666"] forState:UIControlStateNormal];
@@ -735,7 +747,7 @@
     else if (indexPath.row==3+1)
     {
         UILabel* nationLabel=[[UILabel alloc] init];
-        nationLabel.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
+        nationLabel.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
         nationLabel.text=[PersionInfoArray objectAtIndex:indexPath.row];
         nationLabel.font=[UIFont systemFontOfSize:14];
         nationLabel.textColor=[UtilityFunc colorWithHexString:@"#333333"];
@@ -744,7 +756,7 @@
 
         nation_Tf=[[UITextField alloc] init];
         nation_Tf.frame=CGRectMake(nationLabel.frame.origin.x+nationLabel.frame.size.width+5, (cell.frame.size.height-21)/2, ScreenWidth-nationLabel.frame.origin.x-nationLabel.frame.size.width-5-20.5, 21);
-        nation_Tf.placeholder=@"请输入您的民族";
+        nation_Tf.placeholder=ModuleZW(@"请输入您的民族");
         NSLog(@"haha:%@",[UserShareOnce shareOnce].nation);
         if ([[UserShareOnce shareOnce].nation isKindOfClass:[NSNull class]] || [UserShareOnce shareOnce].nation == nil) {
             //nation_Tf.text=@"";
@@ -763,7 +775,7 @@
     else if (indexPath.row==4+1)
     {
         UILabel* AddressLb=[[UILabel alloc] init];
-        AddressLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
+        AddressLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
         AddressLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
         AddressLb.font=[UIFont systemFontOfSize:14];
         AddressLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
@@ -774,7 +786,7 @@
         AddressLb_Tf=[[UITextField alloc] init];
         AddressLb_Tf.frame=CGRectMake(AddressLb.frame.origin.x+AddressLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-AddressLb.frame.origin.x-AddressLb.frame.size.width-5-20.5, 21);
         AddressLb_Tf.delegate=self;
-        AddressLb_Tf.placeholder=@"请输入您的居住地址";
+        AddressLb_Tf.placeholder=ModuleZW(@"请输入您的居住地址");
         if ([UserShareOnce shareOnce].address== (id)[NSNull null]) {
 
         }
@@ -796,7 +808,7 @@
     else if (indexPath.row==5+1)
     {
         UILabel* TelephoneLb=[[UILabel alloc] init];
-        TelephoneLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
+        TelephoneLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
         TelephoneLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
         TelephoneLb.font=[UIFont systemFontOfSize:14];
         TelephoneLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
@@ -808,7 +820,7 @@
         TelephoneLb_Tf.frame=CGRectMake(TelephoneLb.frame.origin.x+TelephoneLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-TelephoneLb.frame.origin.x-TelephoneLb.frame.size.width-5-20.5, 21);
         TelephoneLb_Tf.returnKeyType=UIReturnKeyDone;
         TelephoneLb_Tf.delegate=self;
-        TelephoneLb_Tf.placeholder=@"请输入您的固定电话";
+        TelephoneLb_Tf.placeholder=ModuleZW(@"请输入您的固定电话");
         TelephoneLb_Tf.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
         [TelephoneLb_Tf setValue:[UtilityFunc colorWithHexString:@"#666666"] forKeyPath:@"_placeholderLabel.textColor"];
         [TelephoneLb_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
@@ -827,7 +839,7 @@
     else if (indexPath.row==6+1)
     {
         UILabel* CertificatesLb=[[UILabel alloc] init];
-        CertificatesLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
+        CertificatesLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
         CertificatesLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
         CertificatesLb.font=[UIFont systemFontOfSize:14];
         CertificatesLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
@@ -839,26 +851,26 @@
         Certificates_btn.frame=CGRectMake(CertificatesLb.frame.origin.x+CertificatesLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-CertificatesLb.frame.origin.x-CertificatesLb.frame.size.width-5-20.5, 21);
         [cell addSubview:Certificates_btn];
         Certificates_btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        [Certificates_btn setTitle:@"请选择您的证件类型" forState:UIControlStateNormal];
+        [Certificates_btn setTitle:ModuleZW(@"请选择您的证件类型") forState:UIControlStateNormal];
         [Certificates_btn setTitleColor:[UtilityFunc colorWithHexString:@"#666666"] forState:UIControlStateNormal];
         [Certificates_btn addTarget:self action:@selector(CertificatesAactive:) forControlEvents:UIControlEventTouchUpInside];
         Certificates_btn.titleLabel.font=[UIFont systemFontOfSize:14];
 
         if ([UserShareOnce shareOnce].identityType == (id)[NSNull null]) {
-            [Certificates_btn setTitle:@"请选择您的证件类型" forState:UIControlStateNormal];
+            [Certificates_btn setTitle:ModuleZW(@"请选择您的证件类型") forState:UIControlStateNormal];
         }else{
             if ([[UserShareOnce shareOnce].identityType isEqualToString:@"idCard"]) {
-                [Certificates_btn setTitle:@"身份证" forState:UIControlStateNormal];
+                [Certificates_btn setTitle:ModuleZW(@"身份证") forState:UIControlStateNormal];
             }else if ([[UserShareOnce shareOnce].identityType isEqualToString:@"officerCard"])
             {
-                [Certificates_btn setTitle:@"军官证" forState:UIControlStateNormal];
+                [Certificates_btn setTitle:ModuleZW(@"军官证") forState:UIControlStateNormal];
             }
             else if ([[UserShareOnce shareOnce].identityType isEqualToString:@"passport"])
             {
-                [Certificates_btn setTitle:@"护照" forState:UIControlStateNormal];
+                [Certificates_btn setTitle:ModuleZW(@"护照") forState:UIControlStateNormal];
             }
             else{
-                [Certificates_btn setTitle:@"其他" forState:UIControlStateNormal];
+                [Certificates_btn setTitle:ModuleZW(@"其他") forState:UIControlStateNormal];
             }
             [Certificates_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         }
@@ -866,7 +878,7 @@
     else if (indexPath.row==7+1)
     {
         UILabel* Certificates_NumberLb=[[UILabel alloc] init];
-        Certificates_NumberLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, 65, 21);
+        Certificates_NumberLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
         Certificates_NumberLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
         Certificates_NumberLb.font=[UIFont systemFontOfSize:14];
         Certificates_NumberLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
@@ -878,7 +890,7 @@
         Certificates_Number_Tf.frame=CGRectMake(Certificates_NumberLb.frame.origin.x+Certificates_NumberLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-Certificates_NumberLb.frame.origin.x-Certificates_NumberLb.frame.size.width-5-20.5, 21);
         Certificates_Number_Tf.delegate=self;
         Certificates_Number_Tf.returnKeyType=UIReturnKeyDone;
-        Certificates_Number_Tf.placeholder=@"请输入您的证件号码";
+        Certificates_Number_Tf.placeholder=ModuleZW(@"请输入您的证件号码");
         if ([UserShareOnce shareOnce].idNumber== (id)[NSNull null] || [UserShareOnce shareOnce].idNumber == nil) {
 
         }else{
@@ -962,15 +974,15 @@
 {
 
  
-    if ([Certificates_btn.titleLabel.text isEqualToString:@"请选择证件类型"]) {
-        [self showAlertWarmMessage:@"请选择证件类型"];
+    if ([Certificates_btn.titleLabel.text isEqualToString:ModuleZW(@"请选择证件类型")]) {
+        [self showAlertWarmMessage:ModuleZW(@"请选择证件类型")];
         return;
     }
     
     if ([CertificatesType isEqualToString:@"idCard"]) {
         if (![UtilityFunc fitToChineseIDWithString:Certificates_Number_Tf.text]) {
             
-            [self showAlertWarmMessage:@"请填写正确的证件号码"];
+            [self showAlertWarmMessage:ModuleZW(@"请填写正确的证件号码")];
             return;
         }
         
@@ -1060,7 +1072,7 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"personalInfoUpdateSuccess" object:nil];
         
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"信息更新成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"信息更新成功") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         [av show];
         av.tag=10007;
         
@@ -1068,7 +1080,7 @@
     }
     else
     {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:[dic objectForKey:@"data"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:[dic objectForKey:@"data"] delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         [av show];
        
     }

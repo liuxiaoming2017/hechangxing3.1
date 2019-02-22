@@ -22,7 +22,7 @@
     [super viewDidLoad];
     
     //[self requestMemberInfo];
-    self.navTitleLabel.text = @"未激活卡片信息";
+    self.navTitleLabel.text =ModuleZW( @"未激活卡片信息");
     /// 布局激活卡页面
     [self layoutAcitivaTionView];
     
@@ -68,7 +68,7 @@
     UITextView *contentTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, carTitleLabel.bottom ,imageWidth - 20, 25)];
     
     
-    contentTextView.text  = [NSString stringWithFormat:@"卡号：%@",_model.card_no];;
+    contentTextView.text  = [NSString stringWithFormat:@"%@：%@",ModuleZW(@"卡号"),_model.card_no];;
     
     contentTextView.font = [UIFont systemFontOfSize:15];
     contentTextView.textAlignment = NSTextAlignmentLeft;
@@ -94,7 +94,7 @@
     
     
     
-    UIButton *activationBT = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - 75, imageV.bottom + 30, 150, 50) target:self sel:@selector(activationAction) tag:11111 image:nil title:@"激活"];
+    UIButton *activationBT = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - 75, imageV.bottom + 30, 150, 50) target:self sel:@selector(activationAction) tag:11111 image:nil title:ModuleZW(@"激活")];
     [activationBT setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
     [activationBT setBackgroundColor:RGB_ButtonBlue];
     activationBT.layer.cornerRadius = 25;
@@ -120,7 +120,7 @@
     [self.blackView addSubview:whiteView];
     
     UILabel *txtLabel = [[UILabel alloc]initWithFrame:CGRectMake( 50, 0, whiteView.width - 100, whiteView.height - 62)];
-    txtLabel.text =  [NSString stringWithFormat:@"您将激活%@,是否继续?",_model.card_name] ;
+    txtLabel.text =  [NSString stringWithFormat:@"%@%@,%@?",ModuleZW(@"您将激活"),_model.card_name,ModuleZW(@"是否继续")] ;
     txtLabel.textColor = RGB_TextLightGray;
     txtLabel.font = [UIFont systemFontOfSize:17];
     txtLabel.numberOfLines = 2;
@@ -128,7 +128,7 @@
     [whiteView addSubview:txtLabel];
     
    
-    NSArray *titleArray = @[@"否",@"是"];
+    NSArray *titleArray = @[ModuleZW(@"否"),ModuleZW(@"是")];
     
     
     for (int i = 0 ; i < 2; i++) {
@@ -266,7 +266,7 @@
             [UserShareOnce shareOnce].userToken = [dataDic objectForKey:@"userToken"];
         }
         [self.navigationController popViewControllerAnimated:YES];
-        [GlobalCommon showMessage:@"服务卡激活成功" duration:1.0];
+        [GlobalCommon showMessage:ModuleZW(@"服务卡激活成功") duration:1.0];
     }else{
         [self showAlertWarmMessage:[dic objectForKey:@"message"]];
     }

@@ -26,7 +26,7 @@
     [self.view addSubview:navView];
     [self.view sendSubviewToBack:navView];
     
-    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-120)/2.0, kStatusBarHeight+2, 120, 40)];
+    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-160)/2.0, kStatusBarHeight+2, 160, 40)];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textColor =[UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -37,9 +37,9 @@
 - (void)addBackBtn
 {
     UIButton *preBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    preBtn.frame = CGRectMake(10, kStatusBarHeight+2, 60, 40);
+    preBtn.frame = CGRectMake(10, kStatusBarHeight+2, 65, 40);
     [preBtn setImage:[UIImage imageNamed:@"nav_bar_back"] forState:UIControlStateNormal];
-    [preBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [preBtn setTitle:ModuleZW(@"返回") forState:UIControlStateNormal];
     [preBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [preBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [preBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
@@ -59,7 +59,7 @@
     [preBtn addTarget:self action:@selector(registAction) forControlEvents:UIControlEventTouchUpInside];
     //[preBtn sizeToFit];
     preBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    [navView addSubview:preBtn];
+//    [navView addSubview:preBtn];
 }
 
 - (void)backAction
@@ -146,9 +146,9 @@
             
             if (![[dic objectForKey:@"isMarried"] isKindOfClass:[NSNull class]]) {
                 if ([[dic objectForKey:@"isMarried"] boolValue] == YES) {
-                    userShare.marryState = @"未婚";
+                    userShare.marryState = ModuleZW(@"未婚");
                 }else if ([[dic objectForKey:@"isMarried"] boolValue] == NO){
-                    userShare.marryState = @"未婚";
+                    userShare.marryState = ModuleZW(@"未婚");
                 }
             }
             
@@ -195,9 +195,9 @@
 
 - (void)showAlertViewController:(NSString *)message
 {
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:NULL];
-    UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:NULL];
+    UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
     }];
     [alertVC addAction:alertAct1];
@@ -207,8 +207,8 @@
 
 - (void)showAlertWarmMessage:(NSString *)message
 {
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:NULL];
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleCancel handler:NULL];
     [alertVC addAction:alertAct1];
     [self presentViewController:alertVC animated:YES completion:NULL];
 }
@@ -307,9 +307,9 @@
             
             if (![[dic objectForKey:@"isMarried"] isKindOfClass:[NSNull class]]) {
                 if ([[dic objectForKey:@"isMarried"] boolValue] == YES) {
-                    userShare.marryState = @"未婚";
+                    userShare.marryState = ModuleZW(@"未婚");
                 }else if ([[dic objectForKey:@"isMarried"] boolValue] == NO){
-                    userShare.marryState = @"未婚";
+                    userShare.marryState = ModuleZW(@"未婚");
                 }
             }
             
@@ -382,9 +382,9 @@
             
             if (![[dic objectForKey:@"isMarried"] isKindOfClass:[NSNull class]]) {
                 if ([[dic objectForKey:@"isMarried"] boolValue] == YES) {
-                    userShare.marryState = @"未婚";
+                    userShare.marryState = ModuleZW(@"未婚");
                 }else if ([[dic objectForKey:@"isMarried"] boolValue] == NO){
-                    userShare.marryState = @"未婚";
+                    userShare.marryState = ModuleZW(@"未婚");
                 }
             }
             

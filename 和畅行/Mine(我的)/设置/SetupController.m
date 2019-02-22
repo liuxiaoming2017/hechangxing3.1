@@ -34,9 +34,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    listNamesArr = @[@[@"关于我们",@"隐私条款",@"会员章程",@"官方微信",@"官方微博",@"声明",@"帮助"],@[@"修改密码",@"注销"]];
+    listNamesArr = @[@[ModuleZW(@"关于我们"),ModuleZW(@"隐私条款"),ModuleZW(@"会员章程"),ModuleZW(@"官方微信"),ModuleZW(@"官方微博"),ModuleZW(@"声明"),ModuleZW(@"帮助")],@[ModuleZW(@"修改密码"),ModuleZW(@"注销")]];
     listImagesArr = @[@[@"private",@"refundRecord",@"returedGoodsRecord",@"1我的_100",@"integral",@"1我的_101",@"1我的_102"],@[@"1我的_103",@"1我的_104"]];
-    self.navTitleLabel.text = @"设置";
+    self.navTitleLabel.text = ModuleZW(@"设置");
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight) style:UITableViewStylePlain];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
@@ -119,7 +119,7 @@
                 HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
                 vc.noWebviewBack = YES;
                 vc.progressType = progress2;
-                vc.titleStr = @"关于我们";
+                vc.titleStr =ModuleZW(@"关于我们");
                 vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/60/1.html",URL_PRE];
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
@@ -130,7 +130,7 @@
                 HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
                 vc.noWebviewBack = YES;
                 vc.progressType = progress2;
-                vc.titleStr = @"隐私条款";
+                vc.titleStr =ModuleZW(@"隐私条款");
                 vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/61/1.html",URL_PRE];
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
@@ -141,7 +141,7 @@
                 HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
                 vc.noWebviewBack = YES;
                 vc.progressType = progress2;
-                vc.titleStr = @"会员章程";
+                vc.titleStr = ModuleZW(@"会员章程");
                 vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/62/1.html",URL_PRE];
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
@@ -164,7 +164,7 @@
                 HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
                 vc.noWebviewBack = YES;
                 vc.progressType = progress2;
-                vc.titleStr = @"声明";
+                vc.titleStr = ModuleZW(@"声明");
                 vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/63/1.html",URL_PRE];
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
@@ -175,7 +175,7 @@
                 HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
                 vc.noWebviewBack = YES;
                 vc.progressType = progress2;
-                vc.titleStr = @"帮助";
+                vc.titleStr = ModuleZW(@"帮助");
                 vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/64/1.html",URL_PRE];
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
@@ -195,11 +195,11 @@
             case 1:
             {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"确认注销用户" preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"确认注销用户") preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                         
                     }];
-                    UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         
                         LoginViewController *loginview=[[LoginViewController alloc]init];
                         NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];

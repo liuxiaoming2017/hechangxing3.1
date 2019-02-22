@@ -53,7 +53,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _TextFieldArr = [[NSMutableArray alloc] init];
-    self.nameLabel.text = @"血压检测";
+    self.nameLabel.text = ModuleZW(@"血压检测");
     [self initWithController];
     [self bounceView];
 }
@@ -106,7 +106,7 @@
     [self.view addSubview:imageView];
     
     NSArray *imagesArr = [[[NSArray alloc] initWithArray:@[@"血压10",@"血压12",@"血压14"]] autorelease];
-    NSArray *titleArr = [[[NSArray alloc] initWithArray:@[@"收缩压",@"舒张压",@"脉搏次数"]] autorelease];
+    NSArray *titleArr = [[[NSArray alloc] initWithArray:@[ModuleZW(@"收缩压"),ModuleZW(@"舒张压"),ModuleZW(@"脉搏次数")]] autorelease];
     for (int i=0; i<3; i++) {
         UIImageView *inputImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20+40*i, kScreenSize.width-20-40, 40)];
         inputImageView.tag = 31+i;
@@ -185,9 +185,9 @@
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
         if(ret1){
-            hud.label.text = @"收缩压不能为空";
+            hud.label.text = ModuleZW(@"收缩压不能为空");
         }else{
-            hud.label.text = @"您的输入有误，请重新输入";
+            hud.label.text = ModuleZW(@"您的输入有误，请重新输入");
         }
         //hud.label.text = @"收缩压不能为空";
         hud.minSize = CGSizeMake(132.f, 108.0f);
@@ -197,9 +197,9 @@
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
         if(ret2){
-            hud.label.text = @"舒张压不能为空";
+            hud.label.text = ModuleZW(@"舒张压不能为空");
         }else{
-            hud.label.text = @"您的输入有误，请重新输入";
+            hud.label.text = ModuleZW(@"您的输入有误，请重新输入");
         }
         
         hud.minSize = CGSizeMake(132.f, 108.0f);
@@ -209,9 +209,9 @@
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
         if(ret3){
-            hud.label.text = @"脉搏次数不能为空";
+            hud.label.text = ModuleZW(@"脉搏次数不能为空");
         }else{
-            hud.label.text = @"您的输入有误，请重新输入";
+            hud.label.text = ModuleZW(@"您的输入有误，请重新输入");
         }
         
         hud.minSize = CGSizeMake(132.f, 108.0f);
@@ -331,7 +331,7 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"当前账户已过期，请重新登录";  //提示的内容
+        hud.label.text = ModuleZW(@"当前账户已过期，请重新登录");  //提示的内容
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hideAnimated:YES afterDelay:2];
         
@@ -368,20 +368,20 @@
     if ([[self.dataArr[indexPath.row] objectForKey:@"birthday"]isEqual:[NSNull null]] ) {
         NSString *sex = @"";
         if ([[UserShareOnce shareOnce].gender isEqual:[NSNull null]]||[[UserShareOnce shareOnce].gender isEqualToString:@"male"]) {
-            sex =@"男" ;
+            sex =ModuleZW(@"男");
         }else{
-            sex = @"女";
+            sex = ModuleZW(@"女");
         }
         
         cell.sexLabel.text = [NSString stringWithFormat:@"%@",sex];
-        cell.phoneLabel.text = [NSString stringWithFormat:@"%@岁",@"0"];
+        cell.phoneLabel.text = [NSString stringWithFormat:@"%@%@",@"0",ModuleZW(@"岁")];
         
     }else{
         NSString *sex = @"";
         if ([[self.dataArr[indexPath.row] objectForKey:@"gender"]isEqual:[NSNull null]]||[[self.dataArr[indexPath.row] objectForKey:@"gender"] isEqualToString:@"male"]) {
-            sex =@"男" ;
+            sex =ModuleZW(@"男");
         }else{
-            sex = @"女";
+            sex = ModuleZW(@"女");
         }
         
         NSString *str = [[self.dataArr[indexPath.row] objectForKey:@"birthday"] substringToIndex:4];
@@ -414,9 +414,9 @@
     }
     NSString *sex = @"";
     if ([[self.dataArr[indexPath.row] objectForKey:@"gender"]isEqual:[NSNull null]]||[[self.dataArr[indexPath.row] objectForKey:@"gender"] isEqualToString:@"male"]) {
-        sex =@"男" ;
+        sex = ModuleZW(@"男");
     }else{
-        sex = @"女";
+        sex = ModuleZW(@"女");
     }
     _memberChildId = [self.dataArr[indexPath.row] objectForKey:@"id"];
     NSString *str = @"";
@@ -503,7 +503,7 @@
 
         UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [sureBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
-        [sureBtn setTitle:@"返回检测" forState:UIControlStateNormal];
+        [sureBtn setTitle: ModuleZW(@"返回检测") forState:UIControlStateNormal];
         sureBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         sureBtn.frame = CGRectMake(20, kScreenSize.height/2+90, imageView.frame.size.width * 0.5, 40);
         [sureBtn addTarget:self action:@selector(confirmBtnClick2:) forControlEvents:UIControlEventTouchUpInside];
@@ -511,38 +511,39 @@
         
         UIButton *lookBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [lookBtn setBackgroundImage:[UIImage imageNamed:@"look"] forState:UIControlStateNormal];
-        [lookBtn setTitle:@"查看档案" forState:UIControlStateNormal];
+        [lookBtn setTitle:ModuleZW(@"查看档案") forState:UIControlStateNormal];
         lookBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         lookBtn.frame = CGRectMake(CGRectGetMaxX(sureBtn.frame), sureBtn.frame.origin.y, imageView.frame.size.width * 0.5, 40);
         [lookBtn addTarget:self action:@selector(lookClickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [view2 addSubview:lookBtn];
         
-        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:@"您当前脉搏%ld次/分\n收缩压  %ldmmHg\n舒张压  %ldmmhg",(long)pulseCount,(long)highCount,(long)lowCount] frame:CGRectMake(0, 50, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
+        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:
+                                                @"%@%ld%@\n%@  %ldmmHg\n%@  %ldmmhg",ModuleZW(@"您当前脉搏"),(long)pulseCount,ModuleZW(@"次/分"),ModuleZW(@"收缩压"),(long)highCount,ModuleZW(@"舒张压"),(long)lowCount] frame:CGRectMake(0, 50, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
         
         
         UILabel *label0 = [[UILabel alloc] init];
-        label0.text = @"血压、脉搏正常范围参考值：";
+        label0.text = ModuleZW(@"血压、脉搏正常范围参考值：");
         label0.textAlignment = NSTextAlignmentCenter;
         label0.font = [UIFont systemFontOfSize:13];
         label0.frame = CGRectMake(20, 110, imageView.bounds.size.width-40, 20);
         [imageView addSubview:label0];
         
         UILabel *label1 = [[UILabel alloc] init];
-        label1.text = @"脉搏：60－100次/分";
+        label1.text = ModuleZW(@"脉搏：60－100次/分");
         label1.textAlignment = NSTextAlignmentCenter;
         label1.font = [UIFont systemFontOfSize:12];
         label1.frame = CGRectMake(20, CGRectGetMaxY(label0.frame), imageView.bounds.size.width-40, 16);
         [imageView addSubview:label1];
         
         UILabel *label2 = [[UILabel alloc] init];
-        label2.text = @"90 < 高压 / 收缩压（mmHg）< 140";
+        label2.text = ModuleZW(@"90 < 高压 / 收缩压（mmHg）< 140");
         label2.textAlignment = NSTextAlignmentCenter;
         label2.font = [UIFont systemFontOfSize:12];
         label2.frame = CGRectMake(20, CGRectGetMaxY(label1.frame), imageView.bounds.size.width-40, 16);
         [imageView addSubview:label2];
         
         UILabel *label3 = [[UILabel alloc] init];
-        label3.text = @"60 < 低压 / 舒张压（mmHg）< 90";
+        label3.text = ModuleZW(@"60 < 低压 / 舒张压（mmHg）< 90");
         label3.textAlignment = NSTextAlignmentCenter;
         label3.font = [UIFont systemFontOfSize:12];
         label3.frame = CGRectMake(20, CGRectGetMaxY(label2.frame), imageView.bounds.size.width-40, 16);
@@ -559,7 +560,7 @@
 
         
     }else{
-        [self showAlertWarmMessage:@"提交数据失败"];
+        [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
     }
     
     
@@ -567,7 +568,7 @@
 }
 
 -(void)requestError:(ASIHTTPRequest *)request{
-    [self showAlertWarmMessage:@"提交数据失败"];
+    [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
 }
 
 
@@ -586,7 +587,7 @@
     UIViewController *controller = app.window.rootViewController;
     UITabBarController  *rvc = (UITabBarController  *)controller;
     [rvc setSelectedIndex:1];
-    [UserShareOnce shareOnce].wherePop = @"血压";
+    [UserShareOnce shareOnce].wherePop = ModuleZW(@"血压");
     [UserShareOnce shareOnce].bloodMemberID = [NSString stringWithFormat:@"%@",self.subId];
     [self.navigationController popToRootViewControllerAnimated:YES];
     

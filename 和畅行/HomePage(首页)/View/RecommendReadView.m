@@ -45,7 +45,7 @@
     //titleLabel.textColor = UIColorFromHex(0x7D7D7D);
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.font = [UIFont systemFontOfSize:17];
-    titleLabel.text = @"推荐阅读";
+    titleLabel.text = ModuleZW(@"推荐阅读");
     [self addSubview:titleLabel];
     
     UIButton *moreButton = [UIButton buttonWithType:(UIButtonTypeCustom)];

@@ -83,7 +83,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navTitleLabel.text = @"专家咨询";
+    self.navTitleLabel.text = ModuleZW(@"专家咨询");
     
     self.headArray = [[NSMutableArray alloc]init];
     self.dataArr = [NSMutableArray array];
@@ -128,7 +128,7 @@
     _textViews = [[UITextView alloc]initWithFrame:CGRectMake(10, choseButton.bottom+10, self.view.frame.size.width - 20, 100)];
     _textView.keyboardType = UIKeyboardTypeDefault;
     _textView.returnKeyType = UIReturnKeyDone;
-    _textViews.text = @"请详细描述您的症状、疾病和身体状况。我们根据病情分诊到对应的大夫为您解答。";
+    _textViews.text = ModuleZW(@"请详细描述您的症状、疾病和身体状况。我们根据病情分诊到对应的大夫为您解答。");
     _textViews.font = [UIFont systemFontOfSize:15];
     _textViews.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     [self.view addSubview:_textViews];
@@ -209,7 +209,7 @@
     if ([textView isFirstResponder]) {
         if ([[[textView textInputMode] primaryLanguage] isEqualToString:@"emoji"] || ![[textView textInputMode] primaryLanguage]) {
             NSLog(@"输入的是表情，返回NO");
-            [self showAlertWarmMessage:@"不能输入表情"];
+            [self showAlertWarmMessage:ModuleZW(@"不能输入表情")];
             return NO;
         }
     }
@@ -227,7 +227,7 @@
 
 - (void)finishButtonAction{
     if ([_textView.text isEqual:[NSNull null]]||_textView.text == nil||[_textView.text isEqualToString:@""]) {
-        [self showAlertWarmMessage:@"抱歉，请填写你的症状"];
+        [self showAlertWarmMessage:ModuleZW(@"抱歉，请填写你的症状")];
         
         return;
     }
@@ -339,7 +339,7 @@
     [self.view addSubview:progress_];
     [self.view bringSubviewToFront:progress_];
     progress_.delegate = self;
-    progress_.label.text = @"提交中...";
+    progress_.label.text = ModuleZW(@"提交中...");
     [progress_ showAnimated:YES];
 }
 
@@ -357,14 +357,14 @@
     
     UIAlertController *alectSheet = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:ModuleZW(@"拍照") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self takePhoto];
     }];
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"选取照片" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:ModuleZW(@"选取照片") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self getPhotos];
     }];
     
-    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:NULL];
+    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:NULL];
     
     [alectSheet addAction:action1];
     [alectSheet addAction:action2];
@@ -439,7 +439,7 @@
     if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied)
     {
         NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-        NSString *str = [NSString stringWithFormat:@"%@%@%@",NSLocalizedString(@"请在iPhone的\"设置->隐私->相机\"选项中，允许", nil),appName,NSLocalizedString(@"访问您的摄像头。", nil)];
+        NSString *str = [NSString stringWithFormat:@"%@%@%@",NSLocalizedString(ModuleZW(@"请在iPhone的\"设置->隐私->相机\"选项中，允许"), nil),appName,NSLocalizedString(ModuleZW(@"访问您的摄像头。"), nil)];
         [self showAlertWarmMessage:str];
         return;
     }
@@ -497,7 +497,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         //[weakSelf.headArray addObject:[responseObject objectForKey:@"data"]];
         [weakSelf uploadTextServer];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [weakSelf showAlertWarmMessage:@"上传失败,请检查网络"];
+        [weakSelf showAlertWarmMessage:ModuleZW(@"上传失败,请检查网络")];
     }];
     
 }
@@ -825,7 +825,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         
     } failureBlock:^(NSError *error) {
         [weakSelf hudWasHidden];
-        [weakSelf showAlertWarmMessage:@"上传失败,请检查网络!"];
+        [weakSelf showAlertWarmMessage:ModuleZW(@"上传失败,请检查网络!")];
     }];
     
 }
@@ -907,7 +907,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"当前账户已过期，请重新登录";  //提示的内容
+        hud.label.text = ModuleZW(@"当前账户已过期，请重新登录");  //提示的内容
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hideAnimated:YES afterDelay:2];
         

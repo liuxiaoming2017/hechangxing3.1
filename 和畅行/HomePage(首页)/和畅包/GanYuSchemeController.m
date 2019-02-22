@@ -26,7 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navTitleLabel.text = @"干预方案";
+    self.navTitleLabel.text =ModuleZW(@"干预方案");
     [self createUI];
 }
 
@@ -41,7 +41,10 @@
    scrollView.bounces = NO;
    [self.view addSubview:scrollView];
     
-    NSArray *titleArr = @[@"经络梳理方案",@"脏腑调理方案",@"体质调理方案",@"状态护理方案"];
+    NSArray *titleArr = @[ModuleZW(@"经络梳理方案"),
+                                        ModuleZW(@"脏腑调理方案"),
+                                       ModuleZW( @"体质调理方案"),
+                                       ModuleZW( @"状态护理方案")];
     for(NSInteger i=0;i<titleArr.count;i++){
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 5+(imageHeight+30)*i, 200, 20)];
         titleLabel.font = [UIFont systemFontOfSize:15];
@@ -55,7 +58,8 @@
     
     UIButton *allBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     allBtn.frame = CGRectMake(ScreenWidth-60, 5, 50, 20);
-    [allBtn setTitle:@"全部 >" forState:UIControlStateNormal];
+    NSString *buttonStr = [NSString stringWithFormat:@"%@ >",ModuleZW(@"全部")];
+    [allBtn setTitle:buttonStr forState:UIControlStateNormal];
     allBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [allBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [allBtn addTarget:self action:@selector(allBtnAction) forControlEvents:UIControlEventTouchUpInside];
@@ -63,9 +67,16 @@
     
     NSArray *imageArr = @[];
     if(self.notYiChi){
-        imageArr = @[@"一戴",@"一站",@"一坐2",@"一饮",@"一测",@"一呼",@"一助",@"一阅"];
+        imageArr = @[ModuleZW(@"一戴Ch"),ModuleZW(@"一站Ch"),
+                               ModuleZW(@"一坐2"),ModuleZW(@"一饮Ch"),
+                               ModuleZW(@"一测Ch"), ModuleZW(@"一呼Ch"),
+                               ModuleZW(@"一助Ch"),ModuleZW(@"一阅Ch")];
     }else{
-        imageArr = @[@"一戴",@"一站",@"一吃",@"一坐",@"一饮",@"一测",@"一呼",@"一助",@"一阅"];
+        imageArr = @[ModuleZW(@"一戴Ch"),ModuleZW(@"一站Ch"),
+                                ModuleZW(@"一吃Ch"),ModuleZW(@"一坐Ch"),
+                                ModuleZW(@"一饮Ch"),ModuleZW(@"一测Ch"),
+                                ModuleZW(@"一呼Ch"),ModuleZW(@"一助Ch"),
+                                ModuleZW(@"一阅Ch")];
     }
     
     for(NSInteger i = 0;i<imageArr.count;i++){
@@ -148,38 +159,38 @@
             if([UserShareOnce shareOnce].isOnline){
                 type = @"/member/service/view/fang/JLBS/1/";
                 fangtype = @"yixuan";
-                titleStr = @"膳食处方";
+                titleStr = ModuleZW(@"膳食处方");
                 urlStr = [NSString stringWithFormat:@"%@%@%@.jhtml?type=%@",URL_PRE,type,[MemberUserShance shareOnce].idNum,fangtype];
             }else{
                 type = @"/member/service/view/fang/JLBS/1/";
                 fangtype = @"yidai";
                 urlStr = [NSString stringWithFormat:@"%@%@%@.jhtml?type=%@",URL_PRE,type,[MemberUserShance shareOnce].idNum,fangtype];
-                titleStr = @"耳穴处方";
+                titleStr =ModuleZW( @"耳穴处方");
             }
             break;
         case 201:
             type = @"/member/service/view/fang/JLBS/1/";
             fangtype = @"yizhan";
             urlStr = [NSString stringWithFormat:@"%@%@%@.jhtml?type=%@",URL_PRE,type,[MemberUserShance shareOnce].idNum,fangtype];
-            titleStr = @"运动处方";
+            titleStr = ModuleZW(@"运动处方");
             break;
         case 202:
             type = @"/member/service/zf_chufang/";
             urlStr = [NSString stringWithFormat:@"%@%@%@/1.jhtml",URL_PRE,type,[MemberUserShance shareOnce].idNum];
-            titleStr = @"食疗处方";
+            titleStr = ModuleZW(@"食疗处方");
             break;
             ///member/service/view/fang/sn/2/
         case 203:
             type = @"member/service/view/fang/sn/1/";
             fangtype = @"yizuo";
             urlStr = [NSString stringWithFormat:@"%@%@%@.jhtml?type=%@",URL_PRE,type,[MemberUserShance shareOnce].idNum,fangtype];
-            titleStr = @"脏腑运动处方";
+            titleStr = ModuleZW(@"脏腑运动处方");
             break;
         case 204:
             type = @"/member/service/view/fang/TZBS/1/";
             fangtype = @"yiyin";
             urlStr = [NSString stringWithFormat:@"%@%@%@.jhtml?type=%@",URL_PRE,type,[MemberUserShance shareOnce].idNum,fangtype];
-            titleStr = @"体质处方";
+            titleStr = ModuleZW(@"体质处方");
             break;
         case 205:
         {

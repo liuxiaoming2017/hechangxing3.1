@@ -44,7 +44,7 @@
     [self.view addSubview:progress_];
     [self.view bringSubviewToFront:progress_];
     progress_.delegate = self;
-    progress_.label.text = @"加载中...";
+    progress_.label.text = ModuleZW(@"加载中...");
     [progress_ showAnimated:YES];
 }
 
@@ -69,7 +69,7 @@
     self.leftBtn.hidden = YES;
     
     self.view.backgroundColor=[UtilityFunc colorWithHexString:@"##f2f1ef"];
-    self.navTitleLabel.text = @"修改密码";
+    self.navTitleLabel.text = ModuleZW(@"修改密码");
     _dishiView = [[UIView alloc]initWithFrame:CGRectMake(0, 70, kScreenSize.width, kScreenSize.height-70)];
     // self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_dishiView];
@@ -82,13 +82,16 @@
     [UserImgView release];
     
     UILabel* UserNameLb=[[UILabel alloc ] init];
-    UserNameLb.frame=CGRectMake(UserImgView.frame.origin.x+UserImgView.frame.size.width+10.5, 24, 55, userImg.size.height/2);
-    UserNameLb.text=@"用 户 名:";
+    UserNameLb.frame=CGRectMake(UserImgView.frame.origin.x+UserImgView.frame.size.width+10.5, 24, 75, userImg.size.height/2);
+    UserNameLb.text=ModuleZW(@"用 户 名:");
     UserNameLb.textColor=[UtilityFunc colorWithHexString:@"#9B9B9B"];
     UserNameLb.font=[UIFont systemFontOfSize:12];
     [_dishiView addSubview:UserNameLb];
-    [UserNameLb release];
-    
+    CGRect textRect = [UserNameLb.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 59)
+                                                    options:NSStringDrawingUsesLineFragmentOrigin
+                                                 attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]}
+                                                    context:nil];
+    UserNameLb.width = textRect.size.width;
     UILabel* UserName_text_Lb=[[UILabel alloc ] init];
     UserName_text_Lb.frame=CGRectMake(UserNameLb.frame.origin.x+UserNameLb.frame.size.width, 24, 90, userImg.size.height/2);
     UserName_text_Lb.textAlignment=0;
@@ -114,12 +117,16 @@
     
     
     UILabel* TeleNameLb=[[UILabel alloc ] init];
-    TeleNameLb.frame=CGRectMake(TeleImgView.frame.origin.x+TeleImgView.frame.size.width+10.5, TeleImgView.frame.origin.y, 55, TeleImg.size.height/2);
-    TeleNameLb.text=@"手机号码:";
+    TeleNameLb.frame=CGRectMake(TeleImgView.frame.origin.x+TeleImgView.frame.size.width+10.5, TeleImgView.frame.origin.y, 78, TeleImg.size.height/2);
+    TeleNameLb.text=ModuleZW(@"手机号码:");
     TeleNameLb.textColor=[UtilityFunc colorWithHexString:@"#9B9B9B"];
     TeleNameLb.font=[UIFont systemFontOfSize:12];
     [_dishiView addSubview:TeleNameLb];
-    [TeleNameLb release];
+    CGRect textRect1 = [TeleNameLb.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 59)
+                                                    options:NSStringDrawingUsesLineFragmentOrigin
+                                                 attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]}
+                                                    context:nil];
+    TeleNameLb.width = textRect1.size.width;
     
     UILabel* TeleName_text_Lb=[[UILabel alloc ] init];
     TeleName_text_Lb.frame=CGRectMake(TeleNameLb.frame.origin.x+TeleNameLb.frame.size.width, TeleImgView.frame.origin.y, 90, TeleImg.size.height/2);
@@ -156,7 +163,7 @@
     registrationTF.leftView = leftview1;
     [leftview1 release];
     registrationTF.delegate=self;
-    registrationTF.placeholder=@"请输入原密码";
+    registrationTF.placeholder=ModuleZW(@"请输入原密码");
     registrationTF.returnKeyType=UIReturnKeyNext;
     self.OriginalSec_TF=registrationTF;
     [_dishiView addSubview:registrationTF];
@@ -187,7 +194,7 @@
     [left_secview release];
     Regist_Sec_TF.secureTextEntry=YES;
     Regist_Sec_TF.delegate=self;
-    Regist_Sec_TF.placeholder=@"请输入新密码";
+    Regist_Sec_TF.placeholder=ModuleZW(@"请输入新密码");
     self.NewSec_TF=Regist_Sec_TF;
     [_dishiView addSubview:Regist_Sec_TF];
     [Regist_Sec_TF release];
@@ -219,14 +226,14 @@
     [left_Sure_secview release];
     sureSecTF.returnKeyType=UIReturnKeyDone;
     sureSecTF.secureTextEntry=YES;
-    sureSecTF.placeholder=@"请确认新密码";
+    sureSecTF.placeholder=ModuleZW(@"请确认新密码");
     self.NewSure_TF=sureSecTF;
     [_dishiView addSubview:sureSecTF];
     [sureSecTF release];
     
     UIButton *findpsButton=[UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *findImg=[UIImage imageWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"ReplaceSec_BTN" ofType:@"png"]];
-    [findpsButton setTitle:@"授权并登录" forState:UIControlStateNormal];
+    [findpsButton setTitle:ModuleZW(@"授权并登录") forState:UIControlStateNormal];
     [findpsButton setBackgroundColor:UIColorFromHex(0x1e82d2)];
     findpsButton.layer.cornerRadius = 5.0;
     findpsButton.clipsToBounds = YES;
@@ -242,14 +249,14 @@
     
     
     if (self.OriginalSec_TF.text.length==0) {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"原密码不能为空" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"原密码不能为空") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         [av show];
         [av release];
         return;
     }
     if (self.OriginalSec_TF.text.length<6||self.OriginalSec_TF.text.length>20)
     {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入6-20位字符，可使用字母，数字或字符组合！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请输入6-20位字符，可使用字母，数字或字符组合！") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         [av show];
         [av release];
         return;
@@ -258,20 +265,20 @@
     
     if (![self.OriginalSec_TF.text isEqualToString:[UserShareOnce shareOnce].passWord])
     {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"输入原密码不正确" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"输入原密码不正确") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         [av show];
         [av release];
         return;
     }
     
     if (self.NewSec_TF.text.length==0) {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"新密码不能为空" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"新密码不能为空") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         [av show];
         [av release];
         return;
     }
     if (self.NewSec_TF.text.length<6||self.NewSec_TF.text.length>20) {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入6-20位字符，可使用字母，数字或字符组合！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请输入6-20位字符，可使用字母，数字或字符组合！") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         [av show];
         [av release];
         return;
@@ -279,7 +286,7 @@
     
     
     if (![self.NewSec_TF.text isEqualToString:self.NewSure_TF.text]) {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"两次输入的密码不一致" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"两次输入的密码不一致") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         [av show];
         [av release];
         return;
@@ -309,7 +316,7 @@
 - (void)requestFindPassError:(ASIHTTPRequest *)request
 {
     [self hudWasHidden];
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉修改密码失败，请重试" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉修改密码失败，请重试") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
     [av show];
     [av release];
     return;
@@ -332,7 +339,7 @@
                 [UtilityFunc updateAppConfigWithMutableDictionary:dicTmp];
             }
             
-            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:data delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+            UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:data delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
             [av show];
             av.tag=10003;
             [av release];
@@ -340,7 +347,7 @@
         }
         else
         {
-            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"登录超时，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+            UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
             av.tag = 100008;
             [av show];
             [av release];

@@ -53,19 +53,20 @@
     
     //CGFloat originX = (ScreenWidth - 122*3-18)/2.0;
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.height/2.0-30, 120, 30)];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.height/2.0-30, 200, 30)];
     self.titleLabel.font = [UIFont systemFontOfSize:21];
     self.titleLabel.textAlignment = NSTextAlignmentLeft;
     self.titleLabel.textColor = [UIColor whiteColor];
-    self.titleLabel.text = @"和畅包";
+    self.titleLabel.text = ModuleZW(@"和畅包");
     [self addSubview:self.titleLabel];
+    
     
     self.remindLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLabel.left, self.titleLabel.bottom, self.width-120, 60)];
     self.remindLabel.font = [UIFont systemFontOfSize:16];
     self.remindLabel.numberOfLines = 0;
     self.remindLabel.textAlignment = NSTextAlignmentLeft;
     self.remindLabel.textColor = [UIColor whiteColor];
-    NSString *str = @"您未完成和畅体检,全部完成体检后定制属于您的和畅服务包";
+    NSString *str = ModuleZW(@"您未完成和畅体检,全部完成体检后定制属于您的和畅服务包");
     self.remindLabel.text = str;
     [self addSubview:self.remindLabel];
     //CGSize strSize = [str boundingRectWithSize:CGSizeMake(self.remindLabel.width, 1200) options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont fontWithName:[[UIFont systemFontOfSize:1] fontName] size:15]} context:nil].size;
@@ -168,41 +169,40 @@
     [MemberUserShance shareOnce].isOpenPackge = YES;
     switch (status) {
         case 0:
-            bingTaiStr = @"未病态";
+            bingTaiStr = ModuleZW(@"未病态");
             break;
         case 1:
-            bingTaiStr = @"欲病态";
-           
+            bingTaiStr = ModuleZW(@"欲病态");
             break;
         case 2:
-            bingTaiStr = @"欲病态";
+            bingTaiStr = ModuleZW(@"欲病态");
             break;
         case 3:
-           bingTaiStr = @"中重度已病态";
+           bingTaiStr = ModuleZW(@"中重度已病态");
             break;
         case 4:
-            bingTaiStr = @"高度已病态";
+            bingTaiStr = ModuleZW(@"重度已病态");
             break;
         case 5:
-            bingTaiStr = @"轻度已病态";
+            bingTaiStr = ModuleZW(@"轻度已病态");
             break;
         case 6:
-            bingTaiStr = @"中度已病态";
+            bingTaiStr = ModuleZW(@"中度已病态");
             break;
         case 7:
-            bingTaiStr = @"中重度已病态";
+            bingTaiStr = ModuleZW(@"中重度已病态");
             break;
         case 8:
-            bingTaiStr = @"高度已病态";
+            bingTaiStr = ModuleZW(@"重度已病态");
             break;
         case 9:
-            bingTaiStr = @"中度已病态";
+            bingTaiStr = ModuleZW(@"中度已病态");
             break;
         case 10:
-            bingTaiStr = @"中重度已病态";
+            bingTaiStr = ModuleZW(@"中重度已病态");
             break;
         case 11:
-            bingTaiStr = @"高度已病态";
+            bingTaiStr = ModuleZW(@"重度已病态");
             break;
         default:
             break;
@@ -222,7 +222,7 @@
 //    if(stateLabel){
 //        stateLabel.hidden = YES;
 //    }
-    NSString *str = @"您未完成和畅体检,全部完成体检后定制属于您的和畅服务包";
+    NSString *str = ModuleZW(@"您未完成和畅体检,全部完成体检后定制属于您的和畅服务包");
     self.remindLabel.text = str;
     [self.toViewButton setBackgroundImage:[UIImage imageNamed:@"和畅包未检测"] forState:(UIControlStateNormal)];
 
@@ -289,7 +289,8 @@
 
 - (void)showYiBingTianWithStr:(NSString *)str1 withStr:(NSString *)str2
 {
-    NSString *str = [NSString stringWithFormat:@"您属于%@的%@型，点击查看我们为您定制的和畅服务包",str1,str2];
+    NSString *stateStr = [NSString stringWithFormat:@"您当前属于%@",str1];
+    NSString *str = [NSString stringWithFormat:@"%@%@型，%@",ModuleZW(stateStr),str2,ModuleZW(@"点击查看我们为您定制的和畅服务包")];
     self.remindLabel.text = str;
     [self.toViewButton setBackgroundImage:[UIImage imageNamed:@"和畅包"] forState:(UIControlStateNormal)];
 
@@ -303,7 +304,7 @@
     HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.viewController.navigationController pushViewController:vc animated:YES];
-    vc.titleStr = @"和畅包";
+    vc.titleStr = ModuleZW(@"和畅包");
     //[MemberUserShance shareOnce].idNum
     NSString *urlStr = [NSString stringWithFormat:@"%@member/service/home/1/%@.jhtml?isnew=1",URL_PRE,[MemberUserShance shareOnce].idNum];
     vc.progressType = progress2;

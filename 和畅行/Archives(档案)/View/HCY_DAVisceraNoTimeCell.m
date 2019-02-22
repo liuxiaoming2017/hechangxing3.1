@@ -88,7 +88,7 @@
     
     
     self.CCLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.doctorNameLabel.left , self.doctorNameLabel.bottom - 10, self.imageV.width - 10, self.imageV.height/2)];
-    self.CCLabel.textColor = RGB(221, 156, 92);
+    self.CCLabel.textColor = RGB(55, 55, 55);
     self.CCLabel.hidden = YES;
     self.CCLabel.font = [UIFont systemFontOfSize:15];
     [self.imageV addSubview:self.CCLabel];
@@ -113,9 +113,27 @@
     
     
     if (model.medicRecordId!=nil&&![model.medicRecordId isKindOfClass:[NSNull class]]&&model.medicRecordId.length!=0){
-        self.doctorNameLabel.text = model.doctorName;
-        self.departmentNameLabel.text = model.doctorDept;
-        self.CCLabel.text =  [NSString stringWithFormat:@"主诉: %@",model.mainSuit];
+        NSString *departmentName = [NSString stringWithFormat:@"科室: %@",model.doctorDept];
+        NSMutableAttributedString *departmentNameStr = [[NSMutableAttributedString alloc]initWithString:departmentName];
+        [departmentNameStr beginEditing];
+        [departmentNameStr addAttribute:NSForegroundColorAttributeName value:RGB(221, 156, 92) range:NSMakeRange(departmentName.length - model.doctorDept.length ,model.doctorDept.length)];
+        [departmentNameStr endEditing];
+        
+        NSString *doctorName = [NSString stringWithFormat:@"医生: %@",model.doctorName];
+        NSMutableAttributedString *doctorNameStr = [[NSMutableAttributedString alloc]initWithString:doctorName];
+        [doctorNameStr beginEditing];
+        [doctorNameStr addAttribute:NSForegroundColorAttributeName value:RGB(221, 156, 92) range:NSMakeRange(doctorNameStr.length - model.doctorName.length ,model.doctorName.length)];
+        [doctorNameStr endEditing];
+        
+        NSString *mainSuit =  [NSString stringWithFormat:@"主诉: %@",model.mainSuit];
+        NSMutableAttributedString *mainSuitStr = [[NSMutableAttributedString alloc]initWithString:mainSuit];
+        [mainSuitStr beginEditing];
+        [mainSuitStr addAttribute:NSForegroundColorAttributeName value:RGB(221, 156, 92) range:NSMakeRange(mainSuitStr.length - model.mainSuit.length ,model.mainSuit.length)];
+        [mainSuitStr endEditing];
+        
+        self.doctorNameLabel.attributedText = departmentNameStr;
+        self.departmentNameLabel.attributedText = doctorNameStr;
+        self.CCLabel.attributedText = mainSuitStr;
         
         NSString *littletimestr = [NSString stringWithFormat:@"%@",model.createTime];
         self.createDateLabel.text = [self getDateStringWithTimeStr:littletimestr];
