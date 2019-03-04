@@ -73,7 +73,7 @@ typedef void(^EDLoadRequestAction)(void);
     }else{
         self.preBtn.hidden = YES;
         self.leftBtn.hidden = NO;
-        self.navTitleLabel.text = @"和畅商城";
+        self.navTitleLabel.text = ModuleZW(@"和畅商城");
     }
     
     

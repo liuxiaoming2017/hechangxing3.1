@@ -140,7 +140,7 @@
             self.contentLabel.text = model.density;
         }else if ([model.typeStr isEqualToString:@"bloodPressure"]){
             typeStr = ModuleZW(@"血压");
-            self.contentLabel.text = [NSString stringWithFormat:@"%@ - %@",model.lowPressure,model.highPressure];
+            self.contentLabel.text = [NSString stringWithFormat:@"%@ %@  %@ %@",ModuleZW(@"收缩压"),model.highPressure,ModuleZW(@"舒张压"),model.lowPressure];
         }else if ([model.typeStr isEqualToString:@"ecg"]){
             typeStr = ModuleZW(@"心电");
             self.contentLabel.text = [model.subject valueForKey:@"name"];
@@ -157,6 +157,7 @@
             typeStr = ModuleZW(@"体温");
             self.contentLabel.text = model.temperature;
         }
+        self.createDateLabel.text =   [self getDateStringWithTimeStr:[NSString stringWithFormat:@"%@",model.createDate]];
         
     }else if (typeInteger == 5){
         typeStr = ModuleZW(@"脏腑");

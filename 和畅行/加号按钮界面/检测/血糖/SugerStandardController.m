@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navTitleLabel.text = @"血糖检测";
+    self.navTitleLabel.text = ModuleZW(@"血糖检测");
     [self createUI];
 }
 
@@ -33,7 +33,7 @@
     titleLabel.font = [UIFont systemFontOfSize:18];
     titleLabel.textAlignment = NSTextAlignmentLeft;
     //titleLabel.textColor = UIColorFromHex(0X1E82D2);
-    titleLabel.text = @"注意事项";
+    titleLabel.text = ModuleZW(@"注意事项");
     [topView addSubview:image1];
     [topView addSubview:titleLabel];
     
@@ -44,7 +44,7 @@
     label2.font = [UIFont systemFontOfSize:15];
     label2.textAlignment = NSTextAlignmentLeft;
     label2.textColor = UIColorFromHex(0X8E8E93);
-    label2.text = @"空腹12-14小时，抽血。前一次进餐要正常饮食，不暴饮暴食。";
+    label2.text = ModuleZW(@"空腹12-14小时，抽血。前一次进餐要正常饮食，不暴饮暴食。");
     [topView addSubview:label2];
     
     
@@ -55,7 +55,7 @@
     label3.font = [UIFont systemFontOfSize:15];
     label3.textAlignment = NSTextAlignmentLeft;
     label3.textColor = UIColorFromHex(0X8E8E93);
-    label3.text = @"既餐后两小时的时候抽血，随后进行测试。";
+    label3.text = ModuleZW(@"既餐后两小时的时候抽血，随后进行测试。");
     [topView addSubview:label3];
     
     UIImageView *image4 = [[UIImageView alloc] initWithFrame:CGRectMake(image3.left, image3.bottom+40, image2.width, image2.height)];
@@ -64,7 +64,7 @@
     label4.font = [UIFont systemFontOfSize:15];
     label4.textAlignment = NSTextAlignmentLeft;
     label4.textColor = UIColorFromHex(0X8E8E93);
-    label4.text = @"既餐后两小时的时候抽血，正常11.1以下。";
+    label4.text = ModuleZW(@"既餐后两小时的时候抽血，正常11.1以下。");
     [topView addSubview:label4];
     
     [topView addSubview:image2];

@@ -45,9 +45,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navTitleLabel.text = @"体质辨识";
+    self.navTitleLabel.text = ModuleZW(@"体质辨识");
     [self getQuestionData];
-    self.anwerArr = [NSArray arrayWithObjects:@"没有（根本不)",@"很少（有一点)",@"有时（有些)",@"经常（相当)",@"总是（非常)", nil];
+    self.anwerArr = [NSArray arrayWithObjects:ModuleZW(@"没有（根本不)"),ModuleZW(@"很少（有一点)"),ModuleZW(@"有时（有些)"),ModuleZW(@"经常（相当)"),ModuleZW(@"总是（非常)"), nil];
     
 }
 
@@ -89,7 +89,7 @@
     
     self.lastPage = [UIButton buttonWithType:UIButtonTypeCustom];
     self.lastPage.frame = CGRectMake(15, backView.height-40, 60, 30);
-    [self.lastPage setTitle:@"上一页" forState:UIControlStateNormal];
+    [self.lastPage setTitle:ModuleZW(@"上一页") forState:UIControlStateNormal];
     self.lastPage.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.lastPage setTitleColor:[Tools colorWithHexString:@"#0282bf"] forState:UIControlStateNormal];
     self.lastPage.hidden = YES;
@@ -100,12 +100,12 @@
     self.allPage.font = [UIFont systemFontOfSize:15];
     self.allPage.textAlignment = NSTextAlignmentCenter;
     self.allPage.textColor = [Tools colorWithHexString:@"#0282bf"];
-    self.allPage.text = [NSString stringWithFormat:@"1/%ld页",(long)_pages];
+    self.allPage.text = [NSString stringWithFormat:ModuleZW(@"1/%ld页"),(long)_pages];
     [backView addSubview:self.allPage];
     
     self.nextPage = [UIButton buttonWithType:UIButtonTypeCustom];
     self.nextPage.frame = CGRectMake(backView.width-60-15, self.lastPage.top, 60, 30);
-    [self.nextPage setTitle:@"下一页" forState:UIControlStateNormal];
+    [self.nextPage setTitle:ModuleZW(@"下一页") forState:UIControlStateNormal];
     self.nextPage.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.nextPage setTitleColor:[Tools colorWithHexString:@"#0282bf"] forState:UIControlStateNormal];
     [self.nextPage addTarget:self action:@selector(nextPageAction) forControlEvents:UIControlEventTouchUpInside];
@@ -213,7 +213,7 @@
             if(result){
                 [cacheManager insertQuestionModels:mutabDataArr];
             }else{
-                [weakSelf showAlertWarmMessage:@"数据库创建失败"];
+                [weakSelf showAlertWarmMessage:ModuleZW(@"数据库创建失败")];
             }
             [weakSelf handleQuestionDataWithArr:mutabDataArr];
         }else{
@@ -342,12 +342,12 @@
     }
     if(_currentIndex+1 == _pages){
         //self.nextPage.hidden = YES;
-        [self.nextPage setTitle:@"提交" forState:UIControlStateNormal];
+        [self.nextPage setTitle:ModuleZW(@"提交") forState:UIControlStateNormal];
     }else{
         //self.nextPage.hidden = NO;
-        [self.nextPage setTitle:@"下一页" forState:UIControlStateNormal];
+        [self.nextPage setTitle:ModuleZW(@"下一页") forState:UIControlStateNormal];
     }
-    self.allPage.text = [NSString stringWithFormat:@"%ld/%ld页",_currentIndex+1,(long)_pages];
+    self.allPage.text = [NSString stringWithFormat:ModuleZW(@"%ld/%ld页"),_currentIndex+1,(long)_pages];
 }
 
 - (void)lastPageAction
@@ -363,11 +363,11 @@
 
 - (void)nextPageAction
 {
-    if([self.nextPage.titleLabel.text isEqualToString:@"提交"]){
+    if([self.nextPage.titleLabel.text isEqualToString:ModuleZW(@"提交")]){
         if(_selectNum == self.questionArr.count){
             [self generateTZBS];
         }else{
-            [self showAlertWarmMessage:@"题目还未答完,不能提交!"];
+            [self showAlertWarmMessage:ModuleZW(@"题目还未答完")];
         }
         return;
     }
@@ -621,7 +621,7 @@
 {
     //[SSWaitViewEx removeWaitViewFrom:self.view];
     [GlobalCommon hideMBHudWithView:self.view];
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉，请检查您的网络是否畅通" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉，请检查您的网络是否畅通") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
     [av show];
 }
 - (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request

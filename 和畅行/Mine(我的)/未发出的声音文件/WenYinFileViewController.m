@@ -74,7 +74,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navTitleLabel.text = @"未发出声的文件";
+    self.navTitleLabel.text =ModuleZW(@"未发出声的文件");
     UILabel* lb1=[[UILabel alloc] init];
     lb1.frame=CGRectMake(0, kNavBarHeight, ScreenWidth, 1);
     lb1.backgroundColor=[UIColor clearColor];
@@ -145,7 +145,7 @@
     NSString *string4 = [[self.WenYinArray objectAtIndex:indexPath.row ] substringWithRange:NSMakeRange(8, 2)];
     NSLog(@"string4==%@",string4);
     
-    cell.lbDate.text=[NSString stringWithFormat:@"时间:%@年%@月%@日",string2,string3,string4];
+    cell.lbDate.text=[NSString stringWithFormat:ModuleZW(@"时间:%@年%@月%@日"),string2,string3,string4];
     cell.delegate = self;
     cell.CellAcessImgView.tag = 1000+ indexPath.row;
    cell.CellDeleImgView.tag    = 2000+ indexPath.row;
@@ -168,7 +168,7 @@
     NSString* styr=[self.WenYinArray objectAtIndex:btn.tag-1000];
     self.mp3name=[NSString stringWithFormat:@"%@",styr];
     self.fieldpath= [imageDir stringByAppendingPathComponent:[self.WenYinArray objectAtIndex:btn.tag-1000]];
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确认重传吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认",nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"确认重传吗？") delegate:self cancelButtonTitle:ModuleZW(@"取消") otherButtonTitles:ModuleZW(@"确认"),nil];
     av.tag=90001;
     [av show];
     
@@ -184,7 +184,7 @@
     NSString* styr=[self.WenYinArray objectAtIndex:btn.tag-2000];
     self.mp3name=[NSString stringWithFormat:@"%@",styr];
     self.fieldpath= [imageDir stringByAppendingPathComponent:[self.WenYinArray objectAtIndex:btn.tag-2000]];
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确认删除吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"确认删除吗？") delegate:self cancelButtonTitle:ModuleZW(@"取消") otherButtonTitles:ModuleZW(@"确定"),nil];
     av.tag=90002;
     [av show];
     
@@ -234,7 +234,6 @@
     [request setDidFailSelector:@selector(requestUpLoadError:)];//requestLoginError
     [request setDidFinishSelector:@selector(requestUpLoadCompleted:)];
     [request startAsynchronous];
-   
 }
 - (void)requestUpLoadCompleted:(ASIHTTPRequest *)request
 {
@@ -284,7 +283,7 @@
 - (void)requestUpLoadError:(ASIHTTPRequest *)request
 {
     [self hudWasHidden];
-    LPPopup *popup = [LPPopup popupWithText:@"抱歉，由于长时间无法连接到网络，系统将您的录音放在了“我的”的“未发出声的文件”里，您可以选择手工上传或删除。"];
+    LPPopup *popup = [LPPopup popupWithText:ModuleZW(@"抱歉，由于长时间无法连接到网络，系统将您的录音放在了“我的”的“未发出声的文件”里，您可以选择手工上传或删除。")];
     CGPoint point=self.view.center;
     point.y=point.y+130;
     [popup showInView:self.view
@@ -351,7 +350,7 @@
         }    }
     else
     {
-        LPPopup *popup = [LPPopup popupWithText:@"抱歉，由于长时间无法连接到网络，系统将您的录音放在了“我的”的“未发出声的文件”里，您可以选择手工上传或删除。"];
+        LPPopup *popup = [LPPopup popupWithText:ModuleZW(@"抱歉，由于长时间无法连接到网络，系统将您的录音放在了“我的”的“未发出声的文件”里，您可以选择手工上传或删除。")];
         CGPoint point=self.view.center;
         point.y=point.y+130;
         [popup showInView:self.view

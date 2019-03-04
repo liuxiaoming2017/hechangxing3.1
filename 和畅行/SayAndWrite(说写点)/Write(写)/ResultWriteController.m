@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navTitleLabel.text = @"健康档案";
+    self.navTitleLabel.text = ModuleZW(@"健康档案");
     [self customeViewWithStr:self.urlStr];
 }
 

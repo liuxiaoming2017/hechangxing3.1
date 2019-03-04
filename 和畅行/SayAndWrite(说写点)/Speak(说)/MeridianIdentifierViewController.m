@@ -102,7 +102,7 @@
     [super viewDidLoad];
     
     self.topView.backgroundColor = [UIColor clearColor];
-    self.navTitleLabel.text = @"经络功能状态评估";
+    self.navTitleLabel.text = ModuleZW(@"经络功能状态评估");
     self.navTitleLabel.textColor = [UIColor whiteColor];
 }
 
@@ -325,8 +325,8 @@
             if(granted){
                 [self recordAudio];
             }else{
-                UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"请打开麦克风权限" preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:NULL];
+                UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"录音权限被禁止") preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleCancel handler:NULL];
                 [alertVC addAction:alertAct1];
                 [self presentViewController:alertVC animated:YES completion:NULL];
             }
@@ -647,23 +647,25 @@
             if ( self.soundCount < 1.0) {
                 [self soundTooLow];
             }else{
-                if([GlobalCommon isManyMember]){
-                    SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
-                    __weak typeof(self) weakSelf = self;
-                    [subMember receiveSubIdWith:^(NSString *subId) {
-                        NSLog(@"%@",subId);
-                        if ([subId isEqualToString:@"user is out of date"]) {
-                            //登录超时
-                            
-                        }else{
-                            [weakSelf testMp3Upload];
-                            NSLog(@"选中的子账户id为：%@",subId);
-                        }
-                        [subMember hideHintView];
-                    }];
-                }else{
-                    [self testMp3Upload];
-                }
+                [self testMp3Upload];
+
+//                if([GlobalCommon isManyMember]){
+//                    SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
+//                    __weak typeof(self) weakSelf = self;
+//                    [subMember receiveSubIdWith:^(NSString *subId) {
+//                        NSLog(@"%@",subId);
+//                        if ([subId isEqualToString:@"user is out of date"]) {
+//                            //登录超时
+//                            
+//                        }else{
+//                            [weakSelf testMp3Upload];
+//                            NSLog(@"选中的子账户id为：%@",subId);
+//                        }
+//                        [subMember hideHintView];
+//                    }];
+//                }else{
+//                    [self testMp3Upload];
+//                }
                 
                 
             }
@@ -721,7 +723,7 @@
         NSString *codeStr = [self stringWithCode:code];
         LPPopup *popup = nil;
         if([codeStr isEqualToString:@""]){
-            popup = [LPPopup popupWithText:@"未采集到有效声音,请重新采集。"];
+            popup = [LPPopup popupWithText:ModuleZW(@"很抱歉，您所录制的声音无效，请重新辨识。")];
         }else{
 //            popup = [LPPopup popupWithText:@"您的录音已成功上传，正在进行分析。分析报告审核完成后，会发送至您的手机上，请注意查收。"];
         }
@@ -754,7 +756,7 @@
         NSString *aUrlle= [NSString stringWithFormat:@"%@/member/service/reshow.jhtml?sn=%@&device=1",URL_PRE,codeStr];
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = aUrlle;
-        vc.titleStr = @"经络辨识";
+        vc.titleStr = ModuleZW(@"经络辨识");
         [self.navigationController pushViewController:vc animated:YES];
     }
     else
@@ -762,7 +764,7 @@
         
         UIButton* btn=(UIButton*)[self.view viewWithTag:10007];
         btn.enabled=YES;
-        LPPopup *popup = [LPPopup popupWithText:@"抱歉，由于长时间无法连接到网络，系统将您的录音放在了“我的”的“未发出声的文件”里，您可以选择手工上传或删除。"];
+        LPPopup *popup = [LPPopup popupWithText:ModuleZW(@"抱歉，由于长时间无法连接到网络，系统将您的录音放在了“我的”的“未发出声的文件”里，您可以选择手工上传或删除。")];
         timeNStager=0;
         [bianshiTime setFireDate:[NSDate distantFuture]];
         [self.Recordbtn setImage:[UIImage imageNamed:@"bs_an_kaishishibian.png"] forState:UIControlStateNormal];
@@ -785,7 +787,7 @@
     [self hudWasHidden];
     UIButton* btn=(UIButton*)[self.view viewWithTag:10007];
     btn.enabled=YES;
-    LPPopup *popup = [LPPopup popupWithText:@"抱歉，由于长时间无法连接到网络，系统将您的录音放在了“我的”的“未发出声的文件”里，您可以选择手工上传或删除。"];
+    LPPopup *popup = [LPPopup popupWithText:ModuleZW(@"抱歉，由于长时间无法连接到网络，系统将您的录音放在了“我的”的“未发出声的文件”里，您可以选择手工上传或删除。")];
     CGPoint point=self.view.center;
     point.y=point.y+130;
     [popup showInView:self.view
@@ -833,7 +835,7 @@
 - (void)soundTooLow{
     
     [self hudWasHidden];
-    LPPopup *popup = [LPPopup popupWithText:@"抱歉，未采集到有效声音。请提高音调！"];
+    LPPopup *popup = [LPPopup popupWithText:ModuleZW(@"抱歉，未采集到有效声音。请提高音调！")];
     CGPoint point=self.view.center;
     point.y=point.y+130;
     [popup showInView:self.view
@@ -880,7 +882,7 @@
     }
     else
     {
-        LPPopup *popup = [LPPopup popupWithText:@"抱歉，由于长时间无法连接到网络，系统将您的录音放在了“更多”的“闻音文件”里，您可以选择手工上传或删除。"];
+        LPPopup *popup = [LPPopup popupWithText:ModuleZW(@"抱歉，由于长时间无法连接到网络，系统将您的录音放在了“更多”的“闻音文件”里，您可以选择手工上传或删除。")];
         CGPoint point=self.view.center;
         timeNStager=0;
         [bianshiTime setFireDate:[NSDate distantFuture]];
@@ -900,7 +902,7 @@
     [self.view addSubview:_progress];
     [self.view bringSubviewToFront:_progress];
     _progress.delegate = self;
-    _progress.label.text = @"加载中...";
+    _progress.label.text = ModuleZW(@"加载中...");
     [_progress showAnimated:YES];
 }
 

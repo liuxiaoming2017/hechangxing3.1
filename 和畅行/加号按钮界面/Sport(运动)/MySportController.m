@@ -159,14 +159,14 @@
     [self.view addSubview:footView];
     
     voiceButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    voiceButton.frame = CGRectMake((ScreenWidth - 28 * 3) / 6, 3, 28, 28);
+    voiceButton.frame = CGRectMake((ScreenWidth - 25 * 3) / 6, 2, 25, 25);
     [voiceButton setBackgroundImage:[UIImage imageNamed:@"yundongtupian2.png"] forState:UIControlStateSelected];
     [voiceButton setBackgroundImage:[UIImage imageNamed:@"yundongtupian1.png"] forState:UIControlStateNormal];
     [voiceButton addTarget:self action:@selector(voiceAction:) forControlEvents:UIControlEventTouchUpInside];
     //voiceButton.selected = YES;
     [footView addSubview:voiceButton];
     
-    UILabel *lunbotu = [[UILabel alloc]initWithFrame:CGRectMake((ScreenWidth - 28 * 3) / 6 - 26, 35-2, (ScreenWidth - 28 * 3) / 6 + 34, 15)];
+    UILabel *lunbotu = [[UILabel alloc]initWithFrame:CGRectMake(0, voiceButton.bottom, ScreenWidth/3,16)];
     lunbotu.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     lunbotu.text =ModuleZW(@"轮播暂停");
     lunbotu.textAlignment = NSTextAlignmentCenter;
@@ -178,7 +178,7 @@
     [audioSession setActive:YES error:nil];
     
     yueYaoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    yueYaoButton.frame = CGRectMake((ScreenWidth - 28 * 3) / 2 + 28, 3, 28, 28);
+    yueYaoButton.frame = CGRectMake((ScreenWidth - 25 * 3) / 2 + 25, 3, 25, 25);
     
     [yueYaoButton setBackgroundImage:[UIImage imageNamed:@"yudongbofang2.png"] forState:UIControlStateNormal];
     [yueYaoButton setBackgroundImage:[UIImage imageNamed:@"yundongbofang1.png"] forState:UIControlStateSelected];
@@ -186,23 +186,23 @@
     [yueYaoButton addTarget:self action:@selector(yueYaoAction:) forControlEvents:UIControlEventTouchUpInside];
     
     [footView addSubview:yueYaoButton];
-    UILabel *bofangyueYao = [[UILabel alloc]initWithFrame:CGRectMake((ScreenWidth - 28 * 3) / 2 + 18, 35-2, (ScreenWidth - 28 * 3) / 2 + 62, 15)];
+    UILabel *bofangyueYao = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/3, voiceButton.bottom, ScreenWidth/3,16)];
     bofangyueYao.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     
     bofangyueYao.text = ModuleZW(@"播放乐药");
-    //bofangyueYao.textAlignment = NSTextAlignmentCenter;
+    bofangyueYao.textAlignment = NSTextAlignmentCenter;
     bofangyueYao.font = [UIFont systemFontOfSize:12];
     [footView addSubview:bofangyueYao];
     shifanyinButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    shifanyinButton.frame = CGRectMake((ScreenWidth - 28 * 3) * 5 / 6 + 56, 3, 28, 28);
+    shifanyinButton.frame = CGRectMake((ScreenWidth - 25 * 3) * 5 / 6 + 50, 3, 25, 25);
     [shifanyinButton setBackgroundImage:[UIImage imageNamed:@"yundongyueyaoting.png"] forState:UIControlStateNormal];
     [shifanyinButton setBackgroundImage:[UIImage imageNamed:@"yundongyueyao.png"] forState:UIControlStateSelected];
     [shifanyinButton addTarget:self action:@selector(shifanyinAction:) forControlEvents:UIControlEventTouchUpInside];
     [footView addSubview:shifanyinButton];
-    UILabel *shifanyin = [[UILabel alloc]initWithFrame:CGRectMake((ScreenWidth - 28 * 3) * 5 / 6 + 39, 35-2, (ScreenWidth - 28 * 3) * 5 / 6 + 90, 15)];
+    UILabel *shifanyin = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth*2/3, voiceButton.bottom, ScreenWidth/3,16)];
     shifanyin.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     shifanyin.text = ModuleZW(@"动作示范音");
-    
+    shifanyin.textAlignment = NSTextAlignmentCenter;
     shifanyin.font = [UIFont systemFontOfSize:12];
     [footView addSubview:shifanyin];
     
@@ -221,6 +221,12 @@
     label1.font = [UIFont systemFontOfSize:15];
     label1.textColor = [UIColor whiteColor];
     [countImageV addSubview:label1];
+    CGRect textRect = [label1.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 15)
+                                                options:NSStringDrawingUsesLineFragmentOrigin
+                                             attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}
+                                                context:nil];
+   label1.width = textRect.size.width;
+    countImageV.width = textRect.size.width;
 
     UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(0, label1.bottom+6, countImageV.width, label1.height)];
     label2.text = [NSString stringWithFormat:@"1/%lu",(unsigned long)self.imageArr.count];
@@ -229,10 +235,13 @@
     label2.textColor = [UIColor whiteColor];
     label2.tag = 2003;
     [countImageV addSubview:label2];
+    label2.width = textRect.size.width;
 
     UIImageView *imgV = [[UIImageView alloc] initWithFrame:CGRectMake((countImageV.width-8)/2, label2.bottom+6, 8, 5)];
     imgV.image = [UIImage imageNamed:@"DownImg"];
+    imgV.tag = 2004;
     [countImageV addSubview:imgV];
+    imgV.left = textRect.size.width/2 - 4;
 
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
     [countImageV addGestureRecognizer:tap];
@@ -574,10 +583,22 @@
     if(index == 0){
         label1.text = ModuleZW(@"全部");
     }else{
-        label1.text = [GlobalCommon getSportNameWithIndex:index];
+        label1.text =ModuleZW( [GlobalCommon getSportNameWithIndex:index]);
     }
+    UIImageView *downV = (UIImageView*)[countV viewWithTag:2004];
     UILabel *label2 = (UILabel *)[countV viewWithTag:2003];
     label2.text = [NSString stringWithFormat:@"%ld/%lu",(long)_pageIndex+1,(unsigned long)_imageArr.count];
+    
+    CGRect textRect = [label1.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 15)
+                                            options:NSStringDrawingUsesLineFragmentOrigin
+                                         attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}
+                                            context:nil];
+    countV.width = textRect.size.width;
+    label1.width = textRect.size.width;
+    label2.width = textRect.size.width;
+    downV.left = textRect.size.width/2 - 4;
+    
+    
 }
 
 

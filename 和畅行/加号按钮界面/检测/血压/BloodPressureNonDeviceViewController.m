@@ -250,23 +250,24 @@
 #pragma mark -------- 选择子账户
 -(void)GetWithModifi
 {
+    [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
 
-    if([GlobalCommon isManyMember]){
-        __weak typeof(self) weakSelf = self;
-        SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
-        [subMember receiveSubIdWith:^(NSString *subId) {
-            NSLog(@"%@",subId);
-            if ([subId isEqualToString:@"user is out of date"]) {
-                //登录超时
-                
-            }else{
-                [weakSelf requestNetworkData:subId];
-            }
-            [subMember hideHintView];
-        }];
-    }else{
-        [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
-    }   
+//    if([GlobalCommon isManyMember]){
+//        __weak typeof(self) weakSelf = self;
+//        SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
+//        [subMember receiveSubIdWith:^(NSString *subId) {
+//            NSLog(@"%@",subId);
+//            if ([subId isEqualToString:@"user is out of date"]) {
+//                //登录超时
+//                
+//            }else{
+//                [weakSelf requestNetworkData:subId];
+//            }
+//            [subMember hideHintView];
+//        }];
+//    }else{
+//        [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+//    }   
 }
 
 - (void)requestNetworkData:(NSString *)subId

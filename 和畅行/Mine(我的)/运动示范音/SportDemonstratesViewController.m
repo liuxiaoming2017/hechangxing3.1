@@ -72,7 +72,7 @@
     _buttonSet = [NSMutableSet set];
     _buttonArray = [NSArray array];
     self.view.backgroundColor=[UtilityFunc colorWithHexString:@"#ffffff"];
-    self.navTitleLabel.text = @"运动示范音";
+    self.navTitleLabel.text = ModuleZW(@"运动示范音");
     
     UITableView *tableview=[[UITableView alloc]init];
     tableview.frame=CGRectMake(0,kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-56);
@@ -128,13 +128,13 @@
        
     }
     if (counts == self.LeMedicArray.count ) {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"你已经全部下载。" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"你已经全部下载。") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         
         [av show];
         
         return;
     }
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"你确定要全部下载运动示范音吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"你确定要全部下载运动示范音吗？") delegate:self cancelButtonTitle:ModuleZW(@"取消") otherButtonTitles:ModuleZW(@"确定"),nil];
     av.tag = 34567;
     [av show];
    
@@ -181,7 +181,7 @@
     }
     else if ([status intValue]==44)
     {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"登录超时，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         av.tag = 100008;
         [av show];
         
@@ -462,7 +462,7 @@
     if (btnbfzt.selected) {
         return;
     }else{
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定下载该曲目吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"确定下载该曲目吗？") delegate:self cancelButtonTitle:ModuleZW(@"取消") otherButtonTitles:ModuleZW(@"确定"),nil];
         av.tag = 1999;
         [av show];
        

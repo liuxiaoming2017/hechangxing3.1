@@ -135,6 +135,8 @@
                 NSString *modelTimeStr = [NSString string];
                 if(self.typeInteger==0||self.typeInteger == 5){
                     modelTimeStr = model.date;
+                }else if (self.typeInteger == 1){
+                    modelTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",model.createDate]];
                 }else{
                     modelTimeStr = model.createTime;
                 }
@@ -142,10 +144,12 @@
                 NSString *onmodelTimeStr = [NSString string];
                  if(self.typeInteger==0||self.typeInteger == 5){
                     onmodelTimeStr = onAmodel.date;
-                }else{
+                 }else if (self.typeInteger == 1){
+                     onmodelTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",onAmodel.createDate]];
+                 }else{
                     onmodelTimeStr = onAmodel.createTime;
                 }
-                
+                NSLog(@"%@   %@",modelTimeStr,model.date);
                 if ([modelTimeStr isEqualToString:onmodelTimeStr]) {
                     return 65;
                 }else {
@@ -172,7 +176,6 @@
         }
     }
     
-    
 }
 #pragma mark -- 每个cell显示的内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -184,6 +187,8 @@
             NSString *timeStr = [NSString string];
             if (self.typeInteger == 0||self.typeInteger == 5) {
                 timeStr = model.date;
+            }else if (self.typeInteger == 1){
+                timeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",model.createDate]];
             }else{
                 timeStr = model.createTime;
             }
@@ -205,6 +210,8 @@
                     NSString *nextTimeStr = [NSString string];
                     if (self.typeInteger == 0||self.typeInteger == 5) {
                         nextTimeStr = nextmodel.date;
+                    }else if (self.typeInteger == 1){
+                        nextTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",nextmodel.createDate]];
                     }else{
                         nextTimeStr = nextmodel.createTime;
                     }
@@ -225,6 +232,8 @@
                 NSString *onTimeStr = [NSString string];
                 if (self.typeInteger == 0||self.typeInteger == 5) {
                     onTimeStr = onAmodel.date;
+                }else if (self.typeInteger == 1){
+                    onTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",onAmodel.createDate]];
                 }else{
                     onTimeStr = onAmodel.createTime;
                 }
@@ -240,6 +249,8 @@
                         NSString *nextTimeStr = [NSString string];
                         if (self.typeInteger == 0||self.typeInteger == 5) {
                             nextTimeStr = nextAmodel.date;
+                        }else if (self.typeInteger == 1){
+                            nextTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",nextAmodel.createDate]];
                         }else{
                             nextTimeStr = nextAmodel.createTime;
                         }
@@ -267,6 +278,8 @@
                         NSString *nextTimeStr = [NSString string];
                         if (self.typeInteger == 0||self.typeInteger == 5) {
                             nextTimeStr = nextAmodel.date;
+                        }else if (self.typeInteger == 1){
+                            nextTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",nextAmodel.createDate]];
                         }else{
                             nextTimeStr = nextAmodel.createTime;
                         }
@@ -638,7 +651,16 @@
     return nil;
 }
 
-
+-(NSString *)getDateStringWithOtherTimeStr:(NSString *)str{
+    NSTimeInterval time=[str doubleValue]/1000;//传入的时间戳str如果是精确到毫秒的记得要/1000
+    NSDate *detailDate=[NSDate dateWithTimeIntervalSince1970:time];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; //实例化一个NSDateFormatter对象
+    //设定时间格式,这里可以设置成自己需要的格式
+    NSString *dateStr = [NSString stringWithFormat:@"MM%@dd%@",ModuleZW(@"月"),ModuleZW(@"日")];
+    [dateFormatter setDateFormat:dateStr];
+    NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
+    return currentDateStr;
+}
 
 //排序
 // 将数组按照时间戳排序

@@ -554,7 +554,7 @@
 		039B2AD4212522D000D558F5 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039B2AD3212522D000D558F5 /* TestViewController.m */; };
 		039B2AD72125247100D558F5 /* TestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 039B2AD62125247100D558F5 /* TestCell.m */; };
 		039B2ADA2125586200D558F5 /* TemperNonDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039B2AD92125586100D558F5 /* TemperNonDeviceViewController.m */; };
-		039B2ADC21255C2300D558F5 /* 确定.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2ADB21255C2200D558F5 /* 确定.png */; };
+		039B2ADC21255C2300D558F5 /* 确定p.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2ADB21255C2200D558F5 /* 确定p.png */; };
 		039B2ADE21255EF000D558F5 /* 体温_非设备检测03.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2ADD21255EF000D558F5 /* 体温_非设备检测03.png */; };
 		039B2AE121255FD500D558F5 /* BreathCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039B2AE021255FD500D558F5 /* BreathCheckViewController.m */; };
 		039B2AEC2125623800D558F5 /* 呼吸01.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AE32125623300D558F5 /* 呼吸01.png */; };
@@ -701,10 +701,8 @@
 		03F97CFA21005DE300A0F842 /* WriteListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F97CF921005DE200A0F842 /* WriteListController.m */; };
 		03F97D0021005EBE00A0F842 /* Mybutton.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F97CFF21005EBE00A0F842 /* Mybutton.m */; };
 		03F97D0321005EE300A0F842 /* SymptomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F97D0121005EE300A0F842 /* SymptomModel.m */; };
-		03F97D082100676F00A0F842 /* symptom.txt in Resources */ = {isa = PBXBuildFile; fileRef = 03F97D072100676F00A0F842 /* symptom.txt */; };
 		03F97D0F21007F7900A0F842 /* OrganDiseaseListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F97D0E21007F7900A0F842 /* OrganDiseaseListViewController.m */; };
 		03F97D1321007FB700A0F842 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F97D1121007FB600A0F842 /* DBManager.m */; };
-		03F97D1421007FB700A0F842 /* ICD10.db in Resources */ = {isa = PBXBuildFile; fileRef = 03F97D1221007FB600A0F842 /* ICD10.db */; };
 		03F97D1721007FE200A0F842 /* OrganDiseaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F97D1621007FE200A0F842 /* OrganDiseaseModel.m */; };
 		03F97D1A2100808200A0F842 /* AdvisoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F97D192100808200A0F842 /* AdvisoryTableViewCell.m */; };
 		03FBDF4421927DB3006116FC /* UMCommonLog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 03FBDF4321927DB3006116FC /* UMCommonLog.bundle */; };
@@ -739,6 +737,8 @@
 		837D822321F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837D822121F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m */; };
 		839E0C552213E0540090F179 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 839E0C572213E0540090F179 /* InfoPlist.strings */; };
 		83D4C50F221FE1C700006CA9 /* sportImageText_en.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83D4C50E221FE1C700006CA9 /* sportImageText_en.plist */; };
+		83D4C5132223D60700006CA9 /* symptom.txt in Resources */ = {isa = PBXBuildFile; fileRef = 83D4C5122223D60700006CA9 /* symptom.txt */; };
+		83D4C5172223E3D600006CA9 /* ICD10.db in Resources */ = {isa = PBXBuildFile; fileRef = 83D4C5162223E3D500006CA9 /* ICD10.db */; };
 		83D54E6821E7165100474F58 /* HCY_ReportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D54E6721E7165100474F58 /* HCY_ReportCell.m */; };
 		83E23EE921C0A53100B43298 /* HCY_CallController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EE821C0A53000B43298 /* HCY_CallController.m */; };
 		83E23EED21C0AD2D00B43298 /* HCY_CallCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EEB21C0AD2D00B43298 /* HCY_CallCell.m */; };
@@ -1593,7 +1593,7 @@
 		039B2AD62125247100D558F5 /* TestCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestCell.m; sourceTree = "<group>"; };
 		039B2AD82125586100D558F5 /* TemperNonDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemperNonDeviceViewController.h; sourceTree = "<group>"; };
 		039B2AD92125586100D558F5 /* TemperNonDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemperNonDeviceViewController.m; sourceTree = "<group>"; };
-		039B2ADB21255C2200D558F5 /* 确定.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "确定.png"; sourceTree = "<group>"; };
+		039B2ADB21255C2200D558F5 /* 确定p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "确定p.png"; sourceTree = "<group>"; };
 		039B2ADD21255EF000D558F5 /* 体温_非设备检测03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "体温_非设备检测03.png"; sourceTree = "<group>"; };
 		039B2ADF21255FD500D558F5 /* BreathCheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreathCheckViewController.h; sourceTree = "<group>"; };
 		039B2AE021255FD500D558F5 /* BreathCheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BreathCheckViewController.m; sourceTree = "<group>"; };
@@ -1827,12 +1827,10 @@
 		03F97CFF21005EBE00A0F842 /* Mybutton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mybutton.m; sourceTree = "<group>"; };
 		03F97D0121005EE300A0F842 /* SymptomModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SymptomModel.m; sourceTree = "<group>"; };
 		03F97D0221005EE300A0F842 /* SymptomModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SymptomModel.h; sourceTree = "<group>"; };
-		03F97D072100676F00A0F842 /* symptom.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = symptom.txt; sourceTree = "<group>"; };
 		03F97D0D21007F7900A0F842 /* OrganDiseaseListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrganDiseaseListViewController.h; sourceTree = "<group>"; };
 		03F97D0E21007F7900A0F842 /* OrganDiseaseListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrganDiseaseListViewController.m; sourceTree = "<group>"; };
 		03F97D1021007FB600A0F842 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		03F97D1121007FB600A0F842 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
-		03F97D1221007FB600A0F842 /* ICD10.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = ICD10.db; sourceTree = "<group>"; };
 		03F97D1521007FE100A0F842 /* OrganDiseaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrganDiseaseModel.h; sourceTree = "<group>"; };
 		03F97D1621007FE200A0F842 /* OrganDiseaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrganDiseaseModel.m; sourceTree = "<group>"; };
 		03F97D182100808100A0F842 /* AdvisoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvisoryTableViewCell.h; sourceTree = "<group>"; };
@@ -1895,6 +1893,8 @@
 		837D822221F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BloodOxyNonDeviceViewController.h; sourceTree = "<group>"; };
 		839E0C562213E0540090F179 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		83D4C50E221FE1C700006CA9 /* sportImageText_en.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sportImageText_en.plist; sourceTree = "<group>"; };
+		83D4C5122223D60700006CA9 /* symptom.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = symptom.txt; sourceTree = "<group>"; };
+		83D4C5162223E3D500006CA9 /* ICD10.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = ICD10.db; sourceTree = "<group>"; };
 		83D54E6621E7165000474F58 /* HCY_ReportCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCY_ReportCell.h; sourceTree = "<group>"; };
 		83D54E6721E7165100474F58 /* HCY_ReportCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCY_ReportCell.m; sourceTree = "<group>"; };
 		83E23EE721C0A53000B43298 /* HCY_CallController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_CallController.h; sourceTree = "<group>"; };
@@ -3629,7 +3629,7 @@
 		039B2ACA212515BC00D558F5 /* 血压检测 */ = {
 			isa = PBXGroup;
 			children = (
-				039B2ADB21255C2200D558F5 /* 确定.png */,
+				039B2ADB21255C2200D558F5 /* 确定p.png */,
 				039B2ADD21255EF000D558F5 /* 体温_非设备检测03.png */,
 				039C23932123D05000F9AFA3 /* 不再提醒.png */,
 				039C23C6212403CB00F9AFA3 /* look.png */,
@@ -3981,13 +3981,13 @@
 		03F97CFB21005DEF00A0F842 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				83D4C5162223E3D500006CA9 /* ICD10.db */,
+				83D4C5122223D60700006CA9 /* symptom.txt */,
 				03F97D1521007FE100A0F842 /* OrganDiseaseModel.h */,
 				03F97D1621007FE200A0F842 /* OrganDiseaseModel.m */,
 				03F97CFD21005E7600A0F842 /* WriteDefine.h */,
-				03F97D072100676F00A0F842 /* symptom.txt */,
 				03F97D1021007FB600A0F842 /* DBManager.h */,
 				03F97D1121007FB600A0F842 /* DBManager.m */,
-				03F97D1221007FB600A0F842 /* ICD10.db */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4229,7 +4229,6 @@
 				036E84D72186EB1A001B9BB4 /* ic_electricity_cyan.png in Resources */,
 				0325A5FE2109C2D300275671 /* sportImageText.plist in Resources */,
 				03A24C932114261B005B5BA1 /* 专家咨询_06.png in Resources */,
-				03F97D1421007FB700A0F842 /* ICD10.db in Resources */,
 				030F51A62101CEBE003C918F /* yundongbofang1.png in Resources */,
 				036A668D2113FB5A0096A006 /* 星星_未点亮.png in Resources */,
 				036E851A2186EB1A001B9BB4 /* add_device.png in Resources */,
@@ -4280,6 +4279,7 @@
 				036E856B2186EB2A001B9BB4 /* MoxaSetting.xib in Resources */,
 				036A66AE2113FEF80096A006 /* wodekabaoxia.png in Resources */,
 				83E23EEE21C0AD2D00B43298 /* HCY_CallCell.xib in Resources */,
+				83D4C5132223D60700006CA9 /* symptom.txt in Resources */,
 				030F51CF2101CEBE003C918F /* pinggushibai.png in Resources */,
 				036E85232186EB1A001B9BB4 /* triangle.png in Resources */,
 				036E85062186EB1A001B9BB4 /* btn_dec_click.png in Resources */,
@@ -4471,6 +4471,7 @@
 				03731DD82112E31500994C53 /* orderLine.png in Resources */,
 				038A65412112ADDC0055C760 /* returedGoodsRecord@2x.png in Resources */,
 				036E85162186EB1A001B9BB4 /* btn_machine_blue.png in Resources */,
+				83D4C5172223E3D600006CA9 /* ICD10.db in Resources */,
 				039C23C7212403CB00F9AFA3 /* look.png in Resources */,
 				036E84F92186EB1A001B9BB4 /* 68MoxaHead.png in Resources */,
 				036E85552186EB2A001B9BB4 /* channel.xib in Resources */,
@@ -4547,7 +4548,6 @@
 				036E851F2186EB1A001B9BB4 /* icon_happy.png in Resources */,
 				036E85612186EB2A001B9BB4 /* i9channel.xib in Resources */,
 				03A07BEF20EF436500002274 /* Regist_yzm_bg.png in Resources */,
-				03F97D082100676F00A0F842 /* symptom.txt in Resources */,
 				030F51D02101CEBE003C918F /* Wybs_ruai_1.png in Resources */,
 				039C23922123D04300F9AFA3 /* 立即检测.png in Resources */,
 				036E84C32186EB1A001B9BB4 /* btn_pressed.png in Resources */,
@@ -4595,7 +4595,7 @@
 				030F51DF2101CEBE003C918F /* 111_106.png in Resources */,
 				036E85242186EB1A001B9BB4 /* ic_password.png in Resources */,
 				036FC0F92118337C00C1A793 /* newweixin_erweima.jpg in Resources */,
-				039B2ADC21255C2300D558F5 /* 确定.png in Resources */,
+				039B2ADC21255C2300D558F5 /* 确定p.png in Resources */,
 				03439075210AB64E00B57142 /* leyaozhifuxianjinka.png in Resources */,
 				039C23B72123FA3100F9AFA3 /* 血压13.png in Resources */,
 				036E84532186EAF5001B9BB4 /* wd56.mp3 in Resources */,

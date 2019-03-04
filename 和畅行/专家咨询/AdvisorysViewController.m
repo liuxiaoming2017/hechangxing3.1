@@ -95,27 +95,27 @@
     self.view.backgroundColor = [UIColor whiteColor];
 
     
-    UIButton *choseButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    choseButton.backgroundColor = RGB(224, 224, 224);
-    choseButton.frame = CGRectMake(0, kNavBarHeight, ScreenWidth, 50);
-    [choseButton setTitle:nameStr forState:(UIControlStateNormal)];
-    [choseButton setTitleColor: [UtilityFunc colorWithHexString:@"#666666"] forState:(UIControlStateNormal)];
-    [choseButton addTarget:self action:@selector(chosePeople) forControlEvents:(UIControlEventTouchUpInside)];
-    [choseButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
-    [self.view addSubview:choseButton];  
-    self.choseButton = choseButton;
-    choseButton.titleEdgeInsets = UIEdgeInsetsMake(0, -ScreenWidth + 150, 0, 0);
+//    UIButton *choseButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+//    choseButton.backgroundColor = RGB(224, 224, 224);
+//    choseButton.frame = CGRectMake(0, kNavBarHeight, ScreenWidth, 50);
+//    [choseButton setTitle:nameStr forState:(UIControlStateNormal)];
+//    [choseButton setTitleColor: [UtilityFunc colorWithHexString:@"#666666"] forState:(UIControlStateNormal)];
+//    [choseButton addTarget:self action:@selector(chosePeople) forControlEvents:(UIControlEventTouchUpInside)];
+//    [choseButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
+////    [self.view addSubview:choseButton];
+//    self.choseButton = choseButton;
+//    choseButton.titleEdgeInsets = UIEdgeInsetsMake(0, -ScreenWidth + 150, 0, 0);
+//
+//    UIImageView *leftImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 15.5, 30, 21)];
+//    leftImageView.image = [UIImage imageNamed:@"221323_03.png"];
+//    [choseButton addSubview:leftImageView];
+//
+//    UIImageView *peopleImageView = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth - 40 , 18, 18, 16)];
+//    peopleImageView.image = [UIImage imageNamed:@"HCY_right"];
+//    [choseButton addSubview:peopleImageView];
     
-    UIImageView *leftImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 15.5, 30, 21)];
-    leftImageView.image = [UIImage imageNamed:@"221323_03.png"];
-    [choseButton addSubview:leftImageView];
-  
-    UIImageView *peopleImageView = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth - 40 , 18, 18, 16)];
-    peopleImageView.image = [UIImage imageNamed:@"HCY_right"];
-    [choseButton addSubview:peopleImageView];
-    
-    _textView = [[CPTextViewPlaceholder alloc]initWithFrame:CGRectMake(10, choseButton.bottom+10, self.view.frame.size.width - 20, 100)];
-    UIView *grayView=[[UIView alloc]initWithFrame:CGRectMake(0, choseButton.bottom, self.view.bounds.size.width, 40)];
+    _textView = [[CPTextViewPlaceholder alloc]initWithFrame:CGRectMake(10, kNavBarHeight+10, self.view.frame.size.width - 20, 100)];
+    UIView *grayView=[[UIView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.bounds.size.width, 40)];
     _textView.delegate = self;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChangess) name:UITextViewTextDidChangeNotification object:self.textView];
     
@@ -125,7 +125,7 @@
     _textView.font = [UIFont systemFontOfSize:15];
     _textView.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     
-    _textViews = [[UITextView alloc]initWithFrame:CGRectMake(10, choseButton.bottom+10, self.view.frame.size.width - 20, 100)];
+    _textViews = [[UITextView alloc]initWithFrame:CGRectMake(10, kNavBarHeight+10, self.view.frame.size.width - 20, 100)];
     _textView.keyboardType = UIKeyboardTypeDefault;
     _textView.returnKeyType = UIReturnKeyDone;
     _textViews.text = ModuleZW(@"请详细描述您的症状、疾病和身体状况。我们根据病情分诊到对应的大夫为您解答。");
@@ -167,7 +167,7 @@
     UIButton *finishButton = [UIButton buttonWithType:UIButtonTypeCustom];
     finishButton.frame = CGRectMake(self.view.frame.size.width / 2 - 70,80, 140, 40);
     [finishButton setBackgroundColor:UIColorFromHex(0x1e82d2)];
-    [finishButton setTitle:@"提交" forState:UIControlStateNormal];
+    [finishButton setTitle:ModuleZW(@"提交") forState:UIControlStateNormal];
     finishButton.layer.cornerRadius = 5.0;
     finishButton.clipsToBounds = YES;
     finishButton.alpha = 0.4;
@@ -439,7 +439,8 @@
     if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied)
     {
         NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-        NSString *str = [NSString stringWithFormat:@"%@%@%@",NSLocalizedString(ModuleZW(@"请在iPhone的\"设置->隐私->相机\"选项中，允许"), nil),appName,NSLocalizedString(ModuleZW(@"访问您的摄像头。"), nil)];
+        NSString *str = [NSString stringWithFormat:ModuleZW(@"请在iPhone的\"设置->隐私->相机\"选项中，允许%@访问您的摄像头。"),appName];
+
         [self showAlertWarmMessage:str];
         return;
     }
@@ -812,8 +813,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         [weakSelf hudWasHidden];
         if([[response objectForKey:@"status"] intValue] == 100){
             
-            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"" message:@"你的咨询信息已提交,医生会在第一时间给予回复" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"" message:ModuleZW(@"你的咨询信息已提交,医生会在第一时间给予回复") preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             }];
             [alertVC addAction:alertAct1];
@@ -825,7 +826,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         
     } failureBlock:^(NSError *error) {
         [weakSelf hudWasHidden];
-        [weakSelf showAlertWarmMessage:ModuleZW(@"上传失败,请检查网络!")];
+        [weakSelf showAlertWarmMessage:ModuleZW(@"上传失败,请检查网络")];
     }];
     
 }

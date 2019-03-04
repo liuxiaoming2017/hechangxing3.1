@@ -22,14 +22,14 @@
     CGFloat hh = self.topView.bottom + 25;
     UIImageView *backImageV = [[UIImageView alloc] initWithFrame:CGRectMake(25, hh, ScreenWidth-50, ScreenHeight-hh-25)];
     
-    backImageV.image = [UIImage imageNamed:@"clickTip"];
+    backImageV.image = [UIImage imageNamed:ModuleZW(@"clickTip")];
     backImageV.userInteractionEnabled = YES;
     [self.view addSubview:backImageV];
     
     UIButton *nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     nextBtn.frame = CGRectMake((backImageV.width-120)/2.0, backImageV.height-70, 120, 40);
     [nextBtn setBackgroundColor:UIColorFromHex(0x1e82d2)];
-    [nextBtn setTitle:@"进入" forState:UIControlStateNormal];
+    [nextBtn setTitle:ModuleZW(@"进入") forState:UIControlStateNormal];
     [nextBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     //[nextBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [nextBtn addTarget:self action:@selector(nextBtnAction) forControlEvents:UIControlEventTouchUpInside];

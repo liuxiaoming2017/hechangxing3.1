@@ -56,7 +56,7 @@
 - (void)initViewAndDatas {
     [_mobileNumberView setLImage:[UIImage imageNamed:@"login_ic_user.png"]];
     [_passwordView setLImage:[UIImage imageNamed:@"login_ic_password.png"]];
-    [_mobileNumberView setPlaceHolder:@"请输入手机号/用户名"];
+    [_mobileNumberView setPlaceHolder:ModuleZW(@"请输入手机号/用户名")];
     _mobileNumberView.filterStr = @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.@-";
     [_passwordView getInputView].text = _password;
     [_passwordView getInputView].enabled = NO;
@@ -113,7 +113,7 @@
     [[self.view findFirstResponder] resignFirstResponder];
     NSString *number = [_mobileNumberView getInputText];
     if ([PubFunc isEmpty:number]) {
-        [OMGToast shakeMessage:@"请输入手机号/用户名" duration:1.5f attchView:_mobileNumberView];
+        [OMGToast shakeMessage:ModuleZW(@"请输入手机号/用户名") duration:1.5f attchView:_mobileNumberView];
         return;
     }
     
