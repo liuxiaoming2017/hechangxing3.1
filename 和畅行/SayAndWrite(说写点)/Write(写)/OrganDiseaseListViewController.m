@@ -68,7 +68,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navTitleLabel.text = @"已患疾病";
+    self.navTitleLabel.text = ModuleZW(@"已患疾病");
     [self customsearchBar];
     [self createTableView];
     
@@ -118,7 +118,7 @@
     UIView *view2 = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-61, ScreenWidth, 61)];
     view2.backgroundColor = [Tools colorWithHexString:@"#f2f1ef"];
     [self.view addSubview:view2];
-    UIButton *selectedSymDisBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2-80, 10.5, 160, 40) target:self sel:@selector(selectedSymDisBtnClick:) tag:22 image:@"selectedSymDisease" title:nil];
+    UIButton *selectedSymDisBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2-80, 10.5, 160, 40) target:self sel:@selector(selectedSymDisBtnClick:) tag:22 image:ModuleZW(@"selectedSymDisease") title:nil];
     [view2 addSubview:selectedSymDisBtn];
     
     
@@ -215,7 +215,7 @@
     view2.backgroundColor = [Tools colorWithHexString:@"#f2f1ef"];
     UIImageView *diseaseIcon = [Tools creatImageViewWithFrame:CGRectMake(20, 14, 17.5, 18) imageName:@"ICD10_病"];
     [view2 addSubview:diseaseIcon];
-    UILabel *symptomLabel = [Tools labelWith:@"现病史" frame:CGRectMake(48, 14, 120, 18) textSize:13 textColor:[Tools colorWithHexString:@"#333"] lines:1 aligment:NSTextAlignmentLeft];
+    UILabel *symptomLabel = [Tools labelWith:ModuleZW(@"现病史") frame:CGRectMake(48, 14, ScreenWidth - 50, 18) textSize:13 textColor:[Tools colorWithHexString:@"#333"] lines:1 aligment:NSTextAlignmentLeft];
     UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 45.5, ScreenWidth, 0.5)];
     line.image = [UIImage imageNamed:@"ICD10_leftGrayLine"];
     [view2 addSubview:line];
@@ -383,7 +383,7 @@
                             }else{
                                 NSLog(@"最多只能选择五个病症");
                                 [self showPopView];
-                                NSArray *alert = @[@"您最多只能选择五种症状",@"请酌情选择"];
+                                NSArray *alert = @[ModuleZW(@"您最多只能选择五种症状")];
                                 for (int k=0; k<alert.count; k++) {
                                     UILabel *label = [Tools labelWith:alert[k] frame:CGRectMake(0, 75+k*15, self->_contentView.frame.size.width, 15) textSize:14 textColor:[Tools colorWithHexString:@"#666"] lines:1 aligment:NSTextAlignmentCenter];
                                     [self->_contentView addSubview:label];
@@ -487,10 +487,11 @@
     }
 //    UIImageView *icon = [Tools creatImageViewWithFrame:CGRectMake(25, 3, 34.5, 34) imageName:iconImage];
 //    [cell.contentView addSubview:icon];
-    UILabel *symptomName = [Tools labelWith:selectedModel.symptom frame:CGRectMake(25, 3, _contentView.frame.size.width-70-25-11-20-30, 34) textSize:14 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentLeft];
+    UILabel *symptomName = [Tools labelWith:ModuleZW(selectedModel.symptom) frame:CGRectMake(25, 3, _contentView.frame.size.width-70-25-11-20-80, 34) textSize:14 textColor:[Tools colorWithHexString:@"#666666"] lines:2 aligment:NSTextAlignmentLeft];
     [cell.contentView addSubview:symptomName];
-    UILabel *extentLabel = [[UILabel alloc] initWithFrame:CGRectMake(_contentView.frame.size.width-25-11-20-30, 3, 30, 34)];
+    UILabel *extentLabel = [[UILabel alloc] initWithFrame:CGRectMake(_contentView.frame.size.width-25-11-20-80, 3, 80, 34)];
     extentLabel.font = [UIFont systemFontOfSize:14];
+    extentLabel.textAlignment = NSTextAlignmentRight;
     NSLog(@"%@ --- %f",selectedModel.symptom,selectedModel.extent);
 
     
@@ -498,13 +499,13 @@
     CGFloat moderate = 1.0;
     CGFloat heavy = 1.5;
     if (selectedModel.extent == light) {
-        extentLabel.text = @"轻度";
+        extentLabel.text = ModuleZW(@"轻度");
         extentLabel.textColor = [Tools colorWithHexString:@"#00bc00"];
     }else if (selectedModel.extent == moderate){
-        extentLabel.text = @"中度";
+        extentLabel.text = ModuleZW(@"中度");
         extentLabel.textColor = [Tools colorWithHexString:@"#ff9a24"];
     }else if (selectedModel.extent == heavy){
-        extentLabel.text = @"重度";
+        extentLabel.text = ModuleZW(@"重度");
         extentLabel.textColor = [Tools colorWithHexString:@"#ff7057"];
     }
 
@@ -681,7 +682,7 @@
     view.backgroundColor = [Tools colorWithHexString:@"#f2f1ef"];
     UIImageView *symIcon = [Tools creatImageViewWithFrame:CGRectMake(20, 5, 17.5, 18) imageName:@"ICD10_07_症"];
     [view addSubview:symIcon];
-    UILabel *symptomLabel = [Tools labelWith:@"已选症状" frame:CGRectMake(48, 5, 120, 18) textSize:13 textColor:[Tools colorWithHexString:@"#333"] lines:1 aligment:NSTextAlignmentLeft];
+    UILabel *symptomLabel = [Tools labelWith:ModuleZW(@"已选症状") frame:CGRectMake(48, 5, 200, 18) textSize:13 textColor:[Tools colorWithHexString:@"#333"] lines:1 aligment:NSTextAlignmentLeft];
     [view addSubview:symptomLabel];
     [_contentView addSubview:view];
     
@@ -690,7 +691,7 @@
     view2.backgroundColor = [Tools colorWithHexString:@"#f2f1ef"];
     UIImageView *diseaseIcon = [Tools creatImageViewWithFrame:CGRectMake(20, 5, 17.5, 18) imageName:@"ICD10_病"];
     [view2 addSubview:diseaseIcon];
-    UILabel *diseaseLabel = [Tools labelWith:@"已选疾病" frame:CGRectMake(48, 5, 120, 18) textSize:13 textColor:[Tools colorWithHexString:@"#333"] lines:1 aligment:NSTextAlignmentLeft];
+    UILabel *diseaseLabel = [Tools labelWith:ModuleZW(@"已选疾病") frame:CGRectMake(48, 5, 200, 18) textSize:13 textColor:[Tools colorWithHexString:@"#333"] lines:1 aligment:NSTextAlignmentLeft];
     [view2 addSubview:diseaseLabel];
     [_contentView addSubview:view2];
     
@@ -699,10 +700,10 @@
     [_contentView addSubview:_popDownTableView];
     [_popDownTableView reloadData];
     
-    UIButton *backBtn = [Tools creatButtonWithFrame:CGRectMake(_contentView.frame.size.width/4-43.25, _contentView.frame.size.height-46, 86.5, 32) target:self sel:@selector(backBtnClick:) tag:60 image:@"ICD10_back" title:nil];
+    UIButton *backBtn = [Tools creatButtonWithFrame:CGRectMake(_contentView.frame.size.width/4-43.25, _contentView.frame.size.height-46, 86.5, 32) target:self sel:@selector(backBtnClick:) tag:60 image:ModuleZW(@"ICD10_back") title:nil];
     [_contentView addSubview:backBtn];
     
-    UIButton *commitBtn = [Tools creatButtonWithFrame:CGRectMake(_contentView.frame.size.width/4*3-43.25, _contentView.frame.size.height-46, 86.5, 32) target:self sel:@selector(commitBtnClick:) tag:61 image:@"ICD10_commit" title:nil];
+    UIButton *commitBtn = [Tools creatButtonWithFrame:CGRectMake(_contentView.frame.size.width/4*3-43.25, _contentView.frame.size.height-46, 86.5, 32) target:self sel:@selector(commitBtnClick:) tag:61 image:ModuleZW(@"ICD10_commit") title:nil];
     [_contentView addSubview:commitBtn];
 }
 
@@ -714,23 +715,25 @@
 -(void)commitBtnClick:(UIButton *)button{
     
     [self hidePopView];
-    if([GlobalCommon isManyMember]){
-        SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
-        __weak typeof(self) weakSelf = self;
-        [subMember receiveSubIdWith:^(NSString *subId) {
-            NSLog(@"%@",subId);
-            if ([subId isEqualToString:@"user is out of date"]) {
-                //登录超时
-                
-            }else{
-                [weakSelf handleMessageWithMemberId:subId];
-                NSLog(@"选中的子账户id为：%@",subId);
-            }
-            [subMember hideHintView];
-        }];
-    }else{
-        [self handleMessageWithMemberId:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
-    }
+    [self handleMessageWithMemberId:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+
+//    if([GlobalCommon isManyMember]){
+//        SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
+//        __weak typeof(self) weakSelf = self;
+//        [subMember receiveSubIdWith:^(NSString *subId) {
+//            NSLog(@"%@",subId);
+//            if ([subId isEqualToString:@"user is out of date"]) {
+//                //登录超时
+//                
+//            }else{
+//                [weakSelf handleMessageWithMemberId:subId];
+//                NSLog(@"选中的子账户id为：%@",subId);
+//            }
+//            [subMember hideHintView];
+//        }];
+//    }else{
+//        [self handleMessageWithMemberId:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+//    }
     
 }
 

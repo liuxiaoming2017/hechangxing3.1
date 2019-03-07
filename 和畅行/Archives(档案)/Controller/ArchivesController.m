@@ -83,7 +83,7 @@
     }
     
     self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
-    self.navTitleLabel.text = @"健康档案";
+    self.navTitleLabel.text = ModuleZW(@"健康档案");
     self.navTitleLabel.textColor = [UIColor whiteColor];
     [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     
@@ -150,15 +150,15 @@
 //获取其他成员
 - (void)userBtnAction:(UIButton *)btn
 {
-    SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
-    __weak typeof(self) weakSelf = self;
-    [subMember receiveSubIdWith:^(NSString *subId) {
-        self->memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
-        weakSelf.pageInteger = 1;
-        [[NSNotificationCenter defaultCenter] postNotificationName:exchangeMemberChildNotify object:self];
-        [weakSelf requestHealthHintDataWithTipyInteger:self->currentIndex withPageInteger:weakSelf.pageInteger];
-        [subMember hideHintView];
-    }];
+//    SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
+//    __weak typeof(self) weakSelf = self;
+//    [subMember receiveSubIdWith:^(NSString *subId) {
+//        self->memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
+//        weakSelf.pageInteger = 1;
+//        [[NSNotificationCenter defaultCenter] postNotificationName:exchangeMemberChildNotify object:self];
+//        [weakSelf requestHealthHintDataWithTipyInteger:self->currentIndex withPageInteger:weakSelf.pageInteger];
+//        [subMember hideHintView];
+//    }];
     
 }
 
@@ -218,7 +218,7 @@
         [self requestHealthHintDataWithTipyInteger:0  withPageInteger:1];
         return;
     }
-    for(NSInteger i=0;i<12;i++){
+    for(NSInteger i=0;i<13;i++){
         UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:100+i];
         if(button.tag != 100+i){
             [btn.layer setBorderColor:UIColorFromHex(0XEEEEEE).CGColor];
@@ -375,7 +375,7 @@
         default:
             break;
     }
-    
+
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.label.text = @"加载中...";
     

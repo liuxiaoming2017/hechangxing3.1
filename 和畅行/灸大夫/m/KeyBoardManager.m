@@ -212,9 +212,9 @@
         [doneInKeyboardButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [doneInKeyboardButton setTitleColor:[UIColor blueColor] forState:UIControlStateHighlighted];
         if (_doneAction == KEYACTION_NEXT) {
-            [self setDoneKeyTitle:@"完成"];
+            [self setDoneKeyTitle:ModuleZW(@"完成")];
         }else if(_doneAction == KEYACTION_COMPLETE) {
-            [self setDoneKeyTitle:@"完成"];
+            [self setDoneKeyTitle:ModuleZW(@"完成")];
         }
         doneInKeyboardButton.frame = CGRectMake(0, screenHeight, 106, 53);
         

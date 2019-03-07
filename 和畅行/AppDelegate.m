@@ -81,10 +81,11 @@
     
     
     NSArray *languages = [[NSUserDefaults standardUserDefaults] valueForKey:@"AppleLanguages"];
-    if ([languages.firstObject isEqualToString:@"zh-Hans-US"]){
-        [[NSUserDefaults standardUserDefaults]setValue:@"Chinese" forKey:@"Language"];
-    }else {
-         [[NSUserDefaults standardUserDefaults]setValue:@"Other" forKey:@"Language"];
+    NSLog(@"%@",languages);
+    if ([languages.firstObject isEqualToString:@"en-US"]||[languages.firstObject isEqualToString:@"ja-US"]){
+        [[NSUserDefaults standardUserDefaults]setValue:@"Other" forKey:@"Language"];
+    }else{
+        [[NSUserDefaults standardUserDefaults]setValue:@"China" forKey:@"Language"];
     }
     
 
@@ -123,30 +124,30 @@
     HomePageController *homeVC = [[HomePageController alloc] init];
     CustomNavigationController *homeNav = [[CustomNavigationController alloc] initWithRootViewController:homeVC];
     //homeVC.tabBarItem.title = @"首页";
-    homeVC.tabBarItem.image = [[UIImage imageNamed:@"HomeNormal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    homeVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"HomeSelect"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    homeVC.tabBarItem.image = [[UIImage imageNamed:ModuleZW(@"HomeNormal")] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    homeVC.tabBarItem.selectedImage = [[UIImage imageNamed:ModuleZW(@"HomeSelect")] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [homeVC.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 0, -6, 0)];
     
     ArchivesController *ArchiveVC = [[ArchivesController alloc] init];
     CustomNavigationController *ArchiveNav = [[CustomNavigationController alloc] initWithRootViewController:ArchiveVC];
     //ArchiveVC.tabBarItem.title = @"档案";
-    ArchiveVC.tabBarItem.image = [UIImage imageNamed:@"docNormal"];
-    ArchiveVC.tabBarItem.selectedImage = [UIImage imageNamed:@"docSelect"];
+    ArchiveVC.tabBarItem.image = [UIImage imageNamed:ModuleZW(@"docNormal")];
+    ArchiveVC.tabBarItem.selectedImage = [UIImage imageNamed:ModuleZW(@"docSelect")];
     [ArchiveVC.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 0, -6, 0)];
     
     //MallViewController *mallVC = [[MallViewController alloc] init];
     EDWKWebViewController *mallVC = [[EDWKWebViewController alloc] initWithUrlString:[NSString stringWithFormat:@"%@mobileIndex.html",URL_PRE]];
     CustomNavigationController *mallNav = [[CustomNavigationController alloc] initWithRootViewController:mallVC];
     //mallVC.tabBarItem.title = @"商城";
-    mallVC.tabBarItem.image = [UIImage imageNamed:@"MallNormal"];
-    mallVC.tabBarItem.selectedImage = [UIImage imageNamed:@"Mallelect"];
+    mallVC.tabBarItem.image = [UIImage imageNamed:ModuleZW(@"MallNormal")];
+    mallVC.tabBarItem.selectedImage = [UIImage imageNamed:ModuleZW(@"Mallelect")];
     [mallVC.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 0, -6, 0)];
     
     MineViewController *mineVC = [[MineViewController alloc] init];
     CustomNavigationController *mineNav = [[CustomNavigationController alloc] initWithRootViewController:mineVC];
     //mineVC.tabBarItem.title = @"我的";
-    mineVC.tabBarItem.image = [UIImage imageNamed:@"MyNormal"];
-    mineVC.tabBarItem.selectedImage = [UIImage imageNamed:@"Myelect"];
+    mineVC.tabBarItem.image = [UIImage imageNamed:ModuleZW(@"MyNormal")];
+    mineVC.tabBarItem.selectedImage = [UIImage imageNamed:ModuleZW(@"Myelect")];
     [mineVC.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 0, -6, 0)];
     
     CommonTabBarController *tabBar = [[CommonTabBarController alloc] init];

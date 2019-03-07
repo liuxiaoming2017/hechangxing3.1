@@ -54,7 +54,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navTitleLabel.text = @"健康讲座";
+    self.navTitleLabel.text = ModuleZW(@"健康讲座");
     [self downloadData];
 }
 

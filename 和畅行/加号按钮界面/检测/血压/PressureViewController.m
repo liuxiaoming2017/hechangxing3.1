@@ -267,23 +267,24 @@ static int const tick = 80;
 
 -(void)commitBtnClick:(UIButton *)button{
   
-    
-    if([GlobalCommon isManyMember]){
-        __weak typeof(self) weakSelf = self;
-        SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
-        [subMember receiveSubIdWith:^(NSString *subId) {
-            NSLog(@"%@",subId);
-            if ([subId isEqualToString:@"user is out of date"]) {
-                //登录超时
-                
-            }else{
-                [weakSelf requestNetworkData:subId];
-            }
-            [subMember hideHintView];
-        }];
-    }else{
-        [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
-    }
+    [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+
+//    if([GlobalCommon isManyMember]){
+//        __weak typeof(self) weakSelf = self;
+//        SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
+//        [subMember receiveSubIdWith:^(NSString *subId) {
+//            NSLog(@"%@",subId);
+//            if ([subId isEqualToString:@"user is out of date"]) {
+//                //登录超时
+//                
+//            }else{
+//                [weakSelf requestNetworkData:subId];
+//            }
+//            [subMember hideHintView];
+//        }];
+//    }else{
+//        [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+//    }
     
 }
 

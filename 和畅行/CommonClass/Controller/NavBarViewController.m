@@ -42,7 +42,7 @@
     [self.view addSubview:topView];
     
     // 设置导航默认标题的颜色及字体大小
-    self.navTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-200)/2.0, 2+kStatusBarHeight, 200, 40)];
+    self.navTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-240)/2.0, 2+kStatusBarHeight, 240, 40)];
     self.navTitleLabel.font = [UIFont systemFontOfSize:18];
     self.navTitleLabel.textAlignment = NSTextAlignmentCenter;
     //self.navTitleLabel.textColor = UIColorFromHex(0x000000);
@@ -84,6 +84,8 @@
         //[leftBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage] forState:UIControlStateNormal placeholderImage:personImg];
     }
     leftBtn.clipsToBounds = YES;
+    //家庭成员
+    leftBtn.userInteractionEnabled = NO;
     leftBtn.layer.cornerRadius = leftBtn.frame.size.width/2;
     [leftBtn addTarget:self action:@selector(userBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:leftBtn];
@@ -143,9 +145,9 @@
 
 - (void)showAlertViewController:(NSString *)message
 {
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:NULL];
-    UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:NULL];
+    UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
     }];
     [alertVC addAction:alertAct1];
@@ -155,8 +157,8 @@
 
 - (void)showAlertWarmMessage:(NSString *)message
 {
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:NULL];
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleCancel handler:NULL];
     [alertVC addAction:alertAct1];
     [self presentViewController:alertVC animated:YES completion:NULL];
 }

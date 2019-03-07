@@ -171,8 +171,18 @@ static NSMutableArray *tasks;
     else if (type == BAHttpRequestTypeHeadGet){
         AFHTTPSessionManager *manager = [self sharedAFManager];
         
+        NSString *languageStr = [NSString string];
+
+        if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"Language"] isEqualToString:@"Other"]){
+            languageStr = @"en-us";
+        }else{
+            languageStr = @"zh-cn";
+        }
         //为网络请求添加请求头
-        NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+        NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,
+                                                @"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
+                                                [UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID],
+                                                @"language":languageStr};
        
         for(NSString *key in headers.allKeys){
             [manager.requestSerializer setValue:[headers objectForKey:key] forHTTPHeaderField:key];

@@ -352,13 +352,13 @@
     [self.view addSubview:footView];
     
     voiceButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    voiceButton.frame = CGRectMake((WIDTH - 28 * 3) / 6, 5, 28, 28);
+    voiceButton.frame = CGRectMake((WIDTH - 25 * 3) / 6, 5, 25, 25);
     [voiceButton setBackgroundImage:[UIImage imageNamed:@"yundongtupian2.png"] forState:UIControlStateNormal];
     [voiceButton setBackgroundImage:[UIImage imageNamed:@"yundongtupian1.png"] forState:UIControlStateSelected];
     [voiceButton addTarget:self action:@selector(voiceButton:) forControlEvents:UIControlEventTouchUpInside];
     voiceButton.selected = YES;
     [footView addSubview:voiceButton];
-    UILabel *lunbotu = [[UILabel alloc]initWithFrame:CGRectMake((WIDTH - 28 * 3) / 6 - 22, 35, (WIDTH - 28 * 3) / 6 + 34, 15)];
+    UILabel *lunbotu = [[UILabel alloc]initWithFrame:CGRectMake((WIDTH - 25 * 3) / 6 - 22, 32, (WIDTH - 28 * 3) / 6 + 34, 15)];
     lunbotu.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     lunbotu.text = @"轮播暂停";
     lunbotu.textAlignment = NSTextAlignmentCenter;
@@ -370,7 +370,7 @@
     [audioSession setActive:YES error:nil];
     
     _leyaoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _leyaoButton.frame = CGRectMake((WIDTH - 28 * 3) / 2 + 28, 5, 28, 28);
+    _leyaoButton.frame = CGRectMake((WIDTH - 25 * 3) / 2 + 28, 5, 25, 25);
     
     [_leyaoButton setBackgroundImage:[UIImage imageNamed:@"yudongbofang2.png"] forState:UIControlStateNormal];
     [_leyaoButton setBackgroundImage:[UIImage imageNamed:@"yundongbofang1.png"] forState:UIControlStateSelected];
@@ -382,23 +382,23 @@
     [_leyaoButton addTarget:self action:@selector(leyaoButton:) forControlEvents:UIControlEventTouchUpInside];
     
     [footView addSubview:_leyaoButton];
-    UILabel *bofangleyao = [[UILabel alloc]initWithFrame:CGRectMake((WIDTH - 28 * 3) / 2 + 18, 35, (WIDTH - 28 * 3) / 2 + 62, 15)];
+    UILabel *bofangleyao = [[UILabel alloc]initWithFrame:CGRectMake((WIDTH - 28 * 3) / 2 + 18, 32, (WIDTH - 28 * 3) / 2 + 62, 15)];
     bofangleyao.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     
     bofangleyao.text = @"播放乐药";
-    //bofangleyao.textAlignment = NSTextAlignmentCenter;
+    bofangleyao.textAlignment = NSTextAlignmentCenter;
     bofangleyao.font = [UIFont systemFontOfSize:12];
     [footView addSubview:bofangleyao];
     _shifanyinButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _shifanyinButton.frame = CGRectMake((WIDTH - 28 * 3) * 5 / 6 + 56, 5, 28, 28);
+    _shifanyinButton.frame = CGRectMake((WIDTH - 25 * 3) * 5 / 6 + 56, 5, 25, 25);
     [_shifanyinButton setBackgroundImage:[UIImage imageNamed:@"yundongyueyaoting.png"] forState:UIControlStateNormal];
     [_shifanyinButton setBackgroundImage:[UIImage imageNamed:@"yundongyueyao.png"] forState:UIControlStateSelected];
     [_shifanyinButton addTarget:self action:@selector(playButton:) forControlEvents:UIControlEventTouchUpInside];
     [footView addSubview:_shifanyinButton];
-    UILabel *shifanyin = [[UILabel alloc]initWithFrame:CGRectMake((WIDTH - 28 * 3) * 5 / 6 + 39, 35, (WIDTH - 28 * 3) * 5 / 6 + 90, 15)];
+    UILabel *shifanyin = [[UILabel alloc]initWithFrame:CGRectMake((WIDTH - 28 * 3) * 5 / 6 + 39, 32, (WIDTH - 28 * 3) * 5 / 6 + 90, 15)];
     shifanyin.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     shifanyin.text = @"动作示范音";
-    //shifanyin.textAlignment = NSTextAlignmentCenter;
+    shifanyin.textAlignment = NSTextAlignmentCenter;
     shifanyin.font = [UIFont systemFontOfSize:12];
     [footView addSubview:shifanyin];
     //    UIButton *playsButton = [UIButton buttonWithType:UIButtonTypeCustom];

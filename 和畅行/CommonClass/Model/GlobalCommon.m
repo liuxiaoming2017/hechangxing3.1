@@ -277,17 +277,17 @@
 +(NSString *)getRemindTRypeWithStr:(NSString *)typeStr
 {
     if([typeStr isEqualToString:@"yizhan"]){
-        return @"一站";
+        return  ModuleZW(@"一站");
     }else if ([typeStr isEqualToString:@"yiting"]){
-        return @"一听";
+        return ModuleZW(@"一听");
     }else if ([typeStr isEqualToString:@"yitui"]){
-        return @"一推";
+        return ModuleZW(@"一推");
     }else if ([typeStr isEqualToString:@"yishuo"]){
-        return @"一说";
+        return ModuleZW(@"一说");
     }else if ([typeStr isEqualToString:@"yixie"]){
-        return @"一写";
+        return ModuleZW(@"一写");
     }else if ([typeStr isEqualToString:@"yidian"]){
-        return @"一点";
+        return ModuleZW(@"一点");
     }
     return nil;
 }

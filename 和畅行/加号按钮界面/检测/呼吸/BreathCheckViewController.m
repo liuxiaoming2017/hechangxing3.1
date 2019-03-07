@@ -41,7 +41,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.userInteractionEnabled = YES;
     
-    self.navTitleLabel.text = @"呼吸检测";
+    self.navTitleLabel.text = ModuleZW(@"呼吸检测");
     [self initWithController];
     [self bounceView];
 }
@@ -89,7 +89,7 @@
     [self.view addSubview:imageView];
     
     _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenSize.width/2-60, 80, 50, 20)];
-    _timeLabel.text = @"倒计时";
+    _timeLabel.text = ModuleZW(@"倒计时");
     _timeLabel.textAlignment = NSTextAlignmentRight;
     _timeLabel.textColor = [UIColor whiteColor];
     _timeLabel.font = [UIFont systemFontOfSize:15];
@@ -115,7 +115,7 @@
     //[self createLabelWith:CGRectMake(kScreenSize.width/2-70, imageView.bottom+36, 140, 20) text:@"请输入本次呼吸次数" fontSize:14 textColor:[UIColor whiteColor] textAlignment:NSTextAlignmentCenter tag:21 isBord:YES];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(kScreenSize.width/2-70, imageView.bottom+36, 140, 20)];
-    label.text = @"请输入本次呼吸次数";
+    label.text = ModuleZW(@"请输入本次呼吸次数");
     label.font = [UIFont systemFontOfSize:14];
     label.textColor = [UIColor whiteColor];
     label.textAlignment = NSTextAlignmentCenter;
@@ -250,22 +250,24 @@
         hud.label.text = str;
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hideAnimated:YES afterDelay:2];
-        if([GlobalCommon isManyMember]){
-            __weak typeof(self) weakSelf = self;
-            SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
-            [subMember receiveSubIdWith:^(NSString *subId) {
-                NSLog(@"%@",subId);
-                if ([subId isEqualToString:@"user is out of date"]) {
-                    //登录超时
-                    
-                }else{
-                    [weakSelf requestNetworkData:subId];
-                }
-                [subMember hideHintView];
-            }];
-        }else{
-             [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
-        }
+        [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+
+//        if([GlobalCommon isManyMember]){
+//            __weak typeof(self) weakSelf = self;
+//            SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
+//            [subMember receiveSubIdWith:^(NSString *subId) {
+//                NSLog(@"%@",subId);
+//                if ([subId isEqualToString:@"user is out of date"]) {
+//                    //登录超时
+//
+//                }else{
+//                    [weakSelf requestNetworkData:subId];
+//                }
+//                [subMember hideHintView];
+//            }];
+//        }else{
+//             [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+//        }
         
         
     }

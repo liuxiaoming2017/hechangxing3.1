@@ -53,7 +53,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navTitleLabel.text = @"血糖检测";
+    self.navTitleLabel.text = ModuleZW(@"血糖检测");
     _type = @"empty";
     [self initWithController];
     [self bounceView];
@@ -94,22 +94,22 @@
 #pragma mark ------ 初始化界面
 -(void)initWithController{
     
-    UIButton *beforeMealButton = [Tools creatButtonWithFrame:CGRectMake(30, kNavBarHeight+36, 60, 60) target:self sel:@selector(beforeClick:) tag:21 image:@"血糖7" title:nil];
+    UIButton *beforeMealButton = [Tools creatButtonWithFrame:CGRectMake(30, kNavBarHeight+36, 60, 60) target:self sel:@selector(beforeClick:) tag:21 image:ModuleZW(@"血糖7") title:nil];
     [beforeMealButton setEnabled:NO];
-    [beforeMealButton setImage:[UIImage imageNamed:@"血糖7"] forState:UIControlStateDisabled];
+    [beforeMealButton setImage:[UIImage imageNamed:ModuleZW(@"血糖7")] forState:UIControlStateDisabled];
     [self.view addSubview:beforeMealButton];
     
-    UIButton *afterMealButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width-90, beforeMealButton.top, 60, 60) target:self sel:@selector(afterClick:) tag:22 image:@"血糖8" title:nil];
+    UIButton *afterMealButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width-90, beforeMealButton.top, 60, 60) target:self sel:@selector(afterClick:) tag:22 image:ModuleZW(@"血糖8") title:nil];
     [self.view addSubview:afterMealButton];
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
     imageView.tag = 10;
     imageView.userInteractionEnabled = YES;
     imageView.center = self.view.center;
-    imageView.image = [UIImage imageNamed:@"血糖9"];
+    imageView.image = [UIImage imageNamed:ModuleZW(@"血糖9")];
     [self.view addSubview:imageView];
     
-    UILabel *reminderLabel = [Tools creatLabelWithFrame:CGRectMake(20, 60, 160, 20) text:@"输入当前血糖值" textSize:12];
+    UILabel *reminderLabel = [Tools creatLabelWithFrame:CGRectMake(20, 60, 160, 20) text:ModuleZW(@"输入当前血糖值") textSize:12];
     reminderLabel.textAlignment = NSTextAlignmentCenter;
     reminderLabel.textColor = [Tools colorWithHexString:@"#3fcadb"];
     reminderLabel.font = [UIFont systemFontOfSize:12];
@@ -159,9 +159,9 @@
     _textFiled.text = nil;
     UIButton *afterMealButton = (UIButton *)[self.view viewWithTag:22];
     [button setEnabled:NO];
-    [button setImage:[UIImage imageNamed:@"血糖7"] forState:UIControlStateDisabled];
+    [button setImage:[UIImage imageNamed:ModuleZW(@"血糖7")] forState:UIControlStateDisabled];
     [afterMealButton setEnabled:YES];
-    [afterMealButton setImage:[UIImage imageNamed:@"血糖8"] forState:UIControlStateNormal];
+    [afterMealButton setImage:[UIImage imageNamed:ModuleZW(@"血糖8")] forState:UIControlStateNormal];
 }
 
 -(void)afterClick:(UIButton *)button{
@@ -172,7 +172,7 @@
     [button setEnabled:NO];
     [button setImage:[UIImage imageNamed:@"血糖4"] forState:UIControlStateDisabled];
     [beforeMealButton setEnabled:YES];
-    [beforeMealButton setImage:[UIImage imageNamed:@"血糖2"] forState:UIControlStateNormal];
+    [beforeMealButton setImage:[UIImage imageNamed:ModuleZW(@"血糖2")] forState:UIControlStateNormal];
 }
 #pragma mark ------ 提交数据
 -(void)commitClick:(UIButton *)button{
@@ -194,8 +194,10 @@
         //收键盘
         [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
         
+        [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+
         //选择子账户
-        [self GetWithModifi];
+//        [self GetWithModifi];
     }
 }
 

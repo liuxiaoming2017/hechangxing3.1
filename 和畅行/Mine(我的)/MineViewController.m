@@ -60,21 +60,30 @@
     //0
 //    listNamesArr = @[@"健康顾问团队",@"退款记录",@"退货记录",@"我的卡包",@"我的积分",@"家庭成员",@"视频预约",@"健康讲座",@"我的乐药",@"运动示范音",@"未发出的声音文件",@"预约挂号",@"健康提示",@"我的咨询",@"收货地址",@"意见反馈",@"收藏",@"设置"];
 //    listImagesArr = @[@"private",@"refundRecord",@"returedGoodsRecord",@"1我的_100",@"integral",@"1我的_101",@"1我的_102",@"1我的_103",@"1我的_104",@"1我的_105",@"1我的_106",@"1我的_107",@"1我的_108",@"1我的_109",@"1我的_110",@"feedback",@"1我的_111",@"1我的_112"];
+    //删除家庭成员
+//    listNamesArr = @[ModuleZW(@"退款记录"),ModuleZW(@"退货记录"),
+//                                ModuleZW(@"我的卡包"),ModuleZW(@"我的积分"),
+//                                ModuleZW(@"家庭成员"),ModuleZW(@"健康讲座"),
+//                               ModuleZW( @"运动示范音"),ModuleZW(@"未发出的声音文件"),
+//                               ModuleZW( @"我的咨询"),ModuleZW(@"收货地址"),
+//                                ModuleZW(@"意见反馈"),ModuleZW(@"收藏"),
+//                                ModuleZW(@"设置")];
+//    listImagesArr = @[@"refundRecord",@"returedGoodsRecord",@"1我的_100",@"integral",@"1我的_101",@"1我的_103",@"1我的_105",@"1我的_106",@"1我的_109",@"1我的_110",@"feedback",@"1我的_111",@"1我的_112"];
     listNamesArr = @[ModuleZW(@"退款记录"),ModuleZW(@"退货记录"),
-                                ModuleZW(@"我的卡包"),ModuleZW(@"我的积分"),
-                                ModuleZW(@"家庭成员"),ModuleZW(@"健康讲座"),
-                               ModuleZW( @"运动示范音"),ModuleZW(@"未发出的声音文件"),
-                               ModuleZW( @"我的咨询"),ModuleZW(@"收货地址"),
-                                ModuleZW(@"意见反馈"),ModuleZW(@"收藏"),
-                                ModuleZW(@"设置")];
-    listImagesArr = @[@"refundRecord",@"returedGoodsRecord",@"1我的_100",@"integral",@"1我的_101",@"1我的_103",@"1我的_105",@"1我的_106",@"1我的_109",@"1我的_110",@"feedback",@"1我的_111",@"1我的_112"];
+                     ModuleZW(@"我的卡包"),ModuleZW(@"我的积分"),
+                     ModuleZW(@""),ModuleZW(@"健康讲座"),
+                     ModuleZW( @"运动示范音"),ModuleZW(@"未发出的声音文件"),
+                     ModuleZW( @"我的咨询"),ModuleZW(@"收货地址"),
+                     ModuleZW(@"意见反馈"),ModuleZW(@"收藏"),
+                     ModuleZW(@"设置")];
+    listImagesArr = @[@"refundRecord",@"returedGoodsRecord",@"1我的_100",@"integral",@"",@"1我的_103",@"1我的_105",@"1我的_106",@"1我的_109",@"1我的_110",@"feedback",@"1我的_111",@"1我的_112"];
     
     if([UserShareOnce shareOnce].isOnline){
         listNamesArr = @[ModuleZW(@"退款记录"),ModuleZW(@"退货记录"),
-                                    ModuleZW(@"我的积分"),ModuleZW(@"家庭成员"),
+                                    ModuleZW(@"我的积分"),ModuleZW(@""),
                                     ModuleZW(@"收货地址"),ModuleZW(@"意见反馈"),
                                     ModuleZW(@"收藏"),ModuleZW(@"设置")];
-        listImagesArr = @[@"refundRecord",@"returedGoodsRecord",@"integral",@"1我的_101",@"1我的_110",@"feedback",@"1我的_111",@"1我的_112"];
+        listImagesArr = @[@"refundRecord",@"returedGoodsRecord",@"integral",@"",@"1我的_110",@"feedback",@"1我的_111",@"1我的_112"];
     }
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, 80)];
     imageView.userInteractionEnabled = YES;
@@ -150,7 +159,7 @@
         dispalyName = [UserShareOnce shareOnce].wxName;
     }
     
-    UILabel *userName = [Tools creatLabelWithFrame:CGRectMake(userIcon.right+20, userIcon.top+10, 130, 20) text:dispalyName textSize:14];
+    UILabel *userName = [Tools creatLabelWithFrame:CGRectMake(userIcon.right+20, userIcon.top+10, 130, 50) text:dispalyName textSize:14];
     userName.textColor = [UIColor whiteColor];;
     [imageView addSubview:userName];
     
@@ -169,7 +178,7 @@
     }
     NSString *childStr = [NSString stringWithFormat:@"%@: %@",ModuleZW(@"家庭成员"),memberStr];
     UILabel *memberLabel = [Tools labelWith:childStr frame:CGRectMake(userName.left, userName.bottom+5, ScreenWidth-105, 20) textSize:14 textColor:[UIColor whiteColor] lines:1 aligment:NSTextAlignmentLeft];
-    [imageView addSubview:memberLabel];
+//    [imageView addSubview:memberLabel];
     
 }
 
@@ -235,7 +244,11 @@
 #pragma mark  -------  UITableViewDelegate
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50.0f;
+    if (indexPath.row == 4) {
+        return 0;
+    }else{
+        return 50.0f;
+    }
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -319,9 +332,9 @@
             break;
         case 4:
         {
-            FamilyViewController *vc = [[FamilyViewController alloc] init];
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
+//            FamilyViewController *vc = [[FamilyViewController alloc] init];
+//            vc.hidesBottomBarWhenPushed = YES;
+//            [self.navigationController pushViewController:vc animated:YES];
             
         }
             break;

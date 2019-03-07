@@ -28,6 +28,7 @@
 @property (nonatomic, strong) HCY_HomeImageModel *pushModel;
 @property (nonatomic, strong) UIImageView *imageV;
 @property (nonatomic, strong)UIActivityIndicatorView *testActivityIndicator;
+@property (nonatomic) BOOL isRefresh;
 
 
 @end
@@ -56,7 +57,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = UIColorFromHex(0xffffff);
     self.topView.backgroundColor = [UIColor clearColor];
-
+    self.isRefresh = YES;
     [self createTopView];
    
     [self requestPackgeNetWork];
@@ -99,7 +100,10 @@
                 [self.homeImageArray addObject:model];
             }
             [self addGradientLayer];
-            [self.readWriteView setButtonImageWithArray:self.homeImageArray];
+            if (self.isRefresh == YES){
+                [self.readWriteView setButtonImageWithArray:self.homeImageArray];
+                self.isRefresh = NO;
+            }
         }else{
             [self addGradientLayer];
             [self.readWriteView initWithUI];
@@ -186,8 +190,12 @@
     CGFloat imageWidth = (ScreenWidth - 10*4)/3.0;
     CGFloat imageHeight = imageWidth*76.8/97.7;
     
-     self.readWriteView = [[ReadOrWriteView alloc] initWithFrame:CGRectMake(0, self.packgeView.bottom, ScreenWidth, imageHeight+10)];
-    [self.bgScrollView addSubview:self.readWriteView];
+    if (!self.readWriteView){
+        self.readWriteView = [[ReadOrWriteView alloc] initWithFrame:CGRectMake(0, self.packgeView.bottom, ScreenWidth, imageHeight+10)];
+        [self.bgScrollView addSubview:self.readWriteView];
+    }
+    
+    
     
     
 //    self.remindView = [[HeChangRemind alloc] initWithFrame:CGRectMake(self.packgeView.left, self.readWriteView.bottom+10, self.readWriteView.width, 200) withDataArr:nil];
@@ -206,9 +214,12 @@
 
 - (void)createMiddleView
 {
+    if (!self.readWriteView){
+        self.readWriteView = [[ReadOrWriteView alloc] initWithFrame:CGRectMake(14, 0, ScreenWidth-14*2, 260)];
+        [self.bgScrollView addSubview:self.readWriteView];
+    }
 
-    self.readWriteView = [[ReadOrWriteView alloc] initWithFrame:CGRectMake(14, 0, ScreenWidth-14*2, 260)];
-    [self.bgScrollView addSubview:self.readWriteView];
+   
     
     self.packgeView = [[HeChangPackge alloc] initWithFrame:CGRectMake(self.readWriteView.left, self.readWriteView.bottom+20, self.readWriteView.width, 150)];
     
@@ -342,9 +353,6 @@
 # pragma mark - 用户信息按钮
 - (void)userBtnAction:(UIButton *)btn
 {
-    
-    
-    
     SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
     __weak typeof(self) weakself = self;
     [subMember receiveSubIdWith:^(NSString *subId) {

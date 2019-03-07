@@ -54,7 +54,7 @@
     [self.view addSubview:UserImgView];
    
     UILabel* UserNameLb=[[UILabel alloc ] init];
-    UserNameLb.frame=CGRectMake(UserImgView.frame.origin.x+UserImgView.frame.size.width+8.5, kNavBarHeight+10.5, 200, userImg.size.height/2);
+    UserNameLb.frame=CGRectMake(UserImgView.right+8.5, kNavBarHeight+10.5, ScreenWidth -UserImgView.right -12 , userImg.size.height/2);
     UserNameLb.text=ModuleZW(@"感谢您提出的宝贵意见");
     UserNameLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
     UserNameLb.font=[UIFont systemFontOfSize:12];
@@ -114,7 +114,7 @@
    
     
     UIButton *findpsButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *findImg=[UIImage imageWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"Feedback_btn" ofType:@"png"]];
+    UIImage *findImg=[UIImage imageNamed:ModuleZW(@"Feedback_btn")];
     [findpsButton setImage:findImg forState:UIControlStateNormal];
     findpsButton.frame=CGRectMake((ScreenWidth-findImg.size.width/2)/2,Linelb2.frame.origin.y+Linelb2.frame.size.height+(((ScreenHeight-kNavBarHeight-36)/2)-findImg.size.height/2)/2, findImg.size.width/2,findImg.size.height/2);
     [findpsButton addTarget:self action:@selector(userFeedbackButton) forControlEvents:UIControlEventTouchUpInside];

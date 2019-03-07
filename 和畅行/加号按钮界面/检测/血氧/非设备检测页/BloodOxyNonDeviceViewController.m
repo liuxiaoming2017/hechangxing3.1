@@ -12,8 +12,8 @@
 #import "SubMemberView.h"
 
 #define NUMBERS @"0123456789.n"
-#define kNomal @"血氧饱和度正常。"
-#define kLow @"血氧饱和度偏低。建议监测，若持续偏低，请及时到医院就诊。"
+#define kNomal  ModuleZW(@"血氧饱和度正常。")
+#define kLow ModuleZW(@"血氧饱和度偏低。建议监测，若持续偏低，请及时到医院就诊。")
 
 @interface BloodOxyNonDeviceViewController ()<UITextFieldDelegate,MBProgressHUDDelegate,ASIHTTPRequestDelegate,UITableViewDataSource,UITableViewDelegate>
 {
@@ -33,7 +33,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _TextFieldArr = [[NSMutableArray alloc] init];
-    self.navigationItem.title  = @"血氧检测";
+    self.navigationItem.title  =ModuleZW(@"血氧检测") ;
     [self initWithController];
     [self bounceView];
 }
@@ -80,7 +80,7 @@
     [inputImageView addSubview:reminderImageView];
     
     UILabel *categoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 12.5, 60, 15)];
-    categoryLabel.text = @"当前血氧";
+    categoryLabel.text = ModuleZW(@"当前血氧");
     categoryLabel.textAlignment = NSTextAlignmentLeft;
     categoryLabel.textColor = [Tools colorWithHexString:@"#878787"];
     categoryLabel.font = [UIFont systemFontOfSize:13];
@@ -88,7 +88,7 @@
     
     UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(90, 0, kScreenSize.width-8-40-90, 40)];
     textField.delegate = self;
-    textField.placeholder = @"请输入0~100整数值";
+    textField.placeholder = ModuleZW(@"请输入0~100整数值");
     textField.keyboardType = UIKeyboardTypeNumberPad;
     [_TextFieldArr addObject:textField];
     [inputImageView addSubview:textField];
@@ -99,7 +99,7 @@
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake((kScreenSize.width-20)/2-80, 90, 160, 30)];
     [button addTarget:self action:@selector(saveClick:) forControlEvents:UIControlEventTouchUpInside];
-    [button setImage:[UIImage imageNamed:@"血压13"] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:ModuleZW(@"血压13")] forState:UIControlStateNormal];
     [imageView addSubview:button];
 }
 
@@ -130,13 +130,15 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"请输入正常的血氧值！";
+        hud.labelText = ModuleZW(@"请输入正常的血氧值！");
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hide:YES afterDelay:2];
     }else{
         //收键盘
         [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
-        [self GetWithModifi ];
+        [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+
+//        [self GetWithModifi ];
         
     }
 }
@@ -219,7 +221,7 @@
         
         UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [sureBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
-        [sureBtn setTitle:@"返回检测" forState:UIControlStateNormal];
+        [sureBtn setTitle:ModuleZW(@"返回检测") forState:UIControlStateNormal];
         sureBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         sureBtn.frame = CGRectMake(20, kScreenSize.height/2+90, imageView.frame.size.width * 0.5, 40);
         [sureBtn addTarget:self action:@selector(confirmBtnClick2:) forControlEvents:UIControlEventTouchUpInside];
@@ -227,13 +229,13 @@
         
         UIButton *lookBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [lookBtn setBackgroundImage:[UIImage imageNamed:@"look"] forState:UIControlStateNormal];
-        [lookBtn setTitle:@"查看档案" forState:UIControlStateNormal];
+        [lookBtn setTitle:ModuleZW(@"查看档案") forState:UIControlStateNormal];
         lookBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         lookBtn.frame = CGRectMake(CGRectGetMaxX(sureBtn.frame), sureBtn.frame.origin.y, imageView.frame.size.width * 0.5, 40);
         [lookBtn addTarget:self action:@selector(lookClickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [view2 addSubview:lookBtn];
         
-        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:@"您当前血氧值：%@ %%",self.textField.text] frame:CGRectMake(0, 60, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
+        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:@"%@%@ %%",ModuleZW(@"您当前血氧值："),self.textField.text] frame:CGRectMake(0, 60, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
         
         UILabel *hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 100, imageView.bounds.size.width-40, 80)];
         hintLabel.numberOfLines = 0;
@@ -241,7 +243,7 @@
         hintLabel.textAlignment = NSTextAlignmentCenter;
         
         //血氧正常范围参考值：95%-100%
-        hintLabel.text = @"血氧正常范围参考值：\n95%-100%";
+        hintLabel.text =ModuleZW(@"血氧正常范围参考值：\n95%-100%") ;
         [imageView addSubview:hintLabel];
         [imageView addSubview:countLabel];
         [view2 addSubview:imageView];
@@ -250,13 +252,13 @@
         
         
     }else{
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"提交数据失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"提交数据失败") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         [av show];
     }
 }
 
 -(void)requestError:(ASIHTTPRequest *)request{
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"提交数据失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"提交数据失败") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
     [av show];
 }
 
@@ -279,7 +281,7 @@
     UIViewController *controller = app.window.rootViewController;
     UITabBarController  *rvc = (UITabBarController  *)controller;
     [rvc setSelectedIndex:1];
-    [UserShareOnce shareOnce].wherePop = @"血氧";
+    [UserShareOnce shareOnce].wherePop = ModuleZW(@"血氧");
     [UserShareOnce shareOnce].bloodMemberID = [NSString stringWithFormat:@"%@",self.subId];
     [self.navigationController popToRootViewControllerAnimated:YES];
    

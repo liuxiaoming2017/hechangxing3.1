@@ -32,9 +32,10 @@
     [self.view addSubview:WeiXinScrollView];
    
     UILabel* Lb_weixin=[[UILabel alloc] init];
-    Lb_weixin.frame=CGRectMake(15, 15, ScreenWidth-30, 21);
+    Lb_weixin.frame=CGRectMake(15, 15, ScreenWidth-30, 40);
     Lb_weixin.font=[UIFont systemFontOfSize:13];
     Lb_weixin.textAlignment=1;
+    Lb_weixin.numberOfLines =2;
     Lb_weixin.textColor=[UtilityFunc colorWithHexString:@"#333333"];
     Lb_weixin.text=ModuleZW(@"炎黄东方微信号：ky3h_yh");
     [WeiXinScrollView addSubview:Lb_weixin];
@@ -55,8 +56,9 @@
     
     
     UILabel* Lb_weixin1=[[UILabel alloc] init];
-    Lb_weixin1.frame=CGRectMake(15, yhBtn.frame.origin.y+yhBtn.frame.size.height+15, ScreenWidth-30, 21);
+    Lb_weixin1.frame=CGRectMake(15, yhBtn.frame.origin.y+yhBtn.frame.size.height+15, ScreenWidth-30, 40);
     Lb_weixin1.font=[UIFont systemFontOfSize:13];
+ 
     Lb_weixin1.textColor=[UtilityFunc colorWithHexString:@"#333333"];
     Lb_weixin1.text=ModuleZW(@"知己KY3H服务微信号：ky3h_zjfw");
     Lb_weixin1.textAlignment=1;

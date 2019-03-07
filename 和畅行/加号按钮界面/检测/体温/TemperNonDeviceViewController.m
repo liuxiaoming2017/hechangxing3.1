@@ -86,7 +86,7 @@
     
     
     UILabel *categoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 12.5, 60, 15)];
-    categoryLabel.text = @"当前体温";
+    categoryLabel.text = ModuleZW(@"当前体温");
     categoryLabel.textAlignment = NSTextAlignmentLeft;
     categoryLabel.textColor = [Tools colorWithHexString:@"#878787"];
     categoryLabel.font = [UIFont systemFontOfSize:13];
@@ -96,7 +96,7 @@
     _textField = [[UITextField alloc] initWithFrame:CGRectMake(30, 0, kScreenSize.width-8-40-30, 40)];
     _textField.font = [UIFont systemFontOfSize:16];
     _textField.keyboardType = UIKeyboardTypeDecimalPad;
-    _textField.placeholder = @"当前体温";
+    _textField.placeholder = ModuleZW(@"当前体温");
     _textField.delegate = self;
     
     [inputImageView addSubview:_textField];
@@ -107,7 +107,7 @@
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake((kScreenSize.width-20)/2-80, 90, 160, 30)];
     [button addTarget:self action:@selector(saveClick:) forControlEvents:UIControlEventTouchUpInside];
-    [button setImage:[UIImage imageNamed:@"血压13"] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:ModuleZW(@"血压13")] forState:UIControlStateNormal];
     [imageView addSubview:button];
     
 }
@@ -140,29 +140,31 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"请输入正常的体温值！";
+        hud.label.text = ModuleZW(@"请输入正常的体温值！");
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hideAnimated:YES afterDelay:2];
     }else{
         //收键盘
         [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
+        [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+
         
-        if([GlobalCommon isManyMember]){
-            __weak typeof(self) weakSelf = self;
-            SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
-            [subMember receiveSubIdWith:^(NSString *subId) {
-                NSLog(@"%@",subId);
-                if ([subId isEqualToString:@"user is out of date"]) {
-                    //登录超时
-                    
-                }else{
-                    [weakSelf requestNetworkData:subId];
-                }
-                [subMember hideHintView];
-            }];
-        }else{
-            [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
-        }
+//        if([GlobalCommon isManyMember]){
+//            __weak typeof(self) weakSelf = self;
+//            SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
+//            [subMember receiveSubIdWith:^(NSString *subId) {
+//                NSLog(@"%@",subId);
+//                if ([subId isEqualToString:@"user is out of date"]) {
+//                    //登录超时
+//
+//                }else{
+//                    [weakSelf requestNetworkData:subId];
+//                }
+//                [subMember hideHintView];
+//            }];
+//        }else{
+//            [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+//        }
         
        
     }
@@ -206,15 +208,15 @@
         NSString *resultStr = [[NSString alloc] init];
         //成人，正常值16~20次/分
         if(tempNum >=36 && tempNum <37.3){
-            resultStr = @"正常";
+            resultStr = ModuleZW(@"正常");
         }else if (tempNum <38){
-            resultStr = @"低热";
+            resultStr = ModuleZW(@"低热");
         }else if (tempNum <39){
-            resultStr = @"中度发热";
+            resultStr = ModuleZW(@"中度发热");
         }else if (tempNum <41){
-            resultStr = @"高热";
+            resultStr = ModuleZW(@"高热");
         }else{
-            resultStr = @"超高热";
+            resultStr = ModuleZW(@"超高热");
         }
 
         UIView *view = [[UIView alloc] initWithFrame:self.view.frame];
@@ -231,12 +233,12 @@
         imageView.userInteractionEnabled = YES;
         imageView.image = [UIImage imageNamed:@"bounceView"];
         
-        UIButton *confirmBtn = [Tools creatButtonWithFrame:CGRectMake(imageView.left, imageView.bottom, imageView.width, 40*1.1) target:self sel:@selector(confirmBtnClick2:) tag:21 image:@"确定" title:nil];
+        UIButton *confirmBtn = [Tools creatButtonWithFrame:CGRectMake(imageView.left, imageView.bottom, imageView.width, 40*1.1) target:self sel:@selector(confirmBtnClick2:) tag:21 image:ModuleZW(@"确定p") title:nil];
         
-        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:@"您当前体温%.1f℃",tempNum] frame:CGRectMake(0, 60, imageView.bounds.size.width, 20) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:1 aligment:NSTextAlignmentCenter];
+        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前体温%.1f℃"),tempNum] frame:CGRectMake(0, 60, imageView.bounds.size.width, 20) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:1 aligment:NSTextAlignmentCenter];
     
-        if ([resultStr isEqualToString:@"正常"]) {
-            UILabel *resultLabel1 = [Tools labelWith:@"您当前体温值" frame:CGRectMake(imageView.bounds.size.width/2-90, 110, 110, 20) textSize:12 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentRight];
+        if ([resultStr isEqualToString:ModuleZW(@"正常")]) {
+            UILabel *resultLabel1 = [Tools labelWith:ModuleZW(@"您当前体温值") frame:CGRectMake(imageView.bounds.size.width/2-90, 110, 110, 20) textSize:12 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentRight];
             UILabel *resultLabel2 = [Tools labelWith:resultStr frame:CGRectMake(imageView.bounds.size.width/2+20, 110, 50, 20) textSize:12 textColor:[Tools colorWithHexString:@"#68c900"] lines:1 aligment:NSTextAlignmentLeft];
             [imageView addSubview:resultLabel1];
             [imageView addSubview:resultLabel2];
@@ -247,11 +249,11 @@
             NSMutableAttributedString *hintString = nil;
             NSRange range;
             if (tempNum >=37.3) {
-                hintString = [[NSMutableAttributedString alloc] initWithString:kHigh];
-                range = [[hintString string] rangeOfString:@"偏高"];
+                hintString = [[NSMutableAttributedString alloc] initWithString:ModuleZW(kHigh)];
+                range = [[hintString string] rangeOfString:ModuleZW(@"偏高")];
             }else{
-                hintString = [[NSMutableAttributedString alloc] initWithString:kLow];
-                range = [[hintString string] rangeOfString:@"偏低"];
+                hintString = [[NSMutableAttributedString alloc] initWithString:ModuleZW(kLow)];
+                range = [[hintString string] rangeOfString:ModuleZW(@"偏低")];
             }
             [hintString addAttribute:NSForegroundColorAttributeName value:[Tools colorWithHexString:@"f60a0c"] range:range];
             hintLabel.attributedText = hintString;
@@ -269,7 +271,7 @@
     
     }else{
         
-        [self showAlertWarmMessage:@"提交数据失败"];
+        [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
         
     }
     
@@ -279,7 +281,7 @@
 
 -(void)requestError:(ASIHTTPRequest *)request{
     [self hidePreogressView];
-    [self showAlertWarmMessage:@"提交数据失败"];
+    [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
 }
 
 
