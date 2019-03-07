@@ -8,7 +8,7 @@
 
 #import "ResultSpeakController.h"
 
-@interface ResultSpeakController ()
+@interface ResultSpeakController ()<UIGestureRecognizerDelegate>
 
 @end
 
@@ -19,6 +19,17 @@
     
     self.navTitleLabel.text = self.titleStr;
     [self customeViewWithStr:self.urlStr];
+    
+    if([self.titleStr isEqualToString:@"季度报告详情"]){
+        [self.navigationController.interactivePopGestureRecognizer setEnabled:YES];
+        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    }
+    //
+}
+
+
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
+    return YES;
 }
 
 #pragma mark - WKNavigationDelegate
@@ -45,6 +56,7 @@
     NSLog(@"str*****:%@",strRequest);
     //decisionHandler(WKNavigationActionPolicyAllow);
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

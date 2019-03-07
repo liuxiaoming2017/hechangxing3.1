@@ -7,8 +7,7 @@
 //
 
 #import "SportViewController.h"
-#import "CafRecordWriter.h"
-#import "AmrRecordWriter.h"
+
 #import "AMPopTip.h"
 #import "NIDropDown.h"
 #import "ASIHTTPRequest.h"
@@ -71,7 +70,7 @@
 @property (strong,nonatomic)NSMutableArray *slideImages8;
 
 @property (nonatomic ,strong) NSString * strtitle;
-@property (nonatomic, strong) MLAudioRecorder *recorder;
+
 //@property (nonatomic, strong) CafRecordWriter *cafWriter;
 //@property (nonatomic, strong) AmrRecordWriter *amrWriter;
 @property(nonatomic,strong) NSArray *menuItems;

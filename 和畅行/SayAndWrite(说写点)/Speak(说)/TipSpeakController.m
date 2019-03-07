@@ -8,6 +8,7 @@
 
 #import "TipSpeakController.h"
 #import "MeridianIdentifierViewController.h"
+
 @interface TipSpeakController ()
 
 @end
@@ -35,6 +36,7 @@
     nextBtn.layer.cornerRadius = 5.0;
     nextBtn.clipsToBounds = YES;
     [backImageV addSubview:nextBtn];
+    
     
 }
 

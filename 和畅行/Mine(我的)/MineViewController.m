@@ -48,6 +48,7 @@
     self.navTitleLabel.textColor = [UIColor whiteColor];
    // [self.leftBtn setImage:[UIImage imageNamed:@"user_01"] forState:UIControlStateNormal];
     [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
+    self.leftBtn.hidden = YES;
     self.view.backgroundColor = [UIColor whiteColor];
     [self createUI];
     [self changUserInfo];

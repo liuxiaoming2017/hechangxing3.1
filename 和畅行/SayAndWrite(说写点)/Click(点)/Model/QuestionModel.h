@@ -34,4 +34,7 @@
 @property (nonatomic,assign) NSInteger answerID;//答案ID
 
 @property (nonatomic,copy) NSString *allIDStr;
+
+@property (nonatomic,assign) BOOL isSelected;
+
 @end

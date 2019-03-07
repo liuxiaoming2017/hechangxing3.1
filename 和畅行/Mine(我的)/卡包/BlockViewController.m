@@ -58,7 +58,7 @@
     blockLabel.text = ModuleZW(@"我的卡包");
     blockLabel.textColor = [UtilityFunc colorWithHexString:@"#000000"];
     blockLabel.font = [UIFont systemFontOfSize:21];
-    [self.view addSubview:blockLabel];
+    //[self.view addSubview:blockLabel];
     
     self.nullLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, marryStateBtn.bottom , ScreenWidth, 200)];
     self.nullLabel.text = ModuleZW(@"还没有卡\n快去添加新卡吧~");

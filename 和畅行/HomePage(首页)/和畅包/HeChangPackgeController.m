@@ -23,17 +23,19 @@
 
 @interface HeChangPackgeController ()
 @property (nonatomic,strong) UIProgressView *progressView;
+@property (nonatomic,assign) BOOL isForeground; //是否是从后台返回到前台
 @end
 
 @implementation HeChangPackgeController
-
+@synthesize isForeground;
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navTitleLabel.text = self.titleStr;
     [self customeViewWithStr:self.urlStr];
-    
+    isForeground = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appHasGoneForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 #pragma mark - WKNavigationDelegate
@@ -99,12 +101,28 @@
     
 }
 
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation
+{
+    
+}
+
 - (void)goBack:(UIButton *)btn
 {
     if(self.noWebviewBack){
          [self.navigationController popViewControllerAnimated:YES];
     }else{
+//        NSLog(@"list:%ld",self.wkwebview.backForwardList.backList.count);
+//        NSLog(@"haha*****:%@",[self syncExecScript]);
+        //解决应用进入后台后,canGoBack 判断问题
+        if(isForeground){
+            NSString *urlStr = [NSString stringWithFormat:@"%@member/service/home/1/%@.jhtml?isnew=1",URL_PRE,[MemberUserShance shareOnce].idNum];
+            if([urlStr isEqualToString:[self syncExecScript]]){
+                [self.navigationController popViewControllerAnimated:YES];
+                return;
+            }
+        }
         if([self.wkwebview canGoBack]){
+            
             [self.wkwebview goBack];
         }else{
             [self.navigationController popViewControllerAnimated:YES];
@@ -113,6 +131,33 @@
     
 }
 
+//同步获取当前html界面的地址
+- (NSString *)syncExecScript
+{
+    __block BOOL finished = NO;
+    __block NSString *content = nil;
+    NSString *script = @"window.location.href";
+    [self.wkwebview evaluateJavaScript:script completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+     content = result;
+     finished = YES;
+    }];
+    while (!finished)
+        {
+           [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+        }
+    return content;
+}
+
+- (void)appHasGoneForeground
+{
+    isForeground = YES;
+    //NSLog(@"回到前台");
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

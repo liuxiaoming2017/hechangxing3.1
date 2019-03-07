@@ -235,17 +235,25 @@
     if(num>100 && num<200){ //第一个题目
         indexNum = num - 100;
         model = [self.questionArr objectAtIndex:_currentIndex*2];
-        if(!_firstQuestionSelect){
-            _selectNum += 1;
+        if(!model.isSelected){
+            if(!_firstQuestionSelect){
+                _selectNum += 1;
+            }
+            model.isSelected = YES;
+            _firstQuestionSelect = YES;
         }
-        _firstQuestionSelect = YES;
+        
     }else{
         indexNum = num - 200;
         model = [self.questionArr objectAtIndex:_currentIndex*2+1];
-        if(!_secondQuestionSelect){
-            _selectNum += 1;
+        if(!model.isSelected){
+            if(!_secondQuestionSelect){
+                _selectNum += 1;
+            }
+            model.isSelected = YES;
+            _secondQuestionSelect = YES;
         }
-        _secondQuestionSelect = YES;
+        
     }
 
     model.selectNum = indexNum;
@@ -294,14 +302,14 @@
     QuestionCell *cell = (QuestionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     cell.delegate = self;
     QuestionModel *model1 = [self.questionArr objectAtIndex:indexPath.row*2];
-    cell.title1.text = [NSString stringWithFormat:@"%d.  %@",indexPath.row*2+1,model1.name];
+    cell.title1.text = [NSString stringWithFormat:@"%ld.  %@",indexPath.row*2+1,model1.name];
     
     [cell updateButtonStateWithGrade1:model1.selectNum withTag:100];
     
     //NSLog(@"count1:%ld,count2:%ld",self.questionArr.count,indexPath.row);
     if(self.questionArr.count>indexPath.row*2+1){
         QuestionModel *model2 = [self.questionArr objectAtIndex:indexPath.row*2+1];
-        cell.title2.text = [NSString stringWithFormat:@"%d.  %@",indexPath.row*2+2,model2.name];
+        cell.title2.text = [NSString stringWithFormat:@"%ld.  %@",indexPath.row*2+2,model2.name];
         
         [cell updateButtonStateWithGrade1:model2.selectNum withTag:200];
         

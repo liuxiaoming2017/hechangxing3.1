@@ -88,8 +88,9 @@
 //    _acceptTV.textColor=[UtilityFunc colorWithHexString:@"#676767"];
     UIView *grayView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40)];
     grayView.backgroundColor=[UtilityFunc colorWithHexString:@"#f1f3f6"];
-    _acceptTV.inputAccessoryView=grayView;
+   // _acceptTV.inputAccessoryView=grayView;
     _acceptTV.tag = 125;
+    [_acceptTV setReturnKeyType:UIReturnKeyDone];
     //_textLabel.hidden = [_acceptTV hasText];
     UIButton *doneButton=[UIButton buttonWithType:UIButtonTypeCustom];
     doneButton.frame=CGRectMake(self.view.frame.size.width - 80, 0, 50, 40);
@@ -133,6 +134,16 @@
         _submitBT.alpha = 0.4;
     }
 }
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+       // [self.view endEditing:YES];
+        return NO;//这里返回NO，就代表return键值失效，即页面上按下return，不会出现换行，如果为yes，则输入页面会换行
+    }
+    return YES;
+}
+
 
 
 - (void)doneButtonAction:(UIButton *)sender{

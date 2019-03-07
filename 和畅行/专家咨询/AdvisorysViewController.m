@@ -121,7 +121,7 @@
     
     grayView.backgroundColor=[UtilityFunc colorWithHexString:@"#f1f3f6"];
     _textView.tag = 123;
-    _textView.inputAccessoryView=grayView;
+   // _textView.inputAccessoryView=grayView;
     _textView.font = [UIFont systemFontOfSize:15];
     _textView.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     
@@ -178,6 +178,8 @@
     
 }
 
+
+
 - (void)textDidChangess{
     _textViews.hidden = [_textViews hasText];
     if([_textView hasText]){
@@ -212,6 +214,11 @@
             [self showAlertWarmMessage:ModuleZW(@"不能输入表情")];
             return NO;
         }
+    }
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        // [self.view endEditing:YES];
+        return NO;//这里返回NO，就代表return键值失效，即页面上按下return，不会出现换行，如果为yes，则输入页面会换行
     }
     return YES;
 }

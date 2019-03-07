@@ -11,7 +11,7 @@
 #import "ASIFormDataRequest.h"
 #import "MBProgressHUD.h"
 #import "LPPopup.h"
-#import "MLAudioRecorder.h"
+
 #import "SBJson.h"
 
 #import "CustomNavigationController.h"
@@ -44,7 +44,7 @@
     UIView *yincangView;
     UIImageView *imageHong;
 }
-@property (nonatomic,strong) MLAudioRecorder *recorder;
+//@property (nonatomic,strong) MLAudioRecorder *recorder;
 @property (nonatomic,strong) UIButton* Recordbtn;
 @property (nonatomic,strong) UIImageView* RotateImg;
 @property (nonatomic, copy) NSString *filePath;
@@ -68,6 +68,8 @@
 
 /**soundCount*/
 @property (nonatomic,assign) CGFloat soundCount;
+@property (nonatomic,assign) BOOL isLound;
+
 @end
 
 @implementation MeridianIdentifierViewController
@@ -100,7 +102,7 @@
      [self setupContentView];
     
     [super viewDidLoad];
-    
+    self.isLound = NO;
     self.topView.backgroundColor = [UIColor clearColor];
     self.navTitleLabel.text = @"经络功能状态评估";
     self.navTitleLabel.textColor = [UIColor whiteColor];
@@ -258,7 +260,11 @@
     double lowPassResults = pow(10, (0.05 * [RecorderAcc peakPowerForChannel:0]));
 //    NSLog(@"声音大小：%lf",lowPassResults);
     self.soundCount += lowPassResults;
-    
+    if(lowPassResults > 0.2){
+        self.isLound = YES;
+    }
+//    double averSound = [RecorderAcc peakPowerForChannel:0];
+//    NSLog(@"*****:%f,########:%f,$$$$$$$$$:%f",self.soundCount,lowPassResults,averSound);
     
     //最大50  0
     //图片 小-》大
@@ -448,7 +454,7 @@
         //        if (self.filePath.length == 0) {
         //            [self audio];
         //        }
-        timerACC = [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(detectionVoices) userInfo:nil repeats:YES];
+        timerACC = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(detectionVoices) userInfo:nil repeats:YES];
         
     }
 
@@ -644,7 +650,7 @@
                 [timerACC invalidate];
             }
             
-            if ( self.soundCount < 1.0) {
+            if ( self.soundCount < 2.0 || !self.isLound) {
                 [self soundTooLow];
             }else{
                 if([GlobalCommon isManyMember]){
@@ -766,7 +772,7 @@
         timeNStager=0;
         [bianshiTime setFireDate:[NSDate distantFuture]];
         [self.Recordbtn setImage:[UIImage imageNamed:@"bs_an_kaishishibian.png"] forState:UIControlStateNormal];
-        [self.recorder stopRecording];
+        //[self.recorder stopRecording];
         CGPoint point=self.view.center;
         point.y=point.y+130;
         [popup showInView:self.view
@@ -811,15 +817,15 @@
     NSInteger codeIndex = [[codeArr objectAtIndex:code-1] integerValue];
     NSString *codeStr = @"";
     if(codeIndex>=16&&codeIndex<=20){
-        codeStr = [NSString stringWithFormat:@"JLBS-G%d",codeIndex-15];
+        codeStr = [NSString stringWithFormat:@"JLBS-G%ld",codeIndex-15];
     }else if (codeIndex>=21&&codeIndex<=25){
-        codeStr = [NSString stringWithFormat:@"JLBS-S%d",codeIndex-20];
+        codeStr = [NSString stringWithFormat:@"JLBS-S%ld",codeIndex-20];
     }else if (codeIndex>=26&&codeIndex<=30){
-        codeStr = [NSString stringWithFormat:@"JLBS-J%d",codeIndex-25];
+        codeStr = [NSString stringWithFormat:@"JLBS-J%ld",codeIndex-25];
     }else if (codeIndex>=31&&codeIndex<=35){
-        codeStr = [NSString stringWithFormat:@"JLBS-Z%d",codeIndex-30];
+        codeStr = [NSString stringWithFormat:@"JLBS-Z%ld",codeIndex-30];
     }else if (codeIndex>=36&&codeIndex<=40){
-        codeStr = [NSString stringWithFormat:@"JLBS-Y%d",codeIndex-35];
+        codeStr = [NSString stringWithFormat:@"JLBS-Y%ld",codeIndex-35];
     }else{
         codeStr = @"";
     }
@@ -876,7 +882,7 @@
         timeNStager=0;
         [bianshiTime setFireDate:[NSDate distantFuture]];
         [self.Recordbtn setImage:[UIImage imageNamed:@"bs_an_kaishishibian.png"] forState:UIControlStateNormal];
-        [self.recorder stopRecording];
+        //[self.recorder stopRecording];
     }
     else
     {
@@ -885,7 +891,7 @@
         timeNStager=0;
         [bianshiTime setFireDate:[NSDate distantFuture]];
         [self.Recordbtn setImage:[UIImage imageNamed:@"bs_an_kaishishibian.png"] forState:UIControlStateNormal];
-        [self.recorder stopRecording];
+       // [self.recorder stopRecording];
         point.y=point.y+130;
         [popup showInView:self.view
             centerAtPoint:point

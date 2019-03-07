@@ -8,6 +8,7 @@
 #import "CustomNavigationController.h"
 #import "MoxaHelpViewController.h"
 #import "MySportController.h"
+#import "ResultSpeakController.h"
 
 @interface CustomNavigationController ()<UIGestureRecognizerDelegate>
 
@@ -43,8 +44,16 @@
     }
     
     if(self.viewControllers>0){
-        if([[self.viewControllers objectAtIndex:[self.viewControllers count] - 1] isKindOfClass:[MoxaHelpViewController class]] || [[self.viewControllers objectAtIndex:[self.viewControllers count] - 1] isKindOfClass:[MySportController class]]){
+        UIViewController *vc = (UIViewController *)[self.viewControllers objectAtIndex:[self.viewControllers count] - 1];
+        if([[self.viewControllers objectAtIndex:[self.viewControllers count] - 1] isKindOfClass:[MoxaHelpViewController class]] || [[self.viewControllers objectAtIndex:[self.viewControllers count] - 1] isKindOfClass:[MySportController class]] ){
+            
             return NO;
+        }
+        if([vc isKindOfClass:[ResultSpeakController class]]){
+            ResultSpeakController *vcc = ( ResultSpeakController *)vc;
+            if([vcc.titleStr isEqualToString:@"季度报告详情"]){
+                return NO;
+            }
         }
     }
     
