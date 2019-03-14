@@ -515,12 +515,15 @@
     
      [self.timeLinvView.tableView.mj_footer endRefreshing];
     [self.timeLinvView.tableView.mj_header endRefreshing];
+   
     NSString *UrlPre=URL_PRE;
     NSString *aUrl = [NSString stringWithFormat:@"%@md/diseaList.jhtml",UrlPre];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
     
     

@@ -233,7 +233,7 @@
     UIButton *jiesuanButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     jiesuanButton.frame = CGRectMake(self.view.frame.size.width -  105, self.view.frame.size.height - kTabBarHeight, 105, 44);
     [jiesuanButton addTarget:self action:@selector(jiesuanButton) forControlEvents:(UIControlEventTouchUpInside)];
-    [jiesuanButton setTitle:@"去结算" forState:(UIControlStateNormal)];
+    [jiesuanButton setTitle:ModuleZW(@"去结算") forState:(UIControlStateNormal)];
     [jiesuanButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
     jiesuanButton.backgroundColor = RGB(68, 204, 82);
     [self.view addSubview:jiesuanButton];
@@ -243,7 +243,7 @@
     [xiaofeijinerImage addSubview:gouwucheImage];
     
     UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 12, 40, 20)];
-    zongjinerLabel.text = @"总计: ";
+    zongjinerLabel.text = ModuleZW(@"总计: ");
     zongjinerLabel.textColor = [UIColor whiteColor];
     zongjinerLabel.font = [UIFont systemFontOfSize:13];
     [xiaofeijinerImage addSubview:zongjinerLabel];
@@ -252,13 +252,7 @@
     jinerLabel.textColor = [UIColor whiteColor];
     jinerLabel.font = [UIFont boldSystemFontOfSize:13];
     [xiaofeijinerImage addSubview:jinerLabel];
-    
-    UILabel *qujiesuanLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 12, 105, 20)];
-    qujiesuanLabel.textColor = [UIColor whiteColor];
-    qujiesuanLabel.text = @"去结算";
-    qujiesuanLabel.font = [UIFont systemFontOfSize:13];
-    qujiesuanLabel.textAlignment = NSTextAlignmentCenter;
-//    [jiesuanButton addSubview:qujiesuanLabel];
+
     
 }
 
@@ -266,7 +260,7 @@
 - (void)jiesuanButton
 {
     if([UserShareOnce shareOnce].yueYaoBuyArr.count == 0){
-        [GlobalCommon showMessage:@"请去添加商品" duration:1.0];
+        [GlobalCommon showMessage:ModuleZW(@"请去添加商品") duration:1.0];
         return;
     }
     ShoppingController *vc = [[ShoppingController alloc] init];
@@ -447,7 +441,7 @@
             [weakSelf.tableView reloadData];
         }else if ([status intValue] == 44)
         {
-            [weakSelf showAlertWarmMessage:@"登录超时，请重新登录"];
+            [weakSelf showAlertWarmMessage:ModuleZW(@"登录超时，请重新登录")];
             return;
         }else{
             NSString *str = [response objectForKey:@"data"];
@@ -469,21 +463,21 @@
         }
         SongListModel *model = [self.dataArr objectAtIndex:index];
         if([[UserShareOnce shareOnce].yueYaoBuyArr containsObject:model]){
-            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"你已经添加此产品" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:NULL];
+            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"你已经添加此产品") preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleCancel handler:NULL];
             [alertVC addAction:alertAct1];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self presentViewController:alertVC animated:YES completion:nil];
             });
         }else{
-            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"确定购买曲目吗？" message:[NSString stringWithFormat:@"¥%.2f",model.price] preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:NULL];
-            UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"确定购买曲目吗？") message:[NSString stringWithFormat:@"¥%.2f",model.price] preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:NULL];
+            UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [[UserShareOnce shareOnce].yueYaoBuyArr addObject:model];
                 [UserShareOnce shareOnce].allYueYaoPrice = [UserShareOnce shareOnce].allYueYaoPrice + model.price;
                 //self->allPrice = self->allPrice + model.price;
                 self->jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
-                 [GlobalCommon showMessage:@"乐药已加入购物车" duration:2.0];
+                 [GlobalCommon showMessage:ModuleZW(@"乐药已加入购物车") duration:2.0];
                 
 //                NSString* filepath=[self createYueYaoZhiFufilepath];
 //                NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -597,7 +591,7 @@
 {
     NSLog(@"index:%ld",(long)index);
     SongListModel *model = [self.dataArr objectAtIndex:index];
-    [GlobalCommon showMessage:[NSString stringWithFormat:@"%@下载完成",model.title] duration:2];
+    [GlobalCommon showMessage:[NSString stringWithFormat:ModuleZW(@"%@下载完成"),model.title] duration:2];
     SongListCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     [cell downloadSuccess];
     
@@ -609,7 +603,7 @@
 {
     
     SongListModel *model = [self.dataArr objectAtIndex:index];
-    [GlobalCommon showMessage:[NSString stringWithFormat:@"%@下载失败",model.title] duration:2];
+    [GlobalCommon showMessage:[NSString stringWithFormat:ModuleZW(@"%@下载失败"),model.title] duration:2];
     SongListCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     [cell downloadFailWithImageStr:@"New_yy_zt_xz"];
     //[cell.downloadBtn setImage:[UIImage imageNamed:@"New_yy_zt_xz"] forState:UIControlStateNormal];

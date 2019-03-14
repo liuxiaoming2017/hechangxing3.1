@@ -29,8 +29,9 @@ extern BOOL isBF;
 
 
 //生产环境
-#define URL_PRE @"http://eky3h.com/healthlm/"
-
+//#define URL_PRE @"http://eky3h.com/healthlm/"
+//多语言测试接口
+#define URL_PRE @"http://10.1.71.121:8080/hcySoft/"
 //测试环境
 //#define URL_PRE @"http://119.254.24.4:7006/"
 

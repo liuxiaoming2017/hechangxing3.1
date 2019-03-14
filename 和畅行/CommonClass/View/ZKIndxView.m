@@ -56,6 +56,7 @@
             
             
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(margin*(col+1) + col * ICON_W, ScreenHeight - topY  + row * (ICON_W + MARGIN), ICON_W, ICON_W)];
+           
             if(i==7){
                 button.frame = CGRectMake(margin*3 + 2 * ICON_W, ScreenHeight - topY  + row * (ICON_W + MARGIN), ICON_W, ICON_W);
             }
@@ -74,6 +75,13 @@
             name.textColor = [UIColor whiteColor];
             name.centerX = button.centerX;
             name.textAlignment = NSTextAlignmentCenter;
+            
+            if (i == 4){
+                if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"Language"] isEqualToString:@"Other"]){
+                    button.hidden = YES;
+                    name.hidden  = YES;
+                }
+            }
             
             [self addSubview:button];
             [self addSubview:name];

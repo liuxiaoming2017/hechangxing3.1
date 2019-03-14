@@ -133,7 +133,7 @@
     [self.view addSubview:commitButton];
     
     //使用规范
-    UIButton *useNorm = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-30,commitButton.bottom+30, 60, 25) target:self sel:@selector(useNormClick:) tag:102 image:@"使用规范" title:nil];
+    UIButton *useNorm = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-30,commitButton.bottom+30, 60, 25) target:self sel:@selector(useNormClick:) tag:102 image:ModuleZW(@"使用规范") title:nil];
     [self.view addSubview:useNorm];
 }
 //收键盘
@@ -178,16 +178,16 @@
 -(void)commitClick:(UIButton *)button{
     NSLog(@"点击提交按钮");
     if ([self isBlankString:_textFiled.text] || [_textFiled.text integerValue] == 0) {
-        NSString *str = @"血糖值不能为空";
+        NSString *str = [NSString string];
         if([self isBlankString:_textFiled.text]){
-            str = @"血糖值不能为空";
+            str = ModuleZW(@"血糖值不能为空");
         }else if ([_textFiled.text integerValue] == 0){
-            str = @"您的输入有误,请重新输入";
+            str = ModuleZW(@"您的输入有误,请重新输入");
         }
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"血糖值不能为空";
+        hud.label.text = ModuleZW(@"血糖值不能为空");
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hideAnimated:YES afterDelay:2];
     }else{
@@ -250,22 +250,22 @@
     if ([self->_type isEqualToString:@"empty"]) {
         //空腹
         if (sugerValue <3.9) {
-            self->_result = [[NSString alloc] initWithFormat:kEmptyLow,sugerValue];
+            self->_result = [[NSString alloc] initWithFormat:ModuleZW(kEmptyLow),sugerValue];
             isAbnormity = YES;
         }else if (sugerValue <=6.1){
-            self->_result = [[NSString alloc] initWithFormat:kNomal];
+            self->_result = [[NSString alloc] initWithFormat:ModuleZW(kNomal)];
             isAbnormity = NO;
         }else{
-            self->_result = [[NSString alloc] initWithFormat:kEmptyHigh,sugerValue];
+            self->_result = [[NSString alloc] initWithFormat:ModuleZW(kEmptyHigh),sugerValue];
             isAbnormity = YES;
         }
     }else{
         //餐后
         if (sugerValue <=7.8) {
-            self->_result = [[NSString alloc] initWithFormat:kNomal];
+            self->_result = [[NSString alloc] initWithFormat:ModuleZW(kNomal)];
             isAbnormity = NO;
         }else{
-            self->_result = [[NSString alloc] initWithFormat:kFullHigh,sugerValue];
+            self->_result = [[NSString alloc] initWithFormat:ModuleZW(kFullHigh),sugerValue];
             isAbnormity = YES;
         }
         
@@ -275,6 +275,9 @@
     NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE] ;
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
     [request addPostValue:subId forKey:@"memberChildId"];
     [request addPostValue:@(60) forKey:@"datatype"];
@@ -308,7 +311,7 @@
         }
         if (indexPath.row==0) {
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width/2, 20)];
-            label.text = @"空腹";
+            label.text = ModuleZW(@"空腹");
             label.font = [UIFont systemFontOfSize:13];
             label.textAlignment = NSTextAlignmentCenter;
             label.textColor = [Tools colorWithHexString:@"#e79947"];
@@ -331,7 +334,7 @@
         }
         if (indexPath.row==0) {
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width/2, 20)];
-            label.text = @"餐后";
+            label.text = ModuleZW(@"餐后");
             label.font = [UIFont systemFontOfSize:13];
             label.textAlignment = NSTextAlignmentCenter;
             label.textColor = [Tools colorWithHexString:@"#e79947"];
@@ -376,7 +379,7 @@
         [self getData];
         
     }else{
-        [self showAlertWarmMessage:@"提交数据失败"];
+        [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
        
     }
     
@@ -385,7 +388,7 @@
 -(void)requestError:(ASIHTTPRequest *)request{
     //[self hudWasHidden];
     [self hidePreogressView];
-    [self showAlertWarmMessage:@"提交数据失败"];
+    [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
     
 }
 #pragma MARK ---------  获取当天体检血糖的数据
@@ -396,6 +399,9 @@
     NSURL *url = [NSURL URLWithString:aUrlle];
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];
@@ -485,11 +491,11 @@
     [imageView addSubview:_scrollView];
     NSString *checkType = nil;
     if ([_type isEqualToString:@"empty"]) {
-        checkType = @"空腹";
+        checkType = ModuleZW(@"空腹");
     }else{
-        checkType = @"餐后";
+        checkType = ModuleZW(@"餐后");
     }
-    UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:@"您今天测量血糖%ld次，正常%ld次，异常%ld次\n您当前检测%@血糖值为%.1fmmol/L",(long)_totalCount,(long)_nomalCount,(long)_unNomalCount,checkType,_textFiled.text.floatValue] frame:CGRectMake(0, 0, imageView.bounds.size.width, 30) textSize:12 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
+    UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您今天测量血糖%ld次，正常%ld次，异常%ld次\n您当前检测%@血糖值为%.1fmmol/L"),(long)_totalCount,(long)_nomalCount,(long)_unNomalCount,checkType,_textFiled.text.floatValue] frame:CGRectMake(0, 0, imageView.bounds.size.width, 30) textSize:12 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
     [_scrollView addSubview:countLabel];
     UILabel *hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 35, imageView.bounds.size.width-40, 60)];
     
@@ -520,7 +526,7 @@
 
 -(void)getDataError:(ASIHTTPRequest *)request{
     [self hidePreogressView];
-    [self showAlertWarmMessage:@"获取血糖数据失败"];
+    [self showAlertWarmMessage:ModuleZW(@"获取血糖数据失败")];
 }
 
 //点击确定

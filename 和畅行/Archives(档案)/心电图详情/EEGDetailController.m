@@ -50,7 +50,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navTitleLabel.text = @"心电图查看";
+    self.navTitleLabel.text = ModuleZW(@"心电图查看");
     self.navTitleLabel.textColor = [UIColor whiteColor];
     self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
  //   [self.leftBtn setImage:[UIImage imageNamed:@"user_01"] forState:UIControlStateNormal];

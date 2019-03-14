@@ -113,19 +113,19 @@
     
     
     if (model.medicRecordId!=nil&&![model.medicRecordId isKindOfClass:[NSNull class]]&&model.medicRecordId.length!=0){
-        NSString *departmentName = [NSString stringWithFormat:@"科室: %@",model.doctorDept];
+        NSString *departmentName = [NSString stringWithFormat:ModuleZW(@"科室: %@"),model.doctorDept];
         NSMutableAttributedString *departmentNameStr = [[NSMutableAttributedString alloc]initWithString:departmentName];
         [departmentNameStr beginEditing];
         [departmentNameStr addAttribute:NSForegroundColorAttributeName value:RGB(221, 156, 92) range:NSMakeRange(departmentName.length - model.doctorDept.length ,model.doctorDept.length)];
         [departmentNameStr endEditing];
         
-        NSString *doctorName = [NSString stringWithFormat:@"医生: %@",model.doctorName];
+        NSString *doctorName = [NSString stringWithFormat:ModuleZW(@"医生: %@"),model.doctorName];
         NSMutableAttributedString *doctorNameStr = [[NSMutableAttributedString alloc]initWithString:doctorName];
         [doctorNameStr beginEditing];
         [doctorNameStr addAttribute:NSForegroundColorAttributeName value:RGB(221, 156, 92) range:NSMakeRange(doctorNameStr.length - model.doctorName.length ,model.doctorName.length)];
         [doctorNameStr endEditing];
         
-        NSString *mainSuit =  [NSString stringWithFormat:@"主诉: %@",model.mainSuit];
+        NSString *mainSuit =  [NSString stringWithFormat:ModuleZW(@"主诉: %@"),model.mainSuit];
         NSMutableAttributedString *mainSuitStr = [[NSMutableAttributedString alloc]initWithString:mainSuit];
         [mainSuitStr beginEditing];
         [mainSuitStr addAttribute:NSForegroundColorAttributeName value:RGB(221, 156, 92) range:NSMakeRange(mainSuitStr.length - model.mainSuit.length ,model.mainSuit.length)];
@@ -144,60 +144,62 @@
         self.typeLabel.hidden = YES;
         self.topLabel.hidden = YES;
         self.lowLabel.hidden = YES;
-    }else {
-        
-        self.doctorNameLabel.hidden = YES;
-        self.departmentNameLabel.hidden = YES;
-        self.CCLabel.hidden = YES;
-        self.typeLabel.hidden = NO;
-        self.topLabel.hidden = NO;
-        self.lowLabel.hidden = NO;
-        
-        NSString *littletimestr = [NSString stringWithFormat:@"%@",model.createDate];
-        self.createDateLabel.text = [self getDateStringWithTimeStr:littletimestr];
+    
     }
-    
-    
-    if ([model.subject valueForKey:@"subject_sn"] != nil&&![[model.subject valueForKey:@"subject_sn"] isKindOfClass:[NSNull class]]) {
-        
-        NSMutableAttributedString * attributedString1 = [[NSMutableAttributedString alloc] initWithString:@"心率监测结果:\n心电图医生提醒:"];
-        NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
-        [paragraphStyle1 setLineSpacing:8];
-        [attributedString1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [attributedString1 length])];
-        
-    
-        self.typeLabel.frame = CGRectMake(self.imageV.left+15, self.imageV.top, 120, self.imageV.height);
-        self.topLabel.frame = CGRectMake(self.typeLabel.right, self.imageV.top + 13, ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2 - 13);
-        self.lowLabel.frame = CGRectMake(self.typeLabel.right, self.topLabel.bottom  , ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2-13);
-        
-        self.typeLabel.attributedText = attributedString1;
-        if( model.zz_name_str == nil || [model.zz_name_str isKindOfClass:[NSNull class]]||model.zz_name_str.length == 0) {
-            self.topLabel.text = [model.subject valueForKey:@"name"];
-            if(model.content != nil&&![model.content isKindOfClass:[NSNull class]]&&model.content.length != 0){
-                self.lowLabel.text = model.content;
-            }else {
-                self.lowLabel.text =  @"暂无心电图医生提示";
-            }
-        }else {
-            self.topLabel.text = model.zz_name_str;
-            self.lowLabel.text = model.icd_name_str;
-        }
-    }
-    
-    if (![model.physique_id isKindOfClass:[NSNull class]]&&model.physique_id!=nil&&model.physique_id.length!=0) {
-        self.typeLabel.frame = CGRectMake(self.imageV.left+15, self.imageV.top, 80, self.imageV.height);
-        self.topLabel.frame = CGRectMake(self.typeLabel.right, self.imageV.top + 13, ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2 - 13);
-        self.lowLabel.frame = CGRectMake(self.typeLabel.right, self.topLabel.bottom  , ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2-13);
-        
-        NSMutableAttributedString * attributedString1 = [[NSMutableAttributedString alloc] initWithString:@"症状选择:\nICD-10:"];
-        NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
-        [paragraphStyle1 setLineSpacing:8];
-        [attributedString1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [attributedString1 length])];
-        
-        self.typeLabel.attributedText = attributedString1;
-        self.topLabel.text = model.zz_name_str;
-        self.lowLabel.text = model.icd_name_str;
-    }
+//    else {
+//
+//        self.doctorNameLabel.hidden = YES;
+//        self.departmentNameLabel.hidden = YES;
+//        self.CCLabel.hidden = YES;
+//        self.typeLabel.hidden = NO;
+//        self.topLabel.hidden = NO;
+//        self.lowLabel.hidden = NO;
+//
+//        NSString *littletimestr = [NSString stringWithFormat:@"%@",model.createDate];
+//        self.createDateLabel.text = [self getDateStringWithTimeStr:littletimestr];
+//    }
+//
+//
+//    if ([model.subject valueForKey:@"subject_sn"] != nil&&![[model.subject valueForKey:@"subject_sn"] isKindOfClass:[NSNull class]]) {
+//
+//        NSMutableAttributedString * attributedString1 = [[NSMutableAttributedString alloc] initWithString:@"心率监测结果:\n心电图医生提醒:"];
+//        NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+//        [paragraphStyle1 setLineSpacing:8];
+//        [attributedString1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [attributedString1 length])];
+//
+//
+//        self.typeLabel.frame = CGRectMake(self.imageV.left+15, self.imageV.top, 120, self.imageV.height);
+//        self.topLabel.frame = CGRectMake(self.typeLabel.right, self.imageV.top + 13, ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2 - 13);
+//        self.lowLabel.frame = CGRectMake(self.typeLabel.right, self.topLabel.bottom  , ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2-13);
+//
+//        self.typeLabel.attributedText = attributedString1;
+//        if( model.zz_name_str == nil || [model.zz_name_str isKindOfClass:[NSNull class]]||model.zz_name_str.length == 0) {
+//            self.topLabel.text = [model.subject valueForKey:@"name"];
+//            if(model.content != nil&&![model.content isKindOfClass:[NSNull class]]&&model.content.length != 0){
+//                self.lowLabel.text = model.content;
+//            }else {
+//                self.lowLabel.text =  @"暂无心电图医生提示";
+//            }
+//        }else {
+//            self.topLabel.text = model.zz_name_str;
+//            self.lowLabel.text = model.icd_name_str;
+//        }
+//    }
+//
+//    if (![model.physique_id isKindOfClass:[NSNull class]]&&model.physique_id!=nil&&model.physique_id.length!=0) {
+//        self.typeLabel.frame = CGRectMake(self.imageV.left+15, self.imageV.top, 80, self.imageV.height);
+//        self.topLabel.frame = CGRectMake(self.typeLabel.right, self.imageV.top + 13, ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2 - 13);
+//        self.lowLabel.frame = CGRectMake(self.typeLabel.right, self.topLabel.bottom  , ScreenWidth - self.typeLabel.right - 20, self.imageV.height/2-13);
+//
+//        NSMutableAttributedString * attributedString1 = [[NSMutableAttributedString alloc] initWithString:@"症状选择:\nICD-10:"];
+//        NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+//        [paragraphStyle1 setLineSpacing:8];
+//        [attributedString1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [attributedString1 length])];
+//
+//        self.typeLabel.attributedText = attributedString1;
+//        self.topLabel.text = model.zz_name_str;
+//        self.lowLabel.text = model.icd_name_str;
+//    }
     
     
   

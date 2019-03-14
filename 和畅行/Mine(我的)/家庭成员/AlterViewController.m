@@ -132,6 +132,9 @@ SonAccount *sonAccount;
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     NSLog(@"---- >  %@",Certificates_Number_Tf.text);
     [request setPostValue:self.model.familyID forKey:@"Id"];
     [request setPostValue:Yh_TF.text forKey:@"name"];

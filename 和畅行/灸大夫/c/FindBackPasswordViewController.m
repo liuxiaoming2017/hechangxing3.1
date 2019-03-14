@@ -31,7 +31,7 @@
     self.leftBtn.hidden = YES;
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;
-    self.navTitleLabel.text = @"找回灸头密码";
+    self.navTitleLabel.text = ModuleZW(@"找回灸头密码");
     self.navTitleLabel.textColor = [UIColor whiteColor];
     //self.topView.hidden = YES;
     
@@ -82,18 +82,18 @@
 - (IBAction)mGetpwdOnclinck:(id)sender {
     NSString *code = _mCodeInputView.text;
     if(![[moxibustion getInstance] isValidMachineCode:code]){
-        [OMGToast showWithText:@"请输入正确的机身编码" duration:1.5f];
+        [OMGToast showWithText:ModuleZW(@"请输入正确的机身编码") duration:1.5f];
         return;
     }
     if([[moxibustion getInstance] getDiscoveredDevicesName].count == 0){
-        [OMGToast showWithText:@"您周围没有可搜寻的设备" duration:1.5f];
+        [OMGToast showWithText:ModuleZW(@"您周围没有可搜寻的设备") duration:1.5f];
         return;
     }
     NSString *pwd = [[moxibustion getInstance] getPassWord:code];
     if(pwd != nil){
-        _mPasswordLable.text = [NSString stringWithFormat:@"%@:%@",@"此设备的密码为",pwd];
+        _mPasswordLable.text = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"此设备的密码为"),pwd];
     }else{
-        [OMGToast showWithText:@"您输入的设备不在连接范围" duration:1.5f];
+        [OMGToast showWithText:ModuleZW(@"您输入的设备不在连接范围") duration:1.5f];
     }
 }
 

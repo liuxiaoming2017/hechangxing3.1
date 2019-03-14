@@ -35,7 +35,7 @@
     
     self.view.backgroundColor = UIColorFromHex(0x1e82d2);
     
-    self.title = @"心电图查看";
+    self.title = ModuleZW(@"心电图查看");
     UIColor *color = [UIColor whiteColor];
     NSDictionary *dict = [NSDictionary dictionaryWithObject:color forKey:NSForegroundColorAttributeName];
     self.navigationController.navigationBar.titleTextAttributes = dict;

@@ -227,6 +227,9 @@
     ASIFormDataRequest *request=[[ASIFormDataRequest alloc]initWithURL:url1];
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setDelegate:self];
     [request setRequestMethod:@"POST"];
     [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
@@ -313,6 +316,9 @@
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url1 = [NSURL URLWithString:aUrlle];
     ASIFormDataRequest *request=[[ASIFormDataRequest alloc]initWithURL:url1];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setDelegate:self];
     [request setRequestMethod:@"GET"];
     [request setDidFailSelector:@selector(requestConverAndParseError:)];//requestLoginError

@@ -193,7 +193,10 @@
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url1 = [NSURL URLWithString:aUrlle];
     ASIFormDataRequest *request=[[ASIFormDataRequest alloc]initWithURL:url1];
-   // [request addRequestHeader:@"token" value:g_userInfo.token];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
+    // [request addRequestHeader:@"token" value:g_userInfo.token];
    // [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",g_userInfo.token,g_userInfo.JSESSIONID]];
     [request setDelegate:self];
     [request setRequestMethod:@"GET"];

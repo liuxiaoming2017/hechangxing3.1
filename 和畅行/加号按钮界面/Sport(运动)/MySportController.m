@@ -264,6 +264,9 @@
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     [request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];
@@ -325,6 +328,9 @@
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrlle]];
     [request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];
@@ -697,7 +703,8 @@
     
     
     MySportCell *cell = (MySportCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
-    cell.imageV.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[self.imageArr objectAtIndex:indexPath.row]]];
+    NSString *imagenName = [NSString stringWithFormat:@"%@",[self.imageArr objectAtIndex:indexPath.row]];
+    cell.imageV.image = [UIImage imageNamed:ModuleZW(imagenName)];
     NSString *titleStr = [self.titleArr objectAtIndex:indexPath.row];
     if(titleStr == nil || [titleStr isEqualToString:@""]){
         cell.bottomView.hidden = YES;

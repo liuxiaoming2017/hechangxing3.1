@@ -95,7 +95,7 @@
     diView.backgroundColor = [UtilityFunc colorWithHexString:@"#f2f1ef"];
     [self.view addSubview:diView];
     UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width / 2 - 60, 12, 120, 32)];
-    imageV.image = [UIImage imageNamed:@"quanbuxiazai.png"];
+    imageV.image = [UIImage imageNamed:ModuleZW(@"quanbuxiazai")];
     [diView addSubview:imageV];
     UIButton *imageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     imageButton.frame = CGRectMake(self.view.frame.size.width / 2 - 60, 12, 120, 32);
@@ -111,6 +111,7 @@
     
 }
 - (void)imageButton{
+    counts = 0;
     NSString* filepath=[self Createfilepath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
    for (int i = 0; i < self.LeMedicArray.count; i++) {
@@ -151,6 +152,9 @@
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     [request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];

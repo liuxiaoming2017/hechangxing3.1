@@ -121,7 +121,9 @@ static NSDictionary *sg_httpHeaders = nil;
     __weak ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     request.requestMethod = @"POST";
     //为网络请求添加请求头
-    NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+    NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID],
+                              @"language" :[UserShareOnce shareOnce].languageType
+                              };
     [self configCommonHttpHeaders:headers];
     for (NSString *key in sg_httpHeaders.allKeys) {
         if (sg_httpHeaders[key] != nil) {
@@ -207,7 +209,7 @@ static NSDictionary *sg_httpHeaders = nil;
     NSURL *url = [NSURL URLWithString:path];
     __weak ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     //为网络请求添加请求头
-    NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+    NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID],@"language" :[UserShareOnce shareOnce].languageType };
     [self configCommonHttpHeaders:headers];
     for (NSString *key in sg_httpHeaders.allKeys) {
         if (sg_httpHeaders[key] != nil) {
@@ -256,7 +258,7 @@ static NSDictionary *sg_httpHeaders = nil;
     __weak ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     [request setData:fData forKey:dataKey];
     //为网络请求添加请求头
-    NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+    NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID],@"language" :[UserShareOnce shareOnce].languageType };
     [self configCommonHttpHeaders:headers];
     for (NSString *key in sg_httpHeaders.allKeys) {
         if (sg_httpHeaders[key] != nil) {

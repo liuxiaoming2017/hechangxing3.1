@@ -109,6 +109,9 @@
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"id"];
     
     [request setPostValue:self.UrlHttpImg forKey:@"memberImage"];
@@ -163,7 +166,7 @@
     iconImage.layer.borderColor = [UIColor whiteColor].CGColor;
     [infoView addSubview:iconImage];
    
-    UIButton* commitBtn=[Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2-100, ScreenHeight-60, 200, 40) target:self sel:@selector(commitClick:) tag:11 image:@"个人信息_提交" title:nil];
+    UIButton* commitBtn=[Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2-100, ScreenHeight-60, 200, 40) target:self sel:@selector(commitClick:) tag:11 image:ModuleZW(@"个人信息_提交") title:nil];
     [self.view addSubview:commitBtn];
     
     UIButton *uploadImageBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth-208, 26.25, 70, 30) target:self sel:@selector(uploadImageClick:) tag:13 image:@"个人信息_上传头像" title:nil];
@@ -553,6 +556,9 @@
     ASIFormDataRequest *request=[[ASIFormDataRequest alloc]initWithURL:url1];
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setDelegate:self];
     [request setRequestMethod:@"POST"];
     [request addPostValue:@"image" forKey:@"fileType"];
@@ -994,6 +1000,9 @@
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"id"];
     
     [request setPostValue:self.UrlHttpImg forKey:@"memberImage"];

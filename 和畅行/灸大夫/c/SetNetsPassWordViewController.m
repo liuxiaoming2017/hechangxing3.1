@@ -33,7 +33,7 @@
     self.leftBtn.hidden = YES;
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;
-    self.navTitleLabel.text = @"设置灸头网络密码";
+    self.navTitleLabel.text = ModuleZW(@"设置灸头网络密码");
     self.navTitleLabel.textColor = [UIColor whiteColor];
     
     [self initData];
@@ -50,8 +50,8 @@
 
 -(void)initView{
     //_mNewPwd.frame = CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
-    [_mNewPwd setPlaceHolder:@"请输入新密码"];
-    [_mOldPwd setPlaceHolder:@"再次输入新密码"];
+    [_mNewPwd setPlaceHolder:ModuleZW(@"请输入新密码")];
+    [_mOldPwd setPlaceHolder:ModuleZW(@"再次输入新密码")];
 //    [_mNewPwd setLImage:[UIImage imageNamed:@"login_ic_password.png"]];
 //    [_mOldPwd setLImage:[UIImage imageNamed:@"login_ic_password.png"]];
     [_mNewPwd setSecure:YES];
@@ -77,11 +77,11 @@
 
 -(BOOL)JugdePwd{
     if([PubFunc isEmpty:[_mNewPwd getInputText]] && [PubFunc isEmpty:[_mOldPwd getInputText]]){
-        [OMGToast showWithText:@"请输入您要设置的密码" duration:1.5f];
+        [OMGToast showWithText:ModuleZW(@"请输入您要设置的密码") duration:1.5f];
         return NO;
     }
     if(![[_mNewPwd getInputText] isEqualToString:[_mOldPwd getInputText]]){
-        [OMGToast showWithText:@"两次密码不符,请重新输入" duration:1.5f];
+        [OMGToast showWithText:ModuleZW(@"两次密码不符,请重新输入") duration:1.5f];
         [_mNewPwd setInputText:@""];
         [_mOldPwd setInputText:@""];
         return NO;

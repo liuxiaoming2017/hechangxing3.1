@@ -54,7 +54,7 @@
     xianjika = 0.0;
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.navTitleLabel.text =  @"结算信息";
+    self.navTitleLabel.text =  ModuleZW(@"结算信息");
     
     self.dataArray = [[NSMutableArray alloc]init];
     
@@ -85,7 +85,7 @@
     cardTitleLabel.font = [UIFont systemFontOfSize:18];
     cardTitleLabel.textAlignment = NSTextAlignmentLeft;
     cardTitleLabel.textColor = [UIColor grayColor];
-    cardTitleLabel.text = @"现金卡支付";
+    cardTitleLabel.text = ModuleZW(@"现金卡支付");
     [cashcardView addSubview:cardTitleLabel];
     
     UIImageView *cardBackImg = [[UIImageView alloc]initWithFrame:CGRectMake(22, cardTitleLabel.bottom+5, self.view.frame.size.width - 44, 200)];
@@ -103,7 +103,7 @@
     nocardLabel.font = [UIFont systemFontOfSize:17];
     nocardLabel.textAlignment = NSTextAlignmentCenter;
     nocardLabel.textColor = [UIColor grayColor];
-    nocardLabel.text = @"您当前还没有现金卡哦";
+    nocardLabel.text = ModuleZW(@"您当前还没有现金卡哦");
     [cashcardView addSubview:nocardLabel];
     self.nocardLabel = nocardLabel;
     
@@ -127,7 +127,7 @@
     titleLabel.font = [UIFont systemFontOfSize:16];
     titleLabel.textAlignment = NSTextAlignmentRight;
     titleLabel.textColor = [UIColor blackColor];
-    titleLabel.text = @"消费金额： ";
+    titleLabel.text = ModuleZW(@"消费金额： ");
     [bottomView addSubview:titleLabel];
     
     UILabel *ciaofeiLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.right, 10, 200, 25)];
@@ -141,7 +141,7 @@
     cardLabel.font = [UIFont systemFontOfSize:16];
     cardLabel.textAlignment = NSTextAlignmentRight;
     cardLabel.textColor = [UIColor blackColor];
-    cardLabel.text = @"现金卡支付： ";
+    cardLabel.text = ModuleZW(@"现金卡支付： ");
     [bottomView addSubview:cardLabel];
     
     UILabel *cardxiaofeiLabel = [[UILabel alloc] initWithFrame:CGRectMake(cardLabel.right, cardLabel.top, 200, 25)];
@@ -170,7 +170,7 @@
     [zhifuView addSubview:gouwucheImage];
     
     UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 12, 90, 20)];
-    zongjinerLabel.text = @"还需支付：";
+    zongjinerLabel.text = ModuleZW(@"还需支付：");
     zongjinerLabel.textAlignment = NSTextAlignmentRight;
     zongjinerLabel.textColor = [UIColor whiteColor];
     zongjinerLabel.font = [UIFont systemFontOfSize:16];
@@ -222,7 +222,7 @@
     float price = [UserShareOnce shareOnce].allYueYaoPrice;
     
     if (price == 0) {
-        [self showAlertWarmMessage:@"你还没有添加产品"];
+        [self showAlertWarmMessage:ModuleZW(@"你还没有添加产品")];
         
         return;
     }
@@ -256,6 +256,9 @@
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:aUrlle];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];
@@ -287,7 +290,7 @@
             
         }
         else if ([status intValue]==44) {
-            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"登录超时，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+            UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
             av.tag = 100008;
             [av show];
         } else
@@ -415,7 +418,9 @@
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setPostValue:@"50" forKey:@"reserveType"];
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
     [request setPostValue:self.idString forKey:@"orderId"];
@@ -463,7 +468,7 @@
     }
     else if([status intValue]==44)
     {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"登录超时，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         av.tag = 100008;
         [av show];
         PayAbnormalViewController *paySuccessVC = [[PayAbnormalViewController alloc]init];
@@ -485,6 +490,9 @@
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:aUrlle];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];
@@ -530,7 +538,7 @@
             //[_blockTableView reloadData];
         }
         else if ([status intValue]==44) {
-            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"登录超时，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+            UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
             av.tag = 100008;
             [av show];
         } else
@@ -573,11 +581,11 @@
         [diView addSubview:_mLabel];
         _hLabel = [[UILabel alloc] init];
         _hLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
-        _hLabel.text = @"会员卡：";
+        _hLabel.text = ModuleZW(@"会员卡：");
         _hLabel.font = [UIFont systemFontOfSize:10];
         [diView addSubview:_hLabel];
         _yLabel = [[UILabel alloc] init];
-        _yLabel.text = @"有效期：";
+        _yLabel.text = ModuleZW(@"有效期：");
         _yLabel.font = [UIFont systemFontOfSize:10];
         _yLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
         [diView addSubview:_yLabel];
@@ -617,7 +625,7 @@
 - (void)dianjiButton:(UIButton *)sender{
     
     if (self.priceCountt == 0) {
-        [self showAlertWarmMessage:@"请添加商品再选择现金卡"];
+        [self showAlertWarmMessage:ModuleZW(@"请添加商品再选择现金卡")];
         return;
     }
     UIButton *button = (UIButton *)[self.view viewWithTag:sender.tag - 1080];
@@ -654,7 +662,7 @@
             }
             button.selected = YES;
         }else{
-            [GlobalCommon showMessage:@"已选卡已经能支付消费金额" duration:2.0];
+            [GlobalCommon showMessage:ModuleZW(@"已选卡已经能支付消费金额") duration:2.0];
             button.selected = NO;
         }
         
@@ -704,7 +712,7 @@
         nameImage.image = [UIImage imageNamed:@"乐药购物车1及支付_03.png"];
         [cell addSubview:nameImage];
         UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(60, 20, 85, 15)];
-        nameLabel.text = @"乐药名称：";
+        nameLabel.text = ModuleZW(@"乐药名称：");
         nameLabel.textColor = [UtilityFunc colorWithHexString:@"#666666"];
         nameLabel.font = [UIFont systemFontOfSize:14];
         //[cell addSubview:nameLabel];
@@ -729,7 +737,7 @@
 }
 - (void)zhifuButton:(UIButton *)sender{
     if (self.priceCountt == 0) {
-        [self showAlertWarmMessage:@"请添加商品再选择现金卡"];
+        [self showAlertWarmMessage:ModuleZW(@"请添加商品再选择现金卡")];
         return;
     }
     

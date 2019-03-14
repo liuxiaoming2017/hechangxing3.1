@@ -34,7 +34,6 @@
 
 #pragma mark - WKNavigationDelegate
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    
     NSString *strRequest = [navigationAction.request.URL.absoluteString stringByRemovingPercentEncoding];
     if([navigationAction.request allHTTPHeaderFields][@"Cookie"]){
         decisionHandler(WKNavigationActionPolicyAllow);
@@ -48,6 +47,9 @@
         NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:navigationAction.request.URL];
         urlRequest.allHTTPHeaderFields = headerFields;
         [urlRequest setValue:[self getCookieValue] forHTTPHeaderField:@"Cookie"];
+        if([UserShareOnce shareOnce].languageType){
+            [urlRequest setValue:[UserShareOnce shareOnce].languageType forHTTPHeaderField:@"language"];
+        }
         [webView loadRequest:urlRequest];
         
     }

@@ -33,7 +33,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _TextFieldArr = [[NSMutableArray alloc] init];
-    self.navigationItem.title  =ModuleZW(@"血氧检测") ;
+     self.navTitleLabel.text  =ModuleZW(@"血氧检测");
     [self initWithController];
     [self bounceView];
 }
@@ -174,6 +174,9 @@
     NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
     [request addPostValue:subId forKey:@"memberChildId"];
     [request addPostValue:@(20) forKey:@"datatype"];
@@ -235,7 +238,7 @@
         [lookBtn addTarget:self action:@selector(lookClickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [view2 addSubview:lookBtn];
         
-        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:@"%@%@ %%",ModuleZW(@"您当前血氧值："),self.textField.text] frame:CGRectMake(0, 60, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
+        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前血氧值：%@ %%"),self.textField.text] frame:CGRectMake(0, 60, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
         
         UILabel *hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 100, imageView.bounds.size.width-40, 80)];
         hintLabel.numberOfLines = 0;

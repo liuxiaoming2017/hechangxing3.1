@@ -28,7 +28,7 @@
     titleLabel.font = [UIFont systemFontOfSize:18];
     titleLabel.textAlignment = NSTextAlignmentLeft;
     //titleLabel.textColor = UIColorFromHex(0X1E82D2);
-    titleLabel.text = @"注意事项";
+    titleLabel.text = ModuleZW(@"注意事项");
     [topView addSubview:image1];
     [topView addSubview:titleLabel];
     
@@ -39,7 +39,7 @@
     label2.font = [UIFont systemFontOfSize:15];
     label2.textAlignment = NSTextAlignmentLeft;
     label2.textColor = UIColorFromHex(0X8E8E93);
-    label2.text = @"请保持情绪的稳定、放松身心。";
+    label2.text = ModuleZW(@"请保持情绪的稳定、放松身心。");
     [topView addSubview:label2];
     
     

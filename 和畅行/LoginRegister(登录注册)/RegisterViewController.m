@@ -312,7 +312,9 @@
      */
     NSString *iPoneNumber = [NSString stringWithFormat:@"%@",self.pregistrationTF.text];
     NSString *iPoneNumberMD5 = [GlobalCommon md5:iPoneNumber];
-    
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setPostValue:self.pregistrationTF.text forKey:@"username"];
     [request setPostValue:iPoneNumberMD5 forKey:@"UserPhoneKey"];
     

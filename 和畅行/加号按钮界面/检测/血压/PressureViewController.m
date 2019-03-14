@@ -123,8 +123,9 @@ static int const tick = 80;
     [stateImageView addSubview:imageViewImage];
     self.imageViewImage = imageViewImage;
     
-    UILabel *stateLabel = [Tools creatLabelWithFrame:CGRectMake(0, 25, stateImageView.frame.size.width, 15) text:ModuleZW(@"未连接") textSize:14];
+    UILabel *stateLabel = [Tools creatLabelWithFrame:CGRectMake(0, 25, stateImageView.frame.size.width, 12) text:ModuleZW(@"未连接") textSize:14];
     stateLabel.textAlignment = NSTextAlignmentCenter;
+    stateLabel.numberOfLines = 2;
     stateLabel.font = [UIFont boldSystemFontOfSize:10];
     stateLabel.textColor = [UIColor whiteColor];
     //stateLabel.adjustsFontSizeToFitWidth = YES;
@@ -217,7 +218,7 @@ static int const tick = 80;
     [self.view addSubview:nonDeviceCheck];
     
     //使用规范
-    UIButton *useNorm = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-30,nonDeviceCheck.bottom+15, 60, 25) target:self sel:@selector(useNormClick:) tag:101 image:@"使用规范" title:nil];
+    UIButton *useNorm = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-30,nonDeviceCheck.bottom+15, 60, 25) target:self sel:@selector(useNormClick:) tag:101 image:ModuleZW(@"使用规范") title:nil];
     [self.view addSubview:useNorm];
 }
 
@@ -229,7 +230,7 @@ static int const tick = 80;
 //    self.commitBtn = commitBtn;
 //    [self.view addSubview:commitBtn];
     
-    [self.startCheck setImage:[UIImage imageNamed:@"血压04"] forState:UIControlStateNormal];
+    [self.startCheck setImage:[UIImage imageNamed:ModuleZW(@"血压04")] forState:UIControlStateNormal];
     self.isHidden = NO;
     self.nonDeviceCheck.enabled = NO;
     
@@ -303,6 +304,9 @@ static int const tick = 80;
     NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
     [request addPostValue:subId forKey:@"memberChildId"];
     [request addPostValue:@(30) forKey:@"datatype"];
@@ -484,6 +488,9 @@ static int const tick = 80;
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];
@@ -522,7 +529,7 @@ static int const tick = 80;
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = ModuleZW(@"当前账户已过期，请重新登录");  //提示的内容
+        hud.label.text = ModuleZW(@"登录超时，请重新登录");  //提示的内容
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hideAnimated:YES afterDelay:2];
         
@@ -638,6 +645,9 @@ static int const tick = 80;
     NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
     [request addPostValue:memberId forKey:@"memberChildId"];
     [request addPostValue:@(30) forKey:@"datatype"];
@@ -701,7 +711,7 @@ static int const tick = 80;
         [lookBtn addTarget:self action:@selector(lookClickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [view2 addSubview:lookBtn];
         
-        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:@"%@%ld%@\n  %@%ldmmHg\n%@ %ldmmhg",ModuleZW(@"您当前脉搏"),(long)pulseCount,ModuleZW(@"次/分"),ModuleZW(@"收缩压"),(long)highCount,ModuleZW(@"舒张压 "),(long)lowCount] frame:CGRectMake(0, 50, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
+        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前脉搏%ld次/分\n  收缩压%ldmmHg\n舒张压 %ldmmhg"),(long)pulseCount,(long)highCount,(long)lowCount] frame:CGRectMake(0, 50, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
 
         
         UILabel *label0 = [[UILabel alloc] init];

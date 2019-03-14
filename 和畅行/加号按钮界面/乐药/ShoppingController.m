@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navTitleLabel.text = @"购物车";
+    self.navTitleLabel.text = ModuleZW(@"购物车");
     
     listTable = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height - kNavBarHeight ) style:UITableViewStylePlain];
     listTable.delegate = self;
@@ -41,7 +41,7 @@
     UIButton *jiesuanButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     jiesuanButton.frame = CGRectMake(self.view.frame.size.width -  105, self.view.frame.size.height - kTabBarHeight, 105, 44);
     [jiesuanButton addTarget:self action:@selector(qujiesuanButton) forControlEvents:(UIControlEventTouchUpInside)];
-    [jiesuanButton setTitle:@"去结算" forState:(UIControlStateNormal)];
+    [jiesuanButton setTitle:ModuleZW(@"去结算") forState:(UIControlStateNormal)];
     [jiesuanButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
     jiesuanButton.backgroundColor = RGB(68, 204, 82);
     [self.view addSubview:jiesuanButton];
@@ -51,7 +51,7 @@
     [xiaofeijinerImage addSubview:gouwucheImage];
     
     UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 12, 40, 20)];
-    zongjinerLabel.text = @"总计: ";
+    zongjinerLabel.text = ModuleZW(@"总计: ");
     zongjinerLabel.textColor = [UIColor whiteColor];
     zongjinerLabel.font = [UIFont systemFontOfSize:13];
     [xiaofeijinerImage addSubview:zongjinerLabel];
@@ -67,7 +67,7 @@
 
 - (void)qujiesuanButton{
     if([UserShareOnce shareOnce].yueYaoBuyArr.count == 0){
-        [GlobalCommon showMessage:@"请去添加商品" duration:1.0];
+        [GlobalCommon showMessage:ModuleZW(@"请去添加商品") duration:1.0];
         return;
     }
     PayMentViewController *payMentVC = [[PayMentViewController alloc]init];
@@ -132,9 +132,9 @@
 
 - (void)deleteButton:(UIButton *)sender{
     
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:nil message:@"确定删除吗？" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:NULL];
-    UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:nil message:ModuleZW(@"确定删除吗？") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:NULL];
+    UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         CGPoint point = sender.center;
         point = [self.listTable convertPoint:point fromView:sender.superview];

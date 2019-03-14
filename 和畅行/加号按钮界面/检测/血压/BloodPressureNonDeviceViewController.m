@@ -142,7 +142,7 @@
     }
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake((kScreenSize.width-20)/2-80, 150, 160, 30)];
     [button addTarget:self action:@selector(saveClick:) forControlEvents:UIControlEventTouchUpInside];
-    [button setImage:[UIImage imageNamed:@"血压13"] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:ModuleZW(@"血压13")] forState:UIControlStateNormal];
     [imageView addSubview:button];
     [button release];
     [imageView release];
@@ -287,6 +287,9 @@
     NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
     [request addPostValue:subId forKey:@"memberChildId"];
     [request addPostValue:@(30) forKey:@"datatype"];
@@ -332,7 +335,7 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = ModuleZW(@"当前账户已过期，请重新登录");  //提示的内容
+        hud.label.text = ModuleZW(@"登录超时，请重新登录");  //提示的内容
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hideAnimated:YES afterDelay:2];
         
@@ -451,6 +454,9 @@
     NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
     [request addPostValue:memberId forKey:@"memberChildId"];
     [request addPostValue:@(30) forKey:@"datatype"];
@@ -518,9 +524,7 @@
         [lookBtn addTarget:self action:@selector(lookClickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [view2 addSubview:lookBtn];
         
-        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:
-                                                @"%@%ld%@\n%@  %ldmmHg\n%@  %ldmmhg",ModuleZW(@"您当前脉搏"),(long)pulseCount,ModuleZW(@"次/分"),ModuleZW(@"收缩压"),(long)highCount,ModuleZW(@"舒张压"),(long)lowCount] frame:CGRectMake(0, 50, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
-        
+        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前脉搏%ld次/分\n  收缩压%ldmmHg\n舒张压 %ldmmhg"),(long)pulseCount,(long)highCount,(long)lowCount] frame:CGRectMake(0, 50, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
         
         UILabel *label0 = [[UILabel alloc] init];
         label0.text = ModuleZW(@"血压、脉搏正常范围参考值：");
@@ -554,10 +558,7 @@
         [view2 addSubview:imageView];
         [self.view addSubview:view];
         [self.view addSubview:view2];
-        //        [view2 addSubview:confirmBtn];
-        [imageView release];
-        [view release];
-        [view2 release];
+
 
         
     }else{

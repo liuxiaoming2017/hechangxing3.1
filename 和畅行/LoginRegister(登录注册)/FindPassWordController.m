@@ -206,6 +206,9 @@
     
     [GlobalCommon showMBHudTitleWithView:self.view];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setPostValue:self.RepInputphoneTF.text forKey:@"username"];
     [request setPostValue:timeSp forKey:@"time"];
     [request setPostValue:iPoneNumberMds forKey:@"UserPhoneKey"];

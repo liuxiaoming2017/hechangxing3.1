@@ -18,7 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navTitleLabel.text = @"经络梳理";
+    self.navTitleLabel.text = ModuleZW(@"经络梳理");
     [self createUI];
 }
 
@@ -116,7 +116,7 @@
         case 206:
             type = @"/member/service/view/fang/JLBS/1/";
             fangtype = @"yijiu";
-            titleStr = @"灸法处方";
+            titleStr = ModuleZW(@"灸法处方");
 //        {
 //            i9_MoxaMainViewController *vc = [[i9_MoxaMainViewController alloc] init];
 //            [self.navigationController pushViewController:vc animated:YES];

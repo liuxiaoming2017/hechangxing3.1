@@ -191,7 +191,7 @@
     [_searchBar setBackgroundImage:[UIImage new]];
     _searchBar.delegate = self;
     _searchBar.tag = 100;
-    _searchBar.placeholder = @"搜索疾病名称";
+    _searchBar.placeholder = ModuleZW(@"搜索疾病名称");
     //searchBar.showsCancelButton = YES;
     
     for(UIView *searchBarSubview in [_searchBar subviews]){

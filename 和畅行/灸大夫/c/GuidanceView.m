@@ -26,7 +26,7 @@
     titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.numberOfLines = 0;
     titleLabel.textColor = [UIColor blackColor];
-    titleLabel.text = @"艾灸仪没有连接上?\n取出艾灸头，此时设备会振动";
+    titleLabel.text = ModuleZW(@"艾灸仪没有连接上?\n取出艾灸头，此时设备会振动");
     [self addSubview:titleLabel];
     
     CGFloat width1 = 210;
@@ -39,7 +39,7 @@
     label2.font = [UIFont systemFontOfSize:16];
     label2.textAlignment = NSTextAlignmentLeft;
     label2.textColor = [UIColor blackColor];
-    label2.text = @"打开蓝牙";
+    label2.text = ModuleZW(@"打开蓝牙");
     [self addSubview:label2];
     
     CGFloat width2 = 90;

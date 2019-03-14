@@ -70,20 +70,20 @@
         [self.healthView addSubview:lineView];
         
         
-        UILabel *titleLabel = [Tools labelWith:ModuleZW(@"讲座说明：") frame:CGRectMake(5, lineView.bottom+10, 100, 10) textSize:11 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentLeft];
+        UILabel *titleLabel = [Tools labelWith:ModuleZW(@"讲座说明：") frame:CGRectMake(5, lineView.bottom+10, 150, 10) textSize:11 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentLeft];
         [self.healthView addSubview:titleLabel];
         
         UILabel *contentLabel = [Tools labelWith:ModuleZW(@"在线预约养生类、慢病类、职业防护类、两性保健类、亲子健康类等健康主题的讲座或沙龙服务。") frame:CGRectMake(15, titleLabel.bottom, kScreenSize.width-25, 30) textSize:11 textColor:[Tools colorWithHexString:@"#333"] lines:0 aligment:NSTextAlignmentLeft];
         [self.healthView addSubview:contentLabel];
         
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, contentLabel.bottom+20, kScreenSize.width, 25)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, contentLabel.bottom+20, kScreenSize.width, 30)];
         imageView.backgroundColor = [Tools colorWithHexString:@"#616161"];
         [self.healthView addSubview:imageView];
         
         NSArray *categoryLabel = @[ModuleZW(@"主讲人"),ModuleZW(@"讲座地址"),ModuleZW(@"讲座课题"),ModuleZW(@"开讲日期"),ModuleZW(@"时间"),ModuleZW(@"价格")];
         CGFloat width = kScreenSize.width/6.0f;
         for (int i=0; i<6; i++) {
-            UILabel *label = [Tools labelWith:categoryLabel[i] frame:CGRectMake(width*i, 0, width, 25) textSize:11 textColor:[Tools colorWithHexString:@"#abafaf"] lines:1 aligment:NSTextAlignmentCenter];
+            UILabel *label = [Tools labelWith:categoryLabel[i] frame:CGRectMake(width*i, 0, width, 30) textSize:11 textColor:[Tools colorWithHexString:@"#abafaf"] lines:2 aligment:NSTextAlignmentCenter];
             [imageView addSubview:label];
         }
         self.healthView.hidden = YES;
@@ -202,7 +202,9 @@
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     [request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
-    //[request healthArticleList.jhtml:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",g_userInfo.token,g_userInfo.JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }    //[request healthArticleList.jhtml:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",g_userInfo.token,g_userInfo.JSESSIONID]];
     //[request setValue:@"50" forKey:@"count"];
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
@@ -273,7 +275,9 @@
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     //[request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",g_userInfo.token,g_userInfo.JSESSIONID]];
     [request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
-    [request setRequestMethod:@"GET"];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }    [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];
     [request setDidFailSelector:@selector(requestResourceslisttssErrorsss:)];

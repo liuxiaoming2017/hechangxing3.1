@@ -51,7 +51,7 @@
     self.testBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.testBtn.frame = CGRectMake(ScreenWidth-85, 12, 70, 26);
     self.testBtn.backgroundColor = UIColorFromHex(0x1e82d2);
-    [self.testBtn setTitle:@"检测" forState:UIControlStateNormal];
+    [self.testBtn setTitle:ModuleZW(@"检测") forState:UIControlStateNormal];
     [self.testBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.testBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     self.testBtn.layer.cornerRadius = 10;

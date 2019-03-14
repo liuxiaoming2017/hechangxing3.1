@@ -84,12 +84,17 @@
     NSLog(@"%@",languages);
     if ([languages.firstObject isEqualToString:@"en-US"]||[languages.firstObject isEqualToString:@"ja-US"]){
         [[NSUserDefaults standardUserDefaults]setValue:@"Other" forKey:@"Language"];
+        [UserShareOnce shareOnce].languageType = @"us-en";
     }else{
         [[NSUserDefaults standardUserDefaults]setValue:@"China" forKey:@"Language"];
+        [UserShareOnce shareOnce].languageType  = nil;
     }
     
-
     
+
+    for (int i = 0; i < 20; ++i) {
+        NSLog(@"%d",i);
+    }
     
     return YES;
 }

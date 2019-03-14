@@ -40,18 +40,18 @@
                   @"ic_help.png", nil];
     _titleArray = [[NSArray alloc]initWithObjects:
                    
-                   @"设置灸头网络密码",
-                   @"找回灸头网络密码",
-                   @"声音",
+                  ModuleZW(@"设置灸头网络密码") ,
+                  ModuleZW(@"找回灸头网络密码"),
+                   ModuleZW(@"声音"),
                    //                       @"管理灸疗对象",
                    
-                   @"帮助", nil];
+                   ModuleZW(@"帮助"), nil];
     
     self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.leftBtn.hidden = YES;
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;
-    self.navTitleLabel.text = @"设置";
+    self.navTitleLabel.text = ModuleZW(@"设置");
     self.navTitleLabel.textColor = [UIColor whiteColor];
     
     _isVoiceEn = [BlueToothCommon getMoxaVoiceEn];
@@ -207,9 +207,9 @@
 
 -(UIImage *)getSettingVoiceIcon{
     if(_bVoiceOn){
-        return [UIImage imageNamed:@"sound_open.png"];
+        return [UIImage imageNamed:@"sound_open"];
     }else{
-        return [UIImage imageNamed:@"sound_close.png"];
+        return [UIImage imageNamed:@"sound_close"];
     }
 }
 

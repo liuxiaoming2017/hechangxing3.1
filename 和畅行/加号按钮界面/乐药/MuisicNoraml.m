@@ -94,7 +94,7 @@
     self.addbutton = [[UIButton alloc]init];
   //  [self.addbutton setImage:[UIImage imageNamed:@"+"] forState:(UIControlStateNormal)];
 
-    [self.addbutton setTitle:@"强" forState:(UIControlStateNormal)];
+    [self.addbutton setTitle:ModuleZW(@"强") forState:(UIControlStateNormal)];
     self.addbutton.titleLabel.textColor = [UIColor whiteColor];
     //self.addbutton.frame = CGRectMake(0, 0, 100/2*SCREEN_WIDTH_Size, 100/2*SCREEN_HEIGHT_Size);
     self.addbutton.frame =CGRectMake(100*SCREEN_WIDTH_Size,0 , 100/2*SCREEN_WIDTH_Size, 100/2*SCREEN_HEIGHT_Size);
@@ -114,7 +114,7 @@
     self.downButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
    // [self.downButton setImage:[UIImage imageNamed:@"jian"] forState:(UIControlStateNormal)];
     
-    [self.downButton setTitle:@"弱" forState:(UIControlStateNormal)];
+    [self.downButton setTitle:ModuleZW(@"弱") forState:(UIControlStateNormal)];
     self.downButton.titleLabel.textColor = [ UIColor whiteColor];
    // self.downButton.frame = CGRectMake(100*SCREEN_WIDTH_Size,0 , 100/2*SCREEN_WIDTH_Size, 100/2*SCREEN_HEIGHT_Size);
     self.downButton.frame = CGRectMake(0, 0, 100/2*SCREEN_WIDTH_Size, 100/2*SCREEN_HEIGHT_Size);
@@ -133,13 +133,13 @@
 - (void)btnClick:(UIButton *)btn{
     
     if (self.isBluetoonState == NO) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请先连接设备" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请先连接设备") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles: nil];
         [alert show];
         
         
     }else{
         if (self.isLeyaoPlayState == NO) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请选择一首乐药进行播放" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请选择一首乐药进行播放") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles: nil];
             [alert show];
             
             
@@ -177,12 +177,12 @@
     
     NSLog(@"%d",sw.on);
     if (self.isBluetoonState == NO) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请先连接设备" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请先连接设备") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles: nil];
         [alert show];
 
     }else{
         if (self.isLeyaoPlayState == NO) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请选择一首乐药进行播放" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请选择一首乐药进行播放") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles: nil];
             [alert show];
 
             
@@ -227,13 +227,13 @@
     
     
     if (self.isBluetoonState == NO) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请先连接设备" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请先连接设备") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles: nil];
         [alert show];
         number = 0;
         self.accordLabel.text = @"00";
     }else{
         if (self.isLeyaoPlayState != NO) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请选择一首乐药进行播放" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请选择一首乐药进行播放") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles: nil];
             [alert show];
 
             number = 0;

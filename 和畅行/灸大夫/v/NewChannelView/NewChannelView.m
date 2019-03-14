@@ -311,7 +311,7 @@
     states = s;
     if(states == CHANNEL_NOLINK)
     {
-        tiemLable.text = @"未连接";
+        tiemLable.text = ModuleZW(@"未连接");
         if(showWarnning == YES){
             [self StopWarnning];
         }

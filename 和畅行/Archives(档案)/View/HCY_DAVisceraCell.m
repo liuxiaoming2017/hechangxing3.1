@@ -127,19 +127,19 @@
 //档案  病历
     if (![GlobalCommon stringEqualNull:model.medicRecordId]){
         
-        NSString *departmentName = [NSString stringWithFormat:@"科室: %@",model.doctorDept];
+        NSString *departmentName = [NSString stringWithFormat:ModuleZW(@"科室: %@"),model.doctorDept];
         NSMutableAttributedString *departmentNameStr = [[NSMutableAttributedString alloc]initWithString:departmentName];
         [departmentNameStr beginEditing];
         [departmentNameStr addAttribute:NSForegroundColorAttributeName value:RGB(221, 156, 92) range:NSMakeRange(departmentName.length - model.doctorDept.length ,model.doctorDept.length)];
         [departmentNameStr endEditing];
         
-        NSString *doctorName = [NSString stringWithFormat:@"医生: %@",model.doctorName];
+        NSString *doctorName = [NSString stringWithFormat:ModuleZW(@"医生: %@"),model.doctorName];
         NSMutableAttributedString *doctorNameStr = [[NSMutableAttributedString alloc]initWithString:doctorName];
         [doctorNameStr beginEditing];
         [doctorNameStr addAttribute:NSForegroundColorAttributeName value:RGB(221, 156, 92) range:NSMakeRange(doctorNameStr.length - model.doctorName.length ,model.doctorName.length)];
         [doctorNameStr endEditing];        
         
-        NSString *mainSuit =  [NSString stringWithFormat:@"主诉: %@",model.mainSuit];
+        NSString *mainSuit =  [NSString stringWithFormat:ModuleZW(@"主诉: %@"),model.mainSuit];
         NSMutableAttributedString *mainSuitStr = [[NSMutableAttributedString alloc]initWithString:mainSuit];
         [mainSuitStr beginEditing];
         [mainSuitStr addAttribute:NSForegroundColorAttributeName value:RGB(221, 156, 92) range:NSMakeRange(mainSuitStr.length - model.mainSuit.length ,model.mainSuit.length)];
@@ -170,8 +170,8 @@
         self.lowLabel.hidden = NO;
         
         NSString *timestr = model.createTime;
-        timestr = [timestr stringByReplacingOccurrencesOfString:@"-" withString:@"月"];
-        timestr = [timestr stringByAppendingString:@"日"];
+        timestr = [timestr stringByReplacingOccurrencesOfString:@"-" withString:ModuleZW(@"月")];
+        timestr = [timestr stringByAppendingString:ModuleZW(@"日")];
         NSRange range = NSMakeRange(timestr.length - 6, 1);
         NSString *subString3 = [timestr substringWithRange:range];
         if ([subString3 isEqualToString: @"0"]) {
@@ -257,6 +257,10 @@
     //设定时间格式,这里可以设置成自己需要的格式
     [dateFormatter setDateFormat:@"MM月dd日"];
     NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
+    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"Language"] isEqualToString:@"Other"]){
+        currentDateStr =  [currentDateStr stringByReplacingOccurrencesOfString:@"日" withString:@"D"];
+        currentDateStr =  [currentDateStr stringByReplacingOccurrencesOfString:@"月" withString:@"M"];
+    }
     return currentDateStr;
 }
 

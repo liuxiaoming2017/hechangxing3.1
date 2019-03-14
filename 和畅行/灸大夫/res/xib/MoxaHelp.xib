@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,7 +28,7 @@
                     <rect key="frame" x="0.0" y="108" width="375" height="532"/>
                 </scrollView>
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="0Xr-vV-3fZ">
-                    <rect key="frame" x="168" y="640" width="40" height="27"/>
+                    <rect key="frame" x="167.5" y="640" width="40" height="27"/>
                     <color key="backgroundColor" red="0.99607843139999996" green="0.59607843140000005" blue="0.30196078430000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="W4E-oM-n2C"/>
@@ -47,7 +47,7 @@
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <viewLayoutGuide key="safeArea" id="Nhr-5o-fcf"/>
-            <point key="canvasLocation" x="638" y="329"/>
+            <point key="canvasLocation" x="1020.8" y="295.95202398800603"/>
         </view>
         <view contentMode="scaleToFill" id="cSd-3M-SRc">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -104,7 +104,7 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <viewLayoutGuide key="safeArea" id="YaM-nw-gHs"/>
-            <point key="canvasLocation" x="1027" y="366"/>
+            <point key="canvasLocation" x="1643.2" y="329.2353823088456"/>
         </view>
         <view contentMode="scaleToFill" id="TCF-CB-nfb">
             <rect key="frame" x="0.0" y="0.0" width="320" height="866"/>
@@ -175,7 +175,7 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="bAN-9R-UiK"/>
-            <point key="canvasLocation" x="1425" y="515"/>
+            <point key="canvasLocation" x="2280" y="463.26836581709148"/>
         </view>
     </objects>
     <resources>

@@ -72,6 +72,9 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
     [request addValue:[self getCookieValue] forHTTPHeaderField:@"Cookie"];
+    if([UserShareOnce shareOnce].languageType){
+        [request addValue:[UserShareOnce shareOnce].languageType forHTTPHeaderField:@"language"];
+    }
     request.timeoutInterval = 20;
     [self.wkwebview loadRequest:request];
     [self.view addSubview:self.wkwebview];

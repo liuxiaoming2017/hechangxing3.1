@@ -138,11 +138,11 @@
     
     
     //开始检测
-    UIButton *startCheckButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-100, breathCount.bottom+30, 200, 40) target:self sel:@selector(startCheckClick:) tag:101 image:@"开始检测" title:nil];
+    UIButton *startCheckButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-100, breathCount.bottom+30, 200, 40) target:self sel:@selector(startCheckClick:) tag:101 image:ModuleZW(@"开始检测") title:nil];
     [self.view addSubview:startCheckButton];
     
     //使用规范
-    UIButton *useNorm = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-30,startCheckButton.bottom+30, 60, 25) target:self sel:@selector(useNormClick:) tag:102 image:@"使用规范" title:nil];
+    UIButton *useNorm = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-30,startCheckButton.bottom+30, 60, 25) target:self sel:@selector(useNormClick:) tag:102 image:ModuleZW(@"使用规范") title:nil];
     [self.view addSubview:useNorm];
 }
 
@@ -199,10 +199,10 @@
     NSLog(@"点击开始检测按钮");
     [button setHidden:YES];
     
-    UIButton *commitButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-100, kScreenSize.height == 480? 350: 400, 200, 40) target:self sel:@selector(commitBtnClick:) tag:11 image:@"commit_green" title:nil];
+    UIButton *commitButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-100, kScreenSize.height == 480? 350: 400, 200, 40) target:self sel:@selector(commitBtnClick:) tag:11 image:ModuleZW(@"commit_green") title:nil];
     [self.view addSubview:commitButton];
     
-    UIButton *reCheckButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-100, kScreenSize.height == 480? 400: 450, 200, 40) target:self sel:@selector(reCheckBtnClick:) tag:12 image:@"recheck_blue" title:nil];
+    UIButton *reCheckButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-100, kScreenSize.height == 480? 400: 450, 200, 40) target:self sel:@selector(reCheckBtnClick:) tag:12 image:ModuleZW(@"recheck_blue") title:nil];
     [self.view addSubview:reCheckButton];
     
     //倒计时30s
@@ -218,7 +218,7 @@
         [_timeLabel setHidden:YES];
         [_instanceTimeLabel setHidden:YES];
         [_unitLabel setHidden:YES];
-        _endLabel = [Tools labelWith:@"计时结束" frame:CGRectMake(kScreenSize.width/2-60, 130, 120, 50) textSize:18 textColor:[UIColor whiteColor] lines:1 aligment:NSTextAlignmentCenter];
+        _endLabel = [Tools labelWith:ModuleZW(@"计时结束") frame:CGRectMake(kScreenSize.width/2-60, 130, 120, 50) textSize:18 textColor:[UIColor whiteColor] lines:1 aligment:NSTextAlignmentCenter];
         [self.view addSubview:_endLabel];
         if (_timer) {
             [_timer invalidate];
@@ -233,16 +233,16 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"正在计时中，请稍后...";
+        hud.label.text = ModuleZW(@"正在计时中，请稍后...");
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hideAnimated:YES afterDelay:2];
         
     }else{
         NSString *str = @"";
         if([GlobalCommon stringEqualNull:_breathCountTF.text]){
-            str =@"温度值不能为空";
+            str =ModuleZW(@"温度值不能为空");
         }else if([self->_breathCountTF.text integerValue] == 0){
-            str = @"您的输入有误,请重新输入";
+            str = ModuleZW(@"您的输入有误,请重新输入");
         }
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
@@ -281,6 +281,9 @@
     NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
     [request addPostValue:subId forKey:@"memberChildId"];
     [request addPostValue:@(50) forKey:@"datatype"];
@@ -308,16 +311,16 @@
         if (_childAge>=18) {
             //成人，正常值16~20次/分
             if (nums>=8 && nums <=10) {
-                resultStr = @"正常";
+                resultStr = ModuleZW(@"正常");
             }else{
-                resultStr = @"不正常";
+                resultStr = ModuleZW(@"不正常");
             }
         }else{
             //儿童，正常值30~40次/分
             if (nums>=15 && nums <=20) {
-                resultStr = @"正常";
+                resultStr = ModuleZW(@"正常");
             }else if(nums <15){
-                resultStr = @"不正常";
+                resultStr = ModuleZW(@"不正常");
             }
         }
         UIView *view = [[UIView alloc] initWithFrame:self.view.frame];
@@ -336,10 +339,10 @@
         
         UIButton *confirmBtn = [Tools creatButtonWithFrame:CGRectMake(20, kScreenSize.height/2+90, kScreenSize.width-40, 40) target:self sel:@selector(confirmBtnClick2:) tag:21 image:@"确定" title:nil];
                 
-        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:@"您当前呼吸节律%ld次/分",(long)nums*2] frame:CGRectMake(0, 60, imageView.bounds.size.width, 20) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:1 aligment:NSTextAlignmentCenter];
-        UILabel *resultLabel1 = [Tools labelWith:@"当前呼吸节律" frame:CGRectMake(imageView.bounds.size.width/2-90, 110, 110, 20) textSize:12 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentRight];
+        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前呼吸节律%ld次/分"),(long)nums*2] frame:CGRectMake(0, 60, imageView.bounds.size.width, 20) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:1 aligment:NSTextAlignmentCenter];
+        UILabel *resultLabel1 = [Tools labelWith:ModuleZW(@"当前呼吸节律") frame:CGRectMake(imageView.bounds.size.width/2-90, 110, 110, 20) textSize:12 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentRight];
         NSString *colorStr = [[NSString alloc] init];
-        if ([resultStr isEqualToString:@"正常"]) {
+        if ([resultStr isEqualToString:ModuleZW(@"正常")]) {
             colorStr = @"#68c900";
         }else{
             colorStr = @"#f60a0c";
@@ -358,7 +361,7 @@
         
         
     }else{
-        [self showAlertWarmMessage:@"提交数据失败"];
+        [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
         
     }
     
@@ -368,7 +371,7 @@
 
 -(void)requestError:(ASIHTTPRequest *)request{
     [self hidePreogressView];
-    [self showAlertWarmMessage:@"提交数据失败"];
+    [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
 }
 //点击确定
 -(void)confirmBtnClick2:(UIButton *)button{

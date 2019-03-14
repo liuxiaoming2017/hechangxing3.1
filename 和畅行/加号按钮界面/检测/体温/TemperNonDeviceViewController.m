@@ -33,7 +33,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.navTitleLabel.text = @"体温检测";
+    self.navTitleLabel.text = ModuleZW(@"体温检测");
     [self initWithController];
     [self bounceView];
     
@@ -180,6 +180,9 @@
     NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
     [request addPostValue:subId forKey:@"memberChildId"];
     [request addPostValue:@(40) forKey:@"datatype"];
@@ -238,7 +241,7 @@
         UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前体温%.1f℃"),tempNum] frame:CGRectMake(0, 60, imageView.bounds.size.width, 20) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:1 aligment:NSTextAlignmentCenter];
     
         if ([resultStr isEqualToString:ModuleZW(@"正常")]) {
-            UILabel *resultLabel1 = [Tools labelWith:ModuleZW(@"您当前体温值") frame:CGRectMake(imageView.bounds.size.width/2-90, 110, 110, 20) textSize:12 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentRight];
+            UILabel *resultLabel1 = [Tools labelWith:ModuleZW(@"当前体温值") frame:CGRectMake(imageView.bounds.size.width/2-90, 110, 110, 20) textSize:12 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentRight];
             UILabel *resultLabel2 = [Tools labelWith:resultStr frame:CGRectMake(imageView.bounds.size.width/2+20, 110, 50, 20) textSize:12 textColor:[Tools colorWithHexString:@"#68c900"] lines:1 aligment:NSTextAlignmentLeft];
             [imageView addSubview:resultLabel1];
             [imageView addSubview:resultLabel2];
