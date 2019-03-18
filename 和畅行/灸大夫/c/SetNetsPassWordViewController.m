@@ -35,7 +35,6 @@
     self.preBtn.hidden = NO;
     self.navTitleLabel.text = ModuleZW(@"设置灸头网络密码");
     self.navTitleLabel.textColor = [UIColor whiteColor];
-    
     [self initData];
     [self initView];
     // Do any additional setup after loading the view.

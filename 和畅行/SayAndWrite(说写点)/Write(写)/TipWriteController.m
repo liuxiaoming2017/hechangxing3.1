@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navTitleLabel.text = @"脏腑状态评估";
+    self.navTitleLabel.text = ModuleZW(@"脏腑状态评估");
     
     CGFloat hh = self.topView.bottom + 25;
     UIImageView *backImageV = [[UIImageView alloc] initWithFrame:CGRectMake(25, hh, ScreenWidth-50, ScreenHeight-hh-25)];

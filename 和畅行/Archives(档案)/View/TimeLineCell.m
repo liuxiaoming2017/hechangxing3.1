@@ -203,7 +203,7 @@
   
     self.typeLabel.text = typeStr;
     self.kindLabel.text = kindStr;
-    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"Language"] isEqualToString:@"Other"]){
+    if ([UserShareOnce shareOnce].languageType){
         NSLog(@"%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"Language"]);
         NSString *salaryStr1 = [NSString string];
         if (kindStr.length > 0){

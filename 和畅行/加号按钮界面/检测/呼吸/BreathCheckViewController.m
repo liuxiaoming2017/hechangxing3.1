@@ -138,7 +138,7 @@
     
     
     //开始检测
-    UIButton *startCheckButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-100, breathCount.bottom+30, 200, 40) target:self sel:@selector(startCheckClick:) tag:101 image:ModuleZW(@"开始检测") title:nil];
+    UIButton *startCheckButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-100, breathCount.bottom+30, 200, 40) target:self sel:@selector(startCheckClick:) tag:101 image:ModuleZW(@"血压03") title:nil];
     [self.view addSubview:startCheckButton];
     
     //使用规范

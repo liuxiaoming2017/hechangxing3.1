@@ -88,7 +88,7 @@
     leftBtn.userInteractionEnabled = NO;
     leftBtn.layer.cornerRadius = leftBtn.frame.size.width/2;
     [leftBtn addTarget:self action:@selector(userBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:leftBtn];
+//    [topView addSubview:leftBtn];
     
 }
 

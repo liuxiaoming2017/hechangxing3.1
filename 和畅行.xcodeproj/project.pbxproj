@@ -432,14 +432,12 @@
 		039B2AD4212522D000D558F5 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039B2AD3212522D000D558F5 /* TestViewController.m */; };
 		039B2AD72125247100D558F5 /* TestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 039B2AD62125247100D558F5 /* TestCell.m */; };
 		039B2ADA2125586200D558F5 /* TemperNonDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039B2AD92125586100D558F5 /* TemperNonDeviceViewController.m */; };
-		039B2ADC21255C2300D558F5 /* 确定.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2ADB21255C2200D558F5 /* 确定.png */; };
 		039B2ADE21255EF000D558F5 /* 体温_非设备检测03.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2ADD21255EF000D558F5 /* 体温_非设备检测03.png */; };
 		039B2AE121255FD500D558F5 /* BreathCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039B2AE021255FD500D558F5 /* BreathCheckViewController.m */; };
 		039B2AEC2125623800D558F5 /* 呼吸01.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AE32125623300D558F5 /* 呼吸01.png */; };
 		039B2AED2125623800D558F5 /* 呼吸02.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AE42125623400D558F5 /* 呼吸02.png */; };
 		039B2AEF2125623800D558F5 /* recheck_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AE62125623500D558F5 /* recheck_blue.png */; };
 		039B2AF02125623800D558F5 /* 完成.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AE72125623500D558F5 /* 完成.png */; };
-		039B2AF12125623800D558F5 /* 开始检测.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AE82125623600D558F5 /* 开始检测.png */; };
 		039B2AF32125623800D558F5 /* bounceView.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AEA2125623700D558F5 /* bounceView.png */; };
 		039B2AF42125623800D558F5 /* commit_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AEB2125623700D558F5 /* commit_green.png */; };
 		039B2AF8212563D800D558F5 /* 深色背景.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AF7212563D800D558F5 /* 深色背景.png */; };
@@ -1333,7 +1331,6 @@
 		039B2AD62125247100D558F5 /* TestCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestCell.m; sourceTree = "<group>"; };
 		039B2AD82125586100D558F5 /* TemperNonDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemperNonDeviceViewController.h; sourceTree = "<group>"; };
 		039B2AD92125586100D558F5 /* TemperNonDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemperNonDeviceViewController.m; sourceTree = "<group>"; };
-		039B2ADB21255C2200D558F5 /* 确定.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "确定.png"; sourceTree = "<group>"; };
 		039B2ADD21255EF000D558F5 /* 体温_非设备检测03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "体温_非设备检测03.png"; sourceTree = "<group>"; };
 		039B2ADF21255FD500D558F5 /* BreathCheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreathCheckViewController.h; sourceTree = "<group>"; };
 		039B2AE021255FD500D558F5 /* BreathCheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BreathCheckViewController.m; sourceTree = "<group>"; };
@@ -1341,7 +1338,6 @@
 		039B2AE42125623400D558F5 /* 呼吸02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "呼吸02.png"; sourceTree = "<group>"; };
 		039B2AE62125623500D558F5 /* recheck_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recheck_blue.png; sourceTree = "<group>"; };
 		039B2AE72125623500D558F5 /* 完成.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "完成.png"; sourceTree = "<group>"; };
-		039B2AE82125623600D558F5 /* 开始检测.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "开始检测.png"; sourceTree = "<group>"; };
 		039B2AEA2125623700D558F5 /* bounceView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bounceView.png; sourceTree = "<group>"; };
 		039B2AEB2125623700D558F5 /* commit_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = commit_green.png; sourceTree = "<group>"; };
 		039B2AF7212563D800D558F5 /* 深色背景.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "深色背景.png"; sourceTree = "<group>"; };
@@ -3196,7 +3192,6 @@
 		039B2ACA212515BC00D558F5 /* 血压检测 */ = {
 			isa = PBXGroup;
 			children = (
-				039B2ADB21255C2200D558F5 /* 确定.png */,
 				039B2ADD21255EF000D558F5 /* 体温_非设备检测03.png */,
 				039C23932123D05000F9AFA3 /* 不再提醒.png */,
 				039C23C6212403CB00F9AFA3 /* look.png */,
@@ -3264,7 +3259,6 @@
 				039B2AF7212563D800D558F5 /* 深色背景.png */,
 				039B2AE32125623300D558F5 /* 呼吸01.png */,
 				039B2AE42125623400D558F5 /* 呼吸02.png */,
-				039B2AE82125623600D558F5 /* 开始检测.png */,
 				039B2AE72125623500D558F5 /* 完成.png */,
 				039B2AEA2125623700D558F5 /* bounceView.png */,
 				039B2AEB2125623700D558F5 /* commit_green.png */,
@@ -3983,7 +3977,6 @@
 				038CE88A20EDF622005E9219 /* checkboxyes.png in Resources */,
 				036E85022186EB1A001B9BB4 /* 68MoxaHead_yellow.png in Resources */,
 				039C23942123D05000F9AFA3 /* 不再提醒.png in Resources */,
-				039B2AF12125623800D558F5 /* 开始检测.png in Resources */,
 				03513AD520E9CAD4004E2805 /* Assets.xcassets in Resources */,
 				03B1A1902119690400B23339 /* ReplaceSec_FSec.png in Resources */,
 				035FD3FC21881F03008CD7E7 /* zhifuwancheng.png in Resources */,
@@ -4031,7 +4024,6 @@
 				030F51DF2101CEBE003C918F /* 111_106.png in Resources */,
 				036E85242186EB1A001B9BB4 /* ic_password.png in Resources */,
 				036FC0F92118337C00C1A793 /* newweixin_erweima.jpg in Resources */,
-				039B2ADC21255C2300D558F5 /* 确定.png in Resources */,
 				03439075210AB64E00B57142 /* leyaozhifuxianjinka.png in Resources */,
 				039C23B72123FA3100F9AFA3 /* 血压13.png in Resources */,
 				036E84532186EAF5001B9BB4 /* wd56.mp3 in Resources */,

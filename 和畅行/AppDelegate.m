@@ -82,9 +82,10 @@
     
     NSArray *languages = [[NSUserDefaults standardUserDefaults] valueForKey:@"AppleLanguages"];
     NSLog(@"%@",languages);
-    if ([languages.firstObject isEqualToString:@"en-US"]||[languages.firstObject isEqualToString:@"ja-US"]){
+    if ([languages.firstObject isEqualToString:@"en-US"]||[languages.firstObject isEqualToString:@"ja-US"]||[languages.firstObject isEqualToString:@"en-CN"]){
         [[NSUserDefaults standardUserDefaults]setValue:@"Other" forKey:@"Language"];
         [UserShareOnce shareOnce].languageType = @"us-en";
+//        [UserShareOnce shareOnce].languageType  = nil;
     }else{
         [[NSUserDefaults standardUserDefaults]setValue:@"China" forKey:@"Language"];
         [UserShareOnce shareOnce].languageType  = nil;
@@ -171,7 +172,6 @@
     [session setCategory:AVAudioSessionCategoryPlayback error:nil];
     //这样做，可以在按home键进入后台后 ，播放一段时间，几分钟吧。但是不能持续播放网络歌曲，若需要持续播放网络歌曲，还需要申请后台任务id，具体做法是：
     _bgTaskId=[AppDelegate backgroundPlayerID:_bgTaskId];
-    
 }
 
 +(UIBackgroundTaskIdentifier)backgroundPlayerID:(UIBackgroundTaskIdentifier)backTaskId

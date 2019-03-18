@@ -11,6 +11,7 @@
 
 "账户密码登录"                     = "Login via password";
 "  请输入手机号"                   = "  Phone number" ;
+
 "请输入手机号"                     = "Phone number" ;
 "  请输入和畅账户"                = "  Phone number" ;
 "  请输入密码"                       = "  Password";
@@ -124,18 +125,19 @@
 
 
 //=============================== 档案==================================
+
 "筛选"                        =  "Filter";
 "最新"                        =  "Lastest";
 "经络"                        =  "Meridian";
 "体质"                        =  "Constitution";
-"脏腑"                        =  "Zang-fu";
-"心率"                        =  "Heart rate";
-"血压"                        =  "Blood pressure";
-"血氧"                        =  "Blood oxygen";
-"血糖"                        =  "Blood sugar";
-"体温"                        =  "Body temp";
-"呼吸"                        =  "Breath";
-"阶段报告"                 =  "Periodic report";
+"脏腑"                        =  "Zang-fu Organs";
+"心率"                        =  "Heart Rate";
+"血压"                        =  "Blood Pressure";
+"血氧"                        =  "Blood Oxygen";
+"血糖"                        =  "Blood Sugar";
+"体温"                        =  "Body Temperature";
+"呼吸"                        =  "Respiration";
+"阶段报告"                 =  "Report";
 //"确定"                      =  "Confirm";
 "全部"                         =  "All";
 "病历"                         =  "Record";
@@ -211,6 +213,7 @@
 "男"                                   =  "Male";
 "女"                                   =  "Femal";
 "加载中..."                        = "Loading…";
+"请稍后"                           ="Loading…";
 "添加家庭成员"                        =  "Add Family Member";
 "    炎黄东方（北京）健康科技有限公司始建于2006年，作为国家“治未病”健康工程的发起和实施单位，积极组建“治未病战略联盟管理总部”，联合全国参与实施“治未病”健康工程的各类机构，共同构建中医特色预防保健服务体系，并创造性地提出了中医特色健康保障服务[知己（KY3H）服务]，倡导并遵循“管理风险、固本治本、提升状态”的服务理念，为客户提供因时间、因地域及其（因）场所和因人而异“四因制宜”的健康保障服务。\n    欢迎关注。"  ="Official Weibo Founded in 2006, Yanhuang Dongfang Healthcare Technologies (Beijing) Co., Ltd is the initiator and practitioner of the national ‘Preventive Treatment of Disease’ project, who established the ‘Management Headquarter for Preventive Treatment of Disease Strategic Alliance’, constructed TCM characterized disease-prevention and healthcare service system jointly with various institutions throughout China who participate the project, and creatively put forward the TCM characterized healthcare service mode ---KY3H. By advocating and following the principle-Manage Risks, Treat the Root and Improve the State, we provide customers with health protection services suited to time, locality, place and individual.\n  Welcome to follow us. Statement";
 
@@ -353,9 +356,13 @@
 "bloodguide4"                                                         ="bloodguide4En";
 "血压04En"                                                              ="血压04En";
 "zhifuwancheng"                                                     = "zhifuwanchengEn";
-"zhongxinzhifu"                                                     = "zhongxinzhifuEn";
+"zhongxinzhifu"                                                       = "zhongxinzhifuEn";
 "quanbuxiazai"                                                          ="quanbuxiazaiEn";
-
+"使用规范"                                                                ="使用规范En";
+"血压03"                                                                ="开始检测En";
+"血压05"                                                                ="血压05En";
+"一坐2"                                                                   ="一坐2En";
+"Find_Btn"                                                              = "Find_BtnEn";
 
 
 //=====================================运动图片 ======
@@ -1480,12 +1487,12 @@
 "有时（有些)"     =   "Sometimes";
 "经常（相当)"     =   "Often";
 "总是（非常)"     =   "Always";
-"下一页 "     =   "Next";
+"下一页"     =   "Next";
 "上一页"     =   "Previous";
 "经络梳理"     =   "Meridian Regulation";
 "灸法处方 "     =   "Moxibustion Therapy";
-"检测 "     =   "Test";
-"血压脉搏检测 "     =   "Blood Pressure and Pulse Test";
+"检测"     =   "Test";
+"血压脉搏检测"     =   "Blood Pressure and Pulse Test";
 "90 < 高压 / 收缩压（mmHg）< 140  "     =   "  90 < SBP（mmHg）< 140";
 "60 < 低压 / 舒张压（mmHg）< 90   "     =   "  60 < DBP（mmHg）< 90";
 "提交数据失败"     =   " Failed to submit data";

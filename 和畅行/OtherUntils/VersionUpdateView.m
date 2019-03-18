@@ -91,7 +91,7 @@
     UIButton *cancelBtn = [[UIButton alloc] init];
     cancelBtn.frame = CGRectMake(0, CGRectGetMaxY(line1.frame), viewWidth/2.0f, 50);
     cancelBtn.backgroundColor = [UIColor whiteColor];
-    [cancelBtn setTitle:@"残忍拒绝" forState:UIControlStateNormal];
+    [cancelBtn setTitle:ModuleZW(@"残忍拒绝") forState:UIControlStateNormal];
     [cancelBtn setTitleColor:UIColorFromHex(0x1e82d2) forState:UIControlStateNormal];
     [cancelBtn addTarget:self action:@selector(cancelUpdate) forControlEvents:UIControlEventTouchUpInside];
     // 指定角切割圆弧
@@ -106,7 +106,7 @@
     UIButton *affirmBtn = [[UIButton alloc] init];
     affirmBtn.frame =  CGRectMake(CGRectGetMaxX(line2.frame), cancelBtn.top, viewWidth/2.0f-0.5, 50);
     affirmBtn.backgroundColor = [UIColor whiteColor];
-    [affirmBtn setTitle:@"立即更新" forState:UIControlStateNormal];
+    [affirmBtn setTitle:ModuleZW(@"立即更新") forState:UIControlStateNormal];
     [affirmBtn setTitleColor:UIColorFromHex(0x1e82d2) forState:UIControlStateNormal];
     [affirmBtn addTarget:self action:@selector(affirmUpdate) forControlEvents:UIControlEventTouchUpInside];
     [self cutCircleByAngle:affirmBtn AngleType:UIRectCornerBottomRight];

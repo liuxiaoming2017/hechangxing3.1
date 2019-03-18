@@ -21,7 +21,7 @@ extern BOOL isBF;
 
 //#define URL_PRE @"http://10.1.71.62:8080/healthlm/"
 
-
+//#define URL_PRE @"http://10.1.71.38:8888/hcy-system/"
 //#define URL_PRE @"http://47.92.80.253:8080/healthlm/"
 
 
@@ -31,9 +31,9 @@ extern BOOL isBF;
 //生产环境
 //#define URL_PRE @"http://eky3h.com/healthlm/"
 //多语言测试接口
-#define URL_PRE @"http://10.1.71.121:8080/hcySoft/"
+//#define URL_PRE @"http://10.1.71.121:8080/hcySoft/"
 //测试环境
-//#define URL_PRE @"http://119.254.24.4:7006/"
+#define URL_PRE @"http://119.254.24.4:7006/"
 
 //#define URL_PRE22 @"http://10.1.71.50:8080/hcy/"
 //#define URL_PRE22 @"http://10.1.71.104:8080/hcy/"
@@ -166,7 +166,7 @@ extern BOOL isBF;
 #define tzbsAdvice @"评测一下，了解体质状态"
 #define zfbsAdvice @"评测一下，了解脏腑状态"
 
-#define requestErrorMessage @"服务器开小差了,请稍后重试!"
+#define requestErrorMessage       ModuleZW(@"服务器开小差了,请稍后重试!")
 
  #define Localized(key)  [[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"appLanguage"]] ofType:@"lproj"]] localizedStringForKey:(key) value:nil table:@"Language"]
 

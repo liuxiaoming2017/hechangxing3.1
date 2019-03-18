@@ -809,11 +809,10 @@
 - (void)leyaoButton:(UIButton *)sender{
     
     if (self.dataArray.count == 0) {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"你还没有乐药产品" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"你还没有乐药产品") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         [av show];
         return;
     }
-    
     if (self.play.playing) {
         
         [self.play pause];

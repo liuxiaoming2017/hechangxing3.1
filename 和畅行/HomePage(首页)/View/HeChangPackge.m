@@ -290,7 +290,7 @@
 - (void)showYiBingTianWithStr:(NSString *)str1 withStr:(NSString *)str2
 {
     NSString *stateStr = [NSString stringWithFormat:@"您当前属于%@",str1];
-    NSString *str = [NSString stringWithFormat:@"%@%@型，%@",ModuleZW(stateStr),str2,ModuleZW(@"点击查看我们为您定制的和畅服务包")];
+    NSString *str = [NSString stringWithFormat:@"%@%@，%@",ModuleZW(stateStr),str2,ModuleZW(@"点击查看我们为您定制的和畅服务包")];
     self.remindLabel.text = str;
     [self.toViewButton setBackgroundImage:[UIImage imageNamed:ModuleZW(@"和畅包p")] forState:(UIControlStateNormal)];
 

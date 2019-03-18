@@ -618,7 +618,7 @@
 //        vc.titleStr = @"病历详情";
 //        vc.hidesBottomBarWhenPushed = YES;
 //        [[self viewController].navigationController pushViewController:vc animated:YES];
-         
+        
         
     }
     

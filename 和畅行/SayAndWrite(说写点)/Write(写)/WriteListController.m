@@ -668,7 +668,7 @@
         UIImageView *icon = [Tools creatImageViewWithFrame:CGRectMake(25, (popCellHeight-22)/2.0, 22, 22) imageName:[self imageStrWithPartName:selectedModel.personPart]];
         [cell.contentView addSubview:icon];
         
-        UILabel *symptomName = [Tools labelWith:ModuleZW(selectedModel.symptom) frame:CGRectMake(icon.right-8, (popCellHeight-40)/2.0, _contentView.frame.size.width-70-25-11-20-50, 40) textSize:14 textColor:[Tools colorWithHexString:@"#666666"] lines:2 aligment:NSTextAlignmentLeft];
+        UILabel *symptomName = [Tools labelWith:ModuleZW(selectedModel.symptom) frame:CGRectMake(icon.right, (popCellHeight-40)/2.0, _contentView.frame.size.width-70-25-11-20-50, 40) textSize:14 textColor:[Tools colorWithHexString:@"#666666"] lines:2 aligment:NSTextAlignmentLeft];
         [cell.contentView addSubview:symptomName];
         UILabel *extentLabel = [[UILabel alloc] initWithFrame:CGRectMake(_contentView.frame.size.width-25-11-20-80, (popCellHeight-30)/2.0, 80, 30)];
         extentLabel.font = [UIFont systemFontOfSize:14];

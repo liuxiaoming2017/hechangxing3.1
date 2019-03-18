@@ -35,7 +35,7 @@
     [super viewDidLoad];
     
     listNamesArr = @[@[ModuleZW(@"关于我们"),ModuleZW(@"隐私条款"),ModuleZW(@"会员章程"),ModuleZW(@"官方微信"),ModuleZW(@"官方微博"),ModuleZW(@"声明"),ModuleZW(@"帮助")],@[ModuleZW(@"修改密码"),ModuleZW(@"注销")]];
-    listImagesArr = @[@[@"private",@"refundRecord",@"returedGoodsRecord",@"1我的_100",@"integral",@"1我的_101",@"1我的_102"],@[@"1我的_103",@"1我的_104"]];
+    listImagesArr = @[@[@"关于我们icon",@"隐私条款icon",@"会员章程icon",@"官方微信icon",@"官方微博icon",@"声明icon",@"帮助icon"],@[@"修改密码icon",@"注销icon"]];
     self.navTitleLabel.text = ModuleZW(@"设置");
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight) style:UITableViewStylePlain];
     self.tableView.showsVerticalScrollIndicator = NO;

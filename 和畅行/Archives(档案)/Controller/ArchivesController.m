@@ -377,7 +377,7 @@
     }
 
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.label.text = @"加载中...";
+    hud.label.text = ModuleZW(@"加载中...");
     
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:str parameters:nil successBlock:^(id response) {
         
