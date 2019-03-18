@@ -67,7 +67,7 @@
     
     NSArray *imageArr = @[];
     if(self.notYiChi){
-        if ([[UserShareOnce shareOnce].languageType isEqualToString:@"en-us"]){
+        if ([[UserShareOnce shareOnce].languageType isEqualToString:@"us-en"]){
             imageArr = @[ModuleZW(@"一戴Ch"),ModuleZW(@"一站Ch"),
                          ModuleZW(@"一坐2"),ModuleZW(@"一饮Ch"),
                          ModuleZW(@"一测Ch"),ModuleZW(@"一助Ch"),
