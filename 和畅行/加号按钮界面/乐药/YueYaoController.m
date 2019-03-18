@@ -201,6 +201,9 @@
             }
         }
     }
+    if ([GlobalCommon stringEqualNull:physicalStr]){
+        [self requestYueyaoListWithType:@"大宫"];
+    }
     
     [self getPayRequest];
     
