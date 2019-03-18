@@ -74,7 +74,6 @@
     [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
     
      [self returnMainPage2];
-    
     [self.window makeKeyAndVisible];
     
     [ChangeLanguageObject initUserLanguage];

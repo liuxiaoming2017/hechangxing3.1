@@ -170,7 +170,7 @@
     [self.view addSubview:YZMbtn];
     
     UIButton *findpsButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *findImg=[UIImage imageNamed:@"Find_Btn"];
+    UIImage *findImg=[UIImage imageNamed:ModuleZW(@"Find_Btn")];
     [findpsButton setImage:findImg forState:UIControlStateNormal];
     findpsButton.frame=CGRectMake((ScreenWidth-findImg.size.width/2)/2,YZMButton.frame.origin.y+YZMButton.frame.size.height+19, findImg.size.width/2,findImg.size.height/2);
     [findpsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
