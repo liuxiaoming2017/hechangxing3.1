@@ -88,7 +88,7 @@
     
     
     self.lastPage = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.lastPage.frame = CGRectMake(15, backView.height-40, 60, 30);
+    self.lastPage.frame = CGRectMake(15, backView.height-40, 65, 30);
     [self.lastPage setTitle:ModuleZW(@"上一页") forState:UIControlStateNormal];
     self.lastPage.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.lastPage setTitleColor:[Tools colorWithHexString:@"#0282bf"] forState:UIControlStateNormal];

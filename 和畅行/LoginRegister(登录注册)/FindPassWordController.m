@@ -50,7 +50,7 @@
     registrationTF.leftView = leftview1;
     registrationTF.tag = 111;
     registrationTF.delegate=self;
-    registrationTF.placeholder=ModuleZW(@"请输入您的手机号");
+    registrationTF.placeholder=ModuleZW(@"  请输入手机号");
     registrationTF.returnKeyType=UIReturnKeyNext;
     registrationTF.keyboardType=UIKeyboardTypeNumberPad;
     self.RepInputphoneTF=registrationTF;
@@ -83,7 +83,7 @@
     Regist_Sec_TF.delegate=self;
     Regist_Sec_TF.secureTextEntry=YES;
     Regist_Sec_TF.tag = 112;
-    Regist_Sec_TF.placeholder=ModuleZW(@"请输入您的新密码");
+    Regist_Sec_TF.placeholder=ModuleZW(@"请输入新密码");
     self.TtempInputsecTF=Regist_Sec_TF;
     [self.view addSubview:Regist_Sec_TF];
     
@@ -118,7 +118,7 @@
     sureSecTF.secureTextEntry=YES;
     sureSecTF.returnKeyType=UIReturnKeyNext;
     sureSecTF.tag = 113;
-    sureSecTF.placeholder=ModuleZW(@"请确认您的新密码");
+    sureSecTF.placeholder=ModuleZW(@"请确认新密码");
     self.NewInputSecTF=sureSecTF;
     [self.view addSubview:sureSecTF];
     
@@ -170,7 +170,7 @@
     [self.view addSubview:YZMbtn];
     
     UIButton *findpsButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *findImg=[UIImage imageWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"Find_Btn" ofType:@"png"]];
+    UIImage *findImg=[UIImage imageNamed:ModuleZW(@"Find_Btn")];
     [findpsButton setImage:findImg forState:UIControlStateNormal];
     findpsButton.frame=CGRectMake((ScreenWidth-findImg.size.width/2)/2,YZMButton.frame.origin.y+YZMButton.frame.size.height+19, findImg.size.width/2,findImg.size.height/2);
     [findpsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

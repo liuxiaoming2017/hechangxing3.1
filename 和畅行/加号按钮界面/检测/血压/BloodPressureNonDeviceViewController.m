@@ -105,7 +105,7 @@
     imageView.image = [UIImage imageNamed:@"血压15"];
     [self.view addSubview:imageView];
     
-    NSArray *imagesArr = [[[NSArray alloc] initWithArray:@[@"血压10",@"血压12",@"血压14"]] autorelease];
+    NSArray *imagesArr = [[[NSArray alloc] initWithArray:@[@"血压12",@"血压10",@"血压14"]] autorelease];
     NSArray *titleArr = [[[NSArray alloc] initWithArray:@[ModuleZW(@"收缩压"),ModuleZW(@"舒张压"),ModuleZW(@"脉搏次数")]] autorelease];
     for (int i=0; i<3; i++) {
         UIImageView *inputImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20+40*i, kScreenSize.width-20-40, 40)];
@@ -174,8 +174,8 @@
 #pragma mark ------- 提交数据
 -(void)saveClick:(UIButton *)button{
     NSLog(@"点击保存");
-    UITextField *tf1 = _TextFieldArr[0];
-    UITextField *tf2 = _TextFieldArr[1];
+    UITextField *tf1 = _TextFieldArr[1];
+    UITextField *tf2 = _TextFieldArr[0];
     UITextField *tf3 = _TextFieldArr[2];
     BOOL ret1 = [self isBlankString:tf1.text];
     BOOL ret2 = [self isBlankString:tf2.text];
@@ -524,7 +524,7 @@
         [lookBtn addTarget:self action:@selector(lookClickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [view2 addSubview:lookBtn];
         
-        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前脉搏%ld次/分\n  收缩压%ldmmHg\n舒张压 %ldmmhg"),(long)pulseCount,(long)highCount,(long)lowCount] frame:CGRectMake(0, 50, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
+        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前脉搏%ld次/分\n  舒张压%ldmmHg\n收缩压 %ldmmhg"),(long)pulseCount,(long)lowCount,(long)highCount] frame:CGRectMake(0, 50, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
         
         UILabel *label0 = [[UILabel alloc] init];
         label0.text = ModuleZW(@"血压、脉搏正常范围参考值：");

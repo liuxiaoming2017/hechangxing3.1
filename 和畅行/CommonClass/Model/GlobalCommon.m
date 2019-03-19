@@ -434,7 +434,7 @@
 {
     
     MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:view];
-    progress.label.text = @"请稍后";
+    progress.label.text = ModuleZW(@"请稍后");
     progress.tag = 101;
     [view addSubview:progress];
     [view bringSubviewToFront:progress];

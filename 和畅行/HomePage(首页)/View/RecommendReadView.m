@@ -159,8 +159,8 @@
 
 - (void)showAlertWarmMessage:(NSString *)message
 {
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:NULL];
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleCancel handler:NULL];
     [alertVC addAction:alertAct1];
     [[self viewController] presentViewController:alertVC animated:YES completion:NULL];
 }
@@ -214,7 +214,7 @@
 {
     
     [GlobalCommon addMaskView];
-    VersionUpdateView *updateView = [VersionUpdateView versionUpdateViewWithContent:@"发现新版本,是否升级"];
+    VersionUpdateView *updateView = [VersionUpdateView versionUpdateViewWithContent:ModuleZW(@"发现新版本,是否升级")];
     __weak __typeof(updateView)wupdateView = updateView;
     updateView.versionUpdateBlock = ^(BOOL isUpdate){
         

@@ -438,7 +438,6 @@
 		039B2AED2125623800D558F5 /* 呼吸02.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AE42125623400D558F5 /* 呼吸02.png */; };
 		039B2AEF2125623800D558F5 /* recheck_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AE62125623500D558F5 /* recheck_blue.png */; };
 		039B2AF02125623800D558F5 /* 完成.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AE72125623500D558F5 /* 完成.png */; };
-		039B2AF12125623800D558F5 /* 开始检测.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AE82125623600D558F5 /* 开始检测.png */; };
 		039B2AF32125623800D558F5 /* bounceView.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AEA2125623700D558F5 /* bounceView.png */; };
 		039B2AF42125623800D558F5 /* commit_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AEB2125623700D558F5 /* commit_green.png */; };
 		039B2AF8212563D800D558F5 /* 深色背景.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AF7212563D800D558F5 /* 深色背景.png */; };
@@ -1339,7 +1338,6 @@
 		039B2AE42125623400D558F5 /* 呼吸02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "呼吸02.png"; sourceTree = "<group>"; };
 		039B2AE62125623500D558F5 /* recheck_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recheck_blue.png; sourceTree = "<group>"; };
 		039B2AE72125623500D558F5 /* 完成.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "完成.png"; sourceTree = "<group>"; };
-		039B2AE82125623600D558F5 /* 开始检测.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "开始检测.png"; sourceTree = "<group>"; };
 		039B2AEA2125623700D558F5 /* bounceView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bounceView.png; sourceTree = "<group>"; };
 		039B2AEB2125623700D558F5 /* commit_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = commit_green.png; sourceTree = "<group>"; };
 		039B2AF7212563D800D558F5 /* 深色背景.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "深色背景.png"; sourceTree = "<group>"; };
@@ -3261,7 +3259,6 @@
 				039B2AF7212563D800D558F5 /* 深色背景.png */,
 				039B2AE32125623300D558F5 /* 呼吸01.png */,
 				039B2AE42125623400D558F5 /* 呼吸02.png */,
-				039B2AE82125623600D558F5 /* 开始检测.png */,
 				039B2AE72125623500D558F5 /* 完成.png */,
 				039B2AEA2125623700D558F5 /* bounceView.png */,
 				039B2AEB2125623700D558F5 /* commit_green.png */,
@@ -3980,7 +3977,6 @@
 				038CE88A20EDF622005E9219 /* checkboxyes.png in Resources */,
 				036E85022186EB1A001B9BB4 /* 68MoxaHead_yellow.png in Resources */,
 				039C23942123D05000F9AFA3 /* 不再提醒.png in Resources */,
-				039B2AF12125623800D558F5 /* 开始检测.png in Resources */,
 				03513AD520E9CAD4004E2805 /* Assets.xcassets in Resources */,
 				03B1A1902119690400B23339 /* ReplaceSec_FSec.png in Resources */,
 				035FD3FC21881F03008CD7E7 /* zhifuwancheng.png in Resources */,

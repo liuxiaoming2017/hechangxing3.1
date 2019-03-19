@@ -69,7 +69,7 @@
     registrationTF.leftView = leftview1;
     
     registrationTF.delegate=self;
-    registrationTF.placeholder=@"请输入您的手机号";
+    registrationTF.placeholder=@" 请输入手机号";
     registrationTF.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
     registrationTF.returnKeyType=UIReturnKeyNext;
     self.pregistrationTF=registrationTF;
@@ -300,7 +300,7 @@
 {
     if (self.pregistrationTF.text.length==0) {
         
-        [self showAlertWarmMessage:@"登录手机号不能为空"];
+        [self showAlertWarmMessage:ModuleZW(@"登录手机号不能为空")];
         return;
     }
  
@@ -432,39 +432,39 @@
     
     if (self.pregistrationTF.text.length==0) {
         
-        [self showAlertWarmMessage:@"登录手机号不能为空"];
+        [self showAlertWarmMessage:ModuleZW(@"登录手机号不能为空")];
         return;
     }
     if (self.pregistrationTF.text.length<11) {
         
-        [self showAlertWarmMessage:@"手机号格式错误，请正确输入您的手机号码"];
+        [self showAlertWarmMessage:ModuleZW(@"手机号格式错误，请正确输入您的手机号码")];
         return;
     }
     if (self.pRegist_Sec_TF.text.length==0) {
         
-        [self showAlertWarmMessage:@"密码设置不能为空"];
+        [self showAlertWarmMessage:ModuleZW(@"密码设置不能为空")];
         return;
     }
     if (self.pRegist_Sec_TF.text.length<6||self.pSecTF.text.length>20) {
         
-        [self showAlertWarmMessage:@"请输入6-20位字符，可使用字母，数字或字符组合!"];
+        [self showAlertWarmMessage:ModuleZW(@"请输入6-20位字符，可使用字母，数字或字符组合!")];
         return;
     }
     if (self.pSureTF.text.length==0) {
-        [self showAlertWarmMessage:@"密码确认不能为空"];
+        [self showAlertWarmMessage:ModuleZW(@"密码确认不能为空")];
         return;
     }
     if (self.pSureTF.text.length<6||self.pSureTF.text.length>20) {
         
-        [self showAlertWarmMessage:@"请输入6-20位字符，可使用字母，数字或字符组合！"];
+        [self showAlertWarmMessage:ModuleZW(@"请输入6-20位字符，可使用字母，数字或字符组合!")];
         return;
     }
     if (![self.pRegist_Sec_TF.text isEqualToString:self.pSureTF.text]) {
-        [self showAlertWarmMessage:@"两次输入的密码不一致"];
+        [self showAlertWarmMessage:ModuleZW(@"两次输入的密码不一致")];
         return;
     }
     if (self.pYzmTF.text.length==0) {
-        [self showAlertWarmMessage:@"请获取注册码"];
+        [self showAlertWarmMessage:ModuleZW(@"请获取注册码")];
         return;
     }
     else
@@ -473,7 +473,7 @@
     }
     
     if (!isagreen) {
-        [self showAlertWarmMessage:@"请阅读条款... ..."];
+        [self showAlertWarmMessage:ModuleZW(@"请阅读条款... ...")];
         return;
     }
     

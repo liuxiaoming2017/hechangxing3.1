@@ -392,25 +392,17 @@
     
     
 }
+// 如果没有定义的委托,我们模拟一个点击取消按钮
+- (void)actionSheetCancel:(UIActionSheet *)actionSheet
+{
+    NSLog(@"actionSheetCancel:");
+}
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     
     if(actionSheet.tag==10006)
     {
-        if (buttonIndex==0) {
-            CertificatesType=@"idCard";
-        }
-        if (buttonIndex==1) {
-            CertificatesType=@"officerCard";
-        }
-        if (buttonIndex==2) {
-            CertificatesType=@"passport";
-        }
-        if (buttonIndex==3) {
-            CertificatesType=@"elseCard";
-        }
-        [Certificates_btn setTitle:[actionSheet buttonTitleAtIndex:buttonIndex] forState:UIControlStateNormal];
-        [Certificates_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+      
     }
     else
     {
@@ -1034,18 +1026,41 @@
         [SelectTF resignFirstResponder];
         [self restoreView];
     }
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@""
-                                                             delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"身份证", @"军官证",@"护照",@"其它" ,nil];
-    actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
-    actionSheet.tag=10006;
+
+    UIAlertController *alectSheet = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     
-    actionSheet.title=@"证件类型";
-    //actionSheet.destructiveButtonIndex = 1;	// make the second button red (destructive)
-    [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]]; // show from our table view (pops up in the middle of the table)
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:ModuleZW(@"身份证") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        self->CertificatesType=@"idCard";
+        [self->Certificates_btn setTitle:@"身份证" forState:UIControlStateNormal];
+        [self->Certificates_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    }];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:ModuleZW(@"军官证") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self->CertificatesType=@"officerCard";
+        [self->Certificates_btn setTitle:@"军官证" forState:UIControlStateNormal];
+        [self->Certificates_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    }];
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:ModuleZW(@"护照") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self->CertificatesType=@"passport";
+        [self->Certificates_btn setTitle:@"护照" forState:UIControlStateNormal];
+        [self->Certificates_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    }];
+    UIAlertAction *action4 = [UIAlertAction actionWithTitle:ModuleZW(@"其它") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self->CertificatesType=@"elseCard";
+        [self->Certificates_btn setTitle:@"其它" forState:UIControlStateNormal];
+        [self->Certificates_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    }];
+    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:NULL];
+    [alectSheet addAction:action1];
+    [alectSheet addAction:action2];
+    [alectSheet addAction:action3];
+    [alectSheet addAction:action4];
+    [alectSheet addAction:cancleAction];
+    [self presentViewController:alectSheet animated:YES completion:NULL];
    
     
 }
+
 -(void) BirthDayActive:(id)sender
 {
     if (SelectTF!=nil) {
@@ -1133,6 +1148,7 @@
     [TelephoneLb_Tf resignFirstResponder];
     [Certificates_Number_Tf resignFirstResponder];
     [ self restoreView];
+    [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
 }
 
 -(void)tapScreen:(UITapGestureRecognizer *)tap{

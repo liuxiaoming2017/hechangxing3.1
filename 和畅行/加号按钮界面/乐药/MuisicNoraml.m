@@ -44,7 +44,6 @@
 }
 
 - (void)createUI{
-    
     self.isBluetoonState = NO;
     self.isLeyaoPlayState = NO;
     [[NSNotificationCenter defaultCenter] addObserverForName:LeyaoBluetoothON object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {

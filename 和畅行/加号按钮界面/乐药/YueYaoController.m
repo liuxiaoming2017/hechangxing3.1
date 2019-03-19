@@ -80,6 +80,8 @@
     self.segmentedControl = nil;
     self.hysegmentControl = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PayStatues" object:nil];
+    [UserShareOnce shareOnce].allYueYaoPrice = 0.0;
+    [[UserShareOnce shareOnce].yueYaoBuyArr removeAllObjects];
 }
 
 - (void)viewDidLoad {
@@ -117,6 +119,7 @@
     
     self->jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
 }
+
 
 - (id)initWithType:(BOOL )isYueLuoyi
 {
@@ -198,6 +201,9 @@
             }
         }
     }
+    if ([GlobalCommon stringEqualNull:physicalStr]){
+        [self requestYueyaoListWithType:@"大宫"];
+    }
     
     [self getPayRequest];
     
@@ -212,14 +218,12 @@
     __weak typeof(self) weakSelf = self;
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
         id status=[response objectForKey:@"status"];
-        [weakSelf createConsumeView];
-        weakSelf.isOnPay = YES;
-//        if([status intValue] == 200){
-//            [weakSelf createConsumeView];
-//            weakSelf.isOnPay = YES;
-//        }else{
-//            weakSelf.isOnPay = NO;
-//        }
+        if([status intValue] != 222){
+            [weakSelf createConsumeView];
+            weakSelf.isOnPay = YES;
+        }else{
+            weakSelf.isOnPay = NO;
+        }
     } failureBlock:^(NSError *error) {
         weakSelf.isOnPay = NO;
     }];
@@ -776,7 +780,7 @@
 #pragma -mark 蓝牙初始化界面
 - (void)BluBluetoothView{
     
-    self.musciView = [[MuisicNoraml alloc]initWithFrame:CGRectMake(0, kScreenSize.height- 43-75, kScreenSize.width, 150)];
+    self.musciView = [[MuisicNoraml alloc]initWithFrame:CGRectMake(0, kScreenSize.height- kNavBarHeight - 75, kScreenSize.width, 150)];
     self.musciView.delegate = self;
     
     [self.view addSubview:self.musciView];
