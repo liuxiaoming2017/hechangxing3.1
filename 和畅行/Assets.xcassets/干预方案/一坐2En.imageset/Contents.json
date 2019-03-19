@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "一坐2En.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "one_sit.png",
       "scale" : "2x"
     },
     {
