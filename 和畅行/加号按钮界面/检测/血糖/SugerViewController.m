@@ -109,10 +109,11 @@
     imageView.image = [UIImage imageNamed:ModuleZW(@"血糖9")];
     [self.view addSubview:imageView];
     
-    UILabel *reminderLabel = [Tools creatLabelWithFrame:CGRectMake(20, 60, 160, 20) text:ModuleZW(@"输入当前血糖值") textSize:12];
+    UILabel *reminderLabel = [Tools creatLabelWithFrame:CGRectMake(20, 60, 160, 30) text:ModuleZW(@"输入当前血糖值") textSize:12];
     reminderLabel.textAlignment = NSTextAlignmentCenter;
     reminderLabel.textColor = [Tools colorWithHexString:@"#3fcadb"];
     reminderLabel.font = [UIFont systemFontOfSize:12];
+    reminderLabel.numberOfLines =2;
     [imageView addSubview:reminderLabel];
     
     _textFiled = [[UITextField alloc] initWithFrame:CGRectMake(60, 90, 80, 40)];
@@ -129,7 +130,7 @@
     
     
     //提交按钮
-    UIButton *commitButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-100, imageView.bottom+30, 200, 40) target:self sel:@selector(commitClick:) tag:101 image:@"0_15" title:nil];
+    UIButton *commitButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-100, imageView.bottom+30, 200, 40) target:self sel:@selector(commitClick:) tag:101 image:ModuleZW(@"0_15") title:nil];
     [self.view addSubview:commitButton];
     
     //使用规范
@@ -481,7 +482,7 @@
     imageView.userInteractionEnabled = YES;
     imageView.image = [UIImage imageNamed:@"bounceView"];
 
-    UIButton *confirmBtn = [Tools creatButtonWithFrame:CGRectMake(imageView.left, imageView.bottom, imageView.width, 40*1.1) target:self sel:@selector(confirmBtnClick2:) tag:21 image:@"确定" title:nil];
+    UIButton *confirmBtn = [Tools creatButtonWithFrame:CGRectMake(imageView.left, imageView.bottom, imageView.width, 40*1.1) target:self sel:@selector(confirmBtnClick2:) tag:21 image:ModuleZW(@"sureButton") title:nil];
     
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 60, imageView.bounds.size.width, imageView.bounds.size.height-60)];
     _scrollView.showsHorizontalScrollIndicator = NO;
@@ -495,8 +496,14 @@
     }else{
         checkType = ModuleZW(@"餐后");
     }
-    UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您今天测量血糖%ld次，正常%ld次，异常%ld次\n您当前检测%@血糖值为%.1fmmol/L"),(long)_totalCount,(long)_nomalCount,(long)_unNomalCount,checkType,_textFiled.text.floatValue] frame:CGRectMake(0, 0, imageView.bounds.size.width, 30) textSize:12 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
+    UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您今天测量血糖%ld次，正常%ld次，异常%ld次\n您当前检测%@血糖值为%.1fmmol/L"),(long)_totalCount,(long)_nomalCount,(long)_unNomalCount,checkType,_textFiled.text.floatValue] frame:CGRectMake(0, 0, imageView.bounds.size.width, 20) textSize:12 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
     [_scrollView addSubview:countLabel];
+    CGRect textRect1 = [countLabel.text  boundingRectWithSize:CGSizeMake(imageView.bounds.size.width-40, MAXFLOAT)
+                                                  options:NSStringDrawingUsesLineFragmentOrigin
+                                               attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]}
+                                                  context:nil];
+    countLabel.height = textRect1.size.height;
+    
     UILabel *hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 35, imageView.bounds.size.width-40, 60)];
     
     hintLabel.numberOfLines = 0;
@@ -511,7 +518,7 @@
         range = NSMakeRange(5, 2);
     }
 
-    [hintString addAttribute:NSForegroundColorAttributeName value:[Tools colorWithHexString:@"f60a0c"] range:range];
+//    [hintString addAttribute:NSForegroundColorAttributeName value:[Tools colorWithHexString:@"f60a0c"] range:range];
     hintLabel.attributedText = hintString;
     [_scrollView addSubview:hintLabel];
     //创建两个tableView

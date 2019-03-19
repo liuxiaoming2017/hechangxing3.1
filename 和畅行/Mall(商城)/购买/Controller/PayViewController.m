@@ -52,7 +52,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    
-    self.navTitleLabel.text = @"第三方支付";
+    self.navTitleLabel.text = ModuleZW(@"第三方支付");
     self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.navTitleLabel.textColor = [UIColor whiteColor];
     self.preBtn.hidden = NO;
@@ -79,7 +79,7 @@
     [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"CELL"];
     
     _tabArray = [[NSMutableArray alloc]initWithObjects:@"zhifubao.png",@"weixin.png", nil];
-    _zhifufangshiArray = [[NSMutableArray alloc]initWithObjects:@"支付宝支付",@"微信支付", nil];
+    _zhifufangshiArray = [[NSMutableArray alloc]initWithObjects:ModuleZW(@"支付宝支付"),ModuleZW(@"微信支付"), nil];
     
 //    _tabArray = [[NSMutableArray alloc]initWithObjects:@"weixin.png", nil];
 //    _zhifufangshiArray = [[NSMutableArray alloc]initWithObjects:@"微信支付", nil];
@@ -96,17 +96,14 @@
     UIButton *jiesuanButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     jiesuanButton.frame = CGRectMake(self.view.frame.size.width -  105, self.view.frame.size.height - kTabBarHeight, 105, 44);
     [jiesuanButton addTarget:self action:@selector(zhifujiesuanButton) forControlEvents:(UIControlEventTouchUpInside)];
-    [jiesuanButton setTitle:@"支付" forState:(UIControlStateNormal)];
+    [jiesuanButton setTitle:ModuleZW(@"去结算") forState:(UIControlStateNormal)];
     [jiesuanButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
     jiesuanButton.backgroundColor = RGB(68, 204, 82);
     [self.view addSubview:jiesuanButton];
     
-    UIImageView *gouwucheImage = [[UIImageView alloc]initWithFrame:CGRectMake(15, 12, 20, 20)];
-    gouwucheImage.image = [UIImage imageNamed:@"qianbao.png"];
-    [xiaofeijinerImage addSubview:gouwucheImage];
     
     UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 12, 50, 20)];
-    zongjinerLabel.text = @"总计：";
+    zongjinerLabel.text = ModuleZW(@"总计: ");
     zongjinerLabel.textColor = [UIColor whiteColor];
     zongjinerLabel.font = [UIFont systemFontOfSize:13];
     [xiaofeijinerImage addSubview:zongjinerLabel];
@@ -477,7 +474,7 @@
     [self.view addSubview:progress_];
     [self.view bringSubviewToFront:progress_];
     progress_.delegate = self;
-    progress_.label.text = @"加载中...";
+    progress_.label.text = ModuleZW(@"加载中...");
     [progress_ showAnimated:YES];
     
 }

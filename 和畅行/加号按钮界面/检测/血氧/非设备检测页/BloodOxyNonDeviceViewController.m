@@ -79,7 +79,7 @@
     reminderImageView.image = [UIImage imageNamed:@"血氧10"];
     [inputImageView addSubview:reminderImageView];
     
-    UILabel *categoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 12.5, 60, 15)];
+    UILabel *categoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 12.5, 60, 15)];
     categoryLabel.text = ModuleZW(@"当前血氧");
     categoryLabel.textAlignment = NSTextAlignmentLeft;
     categoryLabel.textColor = [Tools colorWithHexString:@"#878787"];
@@ -130,7 +130,7 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
-        hud.labelText = ModuleZW(@"请输入正常的血氧值！");
+        hud.label.text= ModuleZW(@"请输入正常的血氧值！");
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hide:YES afterDelay:2];
     }else{

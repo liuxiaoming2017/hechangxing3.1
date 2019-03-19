@@ -99,8 +99,9 @@
     [cashcardView addSubview:no_CardImage];
     self.no_CardImage = no_CardImage;
     
-    UILabel *nocardLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth/2.0-100, no_CardImage.bottom+5, 200, 25)];
-    nocardLabel.font = [UIFont systemFontOfSize:17];
+    UILabel *nocardLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth/2.0-100, no_CardImage.bottom+5, 200, 40)];
+    nocardLabel.font = [UIFont systemFontOfSize:16];
+    nocardLabel.numberOfLines = 2;
     nocardLabel.textAlignment = NSTextAlignmentCenter;
     nocardLabel.textColor = [UIColor grayColor];
     nocardLabel.text = ModuleZW(@"您当前还没有现金卡哦");
@@ -128,6 +129,11 @@
     titleLabel.textAlignment = NSTextAlignmentRight;
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.text = ModuleZW(@"消费金额： ");
+    CGRect textRect = [titleLabel.text  boundingRectWithSize:CGSizeMake(MAXFLOAT, 25)
+                                               options:NSStringDrawingUsesLineFragmentOrigin
+                                            attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]}
+                                               context:nil];
+    titleLabel.width = textRect.size.width;
     [bottomView addSubview:titleLabel];
     
     UILabel *ciaofeiLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.right, 10, 200, 25)];
@@ -142,6 +148,11 @@
     cardLabel.textAlignment = NSTextAlignmentRight;
     cardLabel.textColor = [UIColor blackColor];
     cardLabel.text = ModuleZW(@"现金卡支付： ");
+    CGRect textRect1 = [cardLabel.text  boundingRectWithSize:CGSizeMake(MAXFLOAT, 25)
+                                                     options:NSStringDrawingUsesLineFragmentOrigin
+                                                  attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]}
+                                                     context:nil];
+    cardLabel.width = textRect1.size.width;
     [bottomView addSubview:cardLabel];
     
     UILabel *cardxiaofeiLabel = [[UILabel alloc] initWithFrame:CGRectMake(cardLabel.right, cardLabel.top, 200, 25)];
@@ -161,16 +172,19 @@
     xiaofeijinerImage.image = [UIImage imageNamed:@"leyaoxiaofeijiner.png"];
     [zhifuView addSubview:xiaofeijinerImage];
     
-    UIImageView *jiesuanImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width -  105, 0, 105, 44)];
-    jiesuanImage.image = [UIImage imageNamed:@"zhifudetu.png"];
-    [zhifuView addSubview:jiesuanImage];
+
     
-    UIImageView *gouwucheImage = [[UIImageView alloc]initWithFrame:CGRectMake(35, 12, 20, 20)];
+    UIImageView *gouwucheImage = [[UIImageView alloc]initWithFrame:CGRectMake(25, 12, 20, 20)];
     gouwucheImage.image = [UIImage imageNamed:@"qianbao.png"];
     [zhifuView addSubview:gouwucheImage];
     
-    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 12, 90, 20)];
+    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 12, 120, 20)];
     zongjinerLabel.text = ModuleZW(@"还需支付：");
+    CGRect textRect2 = [zongjinerLabel.text  boundingRectWithSize:CGSizeMake(MAXFLOAT, 20)
+                                                     options:NSStringDrawingUsesLineFragmentOrigin
+                                                  attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]}
+                                                     context:nil];
+    zongjinerLabel.width = textRect2.size.width;
     zongjinerLabel.textAlignment = NSTextAlignmentRight;
     zongjinerLabel.textColor = [UIColor whiteColor];
     zongjinerLabel.font = [UIFont systemFontOfSize:16];
@@ -184,9 +198,12 @@
     _jinerLabel.font = [UIFont boldSystemFontOfSize:16];
     [zhifuView addSubview:_jinerLabel];
     
-    UIButton *jiesuanButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton *jiesuanButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     jiesuanButton.frame = CGRectMake(self.view.frame.size.width - 105, 0, 105, 44);
-    [jiesuanButton addTarget:self action:@selector(zhifuqujiesuanButton) forControlEvents:UIControlEventTouchUpInside];
+    [jiesuanButton addTarget:self action:@selector(zhifuqujiesuanButton) forControlEvents:(UIControlEventTouchUpInside)];
+    [jiesuanButton setTitle:ModuleZW(@"去结算") forState:(UIControlStateNormal)];
+    [jiesuanButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    jiesuanButton.backgroundColor = RGB(68, 204, 82);
     [zhifuView addSubview:jiesuanButton];
     
     self.priceCountt = [UserShareOnce shareOnce].allYueYaoPrice;

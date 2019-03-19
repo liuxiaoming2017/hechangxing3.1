@@ -123,12 +123,12 @@ static int const tick = 80;
     [stateImageView addSubview:imageViewImage];
     self.imageViewImage = imageViewImage;
     
-    UILabel *stateLabel = [Tools creatLabelWithFrame:CGRectMake(0, 25, stateImageView.frame.size.width, 12) text:ModuleZW(@"未连接") textSize:14];
+    UILabel *stateLabel = [Tools creatLabelWithFrame:CGRectMake(0, 25, stateImageView.frame.size.width, 20) text:ModuleZW(@"未连接") textSize:14];
     stateLabel.textAlignment = NSTextAlignmentCenter;
     stateLabel.numberOfLines = 2;
     stateLabel.font = [UIFont boldSystemFontOfSize:10];
     stateLabel.textColor = [UIColor whiteColor];
-    //stateLabel.adjustsFontSizeToFitWidth = YES;
+    stateLabel.adjustsFontSizeToFitWidth = YES;
     self.stateLabel = stateLabel;
     [stateImageView addSubview:stateLabel];
     
@@ -207,12 +207,12 @@ static int const tick = 80;
 
 
 -(void)createButton{
-    UIButton *startCheck = [Tools creatButtonWithFrame:CGRectMake(50, kScreenSize.height==480 ? 350: 390, kScreenSize.width-100, (kScreenSize.width-100)/6.0) target:self sel:@selector(startCheckClick:) tag:11 image:@"血压03" title:nil];
+    UIButton *startCheck = [Tools creatButtonWithFrame:CGRectMake(50, kScreenSize.height==480 ? 350: 390, kScreenSize.width-100, (kScreenSize.width-100)/6.0) target:self sel:@selector(startCheckClick:) tag:11 image:ModuleZW(@"血压03") title:nil];
     startCheck.enabled = NO;
     self.startCheck = startCheck;
     [self.view addSubview:startCheck];
     
-    UIButton *nonDeviceCheck = [Tools creatButtonWithFrame:CGRectMake(50,startCheck.bottom+20, kScreenSize.width-100, (kScreenSize.width-100)/6.0) target:self sel:@selector(nonDeviceChekClick:) tag:12 image:@"血压05" title:nil];
+    UIButton *nonDeviceCheck = [Tools creatButtonWithFrame:CGRectMake(50,startCheck.bottom+20, kScreenSize.width-100, (kScreenSize.width-100)/6.0) target:self sel:@selector(nonDeviceChekClick:) tag:12 image:ModuleZW(@"血压05") title:nil];
     nonDeviceCheck.enabled = YES;
     self.nonDeviceCheck = nonDeviceCheck;
     [self.view addSubview:nonDeviceCheck];

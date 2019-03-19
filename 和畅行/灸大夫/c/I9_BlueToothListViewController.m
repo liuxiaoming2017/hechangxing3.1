@@ -55,6 +55,7 @@
     _mTableList.dataSource = self;
     _mTableList.delegate = self;
     _deviceList = [NSMutableArray new];
+    [_mRefreshBtn setTitle:ModuleZW(@"刷新列表") forState:(UIControlStateNormal)];
     _deviceMeshnameList = [NSMutableArray new];
     if (SUPPORT_YES == [[moxibustion getInstance] getBluetoothSupportState]
         && STATE_ON == [[moxibustion getInstance] getBluetoothOpenState])

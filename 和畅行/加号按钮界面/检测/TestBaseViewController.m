@@ -30,7 +30,7 @@
     progressView = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:progressView];
     [self.view bringSubviewToFront:progressView];
-    progressView.label.text = @"加载中...";
+    progressView.label.text = ModuleZW(@"加载中...");
     [progressView showAnimated:YES];
 
 }
