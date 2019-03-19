@@ -238,7 +238,7 @@
 {
     [self hudWasHidden];
     
-    [self showAlertWarmMessage:@"网络连接错误"];
+    [self showAlertWarmMessage:requestErrorMessage];
     
 }
 -(void)requestIsAPPpayReaderCompleted:(ASIHTTPRequest *)request

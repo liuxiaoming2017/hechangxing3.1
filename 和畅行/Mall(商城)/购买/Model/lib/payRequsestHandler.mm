@@ -156,7 +156,7 @@
     NSLog(@"%f",priceChinese);
     NSString *order_price   = @"";//1分钱测试
     order_price = [NSString stringWithFormat:@"%.0f",priceChinese];
-
+    
     //================================
     //预付单参数订单设置
     //================================

@@ -212,12 +212,14 @@
     __weak typeof(self) weakSelf = self;
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
         id status=[response objectForKey:@"status"];
-        if([status intValue] == 200){
-            [weakSelf createConsumeView];
-            weakSelf.isOnPay = YES;
-        }else{
-            weakSelf.isOnPay = NO;
-        }
+        [weakSelf createConsumeView];
+        weakSelf.isOnPay = YES;
+//        if([status intValue] == 200){
+//            [weakSelf createConsumeView];
+//            weakSelf.isOnPay = YES;
+//        }else{
+//            weakSelf.isOnPay = NO;
+//        }
     } failureBlock:^(NSError *error) {
         weakSelf.isOnPay = NO;
     }];
