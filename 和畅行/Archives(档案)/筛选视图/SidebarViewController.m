@@ -42,20 +42,37 @@
     
     self.selectTag = -1;
     //档案最新
-    self.titleArr = [NSArray arrayWithObjects:
-                     ModuleZW(@"全部"),
-                     ModuleZW(@"最新"),
-                     ModuleZW(@"阶段报告"),
-                     ModuleZW(@"病历"),
-                     ModuleZW(@"经络"),
-                     ModuleZW(@"脏腑"),
-                     ModuleZW(@"体质"),
-                     ModuleZW(@"血压"),
-                     ModuleZW(@"血氧"),
-                     ModuleZW(@"血糖"),
-                     ModuleZW(@"心率"),
-                     ModuleZW(@"呼吸"),
-                     ModuleZW(@"体温"), nil];
+    if ([UserShareOnce shareOnce].languageType){
+        self.titleArr = [NSArray arrayWithObjects:
+                         ModuleZW(@"全部"),
+                         ModuleZW(@"最新"),
+                         ModuleZW(@"阶段报告"),
+                         ModuleZW(@"经络"),
+                         ModuleZW(@"脏腑"),
+                         ModuleZW(@"体质"),
+                         ModuleZW(@"血压"),
+                         ModuleZW(@"血氧"),
+                         ModuleZW(@"血糖"),
+                         ModuleZW(@"心率"),
+                         ModuleZW(@"呼吸"),
+                         ModuleZW(@"体温"), nil];
+    }else{
+        self.titleArr = [NSArray arrayWithObjects:
+                         ModuleZW(@"全部"),
+                         ModuleZW(@"最新"),
+                         ModuleZW(@"阶段报告"),
+                         ModuleZW(@"病历"),
+                         ModuleZW(@"经络"),
+                         ModuleZW(@"脏腑"),
+                         ModuleZW(@"体质"),
+                         ModuleZW(@"血压"),
+                         ModuleZW(@"血氧"),
+                         ModuleZW(@"血糖"),
+                         ModuleZW(@"心率"),
+                         ModuleZW(@"呼吸"),
+                         ModuleZW(@"体温"), nil];
+    }
+   
 
     for(NSInteger i=0;i<self.titleArr.count;i++){
         UIButton *selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];

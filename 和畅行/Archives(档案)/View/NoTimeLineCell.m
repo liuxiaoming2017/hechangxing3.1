@@ -193,19 +193,21 @@
     }else if ([self.typeLabel.text isEqualToString:ModuleZW(@"体温")]) {
         kindStr = @"(℃)";
     }else{
-        kindStr = @"";
+        kindStr = nil;
     }
+    
     self.kindLabel.text = kindStr;
     self.typeLabel.text = typeStr;
     
     if ([UserShareOnce shareOnce].languageType){
         
         NSString *salaryStr1 = [NSString string];
-        if (kindStr.length > 0){
+        if (kindStr){
             salaryStr1 =  [NSString stringWithFormat:@"%@\n%@",typeStr,kindStr];
         }else{
             salaryStr1 = typeStr;
         }
+        NSLog(@"%@  ",salaryStr1);
         self.typeLabel.numberOfLines = 2;
         NSMutableAttributedString *salaryStr = [[NSMutableAttributedString alloc]initWithString:salaryStr1];
         [salaryStr beginEditing];

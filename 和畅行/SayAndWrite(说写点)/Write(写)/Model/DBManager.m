@@ -71,7 +71,7 @@
     NSMutableArray *marr = [NSMutableArray arrayWithCapacity:0];
     while ([rs next]) {
         OrganDiseaseModel *model = [[OrganDiseaseModel alloc] init];
-        if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"Language"] isEqualToString:@"Other"]){
+        if ([UserShareOnce shareOnce].languageType){
             model.content = [rs stringForColumn:@"content_en"];
         }else{
             model.content = [rs stringForColumn:@"content"];
@@ -91,7 +91,7 @@
         [_database open];
     }
      NSString *sql = @"select * from ICD10 where content like ?";
-    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"Language"] isEqualToString:@"Other"]){
+    if ([UserShareOnce shareOnce].languageType){
         sql = @"select * from ICD10 where content_en like ?";
     }
    
@@ -99,7 +99,7 @@
     NSMutableArray *marr = [NSMutableArray arrayWithCapacity:0];
     while ([rs next]) {
         OrganDiseaseModel *model = [[OrganDiseaseModel alloc] init];
-        if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"Language"] isEqualToString:@"Other"]){
+        if ([UserShareOnce shareOnce].languageType){
             model.content = [rs stringForColumn:@"content_en"];
         }else{
             model.content = [rs stringForColumn:@"content"];

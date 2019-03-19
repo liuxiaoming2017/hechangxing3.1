@@ -53,15 +53,14 @@
     
     //CGFloat originX = (ScreenWidth - 122*3-18)/2.0;
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.height/2.0-30, 200, 30)];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, self.height/2.0-30, 200, 30)];
     self.titleLabel.font = [UIFont systemFontOfSize:21];
     self.titleLabel.textAlignment = NSTextAlignmentLeft;
     self.titleLabel.textColor = [UIColor whiteColor];
     self.titleLabel.text = ModuleZW(@"和畅包");
     [self addSubview:self.titleLabel];
     
-    
-    self.remindLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLabel.left, self.titleLabel.bottom, self.width-120, 60)];
+    self.remindLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLabel.left, self.titleLabel.bottom, ScreenWidth -50 , 60)];
     self.remindLabel.font = [UIFont systemFontOfSize:16];
     self.remindLabel.numberOfLines = 0;
     self.remindLabel.textAlignment = NSTextAlignmentLeft;

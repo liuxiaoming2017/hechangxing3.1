@@ -257,7 +257,7 @@
     //设定时间格式,这里可以设置成自己需要的格式
     [dateFormatter setDateFormat:@"MM月dd日"];
     NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
-    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"Language"] isEqualToString:@"Other"]){
+   if ([UserShareOnce shareOnce].languageType){
         currentDateStr =  [currentDateStr stringByReplacingOccurrencesOfString:@"日" withString:@"D"];
         currentDateStr =  [currentDateStr stringByReplacingOccurrencesOfString:@"月" withString:@"M"];
     }

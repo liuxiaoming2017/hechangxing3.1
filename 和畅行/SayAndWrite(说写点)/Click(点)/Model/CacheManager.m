@@ -32,7 +32,12 @@
     self = [super init];
     if (self) {
         NSString *docuPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
-        NSString *dbPath = [docuPath stringByAppendingPathComponent:@"question.db"];
+        NSString *dbPath = [NSString string];
+        if([UserShareOnce shareOnce].languageType){
+            dbPath = [docuPath stringByAppendingPathComponent:@"questionEn.db"];
+        }else{
+            dbPath = [docuPath stringByAppendingPathComponent:@"question.db"];
+        }
         self.db = [FMDatabase databaseWithPath:dbPath];
         [self.db open];
     }
@@ -42,7 +47,12 @@
 - (BOOL)createDataBase
 {
     NSString *docuPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
-    NSString *dbPath = [docuPath stringByAppendingPathComponent:@"question.db"];
+    NSString *dbPath = [NSString string];
+    if([UserShareOnce shareOnce].languageType){
+        dbPath = [docuPath stringByAppendingPathComponent:@"questionEn.db"];
+    }else{
+        dbPath = [docuPath stringByAppendingPathComponent:@"question.db"];
+    }
     //2.创建对应路径下数据库
     _db = [FMDatabase databaseWithPath:dbPath];
     //3.在数据库中进行增删改查操作时，需要判断数据库是否open，如果open失败，可能是权限或者资源不足，数据库操作完成通常使用close关闭数据库

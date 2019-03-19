@@ -122,7 +122,12 @@
 - (void)getQuestionData
 {
     NSString *docuPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
-    NSString *dbPath = [docuPath stringByAppendingPathComponent:@"question.db"];
+    NSString *dbPath  = [NSString string];
+    if([UserShareOnce shareOnce].languageType){
+        dbPath = [docuPath stringByAppendingPathComponent:@"questionEn.db"];
+    }else{
+        dbPath = [docuPath stringByAppendingPathComponent:@"question.db"];
+    }
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL isExist = [fileManager fileExistsAtPath:dbPath];
     if(isExist){
@@ -149,7 +154,7 @@
         QuestionModel *model1 = [tempArr objectAtIndex:i];
         for(NSInteger j=i+1;j<arrCount;j++){
             QuestionModel *model2 = [tempArr objectAtIndex:j];
-            if(model2.order == model1.order){
+            if(model2.uid == model1.uid){
                 isRepeat = YES;
             }
         }
@@ -219,6 +224,7 @@
         }else{
             [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
         }
+        
     } failureBlock:^(NSError *error) {
         [GlobalCommon hideMBHudWithView:weakSelf.view];
         [weakSelf showAlertWarmMessage:requestErrorMessage];

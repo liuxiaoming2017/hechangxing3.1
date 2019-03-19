@@ -204,7 +204,6 @@
     self.typeLabel.text = typeStr;
     self.kindLabel.text = kindStr;
     if ([UserShareOnce shareOnce].languageType){
-        NSLog(@"%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"Language"]);
         NSString *salaryStr1 = [NSString string];
         if (kindStr.length > 0){
             salaryStr1 =  [NSString stringWithFormat:@"%@\n%@",typeStr,kindStr];
@@ -253,7 +252,7 @@
     NSString *dateStr = [NSString stringWithFormat:ModuleZW(@"MM月dd日")];
     [dateFormatter setDateFormat:dateStr];
     NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
-    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"Language"] isEqualToString:@"Other"]){
+    if ([UserShareOnce shareOnce].languageType){
         currentDateStr =  [currentDateStr stringByReplacingOccurrencesOfString:@"日" withString:@"D"];
         currentDateStr =  [currentDateStr stringByReplacingOccurrencesOfString:@"月" withString:@"M"];
     }

@@ -77,7 +77,7 @@
             name.textAlignment = NSTextAlignmentCenter;
             
             if (i == 4){
-                if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"Language"] isEqualToString:@"Other"]){
+                if ([UserShareOnce shareOnce].languageType){
                     button.hidden = YES;
                     name.hidden  = YES;
                 }

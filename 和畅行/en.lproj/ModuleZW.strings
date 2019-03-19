@@ -592,7 +592,7 @@
 "正常稍高"        ="Slightly high in normal range";
 "正常"        ="Normal";
 "偏低"        ="Low";
-"次/分"        ="Times/min";
+"(次/分)"        ="(Times/min)";
 "已接入"        ="Connected ";
 "请将设备插入仪器口指示位置"        ="Please insert the device into the indicated port of the instrument  ";
 "血氧检测"        ="Blood oxygen detection";
