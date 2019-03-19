@@ -53,7 +53,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _TextFieldArr = [[NSMutableArray alloc] init];
-    self.nameLabel.text = ModuleZW(@"血压检测");
+    self.navTitleLabel.text = ModuleZW(@"血压脉搏检测");
     [self initWithController];
     [self bounceView];
 }
@@ -117,7 +117,7 @@
         [inputImageView addSubview:reminderImageView];
         [reminderImageView release];
         
-        UILabel *categoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 12.5, 60, 15)];
+        UILabel *categoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 12.5, 65, 15)];
         categoryLabel.text = titleArr[i];
         categoryLabel.textAlignment = NSTextAlignmentLeft;
         categoryLabel.textColor = [Tools colorWithHexString:@"#878787"];
@@ -524,14 +524,23 @@
         [lookBtn addTarget:self action:@selector(lookClickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [view2 addSubview:lookBtn];
         
-        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前脉搏%ld次/分\n  舒张压%ldmmHg\n收缩压 %ldmmhg"),(long)pulseCount,(long)lowCount,(long)highCount] frame:CGRectMake(0, 50, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
+        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前脉搏%ld次/分\n  收缩压%ldmmHg\n舒张压 %ldmmhg"),(long)pulseCount,(long)highCount,(long)lowCount] frame:CGRectMake(0, 50, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
         
         UILabel *label0 = [[UILabel alloc] init];
         label0.text = ModuleZW(@"血压、脉搏正常范围参考值：");
+        label0.numberOfLines = 2;
         label0.textAlignment = NSTextAlignmentCenter;
         label0.font = [UIFont systemFontOfSize:13];
-        label0.frame = CGRectMake(20, 110, imageView.bounds.size.width-40, 20);
+        label0.frame = CGRectMake(20, 110, imageView.bounds.size.width-40, 25);
         [imageView addSubview:label0];
+        CGRect textRect1 = [label0.text  boundingRectWithSize:CGSizeMake(imageView.bounds.size.width-40, MAXFLOAT)
+                                                      options:NSStringDrawingUsesLineFragmentOrigin
+                                                   attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]}
+                                                      context:nil];
+        label0.height = textRect1.size.height;
+        imageView.height = 180 + label0.height ;
+        sureBtn.top = imageView.bottom;
+        lookBtn.top = sureBtn.top;
         
         UILabel *label1 = [[UILabel alloc] init];
         label1.text = ModuleZW(@"脉搏：60－100次/分");

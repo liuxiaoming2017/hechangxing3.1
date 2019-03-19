@@ -844,7 +844,7 @@
 - (void)soundTooLow{
     
     [self hudWasHidden];
-    LPPopup *popup = [LPPopup popupWithText:ModuleZW(@"抱歉，未采集到有效声音。请提高音调！")];
+    LPPopup *popup = [LPPopup popupWithText:ModuleZW(@"未采集到有效声音，请录制有效声音")];
     CGPoint point=self.view.center;
     point.y=point.y+130;
     [popup showInView:self.view

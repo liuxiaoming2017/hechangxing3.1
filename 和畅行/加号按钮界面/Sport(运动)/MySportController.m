@@ -587,7 +587,7 @@
     UIImageView *countV = (UIImageView *)[self.view viewWithTag:2001];
     UILabel *label1 = (UILabel *)[countV viewWithTag:2002];
     if(index == 0){
-        label1.text = ModuleZW(@"全部");
+        label1.text = ModuleZW(@"全部   ");
     }else{
         label1.text =ModuleZW( [GlobalCommon getSportNameWithIndex:index]);
     }

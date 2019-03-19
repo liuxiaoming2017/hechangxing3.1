@@ -97,7 +97,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor=[UtilityFunc colorWithHexString:@"#f2f1ef"];
-    self.navTitleLabel.text = @"我的乐药";
+    self.navTitleLabel.text = ModuleZW(@"我的乐药");
     
     UIImage* LeMedicineTypeImg=[UIImage imageNamed:@"LeMedicineType_img.png"];
     UIImageView* LeMedicineImgView=[[UIImageView alloc] init];
@@ -108,7 +108,7 @@
     
     UILabel* TYPE_Name=[[UILabel alloc] init];
     TYPE_Name.frame=CGRectMake(0, (LeMedicineImgView.frame.size.height-21)/2+kNavBarHeight, 120, 21);
-    TYPE_Name.text=@"名称";
+    TYPE_Name.text=ModuleZW(@"名称");
     
     TYPE_Name.font=[UIFont systemFontOfSize:13];
     TYPE_Name.textAlignment = NSTextAlignmentCenter;

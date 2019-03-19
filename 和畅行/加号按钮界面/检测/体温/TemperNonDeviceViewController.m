@@ -141,6 +141,7 @@
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
         hud.label.text = ModuleZW(@"请输入正常的体温值！");
+        hud.label.numberOfLines = 0;
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hideAnimated:YES afterDelay:2];
     }else{
@@ -236,7 +237,7 @@
         imageView.userInteractionEnabled = YES;
         imageView.image = [UIImage imageNamed:@"bounceView"];
         
-        UIButton *confirmBtn = [Tools creatButtonWithFrame:CGRectMake(imageView.left, imageView.bottom, imageView.width, 40*1.1) target:self sel:@selector(confirmBtnClick2:) tag:21 image:ModuleZW(@"确定p") title:nil];
+        UIButton *confirmBtn = [Tools creatButtonWithFrame:CGRectMake(imageView.left, imageView.bottom, imageView.width, 40*1.1) target:self sel:@selector(confirmBtnClick2:) tag:21 image:ModuleZW(@"sureButton") title:nil];
         
         UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前体温%.1f℃"),tempNum] frame:CGRectMake(0, 60, imageView.bounds.size.width, 20) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:1 aligment:NSTextAlignmentCenter];
     

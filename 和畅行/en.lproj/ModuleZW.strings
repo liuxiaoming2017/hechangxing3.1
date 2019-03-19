@@ -103,8 +103,8 @@
 "轮播暂停"                           =  "Suspend Slider";
 "播放乐药"                           =   "Play Treatment Music";
 "动作示范音"                       =  "Audio for Demonstration";
-"全部"                                  =  "All";
-"全部   "                               =  "All  ";
+"全部"                                  =  "All    ";
+"全部   "                               =  "  All          ";
 "预备   "                               =   "Prepare  ";
 "第一式   起式"                    =  "Exercise One: Warm-up";
 "第二式   剑指后仰式"         =  "Exercise Two: LeanBackward";
@@ -139,7 +139,6 @@
 "呼吸"                        =  "Respiration";
 "阶段报告"                 =  "Report";
 //"确定"                      =  "Confirm";
-"全部"                         =  "All";
 "病历"                         =  "Record";
 "收缩压"                     = "SBP";
 "舒张压"                     ="DBP";
@@ -278,7 +277,6 @@
 
 "干预方案"                                                            = "Intervention Solution";
 "经络梳理方案"                                                     = "Meridian Regulation Solution";
-"全部"                                                                   = "All";
 "耳穴处方"                                                            = "Ear Acupuncture";
 "运动处方"                                                            = "Meridian Exercise";
 "食疗处方"                                                            = "Dietary Therapy";
@@ -363,10 +361,14 @@
 "血压05"                                                                ="血压05En";
 "一坐2"                                                                   ="一坐2En";
 "Find_Btn"                                                              = "Find_BtnEn";
-
+"0_15"                                                                  ="Find_BtnEn";
+"sureButton"                                                        ="sureButtonEn";
+"commit_green"                                                  = "commit_greenEn";
+"recheck_blue"                                                     = "血压04En";
 
 //=====================================运动图片 ======
 "gf_tp_yubeidongzuo_0" = "gf_tp_yubeidongzuo_0En";
+"gf_tp_yubeidongzuo_1" = "gf_tp_yubeidongzuo_1En";
 "gf_tp_1_0" = "gf_tp_1_0En";
 "gf_tp_1_1" = "gf_tp_1_1En";
 "gf_tp_1_2" = "gf_tp_1_2En";
@@ -398,7 +400,8 @@
 "gf_tp_6_3" = "gf_tp_6_3En";
 "gf_tp_qishi_0" = "gf_tp_qishi_0En";
 "gf_tp_qishi_1" = "gf_tp_qishi_1En";
-
+"gf_tp_shoushi_0"="gf_tp_shoushi_0En";
+"gf_tp_shoushi_1"="gf_tp_shoushi_1En";
 
 
 
@@ -1491,13 +1494,13 @@
 "上一页"     =   "Previous";
 "经络梳理"     =   "Meridian Regulation";
 "灸法处方 "     =   "Moxibustion Therapy";
-"检测"     =   "Test";
+"检测"     =   "Detection";
 "血压脉搏检测"     =   "Blood Pressure and Pulse Test";
-"90 < 高压 / 收缩压（mmHg）< 140  "     =   "  90 < SBP（mmHg）< 140";
-"60 < 低压 / 舒张压（mmHg）< 90   "     =   "  60 < DBP（mmHg）< 90";
+"90 < 高压 / 收缩压（mmHg）< 140"     =   "  90 < SBP（mmHg）< 140";
+"60 < 低压 / 舒张压（mmHg）< 90"     =   "  60 < DBP（mmHg）< 90";
 "提交数据失败"     =   " Failed to submit data";
-"您当前脉搏%ld次/分\n  收缩压%ldmmHg\n舒张压 %ldmmhg  "     =   "  Your current pulse rate is %ld/min\n, SBP %ldmmHg\n, DBP %ldmmhg";
-"脉搏次数"     =   " Pulse rate";
+"您当前脉搏%ld次/分\n  收缩压%ldmmHg\n舒张压 %ldmmhg"     =   "  Your current pulse rate is %ld/min\n, SBP %ldmmHg\n, DBP %ldmmhg";
+"脉搏次数"     =   "Pulse rate";
 "收缩压不能为空"     =   " SBP cannot be empty";
 "您的输入有误，请重新输入"     =   "Your input is incorrect, please re-enter";
 "舒张压不能为空 "     =   "DBP cannot be empty";
@@ -1514,8 +1517,9 @@
 "%@下载失败"     =   "%@ Download failed";
 "确定删除吗？"     =   "Sure to delete?";
 "现金卡支付"     =   "Pay by cash card";
+"现金卡支付： "     =   "Pay by cash card:";
 "您当前还没有现金卡哦"     =   "You don't have a cash card yet.";
-"消费金额： "     =   "Amount of consumption:";
+"消费金额： "     =   "Amount of consumption:";
 "还需支付："     =   "Still have to pay";
 "你还没有添加产品"     =   "You have not added items yet";
 "会员卡："     =   "Membership card:";
@@ -1537,6 +1541,7 @@
 "您今天测量血糖%ld次，正常%ld次，异常%ld次\n您当前检测%@血糖值为%.1fmmol/L"     =   "You have measured blood sugar for %ld times today, %ld times normal, %ld times\n abnormal. Your test %@ value is %.1fmmol/L.";
 "获取血糖数据失败"     =   "Failed to get blood sugar data";
 "注意事项"     =   "Note";
+
 "空腹12-14小时，抽血。前一次进餐要正常饮食，不暴饮暴食。"     =   "Take an empty stomach for 12-14 hours and draw blood. The previous meal should be a normal diet, not overeating.";
 "既餐后两小时的时候抽血，随后进行测试。"     =   "Blood is drawn 2 hours after meal and then test.";
 "既餐后两小时的时候抽血，正常11.1以下。"     =   "The normal value is 11.1 or less for the test 2 hours after meal.";
@@ -1552,6 +1557,7 @@
 "您的输入有误,请重新输入"     =   "Your input is incorrect, please try again.";
 "不正常"     =   "Abnormal";
 "您当前呼吸节律%ld次/分"     =   "Your current breathing rhythm %ld times / min";
+"当前呼吸节律"     =   "Your current breathing rhythm ";
 "体温检测"     =   "Body temperature test";
 "当前体温"     =   "Current temperature";
 "请输入正常的体温值！"     =   "Please enter normal body temperature value";
@@ -1559,7 +1565,7 @@
 "中度发热"     =   "Moderate fever";
 "高热"     =   "High fever";
 "超高热"     =   "Super high fever";
-"您当前体温%.1f℃ "     =   "Your current body temperature is %.1f °C";
+"您当前体温%.1f℃"     =   "Your current body temperature is %.1f °C";
 "刚刚"     =   "Just now";
 "分钟前"     =   "Minutes ago";
 "小时前"     =   "Hours ago";
@@ -1590,7 +1596,7 @@
 "灸大夫隔物灸仪列表"     =   "Sandwiched moxibustion device list";
 "现连接灸头网络名称"     =   "Name of the network connected";
 "当前未连接设备"     =   "Not connected with a device";
-"正在努力搜索灸大夫隔物灸仪... "     =   "Searching device under progress...";
+"正在努力搜索灸大夫隔物灸仪..."     =   "Searching device under progress...";
 "灸头ID"     =   "Device ID";
 "正在连接AJi9-%@灸头网络,请输入三位密码"     =   "Connecting to network of device AJi9-%@ under progress. Enter a three-digit password";
 "完成"     =   "Complete";

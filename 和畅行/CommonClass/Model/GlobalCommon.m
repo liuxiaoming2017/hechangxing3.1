@@ -252,26 +252,26 @@
 +(NSString *)getSportNameWithIndex:(NSInteger)index
 {
     if(index == 1){
-        return @"预备";
+        return ModuleZW(@"预备   ");
     }else if(index == 2){
-        return @"第一式";
+        return ModuleZW(@"第一式");
     }
     else if(index == 3){
-        return @"第二式";
+        return ModuleZW(@"第二式");
     }else if (index == 4){
-        return @"第三式";
+        return ModuleZW(@"第三式");
     }else if (index == 5){
-        return @"第四式";
+        return ModuleZW(@"第四式");
     }else if (index == 6){
-        return @"第五式";
+        return ModuleZW(@"第五式");
     }else if (index == 7){
-        return @"第六式";
+        return ModuleZW(@"第六式");
     }else if (index == 8){
-        return @"第七式";
+        return ModuleZW(@"第七式");
     }else if (index == 9){
-        return @"第八式";
+        return ModuleZW(@"第八式");
     }
-    return @"全部";
+    return ModuleZW(@"全部   ");
 }
 
 +(NSString *)getRemindTRypeWithStr:(NSString *)typeStr
