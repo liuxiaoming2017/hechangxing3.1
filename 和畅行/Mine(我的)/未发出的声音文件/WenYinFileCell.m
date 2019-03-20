@@ -44,7 +44,7 @@
     lbname.backgroundColor=[UIColor clearColor];
     lbname.textColor=[UtilityFunc colorWithHexString:@"#666666"];
     lbname.font=[UIFont systemFontOfSize:12];
-    lbname.text=@"经络";
+    lbname.text=ModuleZW(@"经络");
     [self addSubview:lbname];
     
     lbDate=[[UILabel alloc] init];
@@ -77,7 +77,7 @@
 
 - (void)showCellViewWithString1:(NSString *)string1 withString2:(NSString *)string2 string3:(NSString *)string3
 {
-    lbDate.text=[NSString stringWithFormat:@"时间:%@年%@月%@日",string1,string2,string3];
+    lbDate.text=[NSString stringWithFormat:@"%@-%@-%@",string1,string2,string3];
 }
 
 -(void)AcessActive:(UIButton *)sender

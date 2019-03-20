@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UILabel *typeLabel;
 @property (nonatomic, strong) UILabel *kindLabel;
 @property (nonatomic, strong)UIImageView *lineImageV2;
+@property (nonatomic, strong)UIImageView *kindImage;
 
 
 - (void)assignmentCellWithModel:(HealthTipsModel *)model withType:(NSInteger )typeInteger;

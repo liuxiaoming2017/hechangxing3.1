@@ -84,11 +84,12 @@
     categoryLabel.textAlignment = NSTextAlignmentLeft;
     categoryLabel.textColor = [Tools colorWithHexString:@"#878787"];
     categoryLabel.font = [UIFont systemFontOfSize:13];
-    [inputImageView addSubview:categoryLabel];
+//    [inputImageView addSubview:categoryLabel];
     
-    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(90, 0, kScreenSize.width-8-40-90, 40)];
+    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(40, 0, kScreenSize.width-100, 40)];
     textField.delegate = self;
-    textField.placeholder = ModuleZW(@"请输入0~100整数值");
+    textField.placeholder = ModuleZW(@"当前血氧");
+//    textField.placeholder = ModuleZW(@"请输入0~100整数值");
     textField.keyboardType = UIKeyboardTypeNumberPad;
     [_TextFieldArr addObject:textField];
     [inputImageView addSubview:textField];
@@ -126,11 +127,11 @@
     NSLog(@"点击保存");
     UITextField *tf = _TextFieldArr[0];
     //获取子账户
-    if (tf.text.floatValue > 100 || tf.text == nil ||tf.text.floatValue <0) {
+    if (tf.text.floatValue > 100 || tf.text == nil ||tf.text.floatValue <= 0) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
-        hud.label.text= ModuleZW(@"请输入正常的血氧值！");
+        hud.label.text= ModuleZW(@"请输入0~100整数值");
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hide:YES afterDelay:2];
     }else{

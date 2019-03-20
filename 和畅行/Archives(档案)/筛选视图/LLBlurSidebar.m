@@ -74,7 +74,6 @@
     
     self.view.hidden = YES;
 }
-
 - (void)dealloc{
     [self.snapImageView release];
     self.snapImageView = nil;

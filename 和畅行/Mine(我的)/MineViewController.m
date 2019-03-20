@@ -71,7 +71,7 @@
 //    listImagesArr = @[@"refundRecord",@"returedGoodsRecord",@"1我的_100",@"integral",@"1我的_101",@"1我的_103",@"1我的_105",@"1我的_106",@"1我的_109",@"1我的_110",@"feedback",@"1我的_111",@"1我的_112"];
     listNamesArr = @[ModuleZW(@"退款记录"),ModuleZW(@"退货记录"),
                      ModuleZW(@"我的卡包"),ModuleZW(@"我的积分"),
-                     ModuleZW(@""),ModuleZW(@"健康讲座"),
+                     ModuleZW(@""),ModuleZW(@"健康讲座 "),
                      ModuleZW( @"运动示范音"),ModuleZW(@"未发出的声音文件"),
                      ModuleZW( @"我的咨询"),ModuleZW(@"收货地址"),
                      ModuleZW(@"意见反馈"),ModuleZW(@"收藏"),

@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) UILabel *typeLabel;
 @property (nonatomic, strong)UIImageView *lineImageV2;
 @property (nonatomic, strong) UILabel *kindLabel;
+@property (nonatomic, strong)UIImageView *kindImage;
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 

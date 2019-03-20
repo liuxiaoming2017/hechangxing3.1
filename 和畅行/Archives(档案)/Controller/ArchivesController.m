@@ -95,9 +95,9 @@
     
     //下拉刷新
     MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
-    [header setTitle:@"下拉刷新" forState:MJRefreshStateIdle];
-    [header setTitle:@"努力加载中..." forState:MJRefreshStateRefreshing];
-    [header setTitle:@"松开即可刷新..." forState:MJRefreshStatePulling];
+    [header setTitle:ModuleZW(@"下拉刷新") forState:MJRefreshStateIdle];
+    [header setTitle:ModuleZW(@"努力加载中...") forState:MJRefreshStateRefreshing];
+    [header setTitle:ModuleZW(@"松开即可刷新...") forState:MJRefreshStatePulling];
     header.lastUpdatedTimeLabel.hidden = YES;
     header.stateLabel.font = [UIFont systemFontOfSize:14];
     header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:14];
@@ -107,10 +107,10 @@
     
     //上拉加载
     MJRefreshBackGifFooter *footer = [MJRefreshBackGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataOther)];
-    [footer setTitle:@"上拉加载"   forState:MJRefreshStateIdle];
-    [footer setTitle:@"加载中..."  forState:MJRefreshStateRefreshing];
-    [footer setTitle:@"没有更多了"  forState:MJRefreshStateNoMoreData];
-    [footer setTitle:@"松开即可加载..."  forState:MJRefreshStatePulling];
+    [footer setTitle:ModuleZW(@"上拉加载")   forState:MJRefreshStateIdle];
+    [footer setTitle:ModuleZW(@"加载中...")  forState:MJRefreshStateRefreshing];
+    [footer setTitle:ModuleZW(@"没有更多了")  forState:MJRefreshStateNoMoreData];
+    [footer setTitle:ModuleZW(@"松开即可加载...")  forState:MJRefreshStatePulling];
     footer.stateLabel.font = [UIFont systemFontOfSize:14];
     footer.stateLabel.textColor = RGB_TextAppBlue;
     self.timeLinvView.tableView.mj_footer = footer;

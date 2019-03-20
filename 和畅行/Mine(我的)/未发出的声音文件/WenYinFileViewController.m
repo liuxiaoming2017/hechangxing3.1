@@ -74,7 +74,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navTitleLabel.text =ModuleZW(@"未发出声的文件");
+    self.navTitleLabel.text =ModuleZW(@"未发出的声音文件");
     UILabel* lb1=[[UILabel alloc] init];
     lb1.frame=CGRectMake(0, kNavBarHeight, ScreenWidth, 1);
     lb1.backgroundColor=[UIColor clearColor];
@@ -145,7 +145,7 @@
     NSString *string4 = [[self.WenYinArray objectAtIndex:indexPath.row ] substringWithRange:NSMakeRange(8, 2)];
     NSLog(@"string4==%@",string4);
     
-    cell.lbDate.text=[NSString stringWithFormat:ModuleZW(@"时间:%@年%@月%@日"),string2,string3,string4];
+    cell.lbDate.text=[NSString stringWithFormat:ModuleZW(@"%@-%@-%@"),string2,string3,string4];
     cell.delegate = self;
     cell.CellAcessImgView.tag = 1000+ indexPath.row;
    cell.CellDeleImgView.tag    = 2000+ indexPath.row;
