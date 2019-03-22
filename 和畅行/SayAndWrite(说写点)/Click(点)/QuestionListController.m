@@ -154,9 +154,11 @@
         QuestionModel *model1 = [tempArr objectAtIndex:i];
         for(NSInteger j=i+1;j<arrCount;j++){
             QuestionModel *model2 = [tempArr objectAtIndex:j];
-            if(model2.uid == model1.uid){
+            if([model2.name isEqualToString: model1.name]){
                 isRepeat = YES;
+                NSLog(@"model数据:%@,%ld",model1.name,model1.order);
             }
+            
         }
         if(isRepeat){
             [repeatArr1 addObject:model1];
@@ -164,7 +166,12 @@
             [tempArr1 addObject:model1];
         }
     }
-    self.questionArr = [tempArr1 copy];
+    
+    
+    //对答案数组按照order字段排序
+    self.questionArr = [tempArr1 sortedArrayUsingComparator:^NSComparisonResult(QuestionModel *model1, QuestionModel *model2) {
+        return model1.order>model2.order;
+    }];
     self.repeatQuestionArr = [repeatArr1 copy];
     _pages = (NSInteger)ceil(self.questionArr.count/2.0);
     [self createUI];
@@ -190,9 +197,9 @@
                 NSArray *answerArr = [dic objectForKey:@"answer"];
                 
                 //对答案数组按照order字段排序
-                answerArr = [answerArr sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *dic1, NSDictionary *dic2) {
-                    return [[dic1 objectForKey:@"order"] compare:[dic2 objectForKey:@"order"]];
-                }];
+//                answerArr = [answerArr sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *dic1, NSDictionary *dic2) {
+//                    return [[dic1 objectForKey:@"order"] compare:[dic2 objectForKey:@"order"]];
+//                }];
                 
                 NSString *answerIDStr = @"";
                 //将所有的答案id拼接
