@@ -106,7 +106,9 @@
             [weakSelf.idArray addObject:@"hot"];
             [weakSelf.idArray addObject:@"10"];
             [daArray addObject:ModuleZW(@"最新资讯")];
-            [daArray addObject:ModuleZW(@"健康讲座")];
+            if(![UserShareOnce shareOnce].languageType){
+                [daArray addObject:ModuleZW(@"健康讲座")];
+            }
             for (NSDictionary *Dic in array) {
                 [daArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"name"]]];
                 [weakSelf.idArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"id"]]];
@@ -168,9 +170,16 @@
         self.healthTableView.hidden = NO;
         [self hotArrayWithView];
     }else if(index == 1){
-        self.healthView.hidden = NO;
-        self.healthTableView.hidden = YES;
-        self.noView.hidden = YES;
+        
+        if ([UserShareOnce shareOnce].languageType){
+            self.healthView.hidden = YES;
+            self.healthTableView.hidden = NO;
+            [self healthArrayWithView:idStr];
+        }else{
+            self.healthView.hidden = NO;
+            self.healthTableView.hidden = YES;
+            self.noView.hidden = YES;
+        }
     }else{
         self.healthView.hidden = YES;
         self.healthTableView.hidden = NO;

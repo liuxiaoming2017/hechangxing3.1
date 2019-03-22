@@ -169,10 +169,19 @@
     UIButton* commitBtn=[Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2-100, ScreenHeight-60, 200, 40) target:self sel:@selector(commitClick:) tag:11 image:ModuleZW(@"个人信息_提交") title:nil];
     [self.view addSubview:commitBtn];
     
-    UIButton *uploadImageBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth-208, 26.25, 70, 30) target:self sel:@selector(uploadImageClick:) tag:13 image:@"个人信息_上传头像" title:nil];
+    UIButton *uploadImageBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth-208, 26.25, 70, 30) target:self sel:@selector(uploadImageClick:) tag:13 image:nil title:ModuleZW(@"请上传头像")];
+    uploadImageBtn.layer.cornerRadius = 5;
+    uploadImageBtn.layer.masksToBounds = YES;
+    [uploadImageBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+    [uploadImageBtn.titleLabel setNumberOfLines:2];
+    [uploadImageBtn setBackgroundColor:RGB(156, 218, 241)];
     [infoView addSubview:uploadImageBtn];
-    
-    UIButton *sexBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth-108, 26.25, 70, 30) target:self sel:@selector(sexClick:) tag:14 image:@"个人信息_性别" title:nil];
+    //Upload avatar     Male
+    UIButton *sexBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth-108, 26.25, 70, 30) target:self sel:@selector(sexClick:) tag:14 image:nil title:ModuleZW(@"男")];
+    sexBtn.layer.cornerRadius = 5;
+    sexBtn.layer.masksToBounds = YES;
+    [sexBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+    [sexBtn setBackgroundColor:RGB(156, 218, 241)];
     [infoView addSubview:sexBtn];
     
     
@@ -302,13 +311,13 @@
     switch (button.tag) {
         case 61:
         {//男
-            [sexBtn setImage:[UIImage imageNamed:@"个人信息_性别"] forState:UIControlStateNormal];
+            [sexBtn setTitle:ModuleZW(@"男") forState:(UIControlStateNormal)];
             SexStr = @"male";
         }
             break;
         case 62:
         {//女
-            [sexBtn setImage:[UIImage imageNamed:@"个人信息_08 - 女"] forState:UIControlStateNormal];
+            [sexBtn setTitle:ModuleZW(@"女") forState:(UIControlStateNormal)];
             SexStr = @"female";
         }
             break;

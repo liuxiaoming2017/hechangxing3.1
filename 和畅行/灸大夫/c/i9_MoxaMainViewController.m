@@ -243,6 +243,7 @@
     
     UILabel *remnderlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _headinfView.bottom, ScreenWidth, 40)];
     remnderlabel.font = [UIFont systemFontOfSize:16];
+    remnderlabel.numberOfLines = 2;
     remnderlabel.textAlignment = NSTextAlignmentLeft;
     remnderlabel.textColor = [UIColor orangeColor];
     remnderlabel.text = ModuleZW(@" 温馨提示:儿童灸疗温度不宜超过39℃");
@@ -1455,9 +1456,9 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
 # pragma mark - 点击进入设置界面
 - (void)onClickRecipelListBtn:(id)sender {
     
-    if(!self.guideView.hidden){
-        return;
-    }
+//    if(!self.guideView.hidden){
+//        return;
+//    }
     
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     [self.navigationItem setBackBarButtonItem:backItem];

@@ -128,7 +128,7 @@
         if ([model.typeName isEqualToString:ModuleZW(@"血压")]) {
             NSArray * array= [model.name componentsSeparatedByString:@"-"];
             if (array.count > 1) {
-                nameStr = [NSString stringWithFormat:@"%@%@  %@%@",ModuleZW(@"收缩压"),array[1],ModuleZW(@"舒张压"),array[0]];
+                nameStr = [NSString stringWithFormat:@"%@  %@",array[0],array[1]];
             }else{
                 nameStr = model.name;
             }
@@ -149,7 +149,7 @@
             typeStr = ModuleZW(@"血压");
             self.contentLabel.text = [NSString stringWithFormat:@"%@ %@  %@ %@",ModuleZW(@"收缩压"),model.highPressure,ModuleZW(@"舒张压"),model.lowPressure];
         }else if ([model.typeStr isEqualToString:@"ecg"]){
-            typeStr = ModuleZW(@"心电");
+            typeStr = ModuleZW(@"心率");
             self.contentLabel.text = [model.subject valueForKey:@"name"];
         }else if ([model.typeStr isEqualToString:@"JLBS"]){
             typeStr = ModuleZW(@"经络");

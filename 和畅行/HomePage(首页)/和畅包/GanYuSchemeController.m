@@ -67,7 +67,7 @@
     
     NSArray *imageArr = @[];
     if(self.notYiChi){
-        if ([[UserShareOnce shareOnce].languageType isEqualToString:@"us-en"]){
+        if ([UserShareOnce shareOnce].languageType){
             imageArr = @[ModuleZW(@"一戴Ch"),ModuleZW(@"一站Ch"),
                          ModuleZW(@"一坐2"),ModuleZW(@"一饮Ch"),
                          ModuleZW(@"一测Ch"),ModuleZW(@"一助Ch"),
@@ -80,7 +80,7 @@
         }
       
     }else{
-        if ([[UserShareOnce shareOnce].languageType isEqualToString:@"en-us"]){
+        if ([UserShareOnce shareOnce].languageType){
             imageArr = @[ModuleZW(@"一戴Ch"),ModuleZW(@"一站Ch"),
                          ModuleZW(@"一吃Ch"),ModuleZW(@"一坐Ch"),
                          ModuleZW(@"一饮Ch"),ModuleZW(@"一测Ch"),
@@ -219,7 +219,7 @@
         case 206:
         {
             
-            if ([[UserShareOnce shareOnce].languageType isEqualToString:@"en-us"]){
+            if ([UserShareOnce shareOnce].languageType){
                 HCY_HelpController *helpVC = [[HCY_HelpController alloc]init];
                 [self.navigationController pushViewController:helpVC animated:YES];
             }else{
@@ -235,7 +235,7 @@
         case 207:
         {
             
-            if ([[UserShareOnce shareOnce].languageType isEqualToString:@"en-us"]){
+            if ([UserShareOnce shareOnce].languageType){
                 InformationViewController *vc = [[InformationViewController alloc] init];
                 [self.navigationController pushViewController:vc animated:YES];
             }else{
