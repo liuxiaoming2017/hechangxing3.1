@@ -1456,9 +1456,9 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
 # pragma mark - 点击进入设置界面
 - (void)onClickRecipelListBtn:(id)sender {
     
-//    if(!self.guideView.hidden){
-//        return;
-//    }
+    if(!self.guideView.hidden){
+        return;
+    }
     
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     [self.navigationItem setBackBarButtonItem:backItem];

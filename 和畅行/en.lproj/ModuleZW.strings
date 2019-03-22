@@ -275,7 +275,6 @@
 //                                                              干预方案
 
 "干预方案"                                                            = "Intervention Solution";
-"经络梳理方案"                                                     = "Meridian Regulation Solution";
 "耳穴处方"                                                            = "Ear Acupuncture";
 "运动处方"                                                            = "Meridian Exercise";
 "食疗处方"                                                            = "Dietary Therapy";
@@ -513,9 +512,6 @@
 "您输入的手机号格式错误"        ="Wrong format of mobile number";
 "账号不能为空"        ="Account cannot be empty";
 "手机号和验证码不能为空"        ="Mobile number and verification code cannot be empty";
-"Harmony package"        ="Harmony package";
-"Reminder"        ="Reminder";
-"Info"        ="Info";
 "经络知识"        ="Meridian knowledge";
 "Get your personalized Harmony package after test"        ="Get your personalized Harmony package after test";
 "检测到新版本，是否下载?"        ="New version detected, download? ";
@@ -534,7 +530,6 @@
 "和畅经络运动"        ="Harmony meridian exercise";
 "请去个人中心->我的->运动示范音中下载示范音，不然您将无法收听到语音播放"        ="Please go to Personal Center->Me->Exercise Demo Recording to download the demo record. Otherwise you will not be able to listen to the voice playback. ";
 "请去下载乐药"        ="Download treatment music";
-=
 "上商"        ="Shang Shang";
 "少商"        ="Shao Shang ";
 "钛商"        ="Tai Shang ";
@@ -1374,6 +1369,7 @@
 "吐痰"    ="spit";
 "ICD10" = "ICD10_En";
 
+"经络梳理方案" = "Meridian Regulation Solution";
 "脏腑调理方案"="Zang-fu regulation plan";
 "体质调理方案"="Constitution regulation plan";
 "状态护理方案"="State care plan";
