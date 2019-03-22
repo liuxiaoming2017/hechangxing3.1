@@ -243,6 +243,7 @@
     
     UILabel *remnderlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _headinfView.bottom, ScreenWidth, 40)];
     remnderlabel.font = [UIFont systemFontOfSize:16];
+    remnderlabel.numberOfLines = 2;
     remnderlabel.textAlignment = NSTextAlignmentLeft;
     remnderlabel.textColor = [UIColor orangeColor];
     remnderlabel.text = ModuleZW(@" 温馨提示:儿童灸疗温度不宜超过39℃");

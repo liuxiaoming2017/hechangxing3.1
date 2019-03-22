@@ -255,12 +255,8 @@
     NSDate *detailDate=[NSDate dateWithTimeIntervalSince1970:time];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; //实例化一个NSDateFormatter对象
     //设定时间格式,这里可以设置成自己需要的格式
-    [dateFormatter setDateFormat:@"MM月dd日"];
+    [dateFormatter setDateFormat:@"MM-dd"];
     NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
-    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"Language"] isEqualToString:@"Other"]){
-        currentDateStr =  [currentDateStr stringByReplacingOccurrencesOfString:@"日" withString:@"D"];
-        currentDateStr =  [currentDateStr stringByReplacingOccurrencesOfString:@"月" withString:@"M"];
-    }
     return currentDateStr;
 }
 

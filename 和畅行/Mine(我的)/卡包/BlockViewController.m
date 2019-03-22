@@ -83,9 +83,9 @@
     //下拉刷新
     
     MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
-    [header setTitle:@"下拉刷新" forState:MJRefreshStateIdle];
-    [header setTitle:@"努力加载中..." forState:MJRefreshStateRefreshing];
-    [header setTitle:@"松开即可刷新..." forState:MJRefreshStatePulling];
+    [header setTitle:ModuleZW(@"下拉刷新") forState:MJRefreshStateIdle];
+    [header setTitle:ModuleZW(@"努力加载中...") forState:MJRefreshStateRefreshing];
+    [header setTitle:ModuleZW(@"松开即可刷新...") forState:MJRefreshStatePulling];
     header.lastUpdatedTimeLabel.hidden = YES;
     header.stateLabel.font = [UIFont systemFontOfSize:14];
     header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:14];

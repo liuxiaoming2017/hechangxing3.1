@@ -33,7 +33,7 @@
 
 - (void)initWithView
 {
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((kSidebarWidth-72*2-26)/2.0, kNavBarHeight, 100, 25)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((kSidebarWidth-72*2-26)/2.0 -15, kNavBarHeight, 100, 25)];
     titleLabel.font = [UIFont systemFontOfSize:20];
     titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.textColor = UIColorFromHex(0X000000);
@@ -42,26 +42,43 @@
     
     self.selectTag = -1;
     //档案最新
-    self.titleArr = [NSArray arrayWithObjects:
-                     ModuleZW(@"全部"),
-                     ModuleZW(@"最新"),
-                     ModuleZW(@"阶段报告"),
-                     ModuleZW(@"病历"),
-                     ModuleZW(@"经络"),
-                     ModuleZW(@"脏腑"),
-                     ModuleZW(@"体质"),
-                     ModuleZW(@"血压"),
-                     ModuleZW(@"血氧"),
-                     ModuleZW(@"血糖"),
-                     ModuleZW(@"心率"),
-                     ModuleZW(@"呼吸"),
-                     ModuleZW(@"体温"), nil];
+    if ([UserShareOnce shareOnce].languageType){
+        self.titleArr = [NSArray arrayWithObjects:
+                         ModuleZW(@"全部"),
+                         ModuleZW(@"最新"),
+                         ModuleZW(@"阶段报告"),
+                         ModuleZW(@"经络"),
+                         ModuleZW(@"脏腑"),
+                         ModuleZW(@"体质"),
+                         ModuleZW(@"血压"),
+                         ModuleZW(@"血氧"),
+                         ModuleZW(@"血糖"),
+                         ModuleZW(@"心率"),
+                         ModuleZW(@"呼吸"),
+                         ModuleZW(@"体温"), nil];
+    }else{
+        self.titleArr = [NSArray arrayWithObjects:
+                         ModuleZW(@"全部"),
+                         ModuleZW(@"最新"),
+                         ModuleZW(@"阶段报告"),
+                         ModuleZW(@"病历"),
+                         ModuleZW(@"经络"),
+                         ModuleZW(@"脏腑"),
+                         ModuleZW(@"体质"),
+                         ModuleZW(@"血压"),
+                         ModuleZW(@"血氧"),
+                         ModuleZW(@"血糖"),
+                         ModuleZW(@"心率"),
+                         ModuleZW(@"呼吸"),
+                         ModuleZW(@"体温"), nil];
+    }
+   
 
     for(NSInteger i=0;i<self.titleArr.count;i++){
         UIButton *selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        selectBtn.frame = CGRectMake(titleLabel.left+(72+17)*(i%2), titleLabel.bottom+26+(42+23)*(i/2), 72, 42);
+        selectBtn.frame = CGRectMake(titleLabel.left+(90+17)*(i%2), titleLabel.bottom+26+(42+23)*(i/2), 90, 42);
         selectBtn.tag = i+100;
-        selectBtn.layer.cornerRadius = 21;
+        selectBtn.layer.cornerRadius = 15;
         selectBtn.titleLabel.numberOfLines = 2;
         selectBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
         selectBtn.titleLabel.lineBreakMode = UILineBreakModeWordWrap;

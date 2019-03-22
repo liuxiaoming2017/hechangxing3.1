@@ -61,18 +61,24 @@
     self.typeLabel.text =ModuleZW(@"经络");
     self.typeLabel.textColor = [UIColor blackColor];
     self.typeLabel.font = [UIFont systemFontOfSize:16];
-    [imageV addSubview:self.typeLabel];
+//    [imageV addSubview:self.typeLabel];
     
     self.kindLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right, self.typeLabel.bottom - 30, 55, 15)];
     self.kindLabel.text = @"(mmHg)";
     self.kindLabel.textColor = RGB(128, 128, 128);;
     self.kindLabel.font = [UIFont systemFontOfSize:12];
-    [imageV addSubview:self.kindLabel];
+//    [imageV addSubview:self.kindLabel];
     
-    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.kindLabel.right+ 5, 0, imageV.width - self.kindLabel.right - 7, imageV.height)];
+    self.kindImage = [[UIImageView alloc]initWithFrame:CGRectMake(9, 9, 31, 31)];
+    self.kindImage.image = [UIImage imageNamed:@"经络Icon"];
+    [imageV addSubview:self.kindImage];
+    
+    
+    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.kindImage.right+ 50, 0, imageV.width - self.kindImage.right - 55, imageV.height)];
     self.contentLabel.font=[UIFont systemFontOfSize:16];
     self.contentLabel.textColor=RGB(128, 128, 128);
-    self.contentLabel.text = ModuleZW(@"大羽");
+    self.contentLabel.text = @"大羽";
+    self.contentLabel.numberOfLines = 2;
     [imageV addSubview:self.contentLabel];
 
     
@@ -115,13 +121,14 @@
 - (void)assignmentNoCellWithModel:(HealthTipsModel *)model withType:(NSInteger )typeInteger {
     
     NSString *typeStr  = [NSString string];
+    NSString *contentStr  = [NSString string];
     
     if (typeInteger == 0) {
         NSString *nameStr= [NSString string];
         if ([model.typeName isEqualToString:ModuleZW(@"血压")]) {
             NSArray * array= [model.name componentsSeparatedByString:@"-"];
             if (array.count > 1) {
-                nameStr = [NSString stringWithFormat:@"%@%@  %@%@",ModuleZW(@"收缩压"),array[1],ModuleZW(@"舒张压"),array[0]];
+                nameStr = [NSString stringWithFormat:@"%@  %@",array[0],array[1]];
             }else{
                 nameStr = model.name;
             }
@@ -142,7 +149,7 @@
             typeStr = ModuleZW(@"血压");
             self.contentLabel.text = [NSString stringWithFormat:@"%@ %@  %@ %@",ModuleZW(@"收缩压"),model.highPressure,ModuleZW(@"舒张压"),model.lowPressure];
         }else if ([model.typeStr isEqualToString:@"ecg"]){
-            typeStr = ModuleZW(@"心电");
+            typeStr = ModuleZW(@"心率");
             self.contentLabel.text = [model.subject valueForKey:@"name"];
         }else if ([model.typeStr isEqualToString:@"JLBS"]){
             typeStr = ModuleZW(@"经络");
@@ -184,47 +191,81 @@
     }
     
     NSString *kindStr= [NSString string];
-    if ([self.typeLabel.text isEqualToString:ModuleZW(@"血压")]) {
+    NSString *kindIcon= [NSString string];
+    if ([typeStr isEqualToString:ModuleZW(@"血压")]) {
         kindStr = @"(mmHg)";
-    }else  if ([self.typeLabel.text isEqualToString:ModuleZW(@"心率")]||[self.typeLabel.text isEqualToString:ModuleZW(@"呼吸")]) {
+        kindIcon = @"血压Icon";
+    }else  if ([typeStr isEqualToString:ModuleZW(@"心率")]){
         kindStr = ModuleZW(@"(次/分)");
-    }else if ([self.typeLabel.text isEqualToString:ModuleZW(@"血糖")]) {
+        kindIcon = @"心率Icon";
+    }else if ([typeStr isEqualToString:ModuleZW(@"呼吸")]) {
+        kindStr = ModuleZW(@"(次/分)");
+        kindIcon = @"呼吸Icon";
+    }else if ([typeStr isEqualToString:ModuleZW(@"血糖")]) {
         kindStr = @"(mmol/L)";
-    }else if ([self.typeLabel.text isEqualToString:ModuleZW(@"体温")]) {
+        kindIcon = @"血糖Icon";
+    }else if ([typeStr isEqualToString:ModuleZW(@"体温")]) {
         kindStr = @"(℃)";
-    }else{
+        kindIcon = @"体温Icon";
+    }else if ([typeStr isEqualToString:ModuleZW(@"经络")]) {
         kindStr = @"";
+        kindIcon = @"经络Icon";
+    }else if ([typeStr isEqualToString:ModuleZW(@"血氧")]) {
+        kindStr = @"";
+        kindIcon = @"血氧Icon";
+    }else if ([typeStr isEqualToString:ModuleZW(@"体质")]) {
+        kindStr = @"";
+        kindIcon = @"体质Icon";
+    }else if ([typeStr isEqualToString:ModuleZW(@"脏腑")]) {
+        kindStr = @"";
+        kindIcon = @"脏腑Icon";
     }
-    self.kindLabel.text = kindStr;
-    self.typeLabel.text = typeStr;
     
-    if ([UserShareOnce shareOnce].languageType){
-        
-        NSString *salaryStr1 = [NSString string];
-        if (kindStr.length > 0){
-            salaryStr1 =  [NSString stringWithFormat:@"%@\n%@",typeStr,kindStr];
-        }else{
-            salaryStr1 = typeStr;
-        }
-        self.typeLabel.numberOfLines = 2;
-        NSMutableAttributedString *salaryStr = [[NSMutableAttributedString alloc]initWithString:salaryStr1];
-        [salaryStr beginEditing];
-        [salaryStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12] range:NSMakeRange(salaryStr1.length - kindStr.length ,kindStr.length)];
-        [salaryStr addAttribute:NSForegroundColorAttributeName value:RGB(128, 128, 128) range:NSMakeRange(salaryStr1.length - kindStr.length ,kindStr.length)];
-
-        [salaryStr endEditing];
-        self.typeLabel.attributedText = salaryStr;
-        CGRect textRect = [typeStr boundingRectWithSize:CGSizeMake(MAXFLOAT, 59)
-                                             options:NSStringDrawingUsesLineFragmentOrigin
-                                          attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]}
-                                             context:nil];
-        [self.typeLabel setFrame:CGRectMake(10, 0, textRect.size.width, 49)];
-        self.kindLabel.text = @"";
-        self.contentLabel.numberOfLines = 2;
-        self.contentLabel.textAlignment = NSTextAlignmentCenter;
-        self.contentLabel.frame = CGRectMake(self.typeLabel.right+ 5, 0, ScreenWidth-85 - self.typeLabel.right, 49);
-        
+    NSString *salaryStr1 = [NSString string];
+    if (kindStr.length > 1){
+        salaryStr1 =  [NSString stringWithFormat:@"%@%@",self.contentLabel.text,kindStr];
+    }else{
+        salaryStr1 = self.contentLabel.text;
     }
+    self.typeLabel.numberOfLines = 2;
+    NSMutableAttributedString *salaryStr = [[NSMutableAttributedString alloc]initWithString:salaryStr1];
+    [salaryStr beginEditing];
+    [salaryStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12] range:NSMakeRange(salaryStr1.length - kindStr.length ,kindStr.length)];
+    [salaryStr addAttribute:NSForegroundColorAttributeName value:RGB(128, 128, 128) range:NSMakeRange(salaryStr1.length - kindStr.length ,kindStr.length)];
+    
+    [salaryStr endEditing];
+    self.contentLabel.attributedText = salaryStr;
+    self.kindImage.image = [UIImage imageNamed:kindIcon];
+
+    
+//    if ([UserShareOnce shareOnce].languageType){
+//
+//        NSString *salaryStr1 = [NSString string];
+//        if (kindStr.length >1){
+//            salaryStr1 =  [NSString stringWithFormat:@"%@\n%@",typeStr,kindStr];
+//        }else{
+//            salaryStr1 = typeStr;
+//        }
+//        NSLog(@"%@  ",salaryStr1);
+//        self.typeLabel.numberOfLines = 2;
+//        NSMutableAttributedString *salaryStr = [[NSMutableAttributedString alloc]initWithString:salaryStr1];
+//        [salaryStr beginEditing];
+//        [salaryStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12] range:NSMakeRange(salaryStr1.length - kindStr.length ,kindStr.length)];
+//        [salaryStr addAttribute:NSForegroundColorAttributeName value:RGB(128, 128, 128) range:NSMakeRange(salaryStr1.length - kindStr.length ,kindStr.length)];
+//
+//        [salaryStr endEditing];
+//        self.typeLabel.attributedText = salaryStr;
+//        CGRect textRect = [typeStr boundingRectWithSize:CGSizeMake(MAXFLOAT, 59)
+//                                             options:NSStringDrawingUsesLineFragmentOrigin
+//                                          attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]}
+//                                             context:nil];
+//        [self.typeLabel setFrame:CGRectMake(10, 0, textRect.size.width, 49)];
+//        self.kindLabel.text = @"";
+//        self.contentLabel.numberOfLines = 2;
+//        self.contentLabel.textAlignment = NSTextAlignmentCenter;
+//        self.contentLabel.frame = CGRectMake(self.typeLabel.right+ 5, 0, ScreenWidth-85 - self.typeLabel.right, 49);
+//
+//    }
 
 }
 

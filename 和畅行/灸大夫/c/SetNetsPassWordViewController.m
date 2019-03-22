@@ -61,9 +61,10 @@
     [_mCntrolview addTarget:self action:@selector(onClickControl:) forControlEvents:UIControlEventTouchUpInside];
     _mSureBtn.layer.masksToBounds = YES;
     _mSureBtn.layer.cornerRadius = 5;
-    
+    [_mSureBtn setTitle:ModuleZW(@"确定") forState:(UIControlStateNormal)];
     _mCancleBtn.layer.masksToBounds = YES;
     _mCancleBtn.layer.cornerRadius = 5;
+     [_mCancleBtn setTitle:ModuleZW(@"取消") forState:(UIControlStateNormal)];
 }
 
 - (IBAction)onClickControl:(id)sender {

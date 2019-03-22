@@ -149,7 +149,6 @@
                  }else{
                     onmodelTimeStr = onAmodel.createTime;
                 }
-                NSLog(@"%@   %@",modelTimeStr,model.date);
                 if ([modelTimeStr isEqualToString:onmodelTimeStr]) {
                     return 65;
                 }else {

@@ -115,7 +115,7 @@ static int const tick = 80;
     [countdownView addSubview:countdownLabel];
     
     //连接状态
-    UIImageView *stateImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenSize.width-60, 90, 50, 40)];
+    UIImageView *stateImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenSize.width-60, 90, 50, 45)];
     stateImageView.image = [UIImage imageNamed:@"0_06"];
     
     UIImageView *imageViewImage = [[UIImageView alloc] initWithFrame:CGRectMake(10, 2, 30, 25)];
@@ -296,9 +296,9 @@ static int const tick = 80;
     
     
     [self showPreogressView];
-    NSInteger highCount = [self.boodArray[5] integerValue];
-    NSInteger lowCount = [self.boodArray[3] integerValue];
-    NSInteger pulseCount = [self.boodArray[4] integerValue];
+    NSInteger highCount = [self.boodArray[3] integerValue];
+    NSInteger lowCount = [self.boodArray[4] integerValue];
+    NSInteger pulseCount = [self.boodArray[5] integerValue];
     
     //提交数据
     NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
@@ -478,66 +478,66 @@ static int const tick = 80;
 
 
 #pragma mark -------- 选择子账户
--(void)GetWithModifi
-{
-    // [self showHUD];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/memberModifi/list.jhtml?memberId=%@",UrlPre,[UserShareOnce shareOnce].uid];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:aUrlle];
-    
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setRequestMethod:@"GET"];
-    [request setTimeOutSeconds:20];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestResourceslistail:)];
-    [request setDidFinishSelector:@selector(requestResourceslistFinish:)];
-    [request startAsynchronous];
-}
-
-- (void)requestResourceslistail:(ASIHTTPRequest *)request
-{
-    
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"获取子账户信息失败!") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-    av.tag = 100008;
-    [av show];
-    
-}
-
-- (void)requestResourceslistFinish:(ASIHTTPRequest *)request
-{
-    // [self hudWasHidden:nil];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    id status=[dic objectForKey:@"status"];
-    if ([status intValue]==100)
-    {
-        _personView.hidden = NO;
-        _showView.hidden = NO;
-        [self.view bringSubviewToFront:_personView];
-        [self.view bringSubviewToFront:_showView];
-        
-        self.dataArr=[dic objectForKey:@"data"];
-        [self.tableView reloadData];
-    }
-    else
-    {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.removeFromSuperViewOnHide =YES;
-        hud.mode = MBProgressHUDModeText;
-        hud.label.text = ModuleZW(@"登录超时，请重新登录");  //提示的内容
-        hud.minSize = CGSizeMake(132.f, 108.0f);
-        [hud hideAnimated:YES afterDelay:2];
-        
-        LoginViewController *login = [[LoginViewController alloc] init];
-        [self.navigationController pushViewController:login animated:YES];
-        
-    }
-}
+//-(void)GetWithModifi
+//{
+//    // [self showHUD];
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/memberModifi/list.jhtml?memberId=%@",UrlPre,[UserShareOnce shareOnce].uid];
+//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    NSURL *url = [NSURL URLWithString:aUrlle];
+//
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setRequestMethod:@"GET"];
+//    [request setTimeOutSeconds:20];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestResourceslistail:)];
+//    [request setDidFinishSelector:@selector(requestResourceslistFinish:)];
+//    [request startAsynchronous];
+//}
+//
+//- (void)requestResourceslistail:(ASIHTTPRequest *)request
+//{
+//
+//    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"获取子账户信息失败!") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
+//    av.tag = 100008;
+//    [av show];
+//
+//}
+//
+//- (void)requestResourceslistFinish:(ASIHTTPRequest *)request
+//{
+//    // [self hudWasHidden:nil];
+//    NSString* reqstr=[request responseString];
+//    NSDictionary * dic=[reqstr JSONValue];
+//    id status=[dic objectForKey:@"status"];
+//    if ([status intValue]==100)
+//    {
+//        _personView.hidden = NO;
+//        _showView.hidden = NO;
+//        [self.view bringSubviewToFront:_personView];
+//        [self.view bringSubviewToFront:_showView];
+//
+//        self.dataArr=[dic objectForKey:@"data"];
+//        [self.tableView reloadData];
+//    }
+//    else
+//    {
+//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        hud.removeFromSuperViewOnHide =YES;
+//        hud.mode = MBProgressHUDModeText;
+//        hud.label.text = ModuleZW(@"登录超时，请重新登录");  //提示的内容
+//        hud.minSize = CGSizeMake(132.f, 108.0f);
+//        [hud hideAnimated:YES afterDelay:2];
+//
+//        LoginViewController *login = [[LoginViewController alloc] init];
+//        [self.navigationController pushViewController:login animated:YES];
+//
+//    }
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArr.count;
@@ -597,72 +597,73 @@ static int const tick = 80;
     }
     return cell;
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    _personView.hidden = YES;
-    _showView.hidden = YES;
-    self.headArray = self.dataArr[indexPath.row];
-    int age = 0;
-    
-    if ([[self.dataArr[indexPath.row] objectForKey:@"name"]isEqualToString:[UserShareOnce shareOnce].username]) {
-        _nameLabel.text = [UserShareOnce shareOnce].name;
-        
-    }else{
-        _nameLabel.text = [self.dataArr[indexPath.row] objectForKey:@"name"];
-    }
-    NSString *sex = @"";
-    if ([[self.dataArr[indexPath.row] objectForKey:@"gender"]isEqual:[NSNull null]]||[[self.dataArr[indexPath.row] objectForKey:@"gender"] isEqualToString:@"male"]) {
-        sex =ModuleZW(@"男") ;
-    }else{
-        sex = ModuleZW(@"女");
-    }
-    _memberChildId = [self.dataArr[indexPath.row] objectForKey:@"id"];
-    NSString *str = @"";
-    if ([[self.dataArr[indexPath.row] objectForKey:@"birthday"] isEqual:[NSNull null]]) {
-        // str = [[UserShareOnce shareOnce].birthday substringToIndex:4];
-        age = 0;
-    }else{
-        str = [[self.dataArr[indexPath.row] objectForKey:@"birthday"] substringToIndex:4];
-        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-        NSDate *now;
-        NSDateComponents *comps = [[NSDateComponents alloc] init];
-        NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |
-        NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-        now=[NSDate date];
-        comps = [calendar components:unitFlags fromDate:now];
-        age = (int)[comps year] - [str intValue];
-    }
-    
-    NSDictionary *memberDic = [[NSDictionary alloc] initWithDictionary:self.dataArr[indexPath.row]];
-    NSNumber *memberId = @(0);
-    memberId = memberDic[@"id"];
-    
-    NSInteger highCount = [self.boodArray[5] integerValue];
-    NSInteger lowCount = [self.boodArray[3] integerValue];
-    NSInteger pulseCount = [self.boodArray[4] integerValue];
-    
-    [self showPreogressView];
-    //提交数据
-    NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    [request addPostValue:memberId forKey:@"memberChildId"];
-    [request addPostValue:@(30) forKey:@"datatype"];
-    [request addPostValue:@(highCount) forKey:@"highPressure"];
-    [request addPostValue:@(lowCount) forKey:@"lowPressure"];
-    [request addPostValue:@(pulseCount) forKey:@"pulse"];
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestError:)];
-    [request setDidFinishSelector:@selector(requestCompleted:)];
-    [request startAsynchronous];
-    
-}
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+//    _personView.hidden = YES;
+//    _showView.hidden = YES;
+//    self.headArray = self.dataArr[indexPath.row];
+//    int age = 0;
+//
+//    if ([[self.dataArr[indexPath.row] objectForKey:@"name"]isEqualToString:[UserShareOnce shareOnce].username]) {
+//        _nameLabel.text = [UserShareOnce shareOnce].name;
+//
+//    }else{
+//        _nameLabel.text = [self.dataArr[indexPath.row] objectForKey:@"name"];
+//    }
+//    NSString *sex = @"";
+//    if ([[self.dataArr[indexPath.row] objectForKey:@"gender"]isEqual:[NSNull null]]||[[self.dataArr[indexPath.row] objectForKey:@"gender"] isEqualToString:@"male"]) {
+//        sex =ModuleZW(@"男") ;
+//    }else{
+//        sex = ModuleZW(@"女");
+//    }
+//    _memberChildId = [self.dataArr[indexPath.row] objectForKey:@"id"];
+//    NSString *str = @"";
+//    if ([[self.dataArr[indexPath.row] objectForKey:@"birthday"] isEqual:[NSNull null]]) {
+//        // str = [[UserShareOnce shareOnce].birthday substringToIndex:4];
+//        age = 0;
+//    }else{
+//        str = [[self.dataArr[indexPath.row] objectForKey:@"birthday"] substringToIndex:4];
+//        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+//        NSDate *now;
+//        NSDateComponents *comps = [[NSDateComponents alloc] init];
+//        NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |
+//        NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+//        now=[NSDate date];
+//        comps = [calendar components:unitFlags fromDate:now];
+//        age = (int)[comps year] - [str intValue];
+//    }
+//
+//    NSDictionary *memberDic = [[NSDictionary alloc] initWithDictionary:self.dataArr[indexPath.row]];
+//    NSNumber *memberId = @(0);
+//    memberId = memberDic[@"id"];
+//
+//    NSInteger highCount = [self.boodArray[3] integerValue];
+//    NSInteger lowCount = [self.boodArray[4] integerValue];
+//    NSInteger pulseCount = [self.boodArray[5] integerValue];
+//
+//
+//    [self showPreogressView];
+//    //提交数据
+//    NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+//    [request addPostValue:memberId forKey:@"memberChildId"];
+//    [request addPostValue:@(30) forKey:@"datatype"];
+//    [request addPostValue:@(highCount) forKey:@"highPressure"];
+//    [request addPostValue:@(lowCount) forKey:@"lowPressure"];
+//    [request addPostValue:@(pulseCount) forKey:@"pulse"];
+//    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestError:)];
+//    [request setDidFinishSelector:@selector(requestCompleted:)];
+//    [request startAsynchronous];
+//
+//}
 
 -(void)requestCompleted:(ASIHTTPRequest *)request{
     [self hidePreogressView];

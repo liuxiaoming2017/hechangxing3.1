@@ -487,7 +487,7 @@
     }
 //    UIImageView *icon = [Tools creatImageViewWithFrame:CGRectMake(25, 3, 34.5, 34) imageName:iconImage];
 //    [cell.contentView addSubview:icon];
-    UILabel *symptomName = [Tools labelWith:ModuleZW(selectedModel.symptom) frame:CGRectMake(25, 3, _contentView.frame.size.width-70-25-11-20-80, 34) textSize:14 textColor:[Tools colorWithHexString:@"#666666"] lines:2 aligment:NSTextAlignmentLeft];
+    UILabel *symptomName = [Tools labelWith:ModuleZW(selectedModel.symptom) frame:CGRectMake(25, 3, _contentView.frame.size.width-25-11-20-80, 34) textSize:14 textColor:[Tools colorWithHexString:@"#666666"] lines:2 aligment:NSTextAlignmentLeft];
     [cell.contentView addSubview:symptomName];
     UILabel *extentLabel = [[UILabel alloc] initWithFrame:CGRectMake(_contentView.frame.size.width-25-11-20-80, 3, 80, 34)];
     extentLabel.font = [UIFont systemFontOfSize:14];
@@ -509,7 +509,6 @@
         extentLabel.textColor = [Tools colorWithHexString:@"#ff7057"];
     }
 
-    
     [cell.contentView addSubview:extentLabel];
     
     cell.contentView.userInteractionEnabled = YES;

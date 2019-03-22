@@ -31,7 +31,7 @@
 "提示"                                     = "Tips";
 "确定"                                     = "sure";
 "取消"                                     = "cancel";
-"返回"                                     = "back";
+"返回"                                     = "Back";
 
 
 
@@ -73,7 +73,7 @@
 "readImage"                                                            =  "一说";
 "writeImage"                                                           =  "一写";
 "hitImage"                                                               =  "一点";
-"我的"                                                                     =  "My";
+"我的"                                                                     =  "Me";
 
 "消息中心"                                                              ="Message Center";
 "在线咨询"                                                              = "Online Consultation";
@@ -88,6 +88,8 @@
 "2.对小病进行咨询"                                                  =  "2.Consultation on minor illness can be done";
 "就医更方便"                                                            =  "More convenient medical care";
 
+"已解答" = "Solved";
+"未解答" = "Pending";
 //=====================================一说================================
 "脏腑状态评估"             ="Zang-fu organs test";
 "很抱歉，您所录制的声音无效，请重新辨识。"        ="Sorry, the voice you recorded is invalid. Please re-identify";
@@ -96,13 +98,14 @@
 "未采集到有效声音，请录制有效声音"        ="No valid voice is collected, please record a valid voice";
 "经络状态评估"        ="Meridian test";
 "经络辨识"              = "Meridian test";
+"经络辨识报告"    = "Meridian test report";
 
 
 //=============================== 运动==================================
 "sportImageText"                 = "sportImageText_en";
-"轮播暂停"                           =  "Suspend Slider";
-"播放乐药"                           =   "Play Treatment Music";
-"动作示范音"                       =  "Audio for Demonstration";
+"轮播暂停"                           =  "Pause";
+"播放乐药"                           =   "Play";
+"动作示范音"                       =  "Audio";
 "全部"                                  =  "All    ";
 "全部   "                               =  "  All          ";
 "预备   "                               =   "Prepare  ";
@@ -138,7 +141,6 @@
 "体温"                        =  "Body Temp";
 "呼吸"                        =  "Respiration";
 "阶段报告"                 =  "Report";
-//"确定"                      =  "Confirm";
 "病历"                         =  "Record";
 "收缩压"                     = "SBP";
 "舒张压"                     ="DBP";
@@ -156,7 +158,7 @@
 "设置"                         = "Settings";
 "关于我们"                  ="About Us";
 "隐私条款"                  =  "Privacy Policy";
-"会员章程"                  =  "Terms & Conditions";
+"会员章程"                  =  "Terms And Conditions";
 "官方微信"                  = "Official WeChat";
 "官方微博"                  = "Official Weibo";
 "声明"                          =  "Statement";
@@ -168,26 +170,24 @@
 "待评价"                       =  "Pending Comment";
 "退款记录"                    =  "Refund Record";
 "退货记录"                    =  "Return Record";
-"我的卡包"                    =  "My Card Pack";
+"我的卡包"                    =  "My Cards";
 "我的积分"                    =  "My Points";
 "家庭成员"                    =  "Family Member";
-"健康讲座"                     =  "Health Lecture";
+"健康讲座 "                     =  "Health Lecture";
 "我的乐药"                     =  "My Treatment Music";
-"运动示范音"                  =  "Exercise Demonstration Recording";
+"运动示范音"                  =  "Exercise Demo Audio";
 "未发出的声音文件"       =  "Unsent sound file";
-"我的咨询"                      =   "My Consulation";
+"我的咨询"                      =   "My Consultation";
 "收货地址"                      =  "Delivery Address";
 "意见反馈"                      = "Feedback";
 "收藏"                             = "Collect";
-"设置"                             = "Harmony package";
-"关于我们"                      = "Harmony package";
 "修改密码"                      = "Change Password";
 "用 户 名:"                       =   "User Name:";
 "手机号码:"                     =   "Phone number:";
 "请输入原密码"               = "Original password";
 "请输入新密码"               = "New password";
 "请确认新密码"               = "Confirm";
-"授权并登录"                   =  "Submit & Login";
+"授权并登录"                   =  "Submit And Login";
 "确认注销用户"               ="Sure to logout";
 "注销"                              = "Logout";
 "手机号码"                       =  "Phone Number ";
@@ -244,7 +244,6 @@
 "艾灸"                                                              = "Moxibustion";
 "电话"                                                              = "Tel";
 "视频"                                                              = "Video";
-"血压"                                                              = "Blood Pressure";
 "留言"                                                              = "Harmony package";
 "耳穴"                                                              = "Ear Acupuncture";
 "留言"                                                              = "Message";
@@ -276,14 +275,13 @@
 //                                                              干预方案
 
 "干预方案"                                                            = "Intervention Solution";
-"经络梳理方案"                                                     = "Meridian Regulation Solution";
 "耳穴处方"                                                            = "Ear Acupuncture";
 "运动处方"                                                            = "Meridian Exercise";
 "食疗处方"                                                            = "Dietary Therapy";
 "脏腑运动处方"                                                     = "Zang-fu Exercise";
 "音乐处方"                                                            = "Treatment Music";
 "磁贴处方"                                                            = "Magnetic-Sticker Prescription";
-"膳食处方"                                                            = "Medicinal food";
+"膳食处方"                                                            = "Dietary Prescription";
 "砭石处方"                                                             = "Bian-stone therapy";
 "艾灸处方"                                                             = "ONE Moxibustion";
 "推拿处方"                                                             = "Massage Prescription";
@@ -299,6 +297,7 @@
 "名医导诊"                                                              = "Medical Guide";
 "健康资讯"                                                              = "Health Information";
 "中医养生"                                                              = "TCM Health Preservation";
+"健康保险"                                                                              = "Health insurance";
 
 //=====================================图片================================
 "血压13"                                                              = "血压13En";
@@ -352,7 +351,7 @@
 "bloodguide2"                                                         ="bloodguide2En";
 "bloodguide3"                                                         ="bloodguide3En";
 "bloodguide4"                                                         ="bloodguide4En";
-"血压04En"                                                              ="血压04En";
+"血压04"                                                              ="血压04En";
 "zhifuwancheng"                                                     = "zhifuwanchengEn";
 "zhongxinzhifu"                                                       = "zhongxinzhifuEn";
 "quanbuxiazai"                                                          ="quanbuxiazaiEn";
@@ -448,7 +447,6 @@
 "退款金额:"        ="Refund amount:";
 "已全额付款:"        ="Paid in full:";
 "已部分退款:"        ="Partially refunded:";
-"Health Lecture:"        ="Health Lecture:";
 "主  讲  人："        ="Keynote speaker:";
 "讲座时间："        ="Time:";
 "讲座地点："        ="Address:";
@@ -464,6 +462,7 @@
 "个人信息更新成功"        ="Personal information updated successfully";
 "个人信息"        ="Personal information";
 "您的输入太长了"        ="Your input is too long";
+"请上传头像"   = "Upload avatar";
 "已婚"        ="Married";
 "未婚"        ="Unmarried";
 "证件号"        ="ID card";
@@ -478,9 +477,7 @@
 "真 实 姓 名"        ="Actual name";
 "填写您的真实姓名"        ="Fill in your actual name";
 "真实姓名"        ="Actual name";
-"Date of Birth"        ="Date of Birth";
 "Marital Status"        ="Marital Status";
-"Nationality"        ="Nationality";
 "居住地址"        ="Residential Address";
 "固定电话"        ="Fixed-line Telephone";
 "证件类型"        ="Type of ID";
@@ -489,16 +486,7 @@
 "永久有效"        ="Permanently valid";
 "periodic report"        ="periodic report";
 "病历"        ="medical history";
-"constitution"        ="constitution";
-"blood pressure"        ="blood pressure";
-"blood oxygen"        ="blood oxygen";
-"blood sugar"        ="blood sugar";
-"heart rate"        ="heart rate";
-"breath"        ="breath";
-"body temp"        ="body temp";
-"Start Test"        ="Start Test";
-"heart rate detection"        ="heart rate detection";
-"NOT CONNECTED"        ="NOT CONNECTED";
+
 "连接中"        ="Connecting";
 "检测完之后才能提交"        ="Submit only after testing";
 "检测数据为空，请重新检测"        ="Empty test data. Re-detect";
@@ -510,12 +498,11 @@
 "心率正常范围参考值"        ="Reference value range of normal heart rate ";
 "60-100次/分"        ="60-100 times / min.";
 "心电结果：请交医生诊断"        ="ECG result: Please consult a doctor for diagnosis";
-"秒"        ="Seconds";
+"秒"        ="S";
 "血压、脉搏正常范围参考值："        ="Reference value range of normal blood pressure and pulse:";
 "脉搏：60－100次/分"        ="Pulse: 60－100 times/min";
 "血氧正常范围参考值：\n95%-100%"        ="Reference value range of normal blood oxygen:  \n95%-100%";
 "查看档案"        ="View archive";
-"秒"        ="Seconds";
 "未连接"        ="NOT CONNECTED";
 "开始检测"        ="Start test";
 "80 秒"    = "80 s";
@@ -525,14 +512,12 @@
 "您输入的手机号格式错误"        ="Wrong format of mobile number";
 "账号不能为空"        ="Account cannot be empty";
 "手机号和验证码不能为空"        ="Mobile number and verification code cannot be empty";
-"Harmony package"        ="Harmony package";
-"Reminder"        ="Reminder";
-"Info"        ="Info";
 "经络知识"        ="Meridian knowledge";
 "Get your personalized Harmony package after test"        ="Get your personalized Harmony package after test";
 "检测到新版本，是否下载?"        ="New version detected, download? ";
 "健康档案"        ="Health archive";
 "体质辨识"        ="Constitution identification";
+"体质辨识报告"        ="Constitution identification report";
 "您已超过7天未进行经络状态的评估"        ="You haven’t tested your meridian for over 7 days ";
 "您已超过30天未进行脏腑状态的评估"        ="You haven’t tested your zang-fu organs for over 30 days ";
 "您已超90天未进行体质状态评估"        ="You haven’t tested your constitution for over 90 days ";
@@ -545,15 +530,6 @@
 "和畅经络运动"        ="Harmony meridian exercise";
 "请去个人中心->我的->运动示范音中下载示范音，不然您将无法收听到语音播放"        ="Please go to Personal Center->Me->Exercise Demo Recording to download the demo record. Otherwise you will not be able to listen to the voice playback. ";
 "请去下载乐药"        ="Download treatment music";
-"Suspend Slider"        ="Suspend Slider";
-"Play Treatment Music"        ="Play Treatment Music";
-"Audio for Demonstration"        ="Audio for Demonstration";
-
-"Da Gong"        ="Da Gong";
-"Jia Gong"        ="Jia Gong";
-"Shang Gong"        ="Shang Gong";
-"Shao Gong"        ="Shao Gong";
-"Zuojue Gong"        ="Zuojue Gong";
 "上商"        ="Shang Shang";
 "少商"        ="Shao Shang ";
 "钛商"        ="Tai Shang ";
@@ -575,7 +551,6 @@
 "桎羽"        ="Zhi Yu";
 "众羽"        ="Zhong Yu";
 "计时结束"        ="Timing over";
-"秒"        ="Seconds";
 "打开"        ="Open";
 "关闭"        ="Close";
 "切换"        ="Changover";
@@ -592,7 +567,7 @@
 "正常稍高"        ="Slightly high in normal range";
 "正常"        ="Normal";
 "偏低"        ="Low";
-"次/分"        ="Times/min";
+"(次/分)"        ="(Times/min)";
 "已接入"        ="Connected ";
 "请将设备插入仪器口指示位置"        ="Please insert the device into the indicated port of the instrument  ";
 "血氧检测"        ="Blood oxygen detection";
@@ -620,7 +595,7 @@
 "本分类下暂时没有乐药"        ="There is no treatment music in this category";
 "我的乐药"        ="My treatment music";
 "确认购买该曲目吗?"        ="Are you sure to buy this track?";
-"&#160;Total："        =" Total：";
+"And#160;Total："        =" Total：";
 "请先到购物车进行付款"        ="Please pay in the shopping cart first.";
 "请去蓝牙页面打开蓝牙连接接乐络怡"        ="Open Bluetooth and connect with Yueluoyi";
 "乐药已加入购物车"        ="Track has been added to shopping cart ";
@@ -654,7 +629,7 @@
 "角"        ="Jue ";
 "徵"        ="Zhi ";
 "羽"        ="Yu ";
-"去结算"        ="To settlement";
+"去结算"        ="CHECKOUT";
 "强"        ="Strong ";
 "弱"        ="Weak ";
 "热点"        ="Hotspot ";
@@ -772,6 +747,7 @@
 "症 状 列 表" = "Symptom List";
 "已选症状"    = "Symptoms chosen";
 "脏腑辨识"        ="Zang-fu organs";
+"脏腑辨识报告"        ="Zang-fu organs report";
 "整个身体"        ="Whole Body";
 "头面部"        ="Head and face";
 "您最多只能选择五种症状"        ="You can choose 5 symptoms at most";
@@ -791,10 +767,10 @@
 "腹部"        ="Abdomen";
 "全身"        ="Whole Body";
 "四肢部"    ="Limbs";
-"头面部"    ="Head& Face";
+"头面部"    ="Head And Face";
 "胸部"        ="Chest";
-"腰股部"    ="Waist& Thigh";
-"腰股部"    ="Waist& Thigh";
+"腰股部"    ="Waist And Thigh";
+"腰股部"    ="Waist And Thigh";
 
 
 
@@ -1393,6 +1369,7 @@
 "吐痰"    ="spit";
 "ICD10" = "ICD10_En";
 
+"经络梳理方案" = "Meridian Regulation Solution";
 "脏腑调理方案"="Zang-fu regulation plan";
 "体质调理方案"="Constitution regulation plan";
 "状态护理方案"="State care plan";
@@ -1587,7 +1564,7 @@
 "你已经全部下载。"     =   "You have downloaded all";
 "你确定要全部下载运动示范音吗？"     =   "Are you sure to download all the exercise demos?";
 "确定下载该曲目吗？"     =   "Are you sure to download this track?";
-"温馨提示:儿童灸疗温度不宜超过39℃"     =   "Tips: Children's moxibustion temperature should not exceed 39℃";
+" 温馨提示:儿童灸疗温度不宜超过39℃"     =   "Tips: Children's moxibustion temperature should not exceed 39℃";
 "设备搜寻中"     =   "Searching device";
 "当前无灸疗计划"     =   "No moxibustion plan currently";
 "已连接AJi9"     =   "Already connected to AJi9";
@@ -1667,10 +1644,45 @@
 "%1$s号灸头"     =   "Moxibustion device %1$s";
 "温度"     =   "Temperature";
 "时间"     =   "Time";
-"同步时间"     =   "Synchronize time";
-"同步温度"     =   "Synchronize temperature";
+"同步温度"     =   "Sync temp";
+"同步时间"     =   "Sync time";
 "蓝牙管理"     =   "Bluetooth management";
 "温度过高"     =   "Temperature is too high";
 "温度正常"     =   "Normal temperature";
 "温度偏高"     =   "Temperature is high";
 
+"发现新版本,是否升级"    ="New version found, update or not?";
+"残忍拒绝"    ="No";
+"立即更新"    ="Yes, now";
+"你还没有乐药产品"    ="You have no treatment music";
+"服务器开小差了,请稍后重试!"    ="Server error, please try again later.";
+"登录手机号不能为空"    ="Mobile number cannot be empty ";
+"手机号格式错误，请正确输入您的手机号码"    ="Mobile number in wrong format, please enter your mobile number correctly.";
+"密码设置不能为空"    ="Password cannot be empty ";
+"请输入6-20位字符，可使用字母，数字或字符组合!"    ="Enter 6-20 characters which can be letters, numbers or character combinations.";
+"两次输入的密码不一致"    ="The two passwords you entered do not match.";
+"请获取注册码"    ="Get the registration code";
+"请阅读条款... ..."    ="Read Terms and Conditions";
+"临时密码不能为空"    ="Temporary password cannot be empty";
+"余额"    ="Balance";
+"您未完成和畅体检,全部完成体检后定制属于您的和畅服务包"    ="Get your personalized Harmony package after test";
+"支付宝支付"    ="Pay via Alipay";
+"微信支付"    ="Pay via WeChat";
+"你还没有音乐示范音产品"    ="You have no demonstration audio ";
+"刷新列表"    ="Refresh";
+"你的咨询信息已提交,医生会在第一时间给予回复"    ="Your consultation has been submitted and the doctor will feed you back as soon as possible.";
+"空腹"    ="Empty stomach";
+"餐后"    ="After meal";
+"未发出声的文件"    ="File unsent";
+"当前体温值"    ="Current body temperature";
+"请保持情绪的稳定、放松身心。"    ="Keep steady emotion and relax";
+"观察被测者的胸腹部、一起一伏为一次呼吸，测量30秒。"    ="Watch the examinee’s chest and stomach. One rise and fall is counted as one breath. Measure for 30 seconds.";
+
+
+"下拉刷新"  =    "Pull down to refresh";
+"努力加载中..."  =    "Loading...";
+"松开即可刷新..."  =    "Release to refresh";
+"上拉加载"  =    "Pull up to load";
+"加载中..."  =    "Loading…";
+"没有更多了"  =    "No more";
+"松开即可加载..."  =    "Release to load";

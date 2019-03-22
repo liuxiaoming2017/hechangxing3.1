@@ -41,7 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navTitleLabel.text = @"我的咨询";
+    self.navTitleLabel.text = ModuleZW(@"我的咨询");
     self.view.backgroundColor = [UIColor whiteColor];
     self.dataArray = [[NSMutableArray alloc]init];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height - kNavBarHeight) style:UITableViewStylePlain];
@@ -84,7 +84,7 @@
     [self.view addSubview:progress_];
     [self.view bringSubviewToFront:progress_];
     progress_.delegate = self;
-    progress_.label.text = @"加载中...";
+    progress_.label.text = ModuleZW(@"加载中...");
     [progress_ showAnimated:YES];
 }
 
@@ -103,7 +103,7 @@
     [self hudWasHidden];
     //[SSWaitViewEx removeWaitViewFrom:self.view];
     
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉，请检查您的网络是否畅通" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉，请检查您的网络是否畅通") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
     [av show];
    
 }
@@ -131,13 +131,13 @@
     else if ([status intValue]==44)
     {
         
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"登录超时，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         av.tag = 100008;
         [av show];
         
     }else{
         NSString *str = [dic objectForKey:@"data"];
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:str delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         //av.tag = 100008;
         [av show];
         
@@ -162,22 +162,23 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (self.dataArray.count) {
         NSDictionary *memberDic = self.dataArray[indexPath.row];
-        if (![memberDic[@"name"] isKindOfClass:[NSNull class]]) {
-            cell.nameLabel.text = memberDic[@"name"];
+//        if (![memberDic[@"name"] isKindOfClass:[NSNull class]]) {
+//            cell.nameLabel.text = memberDic[@"name"];
+//        }else{
+        if ([MemberUserShance shareOnce].name.length <  26) {
+            cell.nameLabel.text = [MemberUserShance shareOnce].name;
         }else{
-            if (![[UserShareOnce shareOnce].name isEqual:[NSNull null]]) {
-                cell.nameLabel.text = [UserShareOnce shareOnce].username;
-            }else{
-                cell.nameLabel.text = [UserShareOnce shareOnce].name;
-            }
+            cell.nameLabel.text = [UserShareOnce shareOnce].wxName;
         }
+
+//        }
         
         
         if ([[self.dataArray[indexPath.row] objectForKey:@"replyUserConsultations"] isEqual:[NSNull null]]) {
-            cell.answerLabel.text = @"未解答";
+            cell.answerLabel.text = ModuleZW(@"未解答");
             cell.answerLabel.textColor = [UtilityFunc colorWithHexString:@"#fe6f5f"];
         }else{
-            cell.answerLabel.text = @"已解答";
+            cell.answerLabel.text = ModuleZW(@"已解答");
             cell.answerLabel.textColor = [UtilityFunc colorWithHexString:@"#5bb3fa"];
         }
         cell.contentlabel.text = [self.dataArray[indexPath.row]objectForKey:@"content"];

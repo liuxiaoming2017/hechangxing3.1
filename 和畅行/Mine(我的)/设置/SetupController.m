@@ -120,7 +120,12 @@
                 vc.noWebviewBack = YES;
                 vc.progressType = progress2;
                 vc.titleStr =ModuleZW(@"关于我们");
-                vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/60/1.html",URL_PRE];
+                if([UserShareOnce shareOnce].languageType){
+                    vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201903/60/1.html",URL_PRE];
+                }else{
+                    vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/60/1.html",URL_PRE];
+
+                }
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
             }
@@ -131,7 +136,11 @@
                 vc.noWebviewBack = YES;
                 vc.progressType = progress2;
                 vc.titleStr =ModuleZW(@"隐私条款");
-                vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/61/1.html",URL_PRE];
+                if([UserShareOnce shareOnce].languageType){
+                    vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201903/61/1.html",URL_PRE];
+                }else{
+                    vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/61/1.html",URL_PRE];
+                }
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
             }
@@ -142,7 +151,11 @@
                 vc.noWebviewBack = YES;
                 vc.progressType = progress2;
                 vc.titleStr = ModuleZW(@"会员章程");
-                vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/62/1.html",URL_PRE];
+                if([UserShareOnce shareOnce].languageType){
+                    vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201903/62/1.html",URL_PRE];
+                }else{
+                    vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/62/1.html",URL_PRE];
+                }
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
             }
@@ -165,7 +178,11 @@
                 vc.noWebviewBack = YES;
                 vc.progressType = progress2;
                 vc.titleStr = ModuleZW(@"声明");
-                vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/63/1.html",URL_PRE];
+                if([UserShareOnce shareOnce].languageType){
+                    vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201903/63/1.html",URL_PRE];
+                }else{
+                    vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/63/1.html",URL_PRE];
+                }
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
             }
@@ -176,7 +193,11 @@
                 vc.noWebviewBack = YES;
                 vc.progressType = progress2;
                 vc.titleStr = ModuleZW(@"帮助");
-                vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/64/1.html",URL_PRE];
+                if([UserShareOnce shareOnce].languageType){
+                    vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201903/64/1.html",URL_PRE];
+                }else{
+                    vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/64/1.html",URL_PRE];
+                }
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
             }

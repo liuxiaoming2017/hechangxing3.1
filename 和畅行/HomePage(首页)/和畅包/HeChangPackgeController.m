@@ -44,6 +44,21 @@
     NSString *strRequest = [navigationAction.request.URL.absoluteString stringByRemovingPercentEncoding];
     //NSString *ganyuStr = [NSString stringWithFormat:@"%@hcy/member/action/ganyufangan",URL_PRE];
     NSString *ganyuStr = [NSString stringWithFormat:@"%@member/action/ganyufangan",URL_PRE];
+    NSLog(@"%@",strRequest);
+    
+    if ([strRequest containsString:@"/member/service/view/tiyan/JLBS"]){
+        self.navTitleLabel.text = ModuleZW(@"经络体检报告");
+    }else if ([strRequest containsString:@"member/service/zf_report.jhtml"]){
+        self.navTitleLabel.text = ModuleZW(@"脏腑体检报告");
+    }else if ([strRequest containsString:@"member/service/view/tiyan/TZBS"]){
+        self.navTitleLabel.text = ModuleZW(@"体质体检报告");
+    }else if ([strRequest containsString:@"/member/service/home"]){
+        self.navTitleLabel.text = ModuleZW(@"和畅包");
+    }else if ([strRequest containsString:@"member/service/index/yibao/TZBS/"]){
+        self.navTitleLabel.text = ModuleZW(@"健康保险");
+    }
+    ///member/service/view/fang/JLBS
+    
     if([strRequest isEqualToString:ganyuStr]){
         decisionHandler(WKNavigationActionPolicyCancel);
         GanYuSchemeController *vc = [[GanYuSchemeController alloc] init];
@@ -92,12 +107,14 @@
             NSMutableURLRequest *request= [NSMutableURLRequest requestWithURL:navigationAction.request.URL];
             NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UserShareOnce shareOnce].token,@"token",[UserShareOnce shareOnce].JSESSIONID,@"JSESSIONID", nil];
             [request addValue:[self readCurrentCookieWith:dic] forHTTPHeaderField:@"Cookie"];
+            if([UserShareOnce shareOnce].languageType){
+                [request addValue:[UserShareOnce shareOnce].languageType forHTTPHeaderField:@"language"];
+            }
             [webView loadRequest:request];
             decisionHandler(WKNavigationActionPolicyCancel);
         }
         
     }
-    NSLog(@"str:%@",strRequest);
     
 }
 
