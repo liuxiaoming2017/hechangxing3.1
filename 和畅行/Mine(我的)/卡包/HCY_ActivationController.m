@@ -270,7 +270,7 @@
             [UserShareOnce shareOnce].userToken = [dataDic objectForKey:@"userToken"];
         }
         [self.navigationController popViewControllerAnimated:YES];
-        [GlobalCommon showMessage:ModuleZW(@"服务卡激活成功") duration:1.0];
+        [GlobalCommon showMessage:ModuleZW(@"激活成功") duration:1.0];
     }else{
         [self showAlertWarmMessage:[dic objectForKey:@"message"]];
     }

@@ -150,7 +150,7 @@
             self.contentLabel.text = [NSString stringWithFormat:@"%@ %@  %@ %@",ModuleZW(@"收缩压"),model.highPressure,ModuleZW(@"舒张压"),model.lowPressure];
         }else if ([model.typeStr isEqualToString:@"ecg"]){
             typeStr = ModuleZW(@"心率");
-            self.contentLabel.text = [model.subject valueForKey:@"name"];
+            self.contentLabel.text = model.heartRate;
         }else if ([model.typeStr isEqualToString:@"JLBS"]){
             typeStr = ModuleZW(@"经络");
             self.contentLabel.text = [model.subject valueForKey:@"name"];
@@ -174,9 +174,9 @@
             self.contentLabel.text = model.name;
         }
         self.createDateLabel.text = model.time;
-    }else  if (typeInteger == 10){
+    }else  if (typeInteger == 10||typeInteger == 9){
         typeStr = ModuleZW(@"心率");
-        self.contentLabel.text = [model.subject valueForKey:@"name"];
+        self.contentLabel.text = model.heartRate;
         NSString *str = [NSString stringWithFormat:@"%@",model.createDate];
         self.createDateLabel.text = [self getDateStringWithTimeStr:str];
     }else {

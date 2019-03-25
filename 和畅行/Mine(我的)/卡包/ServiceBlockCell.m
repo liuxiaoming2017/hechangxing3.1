@@ -45,7 +45,7 @@
     [self addSubview:self.contentLabel];
     
     self.tradeBtn = [HCY_UnderlineButton buttonWithType:(UIButtonTypeCustom)];
-    self.tradeBtn.frame =CGRectMake(cellWidth-90, 0, 80, 30);
+    self.tradeBtn.frame =CGRectMake(cellWidth-90, 0, 85, 30);
     self.tradeBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
     self.tradeBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [self.tradeBtn addTarget:self action:@selector(consultingAction:) forControlEvents:(UIControlEventTouchUpInside)];

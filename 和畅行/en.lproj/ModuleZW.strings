@@ -223,7 +223,7 @@
 "消费记录"                                      ="Order history";
 "卡号"                                             ="Card No.";
 "去咨询"                                          ="Consult ";
-"去预约"                                          ="Make an appointment";
+"去预约"                                          ="Appointment";
 "未激活卡片信息"                            ="Card info inactivated";
 "您即将激活"                                   ="You are about to activate";
 "，是否继续？"                               =", sure to continue?";
@@ -292,7 +292,6 @@
 "体征监测"                                                             = " Sign Monitoring";
 "体检建议"                                                              = "Checkup Suggestion";
 "视频问诊"                                                              = "Video";
-"图文咨询"                                                              = "Graphic Consultation ";
 "预约挂号"                                                              = "Appointment";
 "名医导诊"                                                              = "Medical Guide";
 "健康资讯"                                                              = "Health Information";
@@ -364,6 +363,7 @@
 "sureButton"                                                        ="sureButtonEn";
 "commit_green"                                                  = "commit_greenEn";
 "recheck_blue"                                                     = "血压04En";
+"未激活"                                                               = "未激活En";
 
 //=====================================运动图片 ======
 "gf_tp_yubeidongzuo_0" = "gf_tp_yubeidongzuo_0En";
@@ -1369,7 +1369,7 @@
 "吐痰"    ="spit";
 "ICD10" = "ICD10_En";
 
-"经络梳理方案" = "Meridian Regulation Solution";
+"经络梳理方案" = "Meridian Regulation Plan";
 "脏腑调理方案"="Zang-fu regulation plan";
 "体质调理方案"="Constitution regulation plan";
 "状态护理方案"="State care plan";
@@ -1442,7 +1442,7 @@
 "您输入的机身编码有误,请重新输入"     =   " Wrong body code. Input again";
 "没有找到该设备"     =   "  The device is not found";
 "正在找回密码..."     =   "  Retrieving password⋯";
-"1.启动/关闭灸疗连接Start/stop connection";
+"1.启动/关闭灸疗连接" = "Start/stop connection";
 "①点击“一键开”按钮，可控制所有灸头的“开”或“关”"     =   "By tapping Turn on ALL, you can open or close all the devices";
 "②点击单个灸头图标，可独立控制该灸头的“开”或“关”"     =   "By tapping the icon of a single device, you can independently open or close this device.";
 "点击需要调整参数的灸头，在弹出的调整界面，通过左右滑动或者点击“+”“-”符号，可调整具体的灸疗温度和时间"     =   "Tap the icon of the device whose parameters need adjustment, slide left or right or tap + /- in pop-up interface, and you can adjust the specific moxibustion temperature and time.";
@@ -1686,3 +1686,13 @@
 "加载中..."  =    "Loading…";
 "没有更多了"  =    "No more";
 "松开即可加载..."  =    "Release to load";
+"通过机身编码找回密码"  = "Retrieve password by device body code";
+"若忘记密码，可用上述方式输入机身编码找回密码"    = "If you forget password, you can retrieve it by entering body code in above way.";
+"联系客服 "    = "Contact Customer Service";
+"联系客服"    = "Customer Service";
+"若无法获机身编码，可拨打客服电话，提供灸头ID找回密码"    = "If you fail to acquire the code, call Customer Service, offer device ID and you can retrieve the password.";
+"注:灸头ID在灸头网络列表中可见"    = "Note: ID can be seen in device network list.";
+"操作指引"    = "Instructions";
+"艾灸禁忌"    = "Taboos";
+"1、装有心脏起搏器者禁用CAJ-68/66型隔物灸仪，建议使用CAJ-100A型隔物灸仪。\n2、醉酒、空腹、过饥、过饱、大惊、大怒、大渴、大汗、极度疲劳以及对灸法恐惧者禁灸！\n3、孕妇的腹部和腰骶部禁灸！\n4、皮肤溃疡处、瘢痕处禁灸！瘢痕体质者必须在医生指导下灸疗！\n5、患有高热、昏迷、抽搐等急症或危重病人禁灸！\n6、婴幼儿、不配合灸疗的儿童、感\n7、心力衰竭及呼吸衰竭者禁灸！\n8、对颜面、五官和有大血管的部位以及关节活动部位慎灸，以防起泡留下瘢痕，影响美容。\n9、体弱者，初次灸疗温度不宜超过45℃，时间不宜超过30分钟。\n10、严禁未成年人、精神病患者以及有意识障碍者使用隔物灸仪自灸！\n11、中医诊断为湿热症、阴虚内热者，需要在医生指导下灸疗！\n12、糖尿病、高血压、心脏病、结核病患者，需要在医生指导下灸疗\n"   =  "1.CAJ-68/66 type sandwiched moxibustion device is forbidden for patients with cardiac pacemakers, and CAJ-100A type is recommended. \n2. Do not perform moxibustion when you are drunk, fasting, hungry, full, shocked, angry, thirsty, sweating, extreme weary, or feared with the therapy. \n3. Do not perform moxibustion on lumbosacral region and abdomen of a pregnant woman. \n4. Do not perform moxibustion on scar or ulcer of the skin. One with scar constitution should perform moxibustion under the guidance of a doctor. \n5. Do not perform moxibustion when suffering from high fever, coma, convulsions, etc. or critically ill. \n6. Do not perform moxibustion for babies, young children or kids not cooperative.\n7. Do not perform moxibustion when suffering from heart or respiratory failure. \n8. Do not perform moxibustion on face, facial features, areas with large blood vessels or joint parts to avoid blisters which may result in scars. \n9. For the weak, the initial moxibustion temperature should not exceed 45, and the time should not exceed 30 minutes. \n10. Do not let the underaged, mentally disordered, or those with conscious disabilities perform moxibustion themselves. \n11. One diagnosed with damp-heat syndrome or internal heat due to yin-deficiency should perform moxibustion under the guidance of a doctor. \n12. One diagnosed with diabetes, hypertension, heart disease, tuberculosis, etc. should perform moxibustion under the guidance of a doctor. \n";
+"1、使用过程中应密切留意作用部位,若出现不适应立即停止使用。\n2、隔物灸仪工作时，灸头工作面中间的发热体的温度较高，严禁触摸！\n3、注意保暖:\n\t⑴ 一切准备妥当后再宽衣解带；\n\t ⑵ 除贴护垫和放置灸头时，短时间内暴露灸疗部位外，灸疗时不允许暴露灸疗部位，应有厚毛巾或棉被覆盖。身体的其他部位更不允许暴露；\n\t⑶ 冬天最好在温度不低于28℃、通风良好的室内施灸；夏天炎热，选择早晚凉爽时施灸。如果在空调房里施灸，空调温度不得低于28℃，并且要避开空调的出风口；春天、秋天施灸，也要注意保暖。\n\t⑷ 每次施灸结束时，特别是外感症，不要立即将灸头拿开，使施灸穴位的温度骤减。应停留几分钟，待施灸穴位的温度逐渐下降后再将灸头拿开。这样可避免风寒邪气乘穴道大开之时侵入。\n4、身上有汗、有水或油腻时，先擦拭干净后，再系绑带施灸，以防护垫滑落。\n5、灸疗过程中，每个人对热的耐受度不一样，不同的人应使用不同的灸疗温度;同一人不同的时间段、不同的部位、不同的穴位、不同经络耐温都不一样，应根据灸疗时的感觉分别调节输出温度。以不起泡为原则，以本人对热的耐受为度。\n6、建议灸疗时不要离开灸疗操作界面，以便感觉温度过高时，及时调低输出温度。\n7、灸疗结束后，不能马上离开灸疗的地方。应穿好衣服在原地停留10～15分钟才能离开；出汗者应等汗停后再离开。\n8、灸疗结束后，护垫的医用粘胶有可能和皮肤粘贴过紧，所以拆卸护垫时，动作应轻柔，避免弄伤皮肤。\n9、灸疗后，灸疗部位4小时内不能接触低于40℃以下的冷水。\n10、灸疗后调养：多喝热水，多吃营养丰富食物。\n11、一般每次灸疗时间以30~60分钟为宜；温度以45℃左右为宜。" = "1. Pay close attention during use and stop immediately in case of any discomfort. \n2. While working, temperature of the heater in middle of moxibustion head is high. Do not touch!  \n3. Keep warm: \n\t(1) Undress when everything is ready; \n\t(2) Do not expose moxibustion site or other parts of your body during moxibustion other than short time exposure when sticking pads and placing the device. The site should be covered with a thick towel or quilts. \n\t(3) In winter, it is better to apply moxibustion in a well-ventilated room with a temperature not lower than 28 °C; in hot summer, do moxibustion in morning and evening when it is cool. If you want to do moxibustion in an air-conditioned room, make the temperature not lower than 28 °C, and avoid the air outlet of the conditioner; in spring and autumn, keep warm during moxibustion. \n\t(4) At the end of each moxibustion, especially in case of exogenous dyndrome, do not remove the device immediately, which can make the acupoint moxibustioned decline quickly.  Keep it for a few minutes and remove it when the acupuncture cools down gradually, which prevents the intrusion of the wind and cold pathogenic factors when the acupoint is open.\n5. During moxibustion, people's tolerance to heat is different. So different people should select different moxibustion temperatures. Even for one person, the temperature tolerance for different time phases, body parts, acupoints and meridians differs. Output temperature should be adjusted as per one's feeling, just not to cause blisters. \n6. It is recommended not to quit operation interface during moxibustion, so that you can lower the temperature in time when feeling too hot. \n7. In the end of moxibustion, do not leave the place of moxibustion immediately. You should put on clothes and stay in place for 10 to 15 minutes before leaving; if you sweat, wait until it stops before leaving. \n8. In the end of moxibustion, the medical adhesive of the pad may be still tightly attached to your skin, so be gentle when removing the pad to avoid hurting the skin. \n9. After moxibustion, the site moxibustioned should be free from cold water below 40 °C within 4 hours. \n10. Nursing after moxibustion: drink hot water and take more nutritious food. \n11. Generally, 30 to 60 minutes per moxibustion is suitable, with temperature around 45 °C.";

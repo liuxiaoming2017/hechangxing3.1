@@ -44,7 +44,11 @@
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    if([UserShareOnce shareOnce].languageType){
+        return 1;
+    }else{
+        return 3;
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -66,6 +70,12 @@
 
 -(void)comeToNextBlockCellwithIndex:(NSIndexPath *)index {
     
+    if ([UserShareOnce shareOnce].languageType){
+        AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
+        [self.navigationController pushViewController:adVC animated:YES];
+        return;
+    }
+    
 //     HHMSDK *hhmSdk = [[HHMSDK alloc] init];
 //    __weak typeof(self) weakSelf = self;
 //    if(index.row==0||index.row==1){
@@ -84,9 +94,9 @@
 //                [hhmSdk startCall:HHCallTypeChild];
 //            }
 //        }];
-//        
+//
 //    }else if (index.row == 1) {
-//        
+//
 //        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
 //            if(error){
 //                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
@@ -94,12 +104,12 @@
 //                [hhmSdk startCall:HHCallTypeAdult];
 //            }
 //        }];
-//        
+//
 //    }else {
-//        
+//
 //        AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
 //        [self.navigationController pushViewController:adVC animated:YES];
-//        
+//
 //    }
 }
 - (void)messageHintView

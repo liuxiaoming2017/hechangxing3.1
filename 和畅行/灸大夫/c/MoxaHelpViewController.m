@@ -11,6 +11,13 @@
 
 
 @interface MoxaHelpViewController ()<UIGestureRecognizerDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *starLbale;
+@property (weak, nonatomic) IBOutlet UILabel *one3Label;
+@property (weak, nonatomic) IBOutlet UILabel *touchLabel;
+@property (weak, nonatomic) IBOutlet UILabel *twoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *twoTLabel;
+@property (weak, nonatomic) IBOutlet UILabel *threeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *threeTLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (strong, nonatomic) IBOutlet UIView *page1View;
@@ -42,13 +49,28 @@
     }
     
     //self.navigationController.interactivePopGestureRecognizer.delegate = self;
-
+/*
+ @property (weak, nonatomic) IBOutlet UILabel *starLbale;
+ @property (weak, nonatomic) IBOutlet UILabel *one3Label;
+ @property (weak, nonatomic) IBOutlet UILabel *touchLabel;
+ @property (weak, nonatomic) IBOutlet UILabel *twoLabel;
+ @property (weak, nonatomic) IBOutlet UILabel *twoTLabel;
+ @property (weak, nonatomic) IBOutlet UILabel *threeLabel;
+ @property (weak, nonatomic) IBOutlet UILabel *threeTLabel;*/
+    
+    self.starLbale.text = ModuleZW(@"1.启动/关闭灸疗连接");
+    self.touchLabel.text = ModuleZW(@"①点击“一键开”按钮，可控制所有灸头的“开”或“关”");
+    self.one3Label.text = ModuleZW(@"②点击单个灸头图标，可独立控制该灸头的“开”或“关”");
+    self.twoLabel.text = ModuleZW(@"2. 调整灸头的温度和时间");
+    self.twoTLabel.text = ModuleZW(@"点击需要调整参数的灸头，在弹出的调整界面，通过左右滑动或者点击“+”“-”符号，可调整具体的灸疗温度和时间");
+    self.threeLabel.text = ModuleZW(@"3. 长按灸头震动三下");
+    self.threeTLabel.text = ModuleZW(@"用手点击灸头并长按，即可震动三下，便于查找相应的灸头");
     
     self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.leftBtn.hidden = YES;
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;
-    self.navTitleLabel.text = @"操作指引";
+    self.navTitleLabel.text = ModuleZW(@"操作指引");
     self.navTitleLabel.textColor = [UIColor whiteColor];
 }
 

@@ -34,6 +34,7 @@
 @property (nonatomic,copy)   NSString *path;
 
 @property (nonatomic,copy)   NSString *content;
+@property (nonatomic,copy)  NSString * heartRate;
 
 
 //季度报告model

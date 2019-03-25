@@ -127,7 +127,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     HealthTipsModel *model = _dataArr[indexPath.row];
     
-    if (self.typeInteger < 7 &&self.typeInteger!=2&&self.typeInteger!=3) {
+    if (self.typeInteger < 11 &&self.typeInteger!=2&&self.typeInteger!=3) {
         if (![model.type isEqualToString:@"REPORT"]){
             if (indexPath.row == 0) {
                 return 105;
@@ -180,7 +180,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (self.typeInteger < 7 &&self.typeInteger !=2 &&self.typeInteger!=3) {
+    if (self.typeInteger < 11 &&self.typeInteger !=2 &&self.typeInteger!=3) {
         HealthTipsModel *model = _dataArr[indexPath.row];
         if(![model.type isEqualToString:@"REPORT"]) {
             NSString *timeStr = [NSString string];

@@ -49,7 +49,7 @@
     
     _imageV = [[UIImageView alloc]init];
     _imageV.frame  =CGRectMake(imageV.width - 60,  5, 50, 45);
-    _imageV.image = [UIImage imageNamed:@"未激活.png"];
+    _imageV.image = [UIImage imageNamed:ModuleZW(@"未激活")];
     _imageV.hidden  = YES;
     [imageV addSubview:_imageV];
    
@@ -71,7 +71,7 @@
           _hLabel.text = str;
         _mLabel.text = [NSString stringWithFormat:@"%@ : %@元",ModuleZW(@"余额"),model.balance];
         timeStr = [NSString stringWithFormat:@"%@",[model.cashcard valueForKey:@"endDate"]];
-        _yLabel.text  = [self getDateStringWithTimeStr:timeStr];
+        _yLabel.text  =[NSString stringWithFormat:@"%@%@",[self getDateStringWithTimeStr:timeStr],ModuleZW(@"到期")] ;
     }else{
         _hLabel.text = model.card_name;
         if (model.cardDescription==nil || [model.cardDescription isKindOfClass:[NSNull class]]||model.cardDescription.length == 0) {
@@ -89,6 +89,8 @@
         if(![GlobalCommon stringEqualNull:timeStr]){
             NSString *endTimeStr =  [NSString stringWithFormat:@"%@%@",timeStr,ModuleZW(@"到期")];
             _yLabel.text = endTimeStr;
+        }else{
+             _yLabel.text = ModuleZW(@"永久有效");
         }
     }
    

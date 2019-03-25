@@ -130,10 +130,11 @@
             self.contentLabel.text = model.density;
         }else if ([model.typeStr isEqualToString:@"bloodPressure"]){
             typeStr = ModuleZW(@"血压");
-            self.contentLabel.text = [NSString stringWithFormat:@"%@ %@",model.highPressure,model.highPressure];
+            self.contentLabel.text = [NSString stringWithFormat:@"%@ %@  %@ %@",ModuleZW(@"收缩压"),model.highPressure,ModuleZW(@"舒张压"),model.lowPressure];
+//            self.contentLabel.text = [NSString stringWithFormat:@"%@ -  %@",model.highPressure,model.highPressure];
         }else if ([model.typeStr isEqualToString:@"ecg"]){
             typeStr = ModuleZW(@"心率");
-            self.contentLabel.text = [model.subject valueForKey:@"name"];
+            self.contentLabel.text = model.heartRate;
         }else if ([model.typeStr isEqualToString:@"JLBS"]){
             typeStr = ModuleZW(@"经络");
             self.contentLabel.text = [model.subject valueForKey:@"name"];
@@ -160,23 +161,13 @@
         
         self.timeLabel.text = model.date;
         self.createDateLabel.text = model.time;
-    }else  if (typeInteger == 10){
-        typeStr = @"心率";
-        self.contentLabel.text = [model.subject valueForKey:@"name"];
+    }else  if (typeInteger == 10||typeInteger == 9){
+        typeStr = ModuleZW(@"心率");
+        self.contentLabel.text = model.heartRate;
         NSString *timerStr = [NSString stringWithFormat:@"%@",model.createDate];
-        
         NSString *timestr = model.createTime;
-        timestr = [timestr stringByReplacingOccurrencesOfString:@"-" withString:ModuleZW(@"月")];
-        timestr = [timestr stringByAppendingString:ModuleZW(@"日")];
-        NSRange range = NSMakeRange(timestr.length - 6, 1);
-        NSString *subString3 = [timestr substringWithRange:range];
-        if ([subString3 isEqualToString: @"0"]) {
-            self.timeLabel.text = [timestr substringFromIndex:timestr.length - 5];
-        }else {
-            self.timeLabel.text = [timestr substringFromIndex:timestr.length - 6];
-        }
+        self.timeLabel.text = [model.createTime substringFromIndex:timestr.length - 5];
         timerStr = [self getDateStringWithOtherTimeStr:timerStr];
-        self.contentLabel.text = [model.subject valueForKey:@"name"];;
         NSString *str = [NSString stringWithFormat:@"%@",model.createDate];
         self.createDateLabel.text = [self getDateStringWithTimeStr:str];
     }else{
@@ -289,7 +280,7 @@
     NSDate *detailDate=[NSDate dateWithTimeIntervalSince1970:time];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; //实例化一个NSDateFormatter对象
     //设定时间格式,这里可以设置成自己需要的格式
-    NSString *dateStr = [NSString stringWithFormat:ModuleZW(@"MM-dd")];
+    NSString *dateStr = [NSString stringWithFormat:@"MM-dd"];
     [dateFormatter setDateFormat:dateStr];
     NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
     return currentDateStr;

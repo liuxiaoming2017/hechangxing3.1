@@ -14,6 +14,11 @@
 #import "PubFunc.h"
 
 @interface FindBackPasswordViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *passLabel;
+@property (weak, nonatomic) IBOutlet UILabel *blueLabel;
+@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
+@property (weak, nonatomic) IBOutlet UILabel *blue2;
+@property (weak, nonatomic) IBOutlet UILabel *blue3;
 @property (weak, nonatomic) IBOutlet UITextField *mCodeInputView;
 @property (weak, nonatomic) IBOutlet UIButton *mBtnGetPwd;
 @property (weak, nonatomic) IBOutlet UILabel *mPasswordLable;
@@ -32,7 +37,16 @@
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;
     self.navTitleLabel.text = ModuleZW(@"找回灸头密码");
+    self.mCodeInputView.text = ModuleZW(@"请输入机身编码");
     self.navTitleLabel.textColor = [UIColor whiteColor];
+    self.passLabel.text = ModuleZW(@"通过机身编码找回密码");
+    self.blueLabel.text = ModuleZW(@"若忘记密码，可用上述方式输入机身编码找回密码");
+    self.phoneLabel.text = ModuleZW(@"联系客服");
+    self.blue2.text = ModuleZW(@"若无法获机身编码，可拨打客服电话，提供灸头ID找回密码");
+    self.blue3.text = ModuleZW(@"注:灸头ID在灸头网络列表中可见");
+    [self.mBtnGetPwd setTitle:ModuleZW(@"找回密码") forState:(UIControlStateNormal)];
+    [self.mBtnGetPwd.titleLabel setNumberOfLines:2];
+    [self.mConnectServicer setTitle:ModuleZW(@"联系客服 ") forState:(UIControlStateNormal)];
     //self.topView.hidden = YES;
     
     [self initData];
