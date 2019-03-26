@@ -38,6 +38,8 @@
     [super viewDidLoad];
     self.navTitleLabel.text = ModuleZW(@"体征监检测");
     
+   
+    
     self.titleArr = @[ModuleZW(@"血压"),
                               ModuleZW(@"血糖"),
                               ModuleZW(@"血氧"),
@@ -52,7 +54,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self requestNetwork];
+   [self requestNetwork];
 }
 
 - (void)createUI
@@ -75,8 +77,25 @@
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellAccessoryNone;
        self.tableView.backgroundColor=[UIColor clearColor];
-    self.tableView.bounces = NO;
+//    self.tableView.bounces = NO;
     [self.view addSubview:self.tableView];
+    
+    //下拉刷新
+    MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    [header setTitle:ModuleZW(@"下拉刷新") forState:MJRefreshStateIdle];
+    [header setTitle:ModuleZW(@"努力加载中...") forState:MJRefreshStateRefreshing];
+    [header setTitle:ModuleZW(@"松开即可刷新...") forState:MJRefreshStatePulling];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    header.stateLabel.font = [UIFont systemFontOfSize:14];
+    header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:14];
+    header.stateLabel.textColor = RGB_TextAppBlue;
+    header.lastUpdatedTimeLabel.textColor = RGB_TextAppBlue;
+    self.tableView.mj_header = header;
+    
+}
+
+-(void)loadNewData{
+         [self requestNetwork];
 }
 
 - (void)requestNetwork
@@ -104,9 +123,11 @@
         }else{
             [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
         }
+        [weakSelf.tableView.mj_header endRefreshing];
     } failureBlock:^(NSError *error) {
         [hud hideAnimated:YES];
         [weakSelf showAlertWarmMessage:requestErrorMessage];
+        [weakSelf.tableView.mj_header endRefreshing];
     }];
 }
 

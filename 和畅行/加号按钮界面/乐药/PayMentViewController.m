@@ -594,16 +594,21 @@
         _mLabel.textAlignment = NSTextAlignmentCenter;
         _mLabel.font = [UIFont systemFontOfSize:17];
         _mLabel.textColor = [UIColor whiteColor];
-        
         [diView addSubview:_mLabel];
+        
         _hLabel = [[UILabel alloc] init];
+        _hLabel.frame = CGRectMake(115, 15, 60, 15);
         _hLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
         _hLabel.text = ModuleZW(@"会员卡：");
         _hLabel.font = [UIFont systemFontOfSize:10];
+        [_hLabel sizeToFit];
+    
         [diView addSubview:_hLabel];
         _yLabel = [[UILabel alloc] init];
+        _yLabel.frame = CGRectMake(115, 40, 60, 15);
         _yLabel.text = ModuleZW(@"有效期：");
         _yLabel.font = [UIFont systemFontOfSize:10];
+         [_yLabel sizeToFit];
         _yLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
         [diView addSubview:_yLabel];
         _wLabel = [[UILabel alloc]init];
@@ -619,10 +624,8 @@
         _backImage.frame = CGRectMake(10, 0, self.view.frame.size.width-20, 139 / 2);
         _imageV.frame  =CGRectMake(10, 0, 101, 139 / 2);
         _mLabel.frame = CGRectMake(10, 0, 101, 139 /2 );
-        _hLabel.frame = CGRectMake(115, 15, 60, 15);
-        _yLabel.frame = CGRectMake(115, 40, 60, 15);
-        _wLabel.frame = CGRectMake(155, 15, 80, 15);
-        _tLabel.frame = CGRectMake(155, 40, 200, 15);
+        _wLabel.frame = CGRectMake(_hLabel.right + 10, _hLabel.top, 80, _hLabel.height);
+        _tLabel.frame = CGRectMake(_yLabel.right, _yLabel.top, 200, _yLabel.height);
         UIButton *zhifuButton = [UIButton buttonWithType:UIButtonTypeCustom];
         zhifuButton.frame = CGRectMake(self.view.frame.size.width- 50, 25, 20, 20);
         zhifuButton.tag = 2000 +i;

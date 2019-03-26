@@ -291,7 +291,7 @@
     UIImageView *zhifufangshiImage = [[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 40, 40)];
     zhifufangshiImage.image = [UIImage imageNamed:self.tabArray[indexPath.row]];
     [cell addSubview:zhifufangshiImage];
-    UILabel *zhifufangshiLabel = [[UILabel alloc]initWithFrame:CGRectMake(110, 20, 100, 20)];
+    UILabel *zhifufangshiLabel = [[UILabel alloc]initWithFrame:CGRectMake(110, 20, 180, 20)];
     zhifufangshiLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
     zhifufangshiLabel.font = [UIFont systemFontOfSize:15];
     zhifufangshiLabel.text = _zhifufangshiArray[indexPath.row];

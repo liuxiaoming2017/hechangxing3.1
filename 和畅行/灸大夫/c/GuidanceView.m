@@ -21,12 +21,13 @@
 
 - (void)setupUI
 {
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 50, 300, 40)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 50, ScreenWidth - 80, 40)];
     titleLabel.font = [UIFont systemFontOfSize:16];
     titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.numberOfLines = 0;
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.text = ModuleZW(@"艾灸仪没有连接上?\n取出艾灸头，此时设备会振动");
+    [titleLabel sizeToFit];
     [self addSubview:titleLabel];
     
     CGFloat width1 = 210;

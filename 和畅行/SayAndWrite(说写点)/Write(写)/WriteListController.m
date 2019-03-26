@@ -944,8 +944,8 @@
     if([GlobalCommon stringEqualNull:partName]){
         return nil;
     }else{
-        if([_sectionDataArr containsObject:partName]){
-            NSInteger index = [_sectionDataArr indexOfObject:partName];
+        if([_sectionDataArr containsObject:ModuleZW(partName)]){
+            NSInteger index = [_sectionDataArr indexOfObject:ModuleZW(partName)];
             if(_sectionOpenImageArr.count > index){
                 return [_sectionOpenImageArr objectAtIndex:index];
             }
