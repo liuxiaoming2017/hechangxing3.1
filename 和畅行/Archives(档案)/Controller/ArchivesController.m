@@ -82,9 +82,7 @@
         memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
     }
     
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.navTitleLabel.text = ModuleZW(@"健康档案");
-    self.navTitleLabel.textColor = [UIColor whiteColor];
     [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     
     self.timeLinvView = [[TimeLineView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, ScreenWidth, ScreenHeight-self.topView.bottom-kTabBarHeight) withData:self.dataListArray];
@@ -130,8 +128,22 @@
     //    [[UIApplication sharedApplication].keyWindow addSubview:self.filterBtn];
     
     //默认选择
-    self.firstButton = (UIButton *)[self.sidebarVC.contentView viewWithTag:100];
-    [self selectIndexWithString:@"全部" withButton:self.firstButton];
+    //血压
+    if ([[UserShareOnce shareOnce].wherePop isEqualToString:ModuleZW(@"血压")]) {
+        UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:107];
+        self.memberId = [UserShareOnce shareOnce].bloodMemberID;
+        [self selectIndexWithString:ModuleZW(@"血压") withButton:btn];
+        [UserShareOnce shareOnce].wherePop = @"";
+    }else if ([[UserShareOnce shareOnce].wherePop isEqualToString:ModuleZW(@"血氧")]) {
+        UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:108];
+        self.memberId = [UserShareOnce shareOnce].bloodMemberID;
+        [self selectIndexWithString:@"血氧" withButton:btn];
+        [UserShareOnce shareOnce].wherePop = @"";
+    }else{
+        self.firstButton = (UIButton *)[self.sidebarVC.contentView viewWithTag:100];
+        [self selectIndexWithString:@"全部" withButton:self.firstButton];
+    }
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exchangeMemberChild:) name:exchangeMemberChildNotify object:nil];
     

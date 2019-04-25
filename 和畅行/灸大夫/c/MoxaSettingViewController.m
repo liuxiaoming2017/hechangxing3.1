@@ -47,12 +47,10 @@
                    
                    ModuleZW(@"帮助"), nil];
     
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.leftBtn.hidden = YES;
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;
     self.navTitleLabel.text = ModuleZW(@"设置");
-    self.navTitleLabel.textColor = [UIColor whiteColor];
     
     _isVoiceEn = [BlueToothCommon getMoxaVoiceEn];
     _tableView.dataSource = self;

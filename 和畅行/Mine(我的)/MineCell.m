@@ -29,23 +29,23 @@
     self.iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(15, 7.5, 35, 35)];
     //self.iconImage.image = [UIImage imageNamed:@"YY_GongIcon"];
     self.iconImage.contentMode = UIViewContentModeScaleAspectFit;
-    [self addSubview:self.iconImage];
+//    [self addSubview:self.iconImage];
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.iconImage.right+15, 10, 250, 30)];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(23, 10, 250, 30)];
     self.titleLabel.textAlignment=NSTextAlignmentLeft;
-    self.titleLabel.font=[UIFont systemFontOfSize:15.0];
-    self.titleLabel.textColor = UIColorFromHex(0x333333);
+    self.titleLabel.font=[UIFont systemFontOfSize:14.0];
+    self.titleLabel.textColor = UIColorFromHex(0x8e8e93);
     self.titleLabel.backgroundColor=[UIColor clearColor];
     
-    self.arrowImage = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth-30, 22-5, 10, 16)];
-    self.arrowImage.image = [UIImage imageNamed:@"1我的_09"];
+//    self.arrowImage = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth-30, 22-5, 10, 16)];
+//    self.arrowImage.image = [UIImage imageNamed:@"1我的_09"];
     
-    self.lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(self.titleLabel.left, 49-1, self.arrowImage.right-self.titleLabel.left, 1)];
-    self.lineImageV.backgroundColor = UIColorFromHex(0xDADADA);
+//    self.lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(self.titleLabel.left, 49-1, self.arrowImage.right-self.titleLabel.left, 1)];
+//    self.lineImageV.backgroundColor = UIColorFromHex(0xDADADA);
     
     [self addSubview:self.titleLabel];
-    [self addSubview:self.arrowImage];
-    [self addSubview:self.lineImageV];
+//    [self addSubview:self.arrowImage];
+//    [self addSubview:self.lineImageV];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -7,7 +7,7 @@
 //
 
 #import "SugerViewController.h"
-//#import "BloodSugerGuideViewController.h"
+#import "LJRuler.h"
 #import "LoginViewController.h"
 #import "AdvisoryTableViewCell.h"
 #import "JSONKit.h"
@@ -23,7 +23,7 @@
 #define kEmptyLow @"您空腹血糖偏低，为%.2fmmol/L，建议您适量进食予以缓解，并在医生指导下对血糖进行定期监测，及时纠正。"
 #define kFullHigh @"您餐后2小时血糖偏高，为%.2fmmol/L，建议您在医生指导下对血糖进行定期监测、科学控制。"
 
-@interface SugerViewController ()<UITextFieldDelegate,MBProgressHUDDelegate,ASIHTTPRequestDelegate,UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
+@interface SugerViewController ()<UITextFieldDelegate,MBProgressHUDDelegate,ASIHTTPRequestDelegate,UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,LJRulerDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 {
     MBProgressHUD *_progress;
     UITextField *_textFiled;
@@ -42,6 +42,25 @@
     NSInteger _emptyCount;//空腹测量次数
     NSInteger _fullCount;//餐后测量次数
 }
+
+@property (nonatomic,copy)  NSString *dateString;
+@property (nonatomic,copy)  NSString *timeString;
+@property (nonatomic,copy)  NSString *sugarString;
+@property (nonatomic,strong) UILabel *dataLabel;
+@property (nonatomic,strong) UILabel *timeLabel;
+@property (nonatomic,strong) UILabel *sugarLabel;
+@property (nonatomic,strong) UIView *backView;
+@property (nonatomic,strong)UIView *bottomView;
+@property (nonatomic,strong) UIDatePicker *datePicker;
+@property (nonatomic,strong) UIPickerView *pickerView;
+@property (nonatomic,strong) UILabel *datatypeLabel;
+@property (nonatomic,strong)NSArray *dataArray;
+
+@property (nonatomic,copy)  NSString *typeStr;
+@property (nonatomic,strong) UILabel *typeLabel;
+@property (nonatomic,strong)  LJRuler *ruler;
+@property (nonatomic,assign)float sugerValue;
+
 @end
 
 @implementation SugerViewController
@@ -53,19 +72,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navTitleLabel.text = ModuleZW(@"血糖检测");
+    self.navTitleLabel.text = ModuleZW(@"血糖录入");
     _type = @"empty";
     [self initWithController];
-    [self bounceView];
+    
+     _dataArray = @[ModuleZW(@"凌晨"),ModuleZW(@"早餐前"),ModuleZW(@"早餐后"),ModuleZW(@"午餐前"),ModuleZW(@"午餐后"),ModuleZW(@"晚餐前"),ModuleZW(@"晚餐后"),ModuleZW(@"睡前")];
+  
 }
 
 -(void)backClick:(UIButton *)button{
     [self.navigationController popToRootViewControllerAnimated:YES];
-    //[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark ------ 弹出视图
 -(void)bounceView{
+    
     //弹出视图
     self.dataArr = [[NSMutableArray alloc]init];
     self.headArray = [[NSMutableArray alloc]init];
@@ -94,183 +115,194 @@
 #pragma mark ------ 初始化界面
 -(void)initWithController{
     
-    UIButton *beforeMealButton = [Tools creatButtonWithFrame:CGRectMake(30, kNavBarHeight+36, 60, 60) target:self sel:@selector(beforeClick:) tag:21 image:ModuleZW(@"血糖7") title:nil];
-    [beforeMealButton setEnabled:NO];
-    [beforeMealButton setImage:[UIImage imageNamed:ModuleZW(@"血糖7")] forState:UIControlStateDisabled];
-    [self.view addSubview:beforeMealButton];
+    NSDate *currentDate = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYY/MM/dd"];
+    [dateFormatter1 setDateFormat:@"HH:mm"];
+    NSString *dateString = [dateFormatter stringFromDate:currentDate];
+    NSString *dateString1 = [dateFormatter1 stringFromDate:currentDate];
+    NSString *typeStr = ModuleZW(@"早餐后");
+    self.dateString = dateString;
+    self.timeString = dateString1;
+    NSArray *buttonTitleArray = @[ ModuleZW(@"  日期"),ModuleZW(@"  测量时间"),ModuleZW(@"  时间段")];
+    NSArray *titleArray = @[dateString,dateString1,typeStr];
     
-    UIButton *afterMealButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width-90, beforeMealButton.top, 60, 60) target:self sel:@selector(afterClick:) tag:22 image:ModuleZW(@"血糖8") title:nil];
-    [self.view addSubview:afterMealButton];
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
-    imageView.tag = 10;
-    imageView.userInteractionEnabled = YES;
-    imageView.center = self.view.center;
-    imageView.image = [UIImage imageNamed:ModuleZW(@"血糖9")];
-    [self.view addSubview:imageView];
-    
-    UILabel *reminderLabel = [Tools creatLabelWithFrame:CGRectMake(20, 60, 160, 30) text:ModuleZW(@"输入当前血糖值") textSize:12];
-    reminderLabel.textAlignment = NSTextAlignmentCenter;
-    reminderLabel.textColor = [Tools colorWithHexString:@"#3fcadb"];
-    reminderLabel.font = [UIFont systemFontOfSize:12];
-    reminderLabel.numberOfLines =2;
-    [imageView addSubview:reminderLabel];
-    
-    _textFiled = [[UITextField alloc] initWithFrame:CGRectMake(60, 90, 80, 40)];
-    _textFiled.delegate = self;
-    _textFiled.tag = 100;
-    _textFiled.borderStyle = UITextBorderStyleRoundedRect;
-    _textFiled.keyboardType = UIKeyboardTypeDecimalPad;
-    _textFiled.placeholder = @"--mmol/L";
-    _textFiled.font = [UIFont systemFontOfSize:14];
-    _textFiled.textColor = [Tools colorWithHexString:@"#3fcadb"];
-    _textFiled.textAlignment = NSTextAlignmentCenter;
-    _textFiled.clearButtonMode = UITextFieldViewModeWhileEditing;
-    [imageView addSubview:_textFiled];
-    
-    
-    //提交按钮
-    UIButton *commitButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-100, imageView.bottom+30, 200, 40) target:self sel:@selector(commitClick:) tag:101 image:ModuleZW(@"0_15") title:nil];
-    [self.view addSubview:commitButton];
+    for (int i = 0; i < 2; i++) {
+        UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10+kNavBarHeight, ScreenWidth - 20, 150)];
+        backImageView.backgroundColor = [UIColor whiteColor];
+        backImageView.userInteractionEnabled = YES;
+        backImageView.layer.cornerRadius = 10;
+        backImageView.layer.masksToBounds = YES;
+        if (i == 0){
+            for (int j  = 0; j < 3; j++) {
+                UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
+                button.frame = CGRectMake(0, 0 +backImageView.height*j/3 , backImageView.width, backImageView.height/3 );
+                [button setTitle:buttonTitleArray[j] forState:(UIControlStateNormal)];
+                [button setImage:[UIImage imageNamed:@"1我的_09"] forState:(UIControlStateNormal)];
+                [button setTitleColor:RGB_TextGray forState:(UIControlStateNormal)];
+                [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
+                [button setTitleEdgeInsets:UIEdgeInsetsMake(0, -button.currentImage.size.width,0,0)];
+                [button.titleLabel setFrame:CGRectMake(20, 0, button.width - 20, button.height)];
+                [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+                [button setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,0)];
+                [button setImageEdgeInsets:UIEdgeInsetsMake(0, backImageView.width - 40 , 0, -backImageView.width + 40)];
+                [[button rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+                    if(j == 0){
+                        [self  layoutDataViewWithType:1];
+                    }else  if(j ==1){
+                        [self  layoutDataViewWithType:2];
+                    }else{
+                        [self  layoutDataViewWithType:3];
+                    }
+                }];
+                [backImageView addSubview:button];
+                
+                UILabel *dataLable = [[UILabel alloc]initWithFrame:CGRectMake(backImageView.width - 200, 0, 150, backImageView.height/3)];
+                dataLable.font = [UIFont systemFontOfSize:16];
+                dataLable.textAlignment = NSTextAlignmentRight;
+                dataLable.text = titleArray[j];
+                [button addSubview:dataLable];
+                if(j == 0){
+                    self.dataLabel = dataLable;
+                }else if(j == 1){
+                    self.timeLabel = dataLable;
+                }else{
+                    self.typeLabel = dataLable;
+                }
+                if(j < 2){
+                    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, backImageView.height*(j+1)/3 - 0.25, backImageView.width, 0.5)];
+                    lineView.backgroundColor = UIColorFromHex(0XD6D6D6);
+                    [backImageView addSubview:lineView];
+                }
+                
+            }
+          
+        }else{
+            
+                backImageView.top = kNavBarHeight + 180 ;
+                backImageView.height = 150;
+//
+                UILabel *bloodLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 10, 300, 30)];
+                bloodLabel.text = ModuleZW(@"血糖");
+                bloodLabel.font = [UIFont systemFontOfSize:16];
+                bloodLabel.textColor = RGB_TextGray;
+                [backImageView addSubview:bloodLabel];
+            
+            UILabel *rightlabel =  [[UILabel alloc]initWithFrame:CGRectMake(0,bloodLabel.bottom + 10 , backImageView.width, 30)];
+            rightlabel.text = @"3mmol/L";
+            rightlabel.textAlignment = NSTextAlignmentCenter;
+            rightlabel.font  =  [UIFont systemFontOfSize:19];
+            [backImageView addSubview:rightlabel];
+            self.sugarLabel = rightlabel;
+            
+            LJRuler *ruler = [[LJRuler alloc] initWithFrame:CGRectMake(40, rightlabel.bottom + 10 , backImageView.width - 80, 34)];
+            ruler.rulerColor = [UIColor whiteColor];
+            ruler.delegate = self;
+            ruler.scaleCount = 330;
+            ruler.mixscaleCount = 10;
+            ruler.scaleAverage = 0.1;
+            self.ruler = ruler;
+            [backImageView addSubview:ruler];
+            }
+        
+        [self insertSublayerWithImageView:backImageView with:self.view];
+        [self.view addSubview:backImageView];
+        
+    }
+
+
+    UIButton *suerButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    suerButton.frame = CGRectMake(ScreenWidth/2 - 45, 350 +kNavBarHeight, 90, 30);
+    [suerButton setTitle:ModuleZW(@"确定") forState:(UIControlStateNormal)];
+    [suerButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [suerButton setBackgroundColor:RGB_ButtonBlue];
+    suerButton.layer.cornerRadius = 15;
+    suerButton.layer.masksToBounds = YES;
+    [suerButton addTarget:self action:@selector(commitClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:suerButton];
+ 
     
     //使用规范
-    UIButton *useNorm = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-30,commitButton.bottom+30, 60, 25) target:self sel:@selector(useNormClick:) tag:102 image:ModuleZW(@"使用规范") title:nil];
-    [self.view addSubview:useNorm];
-}
-//收键盘
--(BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [textField resignFirstResponder];
-    return YES;
-}
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    [_textFiled resignFirstResponder];
-}
-//只允许textField输入数字
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    NSCharacterSet *cs;
-    cs = [[NSCharacterSet characterSetWithCharactersInString:NUMBERS] invertedSet];
-    NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""]; //按cs分离出数组,数组按@""分离出字符串
-    BOOL canChange = [string isEqualToString:filtered];
-    return canChange;
+//    UIButton *useNorm = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-30,commitButton.bottom+30, 60, 25) target:self sel:@selector(useNormClick:) tag:102 image:ModuleZW(@"使用规范") title:nil];
+//    [self.view addSubview:useNorm];
 }
 
--(void)beforeClick:(UIButton *)button{
-    NSLog(@"点击空腹按钮");
-    _type = @"empty";
-    _textFiled.text = nil;
-    UIButton *afterMealButton = (UIButton *)[self.view viewWithTag:22];
-    [button setEnabled:NO];
-    [button setImage:[UIImage imageNamed:ModuleZW(@"血糖7")] forState:UIControlStateDisabled];
-    [afterMealButton setEnabled:YES];
-    [afterMealButton setImage:[UIImage imageNamed:ModuleZW(@"血糖8")] forState:UIControlStateNormal];
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    self.ruler.currentValue = 2;
+    self.sugerValue = 3.0;
+    self.sugarLabel.text = @"3.0mmol/L";
+}
+- (void)ruler:(LJRuler *)ruler didScroll:(LJRulerScrollView *)scrollView {
+    
+    if(scrollView.currentValue +ruler.mixscaleCount/10 >scrollView.scaleCount/10){
+        self.sugarLabel.text = [NSString stringWithFormat:@"%ldmmol/L",scrollView.scaleCount/10];
+        self.sugerValue = 33.0;
+    } else{
+        self.sugarLabel.text = [NSString stringWithFormat:@"%.1fmmol/L",scrollView.currentValue+scrollView.mixscaleCount/10];
+        self.sugerValue = scrollView.currentValue+scrollView.mixscaleCount/10;
+    }
+    
 }
 
--(void)afterClick:(UIButton *)button{
-    NSLog(@"点击餐后按钮");
-    _type = @"full";
-    _textFiled.text = nil;
-    UIButton *beforeMealButton = (UIButton *)[self.view viewWithTag:21];
-    [button setEnabled:NO];
-    [button setImage:[UIImage imageNamed:@"血糖4"] forState:UIControlStateDisabled];
-    [beforeMealButton setEnabled:YES];
-    [beforeMealButton setImage:[UIImage imageNamed:ModuleZW(@"血糖2")] forState:UIControlStateNormal];
-}
+
+
 #pragma mark ------ 提交数据
 -(void)commitClick:(UIButton *)button{
-    NSLog(@"点击提交按钮");
-    if ([self isBlankString:_textFiled.text] || [_textFiled.text integerValue] == 0) {
-        NSString *str = [NSString string];
-        if([self isBlankString:_textFiled.text]){
-            str = ModuleZW(@"血糖值不能为空");
-        }else if ([_textFiled.text integerValue] == 0){
-            str = ModuleZW(@"您的输入有误,请重新输入");
-        }
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.removeFromSuperViewOnHide =YES;
-        hud.mode = MBProgressHUDModeText;
-        hud.label.text = ModuleZW(@"血糖值不能为空");
-        hud.minSize = CGSizeMake(132.f, 108.0f);
-        [hud hideAnimated:YES afterDelay:2];
-    }else{
-        //收键盘
-        [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
-        
-        [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
-
-        //选择子账户
-//        [self GetWithModifi];
-    }
-}
-
-//用来判断字符串是否为空，如果返回YES就是空，返回NO，字符串不为空
--(BOOL)isBlankString:(NSString *)string
-{
-    if (string == nil || string == NULL)
-    {
-        return YES;
-    }
-    if ([string isKindOfClass:[NSNull class]])
-    {
-        return YES;
-    }
-    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0)
-    {
-        return YES;
-    }
-    return NO;
-}
-
-#pragma mark -------- 选择子账户
--(void)GetWithModifi
-{
-    
-    if([GlobalCommon isManyMember]){
-        __weak typeof(self) weakSelf = self;
-        SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
-        [subMember receiveSubIdWith:^(NSString *subId) {
-            NSLog(@"%@",subId);
-            if ([subId isEqualToString:@"user is out of date"]) {
-                //登录超时
-                
-            }else{
-                [weakSelf requestNetworkData:subId];
-            }
-            [subMember hideHintView];
-        }];
-    }else{
-        [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
-    }
-    
-}
-
-
-- (void)requestNetworkData:(NSString *)subId
-{
-    float sugerValue = [self->_textFiled.text floatValue];
+    NSString *idNumStr = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
     BOOL isAbnormity = NO;
-    if ([self->_type isEqualToString:@"empty"]) {
-        //空腹
-        if (sugerValue <3.9) {
-            self->_result = [[NSString alloc] initWithFormat:ModuleZW(kEmptyLow),sugerValue];
-            isAbnormity = YES;
-        }else if (sugerValue <=6.1){
-            self->_result = [[NSString alloc] initWithFormat:ModuleZW(kNomal)];
-            isAbnormity = NO;
-        }else{
-            self->_result = [[NSString alloc] initWithFormat:ModuleZW(kEmptyHigh),sugerValue];
-            isAbnormity = YES;
-        }
-    }else{
-        //餐后
-        if (sugerValue <=7.8) {
-            self->_result = [[NSString alloc] initWithFormat:ModuleZW(kNomal)];
-            isAbnormity = NO;
-        }else{
-            self->_result = [[NSString alloc] initWithFormat:ModuleZW(kFullHigh),sugerValue];
-            isAbnormity = YES;
-        }
-        
+    
+    NSString *typeStr = NSString.new;
+    if([self.typeLabel.text isEqualToString:ModuleZW(@"凌晨")]){
+        typeStr = @"beforeDawn";
+    }else   if([self.typeLabel.text isEqualToString:ModuleZW(@"早餐前")]){
+        typeStr = @"beforeBreakfast";
+    }else   if([self.typeLabel.text isEqualToString:ModuleZW(@"早餐后")]){
+        typeStr = @"afterBreakfast";
+    }else   if([self.typeLabel.text isEqualToString:ModuleZW(@"午餐前")]){
+        typeStr = @"beforeLunch";
+    }else   if([self.typeLabel.text isEqualToString:ModuleZW(@"午餐后")]){
+        typeStr = @"afterLunch";
+    }else   if([self.typeLabel.text isEqualToString:ModuleZW(@"晚餐前")]){
+        typeStr = @" beforeDinner";
+    }else   if([self.typeLabel.text isEqualToString:ModuleZW(@"晚餐后")]){
+        typeStr = @"afterDinner";
+    }else   if([self.typeLabel.text isEqualToString:ModuleZW(@"睡前")]){
+        typeStr = @"beforeSleep";
+    }else   if([self.typeLabel.text isEqualToString:ModuleZW(@"凌晨")]){
+        typeStr = @"beforeDawn";
     }
+    
+    NSString *str = [NSString stringWithFormat:@"%@ %@",_dataLabel.text,_timeLabel.text];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYY/MM/dd HH:mm"];
+    NSDate *tempDate = [dateFormatter dateFromString:str];
+    long  timeSp = (long)[tempDate timeIntervalSince1970];
+//    if ([self->_type isEqualToString:@"empty"]) {
+//        //空腹
+//        if (sugerValue <3.9) {
+//            self->_result = [[NSString alloc] initWithFormat:ModuleZW(kEmptyLow),sugerValue];
+//            isAbnormity = YES;
+//        }else if (sugerValue <=6.1){
+//            self->_result = [[NSString alloc] initWithFormat:ModuleZW(kNomal)];
+//            isAbnormity = NO;
+//        }else{
+//            self->_result = [[NSString alloc] initWithFormat:ModuleZW(kEmptyHigh),sugerValue];
+//            isAbnormity = YES;
+//        }
+//    }else{
+//        //餐后
+//        if (sugerValue <=7.8) {
+//            self->_result = [[NSString alloc] initWithFormat:ModuleZW(kNomal)];
+//            isAbnormity = NO;
+//        }else{
+//            self->_result = [[NSString alloc] initWithFormat:ModuleZW(kFullHigh),sugerValue];
+//            isAbnormity = YES;
+//        }
+//
+//    }
     
     [self showPreogressView];
     NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE] ;
@@ -280,11 +312,12 @@
         [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
     }
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    [request addPostValue:subId forKey:@"memberChildId"];
+    [request addPostValue:idNumStr forKey:@"memberChildId"];
     [request addPostValue:@(60) forKey:@"datatype"];
-    [request addPostValue:@(sugerValue) forKey:@"levels"];
-    [request addPostValue:self->_type forKey:@"type"];
+    [request addPostValue:@(self.sugerValue) forKey:@"levels"];
+    [request addPostValue:typeStr forKey:@"type"];
     [request addPostValue:@(isAbnormity) forKey:@"isAbnormity"];
+    [request addPostValue:@(timeSp) forKey:@"createDate"];
     [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
     [request setTimeOutSeconds:20];
     [request setRequestMethod:@"POST"];
@@ -293,6 +326,10 @@
     [request setDidFinishSelector:@selector(requestCompleted:)];
     [request startAsynchronous];
 }
+
+
+
+
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -354,10 +391,8 @@
     }
     return nil;
 }
-//得到时间字符串  --------->>>  注意：传入的时间为mm
 -(NSString *)timeStringFrom:(double )time{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init] ;
-    //dateFormatter.timeZone = [NSTimeZone timeZoneWithName:@"shanghai"];
     [dateFormatter setDateFormat:@"HH:mm"];
     NSDate *timeDate = [NSDate dateWithTimeIntervalSince1970:time/1000.0f];
     return  [dateFormatter stringFromDate:timeDate];
@@ -576,20 +611,165 @@
     [self.navigationController pushViewController:vc animated:YES];
     
 }
+-(void)layoutDataViewWithType: (int) typeInt{
+    
+    if(!_backView){
+        UIView *backView  = [[UIView alloc]initWithFrame:self.view.bounds];
+        backView.backgroundColor = RGBA(0, 0, 0, 0.4);
+        [self.view addSubview:backView];
+        _backView = backView;
+        UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(10, ScreenHeight - 290, ScreenWidth - 20, 280)];
+        bottomView.backgroundColor = [UIColor whiteColor];
+        bottomView.layer.cornerRadius = 15;
+        [backView addSubview:bottomView];
+        self.bottomView = bottomView;
+        
+        UILabel *dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 10, 100, 30)];
+        dataLabel.textColor = RGB_TextGray;
+        dataLabel.font = [UIFont systemFontOfSize:14];
+        [bottomView addSubview:dataLabel];
+        _datatypeLabel = dataLabel;
+        
+        
+        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(bottomView.width/2 - 0.25,bottomView.height - 36, 0.5, 32)];
+        lineView.backgroundColor = RGB(230, 230, 230);
+        [bottomView addSubview:lineView];
+        
+        
+     
+        
+        if(typeInt == 1){
+            dataLabel.text = ModuleZW(@"日期");
+            self.datePicker.datePickerMode =  UIDatePickerModeDate;
+            self.datePicker.tag = 111;
+            [self.datePicker setMaximumDate:[NSDate date]];
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+        }else if(typeInt == 2){
+            dataLabel.text = ModuleZW(@"测量时间");
+            self.datePicker.datePickerMode =  UIDatePickerModeTime;
+            self.datePicker.tag = 112;
+            [self.datePicker setMaximumDate:[NSDate date]];
+
+        }else{
+            dataLabel.text = ModuleZW(@"时间段");
+            self.pickerView.showsSelectionIndicator = YES;
+
+        }
+        
+        NSArray *buttonTitleArray = @[ModuleZW(@"取消"),ModuleZW(@"确定")];
+        for (int i = 0; i < 2; i++) {
+            UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
+            button.frame = CGRectMake(40 + (bottomView.width/2-40)*i  , bottomView.height - 40, (bottomView.width - 80)/2, 40);
+            [button setTitle:buttonTitleArray[i] forState:(UIControlStateNormal)];
+            [button setTitleColor:UIColorFromHex(0Xffa200) forState:(UIControlStateNormal)];
+            [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
+            [[button rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+                if(i == 1){
+                    if([self.datatypeLabel.text isEqualToString: ModuleZW(@"日期")]){
+                        self.dataLabel.text = self.dateString;
+                    }else if([self.datatypeLabel.text isEqualToString: ModuleZW(@"测量时间")]){
+                        self.timeLabel.text = self.timeString;
+                    }else{
+                          self.typeLabel.text = self.typeStr;
+                    }
+                }
+                backView.hidden = YES;
+            }];
+            [bottomView addSubview:button];
+        }
+    }else{
+        _backView.hidden = NO;
+        if(typeInt == 1){
+            _datatypeLabel.text = ModuleZW(@"日期");
+            self.datePicker.datePickerMode =  UIDatePickerModeDate;
+            self.datePicker.tag = 111;
+            self.datePicker.hidden = NO;
+            self.pickerView.hidden = YES;
+        }else if(typeInt == 2){
+            _datatypeLabel.text = ModuleZW(@"测量时间");
+            self.datePicker.datePickerMode =  UIDatePickerModeTime;
+            self.datePicker.tag = 112;
+            self.datePicker.hidden = NO;
+            self.pickerView.hidden = YES;
+        }else{
+            _datatypeLabel.text = ModuleZW(@"时间段");
+            self.datePicker.hidden = YES;
+            self.pickerView.hidden = NO;
+        }
+      
+        NSString *str = [NSString stringWithFormat:@"%@ %@",_dataLabel.text,_timeLabel.text];
+        _dateString = _dataLabel.text;
+        _timeString = _timeLabel.text;
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"YYYY/MM/dd HH:mm"];
+        NSDate *tempDate = [dateFormatter dateFromString:str];
+        [self.datePicker setDate:tempDate animated:YES];
+    }
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)dateChange:(UIDatePicker *)datePicker {
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    //设置时间格式
+    if(datePicker.tag == 111){
+        formatter.dateFormat = @"yyyy/MM/dd";
+        NSString *dateStr = [formatter  stringFromDate:datePicker.date];
+        self.dateString = dateStr;
+    }else{
+        formatter.dateFormat = @"HH:mm";
+        NSString *dateStr = [formatter  stringFromDate:datePicker.date];
+        self.timeString = dateStr;
+    }
+    
 }
-*/
+
+-(UIDatePicker *)datePicker{
+    if(!_datePicker){
+        self.datePicker = [[UIDatePicker alloc] init];
+        self.datePicker.frame = CGRectMake(30, 40, _bottomView.width - 80, 200);
+        self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
+        [self.datePicker addTarget:self action:@selector(dateChange:) forControlEvents:UIControlEventValueChanged];
+        [_bottomView addSubview:self.datePicker];
+    }
+    return _datePicker;
+}
+
+-(UIPickerView *)pickerView{
+    if(!_pickerView){
+        self.pickerView = [[UIPickerView alloc] init];
+        self.pickerView.frame = CGRectMake(30, 40, _bottomView.width - 80, 200);
+        self.pickerView.dataSource = self;
+        self.pickerView.delegate = self;
+        [_bottomView  addSubview:self.pickerView];
+    }
+    return _pickerView;
+}
+
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)componen {
+    return  _dataArray.count;
+}
+- (NSString *)pickerView:(UIPickerView *)pickerView
+             titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return _dataArray[row];
+}
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:
+(NSInteger)row inComponent:(NSInteger)component
+{
+    self.typeStr = _dataArray[row];
+}
+
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+{
+    return 40;
+}
+
 
 @end

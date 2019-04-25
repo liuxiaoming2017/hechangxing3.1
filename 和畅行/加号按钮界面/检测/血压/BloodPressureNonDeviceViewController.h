@@ -15,7 +15,6 @@
 @property (nonatomic ,retain) UILabel *nameLabel;
 @property (nonatomic ,retain) UILabel *sexLabel;
 @property (nonatomic ,retain) NSString *memberChildId;
-@property (nonatomic ,retain) UIView *personView;
 @property (nonatomic ,retain) UIView *showView;
 @property (nonatomic,strong) NSMutableArray *dataArr;
 

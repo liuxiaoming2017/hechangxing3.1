@@ -38,7 +38,6 @@
     UILabel  *navTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 140, 43)];
     navTitleLabel.text = @"资讯详情";
     navTitleLabel.font = [UIFont systemFontOfSize:18];
-    navTitleLabel.textColor = [UIColor whiteColor];
     navTitleLabel.textAlignment = NSTextAlignmentCenter;
     navTitleLabel.backgroundColor = [UIColor clearColor];
     self.navigationItem.titleView = navTitleLabel;

@@ -18,10 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = RGB_AppWhite;
     
-    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight)];
-    [backImageView setImage:[UIImage imageNamed:@"深色背景"]];
-    [self.view addSubview:backImageView];
     
 }
 

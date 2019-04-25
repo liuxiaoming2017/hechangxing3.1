@@ -146,7 +146,7 @@ static DownLoadHandlers *sharedDownloadhandler = nil;
         UIView* view=[_btnImg.subviews objectAtIndex:i];
         [view removeFromSuperview];
     }
-    UIImage* statusviewImg=[UIImage imageNamed:@"New_yy_zt_xz.png"];
+    UIImage* statusviewImg=[UIImage imageNamed:@"乐药下载icon"];
     UIImageView* statusviewImgview=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, statusviewImg.size.width/2  , statusviewImg.size.height/2)];
     statusviewImgview.image=statusviewImg;
     [_btnImg addSubview:statusviewImgview];

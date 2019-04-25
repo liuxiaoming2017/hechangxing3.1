@@ -84,6 +84,7 @@
         
         //NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:response options:kNilOptions error:nil];
         if([[response objectForKey:@"status"] intValue] == 100){
+            [UserShareOnce shareOnce].loginType = @"SMS";
             
             //判断是不是第一次登录
             if (![[NSUserDefaults standardUserDefaults] boolForKey:@"everLongined"]) {
@@ -231,6 +232,12 @@
         NSLog(@"%@",response);
 
         if([[response objectForKey:@"status"] intValue] == 100){
+            
+            if (check == 2) {
+                [UserShareOnce shareOnce].loginType = @"WX";
+            }else if (check == 3) {
+                [UserShareOnce shareOnce].loginType = @"SMS";
+            }
             
             //判断是不是第一次登录
             if (![[NSUserDefaults standardUserDefaults] boolForKey:@"everLongined"]) {

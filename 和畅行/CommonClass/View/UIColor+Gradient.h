@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (CAGradientLayer *)setGradualChangingColor:(UIView *)view fromColor:(NSString *)fromHexColorStr toColor:(NSString *)toHexColorStr;
 
++ (CAGradientLayer *)setGradualChangingColorHeng:(UIView *)view fromColor:(NSString *)fromHexColorStr  modColor:(NSString *)modColor toColor:(NSString *)toHexColorStr;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

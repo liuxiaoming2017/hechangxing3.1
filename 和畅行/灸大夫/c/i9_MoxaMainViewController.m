@@ -176,7 +176,6 @@
     shortTime = 0;
     lowestTemp = 0;
 
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.leftBtn.hidden = YES;
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;

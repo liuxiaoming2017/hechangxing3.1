@@ -27,7 +27,6 @@
     [UserShareOnce shareOnce].allYueYaoPrice = 0;
     [[UserShareOnce shareOnce].yueYaoBuyArr removeAllObjects];
 
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.navTitleLabel.text = ModuleZW(@"支付信息");
     
     UIImageView *beijingImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, 300)];

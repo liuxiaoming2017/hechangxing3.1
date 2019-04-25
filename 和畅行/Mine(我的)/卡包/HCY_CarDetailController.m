@@ -22,6 +22,7 @@
 @property (nonatomic,strong)UITableView *serviceTableView;
 @property (nonatomic,strong) NSArray *dataArr;
 @property (nonatomic,strong) NSArray *serviceArr;
+@property (nonatomic,strong) UIView *listBackView;
 @end
 
 @implementation HCY_CarDetailController
@@ -29,12 +30,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self layoutCarDetailView];
-    [self requestPurchaseHistory];
+   
 }
 
 -(void)layoutCarDetailView {
     
-    self.navTitleLabel.text = ModuleZW(@"消费记录");
+    self.navTitleLabel.text = ModuleZW(@"卡详情");
     UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 240)];
     [imageV.layer addSublayer:[UIColor setGradualChangingColor:imageV fromColor:@"4294E1" toColor:@"D1BDFF"]];
     imageV.layer.cornerRadius = 10;
@@ -43,9 +44,8 @@
     [self.view addSubview:imageV];
     
     _hLabel = [[UILabel alloc] init];
-    _hLabel.frame = CGRectMake(0, 20, imageV.width, 25);
+    _hLabel.frame = CGRectMake(20, 20, imageV.width - 30, 25);
     _hLabel.textColor = [UIColor whiteColor];
-    _hLabel.textAlignment = NSTextAlignmentCenter;
     _hLabel.text = self.model.card_name;
     _hLabel.font = [UIFont systemFontOfSize:21];
     [imageV addSubview:_hLabel];
@@ -80,25 +80,62 @@
     [imageV addSubview:self.serviceTableView];
     
     
-    UILabel *listLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, imageV.bottom + 23, 200, 30)];
-    listLabel.text = ModuleZW(@"消费记录");
+    
+    
+    UIButton *listButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    listButton.frame = CGRectMake(imageV.width - 40, 20, 25, 27);
+    [listButton setBackgroundImage:[UIImage imageNamed:@"消费记录icon"] forState:(UIControlStateNormal)];
+    [[listButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        if(!self.listBackView) {
+            self.listBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+            self.listBackView.backgroundColor = RGBA(0, 0, 0, 0.55);
+            self.listBackView.hidden = NO;
+            [self.view addSubview:self.listBackView];
+        }else{
+             self.listBackView.hidden = NO;
+        }
+        
+        self.listTableView = [[UITableView alloc]initWithFrame:CGRectMake(40, ScreenHeight/2 - 110 , ScreenWidth - 80 , 210) style:UITableViewStylePlain];
+        self.listTableView.backgroundColor = UIColorFromHex(0Xffffff);
+        self.listTableView.separatorStyle = UITableViewCellEditingStyleNone;
+        self.listTableView.layer.cornerRadius = 8;
+        self.listTableView.dataSource = self;
+        self.listTableView.delegate = self;
+        self.listTableView.rowHeight = 30;
+        [self.listBackView addSubview:self.listTableView];
+          [self.listTableView registerNib:[UINib nibWithNibName:@"HCY_ConsumptionListCell" bundle:nil] forCellReuseIdentifier:@"HCY_ConsumptionListCell"];
+        
+        
+         [self requestPurchaseHistory];
+        
+        UIButton *closeButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        closeButton.frame = CGRectMake(ScreenWidth - 55, ScreenHeight/2 - 145, 28, 28);
+        [closeButton setBackgroundImage:[UIImage imageNamed:@"消费记录取消icon"] forState:(UIControlStateNormal)];
+        [[closeButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            self.listBackView.hidden = YES;
+        }];
+        [self.listBackView addSubview:closeButton];
+        
+    }];
+    [imageV addSubview:listButton];
+    
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (tableView == _listTableView){
+        return 50;
+    }else{
+         return 0;
+    }
+}
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UILabel *listLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,0, tableView.width, 50)];
+    listLabel.backgroundColor = UIColorFromHex(0Xffffff);
+    listLabel.text = ModuleZW(@"   消费记录");
     listLabel.font = [UIFont systemFontOfSize:16];
     listLabel.textColor = RGB_TextDarkGray;
-    [self.view addSubview:listLabel];
-    
-    
-
-    self.listTableView = [[UITableView alloc]initWithFrame:CGRectMake(30, listLabel.bottom+20, self.view.frame.size.width - 60, self.view.frame.size.height - kNavBarHeight-listLabel.bottom - 20) style:UITableViewStylePlain];
-    self.listTableView.backgroundColor = [UIColor clearColor];
-    self.listTableView.separatorStyle = UITableViewCellEditingStyleNone;
-    self.listTableView.dataSource = self;
-    self.listTableView.delegate = self;
-    self.listTableView.rowHeight = 30;
-    [self.view addSubview:self.listTableView];
-    
-    [self.listTableView registerNib:[UINib nibWithNibName:@"HCY_ConsumptionListCell" bundle:nil] forCellReuseIdentifier:@"HCY_ConsumptionListCell"];
-    
-    
+    [self.listTableView addSubview:listLabel];
+    return listLabel;
 }
 
 - (void)requestPurchaseHistory
@@ -180,32 +217,12 @@
 }
 
 
-
--(void)consultingAction:(UIButton *)button {
-    
-    
-    switch (button.tag) {
-        case 2000:
-            NSLog(@"去购物");
-            break;
-            
-        case 2001:
-            NSLog(@"去咨询");
-            break;
-            
-        default:
-            break;
-    }
-    
-    
-}
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     if(tableView == self.serviceTableView){
         return self.serviceArr.count;
     }else if (tableView == self.listTableView){
-        return self.dataArr.count;
+        return 15;
     }
     return 0;
 }

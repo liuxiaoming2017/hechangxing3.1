@@ -16,11 +16,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
-    self.navTitleLabel.textColor = [UIColor whiteColor];
     self.preBtn.hidden = NO;
     self.leftBtn.hidden = YES;
     [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
+    self.view.backgroundColor = RGB_AppWhite;
+    
 }
 
 - (void)didReceiveMemoryWarning {

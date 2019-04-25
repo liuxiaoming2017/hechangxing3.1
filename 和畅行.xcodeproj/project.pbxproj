@@ -84,15 +84,12 @@
 		0338E50F212C059100BBF576 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0338E50C212C059100BBF576 /* MessageCell.xib */; };
 		03430B4521119AF7008EE6C8 /* JingLuoSchemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03430B4421119AF7008EE6C8 /* JingLuoSchemeController.m */; };
 		03439067210AB57F00B57142 /* CCSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 03439066210AB57F00B57142 /* CCSegmentedControl.m */; };
-		0343906B210AB5FA00B57142 /* 乐药11_1106.png in Resources */ = {isa = PBXBuildFile; fileRef = 03439069210AB5FA00B57142 /* 乐药11_1106.png */; };
-		0343906C210AB5FA00B57142 /* 乐药112_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 0343906A210AB5FA00B57142 /* 乐药112_01.png */; };
 		03439072210AB64E00B57142 /* leyaoxiaofeijiner.png in Resources */ = {isa = PBXBuildFile; fileRef = 0343906D210AB64D00B57142 /* leyaoxiaofeijiner.png */; };
 		03439073210AB64E00B57142 /* leyaoweigoumai.png in Resources */ = {isa = PBXBuildFile; fileRef = 0343906E210AB64E00B57142 /* leyaoweigoumai.png */; };
 		03439074210AB64E00B57142 /* leyaogouwuche.png in Resources */ = {isa = PBXBuildFile; fileRef = 0343906F210AB64E00B57142 /* leyaogouwuche.png */; };
 		03439075210AB64E00B57142 /* leyaozhifuxianjinka.png in Resources */ = {isa = PBXBuildFile; fileRef = 03439070210AB64E00B57142 /* leyaozhifuxianjinka.png */; };
 		03439076210AB64E00B57142 /* leyaojiesuan.png in Resources */ = {isa = PBXBuildFile; fileRef = 03439071210AB64E00B57142 /* leyaojiesuan.png */; };
 		03439079210AB6B200B57142 /* YueYaoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03439078210AB6B200B57142 /* YueYaoController.m */; };
-		0343907E210AB84700B57142 /* YY_btn_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 0343907C210AB84600B57142 /* YY_btn_bg.png */; };
 		03439082210AB8BB00B57142 /* HYSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 03439080210AB8BB00B57142 /* HYSegmentedControl.m */; };
 		0343908E210AC23200B57142 /* New_yy_zt_zt.png in Resources */ = {isa = PBXBuildFile; fileRef = 03439086210AC22F00B57142 /* New_yy_zt_zt.png */; };
 		03439090210AC23200B57142 /* New_yy_zt_xz.png in Resources */ = {isa = PBXBuildFile; fileRef = 03439088210AC23000B57142 /* New_yy_zt_xz.png */; };
@@ -105,7 +102,6 @@
 		0343909B210AC3AB00B57142 /* DownloadHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0343909A210AC3AB00B57142 /* DownloadHandler.m */; };
 		0343909E210ACAFF00B57142 /* ProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0343909C210ACAFF00B57142 /* ProgressIndicator.m */; };
 		034390A1210ACCA500B57142 /* SongListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 034390A0210ACCA500B57142 /* SongListModel.m */; };
-		034A4E61211A7FF200936A46 /* 专家咨询11_023.png in Resources */ = {isa = PBXBuildFile; fileRef = 034A4E60211A7FF200936A46 /* 专家咨询11_023.png */; };
 		034A4E80211A9AD900936A46 /* TZLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 034A4E64211A9AD100936A46 /* TZLocationManager.m */; };
 		034A4E81211A9AD900936A46 /* TZImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 034A4E65211A9AD100936A46 /* TZImagePickerController.bundle */; };
 		034A4E82211A9AD900936A46 /* TZImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 034A4E67211A9AD200936A46 /* TZImageManager.m */; };
@@ -440,7 +436,6 @@
 		039B2AF02125623800D558F5 /* 完成.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AE72125623500D558F5 /* 完成.png */; };
 		039B2AF32125623800D558F5 /* bounceView.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AEA2125623700D558F5 /* bounceView.png */; };
 		039B2AF42125623800D558F5 /* commit_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AEB2125623700D558F5 /* commit_green.png */; };
-		039B2AF8212563D800D558F5 /* 深色背景.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2AF7212563D800D558F5 /* 深色背景.png */; };
 		039B2AFB212564C100D558F5 /* SugerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039B2AF9212564C000D558F5 /* SugerViewController.m */; };
 		039B2AFE2125665A00D558F5 /* BloodSugerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 039B2AFD2125665900D558F5 /* BloodSugerModel.m */; };
 		039B2B092125689E00D558F5 /* 血糖8.png in Resources */ = {isa = PBXBuildFile; fileRef = 039B2B002125689A00D558F5 /* 血糖8.png */; };
@@ -464,7 +459,6 @@
 		039C23AE2123FA3100F9AFA3 /* 血压11.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C239F2123FA2A00F9AFA3 /* 血压11.png */; };
 		039C23AF2123FA3100F9AFA3 /* 血压14.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C23A02123FA2A00F9AFA3 /* 血压14.png */; };
 		039C23B02123FA3100F9AFA3 /* 血压03.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C23A12123FA2B00F9AFA3 /* 血压03.png */; };
-		039C23B12123FA3100F9AFA3 /* 血压02.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C23A22123FA2B00F9AFA3 /* 血压02.png */; };
 		039C23B22123FA3100F9AFA3 /* 血压15.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C23A32123FA2C00F9AFA3 /* 血压15.png */; };
 		039C23B52123FA3100F9AFA3 /* 血压10.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C23A62123FA2D00F9AFA3 /* 血压10.png */; };
 		039C23B62123FA3100F9AFA3 /* 血压06.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C23A72123FA2E00F9AFA3 /* 血压06.png */; };
@@ -605,6 +599,8 @@
 		835DB91C21D757C800B8DF99 /* HCY_FamilyListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 835DB91B21D757C800B8DF99 /* HCY_FamilyListModel.m */; };
 		837D822321F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837D822121F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m */; };
 		839E0C552213E0540090F179 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 839E0C572213E0540090F179 /* InfoPlist.strings */; };
+		83C5F7E02270002000889370 /* LJRulerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C5F7DC2270001F00889370 /* LJRulerScrollView.m */; };
+		83C5F7E12270002000889370 /* LJRuler.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C5F7DF2270002000889370 /* LJRuler.m */; };
 		83D4C50F221FE1C700006CA9 /* sportImageText_en.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83D4C50E221FE1C700006CA9 /* sportImageText_en.plist */; };
 		83D54E6821E7165100474F58 /* HCY_ReportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D54E6721E7165100474F58 /* HCY_ReportCell.m */; };
 		83E23EE921C0A53100B43298 /* HCY_CallController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EE821C0A53000B43298 /* HCY_CallController.m */; };
@@ -756,8 +752,6 @@
 		03430B4421119AF7008EE6C8 /* JingLuoSchemeController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JingLuoSchemeController.m; sourceTree = "<group>"; };
 		03439065210AB57F00B57142 /* CCSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSegmentedControl.h; sourceTree = "<group>"; };
 		03439066210AB57F00B57142 /* CCSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSegmentedControl.m; sourceTree = "<group>"; };
-		03439069210AB5FA00B57142 /* 乐药11_1106.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "乐药11_1106.png"; sourceTree = "<group>"; };
-		0343906A210AB5FA00B57142 /* 乐药112_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "乐药112_01.png"; sourceTree = "<group>"; };
 		0343906D210AB64D00B57142 /* leyaoxiaofeijiner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leyaoxiaofeijiner.png; sourceTree = "<group>"; };
 		0343906E210AB64E00B57142 /* leyaoweigoumai.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leyaoweigoumai.png; sourceTree = "<group>"; };
 		0343906F210AB64E00B57142 /* leyaogouwuche.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leyaogouwuche.png; sourceTree = "<group>"; };
@@ -765,7 +759,6 @@
 		03439071210AB64E00B57142 /* leyaojiesuan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leyaojiesuan.png; sourceTree = "<group>"; };
 		03439077210AB6B200B57142 /* YueYaoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YueYaoController.h; sourceTree = "<group>"; };
 		03439078210AB6B200B57142 /* YueYaoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YueYaoController.m; sourceTree = "<group>"; };
-		0343907C210AB84600B57142 /* YY_btn_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = YY_btn_bg.png; sourceTree = "<group>"; };
 		03439080210AB8BB00B57142 /* HYSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYSegmentedControl.m; sourceTree = "<group>"; };
 		03439081210AB8BB00B57142 /* HYSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYSegmentedControl.h; sourceTree = "<group>"; };
 		03439086210AC22F00B57142 /* New_yy_zt_zt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = New_yy_zt_zt.png; sourceTree = "<group>"; };
@@ -783,7 +776,6 @@
 		0343909D210ACAFF00B57142 /* ProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressIndicator.h; sourceTree = "<group>"; };
 		0343909F210ACCA500B57142 /* SongListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SongListModel.h; sourceTree = "<group>"; };
 		034390A0210ACCA500B57142 /* SongListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SongListModel.m; sourceTree = "<group>"; };
-		034A4E60211A7FF200936A46 /* 专家咨询11_023.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "专家咨询11_023.png"; sourceTree = "<group>"; };
 		034A4E63211A9AD100936A46 /* TZProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZProgressView.h; sourceTree = "<group>"; };
 		034A4E64211A9AD100936A46 /* TZLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZLocationManager.m; sourceTree = "<group>"; };
 		034A4E65211A9AD100936A46 /* TZImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TZImagePickerController.bundle; sourceTree = "<group>"; };
@@ -1340,7 +1332,6 @@
 		039B2AE72125623500D558F5 /* 完成.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "完成.png"; sourceTree = "<group>"; };
 		039B2AEA2125623700D558F5 /* bounceView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bounceView.png; sourceTree = "<group>"; };
 		039B2AEB2125623700D558F5 /* commit_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = commit_green.png; sourceTree = "<group>"; };
-		039B2AF7212563D800D558F5 /* 深色背景.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "深色背景.png"; sourceTree = "<group>"; };
 		039B2AF9212564C000D558F5 /* SugerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SugerViewController.m; sourceTree = "<group>"; };
 		039B2AFA212564C100D558F5 /* SugerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SugerViewController.h; sourceTree = "<group>"; };
 		039B2AFC2125665900D558F5 /* BloodSugerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BloodSugerModel.h; sourceTree = "<group>"; };
@@ -1371,7 +1362,6 @@
 		039C239F2123FA2A00F9AFA3 /* 血压11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "血压11.png"; sourceTree = "<group>"; };
 		039C23A02123FA2A00F9AFA3 /* 血压14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "血压14.png"; sourceTree = "<group>"; };
 		039C23A12123FA2B00F9AFA3 /* 血压03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "血压03.png"; sourceTree = "<group>"; };
-		039C23A22123FA2B00F9AFA3 /* 血压02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "血压02.png"; sourceTree = "<group>"; };
 		039C23A32123FA2C00F9AFA3 /* 血压15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "血压15.png"; sourceTree = "<group>"; };
 		039C23A62123FA2D00F9AFA3 /* 血压10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "血压10.png"; sourceTree = "<group>"; };
 		039C23A72123FA2E00F9AFA3 /* 血压06.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "血压06.png"; sourceTree = "<group>"; };
@@ -1621,6 +1611,10 @@
 		837D822121F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BloodOxyNonDeviceViewController.m; sourceTree = "<group>"; };
 		837D822221F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BloodOxyNonDeviceViewController.h; sourceTree = "<group>"; };
 		839E0C562213E0540090F179 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83C5F7DC2270001F00889370 /* LJRulerScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJRulerScrollView.m; sourceTree = "<group>"; };
+		83C5F7DD2270001F00889370 /* LJRulerScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJRulerScrollView.h; sourceTree = "<group>"; };
+		83C5F7DE2270001F00889370 /* LJRuler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJRuler.h; sourceTree = "<group>"; };
+		83C5F7DF2270002000889370 /* LJRuler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJRuler.m; sourceTree = "<group>"; };
 		83D4C50E221FE1C700006CA9 /* sportImageText_en.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sportImageText_en.plist; sourceTree = "<group>"; };
 		83D54E6621E7165000474F58 /* HCY_ReportCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCY_ReportCell.h; sourceTree = "<group>"; };
 		83D54E6721E7165100474F58 /* HCY_ReportCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCY_ReportCell.m; sourceTree = "<group>"; };
@@ -2089,14 +2083,11 @@
 				038B52FE21E842D000D592C9 /* quanbuxiazai.png */,
 				0389890B21D36CCB004A6CBD /* My_upIcon.png */,
 				0389890921D36CC5004A6CBD /* My_DeleIcon.png */,
-				03439069210AB5FA00B57142 /* 乐药11_1106.png */,
-				0343906A210AB5FA00B57142 /* 乐药112_01.png */,
 				0343906F210AB64E00B57142 /* leyaogouwuche.png */,
 				03439071210AB64E00B57142 /* leyaojiesuan.png */,
 				0343906E210AB64E00B57142 /* leyaoweigoumai.png */,
 				0343906D210AB64D00B57142 /* leyaoxiaofeijiner.png */,
 				03439070210AB64E00B57142 /* leyaozhifuxianjinka.png */,
-				0343907C210AB84600B57142 /* YY_btn_bg.png */,
 				0343908D210AC23200B57142 /* New_yy_zt_bf.png */,
 				03439088210AC23000B57142 /* New_yy_zt_xz.png */,
 				03439086210AC22F00B57142 /* New_yy_zt_zt.png */,
@@ -3061,7 +3052,6 @@
 				036A66A92113FEE70096A006 /* 我的卡包 */,
 				036A668E2113FB7F0096A006 /* 私人服务 */,
 				03731DD72112E31400994C53 /* orderLine.png */,
-				034A4E60211A7FF200936A46 /* 专家咨询11_023.png */,
 				036FC0E32118249D00C1A793 /* Feedback_btn.png */,
 				036FC0E22118249D00C1A793 /* Feedback_UserImg.png */,
 				03A24CB321143A00005B5BA1 /* LeMedicineType_img.png */,
@@ -3202,7 +3192,6 @@
 				039C238B2123D02600F9AFA3 /* bloodguide2.png */,
 				039C23892123D02500F9AFA3 /* bloodguide3.png */,
 				039C238C2123D02600F9AFA3 /* bloodguide4.png */,
-				039C23A22123FA2B00F9AFA3 /* 血压02.png */,
 				039C23A12123FA2B00F9AFA3 /* 血压03.png */,
 				039C23A92123FA2F00F9AFA3 /* 血压04.png */,
 				039C23AA2123FA2F00F9AFA3 /* 血压05.png */,
@@ -3256,7 +3245,6 @@
 		039B2AE22125622A00D558F5 /* 呼吸检测 */ = {
 			isa = PBXGroup;
 			children = (
-				039B2AF7212563D800D558F5 /* 深色背景.png */,
 				039B2AE32125623300D558F5 /* 呼吸01.png */,
 				039B2AE42125623400D558F5 /* 呼吸02.png */,
 				039B2AE72125623500D558F5 /* 完成.png */,
@@ -3294,6 +3282,10 @@
 				0338E4F9212BC0DD00BBF576 /* TestBaseViewController.m */,
 				039B2AD52125247100D558F5 /* TestCell.h */,
 				039B2AD62125247100D558F5 /* TestCell.m */,
+				83C5F7DE2270001F00889370 /* LJRuler.h */,
+				83C5F7DF2270002000889370 /* LJRuler.m */,
+				83C5F7DD2270001F00889370 /* LJRulerScrollView.h */,
+				83C5F7DC2270001F00889370 /* LJRulerScrollView.m */,
 			);
 			path = "检测";
 			sourceTree = "<group>";
@@ -3828,7 +3820,6 @@
 				030F51D12101CEBE003C918F /* WY_bssf.mp3.wav in Resources */,
 				030F51F32101CEBE003C918F /* WY_bs.mp3 in Resources */,
 				03731DD52112DF4900994C53 /* 个人信息_上传头像.png in Resources */,
-				039B2AF8212563D800D558F5 /* 深色背景.png in Resources */,
 				030F51E22101CEBE003C918F /* WinZhi_Img_mi_1.png in Resources */,
 				036E850A2186EB1A001B9BB4 /* bluetooth_add.png in Resources */,
 				036E85752186EB2A001B9BB4 /* MoxaEndView.xib in Resources */,
@@ -3919,7 +3910,6 @@
 				036A66BB2113FF1F0096A006 /* 查看报告.png in Resources */,
 				036E84EA2186EB1A001B9BB4 /* ajys_bluetooth_clost@3x.png in Resources */,
 				036E856A2186EB2A001B9BB4 /* chooseMoxaModelView.xib in Resources */,
-				0343906B210AB5FA00B57142 /* 乐药11_1106.png in Resources */,
 				03A07BF320EF436500002274 /* RegistTF_bg.png in Resources */,
 				0306C5D521CCC15A00DA5DC1 /* UMSocialSDKResources.bundle in Resources */,
 				0337A714218ACE22005A4693 /* ReplaceSec_BTN.png in Resources */,
@@ -3985,7 +3975,6 @@
 				036A66BA2113FF1F0096A006 /* 我的咨询_21.png in Resources */,
 				039C23BA2123FA3100F9AFA3 /* 血压12.png in Resources */,
 				030F51F22101CEBE003C918F /* WinZhi_Img_la_1.png in Resources */,
-				0343907E210AB84700B57142 /* YY_btn_bg.png in Resources */,
 				C9FDB92C21BE3D4900E726F3 /* HCY_ConsumptionListCell.xib in Resources */,
 				036E851F2186EB1A001B9BB4 /* icon_happy.png in Resources */,
 				036E85612186EB2A001B9BB4 /* i9channel.xib in Resources */,
@@ -4004,7 +3993,6 @@
 				036285B6210709100090020D /* pinggu.png in Resources */,
 				030F51F12101CEBE003C918F /* WinZhi_Img_sao_1.png in Resources */,
 				03439072210AB64E00B57142 /* leyaoxiaofeijiner.png in Resources */,
-				039C23B12123FA3100F9AFA3 /* 血压02.png in Resources */,
 				036E850D2186EB1A001B9BB4 /* i9MoxaHead.png in Resources */,
 				036E85102186EB1A001B9BB4 /* 68MoxaHead_red.png in Resources */,
 				03A24C942114261B005B5BA1 /* 专家咨询_08.png in Resources */,
@@ -4013,7 +4001,6 @@
 				036E85082186EB1A001B9BB4 /* img_fenxiang_bg.png in Resources */,
 				03513AD320E9CAD3004E2805 /* Main.storyboard in Resources */,
 				036E84E22186EB1A001B9BB4 /* btn_aijiu_recipe_day_add.png in Resources */,
-				0343906C210AB5FA00B57142 /* 乐药112_01.png in Resources */,
 				036E85592186EB2A001B9BB4 /* AddTreatUser.xib in Resources */,
 				036E85142186EB1A001B9BB4 /* ic_electricity_01_green.png in Resources */,
 				036E85032186EB1A001B9BB4 /* i9MoxaHead_red.png in Resources */,
@@ -4031,7 +4018,6 @@
 				038CE88020EDF4F3005E9219 /* Find_Btn.png in Resources */,
 				03B1A1942119690400B23339 /* ReplaceSec_NSec.png in Resources */,
 				039C23882123CCB600F9AFA3 /* 流程介绍页_02.png in Resources */,
-				034A4E61211A7FF200936A46 /* 专家咨询11_023.png in Resources */,
 				036E85702186EB2A001B9BB4 /* RecipeListCell.xib in Resources */,
 				036E856C2186EB2A001B9BB4 /* SelTreatUser.xib in Resources */,
 				03A24C912114261B005B5BA1 /* 专家咨询1_03(111).png in Resources */,
@@ -4074,13 +4060,11 @@
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
 				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/HHDoctorSDK.framework",
-				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/NIMAVChat.framework",
-				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/NIMSDK.framework",
-				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/NMC.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
 				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
 				"${BUILT_PRODUCTS_DIR}/PYPhotoBrowser/PYPhotoBrowser.framework",
+				"${BUILT_PRODUCTS_DIR}/ReactiveObjC/ReactiveObjC.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/YYModel/YYModel.framework",
 			);
@@ -4091,13 +4075,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HHDoctorSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NIMAVChat.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NIMSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NMC.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PYPhotoBrowser.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveObjC.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYModel.framework",
 			);
@@ -4131,12 +4113,10 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-和畅行/Pods-和畅行-resources.sh",
-				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/resources/NMCVideoFilter.bundle",
 				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/resources/SecurityKit.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/NMCVideoFilter.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SecurityKit.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4367,6 +4347,7 @@
 				03F6931220FF2FD400308E38 /* SBJsonStreamParserAccumulator.m in Sources */,
 				036A66A82113FEB30096A006 /* BlockViewController.m in Sources */,
 				03A07BFF20EF5BC300002274 /* LBReadingTimeScrollPanel.m in Sources */,
+				83C5F7E02270002000889370 /* LJRulerScrollView.m in Sources */,
 				03535F0320F74BDA00664FA9 /* QuestionModel.m in Sources */,
 				036E85AF2186EB6E001B9BB4 /* NewChannelView.m in Sources */,
 				0370A86121115BF000447DFB /* GanYuSchemeController.m in Sources */,
@@ -4389,6 +4370,7 @@
 				03FBDF842192825C006116FC /* RecommendCollectCell.m in Sources */,
 				038517112186AC10001DD2B7 /* PayAbnormalViewController.m in Sources */,
 				0343909E210ACAFF00B57142 /* ProgressIndicator.m in Sources */,
+				83C5F7E12270002000889370 /* LJRuler.m in Sources */,
 				03DEBC71210863AB008434BD /* LiveMonitorVC.m in Sources */,
 				036FC0F2211830EE00C1A793 /* WeXinViewController.m in Sources */,
 				0379823D20FC32F4002015A3 /* QuestionCell.m in Sources */,
@@ -4646,6 +4628,7 @@
 					"\"${PODS_ROOT}/Headers/Public/MJExtension\"",
 					"\"$(SRCROOT)/和畅行/Mall(商城)/购买/Model/lib\"",
 					"\"$(SRCROOT)/和畅行/Mall(商城)/购买/View/IntegratedAlipay/AlipayFiles\"",
+					"\"$(SRCROOT)/和畅行/灸大夫/m/PrefixHeader.pch\"",
 				);
 				INFOPLIST_FILE = "和畅行/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -4705,6 +4688,7 @@
 					"\"${PODS_ROOT}/Headers/Public/MJExtension\"",
 					"\"$(SRCROOT)/和畅行/Mall(商城)/购买/Model/lib\"",
 					"\"$(SRCROOT)/和畅行/Mall(商城)/购买/View/IntegratedAlipay/AlipayFiles\"",
+					"\"$(SRCROOT)/和畅行/灸大夫/m/PrefixHeader.pch\"",
 				);
 				INFOPLIST_FILE = "和畅行/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

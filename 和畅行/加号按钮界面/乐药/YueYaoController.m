@@ -25,7 +25,6 @@
     NSInteger SegIndex;
 }
 
-@property (nonatomic,strong) CCSegmentedControl *segmentedControl;
 @property (nonatomic,strong) HYSegmentedControl *hysegmentControl;
 @property (nonatomic,strong) DownloadHandler *downhander;
 @property (nonatomic,strong) NSArray *dataArr;
@@ -48,6 +47,8 @@
 @property (nonatomic,assign) float allPrice;
 
 @property (nonatomic,copy) NSString *typeStr;
+@property (nonatomic,strong) UIView *backView;
+
 /**
  *  蓝牙连接必要对象
  */
@@ -69,15 +70,15 @@
 @end
 
 @implementation YueYaoController
-@synthesize segmentedControl,hysegmentControl,downhander,jinerLabel,allPrice;
+@synthesize hysegmentControl,downhander,jinerLabel,allPrice;
 
 - (void)dealloc
 {
+
     downhander = nil;
     self.dataArr = nil;
     self.avPlayer = nil;
     self.tableView = nil;
-    self.segmentedControl = nil;
     self.hysegmentControl = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PayStatues" object:nil];
     [UserShareOnce shareOnce].allYueYaoPrice = 0.0;
@@ -116,6 +117,35 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    if(self.backView){
+        if([UserShareOnce shareOnce].yueYaoBuyArr.count == 0){
+            if(_backView.top == ScreenHeight - kTabBarHeight - 16){
+                [UIView animateWithDuration:0.3 animations:^{
+                    self->_backView.top  = ScreenHeight ;
+                }];
+            }
+        }else{
+            if(_backView.top == ScreenHeight){
+                [UIView animateWithDuration:0.3 animations:^{
+                    self->_backView.top  = ScreenHeight  - kTabBarHeight - 16;
+                }];
+            }
+        }
+    }
+    
+    if([UserShareOnce shareOnce].yueYaoBuyArr.count == 0&&self.backView){
+        if(self->_backView.top == ScreenHeight - kTabBarHeight - 16){
+            [UIView animateWithDuration:0.3 animations:^{
+                self->_backView.top  = ScreenHeight ;
+            }];
+        }
+    }else{
+        if(self->_backView.top == ScreenHeight){
+            [UIView animateWithDuration:0.3 animations:^{
+                self->_backView.top  = ScreenHeight - kTabBarHeight - 16;
+            }];
+        }
+    }
     
     self->jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
 }
@@ -133,34 +163,30 @@
 # pragma mark - 创建视图
 - (void)createTopGongView
 {
-    segmentedControl = [[CCSegmentedControl alloc] initWithItems:@[@"宫", @"商", @"角", @"徵",@"羽"]];
-    segmentedControl.frame = CGRectMake(0, kNavBarHeight+5, ScreenWidth, 40);
-    //segmentedControl.backgroundColor = RGB(79, 172, 218);
-    UIImageView *ddimage = [[UIImageView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, 42)];
-    ddimage.image = [UIImage imageNamed:@"乐药112_01.png"];
-    [self.view addSubview:ddimage];
-    segmentedControl.backgroundColor = [UIColor clearColor];
     
-    //阴影部分图片，不设置使用默认椭圆外观的stain
+    NSArray *titleArray = @[@"宫", @"商", @"角", @"徵",@"羽"];
+    UISegmentedControl *topSegment = [[UISegmentedControl alloc]initWithItems:titleArray];
+    topSegment.frame = CGRectMake(0, kNavBarHeight+5, 250, 50);
+    topSegment.tintColor = [UIColor whiteColor];
+    NSDictionary *selectedDic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:28],
+                                  NSForegroundColorAttributeName:[UIColor blackColor]};
+    NSDictionary *noSelectedDic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:25],
+                                    NSForegroundColorAttributeName:RGB_TextAppGray};
+    [topSegment setTitleTextAttributes:selectedDic forState:(UIControlStateSelected)];
+    [topSegment setTitleTextAttributes:noSelectedDic forState:(UIControlStateNormal)];
+    topSegment.selectedSegmentIndex = 0;
+    [topSegment addTarget:self action:@selector(valuesegChanged:) forControlEvents:(UIControlEventValueChanged)];
+    [self.view addSubview:topSegment];
     
-    UIImageView* selestainbgview=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 35, 35)];
-    selestainbgview.image=[UIImage imageNamed:@"YY_btn_bg.png"];
-    segmentedControl.selectedStainView = selestainbgview;
-    [segmentedControl addTarget:self action:@selector(valuesegChanged:) forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:segmentedControl];
     
-    hysegmentControl = [[HYSegmentedControl alloc] initWithOriginY:segmentedControl.frame.origin.y+segmentedControl.frame.size.height + 5 Titles:@[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"] delegate:self];
+ 
+    
+    hysegmentControl = [[HYSegmentedControl alloc] initWithOriginY:topSegment.bottom + 15 Titles:@[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"] delegate:self];
     [self.view addSubview:hysegmentControl];
 
-   
 
     
-    UIImageView *diImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, hysegmentControl.bottom, self.view.frame.size.width, self.view.frame.size.height - hysegmentControl.bottom)];
-    diImage.image = [UIImage imageNamed:@"乐药11_1106.png"];
-    [self.view addSubview:diImage];
-    
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, hysegmentControl.bottom, ScreenWidth, ScreenHeight-hysegmentControl.bottom) style:UITableViewStylePlain];
- //tableview.frame=CGRectMake(_segmentedControl.frame.origin.x,_segmentedControl.frame.origin.y+_segmentedControl.frame.size.height, self.view.frame.size.width, SCREEN_HEIGHT-(_segmentedControl.frame.origin.y+_segmentedControl.frame.size.height)-44);
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, hysegmentControl.bottom+20, ScreenWidth, ScreenHeight-hysegmentControl.bottom) style:UITableViewStylePlain];
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
@@ -174,11 +200,10 @@
     }
    // [self requestYueyaoListWithType:@"大宫"];
     
-    
     //根据个人经络最新一条信息展示
     NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
     
-    if (physicalStr.length != 0 && physicalStr !=nil &&![physicalStr isKindOfClass:[NSNull class]]) {
+    if (![GlobalCommon stringEqualNull:physicalStr]) {
         
         NSArray * segmentedArray = @[
                                      @[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"],
@@ -191,9 +216,8 @@
             for (int j = 0; j < 5; j++) {
                 NSString *str = segmentedArray[i][j];
                 if([physicalStr isEqualToString:str]){
-                    [segmentedControl setSelectedSegmentIndex:i];
-                    segmentedControl.selectedSegmentIndex = i;
-                    [self valuesegChanged:nil];
+                    topSegment.selectedSegmentIndex = i;
+                    [self valuesegChanged:topSegment];
                     [hysegmentControl changeSegmentedControlWithIndex:j];
                     [self requestYueyaoListWithType:physicalStr];
                     self.typeStr = physicalStr; //用于支付成功刷新
@@ -218,7 +242,7 @@
     __weak typeof(self) weakSelf = self;
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
         id status=[response objectForKey:@"status"];
-        if([status intValue] != 222){
+        if([status intValue] != 200){
             [weakSelf createConsumeView];
             weakSelf.isOnPay = YES;
         }else{
@@ -231,33 +255,36 @@
 # pragma mark - 下方金额视图
 - (void)createConsumeView
 {
-    UIImageView *xiaofeijinerImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - kTabBarHeight, self.view.frame.size.width - 105, 44)];
-    xiaofeijinerImage.image = [UIImage imageNamed:@"leyaoxiaofeijiner.png"];
-    [self.view addSubview:xiaofeijinerImage];
-    
+    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth  , 60)];
+    backView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:backView];
+    self.backView = backView;
     
     UIButton *jiesuanButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    jiesuanButton.frame = CGRectMake(self.view.frame.size.width -  105, self.view.frame.size.height - kTabBarHeight, 105, 44);
+    jiesuanButton.frame = CGRectMake(ScreenWidth-  105,10, 80, 40);
     [jiesuanButton addTarget:self action:@selector(jiesuanButton) forControlEvents:(UIControlEventTouchUpInside)];
-    [jiesuanButton setTitle:ModuleZW(@"去结算") forState:(UIControlStateNormal)];
+    [jiesuanButton.layer addSublayer:[UIColor setGradualChangingColor:jiesuanButton fromColor:@"f5c366" toColor:@"e79036"]];
+    jiesuanButton.layer.cornerRadius = 20;
+    jiesuanButton.layer.masksToBounds = YES;
+    [jiesuanButton setTitle:ModuleZW(@"结算") forState:(UIControlStateNormal)];
     [jiesuanButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
     jiesuanButton.backgroundColor = RGB(68, 204, 82);
-    [self.view addSubview:jiesuanButton];
+    [backView addSubview:jiesuanButton];
     
-    UIImageView *gouwucheImage = [[UIImageView alloc]initWithFrame:CGRectMake(15, 12, 20, 20)];
-    gouwucheImage.image = [UIImage imageNamed:@"leyaogouwuche.png"];
-    [xiaofeijinerImage addSubview:gouwucheImage];
+    UIImageView *gouwucheImage = [[UIImageView alloc]initWithFrame:CGRectMake(25, 20, 20, 20)];
+    gouwucheImage.image = [UIImage imageNamed:@"购物车icon"];
+    [backView addSubview:gouwucheImage];
     
-    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 12, 40, 20)];
+    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 0, 40, 60)];
     zongjinerLabel.text = ModuleZW(@"总计: ");
-    zongjinerLabel.textColor = [UIColor whiteColor];
-    zongjinerLabel.font = [UIFont systemFontOfSize:13];
-    [xiaofeijinerImage addSubview:zongjinerLabel];
+    zongjinerLabel.textColor = RGB_TextAppGray;
+    zongjinerLabel.font = [UIFont systemFontOfSize:16];
+    [backView addSubview:zongjinerLabel];
     
-    jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(zongjinerLabel.right, 12, 60, 20)];
-    jinerLabel.textColor = [UIColor whiteColor];
-    jinerLabel.font = [UIFont boldSystemFontOfSize:13];
-    [xiaofeijinerImage addSubview:jinerLabel];
+    jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(zongjinerLabel.right, 0, 100, 60)];
+    jinerLabel.textColor = RGB(222, 119, 36);
+    jinerLabel.font = [UIFont boldSystemFontOfSize:16];
+    [backView addSubview:jinerLabel];
 
     
 }
@@ -277,7 +304,7 @@
 #pragma mark - tableview代理方法
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 45;
+    return 90;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -294,7 +321,25 @@
     }
     if(self.dataArr.count>0){
         SongListModel *model = [self.dataArr objectAtIndex:indexPath.row];
-        cell.titleLabel.text = model.title;
+
+        if (self.isOnPay == YES){
+            NSString *priceStr = [NSString stringWithFormat:@"¥%0.2f",model.price];
+            NSString *str = [NSString stringWithFormat:@"%@\n%@",model.title,priceStr];
+            
+            NSMutableAttributedString *salaryStr = [[NSMutableAttributedString alloc]initWithString:str];
+            [salaryStr beginEditing];
+            [salaryStr addAttribute:NSForegroundColorAttributeName value:RGB(222, 119, 36) range:NSMakeRange(str.length - priceStr.length ,priceStr.length)];
+            NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+            [paragraphStyle1 setLineSpacing:8];
+            [salaryStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [salaryStr length])];
+            [salaryStr endEditing];
+            cell.titleLabel.attributedText = salaryStr;
+          
+            
+        }else{
+            cell.titleLabel.text = model.title;
+        }
+      
         cell.delegate = self;
         cell.currentSelect = NO;
         BOOL fileExists = [self existFileWithName:model.title];
@@ -302,27 +347,23 @@
             [cell downloadSuccess];
             if([model.title isEqualToString:self.selectSongName] && [self.avPlayer isPlaying]){//正在播放的cell,设置为选中
                 cell.currentSelect = YES;
-                [cell.downloadBtn setImage:[UIImage imageNamed:@"New_yy_zt_bf"] forState:UIControlStateNormal];
+                [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
                 [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
         }else{
             NSString *imageStr = @"";
             if (model.price == 0){
-                imageStr = @"New_yy_zt_xz";
+                imageStr = @"乐药下载icon";
             }else if([model.status isKindOfClass:[NSNull class]] || [model.status isEqualToString:@"unpaid"]){  //需要付费leyaoweigoumai
                 if (self.isOnPay == YES){
-                    imageStr = @"leyaoweigoumai";
+                    imageStr = @"乐药未购买icon";
                 }else{
-                    imageStr = @"New_yy_zt_xz";
+                    imageStr = @"乐药下载icon";
                 }
-            }else if ([model.status isEqualToString:@"paid"]){
-                imageStr = @"New_yy_zt_xz";
-            } else{
-                imageStr = @"New_yy_zt_xz";
+            }else{
+                imageStr = @"乐药下载icon";
             }
-            
             [cell downloadFailWithImageStr:imageStr];
-
         }
         //判断当前cell是否处在下载中
         UIButton *btn = cell.downloadBtn;
@@ -348,19 +389,19 @@
         
         switch (SegIndex) {
             case 0:
-                [cell setIconImageWith:@"YY_GongIcon.png"];
+                [cell setIconImageWith:@"宫icon"];
                 break;
             case 1:
-                [cell setIconImageWith:@"YY_ShangIcon.png"];
+                [cell setIconImageWith:@"商icon"];
                 break;
             case 2:
-                [cell setIconImageWith:@"YY_JueIcon.png"];
+                [cell setIconImageWith:@"角icon"];
                 break;
             case 3:
-                [cell setIconImageWith:@"YY_ZhiIcon.png"];
+                [cell setIconImageWith:@"徵icon"];
                 break;
             case 4:
-                [cell setIconImageWith:@"YY_YuIcon.png"];
+                [cell setIconImageWith:@"羽icon"];
                 break;
             default:
                 break;
@@ -377,12 +418,12 @@
         cell.currentSelect = !cell.currentSelect;
         SongListModel *model = [self.dataArr objectAtIndex:indexPath.row];
         if(cell.currentSelect){
-            [cell.downloadBtn setImage:[UIImage imageNamed:@"New_yy_zt_bf"] forState:UIControlStateNormal];
+            [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
             NSString *musicStr = [[GlobalCommon Createfilepath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3",model.title]];
             [self palyActionWithUrlStr:musicStr];
             self.selectSongName = cell.titleLabel.text;
         }else{
-            [cell.downloadBtn setImage:[UIImage imageNamed:@"New_yy_zt_zt"] forState:UIControlStateNormal];
+            [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药播放icon"] forState:UIControlStateNormal];
           //  self.selectSongName = @"";
             [self pauseAction];
         }
@@ -398,7 +439,7 @@
      SongListCell *cell = (SongListCell *)[tableView cellForRowAtIndexPath:indexPath];
      NSLog(@"haha:%@",cell.reuseIdentifier);
     if(cell.PlayOrdownload){
-        [cell.downloadBtn setImage:[UIImage imageNamed:@"New_yy_zt_zt"] forState:UIControlStateNormal];
+        [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药播放icon"] forState:UIControlStateNormal];
         cell.currentSelect = NO;
         self.selectSongName = @"";
         [self pauseAction];
@@ -463,7 +504,7 @@
 #pragma mark - 下载按钮的代理事件
 - (void)downloadWithIndex:(NSInteger)index withBtn:(UIButton *)btn
 {
-    if([[btn imageForState:UIControlStateNormal] isEqual:[UIImage imageNamed:@"leyaoweigoumai"]]){ //未购买
+    if(btn.height == 20){ //未购买
         if(![UserShareOnce shareOnce].yueYaoBuyArr){
             [UserShareOnce shareOnce].yueYaoBuyArr = [NSMutableArray arrayWithCapacity:0];
         }
@@ -485,11 +526,12 @@
                 self->jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
                  [GlobalCommon showMessage:ModuleZW(@"乐药已加入购物车") duration:2.0];
                 
-//                NSString* filepath=[self createYueYaoZhiFufilepath];
-//                NSFileManager *fileManager = [NSFileManager defaultManager];
-//                NSString *urlpath= [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", @"arrayText.txt"]];
-//                NSString *namePath = [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"nameText.txt"]];
-//                BOOL fileExists = [fileManager fileExistsAtPath:urlpath];
+                if(self->_backView.top == ScreenHeight){
+                    [UIView animateWithDuration:0.3 animations:^{
+                        self->_backView.top  = ScreenHeight - kTabBarHeight - 16;
+                    }];
+                }
+
             }];
             [alertVC addAction:alertAct1];
             [alertVC addAction:alertAct12];
@@ -504,7 +546,9 @@
     NSString* NewFileName=model.source; //leyaoPath
     
     NSString *urlPathName = model.title;
-    
+    btn.frame = CGRectMake(ScreenWidth - 80, 25, 30, 30);
+    btn.backgroundColor = [UIColor clearColor];
+    [btn setTitle:@"" forState:(UIControlStateNormal)];
     downhander = [DownloadHandler sharedInstance];
     [downhander.downloadingDic setValue:@"downloading" forKey: [NSString stringWithFormat:@"%@",urlPathName]];
     NSString *aurl = [NewFileName stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
@@ -611,15 +655,15 @@
     SongListModel *model = [self.dataArr objectAtIndex:index];
     [GlobalCommon showMessage:[NSString stringWithFormat:ModuleZW(@"%@下载失败"),model.title] duration:2];
     SongListCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-    [cell downloadFailWithImageStr:@"New_yy_zt_xz"];
-    //[cell.downloadBtn setImage:[UIImage imageNamed:@"New_yy_zt_xz"] forState:UIControlStateNormal];
+    [cell downloadFailWithImageStr:@"乐药下载icon"];
     
 }
 
 # pragma mark - 宫商角选择事件
-- (void)valuesegChanged:(id)sender
+
+- (void)valuesegChanged:(UISegmentedControl *)segment
 {
-    if (segmentedControl.selectedSegmentIndex==0)
+    if (segment.selectedSegmentIndex==0)
     {
         SegIndex=0;
         [hysegmentControl setBtnorline:@[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"]];
@@ -627,7 +671,7 @@
         [hysegmentControl segmentedControlChange:btn];
         //[self LeMedicinaRequest:@"大宫"];
     }
-    else if (segmentedControl.selectedSegmentIndex==1)
+    else if (segment.selectedSegmentIndex==1)
     {
         SegIndex=1;
         [hysegmentControl setBtnorline:@[@"上商", @"少商", @"钛商", @"右商", @"左商"]];
@@ -635,14 +679,14 @@
         UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
         [hysegmentControl segmentedControlChange:btn];
     }
-    else if (segmentedControl.selectedSegmentIndex==2)
+    else if (segment.selectedSegmentIndex==2)
     {
         SegIndex=2;
         [hysegmentControl setBtnorline:@[@"大角", @"判角", @"上角", @"少角", @"钛角"]];
         UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
         [hysegmentControl segmentedControlChange:btn];
     }
-    else if (segmentedControl.selectedSegmentIndex==3)
+    else if (segment.selectedSegmentIndex==3)
     {
         SegIndex=3;
         [hysegmentControl setBtnorline:@[@"判徵", @"上徵", @"少徵", @"右徵", @"质徵"]];

@@ -59,6 +59,7 @@
 @property (nonatomic,assign) float allYueYaoPrice;
 
 @property (nonatomic,copy) NSString * languageType;
+@property (nonatomic,copy) NSString * loginType;
 
 + (UserShareOnce *)shareOnce;
 +(void)attemptDealloc;

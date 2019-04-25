@@ -8,12 +8,10 @@
 
 #import "PersonalInformationViewController.h"
 #import "Global.h"
-
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 #import "SBJson.h"
 #import <sys/utsname.h>
-
 #import "ZHPickView.h"
 #import "UIImageView+WebCache.h"
 #import "PECropViewController.h"
@@ -21,89 +19,227 @@
 #define currentMonth [currentMonthString integerValue]
 
 
-@interface PersonalInformationViewController ()<ZHPickViewDelegate>
-{
-    NSString *_marryState;
-    UIView *bottomView;
-    UIView *backView;
-}
-    
-    
-@property(nonatomic,strong)ZHPickView *pickview;
-@property(nonatomic,strong)NSIndexPath *indexPath;
-@property (nonatomic,strong)UITableView *tableView;
-@property (nonatomic,strong)NSMutableArray *sizeArray;
+@interface PersonalInformationViewController ()<ZHPickViewDelegate,MBProgressHUDDelegate,UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UITableViewDelegate,UITableViewDataSource>
+
+@property (nonatomic,strong)ZHPickView *pickview;
+@property (nonatomic,strong)UIView *blackView;
+@property (nonatomic,strong)UIButton *photoButton;
+@property (nonatomic,strong)UIButton *brithdayButton;
+@property (nonatomic,copy)NSString *urlHttpImg;
+@property (nonatomic,copy)NSString *sexStr;
+@property (nonatomic,copy)NSString *nameStr;
+@property (nonatomic,copy)NSString *brithdayStr;
+@property (nonatomic,copy)NSString *phoneStr;
+@property (nonatomic,copy) NSString *pngFilePath;
 
 @end
 
 @implementation PersonalInformationViewController
-@synthesize mobilestr;
-@synthesize usernametr;
-@synthesize Birthdaystr;
-@synthesize genderstr;
-@synthesize emailstr;
-@synthesize idstr;
-@synthesize regcodestr;
-@synthesize datePicker;
-@synthesize pRegistrationTF,pRegistrationnewTF,pyouxiangTF,pshenfenZTF;
-@synthesize PersonInfoTableView=_PersonInfoTableView;
-@synthesize customPicker=_customPicker;
-@synthesize toolbarCancelDone=_toolbarCancelDone;
-@synthesize pngFilePath;
-@synthesize currentMonthString=_currentMonthString;
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.navTitleLabel.text = ModuleZW(@"个人资料");
+    [self layoutMineView];
 }
 
-- (void)goBack:(UIButton *)btn
-{
-    if(_pickview){
-        [_pickview remove];
+-(void)layoutMineView{
+    
+    self.nameStr        = [NSString string];
+    self.sexStr           = [NSString string];
+    self.brithdayStr    = [NSString string];
+    self.phoneStr       = [NSString string];
+    if ([MemberUserShance shareOnce].name.length <  26) {
+        self.nameStr = [MemberUserShance shareOnce].name;
+    }else{
+        self.nameStr = [UserShareOnce shareOnce].wxName;
     }
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
--(void) showHUD
-{
-    
-}
-
-- (void)hudWasHidden:(MBProgressHUD *)hud
-{
-    
-    
-}
-#pragma mark ------ 提交按钮
--(void)commitClick:(UIButton *)button{
-    
-    
-//    if (mobile_Tf.text.length != 11||![mobile_Tf.text hasPrefix:@"1"]){
-//        [self showAlertWarmMessage:@"请输入正确的手机号"];
-//        return;
-//    }
-    
-    
-    if ([Certificates_btn.titleLabel.text isEqualToString:@"请选择证件类型"]) {
-       
-        [self showAlertWarmMessage:@"请选择证件类型"];
-        return;
-    }
-    
-    if ([CertificatesType isEqualToString:@"idCard"]) {
-        if (![UtilityFunc fitToChineseIDWithString:Certificates_Number_Tf.text]) {
-            
-            [self showAlertWarmMessage:@"请填写正确的证件号码"];
-            return;
+    if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].gender]) {
+        if ([[UserShareOnce shareOnce].gender isEqualToString:@"male"]) {
+            self.sexStr  = ModuleZW(@"男");
+        }else{
+            self.sexStr   =  ModuleZW(@"女");
         }
-        
+    }else{
+        self.sexStr = @"未设置";
     }
     
-    [self showHUD];
+    if(![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].birthday]){
+        self.brithdayStr  = [UserShareOnce shareOnce].birthday;
+    }else {
+        self.brithdayStr  = ModuleZW(@"未设置");
+    }
+    
+    
+    if ([[UserShareOnce shareOnce].loginType isEqualToString:@"WX"]){
+        if([self deptNumInputShouldNumber:[UserShareOnce shareOnce].username]){
+            self.phoneStr  = [UserShareOnce shareOnce].username;
+        }else{
+            self.phoneStr = ModuleZW(@"未绑定");
+        }
+    }else{
+        if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].username]) {
+            if([self deptNumInputShouldNumber:[UserShareOnce shareOnce].username]){
+                self.phoneStr  = [UserShareOnce shareOnce].username;
+            }else{
+                self.phoneStr = @"";
+            }
+        }
+    }
+   
+    NSArray *titleArray = @[ModuleZW(@"头像"),ModuleZW(@"昵称"),ModuleZW(@"性别"),ModuleZW(@"出生日期"),ModuleZW(@"手机号码")];
+    NSArray *contentArray = @[@"",self.nameStr,self.sexStr,self.brithdayStr ,self.phoneStr ];
+    
+    for (int i = 0; i < titleArray.count; i++) {
+        UILabel *leftLabel = [[UILabel alloc]init];
+        leftLabel.text = titleArray[i];
+        leftLabel.textColor =  RGB_TextDarkGray;
+        leftLabel.font = [UIFont systemFontOfSize:16];
+        if(i == 0){
+            leftLabel.frame = CGRectMake(30, kNavBarHeight , 100, 90);
+            UIButton *photoButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+            photoButton.frame = CGRectMake(ScreenWidth - 100, kNavBarHeight + 10, 70, 70);
+            photoButton.layer.cornerRadius = 35;
+            photoButton.layer.masksToBounds = YES;
+            if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].memberImage]) {
+                self.urlHttpImg=[UserShareOnce shareOnce].memberImage;
+                [photoButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage] forState:(UIControlStateNormal)];
+            }
+            else{
+                [photoButton setBackgroundImage:[UIImage imageNamed:@"1我的_03"] forState:(UIControlStateNormal)];
+            }
+            [photoButton addTarget:self action:@selector(uploadImageClick) forControlEvents:(UIControlEventTouchUpInside)];
+            
+            UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(photoButton.right + 10, kNavBarHeight + 37.5 , 12, 15)];
+            iconImageView.image = [UIImage imageNamed:@"1我的_09"];
+            [self.view addSubview:iconImageView];
+            [self.view addSubview:photoButton];
+            self.photoButton = photoButton;
+            
+        }else {
+            leftLabel.frame = CGRectMake(30, kNavBarHeight + 90 + 45 *(i-1), 100, 45);
+            UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
+            button.frame = CGRectMake(leftLabel.right + 20, leftLabel.top, ScreenWidth - leftLabel.right - 50, 45);
+            [button setTitle:contentArray[i] forState:(UIControlStateNormal)];
+            [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
+            [button setTitleColor: [UIColor blackColor] forState:(UIControlStateNormal)];
+            [button.titleLabel setFrame:button.bounds];
+            [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+            [[button rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+                switch (i) {
+                    case 1: {
+                        UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"" message:nil preferredStyle:
+                                                      UIAlertControllerStyleAlert];
+                        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                            textField.placeholder = ModuleZW(@"设置昵称");
+                            [textField addTarget:self action:@selector(textFieldDidChanged:) forControlEvents:UIControlEventEditingChanged];
+                            
+                        }];
+                        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                            self.nameStr = [[alertVc textFields] objectAtIndex:0].text;
+                            [button setTitle:self.nameStr forState:(UIControlStateNormal)];
+                            [self commitClick];
+                        }];
+                        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+                        [alertVc addAction:action2];
+                        [alertVc addAction:action1];
+                        [self presentViewController:alertVc animated:YES completion:nil];
+                    }
+                        break;
+                    case 2:
+                        [self sexClick:x];
+                        break;
+                    case 3:
+                        [self birthDayActive];
+                        break;
+                    case 4:
+                        if ([[UserShareOnce shareOnce].loginType isEqualToString:@"WX"]){
+                            if(![self deptNumInputShouldNumber:[UserShareOnce shareOnce].username]){
+                                 [self showAlertWarmMessage:@"跳转绑定手机号"];
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }];
+            if(i == 3){
+                _brithdayButton = button;
+            }
+            UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(button.width + 10, 15 , 12, 15)];
+            iconImageView.image = [UIImage imageNamed:@"1我的_09"];
+            [button addSubview:iconImageView];
+            [self.view addSubview:button];
+
+        }
+        [self.view addSubview:leftLabel];
+    }
+    
+    
+}
+
+
+//选择性别
+-(void)sexClick:(UIButton *)button{
+
+    UIView *blackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+    blackView.backgroundColor = RGBA(0, 0, 0, 0.5);
+    [self.view addSubview:blackView];
+    self.blackView = blackView;
+    //SexStr
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth/2-110, self.view.center.y-60, 220, 120)];
+    imageView.alpha = 1;
+    imageView.backgroundColor = [UIColor whiteColor];
+    imageView.image = [UIImage imageNamed:@"个人信息_弹出背景"];
+    UIImageView *line = [Tools creatImageViewWithFrame:CGRectMake(0, 59.5, 220, 1) imageName:@"orderLine"];
+    [imageView addSubview:line];
+    imageView.userInteractionEnabled = YES;
+    [blackView addSubview:imageView];
+    
+    NSArray *arr = @[ModuleZW(@"男"),ModuleZW(@"女")];
+    for (int i=0; i<2; i++) {
+        UIButton *btn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        btn.frame = CGRectMake(0, 60*i, 220, 59);
+        [btn setTitle:arr[i] forState:(UIControlStateNormal)];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        btn.titleLabel.font = [UIFont systemFontOfSize:14];
+        [[btn rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            [blackView removeFromSuperview];
+            switch (i) {
+                case 0:
+                    [button setTitle:ModuleZW(@"男") forState:(UIControlStateNormal)];
+                    self.sexStr = ModuleZW(@"男");
+                    [self commitClick];
+                    break;
+                    
+                case 1:
+                    [button setTitle:ModuleZW(@"女") forState:(UIControlStateNormal)];
+                    self.sexStr = ModuleZW(@"女");
+                    [self commitClick];
+                    break;
+                    
+                default:
+                    break;
+            }
+            
+        }];
+        [imageView addSubview:btn];
+    }
+    
+}
+
+
+
+#pragma mark ------ 提交按钮
+-(void)commitClick {
+    
+    NSString *sexStr = [NSString string];
+    if([self.sexStr isEqualToString:ModuleZW(@"男")]){
+        sexStr = @"male";
+    }else if([self.sexStr isEqualToString:ModuleZW(@"女")]){
+        sexStr = @"female";
+    }else{
+        sexStr = @"";
+    }
+   [GlobalCommon showMBHudWithView:self.view];
     NSString *UrlPre=URL_PRE;
     NSString *aUrl = [NSString stringWithFormat:@"%@/member/update.jhtml",UrlPre];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
@@ -113,29 +249,15 @@
         [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
     }
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"id"];
-    
-    [request setPostValue:self.UrlHttpImg forKey:@"memberImage"];
-    [request setPostValue:SexStr forKey:@"gender"];
-    [request setPostValue:Yh_TF.text forKey:@"name"];
-    [request setPostValue:mobile_Tf.text forKey:@"mobile"];
-    [request setPostValue:TelephoneLb_Tf.text forKey:@"phone"];
-    [request setPostValue:nation_Tf.text forKey:@"nation"];
-    if ([[UserShareOnce shareOnce].marryState isEqualToString:@"已婚"]) {
-        [request setPostValue:@(YES) forKey:@"isMarried"];
-    }else if ([[UserShareOnce shareOnce].marryState isEqualToString:@"未婚"]){
-        [request setPostValue:@(NO) forKey:@"isMarried"];
-    }
-    if ([BirthDay_btn.titleLabel.text isEqualToString:@"请选择您的出生日期"]) {
-        BirthDay_btn.titleLabel.text=@"";
-    }
-    if (nation_Tf.text) {
-        [request setPostValue:nation_Tf.text forKey:@"nation"];
+    [request setPostValue:self.urlHttpImg forKey:@"memberImage"];
+    [request setPostValue:sexStr forKey:@"gender"];
+    [request setPostValue:self.nameStr forKey:@"name"];
+    [request setPostValue:_phoneStr forKey:@"mobile"];
+    if ([_brithdayStr isEqualToString:@"请选择您的出生日期"]) {
+        _brithdayStr = @"";
     }
     [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setPostValue:AddressLb_Tf.text forKey:@"address"];
-    [request setPostValue:CertificatesType forKey:@"identityType"];
-    [request setPostValue:Certificates_Number_Tf.text forKey:@"idNumber"];
-    [request setPostValue:BirthDay_btn.titleLabel.text forKey:@"birthday"];
+    [request setPostValue:_brithdayStr forKey:@"birthday"];
     [request setTimeOutSeconds:20];
     [request setRequestMethod:@"POST"];
     [request setDelegate:self];
@@ -145,322 +267,29 @@
     
 }
 
-- (void)dealloc
-{
-   
-}
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.navTitleLabel.text = ModuleZW(@"个人信息");
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.sizeArray = [NSMutableArray array];
-    _marryState = [[NSString alloc] init];
-    
-    UIImageView *infoView = [Tools creatImageViewWithFrame:CGRectMake(0, 0, ScreenWidth, 92.5) imageName:@"个人信息_背景"];
-    infoView.userInteractionEnabled = YES;
-    iconImage = [Tools creatImageViewWithFrame:CGRectMake(20, 11.25, 70, 70) imageName:@"1我的_03"];
-    iconImage.clipsToBounds = YES;
-    iconImage.layer.cornerRadius = iconImage.frame.size.width/2;
-    iconImage.layer.borderWidth = 1.0f;
-    iconImage.layer.borderColor = [UIColor whiteColor].CGColor;
-    [infoView addSubview:iconImage];
-   
-    UIButton* commitBtn=[Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2-100, ScreenHeight-60, 200, 40) target:self sel:@selector(commitClick:) tag:11 image:ModuleZW(@"个人信息_提交") title:nil];
-    [self.view addSubview:commitBtn];
-    
-    UIButton *uploadImageBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth-208, 26.25, 70, 30) target:self sel:@selector(uploadImageClick:) tag:13 image:nil title:ModuleZW(@"请上传头像")];
-    uploadImageBtn.layer.cornerRadius = 5;
-    uploadImageBtn.layer.masksToBounds = YES;
-    [uploadImageBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-    [uploadImageBtn.titleLabel setNumberOfLines:2];
-    [uploadImageBtn setBackgroundColor:RGB(156, 218, 241)];
-    [infoView addSubview:uploadImageBtn];
-    //Upload avatar     Male
-    UIButton *sexBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth-108, 26.25, 70, 30) target:self sel:@selector(sexClick:) tag:14 image:nil title:ModuleZW(@"男")];
-    sexBtn.layer.cornerRadius = 5;
-    sexBtn.layer.masksToBounds = YES;
-    [sexBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-    [sexBtn setBackgroundColor:RGB(156, 218, 241)];
-    [infoView addSubview:sexBtn];
-    
-    
-    self.tableView=[[UITableView alloc]initWithFrame:CGRectMake(0,kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-80) style:UITableViewStylePlain];
-     self.tableView.delegate=self;
-     self.tableView.dataSource=self;
-     self.tableView.bounces = NO;
-     self.tableView.showsVerticalScrollIndicator = NO;
-     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
-    // tableview.separatorColor =[UIColor clearColor];
-     self.tableView.backgroundColor=[UIColor clearColor];
-    
-     self.tableView.tableHeaderView = infoView;
-    //self.PersonInfoTableView=tableview;
-    [self.view addSubview: self.tableView];
-    
-    UITapGestureRecognizer *tapSCR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapScreen:)];
-    [ self.tableView addGestureRecognizer:tapSCR];
-    
-    [self.view addSubview:self.topView];
-    
-    
-    PersionInfoArray=[NSMutableArray new];
-    [PersionInfoArray addObject:ModuleZW(@"手机号码")];
-    [PersionInfoArray addObject:ModuleZW(@"真实姓名")];
-    [PersionInfoArray addObject:ModuleZW(@"出生日期")];
-    [PersionInfoArray addObject:ModuleZW(@"婚姻状况")];
-    [PersionInfoArray addObject:ModuleZW(@"民       族")];
-    [PersionInfoArray addObject:ModuleZW(@"居住地址")];
-    [PersionInfoArray addObject:ModuleZW(@"固定电话")];
-    [PersionInfoArray addObject:ModuleZW(@"证件类型")];
-    [PersionInfoArray addObject:ModuleZW(@"证件号码")];
-    
-    for (int i = 0 ; i<PersionInfoArray.count; i++) {
-        CGRect textRect = [PersionInfoArray[i] boundingRectWithSize:CGSizeMake(MAXFLOAT, 21)
-                                                options:NSStringDrawingUsesLineFragmentOrigin
-                                             attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
-                                                context:nil];
-        
-        [self.sizeArray addObject:[NSNumber numberWithFloat:textRect.size.width]];
-    }
-    
-    ptCenterper=self.tableView.center;
-    
-    if ([UserShareOnce shareOnce].memberImage== (id)[NSNull null]) {
-        
-        iconImage.image = [UIImage imageNamed:@"1我的_03"];
-    }
-    else{
-        self.UrlHttpImg=[UserShareOnce shareOnce].memberImage;
-       
-        [iconImage sd_setImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage] placeholderImage:[UIImage imageNamed:@"1我的_03"]];
-        
-        
-    }
-    
-//    SexStr=[UserShareOnce shareOnce].gender;
-//  初始化性别
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    if ([UserShareOnce shareOnce].gender != (id)[NSNull null]) {
-        if ([[UserShareOnce shareOnce].gender isEqualToString:@"male"]) {
-            btn.tag = 61;
-            [self chooseSax:btn];
-        }else{
-            btn.tag = 62;
-            [self chooseSax:btn];
-        }
-    }
-    
-    //IsYiBao=@"1";
-    
-    bottomView = [[UIView alloc] initWithFrame:self.view.frame];
-    [self.view addSubview:bottomView];
-    backView = [[UIView alloc] initWithFrame:self.view.frame];
-    [self.view addSubview:backView];
-    [backView setHidden:YES];
-    [bottomView setHidden:YES];
-    bottomView.backgroundColor = [UIColor blackColor];
-    bottomView.alpha = 0.5;
-    backView.backgroundColor = [UIColor clearColor];
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
-    [backView addGestureRecognizer:tap];
-   
-}
-
--(void)tapClick:(UITapGestureRecognizer *)tap{
-    [bottomView setHidden:YES];
-    [backView setHidden:YES];
-    for (UIView *view in backView.subviews) {
-        [view removeFromSuperview];
-    }
-}
-//点击私人服务
--(void)privateSeviceClick:(UIButton *)button{
-    
-}
-//选择性别
--(void)sexClick:(UIButton *)button{
-    [bottomView setHidden:NO];
-    [backView setHidden:NO];
-    for (UIView *view in backView.subviews) {
-        [view removeFromSuperview];
-    }
-    
-    //SexStr
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth/2-110, self.view.center.y-60, 220, 120)];
-    imageView.alpha = 1;
-    imageView.backgroundColor = [UIColor whiteColor];
-    imageView.image = [UIImage imageNamed:@"个人信息_弹出背景"];
-    [backView addSubview:imageView];
-    UIImageView *line = [Tools creatImageViewWithFrame:CGRectMake(0, 59.5, 220, 1) imageName:@"orderLine"];
-    [imageView addSubview:line];
-    imageView.userInteractionEnabled = YES;
-    
-    NSArray *arr = @[ModuleZW(@"男"),ModuleZW(@"女")];
-    for (int i=0; i<2; i++) {
-        UIButton *btn = [Tools creatButtonWithFrame:CGRectMake(0, 60*i, 220, 59) target:self sel:@selector(chooseSax:) tag:61+i image:nil title:arr[i]];
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        btn.titleLabel.font = [UIFont systemFontOfSize:14];
-        [imageView addSubview:btn];
-    }
-    
-}
--(void)chooseSax:(UIButton *)button{
-    UIButton *sexBtn = (UIButton *)[self.view viewWithTag:14];
-    switch (button.tag) {
-        case 61:
-        {//男
-            [sexBtn setTitle:ModuleZW(@"男") forState:(UIControlStateNormal)];
-            SexStr = @"male";
-        }
-            break;
-        case 62:
-        {//女
-            [sexBtn setTitle:ModuleZW(@"女") forState:(UIControlStateNormal)];
-            SexStr = @"female";
-        }
-            break;
-            
-        default:
-            break;
-    }
-    [bottomView setHidden:YES];
-    [backView setHidden:YES];
-    for (UIView *view in backView.subviews) {
-        [view removeFromSuperview];
-    }
-}
-//点击选择婚姻状况按钮
--(void)marryBtnClick:(UIButton *)button{
-    [bottomView setHidden:NO];
-    [backView setHidden:NO];
-    for (UIView *view in backView.subviews) {
-        [view removeFromSuperview];
-    }
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth/2-110, self.view.center.y-60, 220, 120)];
-    imageView.alpha = 1;
-    imageView.backgroundColor = [UIColor whiteColor];
-    imageView.image = [UIImage imageNamed:@"个人信息_弹出背景"];
-    [backView addSubview:imageView];
-    UIImageView *line = [Tools creatImageViewWithFrame:CGRectMake(0, 59.5, 220, 1) imageName:@"orderLine"];
-    [imageView addSubview:line];
-    imageView.userInteractionEnabled = YES;
-    
-    NSArray *arr = @[ModuleZW(@"已婚"),ModuleZW(@"未婚")];
-    for (int i=0; i<2; i++) {
-        UIButton *btn = [Tools creatButtonWithFrame:CGRectMake(0, 60*i, 220, 59) target:self sel:@selector(chooseMarry:) tag:51+i image:nil title:arr[i]];
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        btn.titleLabel.font = [UIFont systemFontOfSize:14];
-        [imageView addSubview:btn];
-    }
-    
-    
-}
--(void)chooseMarry:(UIButton *)button{
-    UIButton *marryStatuBtn = (UIButton *)[self.view viewWithTag:31];
-    [marryStatuBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    switch (button.tag) {
-        case 51:
-        {//已婚
-            [marryStatuBtn setTitle:ModuleZW(@"已婚") forState:UIControlStateNormal];
-            [UserShareOnce shareOnce].marryState =ModuleZW(@"已婚");
-        }
-            break;
-        case 52:
-        {//未婚
-            [marryStatuBtn setTitle:ModuleZW(@"未婚") forState:UIControlStateNormal];
-            [UserShareOnce shareOnce].marryState = ModuleZW(@"未婚");
-        }
-            break;
-            
-        default:
-            break;
-    }
-    [bottomView setHidden:YES];
-    [backView setHidden:YES];
-    for (UIView *view in backView.subviews) {
-        [view removeFromSuperview];
-    }
-}
 
 //上传头像
-- (IBAction)uploadImageClick:(UIButton *)sender {
-    
-    if (SelectTF!=nil) {
-        [SelectTF resignFirstResponder];
-        [self restoreView];
-    }
-    
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@""
-                                                             delegate:self cancelButtonTitle:ModuleZW(@"取消") destructiveButtonTitle:nil
-                                                    otherButtonTitles:ModuleZW(@"拍照"), ModuleZW(@"选取照片"), nil];
-    actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
-    [actionSheet showInView:self.view]; // show from our table view (pops up in the middle of the table)
+- (void)uploadImageClick{
     
     
-}
-// 如果没有定义的委托,我们模拟一个点击取消按钮
-- (void)actionSheetCancel:(UIActionSheet *)actionSheet
-{
-    NSLog(@"actionSheetCancel:");
-}
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    
-    if(actionSheet.tag==10006)
-    {
-      
-    }
-    else
-    {
-        if (buttonIndex == 0)
-        {
+    UIAlertController *alVC = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *kakaAction= [UIAlertAction actionWithTitle:ModuleZW(@"拍照") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        //先设定sourceType为相机，然后判断相机是否可用（ipod）没相机，不可用将sourceType设定为相片库
+        
+        if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
+            UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
             
-            //先设定sourceType为相机，然后判断相机是否可用（ipod）没相机，不可用将sourceType设定为相片库
-            
-            if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
-                UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
-                
-                UIImagePickerController* imagePicker = [[UIImagePickerController alloc] init];
-                //pickerContro = imagePicker;
-                imagePicker.delegate = self;
-                imagePicker.allowsEditing = YES;
-                imagePicker.sourceType = sourceType;
-                const CGFloat cRed   = 232.0/255.0;
-                const CGFloat cGreen = 149.0/255.0;
-                const CGFloat cBlue  = 0.0/255.0;
-                imagePicker.navigationBar.tintColor = [UIColor colorWithRed:cRed green:cGreen blue:cBlue alpha:1];
-                //  [self.navigationController presentModalViewController:imagePicker animated:YES];
-                
-                [self presentViewController:imagePicker
-                                   animated:YES
-                                 completion:^(void){
-                                     //Code
-                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"HideTabbar" object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"6",@"index",nil]];
-                                 }];
-                
-               
-            }
-            
-            
-        }
-        else if (buttonIndex == 1)
-        {
-            UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
             UIImagePickerController* imagePicker = [[UIImagePickerController alloc] init];
-            // pickerContro = imagePicker;
+            //pickerContro = imagePicker;
+            imagePicker.delegate = self;
+            imagePicker.allowsEditing = YES;
+            imagePicker.sourceType = sourceType;
             const CGFloat cRed   = 232.0/255.0;
             const CGFloat cGreen = 149.0/255.0;
             const CGFloat cBlue  = 0.0/255.0;
             imagePicker.navigationBar.tintColor = [UIColor colorWithRed:cRed green:cGreen blue:cBlue alpha:1];
-            imagePicker.navigationBar.barStyle = UIBarStyleBlackOpaque;
-            imagePicker.delegate = self;
-            imagePicker.allowsEditing = YES;
-            imagePicker.sourceType = sourceType;
-            // [[[UIApplication sharedApplication] keyWindow] addSubview:imagePicker.view];
-            //[self.navigationController presentModalViewController:imagePicker animated:YES];
+            //  [self.navigationController presentModalViewController:imagePicker animated:YES];
+            
             [self presentViewController:imagePicker
                                animated:YES
                              completion:^(void){
@@ -468,11 +297,39 @@
                                  [[NSNotificationCenter defaultCenter] postNotificationName:@"HideTabbar" object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"6",@"index",nil]];
                              }];
         }
-        else
-        {
-        }
-    }
+        
+    }];
+    UIAlertAction *photoAction= [UIAlertAction actionWithTitle:ModuleZW(@"选取照片") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        UIImagePickerController* imagePicker = [[UIImagePickerController alloc] init];
+        // pickerContro = imagePicker;
+        const CGFloat cRed   = 232.0/255.0;
+        const CGFloat cGreen = 149.0/255.0;
+        const CGFloat cBlue  = 0.0/255.0;
+        imagePicker.navigationBar.tintColor = [UIColor colorWithRed:cRed green:cGreen blue:cBlue alpha:1];
+        imagePicker.navigationBar.barStyle = UIBarStyleBlackOpaque;
+        imagePicker.delegate = self;
+        imagePicker.allowsEditing = YES;
+        imagePicker.sourceType = sourceType;
+        // [[[UIApplication sharedApplication] keyWindow] addSubview:imagePicker.view];
+        //[self.navigationController presentModalViewController:imagePicker animated:YES];
+        [self presentViewController:imagePicker
+                           animated:YES
+                         completion:^(void){
+                             //Code
+                             [[NSNotificationCenter defaultCenter] postNotificationName:@"HideTabbar" object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"6",@"index",nil]];
+                         }];
+        
+    }];
+    UIAlertAction *cancelAction= [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:(UIAlertActionStyleCancel) handler:nil];
+    
+    [alVC addAction:kakaAction];
+    [alVC addAction:photoAction];
+    [alVC addAction:cancelAction];
+    [self presentViewController:alVC animated:YES completion:nil];
+    
 }
+
 
 #pragma mark Camera View Delegate Methods
 - (void)imagePickerController:(UIImagePickerController *)picker
@@ -484,27 +341,13 @@
         [self openEditorWithImage:image];
     }];
     return;
-    
-//    [picker dismissViewControllerAnimated:YES completion:nil];
-//    iconImage.image = [info objectForKey:UIImagePickerControllerEditedImage];
-//    //[ivIDCard setImage: [info objectForKey:UIImagePickerControllerEditedImage] forState:UIControlStateNormal];
-//
-//    NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-//    self.pngFilePath = [NSString stringWithFormat:@"%@/usertouxiang.png",docDir];
-//
-//    NSData *data1 = [NSData dataWithData:UIImagePNGRepresentation([info objectForKey:UIImagePickerControllerEditedImage])];
-//    [data1 writeToFile:self.pngFilePath atomically:YES];
-//
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowTabbar" object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"6",@"index",nil]];
-//    [self UpLoadImgHttp];
 }
 
 #pragma mark -
-
 - (void)cropViewController:(PECropViewController *)controller didFinishCroppingImage:(UIImage *)croppedImage
 {
     [controller dismissViewControllerAnimated:YES completion:NULL];
-    iconImage.image = croppedImage;
+    [self.photoButton setBackgroundImage:croppedImage forState:(UIControlStateNormal)];
     CGSize imagesize = croppedImage.size;
     imagesize.width = 300;
     imagesize.height = imagesize.width*croppedImage.size.height/croppedImage.size.width;
@@ -549,6 +392,7 @@
 
 -(void) UpLoadImgHttp
 {
+    
     [GlobalCommon showMBHudWithView:self.view];
     NSString *UrlPre=URL_PRE;
     NSString *aUrlle= [NSString stringWithFormat:@"%@/member/fileUpload/upload.jhtml",UrlPre];
@@ -578,12 +422,8 @@
     id status=[dic objectForKey:@"status"];
     if ([status intValue]==100)
     {
-        self.UrlHttpImg=[dic objectForKey:@"data"];
-        //[[NSNotificationCenter defaultCenter] postNotificationName:@"uploadImageSuccess" object:nil];
-    }
-    else
-    {
-        //[GlobalCommon hideMBHudWithView:self.view];
+        self.urlHttpImg=[dic objectForKey:@"data"];
+        [UserShareOnce shareOnce].memberImage = self.urlHttpImg;
     }
 }
 - (void)requestUpLoadError:(ASIHTTPRequest *)request
@@ -595,490 +435,25 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowTabbar" object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"6",@"index",nil]];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
-    //[picker dismissModalViewControllerAnimated:YES];
 }
 
 
-
-
-#pragma mark - Table view data source
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 47;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return PersionInfoArray.count;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section;
-{
-    return 0.000001;
-}
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"LeMedicineCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    NSNumber *floatNumber  =  self.sizeArray[indexPath.row];
-    if (cell == nil)
-    {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1
-                                      reuseIdentifier:CellIdentifier];
-        cell.backgroundColor=[UIColor clearColor];
-        cell.textLabel.font = [UIFont systemFontOfSize:15];
-    }
-    if (indexPath.row==0) {
-
-        UILabel* TxLb=[[UILabel alloc] init];
-        TxLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
-        TxLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
-        TxLb.font=[UIFont systemFontOfSize:14];
-        TxLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
-        [cell addSubview:TxLb];
-        TxLb.backgroundColor=[UIColor whiteColor];
-
-
-
-        mobile_Tf=[[UITextField alloc] init];
-        mobile_Tf.frame=CGRectMake(TxLb.frame.origin.x+TxLb.frame.size.width+5, (cell.frame.size.height-21)/2, ScreenWidth-TxLb.frame.origin.x-TxLb.frame.size.width-5-20.5, 21);
-        mobile_Tf.returnKeyType=UIReturnKeyNext;
-        mobile_Tf.delegate=self;
-        mobile_Tf.placeholder=ModuleZW(@"填写手机号码");
-        mobile_Tf.keyboardType=UIKeyboardTypeNumberPad;
-        [mobile_Tf setValue:[UtilityFunc colorWithHexString:@"#666666"] forKeyPath:@"_placeholderLabel.textColor"];
-        [mobile_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
-        mobile_Tf.userInteractionEnabled = NO;
-        if ([UserShareOnce shareOnce].username!=nil || ![[UserShareOnce shareOnce].username isKindOfClass:[NSNull class]]) {
-            if([self deptNumInputShouldNumber:[UserShareOnce shareOnce].username]){
-                mobile_Tf.text = [UserShareOnce shareOnce].username;
-            }else{
-                mobile_Tf.text= @"";
-            }
-        }
-        mobile_Tf.font=[UIFont systemFontOfSize:14];
-        [cell addSubview:mobile_Tf];
-
-    }
-    else  if(indexPath.row==1){
-
-        UILabel* nameLb=[[UILabel alloc] init];
-        nameLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
-        nameLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
-        nameLb.font=[UIFont systemFontOfSize:14];
-        nameLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
-        [cell addSubview:nameLb];
-        nameLb.backgroundColor=[UIColor whiteColor];
-
-        Yh_TF=[[UITextField alloc] init];
-        Yh_TF.frame=CGRectMake(nameLb.frame.origin.x+nameLb.frame.size.width+5, (cell.frame.size.height-21)/2, ScreenWidth-nameLb.frame.origin.x-nameLb.frame.size.width-5-20.5, 21);
-        Yh_TF.placeholder=ModuleZW(@"填写您的真实姓名");
-        NSString *str = [UserShareOnce shareOnce].name;
-        if (str == nil || [str isKindOfClass:[NSNull class]] ||str.length == 0) {
-            //Yh_TF.text=@"";
-        }else{
-            Yh_TF.text=[NSString stringWithString:str];
-        }
-        [Yh_TF setValue:[UtilityFunc colorWithHexString:@"#666666"] forKeyPath:@"_placeholderLabel.textColor"];
-        [Yh_TF setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
-        Yh_TF.returnKeyType=UIReturnKeyNext;
-        Yh_TF.delegate=self;
-        [cell addSubview:Yh_TF];
-        Yh_TF.font=[UIFont systemFontOfSize:14];
-
-
-
-    }
-    else if (indexPath.row==2)
-    {
-        UILabel* BirthDayLb=[[UILabel alloc] init];
-        BirthDayLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
-        BirthDayLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
-        BirthDayLb.font=[UIFont systemFontOfSize:14];
-        BirthDayLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
-        [cell addSubview:BirthDayLb];
-        BirthDayLb.backgroundColor=[UIColor whiteColor];
-        
-        BirthDay_btn=[UIButton buttonWithType:UIButtonTypeCustom];
-     BirthDay_btn.frame=CGRectMake(BirthDayLb.frame.origin.x+BirthDayLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-BirthDayLb.frame.origin.x-BirthDayLb.frame.size.width-5-20.5, 21);
-        BirthDay_btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        BirthDay_btn.titleLabel.textAlignment = NSTextAlignmentLeft;
-        
-        if ([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].birthday]) {
-            
-            [BirthDay_btn setTitle:ModuleZW(@"请选择您的出生日期") forState:UIControlStateNormal];
-            [BirthDay_btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        }
-        else
-        {
-            [BirthDay_btn setTitle:[UserShareOnce shareOnce].birthday forState:UIControlStateNormal];
-            [BirthDay_btn setTitleColor:[UtilityFunc colorWithHexString:@"#333333"] forState:UIControlStateNormal];
-            
-        }
-        
-        [BirthDay_btn addTarget:self action:@selector(BirthDayActive:) forControlEvents:UIControlEventTouchUpInside];
-        
-        BirthDay_btn.titleLabel.font=[UIFont systemFontOfSize:14];
-        [cell addSubview:BirthDay_btn];
-    }
-    else if (indexPath.row==2+1)
-    {
-        UILabel* marryLabel=[[UILabel alloc] init];
-        marryLabel.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
-        marryLabel.text=[PersionInfoArray objectAtIndex:indexPath.row];
-        marryLabel.font=[UIFont systemFontOfSize:14];
-        marryLabel.textColor=[UtilityFunc colorWithHexString:@"#333333"];
-        [cell addSubview:marryLabel];
-        marryLabel.backgroundColor=[UIColor whiteColor];
-
-        UIButton *marryStateBtn = [Tools creatButtonWithFrame:CGRectMake(marryLabel.frame.origin.x+marryLabel.frame.size.width+5, (cell.frame.size.height-21)/2, ScreenWidth-marryLabel.frame.origin.x-marryLabel.frame.size.width-5-20.5, 21) target:self sel:@selector(marryBtnClick:) tag:31 image:nil title:ModuleZW(@"请选择您的婚否情况")];
-        
-        marryStateBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        [marryStateBtn setTitleColor:[UtilityFunc colorWithHexString:@"#666666"] forState:UIControlStateNormal];
-        marryStateBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        [marryStateBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 80)];
-        if (([UserShareOnce shareOnce].marryState != nil && ![[UserShareOnce shareOnce].marryState isKindOfClass:[NSNull class]])) {
-            NSLog(@"婚姻状况：%@",[UserShareOnce shareOnce].marryState);
-            [marryStateBtn setTitle:[UserShareOnce shareOnce].marryState forState:UIControlStateNormal];
-            [marryStateBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        }
-        [cell addSubview:marryStateBtn];
-
-
-
-
-    }
-    else if (indexPath.row==3+1)
-    {
-        UILabel* nationLabel=[[UILabel alloc] init];
-        nationLabel.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
-        nationLabel.text=[PersionInfoArray objectAtIndex:indexPath.row];
-        nationLabel.font=[UIFont systemFontOfSize:14];
-        nationLabel.textColor=[UtilityFunc colorWithHexString:@"#333333"];
-        [cell addSubview:nationLabel];
-        nationLabel.backgroundColor=[UIColor whiteColor];
-
-        nation_Tf=[[UITextField alloc] init];
-        nation_Tf.frame=CGRectMake(nationLabel.frame.origin.x+nationLabel.frame.size.width+5, (cell.frame.size.height-21)/2, ScreenWidth-nationLabel.frame.origin.x-nationLabel.frame.size.width-5-20.5, 21);
-        nation_Tf.placeholder=ModuleZW(@"请输入您的民族");
-        NSLog(@"haha:%@",[UserShareOnce shareOnce].nation);
-        if ([[UserShareOnce shareOnce].nation isKindOfClass:[NSNull class]] || [UserShareOnce shareOnce].nation == nil) {
-            //nation_Tf.text=@"";
-        }else{
-            nation_Tf.text=[NSString stringWithString:[UserShareOnce shareOnce].nation];
-        }
-        [nation_Tf setValue:[UtilityFunc colorWithHexString:@"#666666"] forKeyPath:@"_placeholderLabel.textColor"];
-        [nation_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
-        nation_Tf.returnKeyType=UIReturnKeyNext;
-        nation_Tf.delegate=self;
-       [cell addSubview:nation_Tf];
-        nation_Tf.font=[UIFont systemFontOfSize:14];
-
-
-    }
-    else if (indexPath.row==4+1)
-    {
-        UILabel* AddressLb=[[UILabel alloc] init];
-        AddressLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
-        AddressLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
-        AddressLb.font=[UIFont systemFontOfSize:14];
-        AddressLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
-        [cell addSubview:AddressLb];
-        AddressLb.backgroundColor=[UIColor whiteColor];
-
-
-        AddressLb_Tf=[[UITextField alloc] init];
-        AddressLb_Tf.frame=CGRectMake(AddressLb.frame.origin.x+AddressLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-AddressLb.frame.origin.x-AddressLb.frame.size.width-5-20.5, 21);
-        AddressLb_Tf.delegate=self;
-        AddressLb_Tf.placeholder=ModuleZW(@"请输入您的居住地址");
-        if ([UserShareOnce shareOnce].address== (id)[NSNull null]) {
-
-        }
-        else
-        {
-            AddressLb_Tf.text=[UserShareOnce shareOnce].address;
-        }
-        AddressLb_Tf.returnKeyType=UIReturnKeyDone;
-        [AddressLb_Tf setValue:[UtilityFunc colorWithHexString:@"#666666"] forKeyPath:@"_placeholderLabel.textColor"];
-        [AddressLb_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
-
-        [cell addSubview:AddressLb_Tf];
-        AddressLb_Tf.font=[UIFont systemFontOfSize:14];
-
-
-
-
-    }
-    else if (indexPath.row==5+1)
-    {
-        UILabel* TelephoneLb=[[UILabel alloc] init];
-        TelephoneLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
-        TelephoneLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
-        TelephoneLb.font=[UIFont systemFontOfSize:14];
-        TelephoneLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
-        [cell addSubview:TelephoneLb];
-        TelephoneLb.backgroundColor=[UIColor whiteColor];
-
-
-        TelephoneLb_Tf=[[UITextField alloc] init];
-        TelephoneLb_Tf.frame=CGRectMake(TelephoneLb.frame.origin.x+TelephoneLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-TelephoneLb.frame.origin.x-TelephoneLb.frame.size.width-5-20.5, 21);
-        TelephoneLb_Tf.returnKeyType=UIReturnKeyDone;
-        TelephoneLb_Tf.delegate=self;
-        TelephoneLb_Tf.placeholder=ModuleZW(@"请输入您的固定电话");
-        TelephoneLb_Tf.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
-        [TelephoneLb_Tf setValue:[UtilityFunc colorWithHexString:@"#666666"] forKeyPath:@"_placeholderLabel.textColor"];
-        [TelephoneLb_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
-        if ([UserShareOnce shareOnce].phone== (id)[NSNull null]) {
-
-        }
-        else{
-            TelephoneLb_Tf.text=[UserShareOnce shareOnce].phone;
-
-        }
-        TelephoneLb_Tf.font=[UIFont systemFontOfSize:14];
-        [cell addSubview:TelephoneLb_Tf];
-
-
-    }
-    else if (indexPath.row==6+1)
-    {
-        UILabel* CertificatesLb=[[UILabel alloc] init];
-        CertificatesLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
-        CertificatesLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
-        CertificatesLb.font=[UIFont systemFontOfSize:14];
-        CertificatesLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
-        [cell addSubview:CertificatesLb];
-        CertificatesLb.backgroundColor=[UIColor whiteColor];
-
-
-        Certificates_btn=[UIButton buttonWithType:UIButtonTypeCustom];
-        Certificates_btn.frame=CGRectMake(CertificatesLb.frame.origin.x+CertificatesLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-CertificatesLb.frame.origin.x-CertificatesLb.frame.size.width-5-20.5, 21);
-        [cell addSubview:Certificates_btn];
-        Certificates_btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        [Certificates_btn setTitle:ModuleZW(@"请选择您的证件类型") forState:UIControlStateNormal];
-        [Certificates_btn setTitleColor:[UtilityFunc colorWithHexString:@"#666666"] forState:UIControlStateNormal];
-        [Certificates_btn addTarget:self action:@selector(CertificatesAactive:) forControlEvents:UIControlEventTouchUpInside];
-        Certificates_btn.titleLabel.font=[UIFont systemFontOfSize:14];
-
-        if ([UserShareOnce shareOnce].identityType == (id)[NSNull null]) {
-            [Certificates_btn setTitle:ModuleZW(@"请选择您的证件类型") forState:UIControlStateNormal];
-        }else{
-            if ([[UserShareOnce shareOnce].identityType isEqualToString:@"idCard"]) {
-                [Certificates_btn setTitle:ModuleZW(@"身份证") forState:UIControlStateNormal];
-            }else if ([[UserShareOnce shareOnce].identityType isEqualToString:@"officerCard"])
-            {
-                [Certificates_btn setTitle:ModuleZW(@"军官证") forState:UIControlStateNormal];
-            }
-            else if ([[UserShareOnce shareOnce].identityType isEqualToString:@"passport"])
-            {
-                [Certificates_btn setTitle:ModuleZW(@"护照") forState:UIControlStateNormal];
-            }
-            else{
-                [Certificates_btn setTitle:ModuleZW(@"其他") forState:UIControlStateNormal];
-            }
-            [Certificates_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        }
-    }
-    else if (indexPath.row==7+1)
-    {
-        UILabel* Certificates_NumberLb=[[UILabel alloc] init];
-        Certificates_NumberLb.frame=CGRectMake(20.4, (cell.frame.size.height-21)/2, [floatNumber floatValue], 21);
-        Certificates_NumberLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
-        Certificates_NumberLb.font=[UIFont systemFontOfSize:14];
-        Certificates_NumberLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
-        [cell addSubview:Certificates_NumberLb];
-        Certificates_NumberLb.backgroundColor=[UIColor whiteColor];
-
-
-        Certificates_Number_Tf=[[UITextField alloc] init];
-        Certificates_Number_Tf.frame=CGRectMake(Certificates_NumberLb.frame.origin.x+Certificates_NumberLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-Certificates_NumberLb.frame.origin.x-Certificates_NumberLb.frame.size.width-5-20.5, 21);
-        Certificates_Number_Tf.delegate=self;
-        Certificates_Number_Tf.returnKeyType=UIReturnKeyDone;
-        Certificates_Number_Tf.placeholder=ModuleZW(@"请输入您的证件号码");
-        if ([UserShareOnce shareOnce].idNumber== (id)[NSNull null] || [UserShareOnce shareOnce].idNumber == nil) {
-
-        }else{
-
-            Certificates_Number_Tf.text=[NSString stringWithString:[UserShareOnce shareOnce].idNumber];
-        }
-        [Certificates_Number_Tf setValue:[UtilityFunc colorWithHexString:@"#666666"] forKeyPath:@"_placeholderLabel.textColor"];
-        [Certificates_Number_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
-        [cell addSubview:Certificates_Number_Tf];
-        Certificates_Number_Tf.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
-        Certificates_Number_Tf.textColor=[UIColor blackColor];
-        Certificates_Number_Tf.font=[UIFont systemFontOfSize:14];
-
-    }
-
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.backgroundColor=[UIColor whiteColor];
-    return cell;
-}
-
-#pragma mark --------字数限制
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    
-    if (textField == mobile_Tf) {
-        //这里的if时候为了获取删除操作,如果没有次if会造成当达到字数限制后删除键也不能使用的后果.
-        if (range.length == 1 && string.length == 0) {
-            return YES;
-        }
-        //so easy
-        else if (mobile_Tf.text.length >= 11) {
-            mobile_Tf.text = [textField.text substringToIndex:11];
-            return NO;
-        }
-    }
-    return YES;
-}
-
-
-
-//-(void)SegSexAction:(UISegmentedControl *)Seg{
-//    NSInteger Index = Seg.selectedSegmentIndex;
-//    switch (Index) {
-//        case 0:
-//        {
-//            SexStr=@"male";
-//            break;
-//        }
-//        case 1:
-//        {
-//            SexStr=@"female";
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//    
-//    //NSLog(@"Seg.selectedSegmentIndex:%ld",Index);
-//}
-//-(void)YiHunSexAction:(UISegmentedControl *)Seg{
-//    NSInteger Index = Seg.selectedSegmentIndex;
-//    switch (Index) {
-//        case 0:
-//        {
-//            
-////            IsYiBao=@"1";
-//            break;
-//        }
-//        case 1:
-//        {
-//            
-////            IsYiBao=@"0";
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//    
-//    // NSLog(@"Seg.selectedSegmentIndex:%ld",Index);
-//}
--(void)AcceptAction:(id)sender
-{
-
- 
-    if ([Certificates_btn.titleLabel.text isEqualToString:ModuleZW(@"请选择证件类型")]) {
-        [self showAlertWarmMessage:ModuleZW(@"请选择证件类型")];
+- (void)textFieldDidChanged:(UITextField *)textField {
+    UITextRange *selectedRange = textField.markedTextRange;
+    UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+    if (position) {
         return;
     }
-    
-    if ([CertificatesType isEqualToString:@"idCard"]) {
-        if (![UtilityFunc fitToChineseIDWithString:Certificates_Number_Tf.text]) {
-            
-            [self showAlertWarmMessage:ModuleZW(@"请填写正确的证件号码")];
-            return;
-        }
-        
+    if (textField.text.length > 7) {
+        textField.text = [textField.text substringToIndex:7];
     }
-    
-    [GlobalCommon showMBHudWithView:self.view];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrl = [NSString stringWithFormat:@"%@/member/update.jhtml",UrlPre];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"id"];
-    
-    [request setPostValue:self.UrlHttpImg forKey:@"memberImage"];
-    [request setPostValue:SexStr forKey:@"gender"];
-    [request setPostValue:Yh_TF.text forKey:@"name"];
-    [request setPostValue:[UserShareOnce shareOnce].username forKey:@"mobile"];
-    [request setPostValue:TelephoneLb_Tf.text forKey:@"phone"];
-    [request setPostValue:self.genderstr forKey:@"nation"];
-    //[request setPostValue:@"" forKey:@"isMarried"];
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setPostValue:AddressLb_Tf.text forKey:@"address"];
-    [request setPostValue:CertificatesType forKey:@"identityType"];
-    [request setPostValue:Certificates_Number_Tf.text forKey:@"idNumber"];
-    //[request setPostValue:IsYiBao forKey:@"isMedicare"];
-    if ([BirthDay_btn.titleLabel.text isEqualToString:@"请选择您的出生日期"]) {
-        BirthDay_btn.titleLabel.text=@"";
-    }
-    [request setPostValue:BirthDay_btn.titleLabel.text forKey:@"birthday"];
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestuserinfoError:)];
-    [request setDidFinishSelector:@selector(requestuserinfoCompleted:)];
-    [request startAsynchronous];
-}
--(void)CertificatesAactive:(id)sender
-{
-    if (SelectTF!=nil) {
-        [SelectTF resignFirstResponder];
-        [self restoreView];
-    }
-
-    UIAlertController *alectSheet = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:ModuleZW(@"身份证") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        self->CertificatesType=@"idCard";
-        [self->Certificates_btn setTitle:@"身份证" forState:UIControlStateNormal];
-        [self->Certificates_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    }];
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:ModuleZW(@"军官证") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self->CertificatesType=@"officerCard";
-        [self->Certificates_btn setTitle:@"军官证" forState:UIControlStateNormal];
-        [self->Certificates_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    }];
-    UIAlertAction *action3 = [UIAlertAction actionWithTitle:ModuleZW(@"护照") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self->CertificatesType=@"passport";
-        [self->Certificates_btn setTitle:@"护照" forState:UIControlStateNormal];
-        [self->Certificates_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    }];
-    UIAlertAction *action4 = [UIAlertAction actionWithTitle:ModuleZW(@"其它") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self->CertificatesType=@"elseCard";
-        [self->Certificates_btn setTitle:@"其它" forState:UIControlStateNormal];
-        [self->Certificates_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    }];
-    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:NULL];
-    [alectSheet addAction:action1];
-    [alectSheet addAction:action2];
-    [alectSheet addAction:action3];
-    [alectSheet addAction:action4];
-    [alectSheet addAction:cancleAction];
-    [self presentViewController:alectSheet animated:YES completion:NULL];
-   
-    
 }
 
--(void) BirthDayActive:(id)sender
+-(void) birthDayActive
 {
-    if (SelectTF!=nil) {
-        [SelectTF resignFirstResponder];
-        [self restoreView];
-    }
     NSDate *date=[NSDate date];
     _pickview=[[ZHPickView alloc] initDatePickWithDate:date datePickerMode:UIDatePickerModeDate isHaveNavControler:NO];
-    _pickview.delegate=self;
+    _pickview.delegate = self;
     [_pickview show];
     
 }
@@ -1091,113 +466,34 @@
     id status=[dic objectForKey:@"status"];
     if ([status intValue]==100) {
         
-        [UserShareOnce shareOnce].name=Yh_TF.text;
-        [UserShareOnce shareOnce].gender=SexStr;
-        [UserShareOnce shareOnce].birthday=BirthDay_btn.titleLabel.text;
-        [UserShareOnce shareOnce].address=AddressLb_Tf.text;
-        [UserShareOnce shareOnce].username=mobile_Tf.text;
-        [UserShareOnce shareOnce].identityType=CertificatesType;
-        [UserShareOnce shareOnce].idNumber=Certificates_Number_Tf.text;
-        //[UserShareOnce shareOnce].isMedicare=IsYiBao;
-        [UserShareOnce shareOnce].memberImage=self.UrlHttpImg;
-        [UserShareOnce shareOnce].nation = nation_Tf.text;
-        
+        [UserShareOnce shareOnce].name=_nameStr;
+        [UserShareOnce shareOnce].gender=_sexStr;
+        [UserShareOnce shareOnce].birthday=_brithdayStr;
+        [UserShareOnce shareOnce].username=_phoneStr;
+        [UserShareOnce shareOnce].memberImage=self.urlHttpImg;
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"personalInfoUpdateSuccess" object:nil];
+
         
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"信息更新成功") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-        [av show];
-        av.tag=10007;
-        
-        
-    }
-    else
-    {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:[dic objectForKey:@"data"] delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-        [av show];
-       
+    } else {
+        [self showAlertWarmMessage:[dic objectForKey:@"data"]];
     }
 }
 
--(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    // alert.tag=10002;
-    if (alertView.tag==10007)
-    {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
 - (void)requestuserinfoError:(ASIHTTPRequest *)request
 {
     [GlobalCommon hideMBHudWithView:self.view];
 }
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    SelectTF=textField;
-    if (textField==Yh_TF || textField == mobile_Tf || textField == nation_Tf) {
-        return;
-    }
-    [ self resizeViewForInput:nil ];
-    
-}
 
-#pragma mark -----键盘遮挡问题
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    //关闭键盘的方法
-    //[[[UIApplication sharedApplication] keyWindow] endEditing:YES];
-    [mobile_Tf resignFirstResponder];
-    [Yh_TF resignFirstResponder];
-    [nation_Tf resignFirstResponder];
-    [AddressLb_Tf resignFirstResponder];
-    [TelephoneLb_Tf resignFirstResponder];
-    [Certificates_Number_Tf resignFirstResponder];
-    [ self restoreView];
-    [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
-}
 
--(void)tapScreen:(UITapGestureRecognizer *)tap{
-    [mobile_Tf resignFirstResponder];
-    [Yh_TF resignFirstResponder];
-    [nation_Tf resignFirstResponder];
-    [AddressLb_Tf resignFirstResponder];
-    [TelephoneLb_Tf resignFirstResponder];
-    [Certificates_Number_Tf resignFirstResponder];
-    [ self restoreView];
-}
--(void)resizeViewForInput:(id)sender
-{
-    [UIView beginAnimations:@"resize for input" context:nil];
-    [UIView setAnimationDuration:0.3f];
-    self.tableView.top = kNavBarHeight - 170;
-    [UIView commitAnimations];
-}
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    [self restoreView];
-    return YES;
-}
--(void)restoreView
-{
-    
-    [UIView beginAnimations:@"resize for input" context:nil];
-    [UIView setAnimationDuration:0.3f];
-    self.tableView.top = kNavBarHeight;
-    [UIView commitAnimations];
-}
 
 -(void)toobarDonBtnHaveClick:(ZHPickView *)pickView resultString:(NSString *)resultString{
     
     NSLog(@"ddfdfd=%@",resultString);
-    [BirthDay_btn setTitle:resultString forState:UIControlStateNormal];
-    [BirthDay_btn setTitleColor:[UtilityFunc colorWithHexString:@"#333333"] forState:UIControlStateNormal];
-    // UITableViewCell * cell=[self.tableView cellForRowAtIndexPath:_indexPath];
-    //cell.detailTextLabel.text=resultString;
+    _brithdayStr = resultString;
+    [_brithdayButton setTitle:resultString forState:(UIControlStateNormal)];
+    [self commitClick];
+
 }
 
 - (BOOL) deptNumInputShouldNumber:(NSString *)str
@@ -1213,6 +509,12 @@
     return NO;
 }
 
-
+- (void)goBack:(UIButton *)btn
+{
+    if(_pickview){
+        [_pickview remove];
+    }
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
 
 @end

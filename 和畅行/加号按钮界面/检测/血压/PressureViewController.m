@@ -57,10 +57,6 @@ static int const tick = 80;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-//- (void)goBack:(UIButton *)btn
-//{
-//    [self.navigationController popToRootViewControllerAnimated:YES];
-//}
 
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
@@ -72,133 +68,112 @@ static int const tick = 80;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navTitleLabel.text =  ModuleZW(@"血压脉搏检测");
+    self.navTitleLabel.text =  ModuleZW(@"血压心率检测");
     [self initWithController];
     
     //血压检测
     [self bloodTest];
     self.isHidden = NO;
     
-    
-//    UIButton *lookBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [lookBtn setBackgroundImage:[UIImage imageNamed:@"look"] forState:UIControlStateNormal];
-//    [lookBtn setTitle:@"查看档案" forState:UIControlStateNormal];
-//    lookBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-//    lookBtn.frame = CGRectMake(100 ,200, 100, 40);
-//    [lookBtn addTarget:self action:@selector(lookClickBtn:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:lookBtn];
 }
 
--(void)backClick:(UIButton *)button{
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    //[self dismissViewControllerAnimated:YES completion:nil];
-}
 
 -(void)initWithController{
     
-    //背景图片
-//    UIImageView *bgView = [[UIImageView alloc] init];
-//    bgView.frame = CGRectMake(0, 64, kScreenSize.width,kScreenSize.height);
-//    bgView.image = [UIImage imageNamed:@"healthBg"];
-//    [self.view addSubview:bgView];
-    
     
     //倒计时
-    UIImageView *countdownView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 90, 50, 40)];
-    countdownView.image = [UIImage imageNamed:@"0_06"];
-    [self.view addSubview:countdownView];
+//    UIImageView *countdownView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 90, 50, 40)];
+//    countdownView.image = [UIImage imageNamed:@"0_06"];
+//    [self.view addSubview:countdownView];
     
-    UILabel *countdownLabel = [Tools creatLabelWithFrame:CGRectMake(0, 13, countdownView.frame.size.width, 15) text:ModuleZW(@"80 秒") textSize:16];
-    countdownLabel.textAlignment = NSTextAlignmentCenter;
-    countdownLabel.textColor = [UIColor whiteColor];
-    self.countdownLabel = countdownLabel;
-    [countdownView addSubview:countdownLabel];
+//    UILabel *countdownLabel = [Tools creatLabelWithFrame:CGRectMake(0, 13, countdownView.frame.size.width, 15) text:ModuleZW(@"80 秒") textSize:16];
+//    countdownLabel.textAlignment = NSTextAlignmentCenter;
+//    countdownLabel.textColor = [UIColor whiteColor];
+//    self.countdownLabel = countdownLabel;
+//    [countdownView addSubview:countdownLabel];
     
     //连接状态
-    UIImageView *stateImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenSize.width-60, 90, 50, 45)];
-    stateImageView.image = [UIImage imageNamed:@"0_06"];
+//    UIImageView *stateImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenSize.width-60, 90, 50, 45)];
+//    stateImageView.image = [UIImage imageNamed:@"0_06"];
     
-    UIImageView *imageViewImage = [[UIImageView alloc] initWithFrame:CGRectMake(10, 2, 30, 25)];
-    imageViewImage.image = [UIImage imageNamed:@"unconnectedImage"];
-    [stateImageView addSubview:imageViewImage];
-    self.imageViewImage = imageViewImage;
+//    UIImageView *imageViewImage = [[UIImageView alloc] initWithFrame:CGRectMake(10, 2, 30, 25)];
+//    imageViewImage.image = [UIImage imageNamed:@"unconnectedImage"];
+//    [stateImageView addSubview:imageViewImage];
+//    self.imageViewImage = imageViewImage;
     
-    UILabel *stateLabel = [Tools creatLabelWithFrame:CGRectMake(0, 25, stateImageView.frame.size.width, 20) text:ModuleZW(@"未连接") textSize:14];
-    stateLabel.textAlignment = NSTextAlignmentCenter;
-    stateLabel.numberOfLines = 2;
-    stateLabel.font = [UIFont boldSystemFontOfSize:10];
-    stateLabel.textColor = [UIColor whiteColor];
-    stateLabel.adjustsFontSizeToFitWidth = YES;
-    self.stateLabel = stateLabel;
-    [stateImageView addSubview:stateLabel];
-    
-    
-    [self.view addSubview:stateImageView];
+//    UILabel *stateLabel = [Tools creatLabelWithFrame:CGRectMake(0, 25, stateImageView.frame.size.width, 20) text:ModuleZW(@"未连接") textSize:14];
+//    stateLabel.textAlignment = NSTextAlignmentCenter;
+//    stateLabel.numberOfLines = 2;
+//    stateLabel.font = [UIFont boldSystemFontOfSize:10];
+//    stateLabel.textColor = [UIColor whiteColor];
+//    stateLabel.adjustsFontSizeToFitWidth = YES;
+//    self.stateLabel = stateLabel;
+//    [stateImageView addSubview:stateLabel];
+//    [self.view addSubview:stateImageView];
    
     
     //显示用户脉搏、收缩压、舒张压信息
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, kScreenSize.height==480? 120: 140, kScreenSize.width-20, 220)];
-    imageView.image = [UIImage imageNamed:@"血压02"];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 30, kScreenSize.width-20, 270)];
+    imageView.layer.cornerRadius = 10;
+    imageView.layer.masksToBounds = YES;
+    [self insertSublayerWithImageView:imageView with:self.view];
     [self.view addSubview:imageView];
-    //脉搏
-    UILabel *pulse = [Tools creatLabelWithFrame:CGRectMake(15, 30, 80, 46.7) text:ModuleZW(@"脉搏") textSize:19];
-    pulse.font = [UIFont systemFontOfSize:19];
-    pulse.textAlignment = NSTextAlignmentRight;
-    pulse.textColor = [UIColor whiteColor];
-    [imageView addSubview:pulse];
-    //pulse.backgroundColor = [UIColor redColor];
     
-    _pulseLabel = [Tools creatLabelWithFrame:CGRectMake(100, 30, 80, 46.7) text:@"- -/" textSize:29];
-    _pulseLabel.font = [UIFont systemFontOfSize:29];
-    _pulseLabel.textAlignment = NSTextAlignmentRight;
-    _pulseLabel.textColor = [UIColor whiteColor];
-    [imageView addSubview:_pulseLabel];
-    //_pulseLabel.backgroundColor = [UIColor redColor];
+    UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth/2 - 25, kNavBarHeight +10, 50, 50)];
+    iconImageView.image = [UIImage imageNamed:@"血压icon"];
+    iconImageView.layer.cornerRadius = 10;
+    iconImageView.layer.masksToBounds = YES;
+    [self.view addSubview:iconImageView];
     
-    UILabel *pulseUnit = [Tools creatLabelWithFrame:CGRectMake(180, 35, 30, 46.7) text:ModuleZW(@"分") textSize:16];
-    pulseUnit.font = [UIFont systemFontOfSize:16];
-    pulseUnit.textAlignment = NSTextAlignmentLeft;
-    pulseUnit.textColor = [UIColor whiteColor];
-    [imageView addSubview:pulseUnit];
-    //pulseUnit.backgroundColor = [UIColor redColor];
     
     //收缩压
-    UILabel *shrink = [Tools creatLabelWithFrame:CGRectMake(15, 81.7, 80, 46.7) text:ModuleZW(@"收缩压") textSize:19];
-    shrink.font = [UIFont systemFontOfSize:19];
+    UILabel *shrink = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 100, 50, 70, 30) text:ModuleZW(@"收缩压") textSize:14];
     shrink.textAlignment = NSTextAlignmentRight;
-    shrink.textColor = [UIColor whiteColor];
+    shrink.textColor = [UIColor blackColor];
     [imageView addSubview:shrink];
     
-    _shrinkPressureLabel = [Tools creatLabelWithFrame:CGRectMake(100, 81.7, 80, 46.7) text:@"- -/" textSize:29];
-    _shrinkPressureLabel.font = [UIFont systemFontOfSize:29];
+    _shrinkPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10 , 50, 30, 30) text:@"__" textSize:19];
     _shrinkPressureLabel.textAlignment = NSTextAlignmentRight;
-    _shrinkPressureLabel.textColor = [UIColor whiteColor];
+    _shrinkPressureLabel.textColor = [UIColor blackColor];
     [imageView addSubview:_shrinkPressureLabel];
     
-    UILabel *shrinkUnit = [Tools creatLabelWithFrame:CGRectMake(180, 86.7, 50, 46.7) text:@"mmHg" textSize:16];
-    shrinkUnit.font = [UIFont systemFontOfSize:16];
+    UILabel *shrinkUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  + 20, 50, 60, 30) text:@"mmHg" textSize:19];
     shrinkUnit.textAlignment = NSTextAlignmentLeft;
-    shrinkUnit.textColor = [UIColor whiteColor];
+    shrinkUnit.textColor = [UIColor blackColor];
     [imageView addSubview:shrinkUnit];
     
     //舒张压
-    UILabel *diastolic = [Tools creatLabelWithFrame:CGRectMake(15, 133.4, 80, 46.7) text:ModuleZW(@"舒张压") textSize:19];
-    diastolic.font = [UIFont systemFontOfSize:19];
+    UILabel *diastolic = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  - 100, shrinkUnit.bottom + 50, 70, 30) text:ModuleZW(@"舒张压") textSize:14];
     diastolic.textAlignment = NSTextAlignmentRight;
-    diastolic.textColor = [UIColor whiteColor];
+    diastolic.textColor = [UIColor blackColor];
     [imageView addSubview:diastolic];
     
-    _diastolicPressureLabel = [Tools creatLabelWithFrame:CGRectMake(100, 133.4, 80, 46.7) text:@"- -/" textSize:29];
-    _diastolicPressureLabel.font = [UIFont systemFontOfSize:29];
+    _diastolicPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10, shrinkUnit.bottom + 50, 30, 30) text:@"__" textSize:19];
     _diastolicPressureLabel.textAlignment = NSTextAlignmentRight;
-    _diastolicPressureLabel.textColor = [UIColor whiteColor];
+    _diastolicPressureLabel.textColor = [UIColor blackColor];
     [imageView addSubview:_diastolicPressureLabel];
     
-    UILabel *diastolicUnit = [Tools creatLabelWithFrame:CGRectMake(180, 138.4, 50, 46.7) text:@"mmHg" textSize:16];
-    diastolicUnit.font = [UIFont systemFontOfSize:16];
+    UILabel *diastolicUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 + 20, shrinkUnit.bottom + 50, 60, 30) text:@"mmHg" textSize:19];
     diastolicUnit.textAlignment = NSTextAlignmentLeft;
-    diastolicUnit.textColor = [UIColor whiteColor];
+    diastolicUnit.textColor = [UIColor blackColor];
     [imageView addSubview:diastolicUnit];
+    
+    //脉搏
+    UILabel *pulse = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  - 100, diastolicUnit.bottom + 50, 70, 30) text:ModuleZW(@"心率") textSize:14];
+    pulse.textAlignment = NSTextAlignmentRight;
+    pulse.textColor = [UIColor blackColor];
+    [imageView addSubview:pulse];
+    
+    _pulseLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10, diastolicUnit.bottom + 50, 30, 30) text:@"__" textSize:19];
+    _pulseLabel.textAlignment = NSTextAlignmentRight;
+    _pulseLabel.textColor = [UIColor blackColor];
+    [imageView addSubview:_pulseLabel];
+    
+    UILabel *pulseUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 +20, diastolicUnit.bottom + 50, 50, 30) text:@"BMP" textSize:16];
+    pulseUnit.font = [UIFont systemFontOfSize:16];
+    pulseUnit.textAlignment = NSTextAlignmentLeft;
+    pulseUnit.textColor = [UIColor blackColor];
+    [imageView addSubview:pulseUnit];
     
     
     [self createButton];
@@ -207,64 +182,51 @@ static int const tick = 80;
 
 
 -(void)createButton{
-    UIButton *startCheck = [Tools creatButtonWithFrame:CGRectMake(50, kScreenSize.height==480 ? 350: 390, kScreenSize.width-100, (kScreenSize.width-100)/6.0) target:self sel:@selector(startCheckClick:) tag:11 image:ModuleZW(@"血压03") title:nil];
-    startCheck.enabled = NO;
-    self.startCheck = startCheck;
-    [self.view addSubview:startCheck];
+    UIButton *startCheckBt = [UIButton  buttonWithType:(UIButtonTypeCustom)];
+    startCheckBt.frame = CGRectMake(ScreenWidth/2 - 45,420, 90, 26);
+    startCheckBt.backgroundColor = RGB_ButtonBlue;
+    startCheckBt.layer.cornerRadius = 13;
+    [startCheckBt setTitle:ModuleZW(@"开始检测") forState:(UIControlStateNormal)];
+    startCheckBt.layer.masksToBounds = YES;
+    [startCheckBt.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    startCheckBt.enabled = NO;
+    startCheckBt.alpha = 0.5;
+    self.startCheck = startCheckBt;
+    [[startCheckBt rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+     
+        self.isHidden = NO;
+        self.nonDeviceCheck.enabled = NO;
+        
+        //开始检测通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPERIPHERAL_BEGIN object:nil userInfo:nil];
+        
+        //开始倒计时
+//        [self startCountDown];
+
+    }];
+    [self.view addSubview:startCheckBt];
     
-    UIButton *nonDeviceCheck = [Tools creatButtonWithFrame:CGRectMake(50,startCheck.bottom+20, kScreenSize.width-100, (kScreenSize.width-100)/6.0) target:self sel:@selector(nonDeviceChekClick:) tag:12 image:ModuleZW(@"血压05") title:nil];
-    nonDeviceCheck.enabled = YES;
-    self.nonDeviceCheck = nonDeviceCheck;
-    [self.view addSubview:nonDeviceCheck];
+    
+    UIButton *nonDeviceCheckBt = [UIButton  buttonWithType:(UIButtonTypeCustom)];
+    nonDeviceCheckBt.frame = CGRectMake(ScreenWidth/2 - 45,_startCheck.bottom+40, 90, 26);
+    nonDeviceCheckBt.backgroundColor = RGB_ButtonBlue;
+    nonDeviceCheckBt.layer.cornerRadius = 13;
+    [nonDeviceCheckBt setTitle:ModuleZW(@"手动录入") forState:(UIControlStateNormal)];
+    nonDeviceCheckBt.layer.masksToBounds = YES;
+    [nonDeviceCheckBt.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    self.nonDeviceCheck = nonDeviceCheckBt;
+    [[nonDeviceCheckBt rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        BloodPressureNonDeviceViewController *nonDeviceCheck = [[BloodPressureNonDeviceViewController alloc] init];
+        [self.navigationController pushViewController:nonDeviceCheck animated:YES];
+    }];
+    [self.view addSubview:nonDeviceCheckBt];
+
     
     //使用规范
-    UIButton *useNorm = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-30,nonDeviceCheck.bottom+15, 60, 25) target:self sel:@selector(useNormClick:) tag:101 image:ModuleZW(@"使用规范") title:nil];
-    [self.view addSubview:useNorm];
+//    UIButton *useNorm = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-30,nonDeviceCheck.bottom+15, 60, 25) target:self sel:@selector(useNormClick:) tag:101 image:ModuleZW(@"使用规范") title:nil];
+//    [self.view addSubview:useNorm];
 }
 
--(void)startCheckClick:(UIButton *)button{
-    NSLog(@"点击开始检测按钮");
-//    [button removeFromSuperview];
-//    UIButton *commitBtn = [Tools creatButtonWithFrame:CGRectMake(50, kScreenSize.height==480 ? 350: 390, kScreenSize.width-100, 40) target:self sel:@selector(reChekBtnClick:) tag:13 image:@"血压04" title:nil];
-//    commitBtn.enabled = YES;
-//    self.commitBtn = commitBtn;
-//    [self.view addSubview:commitBtn];
-    
-    [self.startCheck setImage:[UIImage imageNamed:ModuleZW(@"血压04")] forState:UIControlStateNormal];
-    self.isHidden = NO;
-    self.nonDeviceCheck.enabled = NO;
-    
-//    UIButton *reCheckBtn = [Tools creatButtonWithFrame:CGRectMake(50, kScreenSize.height==480 ? 400:450, kScreenSize.width-100, 40) target:self sel:@selector(reChekBtnClick:) tag:14 image:@"血压04" title:nil];
-//    [self.view addSubview:reCheckBtn];
-    
-    
-    //开始检测通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:kPERIPHERAL_BEGIN object:nil userInfo:nil];
-    
-    //开始倒计时
-    [self startCountDown];
-    
-    
-//    static BOOL isPressed = NO;
-//    
-//    UIButton *repeatCheck = (UIButton *)[self.view viewWithTag:12];
-//    if (isPressed) {
-//        isPressed = NO;
-//        [repeatCheck setImage:[UIImage imageNamed:@"血压05"] forState:UIControlStateNormal];
-//        [button setImage:[UIImage imageNamed:@"血压03"] forState:UIControlStateNormal];
-//    }else{
-//        isPressed = YES;
-//        [repeatCheck setImage:[UIImage imageNamed:@"血压04"] forState:UIControlStateNormal];
-//        [button setImage:[UIImage imageNamed:@"血压06"] forState:UIControlStateNormal];
-//    }
-}
-
--(void)nonDeviceChekClick:(UIButton *)button{
-    NSLog(@"点击非设备检测");
-    BloodPressureNonDeviceViewController *nonDeviceCheck = [[BloodPressureNonDeviceViewController alloc] init];
-    [self.navigationController pushViewController:nonDeviceCheck animated:YES];
-    
-}
 
 -(void)commitBtnClick:(UIButton *)button{
   
@@ -357,6 +319,7 @@ static int const tick = 80;
         weakSelf.stateLabel.text = ModuleZW(@"已连接");
         weakSelf.imageViewImage.image = [UIImage imageNamed:@"connectedImage"];
         weakSelf.startCheck.enabled = YES;
+        weakSelf.startCheck.alpha = 1.0;
     }];
     
     [[NSNotificationCenter defaultCenter] addObserverForName:kPERIPHERAL_CONNECT_FAILED object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
