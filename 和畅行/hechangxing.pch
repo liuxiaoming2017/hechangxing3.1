@@ -39,7 +39,7 @@
 #import "UIImage+Util.h"
 #import <ReactiveObjC/ReactiveObjC.h>
 //和缓
-#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+//#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 
 
 #endif /* ____pch */

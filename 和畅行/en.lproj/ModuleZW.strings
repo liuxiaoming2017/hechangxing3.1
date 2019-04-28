@@ -742,8 +742,8 @@
 
 //==============================  脏腑辨识  ==============================
 
-"人 体 图 解"    = "Body Diagram";
-"症 状 列 表" = "Symptom List";
+"人体图解"    = "Body Diagram";
+"症状列表" = "Symptom List";
 "已选症状"    = "Symptoms chosen";
 "脏腑辨识"        ="Zang-fu organs";
 "脏腑辨识报告"        ="Zang-fu organs report";

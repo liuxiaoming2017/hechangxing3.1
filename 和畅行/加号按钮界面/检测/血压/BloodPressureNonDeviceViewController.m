@@ -402,6 +402,12 @@
     NSInteger lowCount = [self.DBPLabel.text integerValue];
     NSInteger pulseCount = [self.rateLabel.text integerValue];
     
+    NSString *str = [NSString stringWithFormat:@"%@ %@",_dataLabel.text,_timeLabel.text];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYY/MM/dd HH:mm"];
+    NSDate *tempDate = [dateFormatter dateFromString:str];
+    long  timeSp = (long)[tempDate timeIntervalSince1970];
+    
     //提交数据
     NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
@@ -416,6 +422,8 @@
     [request addPostValue:@(lowCount) forKey:@"lowPressure"];
     [request addPostValue:@(pulseCount) forKey:@"pulse"];
     [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+    [request addPostValue:@(timeSp) forKey:@"createDate"];
+
     [request setTimeOutSeconds:20];
     [request setRequestMethod:@"POST"];
     [request setDelegate:self];
@@ -579,7 +587,5 @@
     [UserShareOnce shareOnce].wherePop = ModuleZW(@"血压");
     [UserShareOnce shareOnce].bloodMemberID = [NSString stringWithFormat:@"%@",subId];
     [self.navigationController popToRootViewControllerAnimated:YES];
-
-    
 }
 @end

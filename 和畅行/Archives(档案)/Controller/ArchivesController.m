@@ -60,11 +60,12 @@
         [self selectIndexWithString:ModuleZW(@"血压") withButton:btn];
         [UserShareOnce shareOnce].wherePop = @"";
     }
-    //血氧
-    if ([[UserShareOnce shareOnce].wherePop isEqualToString:ModuleZW(@"血氧")]) {
-        UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:108];
+   
+    //血糖
+    if ([[UserShareOnce shareOnce].wherePop isEqualToString:ModuleZW(@"血糖")]) {
+        UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:109];
         self.memberId = [UserShareOnce shareOnce].bloodMemberID;
-        [self selectIndexWithString:@"血氧" withButton:btn];
+        [self selectIndexWithString:ModuleZW(@"血糖") withButton:btn];
         [UserShareOnce shareOnce].wherePop = @"";
     }
 }
@@ -134,10 +135,10 @@
         self.memberId = [UserShareOnce shareOnce].bloodMemberID;
         [self selectIndexWithString:ModuleZW(@"血压") withButton:btn];
         [UserShareOnce shareOnce].wherePop = @"";
-    }else if ([[UserShareOnce shareOnce].wherePop isEqualToString:ModuleZW(@"血氧")]) {
-        UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:108];
+    }else if ([[UserShareOnce shareOnce].wherePop isEqualToString:ModuleZW(@"血糖")]) {
+        UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:109];
         self.memberId = [UserShareOnce shareOnce].bloodMemberID;
-        [self selectIndexWithString:@"血氧" withButton:btn];
+        [self selectIndexWithString:ModuleZW(@"血糖") withButton:btn];
         [UserShareOnce shareOnce].wherePop = @"";
     }else{
         self.firstButton = (UIButton *)[self.sidebarVC.contentView viewWithTag:100];

@@ -165,6 +165,7 @@
                 NSString *urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(30)];
                 ResultSpeakController *vc = [[ResultSpeakController alloc] init];
                 vc.urlStr = urlStr;
+                vc.popInt = 111;
                 vc.titleStr = ModuleZW(@"血压监测");
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
@@ -228,6 +229,7 @@
            NSString  *urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(60)];
                 ResultSpeakController *vc = [[ResultSpeakController alloc] init];
                 vc.urlStr = urlStr;
+                vc.popInt = 111;
                 vc.titleStr = ModuleZW(@"血糖监测");
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];

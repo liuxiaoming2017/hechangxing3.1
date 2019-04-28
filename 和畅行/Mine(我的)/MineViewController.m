@@ -62,7 +62,7 @@
     self.backScrollView = backScrollView;
     
     //顶部蓝色背景
-    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 290)];
+    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 224+kNavBarHeight)];
     backImageView.tag = 1000;
     backImageView.backgroundColor = RGB_ButtonBlue;
     backImageView.userInteractionEnabled = YES;

@@ -155,7 +155,12 @@
 
 - (void)goBack:(UIButton *)btn
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    if (self.popInt == 111) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [self.navigationController popToRootViewControllerAnimated:YES];
+
+    }
 }
 
 #pragma mark - KVO

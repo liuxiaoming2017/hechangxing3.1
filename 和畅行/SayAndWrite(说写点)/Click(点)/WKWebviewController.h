@@ -17,6 +17,7 @@ typedef enum : NSUInteger {
 @interface WKWebviewController : NavBarViewController
 
 @property (nonatomic,strong) WKWebView *wkwebview;
+@property (nonatomic,assign) int popInt;
 @property (nonatomic,assign) NSInteger progressType;
 - (void)customeViewWithStr:(NSString *)urlStr;
 - (NSString*)readCurrentCookieWith:(NSDictionary*)dic;

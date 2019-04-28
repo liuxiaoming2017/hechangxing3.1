@@ -17,7 +17,6 @@ typedef void(^addCheckBlock)(void);
     UIImageView *_rightView;
     UIButton *_leftButton;
     UIButton *_rightButton;
-    UIImageView *_lineView;//蓝线
     int _sex;  //  2男，  1女
     BOOL _isFront;//是否是身体的正面
     BOOL _isBodyTouched;//点击身体的某部位
@@ -56,7 +55,6 @@ typedef void(^addCheckBlock)(void);
 @property (nonatomic,strong) UIImageView *rightView;
 @property (nonatomic,strong) UIButton *leftButton;
 @property (nonatomic,strong) UIButton *rightButton;
-@property (nonatomic,strong) UIImageView *lineView;
 @property (nonatomic,assign) int sex;
 @property (nonatomic,assign) BOOL isFront;
 @property (nonatomic,assign) BOOL isBodyTouched;
