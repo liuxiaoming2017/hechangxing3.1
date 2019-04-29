@@ -15,16 +15,13 @@
 @interface TestValueModel:NSObject
 
 @property (nonatomic,assign) long createDate;
-//呼吸次数
-@property (nonatomic,copy) NSString *nums;
-//血氧
-@property (nonatomic,copy) NSString *density;
+
 //血压高压
 @property (nonatomic,copy) NSString *highPressure;
 //血压低压
 @property (nonatomic,copy) NSString *lowPressure;
 //血糖
 @property (nonatomic,copy) NSString *levels;
-//体温
-@property (nonatomic,copy) NSString *temperature;
+//心跳
+@property (nonatomic,copy) NSString *pulse;
 @end

@@ -16,6 +16,8 @@
 #import "HCY_HomeImageModel.h"
 
 
+#import "SugerViewController.h"
+
 @interface HomePageController ()<UIScrollViewDelegate>
 
 @property (nonatomic,strong) UIScrollView *bgScrollView;
@@ -64,6 +66,10 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exchangeMemberChild:) name:exchangeMemberChildNotify object:nil];
     
+    
+//    SugerViewController *nonDeviceCheck = [[SugerViewController alloc] init];
+//    nonDeviceCheck.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:nonDeviceCheck animated:YES];
 }
 
 - (void)exchangeMemberChild:(NSNotification *)notify
@@ -350,18 +356,6 @@
     }];
 }
 
-# pragma mark - 用户信息按钮
-- (void)userBtnAction:(UIButton *)btn
-{
-    SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
-    __weak typeof(self) weakself = self;
-    [subMember receiveSubIdWith:^(NSString *subId) {
-        NSLog(@"%@",subId);
-        [[NSNotificationCenter defaultCenter] postNotificationName:exchangeMemberChildNotify object:self];
-        [weakself requestPackgeNetWork];
-        [subMember hideHintView];
-    }];
-}
 
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

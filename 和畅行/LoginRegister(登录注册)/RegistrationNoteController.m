@@ -19,9 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.navTitleLabel.text = @"注册说明";
-    self.navTitleLabel.textColor = [UIColor whiteColor];
     self.preBtn.hidden = NO;
     self.leftBtn.hidden = YES;
     self.rightBtn.hidden = YES;

@@ -220,7 +220,7 @@
 //=============================== 卡包==================================
 "还没有卡\n快去添加新卡吧~"        ="Not having a card\n add a new card~";
 "您将激活"                                      = "Continue to activate the";
-"消费记录"                                      ="Order history";
+"   消费记录"                                      ="Order history";
 "卡号"                                             ="Card No.";
 "去咨询"                                          ="Consult ";
 "去预约"                                          ="Appointment";
@@ -629,7 +629,7 @@
 "角"        ="Jue ";
 "徵"        ="Zhi ";
 "羽"        ="Yu ";
-"去结算"        ="CHECKOUT";
+"结算"        ="CHECKOUT";
 "强"        ="Strong ";
 "弱"        ="Weak ";
 "热点"        ="Hotspot ";
@@ -655,7 +655,6 @@
 "否"        ="No";
 "剩余服务"        ="Remaining service";
 "视频咨询"        ="Video consultation";
-"消费记录"        ="Consumption record";
 "将二维码/条码放入框内即可自动扫描"        ="Scan QR code/ barcode ";
 "手动输入"        ="Input manually";
 "请在输入框输入服务卡号"        ="Input card number";
@@ -743,8 +742,8 @@
 
 //==============================  脏腑辨识  ==============================
 
-"人 体 图 解"    = "Body Diagram";
-"症 状 列 表" = "Symptom List";
+"人体图解"    = "Body Diagram";
+"症状列表" = "Symptom List";
 "已选症状"    = "Symptoms chosen";
 "脏腑辨识"        ="Zang-fu organs";
 "脏腑辨识报告"        ="Zang-fu organs report";

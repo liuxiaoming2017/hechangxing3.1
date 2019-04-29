@@ -12,6 +12,7 @@
 #import "Mybutton.h"
 #import "MyView.h"
 #import "OrganDiseaseListViewController.h"
+#import "WriteleftTableViewCell.h"
 
 #define popCellHeight 40
 
@@ -36,7 +37,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navTitleLabel.text = ModuleZW(@"脏腑辨识");
+    self.navTitleLabel.text = ModuleZW(@"疾病检测");
     self.view.backgroundColor = [UIColor whiteColor];
     [self initWithController];
     //弹出视图
@@ -67,32 +68,21 @@
 #pragma mark-构建界面
 -(void)initWithController{
     _touchedPart = [[NSString alloc] init];
-    _leftButton = [Tools creatButtonWithFrame:CGRectMake(0, kNavBarHeight+5, ScreenWidth/2-0.5, 40) target:self sel:@selector(leftBtnClick:) tag:11 image:nil title:ModuleZW(@"人 体 图 解")];
-    _leftButton.titleLabel.font = [UIFont systemFontOfSize:17];
-    [_leftButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_leftButton setTitleColor:[Tools colorWithHexString:@"#319ffe"] forState:UIControlStateSelected];
-    [_leftButton setTintColor:[UIColor whiteColor]];
-    _leftButton.selected = YES;
+    _leftButton = [Tools creatButtonWithFrame:CGRectMake(20, kNavBarHeight+10, ScreenWidth/2, 34) target:self sel:@selector(leftBtnClick:) tag:11 image:nil title:ModuleZW(@"人体图解")];
+    _leftButton.titleLabel.font = [UIFont systemFontOfSize:16];
+    _leftButton.backgroundColor = UIColorFromHex(0XFFA200);
+    [_leftButton.titleLabel setLineBreakMode:NSLineBreakByTruncatingTail];
+    _leftButton.layer.cornerRadius = 17;
+    _leftButton.layer.masksToBounds = YES;
     [self.view addSubview:_leftButton];
-    _rightButton = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2+0.5, kNavBarHeight+5, ScreenWidth/2-0.5, 40) target:self sel:@selector(rightBtnClick:) tag:12 image:nil title:ModuleZW(@"症 状 列 表")];
-    _rightButton.titleLabel.font = [UIFont systemFontOfSize:17];
-    [_rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_rightButton setTitleColor:[Tools colorWithHexString:@"#319ffe"] forState:UIControlStateSelected];
-    [_rightButton setTintColor:[UIColor whiteColor]];
+    _rightButton = [Tools creatButtonWithFrame:CGRectMake(_leftButton.right + 16, kNavBarHeight+10, ScreenWidth/6,34) target:self sel:@selector(rightBtnClick:) tag:12 image:nil title:ModuleZW(@"症状列表")];
+    _rightButton.titleLabel.font = [UIFont systemFontOfSize:16];
+    _rightButton.backgroundColor = UIColorFromHex(0XC3C3C3);
+    [_rightButton.titleLabel setLineBreakMode:NSLineBreakByTruncatingTail];
+    _rightButton.layer.cornerRadius = 17;
+    _rightButton.layer.masksToBounds = YES;
     [self.view addSubview:_rightButton];
     
-    UIImageView *vLine = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth/2-0.25, kNavBarHeight+16, 0.5, 18)];
-    vLine.image = [UIImage imageNamed:@"预约挂号专题页_03"];
-    [self.view addSubview:vLine];
-    //    [vLine release];
-    UIImageView *hLine = [[UIImageView alloc] initWithFrame:CGRectMake(0, _leftButton.bottom, ScreenWidth, 0.3)];
-    hLine.image = [UIImage imageNamed:@"预约挂号专题页_04"];
-    [self.view addSubview:hLine];
-    //    [hLine release];
-    
-    _lineView = [[UIImageView alloc] initWithFrame:CGRectMake(0, _leftButton.bottom, ScreenWidth/2, 1)];
-    _lineView.backgroundColor = [Tools colorWithHexString:@"#319ffe"];
-    [self.view addSubview:_lineView];
     
     _leftView = [Tools creatImageViewWithFrame:CGRectMake(0, _leftButton.bottom, ScreenWidth, ScreenHeight-_leftButton.bottom) imageName:@"ICD10_02"];
     [self.view addSubview:_leftView];
@@ -150,22 +140,14 @@
 
 #pragma mark-症状列表界面以及左tableView
 -(void)createSymptom{
-    UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 46)];
-    view.backgroundColor = [Tools colorWithHexString:@"#f2f1ef"];
-    UIImageView *diseaseIcon = [Tools creatImageViewWithFrame:CGRectMake(20, 14, 17.5, 18) imageName:@"ICD10_07_症"];
-    [view addSubview:diseaseIcon];
-    UILabel *symptomLabel = [Tools labelWith:ModuleZW(@"选择症状") frame:CGRectMake(48, 14, 120, 18) textSize:13 textColor:[Tools colorWithHexString:@"#333"] lines:1 aligment:NSTextAlignmentLeft];
-    UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 45.5, ScreenWidth, 0.5)];
-    line.image = [UIImage imageNamed:@"ICD10_leftGrayLine"];
-    [view addSubview:line];
     
-    [view addSubview:symptomLabel];
-    [_rightView addSubview:view];
-    
-    
+   
+    UILabel *symptomLabel = [Tools labelWith:ModuleZW(@"选择症状") frame:CGRectMake(20, 0, 200, 46) textSize:16 textColor:RGB_TextGray lines:1 aligment:NSTextAlignmentLeft];
+    symptomLabel.backgroundColor = [UIColor clearColor];
+    [_rightView addSubview:symptomLabel];
     [self createDataSource];
-    _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, ScreenWidth/2-20, _leftView.bounds.size.height-61-41) style:UITableViewStylePlain];
-    _leftTableView.backgroundColor = [Tools colorWithHexString:@"#ecf0f1"];
+    _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, 90, _leftView.bounds.size.height-61-41) style:UITableViewStylePlain];
+    _leftTableView.backgroundColor = RGB_AppWhite;
     _leftTableView.delegate = self;
     _leftTableView.dataSource = self;
     _leftTableView.showsVerticalScrollIndicator = NO;
@@ -254,13 +236,22 @@
 
 #pragma mark-点击人体图解按钮
 -(void)leftBtnClick:(UIButton *)button{
+    
+    if (_leftButton.width == ScreenWidth/6){
+        [UIView animateWithDuration:0.3 animations:^{
+            self->_leftButton.width = ScreenWidth/2;
+            self->_leftButton.backgroundColor = UIColorFromHex(0XFFA200);
+            self->_rightButton.left = self->_leftButton.right + 16;
+            self->_rightButton.width =ScreenWidth/6;
+            self->_rightButton.backgroundColor = UIColorFromHex(0XC3C3C3);
+        }];
+    }
     _leftView.hidden = NO;
     _rightView.hidden = YES;
     [_leftButton setSelected:YES];
     [_rightButton setSelected:NO];
     _leftButton.userInteractionEnabled = NO;
     _rightButton.userInteractionEnabled = YES;
-    [_lineView setFrame:CGRectMake(0, _leftButton.bottom-1, ScreenWidth/2, 1)];
     [self reloadLeftView];
     //将症状列表里面的section状态还原
     for (int i=0; i<_sectionStatus.count; i++) {
@@ -269,6 +260,16 @@
 }
 #pragma mark-点击症状列表按钮
 -(void)rightBtnClick:(UIButton *)button{
+    
+    if (_rightButton.width == ScreenWidth/6){
+        [UIView animateWithDuration:0.3 animations:^{
+            self->_rightButton.left = 36 +ScreenWidth/6;
+            self->_rightButton.width =ScreenWidth/2;
+            self->_rightButton.backgroundColor = UIColorFromHex(0XFFA200);
+            self->_leftButton.width = ScreenWidth/6;
+            self->_leftButton.backgroundColor = UIColorFromHex(0XC3C3C3);
+        }];
+    }
     _leftView.hidden = YES;
     _rightView.hidden = NO;
     [_rightButton setSelected:YES];
@@ -276,7 +277,6 @@
     _rightButton.userInteractionEnabled = NO;
     _leftButton.userInteractionEnabled = YES;
     
-    [_lineView setFrame:CGRectMake(ScreenWidth/2, _leftButton.bottom-1, ScreenWidth/2, 1)];
     //判断是不是点击身体的某部位而跳转过来的
     if (_isBodyTouched) {
         _isBodyTouched = NO;
@@ -512,9 +512,7 @@
         UIView *back = [[UIView alloc] init];
         back.backgroundColor = [UIColor whiteColor];
         cell.selectedBackgroundView = back;
-        //        [back release];
-        UIImageView *lineView = [Tools creatImageViewWithFrame:CGRectMake(48, 44, _leftTableView.frame.size.width-33.5, 1) imageName:@"ICD10_leftGrayLine"];
-        [cell.contentView addSubview:lineView];
+      
         UILabel *title = [Tools labelWith: ModuleZW([cellData objectAtIndex:indexPath.row]) frame:CGRectMake(48, 0, 100, 45) textSize:15 textColor:[Tools colorWithHexString:@"#8f9292"] lines:1 aligment:NSTextAlignmentLeft];
         [cell.contentView addSubview:title];
         title.numberOfLines = 2;

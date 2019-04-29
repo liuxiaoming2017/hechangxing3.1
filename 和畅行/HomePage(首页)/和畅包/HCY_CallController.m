@@ -11,7 +11,7 @@
 #import "AdvisorysViewController.h"
 #import "AppDelegate.h"
 
-#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+//#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 
 @interface HCY_CallController ()<UITableViewDelegate,UITableViewDataSource>
 

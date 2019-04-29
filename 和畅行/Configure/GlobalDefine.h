@@ -153,6 +153,9 @@
 #define RGB_TextAppOrange                       RGB(224.0f, 83.0f, 51.0f)
 #define RGB_TextAppBlue                         RGB( 88, 147, 219)
 
+#define RGB_TextAppGray                        RGB( 135, 135, 135)
+
+#define RGB_TextGray                       UIColorFromHex(0x8e8e93)
 #define RGB_ButtonBlue                          RGB(30, 130, 210)
 
 

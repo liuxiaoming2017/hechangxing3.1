@@ -20,7 +20,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-   self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.navTitleLabel.text = ModuleZW(@"支付信息");
     
     self.view.backgroundColor = [UIColor whiteColor];

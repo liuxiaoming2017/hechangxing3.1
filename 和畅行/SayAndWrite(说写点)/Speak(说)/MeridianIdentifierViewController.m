@@ -105,7 +105,6 @@
     self.isLound = NO;
     self.topView.backgroundColor = [UIColor clearColor];
     self.navTitleLabel.text = ModuleZW(@"经络功能状态评估");
-    self.navTitleLabel.textColor = [UIColor whiteColor];
 }
 
 - (void)setupContentView

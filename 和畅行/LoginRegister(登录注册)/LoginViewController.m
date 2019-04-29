@@ -20,12 +20,17 @@
 #import <UMCommon/UMCommon.h>
 #import <UMCommonLog/UMCommonLogManager.h>
 #import "payRequsestHandler.h"
-
+#import "HeChangPackgeController.h"
 #define margin 40
 #define leftOrigin 40
 
 @interface LoginViewController ()
-
+@property (nonatomic, strong) UIView *blueView;
+@property (nonatomic, strong) UILabel *addNumberLabel;
+@property (nonatomic, strong) UILabel *promptLabel;
+@property (nonatomic,assign)BOOL isChoose;
+@property (nonatomic,strong)UIButton *loginBtn;
+@property (nonatomic,strong)UIButton *ageButton;
 @end
 
 @implementation LoginViewController
@@ -34,6 +39,7 @@
     [super viewDidLoad];
     //titleLabel.text = @"登录";
     navView.bottom = YES;
+    self.isChoose = YES;
     [self addRightBtn];
     
     [self initWithUI];
@@ -53,41 +59,78 @@
     UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake((ScreenWidth-110)/2.0, kNavBarHeight+30, 110, 77)];
     imageV.image = [UIImage imageNamed:@"和畅logo"];
     [self.view addSubview:imageV];
+    NSArray *titleArray = @[ModuleZW(@"短信登录"),ModuleZW(@"密码登录")];
+    UISegmentedControl *segment = [[UISegmentedControl alloc]initWithItems:titleArray];
+    segment.frame = CGRectMake(40, imageV.bottom + 40, ScreenWidth - 80, 30);
+    segment.tintColor = [UIColor clearColor];
+    NSDictionary* selectedTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:24],NSForegroundColorAttributeName: RGB_ButtonBlue };
+    [segment setTitleTextAttributes:selectedTextAttributes forState:UIControlStateSelected];
+    NSDictionary* unselectedTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:24],NSForegroundColorAttributeName: RGB_ButtonBlue };
+    [segment setTitleTextAttributes:unselectedTextAttributes forState:UIControlStateNormal];
+    segment.selectedSegmentIndex = 0;
+    [segment addTarget:self action:@selector(selected:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:segment];
     
-    UILabel *welcomLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftOrigin, ScreenHeight/3.0, 200, 40)];
-    welcomLabel.font = [UIFont systemFontOfSize:22];
-    welcomLabel.textAlignment = NSTextAlignmentLeft;
-    welcomLabel.textColor = UIColorFromHex(0X0e0e0e);
-    welcomLabel.text = ModuleZW(@"欢迎登录");
-    [self.view addSubview:welcomLabel];
+    
+    UIView *blueView  = [[UIView alloc]initWithFrame:CGRectMake(40, segment.bottom + 5, ScreenWidth/2 - 40, 1.5)];
+    blueView.backgroundColor = RGB_ButtonBlue;
+    [self.view addSubview:blueView];
+    self.blueView = blueView;
+    
     
     userNameBox=[[UITextField alloc] init];
-    userNameBox.frame=CGRectMake(welcomLabel.left, welcomLabel.bottom+10, 200 ,30 );
+    userNameBox.frame=CGRectMake(segment.left, segment.bottom+40, ScreenWidth - 80 ,30 );
     userNameBox.borderStyle=UITextBorderStyleNone;
     userNameBox.returnKeyType=UIReturnKeyNext;
     userNameBox.keyboardType=UIKeyboardTypeNumberPad;
     userNameBox.clearButtonMode=UITextFieldViewModeWhileEditing;
     userNameBox.delegate=self;
-    userNameBox.font=[UIFont systemFontOfSize:13.0];
+    userNameBox.font=[UIFont systemFontOfSize:15.0];
     userNameBox.placeholder=ModuleZW(@"  请输入手机号");
     [self.view addSubview:userNameBox];
     
+    UILabel *addNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(userNameBox.width - 40, 0, 35, 30)];
+    addNumberLabel.text = @"+86";
+    addNumberLabel.textColor = RGB_TextMidLightGray;
+    [userNameBox addSubview:addNumberLabel];
+    self.addNumberLabel = addNumberLabel;
     
-    UIImageView *imageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(welcomLabel.left, userNameBox.bottom+2, ScreenWidth-welcomLabel.left*2, 1)];
+    UIImageView *imageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(segment.left, userNameBox.bottom+2, ScreenWidth-segment.left*2, 1)];
     imageV2.backgroundColor = UIColorFromHex(0X1E82D2);
     [self.view addSubview:imageV2];
     
     passWordBox=[[UITextField alloc]init];
-    passWordBox.frame=CGRectMake(welcomLabel.left, imageV2.bottom+10, 200 ,userNameBox.height );
+    passWordBox.frame=CGRectMake(segment.left, imageV2.bottom+10, 200 ,userNameBox.height );
     passWordBox.clearButtonMode=UITextFieldViewModeWhileEditing;
     passWordBox.delegate = self;
-    passWordBox.font=[UIFont systemFontOfSize:13.0];
+    passWordBox.font=[UIFont systemFontOfSize:15.0];
     passWordBox.placeholder=ModuleZW(@"  请输入验证码");
     passWordBox.keyboardType = UIKeyboardTypeNumberPad;
     passWordBox.returnKeyType=UIReturnKeyDone;
     [self.view addSubview:passWordBox];
     
-    UIImageView *imageV3 = [[UIImageView alloc] initWithFrame:CGRectMake(welcomLabel.left, passWordBox.bottom+2, imageV2.width, 1)];
+    NSArray *buttonTitleArray = @[ModuleZW(@"我已阅读并同意"),ModuleZW(@"《炎黄用户协议》")];
+    for (int i = 0; i < 2; i++) {
+        UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        [button setTitle:buttonTitleArray[i] forState:(UIControlStateNormal)];
+        [button addTarget:self action:@selector(agreeDeal:) forControlEvents:(UIControlEventTouchUpInside)];
+        [button.titleLabel setFont:[UIFont systemFontOfSize:12]];
+        [button setFrame:CGRectMake(segment.left + 105*i, passWordBox.bottom + 20, 110, 20)];
+        [button setTag:1000 + i];
+        [self.view addSubview:button];
+        
+        if(i == 0 ) {
+            [button setTitleColor:RGB_TextMidLightGray forState:(UIControlStateNormal)];
+            [button setImage:[[UIImage imageNamed:@"协议选中"] transformWidth:15 height:15] forState:(UIControlStateNormal)];
+            [button setImageEdgeInsets:UIEdgeInsetsMake(0, -5, 0, 0)];
+        }else{
+            [button setTitleColor:RGB_ButtonBlue forState:(UIControlStateNormal)];
+            button.width = 100;
+        }
+        
+    }
+    
+    UIImageView *imageV3 = [[UIImageView alloc] initWithFrame:CGRectMake(segment.left, passWordBox.bottom+2, imageV2.width, 1)];
     imageV3.backgroundColor = UIColorFromHex(0X1E82D2);
     [self.view addSubview:imageV3];
     
@@ -105,8 +148,9 @@
     userNameBox.width = rightBtn.left-userNameBox.left;
     passWordBox.width = userNameBox.width;
     
+    
     UIButton *loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    loginBtn.frame = CGRectMake(welcomLabel.left, imageV3.bottom+25, imageV3.width, 44);
+    loginBtn.frame = CGRectMake(segment.left, passWordBox.bottom + 60, imageV3.width, 44);
     loginBtn.layer.cornerRadius = 22.0;
     loginBtn.layer.masksToBounds = YES;
     loginBtn.backgroundColor = UIColorFromHex(0x1e82d2);
@@ -115,32 +159,27 @@
     [loginBtn setTitleColor:UIColorFromHex(0xffffff) forState:UIControlStateNormal];
     [loginBtn addTarget:self action:@selector(userLogin) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:loginBtn];
+    self.loginBtn = loginBtn;
     
-    UIButton *switchLoginType = [UIButton buttonWithType:UIButtonTypeCustom];
-    switchLoginType.frame = CGRectMake(welcomLabel.left, loginBtn.bottom+10, 140, 30);
-    [switchLoginType addTarget:self action:@selector(switchLoginTypeAction:) forControlEvents:UIControlEventTouchUpInside];
-    switchLoginType.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    switchLoginType.tag = 2019;
-    [switchLoginType setTitle:ModuleZW(@"账户密码登录") forState:UIControlStateNormal];
-    switchLoginType.titleLabel.font = [UIFont systemFontOfSize:13.0];
-    [switchLoginType setTitleColor:UIColorFromHex(0xb8b8b8) forState:UIControlStateNormal];
-    [self.view addSubview:switchLoginType];
+    RAC(loginBtn, enabled) = [RACSignal combineLatest:@[userNameBox.rac_textSignal, passWordBox.rac_textSignal] reduce:^id _Nullable(NSString * username, NSString * password){
+        if(username.length> 0 && password.length  > 0) {
+            loginBtn.backgroundColor = UIColorFromHex(0x1e82d2);
+        }else{
+            loginBtn.backgroundColor = RGB(195, 195, 195);
+        }
+        return @(username.length && password.length);
+    }];
     
-    UIButton *registBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    registBtn.frame = CGRectMake(imageV3.right-80, switchLoginType.top, 80, 30);
-    [registBtn addTarget:self action:@selector(registAction) forControlEvents:UIControlEventTouchUpInside];
-    registBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    [registBtn setTitle:@"注册" forState:UIControlStateNormal];
-    registBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
-    [registBtn setTitleColor:UIColorFromHex(0xb8b8b8) forState:UIControlStateNormal];
-
-    //[self.view addSubview:registBtn];
-
+    UILabel *promptLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, loginBtn.bottom , ScreenWidth, 40)];
+    promptLabel.text = ModuleZW(@"无须注册,直接登录");
+    promptLabel.textAlignment = NSTextAlignmentCenter;
+    promptLabel.font = [UIFont systemFontOfSize:14];
+    promptLabel.textColor = RGB_TextLightGray;
+    [self.view addSubview:promptLabel];
+    self.promptLabel = promptLabel;
     
     
-    
-    
-    UILabel *otherLoginLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-100)/2.0, registBtn.bottom+30, 100, 30)];
+    UILabel *otherLoginLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-100)/2.0, promptLabel.bottom+30, 100, 30)];
     otherLoginLabel.font = [UIFont systemFontOfSize:14];
     otherLoginLabel.textAlignment = NSTextAlignmentCenter;
     otherLoginLabel.textColor = UIColorFromHex(0xcecece);
@@ -178,7 +217,8 @@
         passWordBox.text=[dicTmp objectForKey:@"PASSWORDAES"];
         if(userNameBox.text.length>0&&passWordBox.text.length>0)
         {
-            // [self userLogin ];
+            _loginBtn.backgroundColor = UIColorFromHex(0x1e82d2);
+            _loginBtn.enabled = YES;
         }
     }
     else
@@ -187,32 +227,96 @@
     }
 }
 
-# pragma mark - 账户密码登录
-- (void)switchLoginTypeAction:(UIButton *)button
-{
-    UIButton *btn = (UIButton *)[self.view viewWithTag:2018];
-    
-    if([button.titleLabel.text isEqualToString:ModuleZW(@"账户密码登录")]){
-        [button setTitle:ModuleZW(@"短信验证码登录") forState:UIControlStateNormal];
-        userNameBox.placeholder = ModuleZW(@"  请输入和畅账户");
-        passWordBox.placeholder = ModuleZW(@"  请输入密码");
-        passWordBox.secureTextEntry=YES;
-        passWordBox.keyboardType = UIKeyboardTypeDefault;
-        [btn setTitle:ModuleZW(@"忘记密码") forState:UIControlStateNormal];
-        if(timer){
-            [timer invalidate];
-            pageNo = 0;
+# pragma mark - 切换登录方式
+-(void)selected:(id)sender{
+    UISegmentedControl* control = (UISegmentedControl*)sender;
+      UIButton *btn = (UIButton *)[self.view viewWithTag:2018];
+    switch (control.selectedSegmentIndex) {
+        case 0:{
+            [UIView animateWithDuration:0.4 animations:^{
+                self.blueView.left = 40;
+            }];
+            self.addNumberLabel.hidden = NO;
+            userNameBox.placeholder = ModuleZW(@"  请输入手机号");
+            passWordBox.placeholder = ModuleZW(@"  请输入验证码");
+            userNameBox.left = 40;
+            passWordBox.left = 40;
+            passWordBox.secureTextEntry=NO;
+            passWordBox.keyboardType = UIKeyboardTypeNumberPad;
+            [btn setTitle:ModuleZW(@"获取验证码") forState:UIControlStateNormal];
+            self.promptLabel.hidden  = NO;
+            if(self.ageButton){
+                self.ageButton.hidden = YES;
+            }
+          
         }
-    }else if ([button.titleLabel.text isEqualToString:ModuleZW(@"短信验证码登录")]){
-         //button.titleLabel.text = @"账户密码登录";
-        userNameBox.placeholder = ModuleZW(@"  请输入手机号");
-        passWordBox.placeholder = ModuleZW(@"  请输入验证码");
-        passWordBox.secureTextEntry=NO;
-        passWordBox.keyboardType = UIKeyboardTypeNumberPad;
-        [button setTitle:ModuleZW(@"账户密码登录") forState:UIControlStateNormal];
-        [btn setTitle:ModuleZW(@"获取验证码") forState:UIControlStateNormal];
-        
+            break;
+        case 1: {
+            [UIView animateWithDuration:0.4 animations:^{
+                self.blueView.left = ScreenWidth/2;
+            }];
+            self.addNumberLabel.hidden = YES;
+            userNameBox.placeholder = ModuleZW(@"  请输入和畅账户");
+            passWordBox.placeholder = ModuleZW(@"  请输入密码");
+            userNameBox.left = 60;
+            passWordBox.left = 60;
+            passWordBox.secureTextEntry=YES;
+            passWordBox.keyboardType = UIKeyboardTypeDefault;
+            if(!self.ageButton){
+                self.ageButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+                self.ageButton.frame = CGRectMake(passWordBox.left - 25,passWordBox.top + passWordBox.height/2 -10, 20, 20);
+                [self.ageButton setImage:[UIImage imageNamed:@"眼睛闭icon"] forState:(UIControlStateNormal)];
+                [[self.ageButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+                    x.selected  = !x.selected;
+                    if(x.selected) {
+                        [x setImage:[UIImage imageNamed:@"眼睛睁icon"] forState:(UIControlStateNormal)];
+                        self->passWordBox.secureTextEntry = NO;
+                    }else {
+                        [x setImage:[UIImage imageNamed:@"眼睛闭icon"] forState:(UIControlStateNormal)];
+                        self->passWordBox.secureTextEntry = YES;
+                    }
+                }];
+                [self.view addSubview: self.ageButton];
+            }else{
+                self.ageButton.hidden = NO;
+            }
+          
+            [btn setTitle:ModuleZW(@"忘记密码") forState:UIControlStateNormal];
+            [btn setTitleColor:RGB_TextDarkGray forState:(UIControlStateNormal)];
+            self.promptLabel.hidden  = YES;
+            if(timer){
+                [timer invalidate];
+                pageNo = 0;
+            }
+            break;
+        }
     }
+}
+
+
+-(void)agreeDeal:(UIButton *)button {
+    if(button.tag == 1000) {
+        button.selected = !button.selected;
+        self.isChoose = !button.selected;
+        if (button.selected) {
+            [button setImage:[[UIImage imageNamed:@"协议未选中"] transformWidth:15 height:15] forState:(UIControlStateNormal)];
+        }else{
+            [button setImage:[[UIImage imageNamed:@"协议选中"] transformWidth:15 height:15] forState:(UIControlStateNormal)];
+        }
+    }else {
+        HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
+        vc.noWebviewBack = YES;
+        vc.progressType = progress2;
+        vc.titleStr =ModuleZW(@"用户协议");
+        if([UserShareOnce shareOnce].languageType){
+            vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201903/61/1.html",URL_PRE];
+        }else{
+            vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/61/1.html",URL_PRE];
+        }
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
 }
 
 - (void)rightBtnAction:(UIButton *)button
@@ -274,7 +378,7 @@
 //    }];
     
 }
-
+#pragma   mark ----  微信登录
 - (void)loginByWeiXin
 {
     [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_WechatSession currentViewController:nil completion:^(id result, NSError *error) {
@@ -434,14 +538,14 @@
 {
     UIButton *button = (UIButton *)[self.view viewWithTag:2019];
     
-    //
+    //userNameBox.placeholder = ModuleZW(@"  请输入手机号");
     if([userNameBox.text isEqualToString:@"13665541112"]&&[passWordBox.text isEqualToString:@"123456"]){
         [self userNameLoginAction];
         return;
     }
     
     //短信验证码登录
-    if([button.titleLabel.text isEqualToString:ModuleZW(@"账户密码登录")]){
+    if([userNameBox.placeholder isEqualToString:ModuleZW(@"  请输入手机号")]){
         [self smsCodeLoginAction];
     }
     //用户名密码登录
@@ -453,7 +557,7 @@
 # pragma mark - 短信验证码登录
 - (void)smsCodeLoginAction
 {
-    if (userNameBox.text.length!=11) {
+    if (userNameBox.text.length!=11||![userNameBox.text  hasPrefix:@"1"]) {
         
         [self showAlertWarmMessage:ModuleZW(@"请输入正确的手机号")];
         
@@ -462,6 +566,10 @@
     if (passWordBox.text.length==0) {
         
         [self showAlertWarmMessage:ModuleZW(@"请输入短信验证码")];
+        return;
+    }
+    if (self.isChoose == NO){
+        [self showAlertWarmMessage:ModuleZW(@"请阅读并同意《炎黄用户协议》")];
         return;
     }
     
@@ -493,6 +601,11 @@
     if (passWordBox.text.length==0) {
         
         [self showAlertWarmMessage:ModuleZW(@"请输入用户名或密码")];
+        return;
+    }
+    
+    if (self.isChoose == NO){
+        [self showAlertWarmMessage:ModuleZW(@"请阅读并同意《炎黄用户协议》")];
         return;
     }
     NSDate *datenow = [NSDate date];
@@ -568,10 +681,5 @@
     [userNameBox resignFirstResponder];
     [passWordBox resignFirstResponder];
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 @end

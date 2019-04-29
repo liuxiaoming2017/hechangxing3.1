@@ -40,7 +40,7 @@
 @property (nonatomic ,strong) UIButton *addButton;
 @property( nonatomic ,copy)  NSString* UrlHttpImg;
 @property (nonatomic,strong) NSString *pngFilePath;
-
+@property (nonatomic,strong)UIButton *photoButton;
 @property (nonatomic ,strong) UIView *personView;
 @property (nonatomic ,strong) UITableView *tableView;
 @property (nonatomic ,strong) UIView *showView;
@@ -57,33 +57,23 @@
 @property (nonatomic ,strong) UITextView *textViews;
 
 @property(nonatomic,strong)NSMutableArray *photos;//放图片的数组
-@property (nonatomic, weak) PYPhotosView *publishPhotosView;//属性 保存选择的图片
 @property(nonatomic,assign)int repeatClickInt;
 @property (nonatomic,strong)NSMutableArray *dataArr;
 /**subId*/
 @property (nonatomic,copy) NSString *subId;
 @property (nonatomic,strong)UIButton *finishButton;
 @property (nonatomic,strong)UIButton *choseButton;
+@property (nonatomic, weak) PYPhotosView *publishPhotosView;//属性 保存选择的图片
+@property (nonatomic ,strong) UILabel *numberLabel;
 @end
 
 @implementation AdvisorysViewController
 
-- (void)dealloc{
-    self.photos = nil;
-    self.headArray = nil;
-    self.textView = nil;
-    self.textViews = nil;
-    self.publishPhotosView = nil;
-}
 
--(void)backClick:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
-    //[self dismissViewControllerAnimated:YES completion:nil];
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.navTitleLabel.text = ModuleZW(@"专家咨询");
+    self.navTitleLabel.text = ModuleZW(@"图文咨询");
+    self.view.backgroundColor = RGB_AppWhite;
     
     self.headArray = [[NSMutableArray alloc]init];
     self.dataArr = [NSMutableArray array];
@@ -92,88 +82,82 @@
     if ([GlobalCommon stringEqualNull:nameStr]) {
         nameStr = [MemberUserShance shareOnce].name;
     }
-    self.view.backgroundColor = [UIColor whiteColor];
 
     
-//    UIButton *choseButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-//    choseButton.backgroundColor = RGB(224, 224, 224);
-//    choseButton.frame = CGRectMake(0, kNavBarHeight, ScreenWidth, 50);
-//    [choseButton setTitle:nameStr forState:(UIControlStateNormal)];
-//    [choseButton setTitleColor: [UtilityFunc colorWithHexString:@"#666666"] forState:(UIControlStateNormal)];
-//    [choseButton addTarget:self action:@selector(chosePeople) forControlEvents:(UIControlEventTouchUpInside)];
-//    [choseButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
-////    [self.view addSubview:choseButton];
-//    self.choseButton = choseButton;
-//    choseButton.titleEdgeInsets = UIEdgeInsetsMake(0, -ScreenWidth + 150, 0, 0);
-//
-//    UIImageView *leftImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 15.5, 30, 21)];
-//    leftImageView.image = [UIImage imageNamed:@"221323_03.png"];
-//    [choseButton addSubview:leftImageView];
-//
-//    UIImageView *peopleImageView = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth - 40 , 18, 18, 16)];
-//    peopleImageView.image = [UIImage imageNamed:@"HCY_right"];
-//    [choseButton addSubview:peopleImageView];
+    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, kNavBarHeight + 10, ScreenWidth - 20, 245 + (ScreenWidth - 70)/4)];
+    backImageView.backgroundColor = [UIColor whiteColor];
+    backImageView.layer.cornerRadius = 10;
+    backImageView.layer.masksToBounds = YES;
+    backImageView.userInteractionEnabled = YES;
+    [self insertSublayerWithImageView:backImageView with:self.view];
+    [self.view addSubview:backImageView];
     
-    _textView = [[CPTextViewPlaceholder alloc]initWithFrame:CGRectMake(10, kNavBarHeight+10, self.view.frame.size.width - 20, 100)];
-    UIView *grayView=[[UIView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.bounds.size.width, 40)];
+    _textView = [[CPTextViewPlaceholder alloc]initWithFrame:CGRectMake(15, 15, backImageView.width - 30, 210)];
     _textView.delegate = self;
+    _textView.layer.borderColor = RGB(221, 221, 221).CGColor;
+    _textView.textContainerInset = UIEdgeInsetsMake(10, 0, 20, 10);
+    _textView.layer.borderWidth =0.5;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChangess) name:UITextViewTextDidChangeNotification object:self.textView];
     
-    grayView.backgroundColor=[UtilityFunc colorWithHexString:@"#f1f3f6"];
-    _textView.tag = 123;
-   // _textView.inputAccessoryView=grayView;
     _textView.font = [UIFont systemFontOfSize:15];
     _textView.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     
-    _textViews = [[UITextView alloc]initWithFrame:CGRectMake(10, kNavBarHeight+10, self.view.frame.size.width - 20, 100)];
+    _textViews = [[UITextView alloc]initWithFrame:CGRectMake(15,15, backImageView.width - 30, 100)];
     _textView.keyboardType = UIKeyboardTypeDefault;
     _textView.returnKeyType = UIReturnKeyDone;
-    _textViews.text = ModuleZW(@"请详细描述您的症状、疾病和身体状况。我们根据病情分诊到对应的大夫为您解答。");
+    _textViews.text = ModuleZW(@"请输入您想咨询的内容");
     _textViews.font = [UIFont systemFontOfSize:15];
-    _textViews.textColor = [UtilityFunc colorWithHexString:@"#666666"];
-    [self.view addSubview:_textViews];
+    _textViews.textColor =RGB(162, 162, 162);
+    [backImageView addSubview:_textViews];
     _textView.backgroundColor = [UIColor clearColor];
 //    _textViews.backgroundColor = [UIColor redColor];
-    [self.view addSubview:_textView];
+    [backImageView addSubview:_textView];
+    
+    UILabel *numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(_textView.width - 100, _textView.height - 30, 90, 20)];
+    numberLabel.text = @"0/200";
+    numberLabel.textColor =RGB(162, 162, 162);
+    numberLabel.textAlignment = NSTextAlignmentRight;
+    [_textView addSubview:numberLabel];
+    _numberLabel = numberLabel;
     
     // 1. 常见一个发布图片时的photosView
     PYPhotosView *publishPhotosView = [PYPhotosView photosView];
-    publishPhotosView.py_x = 19;
-    publishPhotosView.py_y = _textView.bottom+22;
-    publishPhotosView.photoWidth = (ScreenWidth-10*2-5*3)/4.0;
-    publishPhotosView.photoHeight = publishPhotosView.photoWidth;
+    publishPhotosView.py_x = 15;
+    publishPhotosView.py_y = _textView.bottom + 10;
+    publishPhotosView.photoWidth = (backImageView.width-50)/4 ;
+    publishPhotosView.photoHeight = (backImageView.width-50)/4 ;
     // 2.1 设置本地图片
     publishPhotosView.images = nil;
+    publishPhotosView.hideDeleteView = YES;
     // 3. 设置代理
     publishPhotosView.delegate = self;
     //publishPhotosView.backgroundColor = [UIColor blackColor];
     publishPhotosView.photosMaxCol = 4;//每行显示最大图片个数
-    publishPhotosView.imagesMaxCountWhenWillCompose = 8;//最多选择图片的个数
+    publishPhotosView.imagesMaxCountWhenWillCompose = 4;//最多选择图片的个数
     // 4. 添加photosView
-    [self.view addSubview:publishPhotosView];
+    [backImageView addSubview:publishPhotosView];
     self.publishPhotosView = publishPhotosView;
     
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.publishPhotosView.bottom+20, ScreenWidth, 120)];
-    bottomView.tag = 2018;
-    [self.view addSubview:bottomView];
-    
-    UIButton *photoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    photoButton.frame = CGRectMake(24, 0, 50, 50) ;
-    [photoButton setBackgroundImage:[UIImage imageNamed:@"专家咨询11_023.png"] forState:UIControlStateNormal];
-    [photoButton addTarget:self action:@selector(photoButton) forControlEvents:UIControlEventTouchUpInside];
 
-    [bottomView addSubview:photoButton];
+    UIButton *photoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    photoButton.frame = CGRectMake(backImageView.width/8-20, _textView.bottom - 10 +  (backImageView.width-50)/8 , 40, 40) ;
+    [photoButton setBackgroundImage:[UIImage imageNamed:@"专家咨询添加图片"] forState:UIControlStateNormal];
+    [photoButton addTarget:self action:@selector(photoAction) forControlEvents:UIControlEventTouchUpInside];
+    [backImageView addSubview:photoButton];
+    self.photoButton = photoButton;
     
     UIButton *finishButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    finishButton.frame = CGRectMake(self.view.frame.size.width / 2 - 70,80, 140, 40);
-    [finishButton setBackgroundColor:UIColorFromHex(0x1e82d2)];
+    finishButton.frame = CGRectMake(self.view.frame.size.width / 2 - 45,backImageView.bottom + 40, 90, 26);
+    [finishButton setBackgroundColor:RGB_ButtonBlue];
     [finishButton setTitle:ModuleZW(@"提交") forState:UIControlStateNormal];
-    finishButton.layer.cornerRadius = 5.0;
+    [finishButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    finishButton.layer.cornerRadius = 13;
     finishButton.clipsToBounds = YES;
     finishButton.alpha = 0.4;
     finishButton.userInteractionEnabled = NO;
     [finishButton addTarget:self action:@selector(finishButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [bottomView addSubview:finishButton];
+    [self.view addSubview:finishButton];
     self.finishButton = finishButton;
     
 }
@@ -189,15 +173,30 @@
         self.finishButton.alpha = 0.4;
         self.finishButton.userInteractionEnabled = NO;
     }
+    
+    if (_textView.text.length > 200)
+    {
+        _textView.text = [_textView.text substringToIndex:200];
+    }
+    self.numberLabel.text = [NSString stringWithFormat:@"%lu/%d", (unsigned long)[_textView.text length], 200];
+    
+    if (_textView.text.length > 200)
+    {
+        NSRange rangeIndex = [_textView.text rangeOfComposedCharacterSequenceAtIndex:200];
+        
+        if (rangeIndex.length == 1)//字数超限
+        {
+            _textView.text = [_textView.text substringToIndex:200];
+            //这里重新统计下字数，字数超限，我发现就不走textViewDidChange方法了，你若不统计字数，忽略这行
+            self.numberLabel.text = [NSString stringWithFormat:@"%lu/%d", (unsigned long)_textView.text.length, 200];
+        }else{
+            NSRange rangeRange = [_textView.text rangeOfComposedCharacterSequencesForRange:NSMakeRange(0, 200)];
+            _textView.text = [_textView.text substringWithRange:rangeRange];
+        }
+   }
+    
 }
 
-
-#pragma mark ----------   选择子成员
--(void)chosePeople {
-    
-    [self GetWithModifi];
-    
-}
 
 #pragma mark ----------  收键盘
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -205,23 +204,6 @@
     [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
 }
 
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    // 不让输入表情
-    
-    if ([textView isFirstResponder]) {
-        if ([[[textView textInputMode] primaryLanguage] isEqualToString:@"emoji"] || ![[textView textInputMode] primaryLanguage]) {
-            NSLog(@"输入的是表情，返回NO");
-            [self showAlertWarmMessage:ModuleZW(@"不能输入表情")];
-            return NO;
-        }
-    }
-    if ([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
-        // [self.view endEditing:YES];
-        return NO;//这里返回NO，就代表return键值失效，即页面上按下return，不会出现换行，如果为yes，则输入页面会换行
-    }
-    return YES;
-}
 -(BOOL)textViewShouldEndEditing:(UITextView *)textView{
     [textView resignFirstResponder];
     return  YES;
@@ -239,102 +221,9 @@
         return;
     }
     
-    //[self uploadImageToServer];
     [self batchRequest];
     
-    
-    /*
-    [NSString stringValidateEmoji:_textView.text];
-    [self showHUD];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrl = [NSString stringWithFormat:@"%@/member/user_consultation/commit.jhtml",UrlPre];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-    [request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    [request setPostValue:_memberChildId forKey:@"memberChildId"];
-    [request setPostValue:_textView.text forKey:@"content"];
-    NSString *strings = @"";
-    if (self.headArray.count == 0) {
-        
-    }else{
-        for (int i = 0; i < self.headArray.count; i++) {
-            if (i==0) {
-                strings = [strings stringByAppendingString:self.headArray[i]];
-            }else {
-                strings = [strings stringByAppendingString:@","];
-                strings = [strings stringByAppendingString:self.headArray[i]];
-            }
-            
-        }
-    }
-    [request setPostValue:strings forKey:@"userConsultationImages"];
-    [request setPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestuserinfoErrorWithsUser:)];
-    [request setDidFinishSelector:@selector(requestuserinfoCompletedWithUser:)];
-    [request startAsynchronous];
-     */
 }
-/*
-- (void)requestuserinfoErrorWithsUser:(ASIHTTPRequest *)request
-{
-    [self hudWasHidden];
-    
-    [self showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
-    
-}
-- (void)requestuserinfoCompletedWithUser:(ASIHTTPRequest *)request
-{
-    [self hudWasHidden];
-    NSString* reqstr=[request responseString];
-    NSLog(@"dic==%@",reqstr);
-    NSDictionary * dic=[reqstr JSONValue];
-    NSLog(@"dic==%@",dic);
-    id status=[dic objectForKey:@"status"];
-    NSLog(@"%@",status);
-    if ([status intValue]==100) {
-        [_imageShowView removeFromSuperview];
-        [_imageShowscroll removeFromSuperview];
-        [self.headArray removeAllObjects];
-        _imageShowView = [[UIView alloc]initWithFrame:CGRectMake(24, 265, self.view.frame.size.width, 80)];
-        [self.view addSubview:self.imageShowView];
-        _imageShowscroll = [[UIView alloc]initWithFrame:CGRectMake(60, 325, self.view.frame.size.width - 60, 80)];
-        [self.view addSubview:_imageShowscroll];
-        
-
-        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"信息提交成功"  preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [self.navigationController popViewControllerAnimated:YES];
-        }];
-        
-        [alertVC addAction:alertAct12];
-        [self presentViewController:alertVC animated:YES completion:NULL];
-    }
-    else if ([status intValue]==44)
-    {
-        
-        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"登录超时，请重新登录"  preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            LoginViewController *loginVC = [[LoginViewController alloc]init];
-            [self.navigationController pushViewController:loginVC animated:YES];
-        }];
-        
-        [alertVC addAction:alertAct12];
-        [self presentViewController:alertVC animated:YES completion:NULL];
-        
-    }else{
-        NSString *str = [dic objectForKey:@"data"];
-        [self showAlertWarmMessage:str];
-        
-    }
-    
-}
-*/
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -360,7 +249,7 @@
     
 }
 # pragma mark - 照片按钮事件
-- (void)photoButton{
+- (void)photoAction{
     
     UIAlertController *alectSheet = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     
@@ -414,7 +303,7 @@
     CCWeakSelf;
     
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9-weakSelf.photos.count delegate:weakSelf];
-    imagePickerVc.maxImagesCount = 9;//最小照片必选张数,默认是0
+    imagePickerVc.maxImagesCount = 4;//最小照片必选张数,默认是0
     imagePickerVc.sortAscendingByModificationDate = NO;// 对照片排序，按修改时间升序，默认是YES。如果设置为NO,最新的照片会显示在最前面，内部的拍照按钮会排在第一个
     // 你可以通过block或者代理，来得到用户选择的照片.
     UIView *bottomView = [self.view viewWithTag:2018];
@@ -426,9 +315,24 @@
         
         [weakSelf.photos addObjectsFromArray:photos];
         [self.publishPhotosView reloadDataWithImages:weakSelf.photos];
+        if (self.photos.count < 4 ) {
+            self.photoButton.hidden = NO;
+            self.photoButton.left = (ScreenWidth - 20)/8-20 + (((ScreenWidth - 20)-50)/4 + 10)*self.photos.count;
+        }else{
+            self.photoButton.hidden = YES;
+        }
         bottomView.top = self.publishPhotosView.bottom+20;
     }];
     [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
+}
+
+-(void)photosView:(PYPhotosView *)photosView didDeleteImageIndex:(NSInteger)imageIndex{
+    if (self.photos.count < 4 ) {
+        self.photoButton.hidden = NO;
+        self.photoButton.left = (ScreenWidth - 20)/8-20 + (((ScreenWidth - 20)-50)/4 + 10)*self.photos.count;
+    }else{
+        self.photoButton.hidden = YES;
+    }
 }
 
 -(NSMutableArray *)photos{
@@ -468,10 +372,11 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     //[picker dismissModalViewControllerAnimated:YES comp];
     [picker dismissViewControllerAnimated:YES completion:nil];
     
-     UIView *bottomView = [self.view viewWithTag:2018];
+    UIView *bottomView = [self.view viewWithTag:2018];
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     [self.photos addObject:image];
     [self.publishPhotosView reloadDataWithImages:self.photos];
+    
     bottomView.top = self.publishPhotosView.bottom+20;
     
 }
@@ -509,203 +414,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     }];
     
 }
-
-//之前的方法
-/*
--(void) UpLoadImgHttp
-{
-    [self showHUD];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/fileUpload/upload.jhtml",UrlPre];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url1 = [NSURL URLWithString:aUrlle];
-    ASIFormDataRequest *request=[[ASIFormDataRequest alloc]initWithURL:url1];
-    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    [request setDelegate:self];
-    [request setRequestMethod:@"POST"];
-    [request addPostValue:@"image" forKey:@"fileType"];
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setFile:self.pngFilePath forKey:@"file"];//可以上传图片
-    [request setDidFailSelector:@selector(requestUpLoadsError:)];//requestLoginError
-    [request setDidFinishSelector:@selector(requestUpLoadCompleted:)];
-    [request startAsynchronous];
-   
-}
-
-
-
-- (void)requestUpLoadCompleted:(ASIHTTPRequest *)request
-{
-    [self hudWasHidden];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    id status=[dic objectForKey:@"status"];
-    if ([status intValue]==100)
-    {
-        [self.headArray addObject:[dic objectForKey:@"data"]];
-        
-        if (self.headArray.count >4 ) {
-            
-            
-            self.scrollView1.contentSize = CGSizeMake(50 + (self.headArray.count - 4) * (WIDTHS +10), 0);
-            UIButton *imageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            imageButton.frame = CGRectMake(24 + (self.headArray.count - 5) *(WIDTHS +10),0, WIDTHS, 80);
-            
-            
-            // UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(24 + (self.headArray.count - 5) *60,0, 50, 50)];
-            NSURL *url = [NSURL URLWithString:[dic objectForKey:@"data"]];
-            NSData *data = [NSData dataWithContentsOfURL:url];
-            // imageV.image = [UIImage imageWithData:data];
-            [imageButton setBackgroundImage:[UIImage imageWithData:data]  forState:UIControlStateNormal];
-            [imageButton addTarget:self action:@selector(buttonImage:) forControlEvents:UIControlEventTouchUpInside];
-            imageButton.tag = 4000 +self.headArray.count;
-            [self.scrollView1 addSubview:imageButton];
-            
-        }else{
-            // UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake((self.headArray.count - 1) *60, 0, 50, 50)];
-            UIButton *imageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            imageButton.frame = CGRectMake((self.headArray.count - 1) *(WIDTHS + 10), 0, WIDTHS, 80);
-            
-            NSURL *url = [NSURL URLWithString:[dic objectForKey:@"data"]];
-            NSData *data = [NSData dataWithContentsOfURL:url];
-            //imageV.image = [UIImage imageWithData:data];
-            [imageButton setBackgroundImage:[UIImage imageWithData:data]  forState:UIControlStateNormal];
-            [imageButton addTarget:self action:@selector(buttonImage:) forControlEvents:UIControlEventTouchUpInside];
-            imageButton.tag = 4000 +self.headArray.count;
-            [_imageShowView addSubview:imageButton];
-            //[_imageShowView addSubview:imageV];
-        }
-        
-        
-    }
-    else
-    {
-        [self hudWasHidden];
-    }
-}
-- (void)buttonImage:(UIButton *)sender{
-    bntTag =  (int)sender.tag - 4001;
-    if (sender.selected ) {
-        sender.selected = NO;
-        
-    }else{
-        sender.selected = YES;
-        diView = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-        [self.view addSubview:diView];
-        diView.backgroundColor = [UIColor blackColor];
-        diView.alpha = 1;
-        UIImageView *imageview = [[UIImageView alloc]initWithFrame:CGRectMake(0, (self.view.frame.size.height - self.view.frame.size.width) / 2, self.view.frame.size.width, self.view.frame.size.width)];
-        imageview.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.headArray[bntTag]]]];
-        [diView addSubview:imageview];
-        UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideImage:)];
-        tap.numberOfTapsRequired = 1;
-        tap.numberOfTouchesRequired = 1;
-        [diView addGestureRecognizer: tap];
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(self.view.frame.size.width  / 2 - 20, self.view.frame.size.height - 62, 30, 30);
-        [button setBackgroundImage:[UIImage imageNamed:@"shanchutu.png"] forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(buttonWithdelegates) forControlEvents:UIControlEventTouchUpInside];
-        [diView addSubview:button];
-    }
-}
-- (void)buttonWithdelegates{
-    [self.headArray removeObjectAtIndex:bntTag];
-    if (bntTag > 3) {
-        for(id tmpView in [_imageShowscroll subviews])
-        {
-            //找到要删除的子视图的对象
-            if([tmpView isKindOfClass:[UIButton class]])
-            {
-                UIButton *imgView = (UIButton *)tmpView;
-                if(imgView.tag == 4001+bntTag)   //判断是否满足自己要删除的子视图的条件
-                {
-                    [imgView removeFromSuperview]; //删除子视图
-                    
-                    break;  //跳出for循环，因为子视图已经找到，无须往下遍历
-                }
-            }
-        }
-    }else {
-        for(id tmpView in [_imageShowView subviews])
-        {
-            //找到要删除的子视图的对象
-            if([tmpView isKindOfClass:[UIButton class]])
-            {
-                UIButton *imgView = (UIButton *)tmpView;
-                if(imgView.tag == 4001+bntTag)   //判断是否满足自己要删除的子视图的条件
-                {
-                    [imgView removeFromSuperview]; //删除子视图
-                    
-                    break;  //跳出for循环，因为子视图已经找到，无须往下遍历
-                }
-            }
-        }
-    }
-    
-    
-    if (self.headArray.count > 3 && bntTag < 4) {
-        
-        //            UIButton *button = (UIButton *)[self.view viewWithTag:4002+bntTag+i];
-        //            button.frame = CGRectMake((bntTag+i) *60, 0, 50, 50);
-        UIButton *button = (UIButton *)[self.view viewWithTag:4005];
-        button.frame = CGRectMake(3 *(WIDTHS + 10), 0, WIDTHS, 80);
-        for(id tmpView in [_imageShowView subviews])
-        {
-            //找到要删除的子视图的对象
-            if([tmpView isKindOfClass:[UIButton class]])
-            {
-                UIButton *imgView = (UIButton *)tmpView;
-                if(imgView.tag == 4005)   //判断是否满足自己要删除的子视图的条件
-                {
-                    [imgView removeFromSuperview]; //删除子视图
-                    break;  //跳出for循环，因为子视图已经找到，无须往下遍历
-                }
-            }
-        }
-        
-        button.tag= 4004;
-        [_imageShowView addSubview:button];
-        for (int i = 0; i < 4 - bntTag; i ++) {
-            UIButton *button = (UIButton *)[self.view viewWithTag:4002+bntTag+i];
-            button.frame = CGRectMake((bntTag+i) *(WIDTHS + 10), 0, WIDTHS, 80);
-            button.tag = 4001 +bntTag+i;
-        }
-        for (int i = 4; i < self.headArray.count ; i++) {
-            UIButton *button = (UIButton *)[self.view viewWithTag:4002+i];
-            button.frame = CGRectMake(24 + (i - 4) *(WIDTHS + 10),0, WIDTHS, 80);
-            button.tag = 4001 +i;
-        }
-        
-    } else if(self.headArray.count > 3&&bntTag > 3){
-        for (int i = bntTag; i < self.headArray.count ; i++) {
-            UIButton *button = (UIButton *)[self.view viewWithTag:4002+i];
-            button.frame = CGRectMake(24 + (i - 4) *(WIDTHS + 10),0, WIDTHS, 80);
-            button.tag = 4001 +i;
-        }
-        
-    }
-    else if (self.headArray.count < 4){
-        for (int i = 0; i < self.headArray.count - bntTag; i ++) {
-            UIButton *button = (UIButton *)[self.view viewWithTag:4002+bntTag+i];
-            button.frame = CGRectMake((bntTag+i) *(WIDTHS + 10), 0, WIDTHS, 80);
-            button.tag = 4001 +bntTag+i;
-        }
-        
-    }
-    diView.hidden = YES;
-}
--(void)hideImage:(UITapGestureRecognizer*)tap{
-    diView.hidden = YES;
-}
-- (void)requestUpLoadsError:(ASIHTTPRequest *)request
-{
-    [self hudWasHidden];
-   
-    [self showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
-   
-}
-*/
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     
@@ -861,31 +569,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     return timeSp;
 }
 
-#pragma mark -------- 选择子账户
--(void)GetWithModifi
-{
-    
-    if([GlobalCommon isManyMember]){
-        __weak typeof(self) weakSelf = self;
-        SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
-        [subMember receiveSubIdWith:^(NSString *subId) {
-            NSLog(@"%@",subId);
-            if ([subId isEqualToString:@"user is out of date"]) {
-                //登录超时
-                
-            }else{
-                [weakSelf requestNetworkData:subId];
-            }
-            [subMember hideHintView];
-        }];
-        
-        [subMember receiveNameWith:^(NSString *nameString) {
-            [weakSelf.choseButton setTitle:nameString forState:(UIControlStateNormal)];
-        }];
-    }else{
-        [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
-    }
-}
 
 - (void)requestNetworkData:(NSString *)subId
 {
@@ -923,13 +606,9 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         [self.navigationController pushViewController:login animated:YES];
     }
 }
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)backClick:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 
 @end

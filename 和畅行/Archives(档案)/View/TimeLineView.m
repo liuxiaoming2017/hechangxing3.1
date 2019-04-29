@@ -17,7 +17,7 @@
 #import "ResultController.h"
 #import "EEGDetailController.h"
 #import "HCY_ReportCell.h"
-#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+//#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 
 @interface TimeLineView()<UITableViewDelegate,UITableViewDataSource,govSectionViewDelegate>
 
