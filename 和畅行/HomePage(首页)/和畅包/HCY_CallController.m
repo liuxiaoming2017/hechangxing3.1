@@ -76,41 +76,41 @@
         return;
     }
     
-//     HHMSDK *hhmSdk = [[HHMSDK alloc] init];
-//    __weak typeof(self) weakSelf = self;
-//    if(index.row==0||index.row==1){
-//        if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].uuid]){
-//            [self messageHintView];
-//            return;
-//        }
-//    }
-//    NSInteger uuid = [[UserShareOnce shareOnce].uuid integerValue];
-//    //uuid = 100002514;
-//    if(index.row == 0) {
-//        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
-//            if(error){
-//                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
-//            }else{
-//                [hhmSdk startCall:HHCallTypeChild];
-//            }
-//        }];
-//
-//    }else if (index.row == 1) {
-//
-//        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
-//            if(error){
-//                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
-//            }else{
-//                [hhmSdk startCall:HHCallTypeAdult];
-//            }
-//        }];
-//
-//    }else {
-//
-//        AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
-//        [self.navigationController pushViewController:adVC animated:YES];
-//
-//    }
+     HHMSDK *hhmSdk = [[HHMSDK alloc] init];
+    __weak typeof(self) weakSelf = self;
+    if(index.row==0||index.row==1){
+        if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].uuid]){
+            [self messageHintView];
+            return;
+        }
+    }
+    NSInteger uuid = [[UserShareOnce shareOnce].uuid integerValue];
+    //uuid = 100002514;
+    if(index.row == 0) {
+        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
+            if(error){
+                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
+            }else{
+                [hhmSdk startCall:HHCallTypeChild];
+            }
+        }];
+
+    }else if (index.row == 1) {
+
+        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
+            if(error){
+                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
+            }else{
+                [hhmSdk startCall:HHCallTypeAdult];
+            }
+        }];
+
+    }else {
+
+        AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
+        [self.navigationController pushViewController:adVC animated:YES];
+
+    }
 }
 - (void)messageHintView
 {

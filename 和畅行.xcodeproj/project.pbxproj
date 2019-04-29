@@ -176,7 +176,6 @@
 		036A66B72113FF1F0096A006 /* 我的卡包_04.png in Resources */ = {isa = PBXBuildFile; fileRef = 036A66B02113FF1D0096A006 /* 我的卡包_04.png */; };
 		036A66B82113FF1F0096A006 /* 2_1wq5.png in Resources */ = {isa = PBXBuildFile; fileRef = 036A66B12113FF1E0096A006 /* 2_1wq5.png */; };
 		036A66B92113FF1F0096A006 /* 家庭成员_提交.png in Resources */ = {isa = PBXBuildFile; fileRef = 036A66B22113FF1E0096A006 /* 家庭成员_提交.png */; };
-		036A66BA2113FF1F0096A006 /* 我的咨询_21.png in Resources */ = {isa = PBXBuildFile; fileRef = 036A66B32113FF1E0096A006 /* 我的咨询_21.png */; };
 		036A66BB2113FF1F0096A006 /* 查看报告.png in Resources */ = {isa = PBXBuildFile; fileRef = 036A66B42113FF1F0096A006 /* 查看报告.png */; };
 		036A66BC2113FF1F0096A006 /* 221323_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 036A66B52113FF1F0096A006 /* 221323_03.png */; };
 		036A66BD2113FF1F0096A006 /* 21221_12206.png in Resources */ = {isa = PBXBuildFile; fileRef = 036A66B62113FF1F0096A006 /* 21221_12206.png */; };
@@ -894,7 +893,6 @@
 		036A66B02113FF1D0096A006 /* 我的卡包_04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我的卡包_04.png"; sourceTree = "<group>"; };
 		036A66B12113FF1E0096A006 /* 2_1wq5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2_1wq5.png; sourceTree = "<group>"; };
 		036A66B22113FF1E0096A006 /* 家庭成员_提交.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "家庭成员_提交.png"; sourceTree = "<group>"; };
-		036A66B32113FF1E0096A006 /* 我的咨询_21.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我的咨询_21.png"; sourceTree = "<group>"; };
 		036A66B42113FF1F0096A006 /* 查看报告.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "查看报告.png"; sourceTree = "<group>"; };
 		036A66B52113FF1F0096A006 /* 221323_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 221323_03.png; sourceTree = "<group>"; };
 		036A66B62113FF1F0096A006 /* 21221_12206.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 21221_12206.png; sourceTree = "<group>"; };
@@ -2378,7 +2376,6 @@
 				036A66B42113FF1F0096A006 /* 查看报告.png */,
 				036A66B22113FF1E0096A006 /* 家庭成员_提交.png */,
 				036A66B02113FF1D0096A006 /* 我的卡包_04.png */,
-				036A66B32113FF1E0096A006 /* 我的咨询_21.png */,
 			);
 			path = "我的卡包";
 			sourceTree = "<group>";
@@ -3982,7 +3979,6 @@
 				035FD3FC21881F03008CD7E7 /* zhifuwancheng.png in Resources */,
 				038B52FF21E842D100D592C9 /* quanbuxiazai.png in Resources */,
 				039C23AF2123FA3100F9AFA3 /* 血压14.png in Resources */,
-				036A66BA2113FF1F0096A006 /* 我的咨询_21.png in Resources */,
 				039C23BA2123FA3100F9AFA3 /* 血压12.png in Resources */,
 				030F51F22101CEBE003C918F /* WinZhi_Img_la_1.png in Resources */,
 				0343907E210AB84700B57142 /* YY_btn_bg.png in Resources */,

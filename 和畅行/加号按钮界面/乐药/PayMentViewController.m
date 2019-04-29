@@ -587,7 +587,8 @@
         _backImage = [[UIImageView alloc] init];
         _backImage.image = [UIImage imageNamed:@"我的卡包_04.png"];
         [diView addSubview:_backImage];
-        _imageV.image = [UIImage imageNamed:@"我的咨询_21.png"];
+     
+        _imageV.image = [UIImage imageNamed:ModuleZW(@"我的咨询_21")];
         [diView addSubview:_imageV];
         _mLabel = [[UILabel alloc] init];
         _mLabel.text = [NSString stringWithFormat:@"%.2f",[[self.dataArray[i]objectForKey:@"balance"]floatValue]];

@@ -218,7 +218,7 @@
     __weak typeof(self) weakSelf = self;
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
         id status=[response objectForKey:@"status"];
-        if([status intValue] != 222){
+        if([status intValue] == 200){
             [weakSelf createConsumeView];
             weakSelf.isOnPay = YES;
         }else{
