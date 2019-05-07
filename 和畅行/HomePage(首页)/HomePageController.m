@@ -88,12 +88,12 @@
    [self requestPackgeNetWork];
 }
 
-- (void)userBtnAction:(UIButton *)btn
-{
-    _isActivity = YES;
-    _havePackage = YES;
-    [self requestPackgeNetWork];
-}
+//- (void)userBtnAction:(UIButton *)btn
+//{
+//    _isActivity = YES;
+//    _havePackage = YES;
+//    [self requestPackgeNetWork];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

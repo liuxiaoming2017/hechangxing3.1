@@ -150,6 +150,7 @@
     CustomNavigationController *mineNav = [[CustomNavigationController alloc] initWithRootViewController:mineVC];
     //mineVC.tabBarItem.title = @"我的";
     mineVC.tabBarItem.image = [UIImage imageNamed:ModuleZW(@"MyNormal")];
+    mineVC.tabBarItem.title = @"哈哈";
     mineVC.tabBarItem.selectedImage = [UIImage imageNamed:ModuleZW(@"Myelect")];
     [mineVC.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 0, -6, 0)];
     
