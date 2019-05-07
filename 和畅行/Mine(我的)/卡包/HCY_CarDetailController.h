@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HCY_CarDetailController : SayAndWriteController
 @property (nonatomic,strong)HYC_CardsModel *model;
+@property (nonatomic,strong)NSDictionary *dateDic;
 @end
 
 NS_ASSUME_NONNULL_END

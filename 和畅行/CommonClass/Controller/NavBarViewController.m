@@ -177,7 +177,7 @@
 
 
 
--(void)insertSublayerWithImageView:(UIImageView *)imageV with:(UIView *)view
+-(void)insertSublayerWithImageView:(UIView *)imageV with:(UIView *)view
 {
     CALayer *subLayer=[CALayer layer];
     CGRect fixframe = imageV.frame;

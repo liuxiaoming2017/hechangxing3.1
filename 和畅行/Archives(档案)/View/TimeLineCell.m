@@ -73,7 +73,7 @@
     self.kindLabel.font = [UIFont systemFontOfSize:12];
 //    [imageV addSubview:self.kindLabel];
     
-    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.kindImage.right+ 50, 0, imageV.width - self.kindImage.right - 55, imageV.height)];
+    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.kindImage.right+ 40, 0, imageV.width - self.kindImage.right - 55, imageV.height)];
     self.contentLabel.font=[UIFont systemFontOfSize:16];
     self.contentLabel.textColor=RGB(128, 128, 128);
     self.contentLabel.text = @"大羽";
@@ -111,7 +111,7 @@
         if ([model.typeName isEqualToString:ModuleZW(@"血压")]) {
             NSArray * array= [model.name componentsSeparatedByString:@"-"];
             if (array.count > 1) {
-                nameStr = [NSString stringWithFormat:@"%@  %@",array[0],array[1]];
+                nameStr =  [NSString stringWithFormat:@"%@ %@  %@ %@",ModuleZW(@"收缩压"),array[0],ModuleZW(@"舒张压"),array[1]];
             }else{
                 nameStr = model.name;
             }

@@ -71,13 +71,19 @@
     [flickingBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [flickingBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [flickingBtn setImage:[UIImage imageNamed:@"二维码"] forState:(UIControlStateNormal)];
-//    [self.view addSubview:flickingBtn];
+    [self.view addSubview:flickingBtn];
    
     
      [flickingBtn setTitleEdgeInsets:UIEdgeInsetsMake(flickingBtn.imageView.frame.size.height +30 ,-flickingBtn.imageView.frame.size.width -18, 0.0,0.0)];
     
     
 }
+-(void)flickingClick{
+    SGScanningQRCodeVC *vc = [[SGScanningQRCodeVC alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+
 - (void)bangButton{
     if ([_textField.text isEqualToString:@""]) {
         UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"卡号不能为空") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
@@ -154,11 +160,7 @@
     id status=[dic objectForKey:@"status"];
     //NSLog(@"234214324%@",status);
     if ([status intValue]== 100) {
-  
-//        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"信息更新成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-//        [av show];
-//        av.tag=10007;
-//        _textField.text = @"";
+
         [[NSNotificationCenter defaultCenter] postNotificationName:@"cardNameSuccess" object:nil];
         [GlobalCommon showMessage:ModuleZW(@"服务卡添加成功") duration:1];
         [self.navigationController popViewControllerAnimated:YES];
@@ -169,14 +171,11 @@
         UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         av.tag  = 100008;
         [av show];
-        [av release];
-    }
-    else  {
+    } else  {
         NSString *str = [dic objectForKey:@"data"];
         UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:str delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         
         [av show];
-        [av release];
     }
 }
 -(void) showHUD

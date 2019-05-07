@@ -203,18 +203,22 @@ static NSMutableArray *tasks;
     }
     
     else if (type == BAHttpRequestTypeHeadGet){
+        
         AFHTTPSessionManager *manager = [self sharedAFManager];
-        
-        //为网络请求添加请求头
         NSDictionary *headers = @{@"version":@"ios_hcy-yh-3.1.3",
-                                               @"token":[UserShareOnce shareOnce].token,
-                                                @"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
-                                                [UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
-
-        for(NSString *key in headers.allKeys){
-            [manager.requestSerializer setValue:[headers objectForKey:key] forHTTPHeaderField:key];
-        }
+                                  @"token":[UserShareOnce shareOnce].token,
+                                  @"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
+                                             [UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
         
+//        for(NSString *key in headers.allKeys){
+//            [manager.requestSerializer setValue:[headers objectForKey:key] forHTTPHeaderField:key];
+//        }
+        
+        [manager.requestSerializer setValue:@"ios_hcy-yh-3.1.3" forHTTPHeaderField:@"version"];
+        
+        [manager.requestSerializer setValue:[UserShareOnce shareOnce].token forHTTPHeaderField:@"token"];
+        [manager.requestSerializer setValue:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
+                                             [UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID] forHTTPHeaderField:@"Cookie"];
         sessionTask = [manager GET:URLString parameters:parameters  progress:^(NSProgress * _Nonnull downloadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -224,14 +228,12 @@ static NSMutableArray *tasks;
                 successBlock(responseObject);
             }
             
-            
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
             if (failureBlock)
             {
                 failureBlock(error);
             }
-            
             
         }];
         

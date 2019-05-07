@@ -10,6 +10,7 @@
 #import "HCY_CallCell.h"
 #import "AdvisorysViewController.h"
 #import "AppDelegate.h"
+#import "WXPhoneController.h"
 
 //#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 
@@ -85,8 +86,12 @@
 //        }
 //    }
 //    NSInteger uuid = [[UserShareOnce shareOnce].uuid integerValue];
-//    //uuid = 100002514;
-//    if(index.row == 0) {
+    //uuid = 100002514;
+    if(index.row == 0) {
+        if ([UserShareOnce shareOnce].username.length != 11) {
+            [self showAlerVC];
+            return;
+        }
 //        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
 //            if(error){
 //                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
@@ -94,9 +99,12 @@
 //                [hhmSdk startCall:HHCallTypeChild];
 //            }
 //        }];
-//
-//    }else if (index.row == 1) {
-//
+
+    }else if (index.row == 1) {
+        if ([UserShareOnce shareOnce].username.length != 11) {
+            [self showAlerVC];
+             return;
+        }
 //        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
 //            if(error){
 //                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
@@ -104,13 +112,24 @@
 //                [hhmSdk startCall:HHCallTypeAdult];
 //            }
 //        }];
-//
-//    }else {
-//
-//        AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
-//        [self.navigationController pushViewController:adVC animated:YES];
-//
-//    }
+
+    }else {
+
+        AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
+        [self.navigationController pushViewController:adVC animated:YES];
+
+    }
+}
+-(void)showAlerVC {
+    UIAlertController *alVC= [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有绑定手机号码,绑定后才能享受服务,是否绑定?") preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        WXPhoneController *vc = [[WXPhoneController alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:(UIAlertActionStyleCancel) handler:nil];
+    [alVC addAction:sureAction];
+    [alVC addAction:cancelAction];
+    [self presentViewController:alVC animated:YES completion:nil];
 }
 - (void)messageHintView
 {

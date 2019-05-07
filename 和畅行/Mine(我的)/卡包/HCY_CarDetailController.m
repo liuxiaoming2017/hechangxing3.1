@@ -67,10 +67,7 @@
     _yLabel.textColor = [UIColor whiteColor];
     [imageV addSubview:_yLabel];
     
-//    if([GlobalCommon stringEqualNull:self.model.cardDescription]){
-//        _yLabel.frame = CGRectMake(_mLabel.left , _hLabel.bottom , 160, 30);
-//    }
-    
+
     self.serviceTableView = [[UITableView alloc]initWithFrame:CGRectMake(_yLabel.left+5, _yLabel.bottom+5, imageV.width-_yLabel.left*2 - 10, imageV.height-_yLabel.bottom-10) style:UITableViewStylePlain];
     self.serviceTableView.backgroundColor = [UIColor clearColor];
     self.serviceTableView.separatorStyle = UITableViewCellEditingStyleNone;
@@ -78,6 +75,9 @@
     self.serviceTableView.delegate = self;
     self.serviceTableView.rowHeight = 30;
     [imageV addSubview:self.serviceTableView];
+    
+    
+  
     
     
     
@@ -105,8 +105,8 @@
         [self.listBackView addSubview:self.listTableView];
           [self.listTableView registerNib:[UINib nibWithNibName:@"HCY_ConsumptionListCell" bundle:nil] forCellReuseIdentifier:@"HCY_ConsumptionListCell"];
         
+     
         
-         [self requestPurchaseHistory];
         
         UIButton *closeButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
         closeButton.frame = CGRectMake(ScreenWidth - 55, ScreenHeight/2 - 145, 28, 28);
@@ -118,7 +118,74 @@
         
     }];
     [imageV addSubview:listButton];
+  
+    if(self.dateDic){
+        listButton.hidden = YES;
+        _mLabel.text = [NSString stringWithFormat:@"%@：%@",ModuleZW(@"卡号"),self.dateDic[@"data"][@"code"]];
+        _yLabel.text = ModuleZW(@"服务内容");
+        _hLabel.text = _dateDic[@"data"][@"name"];
+        UIButton *addButton =  [UIButton buttonWithType:(UIButtonTypeCustom)];
+        addButton.frame = CGRectMake(40, ScreenHeight - kTabBarHeight - 40, ScreenWidth - 80, 36);
+        addButton.layer.cornerRadius = 18;
+        addButton.layer.masksToBounds = YES;
+        addButton.backgroundColor = RGB_ButtonBlue;
+        [addButton setTitle:ModuleZW(@"添加至卡包") forState:(UIControlStateNormal)];
+        [[addButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            NSString *UrlPre=URL_PRE;
+            NSString *aUrl = [NSString stringWithFormat:@"%@/member/cashcard/bind.jhtml",UrlPre];
+            ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+            [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+            [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+            if([UserShareOnce shareOnce].languageType){
+                [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+            }
+            [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+            [request setPostValue:self.dateDic[@"data"][@"code"]forKey:@"code"];
+            
+            [request setTimeOutSeconds:20];
+            [request setRequestMethod:@"POST"];
+            [request setDelegate:self];
+            [request setDidFailSelector:@selector(requesstuserinfoError1:)];
+            [request setDidFinishSelector:@selector(requesstuserinfoCompleted1:)];
+            [request startAsynchronous];
+        }];
+        [self.view addSubview:addButton];
+        self.serviceArr = self.dateDic[@"data"][@"lmMdServiceAttr"];
+        if(self.serviceArr.count > 0){
+            [_listTableView reloadData];
+        }
+        
+    }else{
+        [self requestPurchaseHistory];
+    }
     
+}
+
+- (void)requesstuserinfoError1:(ASIHTTPRequest *)request
+{
+    [self showAlertViewController:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
+}
+- (void)requesstuserinfoCompleted1:(ASIHTTPRequest *)request
+{
+    NSString* reqstr=[request responseString];
+    NSDictionary * dic=[reqstr JSONValue];
+    id status=[dic objectForKey:@"status"];
+    if ([status intValue]== 100) {
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"cardNameSuccess" object:nil];
+        [GlobalCommon showMessage:ModuleZW(@"服务卡添加成功") duration:1];
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    }
+    else if ([status intValue]== 44)
+    {
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
+        av.tag  = 100008;
+        [av show];
+    } else  {
+        NSString *str = [dic objectForKey:@"data"];
+        [self showAlertViewController:str];
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -253,6 +320,12 @@
             }else{
                 [cell.tradeBtn setTitle:ModuleZW(@"去咨询") forState:UIControlStateNormal];
             }
+            
+            if(self.dateDic){
+                cell.tradeBtn.hidden = YES;
+                cell.contentLabel.width = ScreenWidth - 130;
+            }
+            
             
         }
         return cell;
