@@ -62,7 +62,7 @@
         return NO;
     }
     //4.数据库中创建表（可创建多张）
-    NSString *sql = @"create table if not exists questionTable ('question_id' integer,'order_num' integer, 'createDate' text,'modifyDate' text,'name' text,'reverse' bool,'typeName' text,'allIDStr' text)";
+    NSString *sql = @"create table if not exists questionTable ('question_id' integer,'order_num' integer, 'createDate' text,'modifyDate' text,'name' text,'reverse' bool,'typeName' text,'allIDStr' text,'classifyId' text)";
     //NSString *sql2 = @"create table if not exists answerTable ('answer_id' integer,'type_id' integer,'order_num' integer, 'content' text,'question_name' text)";
     //5.执行更新操作 此处database直接操作，不考虑多线程问题，多线程问题，用FMDatabaseQueue 每次数据库操作之后都会返回bool数值，YES，表示success，NO，表示fail,可以通过 @see lastError @see lastErrorCode @see lastErrorMessage
     BOOL result = [_db executeUpdate:sql];
@@ -81,7 +81,7 @@
 {
     FMResultSet *set = [_db executeQuery:@"select question_id from questionTable where question_id = ?",[NSNumber numberWithInteger:model.uid]];
     if(![set next]){
-        [_db executeUpdate:@"insert into questionTable(question_id,order_num,createDate,modifyDate,name,reverse,typeName,allIDStr) values (?,?,?,?,?,?,?,?)",[NSNumber numberWithInteger:model.uid],[NSNumber numberWithInteger:model.order],model.createDate,model.modifyDate,model.name,[NSNumber numberWithBool:model.reverse],model.type,model.allIDStr];
+        [_db executeUpdate:@"insert into questionTable(question_id,order_num,createDate,modifyDate,name,reverse,typeName,allIDStr,classifyId) values (?,?,?,?,?,?,?,?,?)",[NSNumber numberWithInteger:model.uid],[NSNumber numberWithInteger:model.order],model.createDate,model.modifyDate,model.name,[NSNumber numberWithBool:model.reverse],model.type,model.allIDStr,model.classifyId];
     }
     [set close];
 }
@@ -101,7 +101,7 @@
     
     FMResultSet *set = [_db executeQuery:@"select question_id from questionTable where question_id = ?",[NSNumber numberWithInteger:model.uid]];
     if([set next]){
-        [_db executeUpdate:@"update questionTable set question_id = ?,order_num = ?,createDate = ?,modifyDate = ?,name = ?,reverse = ?,typeName = ?,allIDStr = ?",[NSNumber numberWithInteger:model.uid],[NSNumber numberWithInteger:model.order],model.createDate,model.modifyDate,model.name,[NSNumber numberWithBool:model.reverse],model.type,model.allIDStr];
+        [_db executeUpdate:@"update questionTable set question_id = ?,order_num = ?,createDate = ?,modifyDate = ?,name = ?,reverse = ?,typeName = ?,allIDStr = ?,classifyId ?",[NSNumber numberWithInteger:model.uid],[NSNumber numberWithInteger:model.order],model.createDate,model.modifyDate,model.name,[NSNumber numberWithBool:model.reverse],model.type,model.allIDStr,model.classifyId];
     }
     [set close];
 }
@@ -151,6 +151,10 @@
     NSMutableArray *mutabArr = [[NSMutableArray alloc] init];
     //FMResultSet *set = [_db executeQuery:@"select *,count(distinct order_num) from questionTable group by order_num order by order_num limit 20"];
     FMResultSet *set = [_db executeQuery:@"select * from questionTable order by order_num"];
+//    NSMutableArray *arr1 = [NSMutableArray arrayWithCapacity:0];
+//    NSMutableArray *arr2 = [NSMutableArray arrayWithCapacity:0];
+//    NSMutableArray *arr3 = [NSMutableArray arrayWithCapacity:0];
+//    NSMutableArray *arr4 = [NSMutableArray arrayWithCapacity:0];
     while ([set next]) {
         QuestionModel *model = [[QuestionModel alloc] init];
         model.uid = [set intForColumn:@"question_id"];
@@ -161,9 +165,35 @@
         model.reverse = [set boolForColumn:@"reverse"];
         model.type = [set stringForColumn:@"typeName"];
         model.allIDStr = [set stringForColumn:@"allIDStr"];
+        model.classifyId = [set stringForColumn:@"classifyId"];
+        
         [mutabArr addObject:model];
+        
+      //  NSInteger classifyId = [model.classifyId integerValue];
+        
+//        switch (classifyId) {
+//            case 0:
+//                [arr1 addObject:model];
+//                break;
+//            case 1:
+//                [arr2 addObject:model];
+//                break;
+//            case 2:
+//                [arr3 addObject:model];
+//                break;
+//            case 3:
+//                [arr4 addObject:model];
+//                break;
+//
+//            default:
+//                break;
+//        }
     }
     [set close];
+//    [mutabArr addObject:arr1];
+//    [mutabArr addObject:arr2];
+//    [mutabArr addObject:arr3];
+//    [mutabArr addObject:arr4];
     return mutabArr;
     
 }

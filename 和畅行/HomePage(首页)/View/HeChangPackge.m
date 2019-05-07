@@ -53,17 +53,19 @@
     
     //CGFloat originX = (ScreenWidth - 122*3-18)/2.0;
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, self.height/2.0-30, 200, 30)];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.width-200)/2.0, self.height/2.0-30, 200, 30)];
     self.titleLabel.font = [UIFont systemFontOfSize:21];
-    self.titleLabel.textAlignment = NSTextAlignmentLeft;
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.textColor = [UIColor whiteColor];
     self.titleLabel.text = ModuleZW(@"和畅包");
     [self addSubview:self.titleLabel];
     
-    self.remindLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.titleLabel.left, self.titleLabel.bottom, ScreenWidth -50 , 60)];
+    CGFloat width = 300;
+    
+    self.remindLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-width)/2.0, self.titleLabel.bottom, width , 60)];
     self.remindLabel.font = [UIFont systemFontOfSize:16];
     self.remindLabel.numberOfLines = 0;
-    self.remindLabel.textAlignment = NSTextAlignmentLeft;
+    self.remindLabel.textAlignment = NSTextAlignmentCenter;
     self.remindLabel.textColor = [UIColor whiteColor];
     NSString *str = ModuleZW(@"您未完成和畅体检,全部完成体检后定制属于您的和畅服务包");
     self.remindLabel.text = str;
@@ -81,7 +83,7 @@
     self.toViewButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [self.toViewButton addTarget:self action:@selector(pushAction) forControlEvents:(UIControlEventTouchUpInside)];
     self.toViewButton.frame = CGRectMake(ScreenWidth/2.0 - 136, self.imageV.bottom - 25, 272, 60);
-    [self addSubview:self.toViewButton];
+   // [self addSubview:self.toViewButton];
 
     
     UIButton *tapButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
@@ -139,13 +141,16 @@
     
     if (str==nil || [str isKindOfClass:[NSNull class]]||str.length == 0) {
         //添加渐变色
-        CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-        gradientLayer.frame = self.imageV.bounds;
-        gradientLayer.colors = [NSArray arrayWithObjects:(id)UIColorFromHex(0x1E82D2).CGColor,(id)UIColorFromHex(0x2B95EB).CGColor,(id)UIColorFromHex(0x05A1EE).CGColor, nil];
-        gradientLayer.startPoint = CGPointMake(0.5, 0);
-        gradientLayer.endPoint = CGPointMake(0.5, 1);
-        gradientLayer.locations = @[@0,@0.5,@1.0];
-        [self.imageV.layer addSublayer:gradientLayer];
+//        CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+//        gradientLayer.frame = self.imageV.bounds;
+//        gradientLayer.colors = [NSArray arrayWithObjects:(id)UIColorFromHex(0x1E82D2).CGColor,(id)UIColorFromHex(0x2B95EB).CGColor,(id)UIColorFromHex(0x05A1EE).CGColor, nil];
+//        gradientLayer.startPoint = CGPointMake(0.5, 0);
+//        gradientLayer.endPoint = CGPointMake(0.5, 1);
+//        gradientLayer.locations = @[@0,@0.5,@1.0];
+//        [self.imageV.layer addSublayer:gradientLayer];
+        
+        [self.imageV setImage:[UIImage imageNamed:@"bg_blue"]];
+        
     }else {
         
         NSString *imageUrl = [NSString stringWithFormat:@"%@%@",URL_PRE,str];
@@ -211,19 +216,12 @@
 
 - (void)updateImageView
 {
-//    UIImageView *imgV = [self viewWithTag:101];
-//    imgV.hidden = NO;
-//    if(shapeLayer){
-//        self.shapeLayer.sublayers = nil;
-//        [self.shapeLayer removeFromSuperlayer];
-//        self.shapeLayer = nil;
-//    }
-//    if(stateLabel){
-//        stateLabel.hidden = YES;
-//    }
-    NSString *str = ModuleZW(@"您未完成和畅体检,全部完成体检后定制属于您的和畅服务包");
-    self.remindLabel.text = str;
-    [self.toViewButton setBackgroundImage:[UIImage imageNamed:ModuleZW(@"和畅包未检测")] forState:(UIControlStateNormal)];
+    
+//    NSString *str = ModuleZW(@"您未完成和畅体检,全部完成体检后定制属于您的和畅服务包");
+//    self.remindLabel.text = str;
+//    [self.toViewButton setBackgroundImage:[UIImage imageNamed:ModuleZW(@"和畅包未检测")] forState:(UIControlStateNormal)];
+    
+    self.hidden = YES;
 
 }
 

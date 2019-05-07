@@ -36,5 +36,9 @@
 @property (nonatomic,copy) NSString *allIDStr;
 
 @property (nonatomic,assign) BOOL isSelected;
+//新增
+@property (nonatomic,copy) NSString *classifyId;
+
+@property (nonatomic,copy) NSString *selectAnswer;
 
 @end

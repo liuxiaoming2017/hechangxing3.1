@@ -75,7 +75,7 @@
     [self.collectionV registerClass:[RecommendCollectCell class] forCellWithReuseIdentifier:@"cellId"];
     
     [self addSubview:self.collectionV];
-    [self requestHealthHintData];
+  //  [self requestHealthHintData];
     
 
 }

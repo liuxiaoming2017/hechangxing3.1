@@ -14,7 +14,7 @@
 
 @property (nonatomic,strong) UILabel *typeLabel;
 @property (nonatomic,strong) UILabel *contentLabel;
-
+@property (nonatomic,strong) UIImageView *circleImageV;
 @property (nonatomic,strong) UIImageView *lineImageV;
 
 @end
