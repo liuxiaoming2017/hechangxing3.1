@@ -437,8 +437,11 @@
 		03FBDF97219285A0006116FC /* NavBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF96219285A0006116FC /* NavBarViewController.m */; };
 		03FBDF9A2192B066006116FC /* TimeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF992192B066006116FC /* TimeLineView.m */; };
 		03FBDF9D2192B0B3006116FC /* TimeLineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF9C2192B0B3006116FC /* TimeLineCell.m */; };
+		832ED75C2278286A00BFEEFC /* HpiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832ED75B2278286A00BFEEFC /* HpiViewController.m */; };
+		832ED75F2278321800BFEEFC /* HPITableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832ED75E2278321800BFEEFC /* HPITableViewCell.m */; };
 		835DB8DB21D3685D00B8DF99 /* HCY_ConsultingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 835DB8DA21D3685D00B8DF99 /* HCY_ConsultingModel.m */; };
 		835DB91C21D757C800B8DF99 /* HCY_FamilyListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 835DB91B21D757C800B8DF99 /* HCY_FamilyListModel.m */; };
+		83755F192281514200D761A2 /* WXPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83755F182281514200D761A2 /* WXPhoneController.m */; };
 		837D822321F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837D822121F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m */; };
 		839E0C552213E0540090F179 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 839E0C572213E0540090F179 /* InfoPlist.strings */; };
 		83C5F7E02270002000889370 /* LJRulerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C5F7DC2270001F00889370 /* LJRulerScrollView.m */; };
@@ -1448,10 +1451,16 @@
 		03FBDF9B2192B0B3006116FC /* TimeLineCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeLineCell.h; sourceTree = "<group>"; };
 		03FBDF9C2192B0B3006116FC /* TimeLineCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimeLineCell.m; sourceTree = "<group>"; };
 		432A80A6E0CB6A191C1F35C4 /* Pods-和畅行.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-和畅行.debug.xcconfig"; path = "Pods/Target Support Files/Pods-和畅行/Pods-和畅行.debug.xcconfig"; sourceTree = "<group>"; };
+		832ED75A2278286A00BFEEFC /* HpiViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HpiViewController.h; sourceTree = "<group>"; };
+		832ED75B2278286A00BFEEFC /* HpiViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HpiViewController.m; sourceTree = "<group>"; };
+		832ED75D2278321800BFEEFC /* HPITableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPITableViewCell.h; sourceTree = "<group>"; };
+		832ED75E2278321800BFEEFC /* HPITableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HPITableViewCell.m; sourceTree = "<group>"; };
 		835DB8D921D3685D00B8DF99 /* HCY_ConsultingModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_ConsultingModel.h; sourceTree = "<group>"; };
 		835DB8DA21D3685D00B8DF99 /* HCY_ConsultingModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_ConsultingModel.m; sourceTree = "<group>"; };
 		835DB91A21D757C800B8DF99 /* HCY_FamilyListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_FamilyListModel.h; sourceTree = "<group>"; };
 		835DB91B21D757C800B8DF99 /* HCY_FamilyListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_FamilyListModel.m; sourceTree = "<group>"; };
+		83755F172281514200D761A2 /* WXPhoneController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXPhoneController.h; sourceTree = "<group>"; };
+		83755F182281514200D761A2 /* WXPhoneController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WXPhoneController.m; sourceTree = "<group>"; };
 		837D822121F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BloodOxyNonDeviceViewController.m; sourceTree = "<group>"; };
 		837D822221F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BloodOxyNonDeviceViewController.h; sourceTree = "<group>"; };
 		839E0C562213E0540090F179 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2153,6 +2162,8 @@
 				03F97CF921005DE200A0F842 /* WriteListController.m */,
 				03F97D0D21007F7900A0F842 /* OrganDiseaseListViewController.h */,
 				03F97D0E21007F7900A0F842 /* OrganDiseaseListViewController.m */,
+				832ED75A2278286A00BFEEFC /* HpiViewController.h */,
+				832ED75B2278286A00BFEEFC /* HpiViewController.m */,
 				030F51342101B2A2003C918F /* ResultWriteController.h */,
 				030F51352101B2A2003C918F /* ResultWriteController.m */,
 				03535EE820F703A400664FA9 /* SayAndWriteController.h */,
@@ -2625,6 +2636,8 @@
 				83E23EF021C0DC2700B43298 /* HCY_HelpController.m */,
 				83E23EF521C24F7F00B43298 /* HCY_ActivityController.h */,
 				83E23EF621C24F7F00B43298 /* HCY_ActivityController.m */,
+				83755F172281514200D761A2 /* WXPhoneController.h */,
+				83755F182281514200D761A2 /* WXPhoneController.m */,
 			);
 			path = "和畅包";
 			sourceTree = "<group>";
@@ -3254,6 +3267,8 @@
 				03F97D192100808200A0F842 /* AdvisoryTableViewCell.m */,
 				83C5F8202272EED300889370 /* WriteleftTableViewCell.h */,
 				83C5F8212272EED300889370 /* WriteleftTableViewCell.m */,
+				832ED75D2278321800BFEEFC /* HPITableViewCell.h */,
+				832ED75E2278321800BFEEFC /* HPITableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4140,6 +4155,7 @@
 				0379824120FC3832002015A3 /* Tools.m in Sources */,
 				036E85942186EB4C001B9BB4 /* CMPopTipView.m in Sources */,
 				835DB8DB21D3685D00B8DF99 /* HCY_ConsultingModel.m in Sources */,
+				832ED75F2278321800BFEEFC /* HPITableViewCell.m in Sources */,
 				03799C1920F899AD004024D1 /* AnwerModel.m in Sources */,
 				034A4E82211A9AD900936A46 /* TZImageManager.m in Sources */,
 				034A4E8B211A9AD900936A46 /* UIView+Layout.m in Sources */,
@@ -4148,6 +4164,7 @@
 				030F51392101C206003C918F /* MeridianIdentifierViewController.m in Sources */,
 				034A4E8C211A9AD900936A46 /* TZGifPhotoPreviewController.m in Sources */,
 				036E85972186EB4C001B9BB4 /* i9_blelistViewCell.m in Sources */,
+				832ED75C2278286A00BFEEFC /* HpiViewController.m in Sources */,
 				039661F121F1BF7F00754AAA /* PayMentViewController.m in Sources */,
 				034A4E8A211A9AD900936A46 /* TZProgressView.m in Sources */,
 				03F6931C20FF30B700308E38 /* JSONKit.m in Sources */,
@@ -4364,6 +4381,7 @@
 				038517112186AC10001DD2B7 /* PayAbnormalViewController.m in Sources */,
 				0343909E210ACAFF00B57142 /* ProgressIndicator.m in Sources */,
 				83C5F7E12270002000889370 /* LJRuler.m in Sources */,
+				83755F192281514200D761A2 /* WXPhoneController.m in Sources */,
 				03DEBC71210863AB008434BD /* LiveMonitorVC.m in Sources */,
 				036FC0F2211830EE00C1A793 /* WeXinViewController.m in Sources */,
 				0379823D20FC32F4002015A3 /* QuestionCell.m in Sources */,
@@ -4639,7 +4657,10 @@
 					"$(PROJECT_DIR)/和畅行/友盟分享/SocialLibraries/QQ",
 					"$(PROJECT_DIR)/和畅行/友盟分享/SocialLibraries/Sina",
 				);
-				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -4700,7 +4721,10 @@
 					"$(PROJECT_DIR)/和畅行/友盟分享/SocialLibraries/QQ",
 					"$(PROJECT_DIR)/和畅行/友盟分享/SocialLibraries/Sina",
 				);
-				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

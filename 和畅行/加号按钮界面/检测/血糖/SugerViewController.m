@@ -571,19 +571,18 @@
             dataLabel.text = ModuleZW(@"日期");
             self.datePicker.datePickerMode =  UIDatePickerModeDate;
             self.datePicker.tag = 111;
-            [self.datePicker setMaximumDate:[NSDate date]];
 
         }else if(typeInt == 2){
             dataLabel.text = ModuleZW(@"测量时间");
             self.datePicker.datePickerMode =  UIDatePickerModeTime;
             self.datePicker.tag = 112;
-            [self.datePicker setMaximumDate:[NSDate date]];
 
         }else{
             dataLabel.text = ModuleZW(@"时间段");
             self.pickerView.showsSelectionIndicator = YES;
 
         }
+        
         
         NSArray *buttonTitleArray = @[ModuleZW(@"取消"),ModuleZW(@"确定")];
         for (int i = 0; i < 2; i++) {
@@ -660,6 +659,7 @@
         self.datePicker.frame = CGRectMake(30, 40, _bottomView.width - 80, 200);
         self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
         [self.datePicker addTarget:self action:@selector(dateChange:) forControlEvents:UIControlEventValueChanged];
+        [self.datePicker setMaximumDate:[NSDate date]];
         [_bottomView addSubview:self.datePicker];
     }
     return _datePicker;

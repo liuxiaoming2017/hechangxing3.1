@@ -16,7 +16,7 @@
 #import "HCY_HomeImageModel.h"
 
 
-#import "SugerViewController.h"
+#import "WXPhoneController.h"
 
 @interface HomePageController ()<UIScrollViewDelegate>
 
@@ -67,7 +67,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exchangeMemberChild:) name:exchangeMemberChildNotify object:nil];
     
     
-//    SugerViewController *nonDeviceCheck = [[SugerViewController alloc] init];
+//    WXPhoneController *nonDeviceCheck = [[WXPhoneController alloc] init];
 //    nonDeviceCheck.hidesBottomBarWhenPushed = YES;
 //    [self.navigationController pushViewController:nonDeviceCheck animated:YES];
 }
@@ -119,9 +119,8 @@
         [self.readWriteView initWithUI];
     }];
     
-    
-    
 }
+
 
 - (void)addGradientLayer
 {

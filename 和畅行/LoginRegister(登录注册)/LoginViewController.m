@@ -100,7 +100,7 @@
     [self.view addSubview:imageV2];
     
     passWordBox=[[UITextField alloc]init];
-    passWordBox.frame=CGRectMake(segment.left, imageV2.bottom+10, 200 ,userNameBox.height );
+    passWordBox.frame=CGRectMake(segment.left, imageV2.bottom+10, 160 ,userNameBox.height );
     passWordBox.clearButtonMode=UITextFieldViewModeWhileEditing;
     passWordBox.delegate = self;
     passWordBox.font=[UIFont systemFontOfSize:15.0];
@@ -146,7 +146,7 @@
     [self.view addSubview:rightBtn];
     
     userNameBox.width = rightBtn.left-userNameBox.left;
-    passWordBox.width = userNameBox.width;
+//    passWordBox.width = userNameBox.width;
     
     
     UIButton *loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -636,7 +636,6 @@
                  HomePageController *main = [[HomePageController alloc]init];
                 CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:main];
                 [UIApplication sharedApplication].keyWindow.rootViewController = nav;
-                
                 [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSuccessNotification object:nil];
                
             }

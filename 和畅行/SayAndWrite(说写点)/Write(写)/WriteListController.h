@@ -32,7 +32,6 @@ typedef void(^addCheckBlock)(void);
     NSMutableArray *_sectionStatus;//存放组的状态
     NSMutableArray *_sectionDataArr;//组的数据
     NSMutableArray *_sectionOpenImageArr;//组的图片
-    NSMutableArray *_sectionClosedImageArr;//组的图片
     
     UITableView *_rightTableView;//右边tableView
     NSMutableArray *_rightDataArr;
@@ -63,7 +62,6 @@ typedef void(^addCheckBlock)(void);
 @property (nonatomic,strong) NSMutableArray *leftDataArr;
 @property (nonatomic,strong) NSMutableArray *sectionDataArr;
 @property (nonatomic,strong) NSMutableArray *sectionOpenImageArr;
-@property (nonatomic,strong) NSMutableArray *sectionClosedImageArr;
 
 @property (nonatomic,strong) UITableView *rightTableView;
 @property (nonatomic,strong) NSMutableArray *rightDataArr;
