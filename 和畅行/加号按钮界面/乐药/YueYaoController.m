@@ -85,6 +85,9 @@
     [[UserShareOnce shareOnce].yueYaoBuyArr removeAllObjects];
 }
 
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.isOnPay = NO;

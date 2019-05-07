@@ -398,9 +398,9 @@
     subLayer.backgroundColor=[UIColorFromHex(0xc5c5c5) colorWithAlphaComponent:1.0].CGColor;
     subLayer.masksToBounds=NO;
     subLayer.shadowColor = UIColorFromHex(0xc5c5c5).CGColor;//shadowColor阴影颜色
-    subLayer.shadowOffset = CGSizeMake(2,5);//shadowOffset阴影偏移,x向右偏移3，y向下偏移2，默认(0, -3),这个跟shadowRadius配合使用
+    subLayer.shadowOffset = CGSizeMake(2,2);//shadowOffset阴影偏移,x向右偏移3，y向下偏移2，默认(0, -3),这个跟shadowRadius配合使用
     subLayer.shadowOpacity = 0.6;//阴影透明度，默认0
-    subLayer.shadowRadius = 8;//阴影半径，默认3
+    subLayer.shadowRadius = 3;//阴影半径，默认3
     [mainView.layer insertSublayer:subLayer below:imageV.layer];
 }
 

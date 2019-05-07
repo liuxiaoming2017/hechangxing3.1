@@ -20,6 +20,7 @@
 		030F51362101B2A2003C918F /* ResultWriteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 030F51352101B2A2003C918F /* ResultWriteController.m */; };
 		030F51392101C206003C918F /* MeridianIdentifierViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 030F51372101C206003C918F /* MeridianIdentifierViewController.m */; };
 		0310F5B021EB7FB60005731F /* MySportController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310F5AF21EB7FB60005731F /* MySportController.m */; };
+		03140CF9227FD9BC00BC79D9 /* QuestionTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03140CF8227FD9BC00BC79D9 /* QuestionTableCell.xib */; };
 		0325A5EC210995F100275671 /* EEGDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0325A5EB210995F100275671 /* EEGDetailController.m */; };
 		0325A5F92109C29900275671 /* MySportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0325A5F42109C29900275671 /* MySportCell.m */; };
 		0325A5FA2109C29900275671 /* MenuTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0325A5F72109C29900275671 /* MenuTypeView.m */; };
@@ -353,6 +354,7 @@
 		03A24CA921142C67005B5BA1 /* HealthLectureOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A24CA721142C66005B5BA1 /* HealthLectureOrderViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		03A24CAC21142DDA005B5BA1 /* OrderNumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A24CAA21142DDA005B5BA1 /* OrderNumModel.m */; };
 		03A24CB2211437A1005B5BA1 /* LeMedicineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A24CB0211437A1005B5BA1 /* LeMedicineViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		03AF015D2277236000DE1CD4 /* QuestionTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AF015C2277236000DE1CD4 /* QuestionTableCell.m */; };
 		03B1A1862119687D00B23339 /* WYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B1A1852119687D00B23339 /* WYViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		03B1A19B211995CF00B23339 /* AdvisorysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B1A199211995CF00B23339 /* AdvisorysViewController.m */; };
 		03B1A19E2119966A00B23339 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B1A19C2119966A00B23339 /* NSString+Emoji.m */; };
@@ -483,7 +485,6 @@
 		83DC65DA2275414600B10F23 /* noMessage.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65302275414500B10F23 /* noMessage.png */; };
 		83DC65DB2275414600B10F23 /* returedGoodsRecord@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65312275414500B10F23 /* returedGoodsRecord@2x.png */; };
 		83DC65DC2275414600B10F23 /* Feedback_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65322275414500B10F23 /* Feedback_btn.png */; };
-		83DC65DD2275414600B10F23 /* 我的咨询_21.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65342275414500B10F23 /* 我的咨询_21.png */; };
 		83DC65DE2275414600B10F23 /* 我的卡包_04.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65352275414500B10F23 /* 我的卡包_04.png */; };
 		83DC65DF2275414600B10F23 /* 21221_12206.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65362275414500B10F23 /* 21221_12206.png */; };
 		83DC65E02275414600B10F23 /* 221323_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65372275414500B10F23 /* 221323_03.png */; };
@@ -660,6 +661,7 @@
 		030F51372101C206003C918F /* MeridianIdentifierViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeridianIdentifierViewController.m; sourceTree = "<group>"; };
 		030F51382101C206003C918F /* MeridianIdentifierViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeridianIdentifierViewController.h; sourceTree = "<group>"; };
 		0310F5AF21EB7FB60005731F /* MySportController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySportController.m; sourceTree = "<group>"; };
+		03140CF8227FD9BC00BC79D9 /* QuestionTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuestionTableCell.xib; sourceTree = "<group>"; };
 		0325A5EA210995F100275671 /* EEGDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EEGDetailController.h; sourceTree = "<group>"; };
 		0325A5EB210995F100275671 /* EEGDetailController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EEGDetailController.m; sourceTree = "<group>"; };
 		0325A5F22109C29800275671 /* MySportController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySportController.h; sourceTree = "<group>"; };
@@ -1289,6 +1291,8 @@
 		03A24CAB21142DDA005B5BA1 /* OrderNumModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderNumModel.h; sourceTree = "<group>"; };
 		03A24CB0211437A1005B5BA1 /* LeMedicineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeMedicineViewController.m; sourceTree = "<group>"; };
 		03A24CB1211437A1005B5BA1 /* LeMedicineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeMedicineViewController.h; sourceTree = "<group>"; };
+		03AF015B2277236000DE1CD4 /* QuestionTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuestionTableCell.h; sourceTree = "<group>"; };
+		03AF015C2277236000DE1CD4 /* QuestionTableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuestionTableCell.m; sourceTree = "<group>"; };
 		03B1A1842119687C00B23339 /* WYViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYViewController.h; sourceTree = "<group>"; };
 		03B1A1852119687D00B23339 /* WYViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYViewController.m; sourceTree = "<group>"; };
 		03B1A199211995CF00B23339 /* AdvisorysViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvisorysViewController.m; sourceTree = "<group>"; };
@@ -1508,7 +1512,6 @@
 		83DC65302275414500B10F23 /* noMessage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noMessage.png; sourceTree = "<group>"; };
 		83DC65312275414500B10F23 /* returedGoodsRecord@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "returedGoodsRecord@2x.png"; sourceTree = "<group>"; };
 		83DC65322275414500B10F23 /* Feedback_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Feedback_btn.png; sourceTree = "<group>"; };
-		83DC65342275414500B10F23 /* 我的咨询_21.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我的咨询_21.png"; sourceTree = "<group>"; };
 		83DC65352275414500B10F23 /* 我的卡包_04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我的卡包_04.png"; sourceTree = "<group>"; };
 		83DC65362275414500B10F23 /* 21221_12206.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 21221_12206.png; sourceTree = "<group>"; };
 		83DC65372275414500B10F23 /* 221323_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 221323_03.png; sourceTree = "<group>"; };
@@ -2214,6 +2217,9 @@
 				03535EFE20F7462900664FA9 /* QuestionView.m */,
 				0379823B20FC32F4002015A3 /* QuestionCell.h */,
 				0379823C20FC32F4002015A3 /* QuestionCell.m */,
+				03AF015B2277236000DE1CD4 /* QuestionTableCell.h */,
+				03AF015C2277236000DE1CD4 /* QuestionTableCell.m */,
+				03140CF8227FD9BC00BC79D9 /* QuestionTableCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3461,7 +3467,6 @@
 		83DC65332275414500B10F23 /* 我的卡包 */ = {
 			isa = PBXGroup;
 			children = (
-				83DC65342275414500B10F23 /* 我的咨询_21.png */,
 				83DC65352275414500B10F23 /* 我的卡包_04.png */,
 				83DC65362275414500B10F23 /* 21221_12206.png */,
 				83DC65372275414500B10F23 /* 221323_03.png */,
@@ -3729,6 +3734,7 @@
 				03513AC520E9CAD3004E2805 /* Frameworks */,
 				03513AC620E9CAD3004E2805 /* Resources */,
 				AF39BC23D98947F91514DB68 /* [CP] Embed Pods Frameworks */,
+				C8C7563DF0D5A7E9210D7736 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3831,7 +3837,6 @@
 				036E855A2186EB2A001B9BB4 /* i9_blelistviewcell.xib in Resources */,
 				83DC66292275414600B10F23 /* WinZhi_Img_sao_1.png in Resources */,
 				036E855E2186EB2A001B9BB4 /* UISetAlertViewController.xib in Resources */,
-				83DC65DD2275414600B10F23 /* 我的咨询_21.png in Resources */,
 				83DC65D42275414600B10F23 /* ReplaceSec_TF_bg.png in Resources */,
 				030126C921F96334000FA318 /* Language.strings in Resources */,
 				036E85732186EB2A001B9BB4 /* WriteExperience.xib in Resources */,
@@ -4060,6 +4065,7 @@
 				83DC66032275414600B10F23 /* Regist_yzm_bg.png in Resources */,
 				83DC65EF2275414600B10F23 /* leyaozhifuxianjinka.png in Resources */,
 				83DC66072275414600B10F23 /* Regist_YZM.png in Resources */,
+				03140CF9227FD9BC00BC79D9 /* QuestionTableCell.xib in Resources */,
 				83DC66322275414600B10F23 /* 专家咨询_06.png in Resources */,
 				83DC66012275414600B10F23 /* Regist_Tele.png in Resources */,
 				83DC65EB2275414600B10F23 /* 个人信息_背景.png in Resources */,
@@ -4084,6 +4090,10 @@
 				"${BUILT_PRODUCTS_DIR}/DACircularProgress/DACircularProgress.framework",
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
+				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/HHDoctorSDK.framework",
+				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/NIMAVChat.framework",
+				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/NIMSDK.framework",
+				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/NMC.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
 				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
@@ -4093,13 +4103,15 @@
 				"${BUILT_PRODUCTS_DIR}/YYModel/YYModel.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DACircularProgress.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HHDoctorSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NIMAVChat.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NIMSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NMC.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
@@ -4111,6 +4123,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-和畅行/Pods-和畅行-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C8C7563DF0D5A7E9210D7736 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-和畅行/Pods-和畅行-resources.sh",
+				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/resources/NMCVideoFilter.bundle",
+				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/resources/SecurityKit.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/NMCVideoFilter.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SecurityKit.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-和畅行/Pods-和畅行-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F354F97218B358223C6D1A31 /* [CP] Check Pods Manifest.lock */ = {
@@ -4309,6 +4341,7 @@
 				036E840E2186EAB1001B9BB4 /* i9_UISetTTViewController.m in Sources */,
 				036E859E2186EB5A001B9BB4 /* ASValueTrackingSlider.m in Sources */,
 				0391D0F920F5ACE4001B52F1 /* SubMemberView.m in Sources */,
+				03AF015D2277236000DE1CD4 /* QuestionTableCell.m in Sources */,
 				036E843F2186EAD3001B9BB4 /* UIButton+ImageWithLable.m in Sources */,
 				03A24CA621142C43005B5BA1 /* HealthOrderedModel.m in Sources */,
 				036E843E2186EAD3001B9BB4 /* UIImage+ImageEffects.m in Sources */,

@@ -26,6 +26,11 @@
     return self;
 }
 
+- (void)initUI
+{
+    
+}
+
 - (void)createUI
 {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];

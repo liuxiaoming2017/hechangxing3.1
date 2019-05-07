@@ -12,5 +12,5 @@
 
 @property (nonatomic,copy) NSString *type;
 @property (nonatomic,copy) NSString *advice;
-
+@property (nonatomic,assign) BOOL isDone;
 @end

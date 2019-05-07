@@ -61,8 +61,12 @@
     self.contentLabel.backgroundColor=[UIColor clearColor];
     [self addSubview:self.contentLabel];
     
+    self.circleImageV = [[UIImageView alloc] initWithFrame:CGRectMake(self.contentLabel.right+5, 24+3, 6, 6)];
+    self.circleImageV.backgroundColor = [UIColor redColor];
+    self.circleImageV.layer.cornerRadius = 3.0;
+    self.circleImageV.layer.masksToBounds = YES;
     
- //   [self addSubview:lineImageV];
+    [self addSubview:self.circleImageV];
 }
 
 -(void)insertSublayerWithImageView:(UIImageView *)imageV

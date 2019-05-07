@@ -126,6 +126,11 @@
              cell.lineImageV.backgroundColor = UIColorFromHex(0X8992F0);
         }
         cell.contentLabel.text = model.advice;
+        if(model.isDone){
+            cell.circleImageV.hidden = NO;
+        }else{
+            cell.circleImageV.hidden = YES;
+        }
     }
     
     return cell;
