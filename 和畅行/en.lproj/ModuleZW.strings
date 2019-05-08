@@ -335,14 +335,12 @@
 "ICD10_woman"                                                     = "ICD10_womanEn";
 "selectedSymDisease"                                            ="selectedSymDiseaseEn";
 "Feedback_btn"                                                      ="Feedback_btnEn";
-"docNormal"                                                            = "docNormalEn";
-"HomeNormal"                                                        = "HomeNormalEn";
-"MallNormal"                                                            = "MallNormalEn";
-"MyNormal"                                                            = "MyNormalEn";
-"docSelect"                                                             ="docSelectEn";
-"HomeSelect"                                                             ="homeSelectEn";
-"MallSelect"                                                             ="MallSelectEn";
-"MySelect"                                                             ="mySelectEn";
+
+"首页"                                                               ="Home";
+"档案"                                                               ="History";
+"商城"                                                               ="Store";
+"我的"                                                               ="Me";
+
 "个人信息_提交"                                                       ="个人信息_提交En";
 "立即检测"                                                                 ="立即检测En";
 "不再提醒"                                                                 ="不再提醒En";

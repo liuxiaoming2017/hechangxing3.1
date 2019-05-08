@@ -132,36 +132,36 @@
     UIEdgeInsets edgeInset = UIEdgeInsetsMake(-1, 0, 1, 0);
     UIOffset offSet = UIOffsetMake(0, 1);
     
-    homeVC.tabBarItem.title = @"首页";
-    homeVC.tabBarItem.image = [[UIImage imageNamed:ModuleZW(@"HomeNormal")] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    homeVC.tabBarItem.selectedImage = [[UIImage imageNamed:ModuleZW(@"HomeSelect")] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    homeVC.tabBarItem.title = ModuleZW(@"首页");
+    homeVC.tabBarItem.image = [[UIImage imageNamed:@"HomeNormal"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    homeVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"HomeSelect"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [homeVC.tabBarItem setImageInsets:edgeInset];
     homeVC.tabBarItem.titlePositionAdjustment =offSet;
     
     ArchivesController *ArchiveVC = [[ArchivesController alloc] init];
     CustomNavigationController *ArchiveNav = [[CustomNavigationController alloc] initWithRootViewController:ArchiveVC];
-    ArchiveVC.tabBarItem.title = @"档案";
-    ArchiveVC.tabBarItem.image = [UIImage imageNamed:ModuleZW(@"docNormal")];
-    ArchiveVC.tabBarItem.selectedImage = [UIImage imageNamed:ModuleZW(@"docSelect")];
+    ArchiveVC.tabBarItem.title = ModuleZW(@"档案");
+    ArchiveVC.tabBarItem.image = [UIImage imageNamed:@"docNormal"];
+    ArchiveVC.tabBarItem.selectedImage = [UIImage imageNamed:@"docSelect"];
     [ArchiveVC.tabBarItem setImageInsets:edgeInset];
     ArchiveVC.tabBarItem.titlePositionAdjustment = offSet;
     
     
     EDWKWebViewController *mallVC = [[EDWKWebViewController alloc] initWithUrlString:[NSString stringWithFormat:@"%@mobileIndex.html",URL_PRE]];
     CustomNavigationController *mallNav = [[CustomNavigationController alloc] initWithRootViewController:mallVC];
-    mallVC.tabBarItem.title = @"商城";
-    mallVC.tabBarItem.image = [UIImage imageNamed:ModuleZW(@"MallNormal")];
-    mallVC.tabBarItem.selectedImage = [UIImage imageNamed:ModuleZW(@"Mallelect")];
+    mallVC.tabBarItem.title = ModuleZW(@"商城");
+    mallVC.tabBarItem.image = [UIImage imageNamed:@"MallNormal"];
+    mallVC.tabBarItem.selectedImage = [UIImage imageNamed:@"MallSelect"];
     [mallVC.tabBarItem setImageInsets:edgeInset];
     mallVC.tabBarItem.titlePositionAdjustment = offSet;
     
     MineViewController *mineVC = [[MineViewController alloc] init];
     CustomNavigationController *mineNav = [[CustomNavigationController alloc] initWithRootViewController:mineVC];
-    mineVC.tabBarItem.title = @"我的";
-    mineVC.tabBarItem.image = [UIImage imageNamed:ModuleZW(@"MyNormal")];
+    mineVC.tabBarItem.title = ModuleZW(@"我的");
+    mineVC.tabBarItem.image = [UIImage imageNamed:@"MyNormal"];
    
    
-    mineVC.tabBarItem.selectedImage = [UIImage imageNamed:ModuleZW(@"Myelect")];
+    mineVC.tabBarItem.selectedImage = [UIImage imageNamed:@"MySelect"];
     [mineVC.tabBarItem setImageInsets:edgeInset];
     mineVC.tabBarItem.titlePositionAdjustment = offSet;
     

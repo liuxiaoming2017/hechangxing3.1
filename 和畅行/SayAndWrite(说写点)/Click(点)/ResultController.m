@@ -14,6 +14,7 @@
 #import "JSONKit.h"
 
 #import "QuestionListController.h"
+#import "TipClickController.h"
 
 @interface ResultController ()<WKUIDelegate,WKNavigationDelegate>
 
@@ -42,7 +43,7 @@
 {
     NSMutableArray *tempArr = self.navigationController.viewControllers.mutableCopy;
     for(UIViewController *vc in self.navigationController.viewControllers){
-        if([vc isKindOfClass:[QuestionListController class]]){
+        if([vc isKindOfClass:[QuestionListController class]]||[vc isKindOfClass:[TipClickController class]]){
             [tempArr removeObject:vc];
         }
     }

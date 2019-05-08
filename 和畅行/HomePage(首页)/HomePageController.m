@@ -235,7 +235,10 @@
     
     if(_isActivity){
         if(!self.activityImage){
-            self.activityImage = [[UIImageView alloc] initWithFrame:CGRectMake(15, self.readWriteView.bottom+10, ScreenWidth-30, 100)];
+            
+            CGFloat imageW = ScreenWidth-30;
+            
+            self.activityImage = [[UIImageView alloc] initWithFrame:CGRectMake(15, self.readWriteView.bottom+10, imageW, imageW/5.15)];
             HCY_HomeImageModel *model = self.pushModel?self.pushModel:self.backImageModel;
             [self.activityImage sd_setImageWithURL:[NSURL URLWithString:model.picurl] placeholderImage:[UIImage imageNamed:@"activityImage"]];
             self.activityImage.userInteractionEnabled = YES;
@@ -245,21 +248,25 @@
             [self.bgScrollView addSubview:self.activityImage];
         }
     }
-   
-    if(self.testActivityIndicator){
+    
+    if(!self.testActivityIndicator){
         self.testActivityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        self.testActivityIndicator.center = CGPointMake(self.view.width/2 , self.readWriteView.bottom +100);//只能设置中心，不能设置大小
+       // self.testActivityIndicator.center = CGPointMake(self.view.width/2 , self.readWriteView.bottom +100);//只能设置中心，不能设置大小
         [self.bgScrollView addSubview:self.testActivityIndicator];
         self.testActivityIndicator.color = RGB_TextAppBlue;
     }
-    
-    
+   
     self.readWriteView.frame = CGRectMake(self.readWriteView.left, _havePackage?self.packgeView.bottom-65:5, self.readWriteView.width, self.readWriteView.height);
     NSLog(@"111:%@*****%@",NSStringFromCGRect(self.packgeView.frame),NSStringFromCGRect(self.readWriteView.frame));
     if(_isActivity){
         self.activityImage.frame = CGRectMake(self.activityImage.left, self.readWriteView.bottom+10, self.activityImage.width, self.activityImage.height);
     }
+    
+    self.testActivityIndicator.center = CGPointMake(self.view.width/2 , _isActivity?self.activityImage.bottom +100:self.readWriteView.bottom +100);//只能设置中心，不能设置大小
+    
     self.remindView.frame = CGRectMake(self.remindView.left, _isActivity?self.activityImage.bottom+10:self.readWriteView.bottom+10, self.readWriteView.width, self.remindView.height);
+    
+    
     
 }
 
@@ -301,7 +308,7 @@
             return;
         }
         
-        [self.testActivityIndicator startAnimating];
+        
         [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:paramDic successBlock:^(id response) {
             
             dispatch_group_leave(group);
@@ -310,8 +317,8 @@
                 NSInteger status = [[[response objectForKey:@"data"] objectForKey:@"num"] integerValue];
                
                     if(status >=0 && status <= 11){
-                        
                         self->_havePackage = YES;
+                        
                         
                         if([response objectForKey:@"data"]!=nil && [[response objectForKey:@"data"] isKindOfClass:[NSDictionary class]]){
                             weakSelf.packageDic = [response objectForKey:@"data"];
@@ -419,7 +426,7 @@
         return;
     }
     __weak typeof(self) weakSelf = self;
-     [self.testActivityIndicator startAnimating];
+    
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:paramDic successBlock:^(id response) {
         
         [weakSelf requestRemindNetWork];
@@ -430,14 +437,16 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 if(status >=0 && status <= 11){
-                    
-                    self->_havePackage = YES;
-                   // [weakSelf createTopViewWithStatus:YES];
+                    if(!self->_havePackage){ //之前没有和畅包,得展示和畅包,有则不变
+                        self->_havePackage = YES;
+                        [weakSelf createTopViewWithStatus:YES];
+                        [weakSelf addGradientLayer];
+                    }
+                   
                     if(weakSelf.packgeView){
                         [weakSelf.packgeView changePackgeTypeWithStatus:status withXingStr:[[response objectForKey:@"data"] objectForKey:@"name"]];
                     }
                 }else{ //未做检测，不显示和畅包
-                    //[weakSelf createTopViewWithStatus:NO];
                     self->_havePackage = NO;
 //                    [weakSelf createTopViewWithStatus:YES];
 //                    [self addGradientLayer];
@@ -454,7 +463,7 @@
 # pragma mark - 和畅提醒网络请求
 - (void)requestRemindNetWork
 {
-    
+    [self.testActivityIndicator startAnimating];
     NSString *urlStr = @"member/new_ins/tips.jhtml";
     //NSString *urlStr = @"/member/new_ins/newTips.jhtml";
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
