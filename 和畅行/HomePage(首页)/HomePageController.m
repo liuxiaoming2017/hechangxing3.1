@@ -249,23 +249,24 @@
         }
     }
     
-    if(!self.testActivityIndicator){
-        self.testActivityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-       // self.testActivityIndicator.center = CGPointMake(self.view.width/2 , self.readWriteView.bottom +100);//只能设置中心，不能设置大小
-        [self.bgScrollView addSubview:self.testActivityIndicator];
-        self.testActivityIndicator.color = RGB_TextAppBlue;
-    }
-   
     self.readWriteView.frame = CGRectMake(self.readWriteView.left, _havePackage?self.packgeView.bottom-65:5, self.readWriteView.width, self.readWriteView.height);
-    NSLog(@"111:%@*****%@",NSStringFromCGRect(self.packgeView.frame),NSStringFromCGRect(self.readWriteView.frame));
+
     if(_isActivity){
         self.activityImage.frame = CGRectMake(self.activityImage.left, self.readWriteView.bottom+10, self.activityImage.width, self.activityImage.height);
     }
     
-    self.testActivityIndicator.center = CGPointMake(self.view.width/2 , _isActivity?self.activityImage.bottom +100:self.readWriteView.bottom +100);//只能设置中心，不能设置大小
+    if(!self.testActivityIndicator){
+        self.testActivityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        self.testActivityIndicator.center = CGPointMake(self.view.width/2 , _isActivity?self.activityImage.bottom +100:self.readWriteView.bottom +100);//只能设置中心，不能设置大小
+        [self.bgScrollView addSubview:self.testActivityIndicator];
+        self.testActivityIndicator.color = RGB_TextAppBlue;
+       
+    }
+   
     
-    self.remindView.frame = CGRectMake(self.remindView.left, _isActivity?self.activityImage.bottom+10:self.readWriteView.bottom+10, self.readWriteView.width, self.remindView.height);
     
+   // self.remindView.frame = CGRectMake(self.remindView.left, _isActivity?self.activityImage.bottom+10:self.readWriteView.bottom+10, self.readWriteView.width, self.remindView.height);
+   
     
     
 }
@@ -292,6 +293,7 @@
 # pragma mark - 网络请求修改
 - (void)handleNetworkGroup
 {
+   
     dispatch_group_t group = dispatch_group_create();
     dispatch_queue_t serialQueue = dispatch_queue_create("com.wzb.test.www", DISPATCH_QUEUE_SERIAL);
     
@@ -383,7 +385,7 @@
                 
             // 刷新UI
             [weakSelf createTopViewWithStatus:self->_isActivity];
-            
+             [weakSelf.testActivityIndicator startAnimating];
             if(self->_havePackage){
                 if(weakSelf.packageDic){
                     NSInteger status = [[self.packageDic objectForKey:@"num"] integerValue];
@@ -463,7 +465,7 @@
 # pragma mark - 和畅提醒网络请求
 - (void)requestRemindNetWork
 {
-    [self.testActivityIndicator startAnimating];
+    
     NSString *urlStr = @"member/new_ins/newTips.jhtml";
     //NSString *urlStr = @"/member/new_ins/newTips.jhtml";
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
@@ -538,6 +540,7 @@
         [self.testActivityIndicator setHidesWhenStopped:YES];
         
     }];
+    
 }
 
 

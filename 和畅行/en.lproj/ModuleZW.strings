@@ -15,8 +15,7 @@
 "请输入手机号"                     = "Phone number" ;
 "  请输入和畅账户"                = "  Phone number" ;
 "  请输入密码"                       = "  Password";
-"忘记密码"                             = "Forgot password?";
-"忘记密码1"                           = "Forgot password";
+"忘记密码"                             = "Forgot password";
 "登录"                                     = "Log in";
 "短信验证码登录"                   = "Log in via SMS"  ;
 "其他登录方式"                      = "OR";
