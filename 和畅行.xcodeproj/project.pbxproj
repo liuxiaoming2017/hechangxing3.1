@@ -169,7 +169,6 @@
 		036E84F82186EB1A001B9BB4 /* btn_detailtxt_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E848B2186EB12001B9BB4 /* btn_detailtxt_normal.png */; };
 		036E84F92186EB1A001B9BB4 /* 68MoxaHead.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E848C2186EB13001B9BB4 /* 68MoxaHead.png */; };
 		036E84FB2186EB1A001B9BB4 /* longclick_drag_guide.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E848E2186EB13001B9BB4 /* longclick_drag_guide.png */; };
-		036E84FC2186EB1A001B9BB4 /* btn_recipelst_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E848F2186EB13001B9BB4 /* btn_recipelst_normal.png */; };
 		036E84FD2186EB1A001B9BB4 /* ic_help.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E84902186EB13001B9BB4 /* ic_help.png */; };
 		036E84FE2186EB1A001B9BB4 /* ic_electricity_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E84912186EB13001B9BB4 /* ic_electricity_red.png */; };
 		036E85002186EB1A001B9BB4 /* AllSwitch.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E84932186EB14001B9BB4 /* AllSwitch.png */; };
@@ -444,6 +443,7 @@
 		835DB8DB21D3685D00B8DF99 /* HCY_ConsultingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 835DB8DA21D3685D00B8DF99 /* HCY_ConsultingModel.m */; };
 		835DB91C21D757C800B8DF99 /* HCY_FamilyListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 835DB91B21D757C800B8DF99 /* HCY_FamilyListModel.m */; };
 		83755F192281514200D761A2 /* WXPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83755F182281514200D761A2 /* WXPhoneController.m */; };
+		83755F1B22854B5B00D761A2 /* btn_recipelst_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 83755F1A22854B5B00D761A2 /* btn_recipelst_normal.png */; };
 		837D822321F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837D822121F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m */; };
 		839E0C552213E0540090F179 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 839E0C572213E0540090F179 /* InfoPlist.strings */; };
 		83C5F7E02270002000889370 /* LJRulerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C5F7DC2270001F00889370 /* LJRulerScrollView.m */; };
@@ -916,7 +916,6 @@
 		036E848B2186EB12001B9BB4 /* btn_detailtxt_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_detailtxt_normal.png; sourceTree = "<group>"; };
 		036E848C2186EB13001B9BB4 /* 68MoxaHead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 68MoxaHead.png; sourceTree = "<group>"; };
 		036E848E2186EB13001B9BB4 /* longclick_drag_guide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = longclick_drag_guide.png; sourceTree = "<group>"; };
-		036E848F2186EB13001B9BB4 /* btn_recipelst_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_recipelst_normal.png; sourceTree = "<group>"; };
 		036E84902186EB13001B9BB4 /* ic_help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_help.png; sourceTree = "<group>"; };
 		036E84912186EB13001B9BB4 /* ic_electricity_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_electricity_red.png; sourceTree = "<group>"; };
 		036E84932186EB14001B9BB4 /* AllSwitch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AllSwitch.png; sourceTree = "<group>"; };
@@ -1465,6 +1464,7 @@
 		835DB91B21D757C800B8DF99 /* HCY_FamilyListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_FamilyListModel.m; sourceTree = "<group>"; };
 		83755F172281514200D761A2 /* WXPhoneController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXPhoneController.h; sourceTree = "<group>"; };
 		83755F182281514200D761A2 /* WXPhoneController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WXPhoneController.m; sourceTree = "<group>"; };
+		83755F1A22854B5B00D761A2 /* btn_recipelst_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_recipelst_normal.png; sourceTree = "<group>"; };
 		837D822121F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BloodOxyNonDeviceViewController.m; sourceTree = "<group>"; };
 		837D822221F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BloodOxyNonDeviceViewController.h; sourceTree = "<group>"; };
 		839E0C562213E0540090F179 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2425,11 +2425,11 @@
 				036E84A12186EB16001B9BB4 /* btn_aijiu_choosed_green.png */,
 				036E847A2186EB0F001B9BB4 /* btn_aijiu_none_choose.png */,
 				036E84652186EB08001B9BB4 /* btn_aijiu_recipe_2.png */,
+				83755F1A22854B5B00D761A2 /* btn_recipelst_normal.png */,
 				036E845E2186EB06001B9BB4 /* btn_aijiu_recipe_4.png */,
 				036E84752186EB0E001B9BB4 /* btn_aijiu_recipe_day_add.png */,
 				036E84B82186EB19001B9BB4 /* btn_aijiu_recipe_day_delete.png */,
 				036E848B2186EB12001B9BB4 /* btn_detailtxt_normal.png */,
-				036E848F2186EB13001B9BB4 /* btn_recipelst_normal.png */,
 				036E84692186EB08001B9BB4 /* btn_recipelst_pressed.png */,
 				036E84B52186EB19001B9BB4 /* channel_num1.png */,
 				036E849C2186EB15001B9BB4 /* click_guide.png */,
@@ -3938,7 +3938,6 @@
 				83DC66152275414600B10F23 /* Wybs_duo.png in Resources */,
 				83DC66572275414600B10F23 /* 血糖9.png in Resources */,
 				83DC65CF2275414600B10F23 /* 私人医生预加载.png in Resources */,
-				036E84FC2186EB1A001B9BB4 /* btn_recipelst_normal.png in Resources */,
 				03513AD820E9CAD4004E2805 /* LaunchScreen.storyboard in Resources */,
 				83DC661B2275414600B10F23 /* qianbao.png in Resources */,
 				83DC662B2275414600B10F23 /* DownImg.png in Resources */,
@@ -3993,6 +3992,7 @@
 				036E85022186EB1A001B9BB4 /* 68MoxaHead_yellow.png in Resources */,
 				83DC66102275414600B10F23 /* zhifuwancheng.png in Resources */,
 				03513AD520E9CAD4004E2805 /* Assets.xcassets in Resources */,
+				83755F1B22854B5B00D761A2 /* btn_recipelst_normal.png in Resources */,
 				83DC662E2275414600B10F23 /* YD_Type.png in Resources */,
 				C9FDB92C21BE3D4900E726F3 /* HCY_ConsumptionListCell.xib in Resources */,
 				83DC662D2275414600B10F23 /* Wybs_sao.png in Resources */,

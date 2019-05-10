@@ -69,7 +69,7 @@
     _type = @"empty";
     [self initWithController];
     
-     _dataArray = @[ModuleZW(@"凌晨"),ModuleZW(@"早餐前"),ModuleZW(@"早餐后"),ModuleZW(@"午餐前"),ModuleZW(@"午餐后"),ModuleZW(@"晚餐前"),ModuleZW(@"晚餐后"),ModuleZW(@"睡前")];
+     _dataArray = @[@"凌晨",@"早餐前",@"早餐后",@"午餐前",@"午餐后",@"晚餐前",@"晚餐后",@"睡前"];
   
 }
 
@@ -228,6 +228,7 @@
     self.ruler.currentValue = 2;
     self.sugerValue = 3.0;
     self.sugarLabel.text = @"3.0mmol/L";
+    self.ruler.isScroll = NO;
 }
 - (void)ruler:(LJRuler *)ruler didScroll:(LJRulerScrollView *)scrollView {
     
@@ -243,10 +244,12 @@
 
 
 
-
-
 #pragma mark ------ 提交数据
 -(void)commitClick:(UIButton *)button{
+    
+    if(self.ruler.isScroll == YES){
+        return;
+    }
     NSString *idNumStr = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
     BOOL isAbnormity = NO;
     
@@ -276,7 +279,7 @@
         typeStr = @"beforeSleep";
          _type = @"empty";
     }
-    
+    self.sugerValue = floor(self.sugerValue*10) / 10;
     NSString *str = [NSString stringWithFormat:@"%@ %@",_dataLabel.text,_timeLabel.text];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"YYYY/MM/dd HH:mm"];
@@ -305,6 +308,8 @@
         }
 
     }
+    
+    
     
     [self showPreogressView];
     NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE] ;
@@ -690,7 +695,7 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView
              titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return _dataArray[row];
+    return  ModuleZW(_dataArray[row]);
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:
 (NSInteger)row inComponent:(NSInteger)component

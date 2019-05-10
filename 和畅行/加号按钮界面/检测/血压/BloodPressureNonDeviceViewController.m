@@ -252,6 +252,9 @@
     _highRuler.currentValue = 120 - _highRuler.mixscaleCount;
     _lowRuler.currentValue = 80 - _lowRuler.mixscaleCount;
     _rateRuler.currentValue = 70 - _rateRuler.mixscaleCount;
+    _highRuler.isScroll = NO;
+    _lowRuler.isScroll = NO;
+    _rateRuler.isScroll = NO;
 }
 
 
@@ -394,6 +397,11 @@
 
 #pragma mark ------- 提交数据
 -(void)saveClick:(UIButton *)button{
+ 
+    
+    if(self.highRuler.isScroll == YES||self.lowRuler.isScroll == YES||self.rateRuler.isScroll == YES){
+        return;
+    }
  
     //得到子账户的id
     NSString *subId = [NSString stringWithFormat:@"%@", [MemberUserShance shareOnce].idNum];
