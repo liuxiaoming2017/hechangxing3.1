@@ -464,7 +464,7 @@
 - (void)requestRemindNetWork
 {
     [self.testActivityIndicator startAnimating];
-    NSString *urlStr = @"member/new_ins/tips.jhtml";
+    NSString *urlStr = @"member/new_ins/newTips.jhtml";
     //NSString *urlStr = @"/member/new_ins/newTips.jhtml";
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
     [paramDic setObject:[MemberUserShance shareOnce].idNum forKey:@"memberChildId"];
@@ -508,34 +508,6 @@
                 }
             }
             
-            /*
-            if([[response objectForKey:@"data"] objectForKey:@"jlbs"] == nil || [[[response objectForKey:@"data"] objectForKey:@"jlbs"] isKindOfClass:[NSNull class]]){
-                RemindModel *model = [[RemindModel alloc] init];
-                model.type =ModuleZW(@"一说");
-                model.advice = jlbsAdvice;
-                model.notTest = YES;
-                [mutableArr addObject:model];
-                NSLog(@"jlbs");
-                
-            }
-            if([[response objectForKey:@"data"] objectForKey:@"tzbs"] == nil || [[[response objectForKey:@"data"] objectForKey:@"tzbs"] isKindOfClass:[NSNull class]]){
-                RemindModel *model = [[RemindModel alloc] init];
-                model.type = ModuleZW(@"一点");
-                model.advice = tzbsAdvice;
-                model.notTest = YES;
-                [mutableArr addObject:model];
-                NSLog(@"tzbs");
-            }
-            if([[response objectForKey:@"data"] objectForKey:@"zfbs"] == nil || [[[response objectForKey:@"data"] objectForKey:@"zfbs"] isKindOfClass:[NSNull class]]){
-                RemindModel *model = [[RemindModel alloc] init];
-                model.type =ModuleZW( @"一写");
-                model.advice = zfbsAdvice;
-                model.notTest = YES;
-                [mutableArr addObject:model];
-                NSLog(@"zfbs");
-            }
-            */
-            
             weakSelf.remindView.dataArr = mutableArr;
             dispatch_async(dispatch_get_main_queue(), ^{
                 if(!weakSelf.remindView){
@@ -564,6 +536,7 @@
     } failureBlock:^(NSError *error) {
         [self.testActivityIndicator stopAnimating];
         [self.testActivityIndicator setHidesWhenStopped:YES];
+        
     }];
 }
 
