@@ -24,4 +24,5 @@
 @property (nonatomic,copy) NSString *levels;
 //心跳
 @property (nonatomic,copy) NSString *pulse;
+@property (nonatomic,copy) NSString *type;
 @end

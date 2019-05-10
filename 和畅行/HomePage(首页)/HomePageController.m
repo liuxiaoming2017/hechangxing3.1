@@ -18,7 +18,7 @@
 
 #import "SugerViewController.h"
 #import "HCY_ActivityController.h"
-
+#import "TestViewController.h"
 @interface HomePageController ()<UIScrollViewDelegate>
 
 @property (nonatomic,strong) UIScrollView *bgScrollView;
@@ -72,7 +72,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exchangeMemberChild:) name:exchangeMemberChildNotify object:nil];
     
     
-//    SugerViewController *nonDeviceCheck = [[SugerViewController alloc] init];
+//    TestViewController *nonDeviceCheck = [[TestViewController alloc] init];
 //    nonDeviceCheck.hidesBottomBarWhenPushed = YES;
 //    [self.navigationController pushViewController:nonDeviceCheck animated:YES];
 }

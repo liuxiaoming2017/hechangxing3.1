@@ -218,7 +218,26 @@
                 cell.middLabel.text = @"--mmol";
 
             }
-            cell.midd1Label.text = ModuleZW(@"午饭前");
+            NSString *typeStr = [NSString string];
+            if([model.type isEqualToString:@"beforeDawn"]){
+                typeStr = @"凌晨";
+            }else  if([model.type isEqualToString:@"beforeBreakfast"]){
+                typeStr = @"早餐前";
+            }else  if([model.type isEqualToString:@"afterBreakfast"]){
+                typeStr = @"早餐后";
+            }else  if([model.type isEqualToString:@"beforeLunch"]){
+                typeStr = @"午餐前";
+            }else  if([model.type isEqualToString:@"afterLunch"]){
+                typeStr = @"午餐后";
+            }else  if([model.type isEqualToString:@"beforeDinner"]){
+                typeStr = @"晚餐前";
+            }else  if([model.type isEqualToString:@"afterDinner"]){
+                typeStr = @"晚餐后";
+            }else  if([model.type isEqualToString:@"beforeSleep"]){
+                typeStr = @"睡前";
+            }
+
+            cell.midd1Label.text = ModuleZW(typeStr);
            
             
             cell.leftTwoBlock = ^{
@@ -236,23 +255,27 @@
 
             };
         }
-        
-        cell.dateLabel.text = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%ld",model.createDate]];
+        if(model.createDate > 100){
+            cell.dateLabel.text =
+            [self compareCurrentTime:[NSString stringWithFormat:@"%ld",model.createDate]];
+        }
 
     }
     return cell;
 }
 
 
--(NSString *)getDateStringWithOtherTimeStr:(NSString *)str{
+- (NSString *) compareCurrentTime:(NSString *)str
+{
     NSTimeInterval time=[str doubleValue]/1000;//传入的时间戳str如果是精确到毫秒的记得要/1000
     NSDate *detailDate=[NSDate dateWithTimeIntervalSince1970:time];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; //实例化一个NSDateFormatter对象
     //设定时间格式,这里可以设置成自己需要的格式
     NSString *dateStr = [NSString stringWithFormat:@"YYYY-MM-dd  HH:mm"];
     [dateFormatter setDateFormat:dateStr];
-    NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
-    return currentDateStr;
+    NSString *timeString = [dateFormatter stringFromDate: detailDate];
+    return  timeString;
 }
+
 
 @end

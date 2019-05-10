@@ -14,6 +14,7 @@
 @property (nonatomic,strong)UIButton *loginBtn;
 @property (nonatomic,assign)int pageNo;
 @property (nonatomic,strong)NSTimer* timer;
+@property (nonatomic,strong)MBProgressHUD *progress;
 @end
 
 @implementation WXPhoneController
@@ -94,8 +95,10 @@
     RAC(loginBtn, enabled) = [RACSignal combineLatest:@[userNameBox.rac_textSignal, passWordBox.rac_textSignal] reduce:^id _Nullable(NSString * username, NSString * password){
         if(username.length> 0 && password.length  > 0) {
             loginBtn.backgroundColor = UIColorFromHex(0x1e82d2);
+            loginBtn.enabled = YES;
         }else{
             loginBtn.backgroundColor = RGB(195, 195, 195);
+            loginBtn.enabled = NO;
         }
         return @(username.length && password.length);
     }];
@@ -106,26 +109,31 @@
 -(void)rightBtnAction
 {
     if (_userNameBox.text.length==0) {
-        [self showAlertWarmMessage:ModuleZW(@"登录手机号不能为空")];
+        [self showAlertWarmMessage:ModuleZW(@"请输入要绑定的手机号")];
         return;
     }
-    
+    if (_userNameBox.text.length!=11) {
+        [self showAlertWarmMessage:ModuleZW(@"请输入正确的手机号")];
+        return;
+    }
     NSString *aUrl = @"weiq/sms/getsmsCode.jhtml";
     /**
      *  MD5加密后的字符串
      */
-    [GlobalCommon showMBHudTitleWithView:self.view];
+ 
+    [self showHUD];
     NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",_userNameBox.text];
     NSString *iPoneNumberMD5 = [GlobalCommon md5:iPoneNumber].uppercaseString;
     NSDictionary *dic = @{@"phone":_userNameBox.text,@"token":iPoneNumberMD5};
     __weak typeof(self) weakSelf = self;
     [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:dic successBlock:^(id response) {
-        [GlobalCommon hideMBHudTitleWithView:weakSelf.view];
+
+        [self hiddenHUD];
         NSLog(@"%@",response);
         id status=[response objectForKey:@"status"];
-        if (status!=nil)
-        {
+        if (status!=nil)   {
             if ([status intValue]==100) {
+                
                 self->_pageNo = 60;
                 self->_timer=[NSTimer scheduledTimerWithTimeInterval:1
                                                              target:self
@@ -133,18 +141,18 @@
                                                            userInfo:nil
                                                             repeats:YES];
             }else{
-                
+
                 NSString *str = [dic objectForKey:@"message"];
                 [weakSelf showAlertWarmMessage:str];
-                
+
             }
         }
         else
         {
             [weakSelf showAlertWarmMessage:ModuleZW(@"短信验证码发送失败，请重试")];
-            
+
             return;
-            
+
         }
     } failureBlock:^(NSError *error) {
         [GlobalCommon hideMBHudTitleWithView:weakSelf.view];
@@ -155,6 +163,16 @@
     
 }
 
+
+-(void)showHUD{
+    self.progress = [[MBProgressHUD alloc] initWithView:self.view];
+    self.progress.label.text = ModuleZW(@"请稍后");
+    [self.view addSubview:self.progress];
+    [self.progress showAnimated:YES];
+}
+-(void)hiddenHUD{
+    [self.progress removeFromSuperview];
+}
 -(void)getResults
 {
     UIButton *YZMbtn = (UIButton *)[self.view viewWithTag:2018];
@@ -179,6 +197,54 @@
 }
 -(void)suerAction{
     
+    if (_userNameBox.text.length==0) {
+        [self showAlertWarmMessage:ModuleZW(@"请输入要绑定的手机号")];
+        return;
+    }
+    if (_userNameBox.text.length!=11) {
+        [self showAlertWarmMessage:ModuleZW(@"请输入正确的手机号")];
+        return;
+    }
+    if(_passWordBox.text.length == 0 || _passWordBox.text.length != 4){
+        [self showAlertWarmMessage:ModuleZW(@"请输入4位验证码")];
+        return;
+    }
+    NSString *aUrl = @"/weiq/setUserInfo.jhtml";
+    NSDictionary *dic = @{@"unionid":[UserShareOnce shareOnce].username,
+                          @"phone":_userNameBox.text,
+                          @"vftcode":_passWordBox.text
+                          };
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:dic successBlock:^(id response) {
+        
+        [self hiddenHUD];
+        id status=[response objectForKey:@"status"];
+        if (status!=nil)   {
+            if ([status intValue]==100) {
+                [UserShareOnce shareOnce].username = self->_userNameBox.text;
+                UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"绑定成功") preferredStyle:(UIAlertControllerStyleAlert)];
+                UIAlertAction *sureAction= [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }];
+                [alerVC addAction:sureAction];
+                [self presentViewController:alerVC animated:YES completion:nil];
+            }else{
+                NSString *str = [response objectForKey:@"data"];
+                [weakSelf showAlertWarmMessage:str];
+                
+            }
+        }
+        else
+        {
+            [weakSelf showAlertWarmMessage:ModuleZW(@"绑定失败，请重试")];
+            
+            return;
+            
+        }
+    } failureBlock:^(NSError *error) {
+        [GlobalCommon hideMBHudTitleWithView:weakSelf.view];
+        [weakSelf showAlertWarmMessage:requestErrorMessage];
+    }];
     
 }
 @end

@@ -78,7 +78,7 @@
             self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0 ,caiImageView.bottom+8, backImageView.width, 20)];
             self.dateLabel.textAlignment=NSTextAlignmentCenter;
             self.dateLabel.font=[UIFont systemFontOfSize:14];
-            self.dateLabel.text = @"1991-01-01 17:02";
+            self.dateLabel.text = @"------";
             self.dateLabel.textColor = UIColorFromHex(0X8E8E93);
             self.dateLabel.backgroundColor=[UIColor clearColor];
             [backImageView addSubview:self.dateLabel];

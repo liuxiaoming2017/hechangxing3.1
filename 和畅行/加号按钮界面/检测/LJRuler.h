@@ -79,4 +79,6 @@
 
 @property (nonatomic, assign) NSInteger mixscaleCount;
 
+@property (nonatomic, strong) LJRulerScrollView *rulerScrollView;
+
 @end

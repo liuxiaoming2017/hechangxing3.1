@@ -11,7 +11,7 @@
 #import "ResultSpeakController.h"
 #import "BloodPressureNonDeviceViewController.h"
 #import "SugerViewController.h"
-
+#import "SGScanningQRCodeVC.h"
 
 
 @interface CustomNavigationController ()<UIGestureRecognizerDelegate>
@@ -59,7 +59,7 @@
                 return NO;
             }
         }
-        if([vc isKindOfClass:[BloodPressureNonDeviceViewController class]]||[vc isKindOfClass:[SugerViewController class]]){
+        if([vc isKindOfClass:[BloodPressureNonDeviceViewController class]]||[vc isKindOfClass:[SugerViewController class]]||[vc isKindOfClass:[SGScanningQRCodeVC class]]){
             return NO;
         }
         

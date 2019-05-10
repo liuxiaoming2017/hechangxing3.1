@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong)NSMutableArray *topArray;
 @property (nonatomic,strong)NSMutableArray *bottomArray;
 @property (nonatomic,assign) int sex;
+@property (nonatomic,strong) NSMutableArray *rightDataArr;
 @end
 
 NS_ASSUME_NONNULL_END

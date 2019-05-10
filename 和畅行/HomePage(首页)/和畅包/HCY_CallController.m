@@ -76,7 +76,7 @@
         [self.navigationController pushViewController:adVC animated:YES];
         return;
     }
-    
+
 //     HHMSDK *hhmSdk = [[HHMSDK alloc] init];
 //    __weak typeof(self) weakSelf = self;
 //    if(index.row==0||index.row==1){
