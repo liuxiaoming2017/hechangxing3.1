@@ -157,6 +157,13 @@
         CGFloat moderate = 1.0;
         CGFloat heavy = 1.5;
         cell.deletBlock = ^{
+            SymptomModel *model = self->_topArray[indexPath.row];
+            for (int i = 0; i < self.rightDataArr.count; i++) {
+                SymptomModel *model1 = self.rightDataArr[i];
+                if([model.symptom isEqualToString:model1.symptom]){
+                    model1.fPrivate = 0;
+                }
+            }
             [self->_topArray removeObjectAtIndex:indexPath.row];
             [self.topTableView reloadData];
         };

@@ -193,6 +193,7 @@
             ruler.rulerColor = [UIColor whiteColor];
             ruler.delegate = self;
             ruler.scaleCount = 330;
+//            ruler.rulerScrollView.delegate =self;
             ruler.mixscaleCount = 10;
             ruler.scaleAverage = 0.1;
             self.ruler = ruler;
@@ -242,6 +243,8 @@
 
 
 
+
+
 #pragma mark ------ 提交数据
 -(void)commitClick:(UIButton *)button{
     NSString *idNumStr = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
@@ -257,7 +260,6 @@
     }else   if([self.typeLabel.text isEqualToString:ModuleZW(@"早餐后")]){
         typeStr = @"afterBreakfast";
         _type = @"full";
-        
     }else   if([self.typeLabel.text isEqualToString:ModuleZW(@"午餐前")]){
         typeStr = @"beforeLunch";
          _type = @"empty";

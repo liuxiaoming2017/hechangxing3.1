@@ -15,7 +15,7 @@
 #import "ZHPickView.h"
 #import "UIImageView+WebCache.h"
 #import "PECropViewController.h"
-
+#import "WXPhoneController.h"
 #define currentMonth [currentMonthString integerValue]
 
 
@@ -152,8 +152,9 @@
                         break;
                     case 4:
                         if ([[UserShareOnce shareOnce].loginType isEqualToString:@"WX"]){
-                            if(![self deptNumInputShouldNumber:[UserShareOnce shareOnce].username]){
-                                 [self showAlertWarmMessage:@"跳转绑定手机号"];
+                            if([UserShareOnce shareOnce].username.length != 11){
+                                WXPhoneController *vc = [[WXPhoneController alloc]init];
+                                [self.navigationController pushViewController:vc animated:YES];
                             }
                         }
                         break;

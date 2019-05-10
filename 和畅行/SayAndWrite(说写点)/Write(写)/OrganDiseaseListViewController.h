@@ -9,14 +9,15 @@
 #import "SayAndWriteController.h"
 
 typedef void (^refreshCellBlock)(NSInteger row);
-
+typedef void(^RefreshTableBlock)(void);
 @interface OrganDiseaseListViewController : SayAndWriteController
 
 @property (nonatomic,retain) NSMutableArray *upData;
 @property (nonatomic,assign) int sex;
+@property (nonatomic,strong) NSMutableArray *rightDataArr;
 
 
-
+@property (nonatomic,copy) RefreshTableBlock refreshTableView;
 @property (nonatomic,copy) refreshCellBlock refreshBlock;
 -(void)refreshCellWith:(refreshCellBlock )block;
 

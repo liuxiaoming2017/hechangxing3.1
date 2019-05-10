@@ -79,8 +79,17 @@
     
 }
 -(void)flickingClick{
-    SGScanningQRCodeVC *vc = [[SGScanningQRCodeVC alloc]init];
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if (authStatus == AVAuthorizationStatusRestricted || authStatus ==AVAuthorizationStatusDenied) {
+        //无权限 可以做一个友好的提示
+        [self showAlertWarmMessage:ModuleZW(@"请您先去设置允许APP访问您的相机 设置>隐私>相机")];
+        return ;
+    } else {  
+        SGScanningQRCodeVC *vc = [[SGScanningQRCodeVC alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+   
 }
 
 

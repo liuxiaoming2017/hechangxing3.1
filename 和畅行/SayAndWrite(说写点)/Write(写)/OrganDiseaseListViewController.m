@@ -84,11 +84,13 @@
     NSArray *section = @[@"背部",@"病因",@"腹部",@"全身",@"四肢部",@"头面部",@"胸部",@"腰股部"];
     _symptomDataArr = [[NSMutableArray alloc] initWithArray:section];
 }
-
--(void)backClick:(UIButton *)button{
+- (void)goBack:(UIButton *)btn{
+    if(_refreshTableView){
+        self.refreshTableView();
+    }
     [self.navigationController popViewControllerAnimated:YES];
-    //[self dismissViewControllerAnimated:YES completion:nil];
 }
+
 
 
 #pragma mark ------ searchBar相关
@@ -334,6 +336,7 @@
     HpiViewController *hpiVC = [[HpiViewController alloc]init];
     hpiVC.topArray = self.upData;
     hpiVC.bottomArray =  _selectedArr;
+    hpiVC.rightDataArr = _rightDataArr;
     hpiVC.sex = _sex;
     [self.navigationController pushViewController:hpiVC animated:YES];
    

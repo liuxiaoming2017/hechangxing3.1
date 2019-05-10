@@ -65,6 +65,7 @@
 @property (nonatomic,strong)UIButton *choseButton;
 @property (nonatomic, weak) PYPhotosView *publishPhotosView;//属性 保存选择的图片
 @property (nonatomic ,strong) UILabel *numberLabel;
+@property (nonatomic ,assign) BOOL canPOP;
 @end
 
 @implementation AdvisorysViewController
@@ -74,7 +75,7 @@
     [super viewDidLoad];
     self.navTitleLabel.text = ModuleZW(@"图文咨询");
     self.view.backgroundColor = RGB_AppWhite;
-    
+    self.canPOP = YES;
     self.headArray = [[NSMutableArray alloc]init];
     self.dataArr = [NSMutableArray array];
     _memberChildId = [UserShareOnce shareOnce].mengberchildId;
@@ -162,13 +163,34 @@
     
 }
 
-
+- (void)goBack:(UIButton *)btn
+{
+    if(self.photos.count>0){
+        self.canPOP = NO;
+    }
+    if(![_textView hasText]&&self.photos.count==0){
+        self.canPOP = YES;
+    }
+    if(self.canPOP == NO) {
+        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您有未提交的咨询信息 是否离开") preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *sureAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:(UIAlertActionStyleCancel) handler:nil];
+        [alertVC addAction:sureAction];
+        [alertVC addAction:cancelAction];
+        [self presentViewController:alertVC animated:YES completion:nil];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 
 - (void)textDidChangess{
     _textViews.hidden = [_textViews hasText];
     if([_textView hasText]){
         self.finishButton.alpha = 1;
         self.finishButton.userInteractionEnabled = YES;
+        self.canPOP = NO;
     }else{
         self.finishButton.alpha = 0.4;
         self.finishButton.userInteractionEnabled = NO;
@@ -533,6 +555,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             }];
             [alertVC addAction:alertAct1];
+            self.canPOP = YES;
             [weakSelf presentViewController:alertVC animated:YES completion:NULL];
             
         }else{
@@ -605,9 +628,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         LoginViewController *login = [[LoginViewController alloc] init];
         [self.navigationController pushViewController:login animated:YES];
     }
-}
--(void)backClick:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

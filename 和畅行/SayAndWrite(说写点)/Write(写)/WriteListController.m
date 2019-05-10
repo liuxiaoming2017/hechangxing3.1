@@ -31,6 +31,11 @@
     NSLog(@"dealloc");
 }
 
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+}
 - (void)goBack:(UIButton *)btn
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
@@ -626,7 +631,6 @@
         //回调，当点击cell时重新刷新cell
         __weak typeof(self) weakSelf = self;
         [self reloadCellWith:^(NSInteger row) {
-            NSLog(@"row:------ > %ld",row);
             if (self->_rightDataArr.count) {
                 for (int i=0; i<self->_rightDataArr.count; i++) {
                     if (row == i) {
@@ -638,17 +642,27 @@
                                 if (self->_selectedCount>0) {
                                     self->_selectedCount--;
                                 }
+                                
                                 self->_choseLabel.text = [NSString stringWithFormat:@"已选症状%ld/5",(long)self->_selectedCount];
                                 //在已经选择的症状中删除相应的model，并更新数据
-                                NSLog(@"删除第%ld个",model2.currentIndex);
-                                [self->_selectedArr removeObjectAtIndex:model2.currentIndex];
+                                for (int i = 0; i < self->_selectedArr.count; i++) {
+                                    SymptomModel *model =  self->_selectedArr[i];
+                                    if ([model.symptom  isEqualToString:model2.symptom]) {
+                                        [self->_selectedArr removeObject:model];
+                                    }
+                                }
                                 for (int j=(int)model2.currentIndex; j<self->_selectedArr.count; j++) {
                                     SymptomModel *model3 = self->_selectedArr[j];
-                                    model3.currentIndex--;
+//                                    model3.currentIndex--;
                                     [self->_selectedArr replaceObjectAtIndex:j withObject:model3];
                                 }
                                 
                                 [self removeCheckWith:cell];
+                                [self->_leftTableView reloadData];
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    [self->_leftTableView selectRowAtIndexPath:self.myIndexPath animated:YES scrollPosition:(UITableViewScrollPositionNone)];
+                                });
+
                             }else{
                                 //弹出提示框，去选择病症的轻重或者提示最多选择5个症状
                                 for (UIView *view in self->_contentView.subviews) {
@@ -798,7 +812,6 @@
         [self.rightTableView reloadData];
     }else if (tableView == _rightTableView){
         //利用block回调
-        NSLog(@"点击第%ld个cell",indexPath.row);
         self.reloadBlock(indexPath.row);
         
     }
@@ -810,10 +823,11 @@
     SymptomModel *model2 = _rightDataArr[row];
     model2.fPrivate = @YES;
     if (_selectedArr.count) {
-        model2.currentIndex = _selectedCount;
+        model2.currentIndex = button.row;
     }else{
         model2.currentIndex = 0;
     }
+    NSLog(@"--------%ld",(long)model2.currentIndex);
     switch (button.tag-500-button.row) {
         case 0:
         {
@@ -836,6 +850,9 @@
     }
     [_selectedArr addObject:model2];
     [_leftTableView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.leftTableView selectRowAtIndexPath:self.myIndexPath animated:YES scrollPosition:(UITableViewScrollPositionNone)];
+    });
     NSLog(@"共选择了%ld个病症",_selectedArr.count);
     _selectedCount++;
     _choseLabel.text = [NSString stringWithFormat:@"已选症状%ld/5",(long)_selectedCount];
@@ -889,8 +906,9 @@
         [_sectionStatus replaceObjectAtIndex:view.tag-1000 withObject:@YES];
     }
     [_leftTableView reloadData];
-    
-    [self.leftTableView selectRowAtIndexPath:self.myIndexPath animated:YES scrollPosition:(UITableViewScrollPositionNone)];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.leftTableView selectRowAtIndexPath:self.myIndexPath animated:YES scrollPosition:(UITableViewScrollPositionNone)];
+    });
 
 }
 
@@ -906,6 +924,7 @@
         if (_selectedCount>0) {
             _selectedCount--;
         }
+        
         _choseLabel.text = [NSString stringWithFormat:@"已选症状%ld/5",(long)_selectedCount];
         //将改变同步到数据源_rightDataArr和plist
         for (NSInteger i=0; i<_rightDataArr.count; i++) {
@@ -932,7 +951,11 @@
             }
         }
         [_rightTableView reloadData];
-        
+        [_leftTableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.leftTableView selectRowAtIndexPath:self.myIndexPath animated:YES scrollPosition:(UITableViewScrollPositionNone)];
+        });
+
         //没有已选症状不让提交
         if(_selectedArr.count == 0){
             _bottomView.hidden = YES;
@@ -956,6 +979,13 @@
         OrganDiseaseListViewController *diseaseList = [[OrganDiseaseListViewController alloc] init];
         diseaseList.upData = _selectedArr;
         diseaseList.sex = _sex;
+        diseaseList.rightDataArr = self.rightDataArr;
+        diseaseList.refreshTableView = ^{
+            [self->_leftTableView reloadData];
+            [self->_rightTableView reloadData];
+            self->_selectedCount = self->_selectedArr.count;
+            self->_choseLabel.text = [NSString stringWithFormat:@"已选症状%ld/5",(long)self->_selectedCount];
+        };
         [self.navigationController pushViewController:diseaseList animated:YES];
     }
     

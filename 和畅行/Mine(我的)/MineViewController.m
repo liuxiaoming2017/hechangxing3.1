@@ -32,6 +32,9 @@
 @property (nonatomic,strong) MyView *userIcon;
 @property (nonatomic,strong) UILabel *userNameLabel;
 @property (nonatomic,strong) UIScrollView *backScrollView;
+@property (nonatomic,strong) UIButton *collectBT;
+@property (nonatomic,strong) UIButton *cardBT;
+@property (nonatomic,strong) UIButton *integralsBT;
 
 
 @end
@@ -53,6 +56,42 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changUserInfo) name:@"personalInfoUpdateSuccess" object:nil];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self requestData];
+}
+
+-(void)requestData{
+    
+    NSString *uidStr = [UserShareOnce shareOnce].uid;
+    NSString *memerIdStr = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
+    NSString *url = [NSString stringWithFormat:@"member/mobile/focus_ware/getAmount.jhtml?memberChildId=%@&&memberId=%@",memerIdStr,uidStr];
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:url parameters:nil successBlock:^(id response) {
+        
+        if ([response[@"status"] integerValue] == 100){
+            NSDictionary *dic = response[@"data"];
+            NSString *integralsStr = [NSString stringWithFormat:@"%@",dic[@"integrals"]];
+            NSString *cardStr = [NSString stringWithFormat:@"%@",dic[@"card"]];
+            NSString *collectStr = [NSString stringWithFormat:@"%@",dic[@"collect"]];
+            if(![GlobalCommon  stringEqualNull:integralsStr]){
+                [self.integralsBT setTitle:[NSString stringWithFormat:@"%@\n%@",dic[@"integrals"],ModuleZW(@"积分")] forState:(UIControlStateNormal)];
+            }
+            if(![GlobalCommon  stringEqualNull:cardStr]){
+                [self.cardBT setTitle:[NSString stringWithFormat:@"%@\n%@",dic[@"card"],ModuleZW(@"卡包")] forState:(UIControlStateNormal)];
+            }
+            if(![GlobalCommon  stringEqualNull:collectStr]){
+                [self.collectBT setTitle:[NSString stringWithFormat:@"%@\n%@",dic[@"collect"],ModuleZW(@"收藏")] forState:(UIControlStateNormal)];
+            }
+
+        }
+        
+        
+    } failureBlock:^(NSError *error) {
+        
+        
+    }];
+    
+}
 - (void)createUI
 {
     
@@ -115,7 +154,7 @@
     
     backScrollView.contentSize = CGSizeMake(0, buttonBackImageView.bottom + 20);
     
-    NSArray *numberArray = @[@"2\n收藏",@"2\n卡包",@"3333\n积分"];
+    NSArray *numberArray = @[@"0\n收藏",@"0\n卡包",@"0\n积分"];
     NSArray *titleArr           = @[ModuleZW(@"待付款"),ModuleZW(@"待评价"),
                                                  ModuleZW(@"退款/售后"),ModuleZW(@"全部订单")];
     NSArray *imageArr        = @[@"我的待付款",@"我的待评价",@"我的退款售后",@"我的全部订单"];
@@ -133,6 +172,13 @@
             [numberButton.titleLabel setTextAlignment:(NSTextAlignmentCenter)];
             [numberButton.titleLabel setNumberOfLines:2];
             numberButton.tag = 111 + i;
+            if(i== 0){
+                self.collectBT = numberButton;
+            }else if(i == 1) {
+                self.cardBT = numberButton;
+            }else{
+                self.integralsBT = numberButton;
+            }
             [[numberButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
                 if(x.tag == 111){
                     NSString *urlStr =  [NSString stringWithFormat:@"%@member/mobile/focus_ware/list.jhtml",URL_PRE];

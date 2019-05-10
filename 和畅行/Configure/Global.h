@@ -21,21 +21,20 @@ extern BOOL isBF;
 
 //#define URL_PRE @"http://10.1.71.62:8080/healthlm/"
 
-//#define URL_PRE @"http://10.1.71.38:8888/hcy-system/"
 //#define URL_PRE @"http://47.92.80.253:8080/healthlm/"
 
 
 //#define URL_PRE @"http://10.1.71.104:8080/hcy/"
 //刘圆杰
-//#define URL_PRE @"http://192.168.10.101:8888/hcy-system/"
+//#define URL_PRE @"http://10.1.71.38:8888/hcy-system/"
 
 
-//#define URL_PRE @"http://47.92.73.99:8080/healthlm/"
+#define URL_PRE @"http://47.92.73.99:8080/healthlm/"
 
 
 
 //生产环境
-#define URL_PRE @"http://eky3h.com/healthlm/"
+//#define URL_PRE @"http://eky3h.com/healthlm/"
 //#define URL_PRE @"http://10.1.71.38:8888/hcy-system/"
 //多语言测试接口
 //#define URL_PRE @"http://10.1.71.121:8080/hcySoft/"

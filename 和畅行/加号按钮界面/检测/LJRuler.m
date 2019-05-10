@@ -10,7 +10,7 @@
 
 @interface LJRuler () <UIScrollViewDelegate>
 
-@property (nonatomic, strong) LJRulerScrollView *rulerScrollView;
+
 
 @end
 
