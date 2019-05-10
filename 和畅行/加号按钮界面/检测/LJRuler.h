@@ -80,5 +80,6 @@
 @property (nonatomic, assign) NSInteger mixscaleCount;
 
 @property (nonatomic, strong) LJRulerScrollView *rulerScrollView;
+@property(nonatomic,assign) BOOL isScroll;
 
 @end

@@ -30,6 +30,7 @@
         [backView addSubview:self.rulerScrollView];
         [self setDefuatlParameter];
         [self addSubview:backView];
+        self.isScroll = NO;
     }
     return self;
 }
@@ -64,6 +65,7 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(LJRulerScrollView *)scrollView {
+    self.isScroll = YES;
     CGFloat offSetX = scrollView.contentOffset.x + self.frame.size.width / 2;
     CGFloat currentValue = (offSetX / scrollView.scaleSpacing) * scrollView.scaleAverage;
     if (currentValue < 0.f) {
@@ -78,6 +80,8 @@
 
 - (void)scrollViewDidEndDecelerating:(LJRulerScrollView *)scrollView {
     [self animationRebound:scrollView];
+    self.isScroll = NO;
+    
 }
 
 - (void)scrollViewDidEndDragging:(LJRulerScrollView *)scrollView willDecelerate:(BOOL)decelerate {
