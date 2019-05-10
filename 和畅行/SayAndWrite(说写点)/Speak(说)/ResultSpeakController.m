@@ -7,6 +7,8 @@
 //
 
 #import "ResultSpeakController.h"
+#import "MeridianIdentifierViewController.h"
+#import "TipSpeakController.h"
 
 @interface ResultSpeakController ()<UIGestureRecognizerDelegate>
 
@@ -25,6 +27,21 @@
         self.navigationController.interactivePopGestureRecognizer.delegate = self;
     }
     //
+}
+
+# pragma mark - 解决侧滑返回指定控制器
+- (void)didMoveToParentViewController:(UIViewController*)parent
+{
+    
+    NSMutableArray *tempArr = self.navigationController.viewControllers.mutableCopy;
+    for(UIViewController *vc in self.navigationController.viewControllers){
+        if([vc isKindOfClass:[MeridianIdentifierViewController class]]||[vc isKindOfClass:[TipSpeakController class]]){
+            [tempArr removeObject:vc];
+        }
+    }
+    self.navigationController.viewControllers = tempArr;
+    
+    
 }
 
 
