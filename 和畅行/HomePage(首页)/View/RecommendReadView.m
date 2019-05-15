@@ -75,6 +75,11 @@
     [self.collectionV registerClass:[RecommendCollectCell class] forCellWithReuseIdentifier:@"cellId"];
     
     [self addSubview:self.collectionV];
+    
+    CacheManager *manager = [CacheManager sharedCacheManager];
+    self.recommendArr = [manager gethealthArticleModels];
+    [self.collectionV reloadData];
+    
     [self requestHealthHintData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -105,6 +110,10 @@
                 [tipModel yy_modelSetWithJSON:dic];
                 [weakSelf.recommendArr addObject:tipModel];
             }
+            
+            CacheManager *manager = [CacheManager sharedCacheManager];
+            [manager inserthealthArticleModels:weakSelf.recommendArr];
+            
             [weakSelf.collectionV reloadData];
             
 //            for (NSDictionary *dic in [response valueForKey:@"data"] ) {

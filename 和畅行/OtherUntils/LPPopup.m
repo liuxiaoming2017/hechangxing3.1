@@ -75,7 +75,7 @@ static NSString * const kLPAnimationKeyPopup = @"kLPAnimationKeyPopup";
         self.textAlignment = NSTextAlignmentCenter;
         
         self.textColor = [UIColor blackColor];
-        self.font = [UIFont boldSystemFontOfSize:15.0f];
+        self.font = [UIFont systemFontOfSize:15.0f];
     }
     return self;
 }

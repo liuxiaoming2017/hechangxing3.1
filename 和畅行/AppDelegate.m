@@ -90,6 +90,9 @@
     
 //    URL_PRE
 
+    //创建本地数据库
+    [[CacheManager sharedCacheManager] createDataBase];
+    
     for (int i = 0; i < 20; ++i) {
         NSLog(@"%d",i);
     }

@@ -66,8 +66,8 @@
     self.homeImageArray = [NSMutableArray array];
   //  [self createTopView];
    
-   // [self requestPackgeNetWork];
-    [self handleNetworkGroup];
+    [self requestUI];
+   // [self handleNetworkGroup];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exchangeMemberChild:) name:exchangeMemberChildNotify object:nil];
     
@@ -99,48 +99,7 @@
     [super didReceiveMemoryWarning];
 }
 
-# pragma mark - 活动数据的请求
--(void)requestUI {
-    
-    NSString *urlStr = @"mobile/index/indexpic.jhtml";
-   
-    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
-        
-        if([[response objectForKey:@"status"] integerValue] == 100){
-            
-            for (NSDictionary *dic in [response valueForKey:@"data"]) {
-                HCY_HomeImageModel *model = [[HCY_HomeImageModel alloc]init];
-                [model yy_modelSetWithJSON:dic];
-                
-                if([model.type isEqualToString:@"1"]){
-                    self.backImageModel = model;
-                }
-                if ([model.type isEqualToString:@"2"]){
-                    self.pushModel = model;
-                }
-                [self.homeImageArray addObject:model];
-                
-            }
-            
-            [self createTopViewWithStatus:YES];
-            
-            [self addGradientLayer];
-            if (self.isRefresh == YES){
-                [self.readWriteView setButtonImageWithArray:self.homeImageArray];
-                self.isRefresh = NO;
-            }
-        }else{
-            
-            [self createTopViewWithStatus:NO];
-            
-            [self addGradientLayer];
-            [self.readWriteView initWithUI];
-        }
-    } failureBlock:^(NSError *error) {
-        [self addGradientLayer];
-        [self.readWriteView initWithUI];
-    }];
-}
+
 
 - (void)addGradientLayer
 {
@@ -209,6 +168,15 @@
         [self.view addSubview:self.imageV];
             
         self.packgeView = [[HeChangPackge alloc] initWithFrame:CGRectMake(0, -kNavBarHeight, ScreenWidth, ScreenWidth*274/414+20)];
+        
+        NSString *str = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+        if(str){
+            NSString *str1 = [[str componentsSeparatedByString:@"&&"] objectAtIndex:0];
+            NSString *str2 = [[str componentsSeparatedByString:@"&&"] objectAtIndex:1];
+            if(_havePackage){
+                [self.packgeView changePackgeTypeWithStatus:[str1 integerValue] withXingStr:str2];
+            }
+        }
     }
     
     if (!self.bgScrollView){
@@ -233,6 +201,7 @@
         [self.bgScrollView addSubview:self.readWriteView];
     }
     
+    //判断有没有活动页面
     if(_isActivity){
         if(!self.activityImage){
             
@@ -249,6 +218,8 @@
         }
     }
     
+    
+    
     self.readWriteView.frame = CGRectMake(self.readWriteView.left, _havePackage?self.packgeView.bottom-65:5, self.readWriteView.width, self.readWriteView.height);
 
     if(_isActivity){
@@ -262,12 +233,34 @@
         self.testActivityIndicator.color = RGB_TextAppBlue;
        
     }
+    
+    if(!self.remindView){
+        
+        NSMutableArray *mutableArr = [[CacheManager sharedCacheManager] getRemindModelsWith:[MemberUserShance shareOnce].idNum];
+        if(mutableArr.count==0){
+            NSArray *nameArr = @[ModuleZW(@"一说"),ModuleZW(@"一写"),ModuleZW(@"一点")];
+            NSArray *adviceArr = @[jlbsAdvice,zfbsAdvice,tzbsAdvice];
+            for(NSInteger i=0;i<nameArr.count;i++){
+                RemindModel *model = [[RemindModel alloc] init];
+                model.type =[nameArr objectAtIndex:i];
+                model.advice = [adviceArr objectAtIndex:i];
+                model.isDone = NO;
+                [mutableArr addObject:model];
+            }
+        }
+        self.remindView = [[HeChangRemind alloc] initWithFrame:CGRectMake(self.packgeView.left,   self.activityImage?self.activityImage.bottom+10:self.readWriteView.bottom+10, self.readWriteView.width, 58+mutableArr.count*(45+14)) withDataArr:mutableArr];
+        [self.bgScrollView addSubview:self.remindView];
+        
+        
+    }
+    if(!self.recommendView){
+        CGFloat width = (ScreenWidth - 23 - 10)/2.5;
+        self.recommendView = [[RecommendReadView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.remindView.frame)+10, ScreenWidth, width*0.75+7+40+55)];
+        [self.bgScrollView addSubview:self.recommendView];
+        self.bgScrollView.contentSize = CGSizeMake(1, self.recommendView.bottom+20);
+    }
+    [self.bgScrollView setContentSize:CGSizeMake(1, self.recommendView.bottom+20)];
    
-    
-    
-   // self.remindView.frame = CGRectMake(self.remindView.left, _isActivity?self.activityImage.bottom+10:self.readWriteView.bottom+10, self.readWriteView.width, self.remindView.height);
-   
-    
     
 }
 
@@ -290,130 +283,76 @@
     }
 }
 
-# pragma mark - 网络请求修改
-- (void)handleNetworkGroup
+
+- (void)showHomePackageView
 {
-   
-    dispatch_group_t group = dispatch_group_create();
-    dispatch_queue_t serialQueue = dispatch_queue_create("com.wzb.test.www", DISPATCH_QUEUE_SERIAL);
+    [self createTopViewWithStatus:YES];
+    [self addGradientLayer];
+    if(self->_isActivity){
+        if (self.isRefresh == YES){
+            [self.readWriteView setButtonImageWithArray:self.homeImageArray];
+            self.isRefresh = NO;
+        }
+    }else{
+        [self createTopViewWithStatus:NO];
+        
+        [self addGradientLayer];
+        [self.readWriteView initWithUI];
+    }
+}
+
+# pragma mark - 活动数据的请求
+-(void)requestUI {
     
+    NSString *urlStr = @"mobile/index/indexpic.jhtml";
     __weak typeof(self) weakSelf = self;
-    
-    dispatch_group_enter(group);
-    dispatch_group_async(group, serialQueue, ^{
-        NSString *urlStr = @"member/new_ins/current.jhtml";
-        NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
-        if ([MemberUserShance shareOnce].idNum){
-            [paramDic setObject:[MemberUserShance shareOnce].idNum forKey:@"memberChildId"];
-            [paramDic setObject:@"1" forKey:@"isnew"];
-        }else {
-            return;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
+        
+        [weakSelf requestPackgeNetWork];
+        
+        if([[response objectForKey:@"status"] integerValue] == 100){
+
+            self->_isActivity = YES;
+            for (NSDictionary *dic in [response valueForKey:@"data"]) {
+                HCY_HomeImageModel *model = [[HCY_HomeImageModel alloc]init];
+                [model yy_modelSetWithJSON:dic];
+                
+                if([model.type isEqualToString:@"1"]){
+                    self.backImageModel = model;
+                }
+                if ([model.type isEqualToString:@"2"]){
+                    self.pushModel = model;
+                }
+                [self.homeImageArray addObject:model];
+                
+            }
+            
+        }else{
+            self->_isActivity = NO;
+            
+        }
+        
+        //先判断本地有没有和畅包缓存,有则直接展示页面没有则等和畅包接口请求完后再展示
+        if([self getLocalPackageContent]){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf showHomePackageView];
+            });
         }
         
         
-        [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:paramDic successBlock:^(id response) {
-            
-            dispatch_group_leave(group);
-            
-            if([[response objectForKey:@"status"] integerValue] == 100){
-                NSInteger status = [[[response objectForKey:@"data"] objectForKey:@"num"] integerValue];
-               
-                    if(status >=0 && status <= 11){
-                        self->_havePackage = YES;
-                        
-                        
-                        if([response objectForKey:@"data"]!=nil && [[response objectForKey:@"data"] isKindOfClass:[NSDictionary class]]){
-                            weakSelf.packageDic = [response objectForKey:@"data"];
-                        }else{
-                            weakSelf.packageDic = nil;
-                        }
-                    }else{ //未做检测，不显示和畅包
-                       self->_havePackage = NO;
-                    }
-               
-            }else{
-                [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
-            }
-        } failureBlock:^(NSError *error) {
-            dispatch_group_leave(group);
-        }];
+    } failureBlock:^(NSError *error) {
         
-    });
-    
-    dispatch_group_enter(group);
-    dispatch_group_async(group, serialQueue, ^{
+        self->_isActivity = NO;
         
-        NSString *urlStr = @"mobile/index/indexpic.jhtml";
+        [weakSelf requestPackgeNetWork];
         
-        [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
-            
-            if([[response objectForKey:@"status"] integerValue] == 100){
-                self->_isActivity = YES;
-                for (NSDictionary *dic in [response valueForKey:@"data"]) {
-                    HCY_HomeImageModel *model = [[HCY_HomeImageModel alloc]init];
-                    [model yy_modelSetWithJSON:dic];
-                    
-                    if([model.type isEqualToString:@"1"]){
-                        weakSelf.backImageModel = model;
-                    }
-                    if ([model.type isEqualToString:@"2"]){
-                        weakSelf.pushModel = model;
-                    }
-                    [weakSelf.homeImageArray addObject:model];
-                    
-                }
-               
-            }else{
-                self->_isActivity = NO;
-            }
-            
-            dispatch_group_leave(group);
-            
-        } failureBlock:^(NSError *error) {
-            dispatch_group_leave(group);
-            self->_isActivity = NO;
-            
-        }];
-    });
-    
-    
-    //所有请求成功后
-    dispatch_group_notify(group, serialQueue, ^{
-        dispatch_async(dispatch_get_global_queue(0,0), ^{
-            [weakSelf requestRemindNetWork];
+        if([self getLocalPackageContent]){
             dispatch_async(dispatch_get_main_queue(), ^{
-                
-            // 刷新UI
-            [weakSelf createTopViewWithStatus:self->_isActivity];
-             [weakSelf.testActivityIndicator startAnimating];
-            if(self->_havePackage){
-                if(weakSelf.packageDic){
-                    NSInteger status = [[self.packageDic objectForKey:@"num"] integerValue];
-                    [weakSelf.packgeView changePackgeTypeWithStatus:status withXingStr:[self.packageDic objectForKey:@"name"]];
-                }
-                
-            }
-            if(self->_isActivity){
-                [weakSelf addGradientLayer];
-                if (self.isRefresh == YES){
-                    [weakSelf.readWriteView setButtonImageWithArray:self.homeImageArray];
-                    self.isRefresh = NO;
-                }
-            }else{
-                [weakSelf addGradientLayer];
-                [weakSelf.readWriteView initWithUI];
-            }
-            
+                [weakSelf showHomePackageView];
             });
-        
-        });
-        
-    });
-        
-        
-   
+        }
+    }];
 }
-
 
 # pragma mark - 和畅包网络请求
 - (void)requestPackgeNetWork
@@ -431,34 +370,52 @@
     
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:paramDic successBlock:^(id response) {
         
-        [weakSelf requestRemindNetWork];
-      //  [weakSelf requestUI];
-        
         if([[response objectForKey:@"status"] integerValue] == 100){
             NSInteger status = [[[response objectForKey:@"data"] objectForKey:@"num"] integerValue];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 if(status >=0 && status <= 11){
-                    if(!self->_havePackage){ //之前没有和畅包,得展示和畅包,有则不变
+                    if(!self->_havePackage){
                         self->_havePackage = YES;
-                        [weakSelf createTopViewWithStatus:YES];
-                        [weakSelf addGradientLayer];
-                    }
-                   
-                    if(weakSelf.packgeView){
-                        [weakSelf.packgeView changePackgeTypeWithStatus:status withXingStr:[[response objectForKey:@"data"] objectForKey:@"name"]];
+                        if(weakSelf.packgeView){ //之前没有和畅包,得展示和畅包,有则不变
+                            [weakSelf addGradientLayer];
+                        }
                     }
                 }else{ //未做检测，不显示和畅包
                     self->_havePackage = NO;
-//                    [weakSelf createTopViewWithStatus:YES];
-//                    [self addGradientLayer];
                 }
+                //本地没有缓存,则在这里展示页面,有缓存在上个接口展示页面
+                if(![weakSelf getLocalPackageContent]){
+                    [weakSelf showHomePackageView];
+                    //和畅提醒加载需要一个加载框
+                    [weakSelf.testActivityIndicator startAnimating];
+                }
+                if(self->_havePackage){
+                    [weakSelf.packgeView changePackgeTypeWithStatus:status withXingStr:[[response objectForKey:@"data"] objectForKey:@"name"]];
+                }
+                
+                //保存和畅包状态,以便下次打开应用直接读取缓存
+                NSString *packageStr = [NSString stringWithFormat:@"%ld&&%@",status,[[response objectForKey:@"data"] objectForKey:@"name"]];
+                [[NSUserDefaults standardUserDefaults]setValue: packageStr forKey:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
             });
+            
         }else{
             [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
         }
+        
+        [weakSelf requestRemindNetWork];
+        
     } failureBlock:^(NSError *error) {
         [weakSelf requestRemindNetWork];
+        
+        self->_havePackage = NO;
+        if(![self getLocalPackageContent]){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf showHomePackageView];
+            });
+        }
     }];
 }
 
@@ -498,9 +455,10 @@
                     model.type = [GlobalCommon getRemindTRypeWithStr:model.type];
                     [mutableArr addObject:model];
                 }
+                
             }else{
-                NSArray *nameArr = @[ModuleZW(@"一说"),ModuleZW(@"一点"),ModuleZW(@"一写")];
-                NSArray *adviceArr = @[jlbsAdvice,tzbsAdvice,zfbsAdvice];
+                NSArray *nameArr = @[ModuleZW(@"一说"),ModuleZW(@"一写"),ModuleZW(@"一点")];
+                NSArray *adviceArr = @[jlbsAdvice,zfbsAdvice,tzbsAdvice];
                 for(NSInteger i=0;i<nameArr.count;i++){
                     RemindModel *model = [[RemindModel alloc] init];
                      model.type =[nameArr objectAtIndex:i];
@@ -510,21 +468,13 @@
                 }
             }
             
+            CacheManager *manager = [CacheManager sharedCacheManager];
+            [manager updateOrinsertRemindModels:mutableArr withCustId:[MemberUserShance shareOnce].idNum];
+            
             weakSelf.remindView.dataArr = mutableArr;
             dispatch_async(dispatch_get_main_queue(), ^{
-                if(!weakSelf.remindView){
-                    weakSelf.remindView = [[HeChangRemind alloc] initWithFrame:CGRectMake(weakSelf.packgeView.left,   weakSelf.activityImage?weakSelf.activityImage.bottom+10:weakSelf.readWriteView.bottom+10, weakSelf.readWriteView.width, 58+mutableArr.count*(45+14)) withDataArr:mutableArr];
-                    
-                    [weakSelf.bgScrollView addSubview:weakSelf.remindView];
-                    
-                    CGFloat width = (ScreenWidth - 23 - 10)/2.5;
-                    weakSelf.recommendView = [[RecommendReadView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(weakSelf.remindView.frame)+10, ScreenWidth, width*0.75+7+40+55)];
-                    [weakSelf.bgScrollView addSubview:self.recommendView];
-                    weakSelf.bgScrollView.contentSize = CGSizeMake(1, self.recommendView.bottom+20);
-                }else{
-                    [weakSelf.remindView updateViewWithData:mutableArr withHeight:58+mutableArr.count*(45+14)];
-                    weakSelf.recommendView.frame = CGRectMake(0, weakSelf.remindView.bottom+10, weakSelf.recommendView.width, weakSelf.recommendView.height);
-                }
+                [weakSelf.remindView updateViewWithData:mutableArr withHeight:58+mutableArr.count*(45+14)];
+                weakSelf.recommendView.frame = CGRectMake(0, weakSelf.remindView.bottom+10, weakSelf.recommendView.width, weakSelf.recommendView.height);
                 
                 [weakSelf.bgScrollView setContentSize:CGSizeMake(1, weakSelf.recommendView.bottom+20)];
                 
@@ -543,6 +493,20 @@
     
 }
 
+- (BOOL)getLocalPackageContent
+{
+    NSString *str = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+    if(str){
+        NSString *str1 = [[str componentsSeparatedByString:@"&&"] objectAtIndex:0];
+        if([str1 integerValue]>=0 && [str1 integerValue]<=11){
+            _havePackage = YES;
+        }else{
+            _havePackage = NO;
+        }
+        return YES;
+    }
+    return NO;
+}
 
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

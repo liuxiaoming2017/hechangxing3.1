@@ -725,6 +725,9 @@
     NSString* reqstr=[request responseString];
     NSDictionary * dic=[reqstr JSONValue];
     id status=[dic objectForKey:@"status"];
+    
+    [self removeLocalFilePath];
+    
     if ([status intValue]==100)
     {
         NSInteger code = [[[dic objectForKey:@"data"] objectForKey:@"code"] integerValue];
@@ -744,13 +747,7 @@
             centerAtPoint:point
                  duration:5.0f
                completion:nil];
-        NSFileManager *fileMgr = [NSFileManager defaultManager];
         
-        BOOL bRet = [fileMgr fileExistsAtPath:self.filePath];
-        if (bRet) {
-            NSError *err;
-            [fileMgr removeItemAtPath:self.filePath error:&err];
-        }
         UIButton* btn=(UIButton*)[self.view viewWithTag:10007];
         btn.enabled=YES;
         yincangView.hidden = YES;
@@ -772,7 +769,7 @@
         
         UIButton* btn=(UIButton*)[self.view viewWithTag:10007];
         btn.enabled=YES;
-        LPPopup *popup = [LPPopup popupWithText:ModuleZW(@"抱歉，由于长时间无法连接到网络，系统将您的录音放在了“我的”的“未发出声的文件”里，您可以选择手工上传或删除。")];
+        LPPopup *popup = [LPPopup popupWithText:[dic objectForKey:@"data"]];
         timeNStager=0;
         [bianshiTime setFireDate:[NSDate distantFuture]];
         [self.Recordbtn setImage:[UIImage imageNamed:@"bs_an_kaishishibian.png"] forState:UIControlStateNormal];
@@ -795,7 +792,10 @@
     [self hudWasHidden];
     UIButton* btn=(UIButton*)[self.view viewWithTag:10007];
     btn.enabled=YES;
-    LPPopup *popup = [LPPopup popupWithText:ModuleZW(@"抱歉，由于长时间无法连接到网络，系统将您的录音放在了“我的”的“未发出声的文件”里，您可以选择手工上传或删除。")];
+    
+    [self removeLocalFilePath];
+    
+    LPPopup *popup = [LPPopup popupWithText:requestErrorMessage];
     CGPoint point=self.view.center;
     point.y=point.y+130;
     [popup showInView:self.view
@@ -809,6 +809,16 @@
     self.filePath = nil;
     yincangView.hidden = YES;
     return;
+}
+
+- (void)removeLocalFilePath
+{
+    NSFileManager *fileMgr = [NSFileManager defaultManager];
+    BOOL bRet = [fileMgr fileExistsAtPath:self.filePath];
+    if (bRet) {
+        NSError *err;
+        [fileMgr removeItemAtPath:self.filePath error:&err];
+    }
 }
 
 - (NSString *)stringWithCode:(NSInteger )code
@@ -855,54 +865,6 @@
     return;
 }
 
-- (void)requestConverAndParseError:(ASIHTTPRequest *)request
-{
-    [self hudWasHidden];
-}
-- (void)requestConverAndParseCompleted:(ASIHTTPRequest *)request
-{
-    [self hudWasHidden];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    id status=[dic objectForKey:@"status"];
-    if ([status intValue]==100)
-    {
-        
-//        LPPopup *popup = [LPPopup popupWithText:@"您的录音已成功上传，正在进行分析。分析报告审核完成后，会发送至您的手机上，请注意查收。"];
-        CGPoint point=self.view.center;
-        point.y=point.y+130;
-//        [popup showInView:self.view
-//            centerAtPoint:point
-//                 duration:5.0f
-//               completion:nil];
-        NSFileManager *fileMgr = [NSFileManager defaultManager];
-        
-        BOOL bRet = [fileMgr fileExistsAtPath:self.filePath];
-        if (bRet) {
-            NSError *err;
-            [fileMgr removeItemAtPath:self.filePath error:&err];
-        }
-        
-        timeNStager=0;
-        [bianshiTime setFireDate:[NSDate distantFuture]];
-        [self.Recordbtn setImage:[UIImage imageNamed:@"bs_an_kaishishibian.png"] forState:UIControlStateNormal];
-        //[self.recorder stopRecording];
-    }
-    else
-    {
-        LPPopup *popup = [LPPopup popupWithText:ModuleZW(@"抱歉，由于长时间无法连接到网络，系统将您的录音放在了“更多”的“闻音文件”里，您可以选择手工上传或删除。")];
-        CGPoint point=self.view.center;
-        timeNStager=0;
-        [bianshiTime setFireDate:[NSDate distantFuture]];
-        [self.Recordbtn setImage:[UIImage imageNamed:@"bs_an_kaishishibian.png"] forState:UIControlStateNormal];
-       // [self.recorder stopRecording];
-        point.y=point.y+130;
-        [popup showInView:self.view
-            centerAtPoint:point
-                 duration:5.0f
-               completion:nil];
-    }
-}
 
 -(void)showHUD
 {
