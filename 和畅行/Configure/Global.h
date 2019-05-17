@@ -189,3 +189,4 @@ extern BOOL isBF;
 
 
 #define  ModuleZW(zwString)          NSLocalizedStringFromTable(zwString, @"ModuleZW", nil)
+#define kDictIsEmpty(dic) ([dic isKindOfClass:[NSNull class]])

@@ -212,7 +212,7 @@
                     return ;
                 }
                 NSString *ytpeStr = [NSString stringWithFormat:@"%@",dic[@"isEnforcement"]];
-//                [weakSelf showUpdateView:downUrl contentStr:dic[@"releaseContent"] typeStr:ytpeStr];
+                [weakSelf showUpdateView:downUrl contentStr:dic[@"releaseContent"] typeStr:ytpeStr];
                 
                 NSLog(@"升级了");
             }else{

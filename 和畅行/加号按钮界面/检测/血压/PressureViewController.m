@@ -39,15 +39,13 @@ static int const tick = 80;
 /**countdownLabel*/
 @property (nonatomic,strong) UILabel *countdownLabel;
 
-@property(nonatomic,strong)NSTimer *timer;
 
-/**timeCount*/
-@property (nonatomic,assign) int timeCount;
 
 /**subId*/
 @property (nonatomic,copy) NSString *subId;
 
 @property (nonatomic,assign) BOOL isHidden;
+@property (nonatomic,assign) BOOL canSubmit;
 
 @end
 
@@ -60,10 +58,11 @@ static int const tick = 80;
 
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-     [_timer invalidate];
-    self.timer = nil;
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self bloodTest];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -71,46 +70,12 @@ static int const tick = 80;
     self.navTitleLabel.text =  ModuleZW(@"血压心率检测");
     [self initWithController];
     
-    //血压检测
-    [self bloodTest];
     self.isHidden = NO;
-    
+    self.canSubmit = NO;
 }
 
 
 -(void)initWithController{
-    
-    
-    //倒计时
-//    UIImageView *countdownView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 90, 50, 40)];
-//    countdownView.image = [UIImage imageNamed:@"0_06"];
-//    [self.view addSubview:countdownView];
-    
-//    UILabel *countdownLabel = [Tools creatLabelWithFrame:CGRectMake(0, 13, countdownView.frame.size.width, 15) text:ModuleZW(@"80 秒") textSize:16];
-//    countdownLabel.textAlignment = NSTextAlignmentCenter;
-//    countdownLabel.textColor = [UIColor whiteColor];
-//    self.countdownLabel = countdownLabel;
-//    [countdownView addSubview:countdownLabel];
-    
-    //连接状态
-//    UIImageView *stateImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenSize.width-60, 90, 50, 45)];
-//    stateImageView.image = [UIImage imageNamed:@"0_06"];
-    
-//    UIImageView *imageViewImage = [[UIImageView alloc] initWithFrame:CGRectMake(10, 2, 30, 25)];
-//    imageViewImage.image = [UIImage imageNamed:@"unconnectedImage"];
-//    [stateImageView addSubview:imageViewImage];
-//    self.imageViewImage = imageViewImage;
-    
-//    UILabel *stateLabel = [Tools creatLabelWithFrame:CGRectMake(0, 25, stateImageView.frame.size.width, 20) text:ModuleZW(@"未连接") textSize:14];
-//    stateLabel.textAlignment = NSTextAlignmentCenter;
-//    stateLabel.numberOfLines = 2;
-//    stateLabel.font = [UIFont boldSystemFontOfSize:10];
-//    stateLabel.textColor = [UIColor whiteColor];
-//    stateLabel.adjustsFontSizeToFitWidth = YES;
-//    self.stateLabel = stateLabel;
-//    [stateImageView addSubview:stateLabel];
-//    [self.view addSubview:stateImageView];
-   
     
     //显示用户脉搏、收缩压、舒张压信息
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 30, kScreenSize.width-20, 270)];
@@ -132,12 +97,12 @@ static int const tick = 80;
     shrink.textColor = [UIColor blackColor];
     [imageView addSubview:shrink];
     
-    _shrinkPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10 , 50, 30, 30) text:@"__" textSize:19];
+    _shrinkPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10 , 50, 50, 30) text:@"__" textSize:19];
     _shrinkPressureLabel.textAlignment = NSTextAlignmentRight;
     _shrinkPressureLabel.textColor = [UIColor blackColor];
     [imageView addSubview:_shrinkPressureLabel];
     
-    UILabel *shrinkUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  + 20, 50, 60, 30) text:@"mmHg" textSize:19];
+    UILabel *shrinkUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  + 40, 50, 60, 30) text:@"mmHg" textSize:19];
     shrinkUnit.textAlignment = NSTextAlignmentLeft;
     shrinkUnit.textColor = [UIColor blackColor];
     [imageView addSubview:shrinkUnit];
@@ -148,12 +113,12 @@ static int const tick = 80;
     diastolic.textColor = [UIColor blackColor];
     [imageView addSubview:diastolic];
     
-    _diastolicPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10, shrinkUnit.bottom + 50, 30, 30) text:@"__" textSize:19];
+    _diastolicPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10, shrinkUnit.bottom + 50, 50, 30) text:@"__" textSize:19];
     _diastolicPressureLabel.textAlignment = NSTextAlignmentRight;
     _diastolicPressureLabel.textColor = [UIColor blackColor];
     [imageView addSubview:_diastolicPressureLabel];
     
-    UILabel *diastolicUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 + 20, shrinkUnit.bottom + 50, 60, 30) text:@"mmHg" textSize:19];
+    UILabel *diastolicUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 + 40, shrinkUnit.bottom + 50, 60, 30) text:@"mmHg" textSize:19];
     diastolicUnit.textAlignment = NSTextAlignmentLeft;
     diastolicUnit.textColor = [UIColor blackColor];
     [imageView addSubview:diastolicUnit];
@@ -164,12 +129,12 @@ static int const tick = 80;
     pulse.textColor = [UIColor blackColor];
     [imageView addSubview:pulse];
     
-    _pulseLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10, diastolicUnit.bottom + 50, 30, 30) text:@"__" textSize:19];
+    _pulseLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10, diastolicUnit.bottom + 50, 50, 30) text:@"__" textSize:19];
     _pulseLabel.textAlignment = NSTextAlignmentRight;
     _pulseLabel.textColor = [UIColor blackColor];
     [imageView addSubview:_pulseLabel];
     
-    UILabel *pulseUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 +20, diastolicUnit.bottom + 50, 50, 30) text:@"BMP" textSize:16];
+    UILabel *pulseUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 +40, diastolicUnit.bottom + 50, 50, 30) text:@"BMP" textSize:16];
     pulseUnit.font = [UIFont systemFontOfSize:16];
     pulseUnit.textAlignment = NSTextAlignmentLeft;
     pulseUnit.textColor = [UIColor blackColor];
@@ -183,7 +148,7 @@ static int const tick = 80;
 
 -(void)createButton{
     UIButton *startCheckBt = [UIButton  buttonWithType:(UIButtonTypeCustom)];
-    startCheckBt.frame = CGRectMake(ScreenWidth/2 - 45,420, 90, 26);
+    startCheckBt.frame = CGRectMake(ScreenWidth/2 - 55,420, 110, 26);
     startCheckBt.backgroundColor = RGB_ButtonBlue;
     startCheckBt.layer.cornerRadius = 13;
     [startCheckBt setTitle:ModuleZW(@"开始检测") forState:(UIControlStateNormal)];
@@ -195,8 +160,14 @@ static int const tick = 80;
     [[startCheckBt rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
      
         self.isHidden = NO;
-        self.nonDeviceCheck.enabled = NO;
+        [startCheckBt setTitle:ModuleZW(@"重新检测") forState:(UIControlStateNormal)];
         
+//        if ([self.manager.connectState isEqualToString:kCONNECTED_POWERD_ON]) {
+//            NSLog(@"蓝牙已经打开，等待搜寻设备的services和characteristics");
+//        }
+//        [self.manager cancelPeripheralConnection];
+//
+//        [self bloodTest];
         //开始检测通知
         [[NSNotificationCenter defaultCenter] postNotificationName:kPERIPHERAL_BEGIN object:nil userInfo:nil];
         
@@ -208,7 +179,7 @@ static int const tick = 80;
     
     
     UIButton *nonDeviceCheckBt = [UIButton  buttonWithType:(UIButtonTypeCustom)];
-    nonDeviceCheckBt.frame = CGRectMake(ScreenWidth/2 - 45,_startCheck.bottom+40, 90, 26);
+    nonDeviceCheckBt.frame = CGRectMake(ScreenWidth/2 - 55,_startCheck.bottom+40, 110, 26);
     nonDeviceCheckBt.backgroundColor = RGB_ButtonBlue;
     nonDeviceCheckBt.layer.cornerRadius = 13;
     [nonDeviceCheckBt setTitle:ModuleZW(@"手动录入") forState:(UIControlStateNormal)];
@@ -216,6 +187,7 @@ static int const tick = 80;
     [nonDeviceCheckBt.titleLabel setFont:[UIFont systemFontOfSize:14]];
     self.nonDeviceCheck = nonDeviceCheckBt;
     [[nonDeviceCheckBt rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        
         BloodPressureNonDeviceViewController *nonDeviceCheck = [[BloodPressureNonDeviceViewController alloc] init];
         [self.navigationController pushViewController:nonDeviceCheck animated:YES];
     }];
@@ -226,35 +198,15 @@ static int const tick = 80;
 //    UIButton *useNorm = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-30,nonDeviceCheck.bottom+15, 60, 25) target:self sel:@selector(useNormClick:) tag:101 image:ModuleZW(@"使用规范") title:nil];
 //    [self.view addSubview:useNorm];
 }
-
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.manager cancelPeripheralConnection];
+}
 
 -(void)commitBtnClick:(UIButton *)button{
   
-    [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
-
-//    if([GlobalCommon isManyMember]){
-//        __weak typeof(self) weakSelf = self;
-//        SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
-//        [subMember receiveSubIdWith:^(NSString *subId) {
-//            NSLog(@"%@",subId);
-//            if ([subId isEqualToString:@"user is out of date"]) {
-//                //登录超时
-//                
-//            }else{
-//                [weakSelf requestNetworkData:subId];
-//            }
-//            [subMember hideHintView];
-//        }];
-//    }else{
-//        [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
-//    }
-    
-}
-
-- (void)requestNetworkData:(NSString *)subId
-{
     //得到子账户的id
-    self.subId = subId;
+    self.subId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
     
     
     [self showPreogressView];
@@ -269,8 +221,11 @@ static int const tick = 80;
     if([UserShareOnce shareOnce].languageType){
         [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
     }
+    
+    
+    
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    [request addPostValue:subId forKey:@"memberChildId"];
+    [request addPostValue:self.subId forKey:@"memberChildId"];
     [request addPostValue:@(30) forKey:@"datatype"];
     [request addPostValue:@(highCount) forKey:@"highPressure"];
     [request addPostValue:@(lowCount) forKey:@"lowPressure"];
@@ -282,6 +237,7 @@ static int const tick = 80;
     [request setDidFailSelector:@selector(requestError:)];
     [request setDidFinishSelector:@selector(requestCompleted:)];
     [request startAsynchronous];
+    
 }
 
 -(void)reChekBtnClick:(UIButton *)button{
@@ -290,15 +246,15 @@ static int const tick = 80;
 }
 
 
-
--(void)useNormClick:(UIButton *)button{
-    NSLog(@"点击使用规范");
-    [[NSUserDefaults standardUserDefaults] setObject:@"11" forKey:@"clickUseNorm_blood"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    BloodGuideViewController *bloodGuide = [[BloodGuideViewController alloc] init];
-    [self.navigationController pushViewController:bloodGuide animated:YES];
-    
-}
+//
+//-(void)useNormClick:(UIButton *)button{
+//    NSLog(@"点击使用规范");
+//    [[NSUserDefaults standardUserDefaults] setObject:@"11" forKey:@"clickUseNorm_blood"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//    BloodGuideViewController *bloodGuide = [[BloodGuideViewController alloc] init];
+//    [self.navigationController pushViewController:bloodGuide animated:YES];
+//
+//}
 
 //血压检测
 - (void)bloodTest{
@@ -329,12 +285,11 @@ static int const tick = 80;
         weakSelf.stateLabel.text = ModuleZW(@"未连接");
         weakSelf.imageViewImage.image = [UIImage imageNamed:@"unconnectedImage"];
         weakSelf.startCheck.enabled = NO;
+        weakSelf.startCheck.alpha = 0.6;
     }];
     [[NSNotificationCenter defaultCenter] addObserverForName:kPERIPHERAL_DISCONNECTED object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
         NSLog(@"外设断开连接");
-        
-        weakSelf.stateLabel.text = ModuleZW(@"未连接");
-        weakSelf.imageViewImage.image = [UIImage imageNamed:@"unconnectedImage"];
+        weakSelf.startCheck.alpha = 0.6;
         weakSelf.startCheck.enabled = NO;
         
     }];
@@ -373,19 +328,16 @@ static int const tick = 80;
                 if(weakSelf.isHidden == NO){
                     weakSelf.isHidden = YES;
                     [weakSelf commitBtnClick:nil];
-                    [weakSelf stopTimer];
+                    weakSelf.nonDeviceCheck.alpha = 1;
+                    weakSelf.nonDeviceCheck.enabled =YES;
+                    [weakSelf.startCheck setTitle:ModuleZW(@"重新检测") forState:(UIControlStateNormal)];
+                    weakSelf.startCheck.enabled = YES;
+                    weakSelf.startCheck.alpha = 1;
                 }
             }
         }
         
     }];
-    
-    //开启一个线程接收数据
-//    dispatch_queue_t queue = dispatch_queue_create("com.huaxinlongma.handleDataQueue", NULL);
-//    dispatch_async(queue, ^{
-//        
-//        
-//    }) ;
     
 }
 
@@ -438,195 +390,6 @@ static int const tick = 80;
     [_showView setHidden:YES];
     [_personView setHidden:YES];
 }
-
-
-#pragma mark -------- 选择子账户
-//-(void)GetWithModifi
-//{
-//    // [self showHUD];
-//    NSString *UrlPre=URL_PRE;
-//    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/memberModifi/list.jhtml?memberId=%@",UrlPre,[UserShareOnce shareOnce].uid];
-//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-//    NSURL *url = [NSURL URLWithString:aUrlle];
-//
-//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-//    if([UserShareOnce shareOnce].languageType){
-//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-//    }
-//    [request setRequestMethod:@"GET"];
-//    [request setTimeOutSeconds:20];
-//    [request setDelegate:self];
-//    [request setDidFailSelector:@selector(requestResourceslistail:)];
-//    [request setDidFinishSelector:@selector(requestResourceslistFinish:)];
-//    [request startAsynchronous];
-//}
-//
-//- (void)requestResourceslistail:(ASIHTTPRequest *)request
-//{
-//
-//    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"获取子账户信息失败!") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-//    av.tag = 100008;
-//    [av show];
-//
-//}
-//
-//- (void)requestResourceslistFinish:(ASIHTTPRequest *)request
-//{
-//    // [self hudWasHidden:nil];
-//    NSString* reqstr=[request responseString];
-//    NSDictionary * dic=[reqstr JSONValue];
-//    id status=[dic objectForKey:@"status"];
-//    if ([status intValue]==100)
-//    {
-//        _personView.hidden = NO;
-//        _showView.hidden = NO;
-//        [self.view bringSubviewToFront:_personView];
-//        [self.view bringSubviewToFront:_showView];
-//
-//        self.dataArr=[dic objectForKey:@"data"];
-//        [self.tableView reloadData];
-//    }
-//    else
-//    {
-//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//        hud.removeFromSuperViewOnHide =YES;
-//        hud.mode = MBProgressHUDModeText;
-//        hud.label.text = ModuleZW(@"登录超时，请重新登录");  //提示的内容
-//        hud.minSize = CGSizeMake(132.f, 108.0f);
-//        [hud hideAnimated:YES afterDelay:2];
-//
-//        LoginViewController *login = [[LoginViewController alloc] init];
-//        [self.navigationController pushViewController:login animated:YES];
-//
-//    }
-//}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.dataArr.count;
-}
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    AdvisoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CELL" forIndexPath:indexPath];
-    if (indexPath.row == 0) {
-        UIImageView *aimage = [[UIImageView alloc]initWithFrame:CGRectMake(20, 13.5, 53 / 2, 53 / 2)];
-        aimage.image = [UIImage imageNamed:@"4111_11.png"];
-        [cell addSubview:aimage];
-    }else{
-        UIImageView *aimage = [[UIImageView alloc]initWithFrame:CGRectMake(20, 13.5, 53 / 2, 53 / 2)];
-        aimage.image = [UIImage imageNamed:@"4123_15.png"];
-        [cell addSubview:aimage];
-    }
-    if ([[self.dataArr[indexPath.row] objectForKey:@"name"]isEqualToString:[UserShareOnce shareOnce].username]) {
-        cell.nameLabel.text = [UserShareOnce shareOnce].name;
-    }else{
-        cell.nameLabel.text = [self.dataArr[indexPath.row] objectForKey:@"name"];
-    }
-    
-    int sesss ;
-    int age ;
-    
-    if ([[self.dataArr[indexPath.row] objectForKey:@"birthday"]isEqual:[NSNull null]] ) {
-        NSString *sex = @"";
-        if ([[UserShareOnce shareOnce].gender isEqual:[NSNull null]]||[[UserShareOnce shareOnce].gender isEqualToString:@"male"]) {
-            sex =ModuleZW(@"男");
-        }else{
-            sex = ModuleZW(@"女");
-        }
-        
-        cell.sexLabel.text = [NSString stringWithFormat:@"%@",sex];
-        cell.phoneLabel.text = [NSString stringWithFormat:@"%@岁",@"0"];
-        
-    }else{
-        NSString *sex = @"";
-        if ([[self.dataArr[indexPath.row] objectForKey:@"gender"]isEqual:[NSNull null]]||[[self.dataArr[indexPath.row] objectForKey:@"gender"] isEqualToString:@"male"]) {
-            sex =ModuleZW(@"男");
-        }else{
-            sex = ModuleZW(@"女");
-        }
-        
-        NSString *str = [[self.dataArr[indexPath.row] objectForKey:@"birthday"] substringToIndex:4];
-        sesss = [str intValue];
-        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-        NSDate *now;
-        NSDateComponents *comps = [[NSDateComponents alloc] init];
-        NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |
-        NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-        now=[NSDate date];
-        comps = [calendar components:unitFlags fromDate:now];
-        age = (int)[comps year] - sesss;
-        // NSString *sexStr = [NSString stringWithFormat:@"(%@%d岁)",sex,age];
-        cell.sexLabel.text = [NSString stringWithFormat:@"%@",sex];
-        cell.phoneLabel.text = [NSString stringWithFormat:@"%d岁",age];
-    }
-    return cell;
-}
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    _personView.hidden = YES;
-//    _showView.hidden = YES;
-//    self.headArray = self.dataArr[indexPath.row];
-//    int age = 0;
-//
-//    if ([[self.dataArr[indexPath.row] objectForKey:@"name"]isEqualToString:[UserShareOnce shareOnce].username]) {
-//        _nameLabel.text = [UserShareOnce shareOnce].name;
-//
-//    }else{
-//        _nameLabel.text = [self.dataArr[indexPath.row] objectForKey:@"name"];
-//    }
-//    NSString *sex = @"";
-//    if ([[self.dataArr[indexPath.row] objectForKey:@"gender"]isEqual:[NSNull null]]||[[self.dataArr[indexPath.row] objectForKey:@"gender"] isEqualToString:@"male"]) {
-//        sex =ModuleZW(@"男") ;
-//    }else{
-//        sex = ModuleZW(@"女");
-//    }
-//    _memberChildId = [self.dataArr[indexPath.row] objectForKey:@"id"];
-//    NSString *str = @"";
-//    if ([[self.dataArr[indexPath.row] objectForKey:@"birthday"] isEqual:[NSNull null]]) {
-//        // str = [[UserShareOnce shareOnce].birthday substringToIndex:4];
-//        age = 0;
-//    }else{
-//        str = [[self.dataArr[indexPath.row] objectForKey:@"birthday"] substringToIndex:4];
-//        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-//        NSDate *now;
-//        NSDateComponents *comps = [[NSDateComponents alloc] init];
-//        NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |
-//        NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-//        now=[NSDate date];
-//        comps = [calendar components:unitFlags fromDate:now];
-//        age = (int)[comps year] - [str intValue];
-//    }
-//
-//    NSDictionary *memberDic = [[NSDictionary alloc] initWithDictionary:self.dataArr[indexPath.row]];
-//    NSNumber *memberId = @(0);
-//    memberId = memberDic[@"id"];
-//
-//    NSInteger highCount = [self.boodArray[3] integerValue];
-//    NSInteger lowCount = [self.boodArray[4] integerValue];
-//    NSInteger pulseCount = [self.boodArray[5] integerValue];
-//
-//
-//    [self showPreogressView];
-//    //提交数据
-//    NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
-//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-//    if([UserShareOnce shareOnce].languageType){
-//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-//    }
-//    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-//    [request addPostValue:memberId forKey:@"memberChildId"];
-//    [request addPostValue:@(30) forKey:@"datatype"];
-//    [request addPostValue:@(highCount) forKey:@"highPressure"];
-//    [request addPostValue:@(lowCount) forKey:@"lowPressure"];
-//    [request addPostValue:@(pulseCount) forKey:@"pulse"];
-//    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-//    [request setTimeOutSeconds:20];
-//    [request setRequestMethod:@"POST"];
-//    [request setDelegate:self];
-//    [request setDidFailSelector:@selector(requestError:)];
-//    [request setDidFinishSelector:@selector(requestCompleted:)];
-//    [request startAsynchronous];
-//
-//}
 
 -(void)requestCompleted:(ASIHTTPRequest *)request{
     [self hidePreogressView];
@@ -726,41 +489,6 @@ static int const tick = 80;
     [self hidePreogressView];
     [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
     
-}
-
-/**
- *  开始倒计时
- */
--(void)startCountDown {
-    
-    [self stopTimer];
-    
-    self.timeCount = tick;
-    self.countdownLabel.text = [NSString stringWithFormat:@"%d %@",self.timeCount,ModuleZW(@"秒")];
-    
-    _timer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(countDown:) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-}
-
-/**
- *  停止倒计时
-
- */
-- (void)stopTimer {
-    if (_timer) {
-        [_timer invalidate];
-        _timer = nil;
-    }
-}
-
-- (void)countDown:(NSTimer *)timer{
-    self.timeCount -= 1;
-    self.countdownLabel.text = [NSString stringWithFormat:@"%d %@",self.timeCount,ModuleZW(@"秒")];
-    
-    if (self.timeCount == 1) {
-        [self stopTimer];
-       
-    }
 }
 
 //查看档案

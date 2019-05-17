@@ -498,7 +498,7 @@
                 break;
             case 9:
                 //血糖
-                urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(60)];
+                urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@&version=2",URL_PRE,memberId,@(60)];
                 break;
             case 11:
                 //体温

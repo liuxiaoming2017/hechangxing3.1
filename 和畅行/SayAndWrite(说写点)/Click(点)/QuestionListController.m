@@ -68,7 +68,7 @@
     
     self.anwerArr = [NSArray arrayWithObjects:ModuleZW(@"没有"),ModuleZW(@"很少"),ModuleZW(@"有时"),ModuleZW(@"经常"),ModuleZW(@"总是"), nil];
     
-    self.headTitleArr = [NSArray arrayWithObjects:@"五官面包及皮肤自查",@"冷热感应状况",@"精神状况",@"身体及代谢症状", nil];
+    self.headTitleArr = [NSArray arrayWithObjects:@"五官面部及皮肤自查",@"冷热感应状况",@"精神状况",@"身体及代谢症状", nil];
     [self getQuestionData];
     
    

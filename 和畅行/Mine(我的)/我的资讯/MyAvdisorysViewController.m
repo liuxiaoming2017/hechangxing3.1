@@ -47,7 +47,7 @@
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height - kNavBarHeight) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.rowHeight = 135;
+    _tableView.rowHeight = 150;
     _tableView.separatorStyle = UITableViewCellAccessoryNone;
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:_tableView];
@@ -103,8 +103,7 @@
     [self hudWasHidden];
     //[SSWaitViewEx removeWaitViewFrom:self.view];
     
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉，请检查您的网络是否畅通") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-    [av show];
+    [self showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
    
 }
 - (void)requestResourceslistCompleteds:(ASIHTTPRequest *)request
@@ -137,9 +136,8 @@
         
     }else{
         NSString *str = [dic objectForKey:@"data"];
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:str delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-        //av.tag = 100008;
-        [av show];
+        [self showAlertWarmMessage:str];
+     
         
     }
 }
@@ -162,17 +160,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (self.dataArray.count) {
         NSDictionary *memberDic = self.dataArray[indexPath.row];
-//        if (![memberDic[@"name"] isKindOfClass:[NSNull class]]) {
-//            cell.nameLabel.text = memberDic[@"name"];
-//        }else{
-        if ([MemberUserShance shareOnce].name.length <  26) {
-            cell.nameLabel.text = [MemberUserShance shareOnce].name;
-        }else{
-            cell.nameLabel.text = [UserShareOnce shareOnce].wxName;
-        }
 
-//        }
-        
         
         if ([[self.dataArray[indexPath.row] objectForKey:@"replyUserConsultations"] isEqual:[NSNull null]]) {
             cell.answerLabel.text = ModuleZW(@"未解答");

@@ -70,14 +70,15 @@
 #pragma mark-构建界面
 -(void)initWithController{
     _touchedPart = [[NSString alloc] init];
-    _leftButton = [Tools creatButtonWithFrame:CGRectMake(20, kNavBarHeight+10, ScreenWidth/2, 34) target:self sel:@selector(leftBtnClick:) tag:11 image:nil title:ModuleZW(@"人体图解")];
+    _leftButton = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - ScreenWidth/4, kNavBarHeight+10, ScreenWidth/2, 34) target:self sel:@selector(leftBtnClick:) tag:11 image:nil title:ModuleZW(@"人体图解")];
     _leftButton.titleLabel.font = [UIFont systemFontOfSize:16];
     _leftButton.backgroundColor = UIColorFromHex(0XFFA200);
     [_leftButton.titleLabel setLineBreakMode:NSLineBreakByTruncatingTail];
     _leftButton.layer.cornerRadius = 17;
     _leftButton.layer.masksToBounds = YES;
     [self.view addSubview:_leftButton];
-    _rightButton = [Tools creatButtonWithFrame:CGRectMake(_leftButton.right + 16, kNavBarHeight+10, ScreenWidth/6,34) target:self sel:@selector(rightBtnClick:) tag:12 image:nil title:ModuleZW(@"症状列表")];
+    
+    _rightButton = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth - ScreenWidth/6 - 20, kNavBarHeight+10, ScreenWidth/6,34) target:self sel:@selector(rightBtnClick:) tag:12 image:nil title:ModuleZW(@"症状列表")];
     _rightButton.titleLabel.font = [UIFont systemFontOfSize:16];
     _rightButton.backgroundColor = UIColorFromHex(0XC3C3C3);
     [_rightButton.titleLabel setLineBreakMode:NSLineBreakByTruncatingTail];
@@ -165,7 +166,7 @@
     backButton.hidden = YES;
     [[backButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
         if(self->_selectedArr.count <1){
-            [GlobalCommon showMessage:ModuleZW(@"未选择症状") duration:2.0];
+            [GlobalCommon showMessage:ModuleZW(@"您还未选择症状") duration:2.0];
 
         }else{
             x.selected = !x.selected;
@@ -190,7 +191,7 @@
     leftImageView.image = [UIImage imageNamed:@"renyuandingwei"];
     [backButton addSubview:leftImageView];
     UILabel *choseLabel = [[UILabel alloc]initWithFrame:CGRectMake(60, 0, backButton.width/2, 40)];
-    choseLabel.text = @"已选症状0/5";
+    choseLabel.text = ModuleZW(@"已选症状0/5");
     choseLabel.textColor = UIColorFromHex(0Xf9a943);
     choseLabel.font = [UIFont systemFontOfSize:14];
     [backButton addSubview:choseLabel];
@@ -304,11 +305,13 @@
 #pragma mark-点击人体图解按钮
 -(void)leftBtnClick:(UIButton *)button{
     
+  
     if (_leftButton.width == ScreenWidth/6){
         [UIView animateWithDuration:0.3 animations:^{
             self->_leftButton.width = ScreenWidth/2;
+            self->_leftButton.left = ScreenWidth/2 - ScreenWidth/4;
             self->_leftButton.backgroundColor = UIColorFromHex(0XFFA200);
-            self->_rightButton.left = self->_leftButton.right + 16;
+            self->_rightButton.left = ScreenWidth - ScreenWidth/6 - 20;
             self->_rightButton.width =ScreenWidth/6;
             self->_rightButton.backgroundColor = UIColorFromHex(0XC3C3C3);
         }];
@@ -329,12 +332,17 @@
 #pragma mark-点击症状列表按钮
 -(void)rightBtnClick:(UIButton *)button{
     
+//    _leftButton = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - ScreenWidth/4, kNavBarHeight+10, ScreenWidth/2, 34) target:self sel:@selector(leftBtnClick:) tag:11 image:nil title:ModuleZW(@"人体图解")];
+//
+//    _rightButton = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth - ScreenWidth/6 - 40, kNavBarHeight+10, ScreenWidth/6,34) target:self sel:@selector(rightBtnClick:) tag:12 image:nil title:ModuleZW(@"症状列表")];
+    
     if (_rightButton.width == ScreenWidth/6){
         [UIView animateWithDuration:0.3 animations:^{
-            self->_rightButton.left = 36 +ScreenWidth/6;
+            self->_rightButton.left = ScreenWidth/2 - ScreenWidth/4;
             self->_rightButton.width =ScreenWidth/2;
             self->_rightButton.backgroundColor = UIColorFromHex(0XFFA200);
             self->_leftButton.width = ScreenWidth/6;
+            self->_leftButton.left = 20;
             self->_leftButton.backgroundColor = UIColorFromHex(0XC3C3C3);
         }];
     }
@@ -529,13 +537,14 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == _leftTableView) {
-        NSArray *cellData = [_leftDataArr objectAtIndex:indexPath.section];
-        NSString *str = ModuleZW([cellData objectAtIndex:indexPath.row]);
-        CGRect textRect = [str boundingRectWithSize:CGSizeMake( 70, MAXFLOAT)
-                                                     options:NSStringDrawingUsesLineFragmentOrigin
-                                                    attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
-                                                     context:nil];
-        return textRect.size.height + 20;
+//        NSArray *cellData = [_leftDataArr objectAtIndex:indexPath.section];
+//        NSString *str = ModuleZW([cellData objectAtIndex:indexPath.row]);
+//        CGRect textRect = [str boundingRectWithSize:CGSizeMake( 70, MAXFLOAT)
+//                                                     options:NSStringDrawingUsesLineFragmentOrigin
+//                                                    attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
+//                                                     context:nil];
+//        return textRect.size.height + 20;
+        return 55;
     }else if (tableView == _rightTableView){
         return 50;
     }else{
@@ -597,6 +606,7 @@
         }
         
         cell.typeLabel.text = ModuleZW([cellData objectAtIndex:indexPath.row]);
+        cell.typeLabel.frame = CGRectMake(10, 10,70, cell.height - 20);
         if(i>0){
             cell.numberLabel.hidden = NO;
             cell.numberLabel.text = [NSString stringWithFormat:@"%d",i];
@@ -643,7 +653,7 @@
                                     self->_selectedCount--;
                                 }
                                 
-                                self->_choseLabel.text = [NSString stringWithFormat:@"已选症状%ld/5",(long)self->_selectedCount];
+                                self->_choseLabel.text = [NSString stringWithFormat:ModuleZW(@"已选症状%ld/5"),(long)self->_selectedCount];
                                 //在已经选择的症状中删除相应的model，并更新数据
                                 for (int i = 0; i < self->_selectedArr.count; i++) {
                                     SymptomModel *model =  self->_selectedArr[i];
@@ -855,7 +865,7 @@
     });
     NSLog(@"共选择了%ld个病症",_selectedArr.count);
     _selectedCount++;
-    _choseLabel.text = [NSString stringWithFormat:@"已选症状%ld/5",(long)_selectedCount];
+    _choseLabel.text = [NSString stringWithFormat:ModuleZW(@"已选症状%ld/5"),(long)_selectedCount];
     
     //将改变同步到数据源_rightDataArr和plist
     [_rightDataArr replaceObjectAtIndex:row withObject:model2];
@@ -925,7 +935,7 @@
             _selectedCount--;
         }
         
-        _choseLabel.text = [NSString stringWithFormat:@"已选症状%ld/5",(long)_selectedCount];
+        _choseLabel.text = [NSString stringWithFormat:ModuleZW(@"已选症状%ld/5"),(long)_selectedCount];
         //将改变同步到数据源_rightDataArr和plist
         for (NSInteger i=0; i<_rightDataArr.count; i++) {
             SymptomModel *rightModel = _rightDataArr[i];
@@ -984,7 +994,7 @@
             [self->_leftTableView reloadData];
             [self->_rightTableView reloadData];
             self->_selectedCount = self->_selectedArr.count;
-            self->_choseLabel.text = [NSString stringWithFormat:@"已选症状%ld/5",(long)self->_selectedCount];
+            self->_choseLabel.text = [NSString stringWithFormat:ModuleZW(@"已选症状%ld/5"),(long)self->_selectedCount];
         };
         [self.navigationController pushViewController:diseaseList animated:YES];
     }

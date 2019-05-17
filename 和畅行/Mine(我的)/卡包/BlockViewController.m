@@ -125,18 +125,6 @@
     header.lastUpdatedTimeLabel.textColor = RGB_TextAppBlue;
     self.tableView.mj_header = header;
     
-//    //上拉加载
-//    MJRefreshBackGifFooter *footer = [MJRefreshBackGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataOther)];
-//
-//    [footer setTitle:@"上拉加载"   forState:MJRefreshStateIdle];
-//    [footer setTitle:@"加载中..."  forState:MJRefreshStateRefreshing];
-//    [footer setTitle:@"没有更多了"  forState:MJRefreshStateNoMoreData];
-//    [footer setTitle:@"松开即可加载..."  forState:MJRefreshStatePulling];
-//    footer.stateLabel.font = [UIFont systemFontOfSize:14];
-//    footer.stateLabel.textColor = RGB_TextAppBlue;
-//    self.tableView.mj_footer = footer;
-    
-    
     self.pageInteger = 1;
 }
 

@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "一听En.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "one_hear.png",
       "scale" : "2x"
     },
     {

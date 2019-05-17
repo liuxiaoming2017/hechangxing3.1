@@ -25,4 +25,5 @@
 //心跳
 @property (nonatomic,copy) NSString *pulse;
 @property (nonatomic,copy) NSString *type;
+@property (nonatomic,assign) long inputDate;
 @end

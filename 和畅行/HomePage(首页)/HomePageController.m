@@ -72,9 +72,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exchangeMemberChild:) name:exchangeMemberChildNotify object:nil];
     
     
-//    TestViewController *nonDeviceCheck = [[TestViewController alloc] init];
-//    nonDeviceCheck.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:nonDeviceCheck animated:YES];
+//   TestViewController *nonDeviceCheck = [[TestViewController alloc] init];
+// nonDeviceCheck.hidesBottomBarWhenPushed = YES;
+//  [self.navigationController pushViewController:nonDeviceCheck animated:YES];
 }
 
 

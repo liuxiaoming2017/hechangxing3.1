@@ -37,7 +37,7 @@
     [super viewDidLoad];
     self.navTitleLabel.text = ModuleZW(@"设置");
     self.view.backgroundColor = RGB_AppWhite;
-    listNamesArr = @[ModuleZW(@"意见反馈"),ModuleZW(@"关于我们"),ModuleZW(@"检测更新")];
+    listNamesArr = @[@"意见反馈",@"关于我们",@"检查更新"];
     NSArray *changeArray = @[ModuleZW(@"修改密码"),ModuleZW(@"退出登录")];
 
     for (int i = 0 ; i < listNamesArr.count; i++) {
@@ -50,8 +50,8 @@
         [self.view addSubview:backImageView];
         
         UIButton *bottomButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        bottomButton.frame = CGRectMake(0, 0,backImageView.width, 50);
-        [bottomButton setTitle:listNamesArr[i] forState:(UIControlStateNormal)];
+        bottomButton.frame = CGRectMake(0, 0,backImageView.width, 55);
+        [bottomButton setTitle:ModuleZW(listNamesArr[i]) forState:(UIControlStateNormal)];
         [bottomButton setImage:[UIImage imageNamed:@"1我的_09"] forState:(UIControlStateNormal)];
         [bottomButton.titleLabel setTextAlignment:(NSTextAlignmentCenter)];
         [bottomButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
@@ -88,7 +88,7 @@
                     break;
                 case 2:
                 {
-                    [self checkHaveUpdate];
+                    [self checkHaveUpdatewihType:1];
                 }
                     break;
                     
@@ -114,11 +114,11 @@
                     [self.navigationController pushViewController:vc animated:YES];
                 }else{
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"确认注销用户" preferredStyle:UIAlertControllerStyleAlert];
-                        UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"确认注销用户") preferredStyle:UIAlertControllerStyleAlert];
+                        UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                             
                         }];
-                        UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                             
                             LoginViewController *loginview=[[LoginViewController alloc]init];
                             NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
@@ -150,7 +150,7 @@
 }
 
 -(void)didBecomeActiveNotification{
-    [self checkHaveUpdate];
+    [self checkHaveUpdatewihType:2];
 }
 
 -(void)dealloc{
@@ -160,7 +160,7 @@
 }
 
 # pragma mark - 检查更新
-- (void)checkHaveUpdate
+- (void)checkHaveUpdatewihType:(int)typeInt
 {
     //ios_hcy-oem-1.0 hcy_android_oem-oem-1.0
     NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
@@ -188,7 +188,9 @@
                 
                 NSLog(@"升级了");
             }else{
-                [self showAlertWarmMessage:ModuleZW(@"已经是最新版本")];
+                if(typeInt == 1){
+                    [self showAlertWarmMessage:ModuleZW(@"已经是最新版本")];
+                }
             }
         }
         

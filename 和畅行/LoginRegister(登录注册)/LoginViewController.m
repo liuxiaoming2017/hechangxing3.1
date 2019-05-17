@@ -31,6 +31,7 @@
 @property (nonatomic,assign)BOOL isChoose;
 @property (nonatomic,strong)UIButton *loginBtn;
 @property (nonatomic,strong)UIButton *ageButton;
+@property (nonatomic,strong)UIButton *leftButton;
 @end
 
 @implementation LoginViewController
@@ -118,16 +119,17 @@
         [button setFrame:CGRectMake(segment.left + 105*i, passWordBox.bottom + 20, 110, 20)];
         [button setTag:1000 + i];
         [self.view addSubview:button];
-        
+        [button  sizeToFit];
         if(i == 0 ) {
             [button setTitleColor:RGB_TextMidLightGray forState:(UIControlStateNormal)];
             [button setImage:[[UIImage imageNamed:@"协议选中"] transformWidth:15 height:15] forState:(UIControlStateNormal)];
             [button setImageEdgeInsets:UIEdgeInsetsMake(0, -5, 0, 0)];
+            button.width = button.width + 15;
+            _leftButton = button;
         }else{
             [button setTitleColor:RGB_ButtonBlue forState:(UIControlStateNormal)];
-            button.width = 100;
+            button.left = _leftButton.right;
         }
-        
     }
     
     UIImageView *imageV3 = [[UIImageView alloc] initWithFrame:CGRectMake(segment.left, passWordBox.bottom+2, imageV2.width, 1)];
@@ -171,7 +173,7 @@
     }];
     
     UILabel *promptLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, loginBtn.bottom , ScreenWidth, 40)];
-    promptLabel.text = ModuleZW(@"无须注册,直接登录");
+    promptLabel.text = ModuleZW(@"无需注册，可直接登录");
     promptLabel.textAlignment = NSTextAlignmentCenter;
     promptLabel.font = [UIFont systemFontOfSize:14];
     promptLabel.textColor = RGB_TextLightGray;
@@ -545,6 +547,7 @@
     }
     
     //短信验证码登录
+    NSLog(@"%@",userNameBox.placeholder );
     if([userNameBox.placeholder isEqualToString:ModuleZW(@"  请输入手机号")]){
         [self smsCodeLoginAction];
     }

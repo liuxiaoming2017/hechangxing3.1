@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "一砭En.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "one_bian.png",
       "scale" : "2x"
     },
     {

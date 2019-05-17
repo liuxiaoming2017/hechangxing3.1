@@ -492,8 +492,6 @@
 		83DC65E22275414600B10F23 /* 家庭成员_提交.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65392275414500B10F23 /* 家庭成员_提交.png */; };
 		83DC65E32275414600B10F23 /* 2_1wq5.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC653A2275414500B10F23 /* 2_1wq5.png */; };
 		83DC65E42275414600B10F23 /* zixundishitu.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC653C2275414500B10F23 /* zixundishitu.png */; };
-		83DC65E52275414600B10F23 /* 我的121咨询_04.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC653D2275414500B10F23 /* 我的121咨询_04.png */; };
-		83DC65E62275414600B10F23 /* qq11个人信息_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC653E2275414500B10F23 /* qq11个人信息_03.png */; };
 		83DC65E72275414600B10F23 /* refundRecord@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC653F2275414500B10F23 /* refundRecord@2x.png */; };
 		83DC65E82275414600B10F23 /* private.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65402275414500B10F23 /* private.png */; };
 		83DC65E92275414600B10F23 /* 个人信息_提交.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65412275414500B10F23 /* 个人信息_提交.png */; };
@@ -1519,8 +1517,6 @@
 		83DC65392275414500B10F23 /* 家庭成员_提交.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "家庭成员_提交.png"; sourceTree = "<group>"; };
 		83DC653A2275414500B10F23 /* 2_1wq5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2_1wq5.png; sourceTree = "<group>"; };
 		83DC653C2275414500B10F23 /* zixundishitu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zixundishitu.png; sourceTree = "<group>"; };
-		83DC653D2275414500B10F23 /* 我的121咨询_04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我的121咨询_04.png"; sourceTree = "<group>"; };
-		83DC653E2275414500B10F23 /* qq11个人信息_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qq11个人信息_03.png"; sourceTree = "<group>"; };
 		83DC653F2275414500B10F23 /* refundRecord@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refundRecord@2x.png"; sourceTree = "<group>"; };
 		83DC65402275414500B10F23 /* private.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = private.png; sourceTree = "<group>"; };
 		83DC65412275414500B10F23 /* 个人信息_提交.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "个人信息_提交.png"; sourceTree = "<group>"; };
@@ -3481,8 +3477,6 @@
 			isa = PBXGroup;
 			children = (
 				83DC653C2275414500B10F23 /* zixundishitu.png */,
-				83DC653D2275414500B10F23 /* 我的121咨询_04.png */,
-				83DC653E2275414500B10F23 /* qq11个人信息_03.png */,
 			);
 			path = "我的资讯";
 			sourceTree = "<group>";
@@ -3890,7 +3884,6 @@
 				83DC65E22275414600B10F23 /* 家庭成员_提交.png in Resources */,
 				83DC664C2275414600B10F23 /* sure.png in Resources */,
 				83DC66512275414600B10F23 /* 呼吸01.png in Resources */,
-				83DC65E52275414600B10F23 /* 我的121咨询_04.png in Resources */,
 				83DC65EA2275414600B10F23 /* 个人信息_08 - 女.png in Resources */,
 				036E844F2186EAF5001B9BB4 /* moxastart.mp3 in Resources */,
 				83DC66212275414600B10F23 /* yundongtupian1.png in Resources */,
@@ -3977,7 +3970,6 @@
 				83DC66142275414600B10F23 /* Wybs_la.png in Resources */,
 				83DC66482275414600B10F23 /* 血压10.png in Resources */,
 				83DC65BD2275414600B10F23 /* 健康讲座线.png in Resources */,
-				83DC65E62275414600B10F23 /* qq11个人信息_03.png in Resources */,
 				036E84C92186EB1A001B9BB4 /* ic_electricity_yellow.png in Resources */,
 				83DC66562275414600B10F23 /* 血糖4.png in Resources */,
 				83DC664A2275414600B10F23 /* 立即检测.png in Resources */,

@@ -11,13 +11,14 @@
 #import "HCY_ConsumptionListCell.h"
 #import "ServiceBlockCell.h"
 #import "HCY_CallController.h"
-
+#import "BlockViewController.h"
 
 @interface HCY_CarDetailController ()<UITableViewDelegate,UITableViewDataSource,ServiceBlockCellDelegate>
 
 @property (nonatomic,strong)UILabel *hLabel;
 @property (nonatomic,strong)UILabel *mLabel;
 @property (nonatomic,strong)UILabel *yLabel;
+@property (nonatomic,strong)UILabel *contentLabel;
 @property (nonatomic,strong)UITableView *listTableView;
 @property (nonatomic,strong)UITableView *serviceTableView;
 @property (nonatomic,strong) NSArray *dataArr;
@@ -29,14 +30,49 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self layoutCarDetailView];
+    
+    
+    if(self.dateDic){
+        [self layoutCarDetailView];
+    }else{
+        [self requestPurchaseHistory];
+    }
+
    
 }
 
 -(void)layoutCarDetailView {
     
     self.navTitleLabel.text = ModuleZW(@"卡详情");
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 240)];
+    CGFloat height ;
+    NSString *contentStr = [NSString string];
+    
+    if(self.dateDic){
+        NSString *dicStr = [NSString stringWithFormat:@"%@",self.dateDic[@"data"][@"lmMdServiceAttr"]];
+        if(dicStr.length > 10){
+            self.serviceArr = self.dateDic[@"data"][@"lmMdServiceAttr"];
+        }else{
+            self.serviceArr = @[];
+        }
+        if(!kDictIsEmpty(self.dateDic[@"data"][@"description"])){
+            contentStr = self.dateDic[@"data"][@"description"];
+        }else{
+            contentStr = @"";
+        }
+    }else{
+        contentStr = _model.cardDescription;
+    }
+    if (_serviceArr.count > 7){
+        height = 220;
+    }else{
+        height = _serviceArr.count * 30;
+    }
+
+    CGRect textRect = [contentStr boundingRectWithSize:CGSizeMake(ScreenWidth - 60, MAXFLOAT)
+                                                           options:NSStringDrawingUsesLineFragmentOrigin
+                                                        attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
+                                                           context:nil];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 105 + textRect.size.height + height)];
     [imageV.layer addSublayer:[UIColor setGradualChangingColor:imageV fromColor:@"4294E1" toColor:@"D1BDFF"]];
     imageV.layer.cornerRadius = 10;
     imageV.layer.masksToBounds = YES;
@@ -58,28 +94,33 @@
     _mLabel.textColor = [UIColor whiteColor];
     [imageV addSubview:_mLabel];
     
+   
+    
+    _contentLabel = [[UILabel alloc] init];
+    _contentLabel.frame = CGRectMake(20,_mLabel.bottom , imageV.width -  40, textRect.size.height );
+    _contentLabel.numberOfLines = 0;
+    _contentLabel.text = contentStr;
+    _contentLabel.font = [UIFont systemFontOfSize:14];
+    _contentLabel.textColor = [UIColor whiteColor];
+    [imageV addSubview:_contentLabel];
+    
     
     
     _yLabel = [[UILabel alloc] init];
-    _yLabel.frame = CGRectMake(_mLabel.left , _mLabel.bottom , 160, 30);
+    _yLabel.frame = CGRectMake(_mLabel.left , _contentLabel.bottom , 160, 30);
     _yLabel.text = ModuleZW(@"剩余服务");
     _yLabel.font = [UIFont systemFontOfSize:16];
     _yLabel.textColor = [UIColor whiteColor];
     [imageV addSubview:_yLabel];
     
 
-    self.serviceTableView = [[UITableView alloc]initWithFrame:CGRectMake(_yLabel.left+5, _yLabel.bottom+5, imageV.width-_yLabel.left*2 - 10, imageV.height-_yLabel.bottom-10) style:UITableViewStylePlain];
+    self.serviceTableView = [[UITableView alloc]initWithFrame:CGRectMake(_yLabel.left+5, _yLabel.bottom+5, imageV.width-_yLabel.left*2 - 10, _serviceArr.count * 30) style:UITableViewStylePlain];
     self.serviceTableView.backgroundColor = [UIColor clearColor];
     self.serviceTableView.separatorStyle = UITableViewCellEditingStyleNone;
     self.serviceTableView.dataSource = self;
     self.serviceTableView.delegate = self;
     self.serviceTableView.rowHeight = 30;
     [imageV addSubview:self.serviceTableView];
-    
-    
-  
-    
-    
     
     
     UIButton *listButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
@@ -91,34 +132,31 @@
             self.listBackView.backgroundColor = RGBA(0, 0, 0, 0.55);
             self.listBackView.hidden = NO;
             [self.view addSubview:self.listBackView];
+            
+            self.listTableView = [[UITableView alloc]initWithFrame:CGRectMake(40, ScreenHeight/2 - 110 , ScreenWidth - 80 , 210) style:UITableViewStylePlain];
+            self.listTableView.backgroundColor = UIColorFromHex(0Xffffff);
+            self.listTableView.separatorStyle = UITableViewCellEditingStyleNone;
+            self.listTableView.layer.cornerRadius = 8;
+            self.listTableView.dataSource = self;
+            self.listTableView.delegate = self;
+            self.listTableView.rowHeight = 30;
+            [self.listBackView addSubview:self.listTableView];
+            [self.listTableView registerNib:[UINib nibWithNibName:@"HCY_ConsumptionListCell" bundle:nil] forCellReuseIdentifier:@"HCY_ConsumptionListCell"];
+            
+            UIButton *closeButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+            closeButton.frame = CGRectMake(ScreenWidth - 55, ScreenHeight/2 - 145, 28, 28);
+            [closeButton setBackgroundImage:[UIImage imageNamed:@"消费记录取消icon"] forState:(UIControlStateNormal)];
+            [[closeButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+                self.listBackView.hidden = YES;
+            }];
+            [self.listBackView addSubview:closeButton];
         }else{
              self.listBackView.hidden = NO;
         }
-        
-        self.listTableView = [[UITableView alloc]initWithFrame:CGRectMake(40, ScreenHeight/2 - 110 , ScreenWidth - 80 , 210) style:UITableViewStylePlain];
-        self.listTableView.backgroundColor = UIColorFromHex(0Xffffff);
-        self.listTableView.separatorStyle = UITableViewCellEditingStyleNone;
-        self.listTableView.layer.cornerRadius = 8;
-        self.listTableView.dataSource = self;
-        self.listTableView.delegate = self;
-        self.listTableView.rowHeight = 30;
-        [self.listBackView addSubview:self.listTableView];
-          [self.listTableView registerNib:[UINib nibWithNibName:@"HCY_ConsumptionListCell" bundle:nil] forCellReuseIdentifier:@"HCY_ConsumptionListCell"];
-        
-     
-        
-        
-        UIButton *closeButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        closeButton.frame = CGRectMake(ScreenWidth - 55, ScreenHeight/2 - 145, 28, 28);
-        [closeButton setBackgroundImage:[UIImage imageNamed:@"消费记录取消icon"] forState:(UIControlStateNormal)];
-        [[closeButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
-            self.listBackView.hidden = YES;
-        }];
-        [self.listBackView addSubview:closeButton];
-        
     }];
     [imageV addSubview:listButton];
   
+
     if(self.dateDic){
         listButton.hidden = YES;
         _mLabel.text = [NSString stringWithFormat:@"%@：%@",ModuleZW(@"卡号"),self.dateDic[@"data"][@"code"]];
@@ -150,14 +188,12 @@
             [request startAsynchronous];
         }];
         [self.view addSubview:addButton];
-        self.serviceArr = self.dateDic[@"data"][@"lmMdServiceAttr"];
         if(self.serviceArr.count > 0){
             [_listTableView reloadData];
         }
         
-    }else{
-        [self requestPurchaseHistory];
     }
+
     
 }
 
@@ -172,9 +208,13 @@
     id status=[dic objectForKey:@"status"];
     if ([status intValue]== 100) {
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"cardNameSuccess" object:nil];
-        [GlobalCommon showMessage:ModuleZW(@"服务卡添加成功") duration:1];
-        [self.navigationController popViewControllerAnimated:YES];
+        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:[dic objectForKey:@"message"] preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *sureAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]animated:YES];
+            
+        }];
+        [alerVC addAction:sureAction];
+        [self presentViewController:alerVC animated:YES completion:nil];
         
     }
     else if ([status intValue]== 44)
@@ -229,32 +269,13 @@
     [request setDidFinishSelector:@selector(requesstuserinfoCompleted:)];
     [request startAsynchronous];
     
-//    __weak typeof(self) weakSelf = self;
-//    [ZYGASINetworking POST_Path:urlStr params:dic completed:^(id JSON, NSString *stringData) {
-//        if([[JSON objectForKey:@"code"] integerValue] == 100){
-//            NSArray *arr = [JSON objectForKey:@"data"];
-//            if(arr.count>0){
-//                    weakSelf.serviceArr = [arr objectAtIndex:0];
-//                [weakSelf.serviceTableView reloadData];
-//                if(arr.count>1){
-//                    weakSelf.dataArr = [arr objectAtIndex:1];
-//                    [weakSelf.listTableView reloadData];
-//                }
-//            }
-           // [weakSelf.listTableView reloadData];
-//        }else{
-//            [weakSelf showAlertWarmMessage:[JSON objectForKey:@"message"]];
-//        }
-//    } failed:^(NSError *error) {
-//        [weakSelf showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
-//    }];
+
 }
 
 - (void)requesstuserinfoError:(ASIHTTPRequest *)request
 {
     [GlobalCommon hideMBHudWithView:self.view];
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉，请检查您的网络是否畅通") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-    [av show];
+    [self showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
 }
 - (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
 {
@@ -266,16 +287,18 @@
     id status=[dic objectForKey:@"status"];
     //NSLog(@"234214324%@",status);
     if ([status intValue]== 100) {
-        
+    
         NSArray *arr = [dic objectForKey:@"data"];
         if(arr.count>0){
             self.serviceArr = [arr objectAtIndex:0];
             [self.serviceTableView reloadData];
             if(arr.count>1){
                 self.dataArr = [arr objectAtIndex:1];
-                [self.listTableView reloadData];
+//                [self.listTableView reloadData];
             }
         }
+        [self layoutCarDetailView];
+
     }else{
         [self showAlertWarmMessage:[dic objectForKey:@"message"]];
 
@@ -287,9 +310,13 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     if(tableView == self.serviceTableView){
-        return self.serviceArr.count;
+        if(self.serviceArr){
+            return self.serviceArr.count;
+        }else{
+            return 0;
+        }
     }else if (tableView == self.listTableView){
-        return 15;
+        return self.dataArr.count;
     }
     return 0;
 }
