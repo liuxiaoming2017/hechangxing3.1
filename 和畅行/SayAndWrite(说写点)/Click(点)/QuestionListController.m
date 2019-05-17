@@ -290,25 +290,28 @@
 - (void)getQuestionData
 {
     
-    
+    // [self requestQuestionListData];
     
     NSString *docuPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString *dbPath  = [NSString string];
     if([UserShareOnce shareOnce].languageType){
-        dbPath = [docuPath stringByAppendingPathComponent:@"questionEn.db"];
+        dbPath = [docuPath stringByAppendingPathComponent:@"questionEn2.db"];
     }else{
-        dbPath = [docuPath stringByAppendingPathComponent:@"question.db"];
+        dbPath = [docuPath stringByAppendingPathComponent:@"question2.db"];
     }
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL isExist = [fileManager fileExistsAtPath:dbPath];
     if(isExist){
-        CacheManager *cacheManager = [[CacheManager alloc] initManage];
+        CacheManager *cacheManager = [CacheManager sharedCacheManager];
 
         NSMutableArray *tempArr = [NSMutableArray arrayWithCapacity:0];
         tempArr = [cacheManager getQuestionModels];
-
-        [self handleQuestionDataWithArr:tempArr];
-
+        
+        if(tempArr.count>0){
+            [self handleQuestionDataWithArr:tempArr];
+        }else{
+            [self requestQuestionListData];
+        }
     }else{
         [self requestQuestionListData];
     }
@@ -430,13 +433,14 @@
                     [mutabDataArr addObject:model];
                 }
             }
-            CacheManager *cacheManager = [[CacheManager alloc] init];
-            BOOL result = [cacheManager createDataBase];
-            if(result){
-                [cacheManager insertQuestionModels:mutabDataArr];
-            }else{
-                [weakSelf showAlertWarmMessage:ModuleZW(@"数据库创建失败")];
-            }
+            CacheManager *cacheManager = [CacheManager sharedCacheManager];
+            [cacheManager insertQuestionModels:mutabDataArr];
+//            BOOL result = [cacheManager createDataBase];
+//            if(result){
+//                [cacheManager insertQuestionModels:mutabDataArr];
+//            }else{
+//                [weakSelf showAlertWarmMessage:ModuleZW(@"数据库创建失败")];
+//            }
             [weakSelf handleQuestionDataWithArr:mutabDataArr];
         }else{
             [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];

@@ -22,7 +22,7 @@
     [super viewDidLoad];
     self.view.backgroundColor=[UtilityFunc colorWithHexString:@"##f2f1ef"];
     navView.backgroundColor = UIColorFromHex(0x009ef3);
-    titleLabel.text = ModuleZW(@"忘记密码1");
+    titleLabel.text = ModuleZW(@"忘记密码");
     [self addBackBtn];
     
     UIImage *registrationImageTextField = [UIImage imageNamed:@"RegistTF_bg.png"];
