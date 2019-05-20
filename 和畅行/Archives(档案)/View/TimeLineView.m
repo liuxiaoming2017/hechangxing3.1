@@ -441,7 +441,7 @@
         }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = aUrlle;
-        vc.titleStr = ModuleZW(@"健康档案");
+        vc.titleStr = ModuleZW(@"经络详情");
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
     }
@@ -455,7 +455,7 @@
             tzUrlle= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
             ResultSpeakController *vc = [[ResultSpeakController alloc] init];
             vc.urlStr = tzUrlle;
-            vc.titleStr = ModuleZW(@"健康档案");
+            vc.titleStr = ModuleZW(@"体质详情");
             vc.hidesBottomBarWhenPushed = YES;
             [[self viewController].navigationController pushViewController:vc animated:YES];
         }else{
@@ -481,7 +481,7 @@
         //member/service/zf_report.jhtml?cust_id=32&physique_id=181224175130815054&device=1
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = zfStr;
-        vc.titleStr = ModuleZW(@"健康档案");
+        vc.titleStr = ModuleZW(@"脏腑详情");
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
     }
@@ -565,7 +565,7 @@
         //                if([GlobalCommon stringEqualNull:model.link]) return;
         //                urlStr= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
         //            }else{
-        xturlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,self.memberIDStr,@(60)];
+        xturlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@&version=2",URL_PRE,self.memberIDStr,@(60)];
 
         //            }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];

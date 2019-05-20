@@ -371,7 +371,11 @@
     if(!_datePicker){
         self.datePicker = [[UIDatePicker alloc] init];
         self.datePicker.frame = CGRectMake(30, 40, _bottomView.width - 80, 200);
-        self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
+        if([UserShareOnce shareOnce].languageType){
+            self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"us"];
+        }else{
+            self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
+        }
         [self.datePicker addTarget:self action:@selector(dateChange:) forControlEvents:UIControlEventValueChanged];
         [_bottomView addSubview:self.datePicker];
     }

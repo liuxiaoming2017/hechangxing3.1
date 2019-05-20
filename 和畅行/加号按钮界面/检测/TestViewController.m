@@ -15,8 +15,7 @@
 #import "SugerViewController.h"
 #import "BloodOxyNonDeviceViewController.h"
 #import "ResultSpeakController.h"
-
-
+#import "SugerStandardController.h"
 @implementation TestValueModel
 
 @end
@@ -178,8 +177,8 @@
             cell.midd1Label.text = ModuleZW(@"舒张压");
             cell.rightLabel.text =[NSString stringWithFormat:@"%@BMP",model.pulse];
             cell.right1Label.text = ModuleZW(@"心率");
-            [cell.lefttBtn setTitle:@"血压检测" forState:(UIControlStateNormal)];
-            [cell.rightBtn setTitle:@"血压监测" forState:(UIControlStateNormal)];
+            [cell.lefttBtn setTitle:ModuleZW(@"血压检测") forState:(UIControlStateNormal)];
+            [cell.rightBtn setTitle:ModuleZW(@"血压监测") forState:(UIControlStateNormal)];
             int highPressure =[model.highPressure intValue];
             int lowPressure =[model.lowPressure intValue];
             if (lowPressure >=0&&lowPressure<=60){
@@ -202,8 +201,8 @@
             cell.rightLabel.hidden = YES;
             cell.left1Label.hidden = YES;
             cell.right1Label.hidden = YES;
-            [cell.lefttBtn setTitle:@"血糖检测" forState:(UIControlStateNormal)];
-            [cell.rightBtn setTitle:@"血糖监测" forState:(UIControlStateNormal)];
+            [cell.lefttBtn setTitle:ModuleZW(@"血糖检测") forState:(UIControlStateNormal)];
+            [cell.rightBtn setTitle:ModuleZW(@"血糖监测") forState:(UIControlStateNormal)];
             if (![GlobalCommon stringEqualNull:model.levels]){
                 if ([model.levels floatValue] <3.9) {
                     cell.arrowImageView.left = (ScreenWidth - 60)/6 + 10;
@@ -225,9 +224,9 @@
                 typeStr = @"早餐前";
             }else  if([model.type isEqualToString:@"afterBreakfast"]){
                 typeStr = @"早餐后";
-            }else  if([model.type isEqualToString:@"beforeLunch"]){
+            }else  if([model.type isEqualToString:@"empty"]){
                 typeStr = @"午餐前";
-            }else  if([model.type isEqualToString:@"afterLunch"]){
+            }else  if([model.type isEqualToString:@"full"]){
                 typeStr = @"午餐后";
             }else  if([model.type isEqualToString:@"beforeDinner"]){
                 typeStr = @"晚餐前";
@@ -241,11 +240,22 @@
            
             
             cell.leftTwoBlock = ^{
-                SugerViewController *vc = [[SugerViewController alloc] init];
-                [self.navigationController pushViewController:vc animated:YES];
+                
+                if([[[NSUserDefaults standardUserDefaults] objectForKey:@"sugerNeverCaution"] isEqualToString:@"1"]){
+                    SugerViewController *vc = [[SugerViewController alloc] init];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else{
+                    SugerStandardController * vc1 = [[SugerStandardController alloc] init];
+//                    vc1.isBottom = YES;
+                    vc1.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc1 animated:YES];
+                }
+                
+                
+               
             };
             cell.righTwoBlock = ^{
-           NSString  *urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(60)];
+           NSString  *urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@&version=2",URL_PRE,[MemberUserShance shareOnce].idNum,@(60)];
                 ResultSpeakController *vc = [[ResultSpeakController alloc] init];
                 vc.urlStr = urlStr;
                 vc.popInt = 111;
@@ -255,9 +265,9 @@
 
             };
         }
-        if(model.createDate > 100){
+        if(model.inputDate > 100){
             cell.dateLabel.text =
-            [self compareCurrentTime:[NSString stringWithFormat:@"%ld",model.createDate]];
+            [self compareCurrentTime:[NSString stringWithFormat:@"%ld",model.inputDate]];
         }
 
     }

@@ -67,7 +67,7 @@
     [self.view addSubview:bangButton];
     
     
-    UIButton *flickingBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - 13 ,ScreenHeight - 200, 50, 50) target:self sel:@selector(flickingClick) tag:31 image:nil title:@"二维码"];
+    UIButton *flickingBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - 13 ,ScreenHeight - 200, 50, 50) target:self sel:@selector(flickingClick) tag:31 image:nil title:ModuleZW(@"二维码")];
     [flickingBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [flickingBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [flickingBtn setImage:[UIImage imageNamed:@"二维码"] forState:(UIControlStateNormal)];

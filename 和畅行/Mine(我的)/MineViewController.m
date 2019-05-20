@@ -155,12 +155,12 @@
     backScrollView.contentSize = CGSizeMake(0, buttonBackImageView.bottom + 20);
     
     NSArray *numberArray = @[@"0\n收藏",@"0\n卡包",@"0\n积分"];
-    NSArray *titleArr           = @[ModuleZW(@"待付款"),ModuleZW(@"待评价"),
-                                                 ModuleZW(@"退款/售后"),ModuleZW(@"全部订单")];
+    NSArray *titleArr           = @[@"待付款",@"待评价",
+                                                 @"退款/售后",@"全部订单"];
     NSArray *imageArr        = @[@"我的待付款",@"我的待评价",@"我的退款售后",@"我的全部订单"];
-    listNamesArr                  = @[ModuleZW(@"健康顾问团队"),ModuleZW(@"咨询记录"),
-                                                  ModuleZW(@"地址管理"),ModuleZW(@"运动示范音"),
-                                                  ModuleZW(@"设置")];
+    listNamesArr                  = @[@"健康顾问团队",@"咨询记录",
+                                                  @"地址管理",@"运动示范音",
+                                                  @"设置"];
     for (int i=0; i<listNamesArr.count; i++) {
         
         if (i < numberArray.count){
@@ -206,9 +206,10 @@
         if(i < titleArr.count){
             UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
             button.frame = CGRectMake(0 + imageV.width*i/titleArr.count , 0, imageV.width/titleArr.count, imageV.height);
-            [button setTitle:titleArr[i] forState:(UIControlStateNormal)];
+            [button setTitle: ModuleZW(titleArr[i])forState:(UIControlStateNormal)];
             [button setImage:[UIImage imageNamed:imageArr[i]] forState:(UIControlStateNormal)];
             [button.titleLabel setTextAlignment:(NSTextAlignmentCenter)];
+            [button.titleLabel setNumberOfLines:2];
             [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
             [button setTitleColor:UIColorFromHex(0X7f7f7f) forState:(UIControlStateNormal)];
             [button setImageEdgeInsets:UIEdgeInsetsMake(-23,0,0, -button.titleLabel.intrinsicContentSize.width)];
@@ -265,7 +266,7 @@
         
         UIButton *bottomButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
         bottomButton.frame = CGRectMake(20, 58*i,ScreenWidth - 40, 58);
-        [bottomButton setTitle:listNamesArr[i] forState:(UIControlStateNormal)];
+        [bottomButton setTitle:ModuleZW(listNamesArr[i]) forState:(UIControlStateNormal)];
         [bottomButton setImage:[UIImage imageNamed:@"1我的_09"] forState:(UIControlStateNormal)];
         [bottomButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [bottomButton setTitleColor: UIColorFromHex(0x8e8e93) forState:(UIControlStateNormal)];
@@ -278,7 +279,7 @@
         [[bottomButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             switch (i) {
                 case 0: {
-                    [self showAlertWarmMessage:@"功能正在研发中..."];
+                    [self showAlertWarmMessage:ModuleZW(@"尚未开放...")];
                 }
                     break;
                 case 1: {

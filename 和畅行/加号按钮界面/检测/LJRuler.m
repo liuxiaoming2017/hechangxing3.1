@@ -86,6 +86,7 @@
 
 - (void)scrollViewDidEndDragging:(LJRulerScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     [self animationRebound:scrollView];
+    self.isScroll = NO;
 }
 
 - (void)animationRebound:(LJRulerScrollView *)scrollView {

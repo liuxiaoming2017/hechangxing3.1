@@ -12,15 +12,12 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-//        _backView = [[UIView alloc]initWithFrame:CGRectMake(10, 0, 70, 70)];
-//        _backView.backgroundColor = [UIColor whiteColor];
-//        [self addSubview:_backView];
-        _typeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10,70, self.height - 20)];
+
+        _typeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5,70, self.height - 10)];
         _typeLabel.textColor = RGB_TextGray;
         _typeLabel.textAlignment = NSTextAlignmentCenter;
-        _typeLabel.layer.cornerRadius = _typeLabel.height/2;
-        _typeLabel.numberOfLines = 2;
-        _typeLabel.layer.masksToBounds = YES;
+        _typeLabel.lineBreakMode = NSLineBreakByCharWrapping;
+        _typeLabel.numberOfLines = 0;
         _typeLabel.font = [UIFont systemFontOfSize:14];
         _numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(70, 5, 14, 14)];
         _numberLabel.backgroundColor = RGB_TextAppOrange;

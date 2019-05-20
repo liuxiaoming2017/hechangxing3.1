@@ -19,9 +19,9 @@
 #define currentMonth [currentMonthString integerValue]
 
 
-@interface PersonalInformationViewController ()<ZHPickViewDelegate,MBProgressHUDDelegate,UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface PersonalInformationViewController ()<ZHPickViewDelegate,MBProgressHUDDelegate,UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate>
 
-@property (nonatomic,strong)ZHPickView *pickview;
+//@property (nonatomic,strong)ZHPickView *pickview;
 @property (nonatomic,strong)UIView *blackView;
 @property (nonatomic,strong)UIButton *photoButton;
 @property (nonatomic,strong)UIButton *brithdayButton;
@@ -31,6 +31,9 @@
 @property (nonatomic,copy)NSString *brithdayStr;
 @property (nonatomic,copy)NSString *phoneStr;
 @property (nonatomic,copy) NSString *pngFilePath;
+@property (nonatomic,strong) UIDatePicker *datePicker;
+@property (nonatomic,strong) UIView *backView;
+@property (nonatomic,copy)  NSString *dateString;
 
 @end
 
@@ -115,7 +118,7 @@
             self.photoButton = photoButton;
             
         }else {
-            leftLabel.frame = CGRectMake(30, kNavBarHeight + 90 + 45 *(i-1), 100, 45);
+            leftLabel.frame = CGRectMake(30, kNavBarHeight + 90 + 45 *(i-1), 110, 45);
             UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
             button.frame = CGRectMake(leftLabel.right + 20, leftLabel.top, ScreenWidth - leftLabel.right - 50, 45);
             [button setTitle:contentArray[i] forState:(UIControlStateNormal)];
@@ -452,10 +455,7 @@
 
 -(void) birthDayActive
 {
-    NSDate *date=[NSDate date];
-    _pickview=[[ZHPickView alloc] initDatePickWithDate:date datePickerMode:UIDatePickerModeDate isHaveNavControler:NO];
-    _pickview.delegate = self;
-    [_pickview show];
+    [self layoutDataView];
     
 }
 - (void)requestuserinfoCompleted:(ASIHTTPRequest *)request
@@ -486,17 +486,6 @@
     [GlobalCommon hideMBHudWithView:self.view];
 }
 
-
-
--(void)toobarDonBtnHaveClick:(ZHPickView *)pickView resultString:(NSString *)resultString{
-    
-    NSLog(@"ddfdfd=%@",resultString);
-    _brithdayStr = resultString;
-    [_brithdayButton setTitle:resultString forState:(UIControlStateNormal)];
-    [self commitClick];
-
-}
-
 - (BOOL) deptNumInputShouldNumber:(NSString *)str
 {
     if (str.length == 0) {
@@ -510,10 +499,89 @@
     return NO;
 }
 
+-(void)layoutDataView{
+    
+
+    if(!_backView){
+        UIView *backView  = [[UIView alloc]initWithFrame:self.view.bounds];
+        backView.backgroundColor = RGBA(0, 0, 0, 0.4);
+        [self.view addSubview:backView];
+        _backView = backView;
+        UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(10, ScreenHeight - 290, ScreenWidth - 20, 280)];
+        bottomView.backgroundColor = [UIColor whiteColor];
+        bottomView.layer.cornerRadius = 15;
+        [backView addSubview:bottomView];
+        
+        UILabel *dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 10, 100, 30)];
+        dataLabel.textColor = RGB_TextGray;
+        dataLabel.font = [UIFont systemFontOfSize:14];
+        [bottomView addSubview:dataLabel];
+//        _datatypeLabel = dataLabel;
+        
+        
+        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(bottomView.width/2 - 0.25,bottomView.height - 36, 0.5, 32)];
+        lineView.backgroundColor = RGB(230, 230, 230);
+        [bottomView addSubview:lineView];
+        
+        self.datePicker = [[UIDatePicker alloc] init];
+        self.datePicker.frame = CGRectMake(30, 40, bottomView.width - 80, 200);
+        if([UserShareOnce shareOnce].languageType){
+            self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"us"];
+        }else{
+            self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
+        }
+        self.datePicker.datePickerMode =  UIDatePickerModeDate;
+        [self.datePicker addTarget:self action:@selector(dateChange:) forControlEvents:UIControlEventValueChanged];
+        [self.datePicker setMaximumDate:[NSDate date]];
+        [bottomView addSubview:self.datePicker];
+    
+        
+        NSArray *buttonTitleArray = @[ModuleZW(@"取消"),ModuleZW(@"确定")];
+        for (int i = 0; i < 2; i++) {
+            UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
+            button.frame = CGRectMake(40 + (bottomView.width/2-40)*i  , bottomView.height - 40, (bottomView.width - 80)/2, 40);
+            [button setTitle:buttonTitleArray[i] forState:(UIControlStateNormal)];
+            [button setTitleColor:UIColorFromHex(0Xffa200) forState:(UIControlStateNormal)];
+            [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
+            [[button rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+                if(i == 1){
+                    self.brithdayStr = self.dateString;
+                    [self->_brithdayButton setTitle:self->_brithdayStr forState:(UIControlStateNormal)];
+                     [self commitClick];
+                }
+                backView.hidden = YES;
+            }];
+            [bottomView addSubview:button];
+        }
+    }else{
+        _backView.hidden = NO;
+
+      
+    }
+    
+    if(self.brithdayStr.length > 7){
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"YYYY/MM/dd"];
+        NSDate *tempDate = [dateFormatter dateFromString:_brithdayStr];
+        [self.datePicker setDate:tempDate animated:YES];
+    }
+}
+
+- (void)dateChange:(UIDatePicker *)datePicker {
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    formatter.dateFormat = @"yyyy/MM/dd";
+    NSString *dateStr = [formatter  stringFromDate:datePicker.date];
+    self.dateString = dateStr;
+ 
+    
+}
+
 - (void)goBack:(UIButton *)btn
 {
-    if(_pickview){
-        [_pickview remove];
+    if(_datePicker){
+        [_datePicker removeFromSuperview];
     }
     [self dismissViewControllerAnimated:YES completion:NULL];
 }

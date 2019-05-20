@@ -217,9 +217,6 @@
     [self.view addSubview:suerButton];
  
     
-    //使用规范
-//    UIButton *useNorm = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-30,commitButton.bottom+30, 60, 25) target:self sel:@selector(useNormClick:) tag:102 image:ModuleZW(@"使用规范") title:nil];
-//    [self.view addSubview:useNorm];
 }
 
 
@@ -264,10 +261,10 @@
         typeStr = @"afterBreakfast";
         _type = @"full";
     }else   if([self.typeLabel.text isEqualToString:ModuleZW(@"午餐前")]){
-        typeStr = @"beforeLunch";
+        typeStr = @"empty";
          _type = @"empty";
     }else   if([self.typeLabel.text isEqualToString:ModuleZW(@"午餐后")]){
-        typeStr = @"afterLunch";
+        typeStr = @"full";
          _type = @"full";
     }else   if([self.typeLabel.text isEqualToString:ModuleZW(@"晚餐前")]){
         typeStr = @" beforeDinner";
@@ -395,6 +392,9 @@
 
 -(void)getDataFinish:(ASIHTTPRequest *)request{
     [self hidePreogressView];
+    
+    NSArray *typeArray = @[@"type=afterDinner",@"type=beforeBreakfast",@"type=beforeSleep",@"type=full",@"type=beforeDawn",@"type=beforeDinner",@"type=empty",@"type=afterBreakfast"];
+    NSMutableArray *tytpAarry1 = [NSMutableArray array];
     NSString *jsonString = [request responseString];
     NSDictionary *dic = [jsonString JSONValue];
     if ([dic[@"status"] integerValue] == 100) {
@@ -407,12 +407,15 @@
         _nomalCount = 0;
         _unNomalCount = 0;
         NSDictionary *data = dic[@"data"];
-        NSLog(@"%@",data);
-        NSArray *emptyArr = data[@"type=empty"];
-        for (NSDictionary *emptyDic in emptyArr) {
+        for (int i = 0; i < typeArray.count; i++) {
+             NSArray *emptyArr = data[typeArray[i]];
+            if(emptyArr.count > 0){
+                [tytpAarry1 addObjectsFromArray:emptyArr];
+            }
+        }
+        for (NSDictionary *emptyDic in tytpAarry1) {
             BloodSugerModel *model = [[BloodSugerModel alloc] init];
             model = [BloodSugerModel mj_objectWithKeyValues:emptyDic];
-            
             
             _totalCount++;
             _emptyCount++;
@@ -422,20 +425,7 @@
                 _nomalCount++;
             }
         }
-        NSArray *fullArr = data[@"type=full"];
-        for (NSDictionary *fullDic in fullArr) {
-            _totalCount++;
-            _fullCount++;
-            BloodSugerModel *model = [[BloodSugerModel alloc] init];
-            model = [BloodSugerModel mj_objectWithKeyValues:fullDic];
-            
-            if ([fullDic[@"isAbnormity"] integerValue] == 1) {
-                _unNomalCount++;
-            }else{
-                _nomalCount++;
-            }
-        }
-        //弹出提示信息
+       
         [self showHintInfo];
     }else{
         MBProgressHUD *mbHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -461,13 +451,12 @@
     imageView.userInteractionEnabled = YES;
     imageView.image = [UIImage imageNamed:@"bounceView"];
 
-//    UIButton *confirmBtn = [Tools creatButtonWithFrame:CGRectMake(imageView.left, imageView.bottom, imageView.width, 40*1.1) target:self sel:@selector(confirmBtnClick2:) tag:21 image:ModuleZW(@"sureButton") title:nil];
     
     UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [sureBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
     [sureBtn setTitle: ModuleZW(@"返回检测") forState:UIControlStateNormal];
     sureBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    sureBtn.frame = CGRectMake(20, kScreenSize.height/2+90, imageView.frame.size.width * 0.5, 40);
+    sureBtn.frame = CGRectMake(20, imageView.bottom, imageView.frame.size.width * 0.5, 40);
     [sureBtn addTarget:self action:@selector(confirmBtnClick2:) forControlEvents:UIControlEventTouchUpInside];
     [view2 addSubview:sureBtn];
     
@@ -664,7 +653,11 @@
     if(!_datePicker){
         self.datePicker = [[UIDatePicker alloc] init];
         self.datePicker.frame = CGRectMake(30, 40, _bottomView.width - 80, 200);
-        self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
+        if([UserShareOnce shareOnce].languageType){
+            self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"us"];
+        }else{
+            self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
+        }
         [self.datePicker addTarget:self action:@selector(dateChange:) forControlEvents:UIControlEventValueChanged];
         [self.datePicker setMaximumDate:[NSDate date]];
         [_bottomView addSubview:self.datePicker];
@@ -700,7 +693,7 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:
 (NSInteger)row inComponent:(NSInteger)component
 {
-    self.typeStr = _dataArray[row];
+    self.typeStr = ModuleZW(_dataArray[row]);
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
