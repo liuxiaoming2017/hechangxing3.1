@@ -44,6 +44,8 @@ xcuserdata/
 
 *.xcscmblueprint
 
+payRequsestHandler.h
+
 
 
 ## Obj-C/Swift specific
@@ -56,7 +58,7 @@ xcuserdata/
 
 *.dSYM
 
-payRequsestHandler.h
+
 
 
 
