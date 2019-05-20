@@ -30,9 +30,10 @@
 
 @synthesize subLayer;
 
-- (id)initWithFrame:(CGRect)frame withDataArr:(NSArray *)arr
+- (id)initWithFrame:(CGRect)frame withDataArr:(NSMutableArray *)arr
 {
     self = [super initWithFrame:frame];
+    self.dataArr = [NSMutableArray arrayWithCapacity:0];
     self.dataArr = arr;
     if(self){
         [self createupUI];
@@ -127,9 +128,9 @@
         }
         cell.contentLabel.text = model.advice;
         if(model.isDone){
-            cell.circleImageV.hidden = NO;
-        }else{
             cell.circleImageV.hidden = YES;
+        }else{
+            cell.circleImageV.hidden = NO;
         }
     }
     
@@ -177,6 +178,13 @@
         [self.viewController.navigationController pushViewController:vc animated:YES];
         
     }else {
+        
+        RemindModel *model = [self.dataArr objectAtIndex:indexPath.row];
+        model.isDone = YES;
+        [self requestDataWithModel:model];
+        [[CacheManager sharedCacheManager] updateRemindModel:model];
+        
+        [self.dataArr exchangeObjectAtIndex:indexPath.row withObjectAtIndex:[self.dataArr count]-1];
         if ([cell.typeLabel.text isEqualToString:ModuleZW(@"一听")]){
             type = @"/member/service/view/fang/JLBS/1/";
             fangtype = @"yiting";
@@ -198,10 +206,12 @@
         hechangVc.titleStr = titleStr;
         hechangVc.hidesBottomBarWhenPushed = YES;
         [self.viewController.navigationController pushViewController:hechangVc animated:YES];
+        
+        [self.tableView reloadData];
     }
 }
 
-- (void)updateViewWithData:(NSArray *)arr withHeight:(CGFloat)height
+- (void)updateViewWithData:(NSMutableArray *)arr withHeight:(CGFloat)height
 {
     UIImageView *imgV = [self viewWithTag:200];
     self.dataArr = arr;
@@ -240,6 +250,20 @@
         subLayer.frame = imageV.frame;
     }
     
+}
+
+- (void)requestDataWithModel:(RemindModel *)model
+{
+    NSString *urlStr = @"/member/new_ins/addExerciseInfo.jhtml";
+    NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [paramDic setObject:[MemberUserShance shareOnce].idNum forKey:@"memberChildId"];
+    [paramDic setObject:[NSString stringWithFormat:@"%ld",model.confId] forKey:@"confId"];
+    
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:paramDic successBlock:^(id response) {
+        NSLog(@"response:%@",response);
+    } failureBlock:^(NSError *error) {
+        
+    }];
 }
 
 - (BOOL)isFirestClickThePageWithString:(NSString *)string

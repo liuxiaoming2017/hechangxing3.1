@@ -11,9 +11,9 @@
 @interface HeChangRemind : UIView
 
 @property(nonatomic,strong) UITableView *tableView;
-@property (nonatomic,strong) NSArray *dataArr;
+@property (nonatomic,strong) NSMutableArray *dataArr;
 
-- (id)initWithFrame:(CGRect)frame withDataArr:(NSArray *)arr;
-- (void)updateViewWithData:(NSArray *)arr withHeight:(CGFloat)height;
+- (id)initWithFrame:(CGRect)frame withDataArr:(NSMutableArray *)arr;
+- (void)updateViewWithData:(NSMutableArray *)arr withHeight:(CGFloat)height;
 
 @end

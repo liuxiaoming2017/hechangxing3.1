@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class QuestionModel;
-//@class AnwerModel;
+@class RemindModel;
 @interface CacheManager : NSObject
 
 - (void)insertQuestionModel:(QuestionModel *)model;
@@ -27,5 +27,7 @@
 
 - (void)inserthealthArticleModels:(NSArray *)arr;
 - (NSMutableArray *)gethealthArticleModels;
+
+- (void)updateRemindModel:(RemindModel *)model;
 
 @end
