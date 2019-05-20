@@ -66,12 +66,10 @@
     self.threeLabel.text = ModuleZW(@"3. 长按灸头震动三下");
     self.threeTLabel.text = ModuleZW(@"用手点击灸头并长按，即可震动三下，便于查找相应的灸头");
     
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.leftBtn.hidden = YES;
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;
     self.navTitleLabel.text = ModuleZW(@"操作指引");
-    self.navTitleLabel.textColor = [UIColor whiteColor];
 }
 
 -(void)viewWillAppear:(BOOL)animated

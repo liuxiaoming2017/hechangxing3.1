@@ -11,31 +11,68 @@
 #import "HCY_ConsumptionListCell.h"
 #import "ServiceBlockCell.h"
 #import "HCY_CallController.h"
-
+#import "BlockViewController.h"
 
 @interface HCY_CarDetailController ()<UITableViewDelegate,UITableViewDataSource,ServiceBlockCellDelegate>
 
 @property (nonatomic,strong)UILabel *hLabel;
 @property (nonatomic,strong)UILabel *mLabel;
 @property (nonatomic,strong)UILabel *yLabel;
+@property (nonatomic,strong)UILabel *contentLabel;
 @property (nonatomic,strong)UITableView *listTableView;
 @property (nonatomic,strong)UITableView *serviceTableView;
 @property (nonatomic,strong) NSArray *dataArr;
 @property (nonatomic,strong) NSArray *serviceArr;
+@property (nonatomic,strong) UIView *listBackView;
 @end
 
 @implementation HCY_CarDetailController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self layoutCarDetailView];
-    [self requestPurchaseHistory];
+    
+    
+    if(self.dateDic){
+        [self layoutCarDetailView];
+    }else{
+        [self requestPurchaseHistory];
+    }
+
+   
 }
 
 -(void)layoutCarDetailView {
     
-    self.navTitleLabel.text = ModuleZW(@"消费记录");
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 240)];
+    self.navTitleLabel.text = ModuleZW(@"卡详情");
+    CGFloat height ;
+    NSString *contentStr = [NSString string];
+    
+    if(self.dateDic){
+        NSString *dicStr = [NSString stringWithFormat:@"%@",self.dateDic[@"data"][@"lmMdServiceAttr"]];
+        if(dicStr.length > 10){
+            self.serviceArr = self.dateDic[@"data"][@"lmMdServiceAttr"];
+        }else{
+            self.serviceArr = @[];
+        }
+        if(!kDictIsEmpty(self.dateDic[@"data"][@"description"])){
+            contentStr = self.dateDic[@"data"][@"description"];
+        }else{
+            contentStr = @"";
+        }
+    }else{
+        contentStr = _model.cardDescription;
+    }
+    if (_serviceArr.count > 7){
+        height = 220;
+    }else{
+        height = _serviceArr.count * 30;
+    }
+
+    CGRect textRect = [contentStr boundingRectWithSize:CGSizeMake(ScreenWidth - 60, MAXFLOAT)
+                                                           options:NSStringDrawingUsesLineFragmentOrigin
+                                                        attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
+                                                           context:nil];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 105 + textRect.size.height + height)];
     [imageV.layer addSublayer:[UIColor setGradualChangingColor:imageV fromColor:@"4294E1" toColor:@"D1BDFF"]];
     imageV.layer.cornerRadius = 10;
     imageV.layer.masksToBounds = YES;
@@ -43,9 +80,8 @@
     [self.view addSubview:imageV];
     
     _hLabel = [[UILabel alloc] init];
-    _hLabel.frame = CGRectMake(0, 20, imageV.width, 25);
+    _hLabel.frame = CGRectMake(20, 20, imageV.width - 30, 25);
     _hLabel.textColor = [UIColor whiteColor];
-    _hLabel.textAlignment = NSTextAlignmentCenter;
     _hLabel.text = self.model.card_name;
     _hLabel.font = [UIFont systemFontOfSize:21];
     [imageV addSubview:_hLabel];
@@ -58,20 +94,27 @@
     _mLabel.textColor = [UIColor whiteColor];
     [imageV addSubview:_mLabel];
     
+   
+    
+    _contentLabel = [[UILabel alloc] init];
+    _contentLabel.frame = CGRectMake(20,_mLabel.bottom , imageV.width -  40, textRect.size.height );
+    _contentLabel.numberOfLines = 0;
+    _contentLabel.text = contentStr;
+    _contentLabel.font = [UIFont systemFontOfSize:14];
+    _contentLabel.textColor = [UIColor whiteColor];
+    [imageV addSubview:_contentLabel];
+    
     
     
     _yLabel = [[UILabel alloc] init];
-    _yLabel.frame = CGRectMake(_mLabel.left , _mLabel.bottom , 160, 30);
+    _yLabel.frame = CGRectMake(_mLabel.left , _contentLabel.bottom , 160, 30);
     _yLabel.text = ModuleZW(@"剩余服务");
     _yLabel.font = [UIFont systemFontOfSize:16];
     _yLabel.textColor = [UIColor whiteColor];
     [imageV addSubview:_yLabel];
     
-//    if([GlobalCommon stringEqualNull:self.model.cardDescription]){
-//        _yLabel.frame = CGRectMake(_mLabel.left , _hLabel.bottom , 160, 30);
-//    }
-    
-    self.serviceTableView = [[UITableView alloc]initWithFrame:CGRectMake(_yLabel.left+5, _yLabel.bottom+5, imageV.width-_yLabel.left*2 - 10, imageV.height-_yLabel.bottom-10) style:UITableViewStylePlain];
+
+    self.serviceTableView = [[UITableView alloc]initWithFrame:CGRectMake(_yLabel.left+5, _yLabel.bottom+5, imageV.width-_yLabel.left*2 - 10, _serviceArr.count * 30) style:UITableViewStylePlain];
     self.serviceTableView.backgroundColor = [UIColor clearColor];
     self.serviceTableView.separatorStyle = UITableViewCellEditingStyleNone;
     self.serviceTableView.dataSource = self;
@@ -80,25 +123,126 @@
     [imageV addSubview:self.serviceTableView];
     
     
-    UILabel *listLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, imageV.bottom + 23, 200, 30)];
-    listLabel.text = ModuleZW(@"消费记录");
+    UIButton *listButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    listButton.frame = CGRectMake(imageV.width - 40, 20, 25, 27);
+    [listButton setBackgroundImage:[UIImage imageNamed:@"消费记录icon"] forState:(UIControlStateNormal)];
+    [[listButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        if(!self.listBackView) {
+            self.listBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+            self.listBackView.backgroundColor = RGBA(0, 0, 0, 0.55);
+            self.listBackView.hidden = NO;
+            [self.view addSubview:self.listBackView];
+            
+            self.listTableView = [[UITableView alloc]initWithFrame:CGRectMake(40, ScreenHeight/2 - 110 , ScreenWidth - 80 , 210) style:UITableViewStylePlain];
+            self.listTableView.backgroundColor = UIColorFromHex(0Xffffff);
+            self.listTableView.separatorStyle = UITableViewCellEditingStyleNone;
+            self.listTableView.layer.cornerRadius = 8;
+            self.listTableView.dataSource = self;
+            self.listTableView.delegate = self;
+            self.listTableView.rowHeight = 30;
+            [self.listBackView addSubview:self.listTableView];
+            [self.listTableView registerNib:[UINib nibWithNibName:@"HCY_ConsumptionListCell" bundle:nil] forCellReuseIdentifier:@"HCY_ConsumptionListCell"];
+            
+            UIButton *closeButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+            closeButton.frame = CGRectMake(ScreenWidth - 55, ScreenHeight/2 - 145, 28, 28);
+            [closeButton setBackgroundImage:[UIImage imageNamed:@"消费记录取消icon"] forState:(UIControlStateNormal)];
+            [[closeButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+                self.listBackView.hidden = YES;
+            }];
+            [self.listBackView addSubview:closeButton];
+        }else{
+             self.listBackView.hidden = NO;
+        }
+    }];
+    [imageV addSubview:listButton];
+  
+
+    if(self.dateDic){
+        listButton.hidden = YES;
+        _mLabel.text = [NSString stringWithFormat:@"%@：%@",ModuleZW(@"卡号"),self.dateDic[@"data"][@"code"]];
+        _yLabel.text = ModuleZW(@"服务内容");
+        _hLabel.text = _dateDic[@"data"][@"name"];
+        UIButton *addButton =  [UIButton buttonWithType:(UIButtonTypeCustom)];
+        addButton.frame = CGRectMake(40, ScreenHeight - kTabBarHeight - 40, ScreenWidth - 80, 36);
+        addButton.layer.cornerRadius = 18;
+        addButton.layer.masksToBounds = YES;
+        addButton.backgroundColor = RGB_ButtonBlue;
+        [addButton setTitle:ModuleZW(@"添加至卡包") forState:(UIControlStateNormal)];
+        [[addButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            NSString *UrlPre=URL_PRE;
+            NSString *aUrl = [NSString stringWithFormat:@"%@/member/cashcard/bind.jhtml",UrlPre];
+            ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+            [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+            [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+            if([UserShareOnce shareOnce].languageType){
+                [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+            }
+            [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+            [request setPostValue:self.dateDic[@"data"][@"code"]forKey:@"code"];
+            
+            [request setTimeOutSeconds:20];
+            [request setRequestMethod:@"POST"];
+            [request setDelegate:self];
+            [request setDidFailSelector:@selector(requesstuserinfoError1:)];
+            [request setDidFinishSelector:@selector(requesstuserinfoCompleted1:)];
+            [request startAsynchronous];
+        }];
+        [self.view addSubview:addButton];
+        if(self.serviceArr.count > 0){
+            [_listTableView reloadData];
+        }
+        
+    }
+
+    
+}
+
+- (void)requesstuserinfoError1:(ASIHTTPRequest *)request
+{
+    [self showAlertViewController:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
+}
+- (void)requesstuserinfoCompleted1:(ASIHTTPRequest *)request
+{
+    NSString* reqstr=[request responseString];
+    NSDictionary * dic=[reqstr JSONValue];
+    id status=[dic objectForKey:@"status"];
+    if ([status intValue]== 100) {
+
+        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:[dic objectForKey:@"message"] preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *sureAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]animated:YES];
+            
+        }];
+        [alerVC addAction:sureAction];
+        [self presentViewController:alerVC animated:YES completion:nil];
+        
+    }
+    else if ([status intValue]== 44)
+    {
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
+        av.tag  = 100008;
+        [av show];
+    } else  {
+        NSString *str = [dic objectForKey:@"data"];
+        [self showAlertViewController:str];
+    }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (tableView == _listTableView){
+        return 50;
+    }else{
+         return 0;
+    }
+}
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UILabel *listLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,0, tableView.width, 50)];
+    listLabel.backgroundColor = UIColorFromHex(0Xffffff);
+    listLabel.text = ModuleZW(@"   消费记录");
     listLabel.font = [UIFont systemFontOfSize:16];
     listLabel.textColor = RGB_TextDarkGray;
-    [self.view addSubview:listLabel];
-    
-    
-
-    self.listTableView = [[UITableView alloc]initWithFrame:CGRectMake(30, listLabel.bottom+20, self.view.frame.size.width - 60, self.view.frame.size.height - kNavBarHeight-listLabel.bottom - 20) style:UITableViewStylePlain];
-    self.listTableView.backgroundColor = [UIColor clearColor];
-    self.listTableView.separatorStyle = UITableViewCellEditingStyleNone;
-    self.listTableView.dataSource = self;
-    self.listTableView.delegate = self;
-    self.listTableView.rowHeight = 30;
-    [self.view addSubview:self.listTableView];
-    
-    [self.listTableView registerNib:[UINib nibWithNibName:@"HCY_ConsumptionListCell" bundle:nil] forCellReuseIdentifier:@"HCY_ConsumptionListCell"];
-    
-    
+    [self.listTableView addSubview:listLabel];
+    return listLabel;
 }
 
 - (void)requestPurchaseHistory
@@ -125,32 +269,13 @@
     [request setDidFinishSelector:@selector(requesstuserinfoCompleted:)];
     [request startAsynchronous];
     
-//    __weak typeof(self) weakSelf = self;
-//    [ZYGASINetworking POST_Path:urlStr params:dic completed:^(id JSON, NSString *stringData) {
-//        if([[JSON objectForKey:@"code"] integerValue] == 100){
-//            NSArray *arr = [JSON objectForKey:@"data"];
-//            if(arr.count>0){
-//                    weakSelf.serviceArr = [arr objectAtIndex:0];
-//                [weakSelf.serviceTableView reloadData];
-//                if(arr.count>1){
-//                    weakSelf.dataArr = [arr objectAtIndex:1];
-//                    [weakSelf.listTableView reloadData];
-//                }
-//            }
-           // [weakSelf.listTableView reloadData];
-//        }else{
-//            [weakSelf showAlertWarmMessage:[JSON objectForKey:@"message"]];
-//        }
-//    } failed:^(NSError *error) {
-//        [weakSelf showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
-//    }];
+
 }
 
 - (void)requesstuserinfoError:(ASIHTTPRequest *)request
 {
     [GlobalCommon hideMBHudWithView:self.view];
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉，请检查您的网络是否畅通") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-    [av show];
+    [self showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
 }
 - (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
 {
@@ -162,16 +287,18 @@
     id status=[dic objectForKey:@"status"];
     //NSLog(@"234214324%@",status);
     if ([status intValue]== 100) {
-        
+    
         NSArray *arr = [dic objectForKey:@"data"];
         if(arr.count>0){
             self.serviceArr = [arr objectAtIndex:0];
             [self.serviceTableView reloadData];
             if(arr.count>1){
                 self.dataArr = [arr objectAtIndex:1];
-                [self.listTableView reloadData];
+//                [self.listTableView reloadData];
             }
         }
+        [self layoutCarDetailView];
+
     }else{
         [self showAlertWarmMessage:[dic objectForKey:@"message"]];
 
@@ -180,30 +307,14 @@
 }
 
 
-
--(void)consultingAction:(UIButton *)button {
-    
-    
-    switch (button.tag) {
-        case 2000:
-            NSLog(@"去购物");
-            break;
-            
-        case 2001:
-            NSLog(@"去咨询");
-            break;
-            
-        default:
-            break;
-    }
-    
-    
-}
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     if(tableView == self.serviceTableView){
-        return self.serviceArr.count;
+        if(self.serviceArr){
+            return self.serviceArr.count;
+        }else{
+            return 0;
+        }
     }else if (tableView == self.listTableView){
         return self.dataArr.count;
     }
@@ -236,6 +347,12 @@
             }else{
                 [cell.tradeBtn setTitle:ModuleZW(@"去咨询") forState:UIControlStateNormal];
             }
+            
+            if(self.dateDic){
+                cell.tradeBtn.hidden = YES;
+                cell.contentLabel.width = ScreenWidth - 130;
+            }
+            
             
         }
         return cell;

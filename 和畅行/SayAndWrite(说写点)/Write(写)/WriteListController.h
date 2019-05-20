@@ -17,7 +17,6 @@ typedef void(^addCheckBlock)(void);
     UIImageView *_rightView;
     UIButton *_leftButton;
     UIButton *_rightButton;
-    UIImageView *_lineView;//蓝线
     int _sex;  //  2男，  1女
     BOOL _isFront;//是否是身体的正面
     BOOL _isBodyTouched;//点击身体的某部位
@@ -33,7 +32,6 @@ typedef void(^addCheckBlock)(void);
     NSMutableArray *_sectionStatus;//存放组的状态
     NSMutableArray *_sectionDataArr;//组的数据
     NSMutableArray *_sectionOpenImageArr;//组的图片
-    NSMutableArray *_sectionClosedImageArr;//组的图片
     
     UITableView *_rightTableView;//右边tableView
     NSMutableArray *_rightDataArr;
@@ -56,7 +54,6 @@ typedef void(^addCheckBlock)(void);
 @property (nonatomic,strong) UIImageView *rightView;
 @property (nonatomic,strong) UIButton *leftButton;
 @property (nonatomic,strong) UIButton *rightButton;
-@property (nonatomic,strong) UIImageView *lineView;
 @property (nonatomic,assign) int sex;
 @property (nonatomic,assign) BOOL isFront;
 @property (nonatomic,assign) BOOL isBodyTouched;
@@ -65,7 +62,6 @@ typedef void(^addCheckBlock)(void);
 @property (nonatomic,strong) NSMutableArray *leftDataArr;
 @property (nonatomic,strong) NSMutableArray *sectionDataArr;
 @property (nonatomic,strong) NSMutableArray *sectionOpenImageArr;
-@property (nonatomic,strong) NSMutableArray *sectionClosedImageArr;
 
 @property (nonatomic,strong) UITableView *rightTableView;
 @property (nonatomic,strong) NSMutableArray *rightDataArr;

@@ -20,6 +20,8 @@
 #import "SGQRCodeTool.h"
 #import <Photos/Photos.h>
 #import "SGAlertView.h"
+#import "HCY_CarDetailController.h"
+#import "LoginViewController.h"
  
 @interface SGScanningQRCodeVC () <AVCaptureMetadataOutputObjectsDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate,UIAlertViewDelegate>
 /** 会话对象 */
@@ -58,7 +60,7 @@
 }
 
 -(void)popview{
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -134,7 +136,7 @@
     [self playSoundEffect:@"sound.caf"];
     
     // 2、删除预览图层
-//    [self.previewLayer removeFromSuperlayer];
+    [self.previewLayer removeFromSuperlayer];
     // 1、如果扫描完成，停止会话
     [self.session stopRunning];
 
@@ -144,8 +146,40 @@
         AVMetadataMachineReadableCodeObject *obj = metadataObjects[0];
         
         NSString *str = [NSString stringWithFormat:@"%@",obj.stringValue];
-        NSArray *array = [str componentsSeparatedByString:@":"];
         
+        // [self setupScanningQRCode];
+
+         NSString *str1 = [NSString stringWithFormat:@"/member/cashcard/getCard.jhtml?imageCode=%@",str];
+
+        [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:str1 parameters:nil successBlock:^(id response) {
+            //             [hud hideAnimated:YES];
+            if ([response[@"status"] integerValue] == 100){
+                HCY_CarDetailController *vc = [[HCY_CarDetailController alloc]init];
+                vc.dateDic = response;
+                [self.navigationController pushViewController:vc animated:YES];
+            } else if ([response[@"status"] intValue]== 44) {
+                
+                UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") preferredStyle:(UIAlertControllerStyleAlert)];
+                UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                    LoginViewController *loginVC = [[LoginViewController alloc]init];
+                    [self.navigationController pushViewController:loginVC animated:YES];
+                }];
+                [alerVC addAction:suerAction];
+                [self presentViewController:alerVC animated:YES completion:nil];
+            } else  {
+                NSString *str = [response objectForKey:@"data"];
+                UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:str preferredStyle:(UIAlertControllerStyleAlert)];
+                UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                    [self setupScanningQRCode];
+                }];
+                [alerVC addAction:suerAction];
+                [self presentViewController:alerVC animated:YES completion:nil];
+                
+            }
+        } failureBlock:^(NSError *error) {
+            
+        }];
+            
         }
 
 }

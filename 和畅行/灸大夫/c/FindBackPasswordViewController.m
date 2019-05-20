@@ -32,13 +32,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.leftBtn.hidden = YES;
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;
     self.navTitleLabel.text = ModuleZW(@"找回灸头密码");
     self.mCodeInputView.text = ModuleZW(@"请输入机身编码");
-    self.navTitleLabel.textColor = [UIColor whiteColor];
     self.passLabel.text = ModuleZW(@"通过机身编码找回密码");
     self.blueLabel.text = ModuleZW(@"若忘记密码，可用上述方式输入机身编码找回密码");
     self.phoneLabel.text = ModuleZW(@"联系客服");

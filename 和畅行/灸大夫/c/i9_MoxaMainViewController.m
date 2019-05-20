@@ -176,7 +176,6 @@
     shortTime = 0;
     lowestTemp = 0;
 
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.leftBtn.hidden = YES;
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;
@@ -271,7 +270,7 @@
         view.frame = CGRectMake(ScreenWidth/2.0-100, kStatusBarHeight, 200, 44);
         NSLog(@"---view = %@",[view description]);
         _indicatorLab = (UIClickLabel*)[view viewWithTag:1];
-        [_indicatorLab setTextColor:[UIColor whiteColor]];
+        [_indicatorLab setTextColor:[UIColor blackColor]];
         [_indicatorLab addUnderLine:ModuleZW(@"设备搜寻中")];
         _searchIndicator = (UIActivityIndicatorView *)[view viewWithTag:2];
         [_searchIndicator setHidden:YES];

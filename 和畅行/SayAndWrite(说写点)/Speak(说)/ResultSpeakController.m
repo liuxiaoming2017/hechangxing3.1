@@ -7,6 +7,8 @@
 //
 
 #import "ResultSpeakController.h"
+#import "MeridianIdentifierViewController.h"
+#import "TipSpeakController.h"
 
 @interface ResultSpeakController ()<UIGestureRecognizerDelegate>
 
@@ -25,6 +27,21 @@
         self.navigationController.interactivePopGestureRecognizer.delegate = self;
     }
     //
+}
+
+# pragma mark - 解决侧滑返回指定控制器
+- (void)didMoveToParentViewController:(UIViewController*)parent
+{
+    
+    NSMutableArray *tempArr = self.navigationController.viewControllers.mutableCopy;
+    for(UIViewController *vc in self.navigationController.viewControllers){
+        if([vc isKindOfClass:[MeridianIdentifierViewController class]]||[vc isKindOfClass:[TipSpeakController class]]){
+            [tempArr removeObject:vc];
+        }
+    }
+    self.navigationController.viewControllers = tempArr;
+    
+    
 }
 
 
@@ -54,30 +71,10 @@
         
     }
     
-    
     NSLog(@"str*****:%@",strRequest);
     //decisionHandler(WKNavigationActionPolicyAllow);
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

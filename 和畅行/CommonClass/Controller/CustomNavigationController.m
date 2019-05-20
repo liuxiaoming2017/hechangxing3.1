@@ -9,6 +9,10 @@
 #import "MoxaHelpViewController.h"
 #import "MySportController.h"
 #import "ResultSpeakController.h"
+#import "BloodPressureNonDeviceViewController.h"
+#import "SugerViewController.h"
+#import "SGScanningQRCodeVC.h"
+
 
 @interface CustomNavigationController ()<UIGestureRecognizerDelegate>
 
@@ -35,7 +39,7 @@
 }
 
 #pragma mark - UIGestureRecognizerDelegate
-//  防止导航控制器只有一个rootViewcontroller时触发手势
+//  防止导航控制器只有一个rootViewcontroller时触发手势 滑动返回
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
     // 根据具体控制器对象决定是否开启全屏右滑返回
     
@@ -55,6 +59,10 @@
                 return NO;
             }
         }
+        if([vc isKindOfClass:[BloodPressureNonDeviceViewController class]]||[vc isKindOfClass:[SugerViewController class]]||[vc isKindOfClass:[SGScanningQRCodeVC class]]){
+            return NO;
+        }
+        
     }
     
     // 解决右滑和UITableView左滑删除的冲突

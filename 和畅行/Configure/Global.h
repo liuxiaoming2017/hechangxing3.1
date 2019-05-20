@@ -16,32 +16,15 @@ extern BOOL isJY;
 extern BOOL isSF;
 extern BOOL isBF;
 
-//#define URL_PRE @"http://10.1.71.52:8080/hcy-system/"
 
 
-//#define URL_PRE @"http://10.1.71.62:8080/healthlm/"
-
-//#define URL_PRE @"http://10.1.71.38:8888/hcy-system/"
-//#define URL_PRE @"http://47.92.80.253:8080/healthlm/"
-
-
-//#define URL_PRE @"http://10.1.71.104:8080/hcy/"
-
-//#define URL_PRE @"http://10.1.71.38:8888/hcy-system/"
+//测试环境
+#define URL_PRE @"http://47.92.73.99:8080/healthlm/"
 
 //生产环境
-#define URL_PRE @"http://eky3h.com/healthlm/"
-//多语言测试接口
-//#define URL_PRE @"http://10.1.71.121:8080/hcySoft/"
-//测试环境
-//#define URL_PRE @"http://119.254.24.4:7006/"
+//#define URL_PRE @"http://eky3h.com/healthlm/"
 
-//#define URL_PRE22 @"http://10.1.71.50:8080/hcy/"
-//#define URL_PRE22 @"http://10.1.71.104:8080/hcy/"
-/*
- http://119.254.24.4:7006/          测试地址
- http://app.ky3h.com:8001/healthlm/ 正式地址
- */
+
 
 #define testUUId 100002514
 #define testToken  @"ECEEDCCD74B7D54BCF6690B7E26262B73F0D04F68EA2608F6783B874E4F50EEF"
@@ -206,3 +189,4 @@ extern BOOL isBF;
 
 
 #define  ModuleZW(zwString)          NSLocalizedStringFromTable(zwString, @"ModuleZW", nil)
+#define kDictIsEmpty(dic) ([dic isKindOfClass:[NSNull class]])

@@ -14,6 +14,6 @@ typedef void(^VersionUpdateBlock)(BOOL isUpdate);
 
 @property (nonatomic, copy)VersionUpdateBlock versionUpdateBlock;
 
-+ (instancetype)versionUpdateViewWithContent:(NSString *)content;
++ (instancetype)versionUpdateViewWithContent:(NSString *)content type:(NSString *)typeStr;
 
 @end

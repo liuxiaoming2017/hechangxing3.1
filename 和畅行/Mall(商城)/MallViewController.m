@@ -20,7 +20,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.navTitleLabel.text = ModuleZW(@"和畅商城");
     self.preBtn.hidden = YES;
     NSString *urlStr = [NSString stringWithFormat:@"%@mobileIndex.html",URL_PRE];

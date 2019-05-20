@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "一灸En.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "one_jiu.png",
       "scale" : "2x"
     },
     {

@@ -16,4 +16,5 @@
 
 - (void)requestNetworkWithIndex:(NSInteger)index;
 - (void)selectIndexWithString:(NSString *)str;
+
 @end

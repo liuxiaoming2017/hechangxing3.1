@@ -12,6 +12,7 @@
 #import "HCY_ActivationController.h"
 #import "HCY_CarDetailController.h"
 #import "HYC_CardsModel.h"
+#import "LoginViewController.h"
 
 @interface BlockViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,retain) UITableView *tableView;
@@ -36,6 +37,37 @@
     [self getDatawithpageInteger:self.pageInteger];
     
     [self layoutView];
+    
+    
+//    NSString *str1 = [NSString stringWithFormat:@"/member/cashcard/getCard.jhtml?imageCode=%@",@"QzM1R1I3WFJTTEtWVzJPRkRCWg=="];
+//
+//    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:str1 parameters:nil successBlock:^(id response) {
+//        //             [hud hideAnimated:YES];
+//        if ([response[@"status"] integerValue] == 100){
+//            HCY_CarDetailController *vc = [[HCY_CarDetailController alloc]init];
+//            vc.dateDic = response;
+//            [self.navigationController pushViewController:vc animated:YES];
+//        } else if ([response[@"status"] intValue]== 44) {
+//
+//            UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") preferredStyle:(UIAlertControllerStyleAlert)];
+//            UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+//                LoginViewController *loginVC = [[LoginViewController alloc]init];
+//                [self.navigationController pushViewController:loginVC animated:YES];
+//            }];
+//            [alerVC addAction:suerAction];
+//            [self presentViewController:alerVC animated:YES completion:nil];
+//        } else  {
+//            NSString *str = [response objectForKey:@"data"];
+//            UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:str preferredStyle:(UIAlertControllerStyleAlert)];
+//            UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+//            }];
+//            [alerVC addAction:suerAction];
+//            [self presentViewController:alerVC animated:YES completion:nil];
+//
+//        }
+//    } failureBlock:^(NSError *error) {
+//
+//    }];
 }
 
 - (void)cardNameSuccess
@@ -92,18 +124,6 @@
     header.stateLabel.textColor = RGB_TextAppBlue;
     header.lastUpdatedTimeLabel.textColor = RGB_TextAppBlue;
     self.tableView.mj_header = header;
-    
-//    //上拉加载
-//    MJRefreshBackGifFooter *footer = [MJRefreshBackGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataOther)];
-//
-//    [footer setTitle:@"上拉加载"   forState:MJRefreshStateIdle];
-//    [footer setTitle:@"加载中..."  forState:MJRefreshStateRefreshing];
-//    [footer setTitle:@"没有更多了"  forState:MJRefreshStateNoMoreData];
-//    [footer setTitle:@"松开即可加载..."  forState:MJRefreshStatePulling];
-//    footer.stateLabel.font = [UIFont systemFontOfSize:14];
-//    footer.stateLabel.textColor = RGB_TextAppBlue;
-//    self.tableView.mj_footer = footer;
-    
     
     self.pageInteger = 1;
 }

@@ -7,6 +7,7 @@
 //
 
 #import "SugerStandardController.h"
+#import "SugerViewController.h"
 
 @interface SugerStandardController ()
 
@@ -72,6 +73,36 @@
     [topView addSubview:image2];
     [topView addSubview:image3];
     [topView addSubview:image4];
+    [self createBottomView];
+}
+
+- (void)createBottomView
+{
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kScreenSize.height-110, kScreenSize.width, 110)];
+    imageView.userInteractionEnabled = YES;
+    imageView.image = [UIImage imageNamed:ModuleZW(@"流程介绍页_02")];
+    [self.view addSubview:imageView];
+    
+    UIButton *checkInstance = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-60, 18, 120, 30) target:self sel:@selector(chekInstaceClick:) tag:11 image:ModuleZW(@"立即检测") title:nil];
+    [imageView addSubview:checkInstance];
+    
+    UIButton *neverCaution = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-60, 63, 120, 30) target:self sel:@selector(neverCautionClick:) tag:12 image:ModuleZW(@"不再提醒") title:nil];
+    [imageView addSubview:neverCaution];
+}
+
+-(void)chekInstaceClick:(UIButton *)button{
+    NSLog(@"点击立即检测");
+    SugerViewController *pressure = [[SugerViewController alloc] init];
+    [self.navigationController pushViewController:pressure animated:YES];
+}
+
+-(void)neverCautionClick:(UIButton *)button{
+    NSLog(@"点击不再提醒");
+    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"sugerNeverCaution"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    SugerViewController *pressure = [[SugerViewController alloc] init];
+    [self.navigationController pushViewController:pressure animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning {

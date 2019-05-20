@@ -11,6 +11,9 @@
 @interface RemindModel : NSObject
 
 @property (nonatomic,copy) NSString *type;
+@property (nonatomic,copy) NSString *action;
 @property (nonatomic,copy) NSString *advice;
+@property (nonatomic,assign) BOOL isDone;
 
+@property (nonatomic,assign) NSInteger custid;
 @end

@@ -147,7 +147,7 @@ static CGFloat const timer_animation_Duration = 0.05;
     [self addSubview:light_button];
     
     
-    UIButton *manualBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - 13 ,ScreenHeight - 200, 50, 50) target:self sel:@selector(manualClick) tag:31 image:nil title:@"手动输入"];
+    UIButton *manualBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - 13 ,light_button.bottom + 30, 50, 50) target:self sel:@selector(manualClick) tag:31 image:nil title:@"手动输入"];
     [manualBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
 //    [manualBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [manualBtn setImage:[UIImage imageNamed:@"手"] forState:(UIControlStateNormal)];
@@ -256,7 +256,7 @@ static CGFloat const timer_animation_Duration = 0.05;
         flag = NO;
         [UIView animateWithDuration:timer_animation_Duration animations:^{
             frame.origin.y += 5;
-            _animation_line.frame = frame;
+            self->_animation_line.frame = frame;
         } completion:nil];
     } else {
         if (_animation_line.frame.origin.y >= scanContent_Y) {

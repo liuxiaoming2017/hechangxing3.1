@@ -14,9 +14,8 @@
 #import "BreathCheckViewController.h"
 #import "SugerViewController.h"
 #import "BloodOxyNonDeviceViewController.h"
-
-
-
+#import "ResultSpeakController.h"
+#import "SugerStandardController.h"
 @implementation TestValueModel
 
 @end
@@ -37,15 +36,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navTitleLabel.text = ModuleZW(@"体征监检测");
-    
+    self.view.backgroundColor = RGB_AppWhite;
    
-    
-    self.titleArr = @[ModuleZW(@"血压"),
-                              ModuleZW(@"血糖"),
-                              ModuleZW(@"血氧"),
-                              ModuleZW(@"呼吸"),
-                              ModuleZW(@"体温")];
-    self.imageArr = @[@"检测_血压",@"检测_血糖",@"检测_血氧",@"检测_呼吸",@"检测_体温"];
     self.dataArr = [NSMutableArray arrayWithCapacity:0];
     
     [self createUI];
@@ -54,30 +46,20 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-   [self requestNetwork];
+    [self requestNetwork];
 }
 
 - (void)createUI
 {
     
-    UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, kNavBarHeight, 160, 39)];
-    topLabel.text = ModuleZW(@"近期检测");
-    topLabel.textAlignment=NSTextAlignmentLeft;
-    topLabel.font=[UIFont systemFontOfSize:16.0];
-    topLabel.textColor = UIColorFromHex(0x333333);
-    topLabel.backgroundColor=[UIColor clearColor];
-    [self.view addSubview:topLabel];
+
+    self.imageArr = @[@"血压icon",@"血糖icon"];
     
-    UIImageView *lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, topLabel.bottom, ScreenWidth, 1)];
-    lineImageV.backgroundColor = UIColorFromHex(0xDADADA);
-    [self.view addSubview:lineImageV];
-    
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, lineImageV.bottom, ScreenWidth, ScreenHeight-lineImageV.bottom) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, self.topView.bottom, ScreenWidth, ScreenHeight - self.topView.height) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellAccessoryNone;
        self.tableView.backgroundColor=[UIColor clearColor];
-//    self.tableView.bounces = NO;
     [self.view addSubview:self.tableView];
     
     //下拉刷新
@@ -113,7 +95,7 @@
             NSDictionary *data = [response objectForKey:@"data"];
  
             [self.dataArr removeAllObjects];
-            NSArray *typeArray = @[@"bloodPressure",@"bloodSugar",@"oxygen",@"breathe",@"bodyTemperature"];
+            NSArray *typeArray = @[@"bloodPressure",@"bloodSugar"];
             for (int i = 0; i < typeArray.count; i++) {
                 TestValueModel *model = [[TestValueModel alloc] init];
                 [model yy_modelSetWithDictionary:[data valueForKey:typeArray[i]]];
@@ -134,11 +116,11 @@
 #pragma mark - tableview代理方法
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    return 250;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return self.dataArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -149,147 +131,161 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     cell.iconImage.image = [UIImage imageNamed:self.imageArr[indexPath.row]];
-    cell.titleLabel.text = [self.titleArr objectAtIndex:indexPath.row];
     if(self.dataArr.count>0){
+        cell.typeInt = 0;
         TestValueModel *model = [self.dataArr objectAtIndex:indexPath.row];
-        if(model.createDate == 0){
-            cell.dateLabel.text = @"";
-        }else{
-            cell.dateLabel.text = [self updateTimeForRow:[NSString stringWithFormat:@"%ld",model.createDate]];
-        }
-       
-        NSString *descrioTionStr = [NSString string];
         if (indexPath.row == 0) {
-            if (![GlobalCommon stringEqualNull:model.highPressure]) {
-                descrioTionStr = [NSString stringWithFormat:@"%@ - %@",model.highPressure,model.lowPressure];
-            }else{
-                descrioTionStr = ModuleZW(@"尚未检测");
+            cell.leftLabel.hidden = NO;
+            cell.rightLabel.hidden = NO;
+            cell.left1Label.hidden = NO;
+            cell.right1Label.hidden = NO;
+            if ([GlobalCommon stringEqualNull:model.highPressure]) {
+                model.highPressure = @"--";
             }
+            if ([GlobalCommon stringEqualNull:model.lowPressure]) {
+                model.lowPressure = @"--";
+            }
+            if ([GlobalCommon stringEqualNull:model.pulse]) {
+                model.pulse = @"--";
+            }
+            cell.leftOneBlock = ^{
+                if([[[NSUserDefaults standardUserDefaults] objectForKey:@"bloodNeverCaution"] isEqualToString:@"1"]){
+                    PressureViewController *vc = [[PressureViewController alloc] init];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else{
+                    BloodGuideViewController * vc1 = [[BloodGuideViewController alloc] init];
+                    vc1.isBottom = YES;
+                    vc1.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc1 animated:YES];
+                }
+            };
+            
+            cell.righOneBlock = ^{
+                NSString *urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,[MemberUserShance shareOnce].idNum,@(30)];
+                ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+                vc.urlStr = urlStr;
+                vc.popInt = 111;
+                vc.titleStr = ModuleZW(@"血压监测");
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+
+            };
+                
+            cell.leftLabel.text = [NSString stringWithFormat:@"%@mmHg",model.highPressure];
+            cell.left1Label.text = ModuleZW(@"收缩压");
+            cell.middLabel.text = [NSString stringWithFormat:@"%@mmHg",model.lowPressure];
+            cell.midd1Label.text = ModuleZW(@"舒张压");
+            cell.rightLabel.text =[NSString stringWithFormat:@"%@BMP",model.pulse];
+            cell.right1Label.text = ModuleZW(@"心率");
+            [cell.lefttBtn setTitle:ModuleZW(@"血压检测") forState:(UIControlStateNormal)];
+            [cell.rightBtn setTitle:ModuleZW(@"血压监测") forState:(UIControlStateNormal)];
+            int highPressure =[model.highPressure intValue];
+            int lowPressure =[model.lowPressure intValue];
+            if (lowPressure >=0&&lowPressure<=60){
+                cell.arrowImageView.left = (ScreenWidth - 60)/6 + 10;
+            }else if (lowPressure >=90){
+                cell.arrowImageView.left = (ScreenWidth - 60)*5/6 + 10;
+            }else{
+                if(highPressure >=140){
+                    cell.arrowImageView.left = (ScreenWidth - 60)*5/6 + 10;
+                }else if(highPressure <=90){
+                    cell.arrowImageView.left = (ScreenWidth - 60)/6 + 10;
+                }else{
+                    cell.arrowImageView.left = (ScreenWidth - 60)*3/6 + 10;
+                }
+            }
+            
         }else if (indexPath.row == 1) {
-            if (![GlobalCommon stringEqualNull:model.levels]) {
-                descrioTionStr = model.levels;
+            cell.typeInt = 1;
+            cell.leftLabel.hidden = YES;
+            cell.rightLabel.hidden = YES;
+            cell.left1Label.hidden = YES;
+            cell.right1Label.hidden = YES;
+            [cell.lefttBtn setTitle:ModuleZW(@"血糖检测") forState:(UIControlStateNormal)];
+            [cell.rightBtn setTitle:ModuleZW(@"血糖监测") forState:(UIControlStateNormal)];
+            if (![GlobalCommon stringEqualNull:model.levels]){
+                if ([model.levels floatValue] <3.9) {
+                    cell.arrowImageView.left = (ScreenWidth - 60)/6 + 10;
+                }else if ([model.levels intValue]  <=6.1){
+                     cell.arrowImageView.left = (ScreenWidth - 60)*3/6 + 10;
+                }else{
+                     cell.arrowImageView.left = (ScreenWidth - 60)*5/6 + 10;
+                }
+                cell.middLabel.text = [NSString stringWithFormat:@"%@mmol",model.levels];
+
             }else{
-                descrioTionStr = ModuleZW(@"尚未检测");
+                cell.middLabel.text = @"--mmol";
+
             }
-        }else if (indexPath.row == 2) {
-            if (![GlobalCommon stringEqualNull:model.density]) {
-                descrioTionStr = model.density;
-            }else{
-                descrioTionStr = ModuleZW(@"尚未检测");
+            NSString *typeStr = [NSString string];
+            if([model.type isEqualToString:@"beforeDawn"]){
+                typeStr = @"凌晨";
+            }else  if([model.type isEqualToString:@"beforeBreakfast"]){
+                typeStr = @"早餐前";
+            }else  if([model.type isEqualToString:@"afterBreakfast"]){
+                typeStr = @"早餐后";
+            }else  if([model.type isEqualToString:@"empty"]){
+                typeStr = @"午餐前";
+            }else  if([model.type isEqualToString:@"full"]){
+                typeStr = @"午餐后";
+            }else  if([model.type isEqualToString:@"beforeDinner"]){
+                typeStr = @"晚餐前";
+            }else  if([model.type isEqualToString:@"afterDinner"]){
+                typeStr = @"晚餐后";
+            }else  if([model.type isEqualToString:@"beforeSleep"]){
+                typeStr = @"睡前";
             }
-        }else if (indexPath.row == 3) {
-            if (![GlobalCommon stringEqualNull:model.nums]) {
-                descrioTionStr = model.nums;
-            }else{
-                descrioTionStr = ModuleZW(@"尚未检测");
-            }
-        }else if (indexPath.row == 4) {
-            if (![GlobalCommon stringEqualNull:model.temperature]) {
-                descrioTionStr = model.temperature;
-            }else{
-                descrioTionStr = ModuleZW(@"尚未检测");
-            }
+
+            cell.midd1Label.text = ModuleZW(typeStr);
+           
+            
+            cell.leftTwoBlock = ^{
+                
+                if([[[NSUserDefaults standardUserDefaults] objectForKey:@"sugerNeverCaution"] isEqualToString:@"1"]){
+                    SugerViewController *vc = [[SugerViewController alloc] init];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else{
+                    SugerStandardController * vc1 = [[SugerStandardController alloc] init];
+//                    vc1.isBottom = YES;
+                    vc1.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc1 animated:YES];
+                }
+                
+                
+               
+            };
+            cell.righTwoBlock = ^{
+           NSString  *urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@&version=2",URL_PRE,[MemberUserShance shareOnce].idNum,@(60)];
+                ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+                vc.urlStr = urlStr;
+                vc.popInt = 111;
+                vc.titleStr = ModuleZW(@"血糖监测");
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+
+            };
         }
-        cell.descriptionLabel.text = descrioTionStr;
+        if(model.inputDate > 100){
+            cell.dateLabel.text =
+            [self compareCurrentTime:[NSString stringWithFormat:@"%ld",model.inputDate]];
+        }
+
     }
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+
+- (NSString *) compareCurrentTime:(NSString *)str
 {
-    UIViewController *vc = nil;
-    
-    //[@"血压",@"血糖",@"血氧",@"呼吸",@"体温"];
-    
-    switch (indexPath.row) {
-        case 0:
-        {
-            if([[[NSUserDefaults standardUserDefaults] objectForKey:@"bloodNeverCaution"] isEqualToString:@"1"]){
-                vc = [[PressureViewController alloc] init];
-            }else{
-                BloodGuideViewController * vc1 = [[BloodGuideViewController alloc] init];
-                vc1.isBottom = YES;
-                vc1.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc1 animated:YES];
-                return;
-            }
-        }
-            break;
-        case 1:
-        {
-            vc = [[SugerViewController alloc] init];
-        }
-            break;
-        case 2:
-        {
-            vc = [[BloodOxyNonDeviceViewController alloc] init];
-//             __weak typeof(self) weakSelf = self;
-//            vc.abock = ^{
-////                [weakSelf requestNetwork];
-//            };
-//            [self.navigationController pushViewController:vc animated:YES];
-//            return;
-        }
-            break;
-        case 3:
-        {
-            vc = [[BreathCheckViewController alloc] init];
-        }
-            break;
-        case 4:
-        {
-            vc = [[TemperNonDeviceViewController alloc] init];
-        }
-            break;
-            
-        default:
-            break;
-    }
-    [self.navigationController pushViewController:vc animated:YES];
+    NSTimeInterval time=[str doubleValue]/1000;//传入的时间戳str如果是精确到毫秒的记得要/1000
+    NSDate *detailDate=[NSDate dateWithTimeIntervalSince1970:time];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; //实例化一个NSDateFormatter对象
+    //设定时间格式,这里可以设置成自己需要的格式
+    NSString *dateStr = [NSString stringWithFormat:@"YYYY-MM-dd  HH:mm"];
+    [dateFormatter setDateFormat:dateStr];
+    NSString *timeString = [dateFormatter stringFromDate: detailDate];
+    return  timeString;
 }
-
-- (NSString *)updateTimeForRow:(NSString *)createTimeString {
-    // 获取当前时时间戳 1466386762.345715 十位整数 6位小数
-    NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
-    // 创建歌曲时间戳(后台返回的时间 一般是13位数字)
-    NSTimeInterval createTime = [createTimeString longLongValue]/1000;
-    // 时间差
-    NSTimeInterval time = currentTime - createTime;
-    
-    NSInteger sec = time/60;
-    if (sec<60) {
-        if (sec == 0){
-            return [NSString stringWithFormat:ModuleZW(@"刚刚")];
-        }
-        return [NSString stringWithFormat:@"%ld%@",sec,ModuleZW(@"分钟前")];
-    }
-    
-    // 秒转小时
-    NSInteger hours = time/3600;
-    if (hours<24) {
-        return [NSString stringWithFormat:@"%ld%@",hours,ModuleZW(@"小时前")];
-    }
-    //秒转天数
-    NSInteger days = time/3600/24;
-    if (days < 30) {
-        return [NSString stringWithFormat:@"%ld%@",days,ModuleZW(@"天前")];
-    }
-    //秒转月
-    NSInteger months = time/3600/24/30;
-    if (months < 12) {
-        return [NSString stringWithFormat:@"%ld%@",months,ModuleZW(@"月前")];
-    }
-    //秒转年
-    NSInteger years = time/3600/24/30/12;
-    return [NSString stringWithFormat:@"%ld%@",years,ModuleZW(@"年前")];
-}
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 
 @end

@@ -30,7 +30,6 @@
     self.navTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 140, 43)];
     self.navTitleLabel.text = @"提交订单";
     self.navTitleLabel.font = [UIFont systemFontOfSize:18];
-    self.navTitleLabel.textColor = [UIColor whiteColor];
     self.navTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.navTitleLabel.backgroundColor = [UIColor clearColor];
     self.navigationItem.titleView = self.navTitleLabel;

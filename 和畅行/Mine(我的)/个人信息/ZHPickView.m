@@ -152,6 +152,8 @@
     datePicker.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
     datePicker.datePickerMode = datePickerMode;
     datePicker.backgroundColor=[UIColor lightGrayColor];
+    datePicker.maximumDate = [NSDate date];
+
     if (_defaulDate) {
         [datePicker setDate:_defaulDate];
     }
@@ -163,6 +165,8 @@
     [self addSubview:datePicker];
     [self addObserver:self forKeyPath:@"maxDate"  options:NSKeyValueObservingOptionNew context:nil];
 }
+
+
 #pragma mark - KVO监测属性值的变化
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
     if ([keyPath isEqualToString:@"maxDate"]) {

@@ -53,8 +53,6 @@
     [super viewDidLoad];
    
     self.navTitleLabel.text = ModuleZW(@"第三方支付");
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
-    self.navTitleLabel.textColor = [UIColor whiteColor];
     self.preBtn.hidden = NO;
     self.leftBtn.hidden = YES;
     self.rightBtn.hidden = YES;

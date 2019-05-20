@@ -75,9 +75,19 @@
     [self.collectionV registerClass:[RecommendCollectCell class] forCellWithReuseIdentifier:@"cellId"];
     
     [self addSubview:self.collectionV];
+    
+    CacheManager *manager = [CacheManager sharedCacheManager];
+    self.recommendArr = [manager gethealthArticleModels];
+    [self.collectionV reloadData];
+    
     [self requestHealthHintData];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didBecomeActiveNotification)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
 
+    
 }
 
 
@@ -100,6 +110,10 @@
                 [tipModel yy_modelSetWithJSON:dic];
                 [weakSelf.recommendArr addObject:tipModel];
             }
+            
+            CacheManager *manager = [CacheManager sharedCacheManager];
+            [manager inserthealthArticleModels:weakSelf.recommendArr];
+            
             [weakSelf.collectionV reloadData];
             
 //            for (NSDictionary *dic in [response valueForKey:@"data"] ) {
@@ -171,6 +185,17 @@
     
 }
 
+
+-(void)didBecomeActiveNotification{
+    [self checkHaveUpdate];
+}
+
+-(void)dealloc{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+}
+
 # pragma mark - 检查更新
 - (void)checkHaveUpdate
 {
@@ -195,7 +220,8 @@
                 if([[UserShareOnce shareOnce].username isEqualToString:@"13665541112"] || [[UserShareOnce shareOnce].username isEqualToString:@"18163865881"]){
                     return ;
                 }
-                [weakSelf showUpdateView:downUrl];
+                NSString *ytpeStr = [NSString stringWithFormat:@"%@",dic[@"isEnforcement"]];
+                [weakSelf showUpdateView:downUrl contentStr:dic[@"releaseContent"] typeStr:ytpeStr];
                 
                 NSLog(@"升级了");
             }else{
@@ -210,11 +236,11 @@
     }];
 }
 
-- (void)showUpdateView:(NSString *)downUrl
+- (void)showUpdateView:(NSString *)downUrl contentStr:(NSString *)contentStr typeStr:(NSString *)typeStr
 {
     
     [GlobalCommon addMaskView];
-    VersionUpdateView *updateView = [VersionUpdateView versionUpdateViewWithContent:ModuleZW(@"发现新版本,是否升级")];
+    VersionUpdateView *updateView = [VersionUpdateView versionUpdateViewWithContent:contentStr type:typeStr];
     __weak __typeof(updateView)wupdateView = updateView;
     updateView.versionUpdateBlock = ^(BOOL isUpdate){
         

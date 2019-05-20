@@ -62,8 +62,8 @@
     
     [[UITabBar appearance] setTranslucent:NO];
     
-    //和缓医疗SDK注册,8248是和缓分配给的productId
-//    HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:@"8248" isDebug:NO isDevelop:NO];
+    //和缓医疗SDK注册,是和缓分配给的productId
+//    HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:@"" isDebug:NO isDevelop:YES];
 //    hhSdk.cerName = @"2cDevTest";
 //    [[HHMSDK alloc] startWithOption:hhSdk];
 
@@ -88,8 +88,11 @@
         [UserShareOnce shareOnce].languageType  = nil;
     }
     
-    
+//    URL_PRE
 
+    //创建本地数据库
+    [[CacheManager sharedCacheManager] createDataBase];
+    
     for (int i = 0; i < 20; ++i) {
         NSLog(@"%d",i);
     }
@@ -126,32 +129,44 @@
 {
     HomePageController *homeVC = [[HomePageController alloc] init];
     CustomNavigationController *homeNav = [[CustomNavigationController alloc] initWithRootViewController:homeVC];
-    //homeVC.tabBarItem.title = @"首页";
-    homeVC.tabBarItem.image = [[UIImage imageNamed:ModuleZW(@"HomeNormal")] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    homeVC.tabBarItem.selectedImage = [[UIImage imageNamed:ModuleZW(@"HomeSelect")] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    [homeVC.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 0, -6, 0)];
+    
+     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} forState:UIControlStateNormal];
+    
+    UIEdgeInsets edgeInset = UIEdgeInsetsMake(-1, 0, 1, 0);
+    UIOffset offSet = UIOffsetMake(0, 1);
+    
+    homeVC.tabBarItem.title = ModuleZW(@"首页");
+    homeVC.tabBarItem.image = [[UIImage imageNamed:@"HomeNormal"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    homeVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"HomeSelect"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [homeVC.tabBarItem setImageInsets:edgeInset];
+    homeVC.tabBarItem.titlePositionAdjustment =offSet;
     
     ArchivesController *ArchiveVC = [[ArchivesController alloc] init];
     CustomNavigationController *ArchiveNav = [[CustomNavigationController alloc] initWithRootViewController:ArchiveVC];
-    //ArchiveVC.tabBarItem.title = @"档案";
-    ArchiveVC.tabBarItem.image = [UIImage imageNamed:ModuleZW(@"docNormal")];
-    ArchiveVC.tabBarItem.selectedImage = [UIImage imageNamed:ModuleZW(@"docSelect")];
-    [ArchiveVC.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 0, -6, 0)];
+    ArchiveVC.tabBarItem.title = ModuleZW(@"档案");
+    ArchiveVC.tabBarItem.image = [UIImage imageNamed:@"docNormal"];
+    ArchiveVC.tabBarItem.selectedImage = [UIImage imageNamed:@"docSelect"];
+    [ArchiveVC.tabBarItem setImageInsets:edgeInset];
+    ArchiveVC.tabBarItem.titlePositionAdjustment = offSet;
     
-    //MallViewController *mallVC = [[MallViewController alloc] init];
+    
     EDWKWebViewController *mallVC = [[EDWKWebViewController alloc] initWithUrlString:[NSString stringWithFormat:@"%@mobileIndex.html",URL_PRE]];
     CustomNavigationController *mallNav = [[CustomNavigationController alloc] initWithRootViewController:mallVC];
-    //mallVC.tabBarItem.title = @"商城";
-    mallVC.tabBarItem.image = [UIImage imageNamed:ModuleZW(@"MallNormal")];
-    mallVC.tabBarItem.selectedImage = [UIImage imageNamed:ModuleZW(@"Mallelect")];
-    [mallVC.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 0, -6, 0)];
+    mallVC.tabBarItem.title = ModuleZW(@"商城");
+    mallVC.tabBarItem.image = [UIImage imageNamed:@"MallNormal"];
+    mallVC.tabBarItem.selectedImage = [UIImage imageNamed:@"MallSelect"];
+    [mallVC.tabBarItem setImageInsets:edgeInset];
+    mallVC.tabBarItem.titlePositionAdjustment = offSet;
     
     MineViewController *mineVC = [[MineViewController alloc] init];
     CustomNavigationController *mineNav = [[CustomNavigationController alloc] initWithRootViewController:mineVC];
-    //mineVC.tabBarItem.title = @"我的";
-    mineVC.tabBarItem.image = [UIImage imageNamed:ModuleZW(@"MyNormal")];
-    mineVC.tabBarItem.selectedImage = [UIImage imageNamed:ModuleZW(@"Myelect")];
-    [mineVC.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 0, -6, 0)];
+    mineVC.tabBarItem.title = ModuleZW(@"我的");
+    mineVC.tabBarItem.image = [UIImage imageNamed:@"MyNormal"];
+   
+   
+    mineVC.tabBarItem.selectedImage = [UIImage imageNamed:@"MySelect"];
+    [mineVC.tabBarItem setImageInsets:edgeInset];
+    mineVC.tabBarItem.titlePositionAdjustment = offSet;
     
     CommonTabBarController *tabBar = [[CommonTabBarController alloc] init];
     tabBar.viewControllers = @[homeNav,ArchiveNav,mallNav,mineNav];

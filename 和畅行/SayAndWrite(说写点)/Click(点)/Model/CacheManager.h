@@ -18,10 +18,14 @@
 - (void)updateQuestionModels:(NSArray *)arr;
 - (NSMutableArray *)getQuestionModels;
 - (BOOL)createDataBase;
-- (id)initManage;
++ (CacheManager *)sharedCacheManager;
 
-//- (void)insertAnswerModel:(AnwerModel *)model;
-- (void)insertAnswerModels:(NSArray *)arr;
-- (void)updateAnswerModels:(NSArray *)arr;
-- (NSArray *)getAnswerModelsWithName:(NSString *)nameStr;
+
+
+- (void)updateOrinsertRemindModels:(NSArray *)arr withCustId:(NSNumber *)custId;
+- (NSMutableArray *)getRemindModelsWith:(NSNumber *)custID;
+
+- (void)inserthealthArticleModels:(NSArray *)arr;
+- (NSMutableArray *)gethealthArticleModels;
+
 @end

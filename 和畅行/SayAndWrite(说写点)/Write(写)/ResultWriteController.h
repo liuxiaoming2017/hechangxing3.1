@@ -8,6 +8,8 @@
 
 #import "WKWebviewController.h"
 
+
+
 @interface ResultWriteController : WKWebviewController
 @property (nonatomic,copy) NSString *urlStr;
 @property (nonatomic,assign) BOOL isReturnTop;

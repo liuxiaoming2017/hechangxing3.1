@@ -9,10 +9,11 @@
 #import "NavBarViewController.h"
 #import "MessageViewController.h"
 #import "UIButton+WebCache.h"
+#import "PersonalInformationViewController.h"
 #define kLOGIN_CHECK @"/login/logincheck.jhtml"
 
 @interface NavBarViewController ()
-
+@property (nonatomic,strong) MBProgressHUD *hud;
 @end
 
 @implementation NavBarViewController
@@ -38,6 +39,7 @@
     self.navigationController.navigationBar.barTintColor = UIColorFromHex(0X4FAEFE);
     
     topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, kNavBarHeight)];
+    topView.backgroundColor = RGB_AppWhite;
     topView.tag = 101;
     [self.view addSubview:topView];
     
@@ -45,16 +47,14 @@
     self.navTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-240)/2.0, 2+kStatusBarHeight, 240, 40)];
     self.navTitleLabel.font = [UIFont systemFontOfSize:18];
     self.navTitleLabel.textAlignment = NSTextAlignmentCenter;
-    //self.navTitleLabel.textColor = UIColorFromHex(0x000000);
-    self.navTitleLabel.textColor = [UIColor whiteColor];
-    //self.navTitleLabel.text = @"和畅服务";
+    self.navTitleLabel.textColor = [UIColor blackColor];
     [topView addSubview:self.navTitleLabel];;
     
     
     preBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     preBtn.frame = CGRectMake(15, kStatusBarHeight+2, 80, 40);
-    [preBtn setImage:[UIImage imageNamed:@"nav_bar_back"] forState:UIControlStateNormal];
-    [preBtn setTitle:ModuleZW(@"返回") forState:UIControlStateNormal];
+    [preBtn setImage:[UIImage imageNamed:@"黑色返回"] forState:UIControlStateNormal];
+//    [preBtn setTitle:ModuleZW(@"返回") forState:UIControlStateNormal];
     [preBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     //[preBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     preBtn.adjustsImageWhenHighlighted = NO;
@@ -70,7 +70,7 @@
     rightBtn.frame = CGRectMake(ScreenWidth-37-14, 2+kStatusBarHeight, 37, 40);
     [rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(messageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:rightBtn];
+//    [topView addSubview:rightBtn];
     
     leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     leftBtn.frame = CGRectMake(15, 2+kStatusBarHeight+2.5, 32, 32);
@@ -85,10 +85,10 @@
     }
     leftBtn.clipsToBounds = YES;
     //家庭成员
-    leftBtn.userInteractionEnabled = NO;
+//    leftBtn.userInteractionEnabled = NO;
     leftBtn.layer.cornerRadius = leftBtn.frame.size.width/2;
     [leftBtn addTarget:self action:@selector(userBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-//    [topView addSubview:leftBtn];
+    [topView addSubview:leftBtn];
     
 }
 
@@ -128,19 +128,8 @@
 
 - (void)userBtnAction:(UIButton *)btn
 {
-    SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
-    [subMember receiveSubIdWith:^(NSString *subId) {
-        NSLog(@"%@",subId);
-        [[NSNotificationCenter defaultCenter] postNotificationName:exchangeMemberChildNotify object:nil];
-        if ([subId isEqualToString:@"user is out of date"]) {
-            //登录超时
-            
-        }else{
-            //得到子账户的id
-            NSLog(@"选中的子账户id为：%@",subId);
-        }
-        [subMember hideHintView];
-    }];
+    PersonalInformationViewController *personVC = [[PersonalInformationViewController alloc]init];
+    [self presentViewController:personVC animated:YES completion:nil];
 }
 
 - (void)showAlertViewController:(NSString *)message
@@ -163,6 +152,15 @@
     [self presentViewController:alertVC animated:YES completion:NULL];
 }
 
+-(void)showHudWithString:(NSString *)string {
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+}
+
+-(void)endHud {
+    [self.hud hideAnimated:YES];
+}
+
+
 - (void)goBack:(UIButton *)btn
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -179,19 +177,22 @@
 
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)insertSublayerWithImageView:(UIView *)imageV with:(UIView *)view
+{
+    CALayer *subLayer=[CALayer layer];
+    CGRect fixframe = imageV.frame;
+    subLayer.frame= fixframe;
+    subLayer.cornerRadius=8;
+    subLayer.backgroundColor=[UIColorFromHex(0xffffff) colorWithAlphaComponent:1.0].CGColor;
+    
+    subLayer.masksToBounds=NO;
+    subLayer.shadowColor = [UIColor lightGrayColor].CGColor;//shadowColor阴影颜色
+    subLayer.shadowOffset = CGSizeMake(0,1);//shadowOffset阴影偏移,x向右偏移3，y向下偏移2，默认(0, -3),这个跟shadowRadius配合使用
+    subLayer.shadowOpacity = 0.4;//阴影透明度，默认0
+    subLayer.shadowRadius = 4;//阴影半径，默认3
+    [view.layer insertSublayer:subLayer below:imageV.layer];
+    
+    
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

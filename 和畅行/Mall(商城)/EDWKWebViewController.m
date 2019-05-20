@@ -63,8 +63,6 @@ typedef void(^EDLoadRequestAction)(void);
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
-    self.navTitleLabel.textColor = [UIColor whiteColor];
     [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     if(self.isCollect){
         self.preBtn.hidden = NO;

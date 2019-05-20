@@ -13,8 +13,9 @@
 #import "QuestionCell.h"
 #import "AnwerModel.h"
 #import "ResultController.h"
+#import "QuestionTableCell.h"
 
-@interface QuestionListController ()<UICollectionViewDelegate,UICollectionViewDataSource,QuestionCellDelegate>
+@interface QuestionListController ()<UICollectionViewDelegate,UICollectionViewDataSource,QuestionCellDelegate,UITableViewDelegate,UITableViewDataSource>
 {
     NSInteger _pages;
     NSInteger _currentIndex;
@@ -22,6 +23,11 @@
     
     BOOL _firstQuestionSelect;
     BOOL _secondQuestionSelect;
+    
+    NSInteger _rowNum;
+    NSInteger _sectionNum;
+    
+    NSInteger _answerCount;
 }
 @property (nonatomic,strong) UICollectionView *collectionV;
 @property (nonatomic,strong) NSArray *anwerArr;
@@ -31,6 +37,13 @@
 @property (nonatomic,strong) UIButton *lastPage;
 @property (nonatomic,strong) UIButton *nextPage;
 @property (nonatomic,copy)NSString *str;
+@property (nonatomic,strong) UITableView *tableView;
+
+@property (nonatomic,strong) NSMutableDictionary *cellH;
+@property (nonatomic,strong) NSArray *headTitleArr;
+@property (nonatomic,assign) NSIndexPath *selectIndexPath;
+@property (nonatomic,assign) BOOL isSelect;
+//@property (nonatomic,strong) NSMutableArray *indexPaths;
 
 @end
 
@@ -39,21 +52,175 @@
 
 - (void)dealloc{
     self.questionArr = nil;
+    self.repeatQuestionArr = nil;
     collectionV = nil;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navTitleLabel.text = ModuleZW(@"体质辨识");
-    [self getQuestionData];
-    self.anwerArr = [NSArray arrayWithObjects:ModuleZW(@"没有（根本不)"),ModuleZW(@"很少（有一点)"),ModuleZW(@"有时（有些)"),ModuleZW(@"经常（相当)"),ModuleZW(@"总是（非常)"), nil];
+    _rowNum = 1;
+    _sectionNum = 1;
+    _answerCount = 0;
     
+    self.cellH = @{}.mutableCopy;
+    self.navTitleLabel.text = ModuleZW(@"体质辨识");
+    
+    self.anwerArr = [NSArray arrayWithObjects:ModuleZW(@"没有"),ModuleZW(@"很少"),ModuleZW(@"有时"),ModuleZW(@"经常"),ModuleZW(@"总是"), nil];
+    
+    self.headTitleArr = [NSArray arrayWithObjects:@"五官面部及皮肤自查",@"冷热感应状况",@"精神状况",@"身体及代谢症状", nil];
+    [self getQuestionData];
+    
+   
+  
 }
+
 
 - (void)goBack:(UIButton *)btn
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)initUI
+{
+    _currentIndex = 0;
+    _selectNum = 0;
+    _firstQuestionSelect = NO;
+    _secondQuestionSelect = NO;
+    
+    self.selectIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    
+    //添加tableview
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-220-20) style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.backgroundColor=[UIColor clearColor];
+    self.tableView.backgroundView=nil;
+    self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+    self.tableView.showsVerticalScrollIndicator = NO;
+    self.tableView.showsHorizontalScrollIndicator = NO;
+    self.tableView.estimatedRowHeight = 80;
+   
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    [self.view addSubview:self.tableView];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"QuestionTableCell" bundle:nil] forCellReuseIdentifier:@"QuestionTableCell"];
+    
+    [self.tableView reloadData];
+    
+    [self createBottomView];
+}
+
+# pragma mark - 底部视图
+- (void)createBottomView
+{
+    UIView *bottomV = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-220, ScreenWidth, 220)];
+    bottomV.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:bottomV];
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-200)/2.0, 15, 200, 20)];
+    titleLabel.font = [UIFont systemFontOfSize:16];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.text = @"请选择";
+    [bottomV addSubview:titleLabel];
+    //UIColorFromHex(0Xf1f1f1)
+    
+    bottomV.layer.cornerRadius=5;
+    bottomV.layer.shadowColor = UIColorFromHex(0Xf1f1f1).CGColor;
+    bottomV.layer.shadowOffset=CGSizeMake(0, -5);
+    bottomV.layer.shadowRadius=8;
+    bottomV.layer.shadowOpacity = YES;
+
+    for (NSInteger i=0;i<5;i++) {
+        UIButton *selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        if(i<3){
+           selectBtn.frame = CGRectMake((ScreenWidth-54*3-60)/2.0+(54+30)*i, titleLabel.bottom+15, 54, 54);
+        }else{
+            selectBtn.frame = CGRectMake((ScreenWidth-54*2-30)/2.0+(54+30)*(i-3), titleLabel.bottom+10+54+22, 54, 54);
+        }
+        selectBtn.tag = 2019+i;
+        
+        selectBtn.layer.cornerRadius = 8.0;
+        selectBtn.layer.masksToBounds = YES;
+        //添加渐变色
+        CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+        gradientLayer.frame = selectBtn.bounds;
+        gradientLayer.colors = [NSArray arrayWithObjects:(id)UIColorFromHex(0x81DDDD).CGColor,(id)UIColorFromHex(0x5D97F2).CGColor, nil];
+        gradientLayer.startPoint = CGPointMake(0.5, 0);
+        gradientLayer.endPoint = CGPointMake(0.5, 1);
+        gradientLayer.locations = @[@0.1,@0.5];
+        [selectBtn.layer addSublayer:gradientLayer];
+        
+        NSString *str = [self.anwerArr objectAtIndex:i];
+        [selectBtn setTitle:str forState:UIControlStateNormal];
+        [selectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        
+        [selectBtn addTarget:self action:@selector(selectBtnBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+        [bottomV addSubview:selectBtn];
+    }
+    
+}
+
+# pragma mark - 答题按钮
+- (void)selectBtnBtnAction:(UIButton *)btn
+{
+    if(self.isSelect && self.selectIndexPath.row!=_rowNum-1){
+        QuestionTableCell *cell = (QuestionTableCell *)[self.tableView cellForRowAtIndexPath:self.selectIndexPath];
+        NSArray *arr1 = [self.questionArr objectAtIndex:self.selectIndexPath.section];
+        QuestionModel *model = [arr1 objectAtIndex:self.selectIndexPath.row];
+        model.selectAnswer = btn.titleLabel.text;
+        [cell setanswerLabelContent:btn.titleLabel.text];
+        return;
+    }
+    NSArray *arr = [self.questionArr objectAtIndex:_sectionNum-1];
+    QuestionModel *model = [arr objectAtIndex:_rowNum-1];
+    model.selectAnswer = btn.titleLabel.text;
+    
+    
+    NSInteger count = [arr count];
+    if(_rowNum<count){
+        _rowNum+=1;
+    }else{
+        _rowNum = 1;
+        _sectionNum+=1;
+    }
+    _selectNum+=1;
+    NSInteger indexNum = btn.tag - 2018;
+    NSLog(@"hhh:%ld",indexNum);
+    model.selectNum = indexNum;
+    if(model.reverse){
+        model.grade = 5 - indexNum;
+    }else{
+        model.grade = indexNum;
+    }
+    
+    NSArray *idArr = [model.allIDStr componentsSeparatedByString:@","];
+    model.answerID = [[idArr objectAtIndex:model.selectNum-1] integerValue];
+    
+    if(_selectNum == 60){ //所有题目已经答完
+        [self generateTZBS];
+        return;
+    }
+    
+    self.isSelect = NO;
+    self.selectIndexPath = [NSIndexPath indexPathForRow:_rowNum-1 inSection:_sectionNum-1];
+    
+
+    [self.tableView reloadData];
+
+
+    dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
+
+    dispatch_after(timer, dispatch_get_main_queue(), ^{
+        //[self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height -self.tableView.bounds.size.height) animated:YES];
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self->_rowNum-1 inSection:self->_sectionNum-1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+
+    });
+
+   
+   
+    
 }
 
 - (void)createUI
@@ -63,6 +230,7 @@
     _selectNum = 0;
     _firstQuestionSelect = NO;
     _secondQuestionSelect = NO;
+    
     
     UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(15, kNavBarHeight+15, ScreenWidth-30, ScreenHeight-kNavBarHeight-30)];
     backView.backgroundColor = [UIColor whiteColor];
@@ -121,34 +289,52 @@
 
 - (void)getQuestionData
 {
+    
+    // [self requestQuestionListData];
+    
     NSString *docuPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString *dbPath  = [NSString string];
     if([UserShareOnce shareOnce].languageType){
-        dbPath = [docuPath stringByAppendingPathComponent:@"questionEn.db"];
+        dbPath = [docuPath stringByAppendingPathComponent:@"questionEn2.db"];
     }else{
-        dbPath = [docuPath stringByAppendingPathComponent:@"question.db"];
+        dbPath = [docuPath stringByAppendingPathComponent:@"question2.db"];
     }
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL isExist = [fileManager fileExistsAtPath:dbPath];
     if(isExist){
-        CacheManager *cacheManager = [[CacheManager alloc] initManage];
+        CacheManager *cacheManager = [CacheManager sharedCacheManager];
 
         NSMutableArray *tempArr = [NSMutableArray arrayWithCapacity:0];
         tempArr = [cacheManager getQuestionModels];
-
-        [self handleQuestionDataWithArr:tempArr];
-
+        
+        if(tempArr.count>0){
+            [self handleQuestionDataWithArr:tempArr];
+        }else{
+            [self requestQuestionListData];
+        }
     }else{
         [self requestQuestionListData];
     }
     
+    
 }
 
-- (void)handleQuestionDataWithArr:(NSMutableArray *)tempArr
+- (void)handleQuestionDataWithArr:(NSMutableArray *)tempArr2
 {
     NSMutableArray *repeatArr1 = [NSMutableArray arrayWithCapacity:0];
     NSMutableArray *tempArr1 = [NSMutableArray arrayWithCapacity:0];
+    
+    NSArray *tempArr = [tempArr2 sortedArrayUsingComparator:^NSComparisonResult(QuestionModel *model1, QuestionModel *model2) {
+        return model1.order>model2.order;
+    }];
+    
+    NSMutableArray *arr1 = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *arr2 = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *arr3 = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *arr4 = [NSMutableArray arrayWithCapacity:0];
+    
     NSInteger arrCount = [tempArr count];
+    
     for(NSInteger i=0;i<arrCount;i++){
         BOOL isRepeat = NO;
         QuestionModel *model1 = [tempArr objectAtIndex:i];
@@ -163,18 +349,45 @@
         if(isRepeat){
             [repeatArr1 addObject:model1];
         }else{
-            [tempArr1 addObject:model1];
+            
+            NSInteger classifyId = [model1.classifyId integerValue];
+            
+            switch (classifyId) {
+                case 0:
+                    [arr1 addObject:model1];
+                    break;
+                case 1:
+                    [arr2 addObject:model1];
+                    break;
+                case 2:
+                    [arr3 addObject:model1];
+                    break;
+                case 3:
+                    [arr4 addObject:model1];
+                    break;
+                    
+                default:
+                    break;
+            }
+            
+           // [tempArr1 addObject:model1];
         }
     }
     
+    [tempArr1 addObject:arr1];
+    [tempArr1 addObject:arr2];
+    [tempArr1 addObject:arr3];
+    [tempArr1 addObject:arr4];
+    
+    self.questionArr = [tempArr1 copy];
     
     //对答案数组按照order字段排序
-    self.questionArr = [tempArr1 sortedArrayUsingComparator:^NSComparisonResult(QuestionModel *model1, QuestionModel *model2) {
-        return model1.order>model2.order;
-    }];
+//    self.questionArr = [tempArr1 sortedArrayUsingComparator:^NSComparisonResult(QuestionModel *model1, QuestionModel *model2) {
+//        return model1.order>model2.order;
+//    }];
     self.repeatQuestionArr = [repeatArr1 copy];
     _pages = (NSInteger)ceil(self.questionArr.count/2.0);
-    [self createUI];
+    [self initUI];
 }
 
 - (void)requestQuestionListData
@@ -220,13 +433,14 @@
                     [mutabDataArr addObject:model];
                 }
             }
-            CacheManager *cacheManager = [[CacheManager alloc] init];
-            BOOL result = [cacheManager createDataBase];
-            if(result){
-                [cacheManager insertQuestionModels:mutabDataArr];
-            }else{
-                [weakSelf showAlertWarmMessage:ModuleZW(@"数据库创建失败")];
-            }
+            CacheManager *cacheManager = [CacheManager sharedCacheManager];
+            [cacheManager insertQuestionModels:mutabDataArr];
+//            BOOL result = [cacheManager createDataBase];
+//            if(result){
+//                [cacheManager insertQuestionModels:mutabDataArr];
+//            }else{
+//                [weakSelf showAlertWarmMessage:ModuleZW(@"数据库创建失败")];
+//            }
             [weakSelf handleQuestionDataWithArr:mutabDataArr];
         }else{
             [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
@@ -302,6 +516,121 @@
             [self nextPageAction];
         }
     }
+}
+
+# pragma mark - tableview的代理
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return  _sectionNum;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+   
+    if(_sectionNum == section+1){
+        return _rowNum;
+     }else{
+        return [[self.questionArr objectAtIndex:section] count];
+     }
+
+    return 0;
+}
+
+//- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return UITableViewAutomaticDimension;
+//}
+
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    //return 80;
+//    return  [[self.cellH objectForKey:[NSString stringWithFormat:@"%ld",indexPath.row]] floatValue];
+//}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 50.0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 50)];
+    view.backgroundColor = UIColorFromHex(0Xf1f1f1);
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-200)/2.0, 10, 200, 30)];
+    titleLabel.font = [UIFont systemFontOfSize:17];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.text = [self.headTitleArr objectAtIndex:section];
+    [view addSubview:titleLabel];
+    return view;
+    
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellReusered = @"QuestionTableCell";
+    NSArray *cellData = [self.questionArr objectAtIndex:indexPath.section];
+    QuestionTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellReusered];
+    
+    if (cell == nil) {
+        cell = [[QuestionTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellReusered];
+        //cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    QuestionModel *model = [cellData objectAtIndex:indexPath.row];
+
+    //CGFloat h = [cell setCellHeight:model.name];
+    cell.contentLabel.text = model.name;
+    if(model.selectAnswer){
+       [cell setanswerLabelContent:model.selectAnswer];
+    }else{
+        cell.rightView.hidden = YES;
+    }
+    
+    if(self.selectIndexPath.section==indexPath.section && self.selectIndexPath.row == indexPath.row){
+        cell.selected = YES;
+        [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        cell.contentLabel.textColor = UIColorFromHex(0x1e82d2);
+    }else{
+        cell.selected = NO;
+        cell.contentLabel.textColor = UIColorFromHex(0x80808c);
+    }
+    
+    if(indexPath.section==0){
+        cell.indexLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row+1];
+    }else if (indexPath.section==1){
+        NSInteger section0Count = [[self.questionArr objectAtIndex:0] count];
+        cell.indexLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row+1+section0Count];
+    }else if (indexPath.section==2){
+        NSInteger section0Count = [[self.questionArr objectAtIndex:0] count];
+        NSInteger section1Count = [[self.questionArr objectAtIndex:1] count];
+        cell.indexLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row+1+section0Count+section1Count];
+    }else if (indexPath.section==3){
+        NSInteger section0Count = [[self.questionArr objectAtIndex:0] count];
+        NSInteger section1Count = [[self.questionArr objectAtIndex:1] count];
+        NSInteger section2Count = [[self.questionArr objectAtIndex:2] count];
+        cell.indexLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row+1+section0Count+section1Count+section2Count];
+    }
+    
+    
+   // [self.cellH setObject:@(h) forKey:[NSString stringWithFormat:@"%ld",indexPath.row]];
+    return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    QuestionTableCell *cell = (QuestionTableCell *)[tableView cellForRowAtIndexPath:indexPath];
+    cell.contentLabel.textColor = UIColorFromHex(0x80808c);
+    
+    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    QuestionTableCell *cell = (QuestionTableCell *)[tableView cellForRowAtIndexPath:indexPath];
+    cell.contentLabel.textColor = UIColorFromHex(0x1e82d2);
+    self.selectIndexPath = indexPath;
+    self.isSelect = YES;
 }
 
 # pragma mark - collectionView的代理
@@ -405,19 +734,40 @@
 # pragma mark - 生成体质辨识
 - (void)generateTZBS
 {
-    for(QuestionModel *model in self.questionArr){
-        for(QuestionModel *repeatModel in self.repeatQuestionArr){
-            if(repeatModel.order == model.order){
-                if(repeatModel.reverse){
-                    repeatModel.grade = 5 - model.selectNum;
-                }else{
-                    repeatModel.grade = model.selectNum;
+    NSArray *newArr = [[NSArray alloc] init];
+    
+    for(NSArray *arr in self.questionArr){
+        newArr = [newArr arrayByAddingObjectsFromArray:arr];
+        for(QuestionModel *model in arr){
+            for(QuestionModel *repeatModel in self.repeatQuestionArr){
+                if(repeatModel.order == model.order){
+                    if(repeatModel.reverse){
+                        repeatModel.grade = 5 - model.selectNum;
+                    }else{
+                        repeatModel.grade = model.selectNum;
+                    }
+                    NSArray *idArr = [repeatModel.allIDStr componentsSeparatedByString:@","];
+                    repeatModel.answerID = [[idArr objectAtIndex:model.selectNum-1] integerValue];
                 }
-                NSArray *idArr = [repeatModel.allIDStr componentsSeparatedByString:@","];
-                repeatModel.answerID = [[idArr objectAtIndex:model.selectNum-1] integerValue];
             }
         }
     }
+    
+    NSLog(@"count:%ld",[newArr count]);
+    
+//    for(QuestionModel *model in self.questionArr){
+//        for(QuestionModel *repeatModel in self.repeatQuestionArr){
+//            if(repeatModel.order == model.order){
+//                if(repeatModel.reverse){
+//                    repeatModel.grade = 5 - model.selectNum;
+//                }else{
+//                    repeatModel.grade = model.selectNum;
+//                }
+//                NSArray *idArr = [repeatModel.allIDStr componentsSeparatedByString:@","];
+//                repeatModel.answerID = [[idArr objectAtIndex:model.selectNum-1] integerValue];
+//            }
+//        }
+//    }
     
     //每种体质个数
     NSInteger TZ00Count=0,TZ01Count=0,TZ02Count=0,TZ03Count=0,TZ04Count=0,TZ05Count=0,TZ06Count=0,TZ07Count=0,TZ08Count = 0;
@@ -428,7 +778,8 @@
     
     NSMutableArray *examCatIdArr = [[NSMutableArray alloc] initWithArray:@[@"",@"",@"",@"",@"",@"",@"",@"",@""]];
     
-    NSArray *totalArr = [self.questionArr arrayByAddingObjectsFromArray:self.repeatQuestionArr];
+//    NSArray *totalArr = [self.questionArr arrayByAddingObjectsFromArray:self.repeatQuestionArr];
+    NSArray *totalArr = [newArr arrayByAddingObjectsFromArray:self.repeatQuestionArr];
     for(QuestionModel *model in totalArr){
         
         NSInteger key = model.uid;
@@ -647,6 +998,7 @@
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉，请检查您的网络是否畅通") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
     [av show];
 }
+
 - (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
 {
     [GlobalCommon hideMBHudWithView:self.view];

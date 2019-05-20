@@ -29,12 +29,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.leftBtn.hidden = YES;
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;
     self.navTitleLabel.text = ModuleZW(@"设置灸头网络密码");
-    self.navTitleLabel.textColor = [UIColor whiteColor];
     [self initData];
     [self initView];
     // Do any additional setup after loading the view.
