@@ -56,7 +56,7 @@
 
 //和缓医疗SDK注册,8248是和缓分配给的productId 9001是测试id
 #define HHSDK_id        @"8248"
-//hh
+//yy
 //友盟ID
 #define Youmeng_id      @"5bbacd04b465f5db4c000073"
 
