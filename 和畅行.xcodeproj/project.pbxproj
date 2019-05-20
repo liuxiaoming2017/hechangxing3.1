@@ -478,7 +478,6 @@
 		039C23C7212403CB00F9AFA3 /* look.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C23C6212403CB00F9AFA3 /* look.png */; };
 		039C23C9212403E400F9AFA3 /* sure.png in Resources */ = {isa = PBXBuildFile; fileRef = 039C23C8212403E300F9AFA3 /* sure.png */; };
 		039C23CC212413F100F9AFA3 /* MuisicNoraml.m in Sources */ = {isa = PBXBuildFile; fileRef = 039C23CB212413F100F9AFA3 /* MuisicNoraml.m */; };
-		039EB91F21CF773300AE4A0D /* Pods_和畅行.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 039EB91E21CF773300AE4A0D /* Pods_和畅行.framework */; };
 		039EC9182182EC7E003EF38F /* EDWebviewCookieManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 039EC9152182EC7E003EF38F /* EDWebviewCookieManager.m */; };
 		039EC9192182EC7E003EF38F /* EDWKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039EC9172182EC7E003EF38F /* EDWKWebViewController.m */; };
 		03A07BEC20EF436500002274 /* Regist_YZM.png in Resources */ = {isa = PBXBuildFile; fileRef = 03A07BE420EF436400002274 /* Regist_YZM.png */; };
@@ -601,6 +600,7 @@
 		03FBDF97219285A0006116FC /* NavBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF96219285A0006116FC /* NavBarViewController.m */; };
 		03FBDF9A2192B066006116FC /* TimeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF992192B066006116FC /* TimeLineView.m */; };
 		03FBDF9D2192B0B3006116FC /* TimeLineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF9C2192B0B3006116FC /* TimeLineCell.m */; };
+		5A1ED87D1BDEFF04EA37D2BF /* Pods____.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3992630D9BF859D26B53112 /* Pods____.framework */; };
 		835DB8DB21D3685D00B8DF99 /* HCY_ConsultingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 835DB8DA21D3685D00B8DF99 /* HCY_ConsultingModel.m */; };
 		835DB91C21D757C800B8DF99 /* HCY_FamilyListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 835DB91B21D757C800B8DF99 /* HCY_FamilyListModel.m */; };
 		837D822321F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837D822121F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m */; };
@@ -1677,7 +1677,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				039EB91F21CF773300AE4A0D /* Pods_和畅行.framework in Frameworks */,
 				03D99E5F21AD335E00C766FD /* libSocialSina.a in Frameworks */,
 				03D99E5D21AD335100C766FD /* libSocialQQ.a in Frameworks */,
 				03D99E5B21AD334300C766FD /* libSocialWeChat.a in Frameworks */,
@@ -1711,6 +1710,7 @@
 				0390CF7F20ECB5D0000ECA53 /* CoreFoundation.framework in Frameworks */,
 				0390CF8020ECB5D0000ECA53 /* Foundation.framework in Frameworks */,
 				0306C5C921CCBEFA00DA5DC1 /* libSocialWeChat.a in Frameworks */,
+				5A1ED87D1BDEFF04EA37D2BF /* Pods____.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4623,7 +4623,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3X65BCYVHU;
+				DEVELOPMENT_TEAM = YSFHX6Y4U7;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4681,7 +4681,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3X65BCYVHU;
+				DEVELOPMENT_TEAM = YSFHX6Y4U7;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
