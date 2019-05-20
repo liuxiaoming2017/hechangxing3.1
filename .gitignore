@@ -57,6 +57,7 @@ xcuserdata/
 
 *.dSYM
 
+payRequsestHandler.h
 
 
 
@@ -112,7 +113,7 @@ fastlane/screenshots
 
 fastlane/test_output
 
-payRequsestHandler.h
+
 
 
 # Code Injection
