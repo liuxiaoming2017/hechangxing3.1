@@ -63,13 +63,13 @@
     [[UITabBar appearance] setTranslucent:NO];
     
     //和缓医疗SDK注册,是和缓分配给的productId
-//    HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:@"" isDebug:NO isDevelop:YES];
+//    HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:HHSDK_id isDebug:NO isDevelop:NO];
 //    hhSdk.cerName = @"2cDevTest";
 //    [[HHMSDK alloc] startWithOption:hhSdk];
 
     [UMCommonLogManager setUpUMCommonLogManager];
     [UMConfigure setLogEnabled:YES];
-    [UMConfigure initWithAppkey:@"5bbacd04b465f5db4c000073" channel:@"App Store"];
+    [UMConfigure initWithAppkey:Youmeng_id channel:@"App Store"];
     
     [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
     

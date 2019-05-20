@@ -54,6 +54,11 @@
 //获取服务器端支付数据地址（商户自定义）
 #define SP_URL          @"http://wxpay.weixin.qq.com/pub_v2/app/app_pay.php"
 
+//和缓医疗SDK注册,8248是和缓分配给的productId 9001是测试id
+#define HHSDK_id        @"8248"
+
+//友盟ID
+#define Youmeng_id      @"5bbacd04b465f5db4c000073"
 
 @interface payRequsestHandler : NSObject{
     //预支付网关url地址
