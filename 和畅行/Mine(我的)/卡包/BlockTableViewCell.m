@@ -79,12 +79,17 @@
         }else{
             _mLabel.text = model.cardDescription;
         }
-        
-        if ([model.status  isEqualToString:@"1"]&&![model.kindStr isEqualToString:ModuleZW(@"现金卡")]) {
-            _imageV.hidden = NO;
-        }else {
+        if([model.kindStr isEqualToString:ModuleZW(@"现金卡")]){
             _imageV.hidden = YES;
+        }else{
+            
+            if ([model.status  isEqualToString:@"1"]){
+                _imageV.hidden = NO;
+            }else{
+                 _imageV.hidden = YES;
+            }
         }
+        
         timeStr = model.exprise_time;
         if(![GlobalCommon stringEqualNull:timeStr]){
             NSString *endTimeStr =  [NSString stringWithFormat:@"%@%@",timeStr,ModuleZW(@"到期")];

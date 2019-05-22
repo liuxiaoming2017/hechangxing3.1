@@ -105,8 +105,9 @@
             if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].memberImage]) {
                 self.urlHttpImg=[UserShareOnce shareOnce].memberImage;
                 [photoButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage] forState:(UIControlStateNormal)];
-            }
-            else{
+                
+                 [photoButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage]  forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"1我的_03"]];
+            } else{
                 [photoButton setBackgroundImage:[UIImage imageNamed:@"1我的_03"] forState:(UIControlStateNormal)];
             }
             [photoButton addTarget:self action:@selector(uploadImageClick) forControlEvents:(UIControlEventTouchUpInside)];
