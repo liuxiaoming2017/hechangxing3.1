@@ -87,8 +87,14 @@
 "2.对小病进行咨询"                                                  =  "2.Consultation on minor illness can be done";
 "就医更方便"                                                            =  "More convenient medical care";
 
-"已解答" = "Solved";
-"未解答" = "Pending";
+"已回复" = "Replied";
+"未回复" = "Not replied";
+"设置昵称" = "Set a nickname";
+"未设置" = "Not set yet";
+"未绑定" = "Not bound yet";
+"已经是最新版本" = "Updated";
+"去结算" = "CHECKOUT";
+"确认完成" = "Done";
 //=====================================一说================================
 "脏腑状态评估"             ="Zang-fu organs test";
 "很抱歉，您所录制的声音无效，请重新辨识。"        ="Sorry, the voice you recorded is invalid. Please re-identify";

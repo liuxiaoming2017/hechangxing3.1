@@ -62,7 +62,7 @@
             self.sexStr   =  ModuleZW(@"女");
         }
     }else{
-        self.sexStr = @"未设置";
+        self.sexStr = ModuleZW(@"未设置");
     }
     
     if(![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].birthday]){
@@ -137,12 +137,12 @@
                             [textField addTarget:self action:@selector(textFieldDidChanged:) forControlEvents:UIControlEventEditingChanged];
                             
                         }];
-                        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                        UIAlertAction *action1 = [UIAlertAction actionWithTitle:ModuleZW(@"确认") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
                             self.nameStr = [[alertVc textFields] objectAtIndex:0].text;
                             [button setTitle:self.nameStr forState:(UIControlStateNormal)];
                             [self commitClick];
                         }];
-                        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+                        UIAlertAction *action2 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:nil];
                         [alertVc addAction:action2];
                         [alertVc addAction:action1];
                         [self presentViewController:alertVc animated:YES completion:nil];
@@ -258,7 +258,7 @@
     [request setPostValue:sexStr forKey:@"gender"];
     [request setPostValue:self.nameStr forKey:@"name"];
     [request setPostValue:_phoneStr forKey:@"mobile"];
-    if ([_brithdayStr isEqualToString:@"请选择您的出生日期"]) {
+    if ([_brithdayStr isEqualToString:ModuleZW(@"未设置")]) {
         _brithdayStr = @"";
     }
     [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
