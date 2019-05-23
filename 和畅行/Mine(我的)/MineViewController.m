@@ -59,6 +59,12 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self requestData];
+    NSLog(@"%@",[UserShareOnce shareOnce].memberImage);
+    if([[UserShareOnce shareOnce].memberImage isKindOfClass:[NSNull class]]){
+        self.userIcon.image = [UIImage imageNamed:@"1我的_03"];
+    }else{
+        [self.userIcon sd_setImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage] placeholderImage:[UIImage imageNamed:@"1我的_03"]];
+    }
 }
 
 -(void)requestData{
@@ -168,7 +174,7 @@
             numberButton.frame = CGRectMake(15 + (ScreenWidth - 30)*i/3, userName.bottom + 10, (ScreenWidth - 30)/3, 50);
             [numberButton setTitle:numberArray[i] forState:(UIControlStateNormal)];
             [numberButton setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
-            [numberButton.titleLabel setFont:[UIFont systemFontOfSize:18]];
+            [numberButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
             [numberButton.titleLabel setTextAlignment:(NSTextAlignmentCenter)];
             [numberButton.titleLabel setNumberOfLines:2];
             numberButton.tag = 111 + i;

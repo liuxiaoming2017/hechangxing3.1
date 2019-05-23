@@ -45,7 +45,7 @@
     [super viewWillAppear:YES];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.tabBarController.tabBar.hidden = NO;
-    
+    self.leftBtn.hidden = NO;
     if ([UserShareOnce shareOnce].isRefresh){
         [self requestPackgeNetWork];
         // [self requestUI];

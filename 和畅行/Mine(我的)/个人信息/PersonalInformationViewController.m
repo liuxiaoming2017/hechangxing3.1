@@ -44,6 +44,8 @@
     [self layoutMineView];
 }
 
+
+
 -(void)layoutMineView{
     
     self.nameStr        = [NSString string];
@@ -429,6 +431,7 @@
     {
         self.urlHttpImg=[dic objectForKey:@"data"];
         [UserShareOnce shareOnce].memberImage = self.urlHttpImg;
+        [self commitClick];
     }
 }
 - (void)requestUpLoadError:(ASIHTTPRequest *)request

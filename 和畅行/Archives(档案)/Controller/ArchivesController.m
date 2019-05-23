@@ -68,6 +68,7 @@
         [self selectIndexWithString:ModuleZW(@"血糖") withButton:btn];
         [UserShareOnce shareOnce].wherePop = @"";
     }
+    self.leftBtn.hidden = YES;
 }
 
 

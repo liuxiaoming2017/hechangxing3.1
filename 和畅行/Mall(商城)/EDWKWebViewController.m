@@ -80,6 +80,11 @@ typedef void(^EDLoadRequestAction)(void);
     [self startToLoadRequest];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.leftBtn.hidden = YES;
+}
+
 - (void)startToLoadRequest {
     [self.indicatorView startAnimating];
     NSURL *url = [NSURL URLWithString:self.rootUrl];
