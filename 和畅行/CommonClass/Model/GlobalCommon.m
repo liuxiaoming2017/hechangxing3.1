@@ -478,16 +478,13 @@
 
 + (BOOL)stringEqualNull:(NSString *)str
 {
-    if([str isKindOfClass:[NSNull class]]){
+    if([str isEqual:[NSNull null]] || str == nil || str.length == 0 || [str isEqualToString:@"(null)"]){
         return YES;
-    }
-    if(str != nil && ![str isEqualToString:@""] ){
-        return NO;
     }else{
-        return YES;
+        return NO;
     }
-    return NO;
 }
+
 
 +(NSString *)getNowTimeTimestamp{
     

@@ -30,4 +30,7 @@
 
 - (void)updateRemindModel:(RemindModel *)model;
 
+
+- (void)insertArchiveModels:(NSArray *)arr;
+- (NSMutableArray *)gethealthArchivesModelsWithIndex:(NSInteger)index andRows:(NSInteger)row;
 @end

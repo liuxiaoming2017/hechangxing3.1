@@ -336,6 +336,7 @@
 		039C239A2123D80900F9AFA3 /* BloodPressureNonDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039C23982123D80800F9AFA3 /* BloodPressureNonDeviceViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		039C239D2123D8C100F9AFA3 /* HHBlueToothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 039C239C2123D8C100F9AFA3 /* HHBlueToothManager.m */; };
 		039C23CC212413F100F9AFA3 /* MuisicNoraml.m in Sources */ = {isa = PBXBuildFile; fileRef = 039C23CB212413F100F9AFA3 /* MuisicNoraml.m */; };
+		039EB91F21CF773300AE4A0D /* Pods_和畅行.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 039EB91E21CF773300AE4A0D /* Pods_和畅行.framework */; };
 		039EC9182182EC7E003EF38F /* EDWebviewCookieManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 039EC9152182EC7E003EF38F /* EDWebviewCookieManager.m */; };
 		039EC9192182EC7E003EF38F /* EDWKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039EC9172182EC7E003EF38F /* EDWKWebViewController.m */; };
 		03A07BFF20EF5BC300002274 /* LBReadingTimeScrollPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A07BFD20EF5BC300002274 /* LBReadingTimeScrollPanel.m */; };
@@ -630,7 +631,6 @@
 		C9FDB92721BE35AC00E726F3 /* HCY_UnderlineButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FDB92621BE35AC00E726F3 /* HCY_UnderlineButton.m */; };
 		C9FDB92B21BE3D4900E726F3 /* HCY_ConsumptionListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FDB92921BE3D4900E726F3 /* HCY_ConsumptionListCell.m */; };
 		C9FDB92C21BE3D4900E726F3 /* HCY_ConsumptionListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9FDB92A21BE3D4900E726F3 /* HCY_ConsumptionListCell.xib */; };
-		F9ED5F790085FA5679E4FD4C /* Pods____.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3992630D9BF859D26B53112 /* Pods____.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1174,6 +1174,7 @@
 		038517002186AB8E001DD2B7 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		038517012186AB8E001DD2B7 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		038517042186AB9E001DD2B7 /* ApiXml.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ApiXml.mm; sourceTree = "<group>"; };
+		038517052186AB9E001DD2B7 /* payRequsestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = payRequsestHandler.h; sourceTree = "<group>"; };
 		038517062186AB9E001DD2B7 /* WXUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WXUtil.mm; sourceTree = "<group>"; };
 		038517072186AB9E001DD2B7 /* payRequsestHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = payRequsestHandler.mm; sourceTree = "<group>"; };
 		038517082186AB9E001DD2B7 /* ApiXml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiXml.h; sourceTree = "<group>"; };
@@ -1645,8 +1646,7 @@
 		83E23EFE21C76CE800B43298 /* HYC_CardsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HYC_CardsModel.h; sourceTree = "<group>"; };
 		83E23EFF21C76CE800B43298 /* HYC_CardsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HYC_CardsModel.m; sourceTree = "<group>"; };
 		83E644922213E883004D286C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ModuleZW.strings; sourceTree = "<group>"; };
-		C3992630D9BF859D26B53112 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods____.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C96771292294EB0C00766A51 /* payRequsestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = payRequsestHandler.h; sourceTree = "<group>"; };
+		C3992630D9BF859D26B53112 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C973089821B91C4B00060447 /* HCY_DAVisceraNoTimeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_DAVisceraNoTimeCell.h; sourceTree = "<group>"; };
 		C973089921B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_DAVisceraNoTimeCell.m; sourceTree = "<group>"; };
 		C97308E021BA0E9800060447 /* UIColor+Gradient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Gradient.h"; sourceTree = "<group>"; };
@@ -1685,6 +1685,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				039EB91F21CF773300AE4A0D /* Pods_和畅行.framework in Frameworks */,
 				03D99E5F21AD335E00C766FD /* libSocialSina.a in Frameworks */,
 				03D99E5D21AD335100C766FD /* libSocialQQ.a in Frameworks */,
 				03D99E5B21AD334300C766FD /* libSocialWeChat.a in Frameworks */,
@@ -1718,7 +1719,6 @@
 				0390CF7F20ECB5D0000ECA53 /* CoreFoundation.framework in Frameworks */,
 				0390CF8020ECB5D0000ECA53 /* Foundation.framework in Frameworks */,
 				0306C5C921CCBEFA00DA5DC1 /* libSocialWeChat.a in Frameworks */,
-				F9ED5F790085FA5679E4FD4C /* Pods____.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2861,7 +2861,7 @@
 			children = (
 				038517082186AB9E001DD2B7 /* ApiXml.h */,
 				038517042186AB9E001DD2B7 /* ApiXml.mm */,
-				C96771292294EB0C00766A51 /* payRequsestHandler.h */,
+				038517052186AB9E001DD2B7 /* payRequsestHandler.h */,
 				038517072186AB9E001DD2B7 /* payRequsestHandler.mm */,
 				038517092186AB9F001DD2B7 /* WXUtil.h */,
 				038517062186AB9E001DD2B7 /* WXUtil.mm */,
@@ -4082,6 +4082,10 @@
 				"${BUILT_PRODUCTS_DIR}/DACircularProgress/DACircularProgress.framework",
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
+				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/HHDoctorSDK.framework",
+				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/NIMAVChat.framework",
+				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/NIMSDK.framework",
+				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/NMC.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
 				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
@@ -4096,6 +4100,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DACircularProgress.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HHDoctorSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NIMAVChat.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NIMSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NMC.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
@@ -4116,10 +4124,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-和畅行/Pods-和畅行-resources.sh",
+				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/resources/NMCVideoFilter.bundle",
 				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/resources/SecurityKit.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/NMCVideoFilter.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SecurityKit.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4629,9 +4639,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shandong City Commercial Bank Cooperation Alliance Co., Ltd.";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 3X65BCYVHU;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4659,7 +4669,10 @@
 				);
 				INFOPLIST_FILE = "和畅行/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/和畅行/SayAndWrite(说写点)/Speak(说)/MLAudioRecorder/lib",
@@ -4673,10 +4686,10 @@
 					"$(inherited)",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
+				PRODUCT_BUNDLE_IDENTIFIER = "cn.com.bankalliance.mdm.wfccb-YiDongYingXiao";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = com.ky3h.hechangxing;
+				PROVISIONING_PROFILE_SPECIFIER = "cn.com.bankalliance.mdm.wfccb-YiDongYingXiao";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};
@@ -4689,9 +4702,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shandong City Commercial Bank Cooperation Alliance Co., Ltd.";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 3X65BCYVHU;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4720,7 +4733,10 @@
 				);
 				INFOPLIST_FILE = "和畅行/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/和畅行/SayAndWrite(说写点)/Speak(说)/MLAudioRecorder/lib",
@@ -4734,10 +4750,10 @@
 					"$(inherited)",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
+				PRODUCT_BUNDLE_IDENTIFIER = "cn.com.bankalliance.mdm.wfccb-YiDongYingXiao";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = com.ky3h.hechangxing;
+				PROVISIONING_PROFILE_SPECIFIER = "cn.com.bankalliance.mdm.wfccb-YiDongYingXiao";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};

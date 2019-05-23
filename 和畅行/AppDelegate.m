@@ -62,10 +62,10 @@
     
     [[UITabBar appearance] setTranslucent:NO];
     
-    //和缓医疗SDK注册,是和缓分配给的productId
-//    HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:HHSDK_id isDebug:NO isDevelop:NO];
-//    hhSdk.cerName = @"2cDevTest";
-//    [[HHMSDK alloc] startWithOption:hhSdk];
+    //和缓医疗SDK注册,是和缓分配给的productId ffff
+    HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:HHSDK_id isDebug:NO isDevelop:YES];
+    hhSdk.cerName = @"2cDevTest";
+    [[HHMSDK alloc] startWithOption:hhSdk];
 
     [UMCommonLogManager setUpUMCommonLogManager];
     [UMConfigure setLogEnabled:YES];

@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 #import "WXPhoneController.h"
 
-//#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 
 @interface HCY_CallController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -77,41 +77,41 @@
         return;
     }
 
-//     HHMSDK *hhmSdk = [[HHMSDK alloc] init];
-//    __weak typeof(self) weakSelf = self;
-//    if(index.row==0||index.row==1){
-//        if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].uuid]){
-//            [self messageHintView];
-//            return;
-//        }
-//    }
-//    NSInteger uuid = [[UserShareOnce shareOnce].uuid integerValue];
-    //uuid = 100002514;
+     HHMSDK *hhmSdk = [[HHMSDK alloc] init];
+    __weak typeof(self) weakSelf = self;
+    if(index.row==0||index.row==1){
+        if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].uuid]){
+            [self messageHintView];
+            return;
+        }
+    }
+    NSInteger uuid = [[UserShareOnce shareOnce].uuid integerValue];
+    
     if(index.row == 0) {
         if ([UserShareOnce shareOnce].username.length != 11) {
             [self showAlerVC];
             return;
         }
-//        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
-//            if(error){
-//                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
-//            }else{
-//                [hhmSdk startCall:HHCallTypeChild];
-//            }
-//        }];
+        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
+            if(error){
+                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
+            }else{
+                [hhmSdk startCall:HHCallTypeChild];
+            }
+        }];
 
     }else if (index.row == 1) {
         if ([UserShareOnce shareOnce].username.length != 11) {
             [self showAlerVC];
              return;
         }
-//        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
-//            if(error){
-//                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
-//            }else{
-//                [hhmSdk startCall:HHCallTypeAdult];
-//            }
-//        }];
+        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
+            if(error){
+                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
+            }else{
+                [hhmSdk startCall:HHCallTypeAdult];
+            }
+        }];
 
     }else {
 
