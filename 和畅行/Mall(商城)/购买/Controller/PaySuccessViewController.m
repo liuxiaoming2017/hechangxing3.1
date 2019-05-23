@@ -44,8 +44,9 @@
     chenggongLabel.font = [UIFont systemFontOfSize:22];
     [self.view addSubview:chenggongLabel];
    
-    UILabel *chashouLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  chenggongLabel.bottom + 10, self.view.frame.size.width, 20)];
+    UILabel *chashouLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  chenggongLabel.bottom + 10, self.view.frame.size.width, 50)];
     chashouLabel.textColor = [UIColor whiteColor];
+    chashouLabel. numberOfLines = 2;
     chashouLabel.text = ModuleZW(@"您已成功购买商品，请注意查收");
     chashouLabel.textAlignment = NSTextAlignmentCenter;
     chashouLabel.font = [UIFont systemFontOfSize:16];
@@ -53,7 +54,10 @@
 
     UIButton *wanchengButton = [UIButton buttonWithType:UIButtonTypeCustom];
     wanchengButton.frame = CGRectMake((self.view.frame.size.width - 210) / 2, 254 + 158.5, 210, 40);
-    [wanchengButton setBackgroundImage:[UIImage imageNamed:@"zhifuwancheng"] forState:UIControlStateNormal];
+    [wanchengButton setBackgroundColor:RGB(109, 192, 235)];
+    wanchengButton.layer.cornerRadius = 8;
+    wanchengButton.layer.masksToBounds = YES;
+    [wanchengButton setTitle:ModuleZW(@"确认完成") forState:(UIControlStateNormal)];
     [wanchengButton addTarget:self action:@selector(wanchengButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:wanchengButton];
                             

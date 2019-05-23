@@ -163,10 +163,10 @@
 
         
         if ([[self.dataArray[indexPath.row] objectForKey:@"replyUserConsultations"] isEqual:[NSNull null]]) {
-            cell.answerLabel.text = ModuleZW(@"未解答");
+            cell.answerLabel.text = ModuleZW(@"未回复");
             cell.answerLabel.textColor = [UtilityFunc colorWithHexString:@"#fe6f5f"];
         }else{
-            cell.answerLabel.text = ModuleZW(@"已解答");
+            cell.answerLabel.text = ModuleZW(@"已回复");
             cell.answerLabel.textColor = [UtilityFunc colorWithHexString:@"#5bb3fa"];
         }
         cell.contentlabel.text = [self.dataArray[indexPath.row]objectForKey:@"content"];

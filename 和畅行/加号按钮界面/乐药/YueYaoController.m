@@ -235,7 +235,6 @@
     [self getPayRequest];
     
     
-    
 }
 
 
@@ -245,7 +244,7 @@
     __weak typeof(self) weakSelf = self;
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
         id status=[response objectForKey:@"status"];
-        if([status intValue] != 200){
+        if([status intValue] == 200){
             [weakSelf createConsumeView];
             weakSelf.isOnPay = YES;
         }else{
@@ -278,7 +277,7 @@
     gouwucheImage.image = [UIImage imageNamed:@"购物车icon"];
     [backView addSubview:gouwucheImage];
     
-    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 0, 40, 60)];
+    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 0, 50, 60)];
     zongjinerLabel.text = ModuleZW(@"总计: ");
     zongjinerLabel.textColor = RGB_TextAppGray;
     zongjinerLabel.font = [UIFont systemFontOfSize:16];

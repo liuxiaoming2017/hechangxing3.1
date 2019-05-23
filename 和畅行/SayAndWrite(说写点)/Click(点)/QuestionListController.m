@@ -67,8 +67,8 @@
     self.navTitleLabel.text = ModuleZW(@"体质辨识");
     
     self.anwerArr = [NSArray arrayWithObjects:ModuleZW(@"没有"),ModuleZW(@"很少"),ModuleZW(@"有时"),ModuleZW(@"经常"),ModuleZW(@"总是"), nil];
-    
-    self.headTitleArr = [NSArray arrayWithObjects:@"五官面部及皮肤自查",@"冷热感应状况",@"精神状况",@"身体及代谢症状", nil];
+
+    self.headTitleArr = [NSArray arrayWithObjects:@"第一部分  五官面部及皮肤自查",@"第二部分  冷热感应状况",@"第三部分  精神状况",@"第四部分  身体及代谢症状", nil];
     [self getQuestionData];
     
    
@@ -122,7 +122,7 @@
     titleLabel.font = [UIFont systemFontOfSize:16];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.textColor = [UIColor blackColor];
-    titleLabel.text = @"请选择";
+    titleLabel.text = ModuleZW(@"请选择");
     [bottomV addSubview:titleLabel];
     //UIColorFromHex(0Xf1f1f1)
     
@@ -154,6 +154,8 @@
         
         NSString *str = [self.anwerArr objectAtIndex:i];
         [selectBtn setTitle:str forState:UIControlStateNormal];
+        [selectBtn.titleLabel setNumberOfLines:2];
+        [selectBtn.titleLabel setTextAlignment:NSTextAlignmentCenter];
         [selectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
         [selectBtn addTarget:self action:@selector(selectBtnBtnAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -548,17 +550,18 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 50.0;
+    return 60.0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 50)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 60)];
     view.backgroundColor = UIColorFromHex(0Xf1f1f1);
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-200)/2.0, 10, 200, 30)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, ScreenWidth - 40, 50)];
     titleLabel.font = [UIFont systemFontOfSize:17];
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.text = [self.headTitleArr objectAtIndex:section];
+    titleLabel.numberOfLines = 2;
+    titleLabel.text = ModuleZW(self.headTitleArr[section]);
     [view addSubview:titleLabel];
     return view;
     

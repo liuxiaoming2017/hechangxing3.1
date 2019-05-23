@@ -33,120 +33,154 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
+
+
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    
     self.navTitleLabel.text = ModuleZW(@"设置");
     self.view.backgroundColor = RGB_AppWhite;
-    listNamesArr = @[@"意见反馈",@"关于我们",@"检查更新"];
-    NSArray *changeArray = @[ModuleZW(@"修改密码"),ModuleZW(@"退出登录")];
+    
+    [self getPayRequest];
+    
 
-    for (int i = 0 ; i < listNamesArr.count; i++) {
-        UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(14, kNavBarHeight +10 + (10 + 50)*i, ScreenWidth - 28, 50)];
-        backImageView.backgroundColor = [UIColor whiteColor];
-        backImageView.layer.cornerRadius = 10;
-        backImageView.layer.masksToBounds = YES;
-        backImageView.userInteractionEnabled = YES;
-        [self insertSublayerWithImageView:backImageView];
-        [self.view addSubview:backImageView];
+  
+   
+   
+}
+    
+-(void)layoutView{
+        NSArray *changeArray = @[ModuleZW(@"修改密码"),ModuleZW(@"退出登录")];
         
-        UIButton *bottomButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        bottomButton.frame = CGRectMake(0, 0,backImageView.width, 55);
-        [bottomButton setTitle:ModuleZW(listNamesArr[i]) forState:(UIControlStateNormal)];
-        [bottomButton setImage:[UIImage imageNamed:@"1我的_09"] forState:(UIControlStateNormal)];
-        [bottomButton.titleLabel setTextAlignment:(NSTextAlignmentCenter)];
-        [bottomButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        [bottomButton setTitleColor: UIColorFromHex(0x8e8e93) forState:(UIControlStateNormal)];
-        [bottomButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -bottomButton.currentImage.size.width,0,0)];
-        [bottomButton.titleLabel setFrame:bottomButton.bounds];
-        [bottomButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-        [bottomButton setTitleEdgeInsets:UIEdgeInsetsMake(0,10,0,0)];
-        [bottomButton setImageEdgeInsets:UIEdgeInsetsMake(0, backImageView.width - 20 , 0, -backImageView.width + 40)];
-        
-        [[bottomButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-            switch (i) {
-                case 0:
-                {
-                    FeedbackViewController *faceVC = [[FeedbackViewController alloc]init];
-                    [self.navigationController pushViewController:faceVC animated:YES];
-                }
-                    break;
-                case 1:
-                {
-                    HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-                    vc.noWebviewBack = YES;
-                    vc.progressType = progress2;
-                    vc.titleStr =ModuleZW(@"关于我们");
-                    if([UserShareOnce shareOnce].languageType){
-                        vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201903/60/1.html",URL_PRE];
-                    }else{
-                        vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/60/1.html",URL_PRE];
+        for (int i = 0 ; i < listNamesArr.count; i++) {
+            UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(14, kNavBarHeight +10 + (10 + 50)*i, ScreenWidth - 28, 50)];
+            backImageView.backgroundColor = [UIColor whiteColor];
+            backImageView.layer.cornerRadius = 10;
+            backImageView.layer.masksToBounds = YES;
+            backImageView.userInteractionEnabled = YES;
+            [self insertSublayerWithImageView:backImageView];
+            [self.view addSubview:backImageView];
+            
+            UIButton *bottomButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+            bottomButton.frame = CGRectMake(0, 0,backImageView.width, 55);
+            [bottomButton setTitle:ModuleZW(listNamesArr[i]) forState:(UIControlStateNormal)];
+            [bottomButton setImage:[UIImage imageNamed:@"1我的_09"] forState:(UIControlStateNormal)];
+            [bottomButton.titleLabel setTextAlignment:(NSTextAlignmentCenter)];
+            [bottomButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+            [bottomButton setTitleColor: UIColorFromHex(0x8e8e93) forState:(UIControlStateNormal)];
+            [bottomButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -bottomButton.currentImage.size.width,0,0)];
+            [bottomButton.titleLabel setFrame:bottomButton.bounds];
+            [bottomButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+            [bottomButton setTitleEdgeInsets:UIEdgeInsetsMake(0,10,0,0)];
+            [bottomButton setImageEdgeInsets:UIEdgeInsetsMake(0, backImageView.width - 20 , 0, -backImageView.width + 40)];
+            
+            [[bottomButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+                switch (i) {
+                    case 0:
+                    {
+                        FeedbackViewController *faceVC = [[FeedbackViewController alloc]init];
+                        [self.navigationController pushViewController:faceVC animated:YES];
                     }
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
-                    
-                }
-                    break;
-                case 2:
-                {
-                    [self checkHaveUpdatewihType:1];
-                }
-                    break;
-                    
-                default:
-                    break;
-            }
-        }];
-        [backImageView addSubview:bottomButton];
-        
-        if(i < changeArray.count){
-            UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            button.frame = CGRectMake(30, backImageView.bottom + 220 + 10*i, ScreenWidth - 60, 44);
-            [button setTitle:changeArray[i] forState:(UIControlStateNormal)];
-            button.layer.cornerRadius = 22;
-            if(i == 0){
-                [button setBackgroundColor:UIColorFromHex(0X1e82d2)];
-            }else{
-                 [button setBackgroundColor:UIColorFromHex(0Xdd0707)];
-            }
-            [[button rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
-                if(i == 0){
-                    WYViewController *vc = [[WYViewController alloc]init];
-                    [self.navigationController pushViewController:vc animated:YES];
-                }else{
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"确认注销用户") preferredStyle:UIAlertControllerStyleAlert];
-                        UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                            
-                        }];
-                        UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                            
-                            LoginViewController *loginview=[[LoginViewController alloc]init];
-                            NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
-                            if (dicTmp) {
-                                [dicTmp setObject:@"" forKey:@"USERNAME"];
-                                [dicTmp setObject:@"" forKey:@"PASSWORDAES"];
-                                [dicTmp setValue:@"0" forKey:@"ischeck"];
-                            }
-                            [UtilityFunc updateAppConfigWithMutableDictionary:dicTmp];
-                            CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:loginview];
-                            
-                            [UIApplication sharedApplication].keyWindow.rootViewController = nav;
-                            //[self.navigationController pushViewController:loginview animated:YES];
-                        }];
-                        [alertVC addAction:alertAct1];
-                        [alertVC addAction:alertAct12];
-                        [self presentViewController:alertVC animated:YES completion:NULL];
-                    });
+                        break;
+                    case 1:
+                    {
+                        HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
+                        vc.noWebviewBack = YES;
+                        vc.progressType = progress2;
+                        vc.titleStr =ModuleZW(@"关于我们");
+                        if([UserShareOnce shareOnce].languageType){
+                            vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201903/60/1.html",URL_PRE];
+                        }else{
+                            vc.urlStr = [NSString stringWithFormat:@"%@upload/article/content/201602/60/1.html",URL_PRE];
+                        }
+                        vc.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:vc animated:YES];
+                        
+                    }
+                        break;
+                    case 2:
+                    {
+                        [self checkHaveUpdatewihType:1];
+                    }
+                        break;
+                        
+                    default:
+                        break;
                 }
             }];
-            [self.view addSubview:button];
+            [backImageView addSubview:bottomButton];
+            
+            if(i < changeArray.count){
+                UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
+                button.frame = CGRectMake(30, backImageView.bottom + 220 + 10*i, ScreenWidth - 60, 44);
+                [button setTitle:changeArray[i] forState:(UIControlStateNormal)];
+                button.layer.cornerRadius = 22;
+                if(i == 0){
+                    [button setBackgroundColor:UIColorFromHex(0X1e82d2)];
+                }else{
+                    [button setBackgroundColor:UIColorFromHex(0Xdd0707)];
+                }
+                [[button rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+                    if(i == 0){
+                        WYViewController *vc = [[WYViewController alloc]init];
+                        [self.navigationController pushViewController:vc animated:YES];
+                    }else{
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"确认注销用户") preferredStyle:UIAlertControllerStyleAlert];
+                            UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                                
+                            }];
+                            UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                
+                                LoginViewController *loginview=[[LoginViewController alloc]init];
+                                NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
+                                if (dicTmp) {
+                                    [dicTmp setObject:@"" forKey:@"USERNAME"];
+                                    [dicTmp setObject:@"" forKey:@"PASSWORDAES"];
+                                    [dicTmp setValue:@"0" forKey:@"ischeck"];
+                                }
+                                [UtilityFunc updateAppConfigWithMutableDictionary:dicTmp];
+                                CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:loginview];
+                                
+                                [UIApplication sharedApplication].keyWindow.rootViewController = nav;
+                                //[self.navigationController pushViewController:loginview animated:YES];
+                            }];
+                            [alertVC addAction:alertAct1];
+                            [alertVC addAction:alertAct12];
+                            [self presentViewController:alertVC animated:YES completion:NULL];
+                        });
+                    }
+                }];
+                [self.view addSubview:button];
+            }
         }
-    }
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didBecomeActiveNotification)
+                                                     name:UIApplicationDidBecomeActiveNotification
+                                                   object:nil];
+}
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didBecomeActiveNotification)
-                                                 name:UIApplicationDidBecomeActiveNotification
-                                               object:nil];
+-(void)getPayRequest {
+    
+    NSString *urlStr = @"/resources/isfree.jhtml";
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
+        id status=[response objectForKey:@"status"];
+        if([status intValue] == 200){
+            self->listNamesArr = @[@"意见反馈",@"关于我们",@"检查更新"];
+        }else{
+            self->listNamesArr = @[@"意见反馈",@"关于我们"];
+        }
+         [self layoutView];
+    } failureBlock:^(NSError *error) {
+        self->listNamesArr = @[@"意见反馈",@"关于我们"];
+         [self layoutView];
+    }];
 }
 
 -(void)didBecomeActiveNotification{
@@ -178,14 +212,12 @@
             NSDictionary *dic = [response objectForKey:@"data"];
             NSInteger isUpdate = [[dic objectForKey:@"isUpdate"] integerValue];
             if(isUpdate == 1){
-                
                 NSString *downUrl = @"https://itunes.apple.com/cn/app/id1440487968";
                 if([[UserShareOnce shareOnce].username isEqualToString:@"13665541112"] || [[UserShareOnce shareOnce].username isEqualToString:@"18163865881"]){
                     return ;
                 }
                 NSString *ytpeStr = [NSString stringWithFormat:@"%@",dic[@"isEnforcement"]];
                 [weakSelf showUpdateView:downUrl contentStr:dic[@"releaseContent"] typeStr:ytpeStr];
-                
                 NSLog(@"升级了");
             }else{
                 if(typeInt == 1){

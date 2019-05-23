@@ -78,7 +78,7 @@
         self.downloadBtn.backgroundColor = RGB(253, 134, 40);
         self.downloadBtn.layer.cornerRadius = 10;
         self.downloadBtn.layer.masksToBounds = YES;
-        [self.downloadBtn setTitle:@"加入购物车" forState:(UIControlStateNormal)];
+        [self.downloadBtn setTitle:ModuleZW(@"加入购物车") forState:(UIControlStateNormal)];
         [self.downloadBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
     }else{
         self.downloadBtn.frame = CGRectMake(ScreenWidth - 80, 25, 30, 30);

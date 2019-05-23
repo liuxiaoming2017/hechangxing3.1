@@ -79,7 +79,6 @@
 
     [_showView addSubview:_titleLabel];
     
-   
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _titleLabel.bottom+5, _showView.frame.size.width, _showView.frame.size.height-_titleLabel.bottom-5) style:UITableViewStylePlain];
     

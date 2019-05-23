@@ -19,9 +19,9 @@ PODS:
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
-  - HHDoctorSDK (2.0.1):
-    - HHDoctorSDK/Base (= 2.0.1)
-  - HHDoctorSDK/Base (2.0.1)
+  - HHDoctorSDK (2.0.6):
+    - HHDoctorSDK/Base (= 2.0.6)
+  - HHDoctorSDK/Base (2.0.6)
   - MBProgressHUD (1.1.0)
   - MJExtension (3.0.13)
   - MJRefresh (3.1.15.7)
@@ -49,27 +49,13 @@ DEPENDENCIES:
   - SDWebImage (~> 4.2.1)
   - YYModel
 
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - AFNetworking
-    - DACircularProgress
-    - FLAnimatedImage
-    - FMDB
-    - MBProgressHUD
-    - MJExtension
-    - MJRefresh
-    - PYPhotoBrowser
-    - ReactiveObjC
-    - SDWebImage
-    - YYModel
-
 EXTERNAL SOURCES:
   HHDoctorSDK:
     :git: http://code.hh-medic.com/hh_public/HHDoctorSDK.ios.git
 
 CHECKOUT OPTIONS:
   HHDoctorSDK:
-    :commit: d8d3b13eb10bb3c6274d452542f5cd11dffcd41a
+    :commit: d1f742dce94d54ecc0c53dd5eb8cef832960c077
     :git: http://code.hh-medic.com/hh_public/HHDoctorSDK.ios.git
 
 SPEC CHECKSUMS:
@@ -77,7 +63,7 @@ SPEC CHECKSUMS:
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
-  HHDoctorSDK: 5c254c791aa30ab010ad95e69d3f5ce7ea3943e5
+  HHDoctorSDK: dbe30b2e8dbca0efe3056fcd7538776052cbbf11
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
@@ -88,4 +74,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 07fb70cdcdfaedeeabe1b1ac417f18b4497bc5df
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.4.0

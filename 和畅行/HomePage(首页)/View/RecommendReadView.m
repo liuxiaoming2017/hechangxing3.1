@@ -215,7 +215,6 @@
             NSDictionary *dic = [response objectForKey:@"data"];
             NSInteger isUpdate = [[dic objectForKey:@"isUpdate"] integerValue];
             if(isUpdate == 1){
-                
                 NSString *downUrl = @"https://itunes.apple.com/cn/app/id1440487968";
                 if([[UserShareOnce shareOnce].username isEqualToString:@"13665541112"] || [[UserShareOnce shareOnce].username isEqualToString:@"18163865881"]){
                     return ;
@@ -224,15 +223,12 @@
                 [weakSelf showUpdateView:downUrl contentStr:dic[@"releaseContent"] typeStr:ytpeStr];
                 
                 NSLog(@"升级了");
-            }else{
-                
             }
         }
         
         NSLog(@"haha:%@",response);
         
     } failureBlock:^(NSError *error) {
-        
     }];
 }
 

@@ -67,17 +67,16 @@
 //    hhSdk.cerName = @"2cDevTest";
 //    [[HHMSDK alloc] startWithOption:hhSdk];
 
-    [UMCommonLogManager setUpUMCommonLogManager];
-    [UMConfigure setLogEnabled:YES];
-    [UMConfigure initWithAppkey:Youmeng_id channel:@"App Store"];
+//    [UMCommonLogManager setUpUMCommonLogManager];
+//    [UMConfigure setLogEnabled:YES];
+//    [UMConfigure initWithAppkey:Youmeng_id channel:@"App Store"];
     
     [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
-    
      [self returnMainPage2];
-    [self.window makeKeyAndVisible];
+     [self.window makeKeyAndVisible];
     
     [ChangeLanguageObject initUserLanguage];
-    
+   
     
     NSArray *languages = [[NSUserDefaults standardUserDefaults] valueForKey:@"AppleLanguages"];
     NSLog(@"%@",languages);
