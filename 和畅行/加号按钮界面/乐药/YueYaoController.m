@@ -512,12 +512,7 @@
         }
         SongListModel *model = [self.dataArr objectAtIndex:index];
         if([[UserShareOnce shareOnce].yueYaoBuyArr containsObject:model]){
-            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"你已经添加此产品") preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleCancel handler:NULL];
-            [alertVC addAction:alertAct1];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self presentViewController:alertVC animated:YES completion:nil];
-            });
+           [GlobalCommon showMessage:ModuleZW(@"乐药已加入购物车") duration:2.0];
         }else{
             UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"确定购买曲目吗？") message:[NSString stringWithFormat:@"¥%.2f",model.price] preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:NULL];

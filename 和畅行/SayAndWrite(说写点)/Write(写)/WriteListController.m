@@ -363,12 +363,29 @@
                 _touchedPart = nil;
                 _leftTableView.contentOffset = CGPointMake(0, 60*i);
                 [_leftTableView reloadData];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.leftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i] animated:YES scrollPosition:(UITableViewScrollPositionNone)];
+                    [self tableView:self.leftTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]];
+                });
                 //                MyView *view = (MyView *)[_rightView viewWithTag:1000+i];
                 //                [self sectionClick:view];
                 break;
             }
         }
         
+    }else{
+        
+        
+        [_sectionStatus replaceObjectAtIndex:0 withObject:@YES];
+        [_leftTableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.leftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:(UITableViewScrollPositionNone)];
+            [self tableView:self.leftTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        });
+        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.leftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:(UITableViewScrollPositionNone)];
+//        });
     }
 }
 
@@ -917,7 +934,8 @@
     }
     [_leftTableView reloadData];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.leftTableView selectRowAtIndexPath:self.myIndexPath animated:YES scrollPosition:(UITableViewScrollPositionNone)];
+        [self.leftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:view.tag-1000] animated:YES scrollPosition:(UITableViewScrollPositionNone)];
+        [self tableView:self.leftTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:view.tag-1000]];
     });
 
 }

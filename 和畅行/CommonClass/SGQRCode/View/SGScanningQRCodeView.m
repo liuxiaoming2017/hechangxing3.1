@@ -44,6 +44,25 @@ static CGFloat const timer_animation_Duration = 0.05;
         _basedLayer = outsideViewLayer;
          // 创建扫描边框
          [self setupScanningQRCodeEdging];
+        
+        UIView  *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, kNavBarHeight)];
+        backView.backgroundColor = [UIColor whiteColor];
+        [self addSubview:backView];
+        
+        UILabel *titleLable = [[UILabel alloc]initWithFrame:CGRectMake(0, backView.bottom - 44, ScreenWidth, 44)];
+        titleLable.text = ModuleZW(@"二维码");
+        titleLable.textAlignment = NSTextAlignmentCenter;
+        titleLable.font = [UIFont systemFontOfSize:22];
+        [backView addSubview:titleLable];
+        
+        UIButton *backButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        backButton.frame = CGRectMake(0, backView.bottom - 44, 70, 44);
+        [backButton setImage:[UIImage imageNamed:@"黑色返回"] forState:UIControlStateNormal];
+        [backButton addTarget:self action:@selector(rightBarButtonItenAction) forControlEvents:(UIControlEventTouchUpInside)];
+        [backView addSubview:backButton];
+        
+        
+        
     }
     return self;
 }
@@ -213,7 +232,7 @@ static CGFloat const timer_animation_Duration = 0.05;
 
 ////手动输入
 
--(void)manualClick {
+-(void)rightBarButtonItenAction {
     
     if (self.popBlock) {
         self.popBlock(self);

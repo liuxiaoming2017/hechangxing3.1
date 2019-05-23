@@ -43,6 +43,7 @@
     
     
     self.scanningView = [[SGScanningQRCodeView alloc] initWithFrame:self.view.frame outsideViewLayer:self.view.layer];
+    self.scanningView.userInteractionEnabled = YES;
     [self.view addSubview:self.scanningView];
 
   
@@ -56,6 +57,8 @@
     self.navigationItem.title = @"扫一扫";
     self.first_push = YES;
     self.isNetValid = YES;
+    
+
     
 }
 
