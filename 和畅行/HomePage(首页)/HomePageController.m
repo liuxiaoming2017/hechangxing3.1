@@ -144,13 +144,12 @@
     
     
     [self.view addSubview:self.topView];
-    self.packgeView.pushModel = self.pushModel;
+    //self.packgeView.pushModel = self.pushModel;
     
     if (self.pushModel.picurl!=nil && ![self.pushModel.picurl isKindOfClass:[NSNull class]]&&self.pushModel.picurl.length != 0) {
         NSString *imageUrl = [NSString stringWithFormat:@"%@%@",URL_PRE,self.pushModel.picurl];
         NSURL *url = [NSURL URLWithString:imageUrl];
-        self.packgeView.toViewButton.frame = CGRectMake(ScreenWidth/2.0 - 136, self.imageV.bottom - 20, 272, 40);
-        [self.packgeView.toViewButton sd_setBackgroundImageWithURL:url forState:UIControlStateNormal];
+        [self.activityImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"activityImage"]];
     }
     
     
@@ -312,7 +311,7 @@
         
         if([[response objectForKey:@"status"] integerValue] == 100){
 
-            self->_isActivity = YES;
+            
             for (NSDictionary *dic in [response valueForKey:@"data"]) {
                 HCY_HomeImageModel *model = [[HCY_HomeImageModel alloc]init];
                 [model yy_modelSetWithJSON:dic];
@@ -322,6 +321,12 @@
                 }
                 if ([model.type isEqualToString:@"2"]){
                     self.pushModel = model;
+                    //图片与连接都为空认为没有活动
+                    if([GlobalCommon stringEqualNull:model.picurl] && [GlobalCommon stringEqualNull:model.link]){
+                        self->_isActivity = NO;
+                    }else{
+                        self->_isActivity = YES;
+                    }
                 }
                 [self.homeImageArray addObject:model];
                 

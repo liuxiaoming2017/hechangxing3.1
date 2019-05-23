@@ -388,6 +388,22 @@
         default:
             break;
     }
+    
+    //全部接口先从本地数据库找
+//    if(tipyInteger == 0){
+//        if (self.pageInteger == 1) {
+//            [weakSelf.dataListArray removeAllObjects];
+//        }
+//        NSArray *arr = [[CacheManager sharedCacheManager] gethealthArchivesModelsWithIndex:pageInteger andRows:20];
+//        if(arr.count==20){
+//            [self.dataListArray addObjectsFromArray:arr];
+//            weakSelf.noView.hidden = YES;
+//            weakSelf.timeLinvView.tableView.hidden = NO;
+//            [self.timeLinvView relodTableViewWitDataArray:weakSelf.dataListArray withType:self.typeUrlInteger withMemberID:self->memberId];
+//            return;
+//        }
+//    }
+    
 
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.label.text = ModuleZW(@"加载中...");
@@ -427,6 +443,10 @@
                     [tipModel yy_modelSetWithJSON:dic];
                     [weakSelf.dataListArray addObject:tipModel];
                 }
+                //添加到本地数据库
+//                if (tipyInteger == 0){
+//                    [[CacheManager sharedCacheManager] insertArchiveModels:weakSelf.dataListArray];
+//                }
             }
             
             if (weakSelf.dataListArray.count < 1) {

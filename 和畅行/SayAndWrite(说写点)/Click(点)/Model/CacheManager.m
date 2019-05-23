@@ -10,13 +10,16 @@
 #import "QuestionModel.h"
 #import "FMDatabase.h"
 #import "AnwerModel.h"
-
+#import "FMDatabaseQueue.h"
 #import "HCY_ConsultingModel.h"
 #import "RemindModel.h"
+
+#import "HealthTipsModel.h"
 
 @interface CacheManager()
 
 @property(nonatomic, retain) FMDatabase *db;
+@property(nonatomic, strong) FMDatabaseQueue *queue;
 
 @end
 
@@ -97,19 +100,15 @@ static CacheManager *__cacheManager = nil;
     NSString *remindSql = @"create table if not exists homeRemindTable ('custid' integer,'advice' text,'action' text, 'isDone' bool,'confId' integer)";
     //首页新闻
     NSString *healthArticleSql = @"create table if not exists healthArticleTable ('picture' text,'title' text,'path' text,'createDate' text)";
+    
+    //健康档案
+   // NSString *archiveSql = @"create table if not exists archiveTable ('custid' integer,'sn' text,'link' text,'date' text,'name' text,'typeName' text,'type' text,'year' text,'time' text,'createTime' text)";
+    
     //5.执行更新操作 此处database直接操作，不考虑多线程问题，多线程问题，用FMDatabaseQueue 每次数据库操作之后都会返回bool数值，YES，表示success，NO，表示fail,可以通过 @see lastError @see lastErrorCode @see lastErrorMessage
-    BOOL resultQuestion = [_db executeUpdate:questionSql];
-    BOOL resultRemind = [_db executeUpdate:remindSql];
-    BOOL resulthealthArticle = [_db executeUpdate:healthArticleSql];
-    BOOL result = resultQuestion && resultRemind && resulthealthArticle;
-//    BOOL result2 = NO;
-//    if (result) {
-//        result2 = [_db executeUpdate:sql2];
-//        if(result2){
-//             NSLog(@"create table success");
-//        }
-//    }
-    //[_db close];
+    BOOL result = [_db executeUpdate:questionSql];
+    result  &= [_db executeUpdate:remindSql];
+    result  &= [_db executeUpdate:healthArticleSql];
+   // result  &= [_db executeUpdate:archiveSql];
     return result;
 }
 # pragma mark - 往表中插入数据
@@ -164,6 +163,23 @@ static CacheManager *__cacheManager = nil;
 {
     for(HCY_ConsultingModel *model in arr){
         [self inserthealthArticleModel:model];
+    }
+}
+
+- (void)insertArchiveModel:(HealthTipsModel *)model
+{
+    
+    FMResultSet *set = [_db executeQuery:@"select * from archiveTable where custid = ? and typeName = ? and createTime = ?",[MemberUserShance shareOnce].idNum,model.typeName,model.createTime];
+    if(![set next]){
+        [_db executeUpdate:@"insert into archiveTable(custid,sn,link,date,name,typeName,type,year,time,createTime) values (?,?,?,?,?,?,?,?,?,?)",[MemberUserShance shareOnce].idNum,model.sn,model.link,model.date,model.name,model.typeName,model.type,model.year,model.time,model.createTime];
+    }
+    [set close];
+}
+
+- (void)insertArchiveModels:(NSArray *)arr
+{
+    for(HealthTipsModel *model in arr){
+        [self insertArchiveModel:model];
     }
 }
 
@@ -258,6 +274,7 @@ static CacheManager *__cacheManager = nil;
 - (NSMutableArray *)gethealthArticleModels
 {
     NSMutableArray *mutabArr = [NSMutableArray arrayWithCapacity:0];
+    
     FMResultSet *set = [_db executeQuery:@"select * from healthArticleTable limit 20"];
     
     while ([set next]) {
@@ -266,6 +283,32 @@ static CacheManager *__cacheManager = nil;
         model.title = [set stringForColumn:@"title"];
         model.path = [set stringForColumn:@"path"];
         model.createDate = [set stringForColumn:@"createDate"];
+        [mutabArr addObject:model];
+        
+        
+    }
+    [set close];
+    
+    return mutabArr;
+}
+
+- (NSMutableArray *)gethealthArchivesModelsWithIndex:(NSInteger)index andRows:(NSInteger)row
+{
+    NSMutableArray *mutabArr = [NSMutableArray arrayWithCapacity:0];
+    NSString *sqlStr = [NSString stringWithFormat:@"select * from archiveTable where custid = %@ limit %ld,%ld",[MemberUserShance shareOnce].idNum,index,row];
+    FMResultSet *set = [_db executeQuery:sqlStr];
+    
+    while ([set next]) {
+        HealthTipsModel *model = [[HealthTipsModel alloc] init];
+        model.sn = [set stringForColumn:@"sn"];
+        model.link = [set stringForColumn:@"link"];
+        model.date = [set stringForColumn:@"date"];
+        model.name = [set stringForColumn:@"name"];
+        model.typeName = [set stringForColumn:@"typeName"];
+        model.type = [set stringForColumn:@"type"];
+        model.year = [set stringForColumn:@"year"];
+        model.time = [set stringForColumn:@"time"];
+        model.createTime = [set stringForColumn:@"createTime"];
         [mutabArr addObject:model];
         
         
