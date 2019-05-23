@@ -21,7 +21,6 @@
 @property (nonatomic,strong)NSIndexPath *myIndexPath;
 @property (nonatomic,strong)UIButton *backButton;
 @property (nonatomic,strong)UILabel *choseLabel;
-
 @end
 
 @implementation WriteListController
@@ -367,8 +366,7 @@
                     [self.leftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i] animated:YES scrollPosition:(UITableViewScrollPositionNone)];
                     [self tableView:self.leftTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]];
                 });
-                //                MyView *view = (MyView *)[_rightView viewWithTag:1000+i];
-                //                [self sectionClick:view];
+            
                 break;
             }
         }
@@ -592,10 +590,14 @@
             title.textColor = [UIColor whiteColor];
             title.backgroundColor = RGB_TextOrange;
         }
+        if(_myIndexPath.section == section){
+            title.textColor = [UIColor whiteColor];
+            title.backgroundColor = RGB_TextOrange;
+        }
         title.layer.cornerRadius = title.height/2;
         title.layer.masksToBounds = YES;
         [view addSubview:title];
-        
+        view.isClick = ret;
         return view ;
     }
     return nil;
@@ -927,17 +929,37 @@
 #pragma mark-点击组
 -(void)sectionClick:(MyView *)view{
     BOOL ret = [[_sectionStatus objectAtIndex:view.tag-1000] boolValue];
-    if (ret == YES) {
-        [_sectionStatus replaceObjectAtIndex:view.tag-1000 withObject:@NO];
-    }else{
+    
+    if(_myIndexPath.section !=  view.tag-1000){
+        [_sectionStatus replaceObjectAtIndex:_myIndexPath.section  withObject:@NO];
         [_sectionStatus replaceObjectAtIndex:view.tag-1000 withObject:@YES];
+    }else{
+        if(ret == YES){
+            [_sectionStatus replaceObjectAtIndex:view.tag-1000 withObject:@NO];
+        }else{
+            [_sectionStatus replaceObjectAtIndex:view.tag-1000 withObject:@YES];
+        }
     }
+    
+   
+//    for (int i = 0; i < _sectionStatus.count;  i++) {
+//        if(i == view.tag-1000){
+//            if(view.isClick == YES){
+//                [_sectionStatus replaceObjectAtIndex:view.tag-1000 withObject:@NO];
+//            }else{
+//                 [_sectionStatus replaceObjectAtIndex:i withObject:@YES];
+//            }
+//        }else{
+//             [_sectionStatus replaceObjectAtIndex:i withObject:@NO];
+//        }
+//    }
     [_leftTableView reloadData];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.leftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:view.tag-1000] animated:YES scrollPosition:(UITableViewScrollPositionNone)];
         [self tableView:self.leftTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:view.tag-1000]];
     });
 
+    
 }
 
 #pragma mark-点击删除按钮
