@@ -105,8 +105,8 @@
             {
                 NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
                 if (dicTmp) {
-                    [dicTmp setObject:[paramDic objectForKey:@"username"] forKey:@"USERNAME"];
-                    [dicTmp setObject:[paramDic objectForKey:@"password"] forKey:@"PASSWORDAES"];
+                    [dicTmp setObject:[GlobalCommon AESEncodeWithString:[paramDic objectForKey:@"username"]] forKey:@"USERNAME"];
+                    [dicTmp setObject:[GlobalCommon AESEncodeWithString:[paramDic objectForKey:@"password"]] forKey:@"PASSWORDAES"];
                     [dicTmp setValue:@"1" forKey:@"ischeck"];
                 }
                 [UtilityFunc updateAppConfigWithMutableDictionary:dicTmp];
@@ -290,7 +290,7 @@
             {
                 NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
                 if (dicTmp) {
-                    [dicTmp setObject:[paramDic valueForKey:@"unionid"] forKey:@"UNIONID"];
+                    [dicTmp setObject:[GlobalCommon AESEncodeWithString:[paramDic valueForKey:@"unionid"]] forKey:@"UNIONID"];
                     if ([paramDic valueForKey:@"screen_name"] != nil) {
                         [dicTmp setObject:[paramDic valueForKey:@"screen_name"] forKey:@"SCREENNAME"];
                     }
@@ -304,7 +304,7 @@
                 NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
                 if (dicTmp) {
                     
-                    [dicTmp setObject:[paramDic valueForKey:@"phone"] forKey:@"PhoneShortMessage"];
+                    [dicTmp setObject:[GlobalCommon AESEncodeWithString:[paramDic valueForKey:@"phone"]] forKey:@"PhoneShortMessage"];
                     [dicTmp setValue:@"3" forKey:@"ischeck"];
                     
                 }

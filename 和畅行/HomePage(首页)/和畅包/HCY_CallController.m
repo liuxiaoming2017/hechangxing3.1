@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 #import "WXPhoneController.h"
 
-#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+//#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 
 @interface HCY_CallController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -77,16 +77,19 @@
         return;
     }
 
-     HHMSDK *hhmSdk = [[HHMSDK alloc] init];
-    __weak typeof(self) weakSelf = self;
+    
     if(index.row==0||index.row==1){
         if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].uuid]){
             [self messageHintView];
             return;
         }
     }
-    NSInteger uuid = [[UserShareOnce shareOnce].uuid integerValue];
     
+    
+    /*
+    HHMSDK *hhmSdk = [[HHMSDK alloc] init];
+    __weak typeof(self) weakSelf = self;
+    NSInteger uuid = [[UserShareOnce shareOnce].uuid integerValue];
     if(index.row == 0) {
         if ([UserShareOnce shareOnce].username.length != 11) {
             [self showAlerVC];
@@ -119,6 +122,10 @@
         [self.navigationController pushViewController:adVC animated:YES];
 
     }
+     */
+    
+     
+    
 }
 -(void)showAlerVC {
     UIAlertController *alVC= [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有绑定手机号码,绑定后才能享受服务,是否绑定?") preferredStyle:(UIAlertControllerStyleAlert)];

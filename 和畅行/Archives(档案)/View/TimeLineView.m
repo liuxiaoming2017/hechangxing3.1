@@ -496,10 +496,11 @@
         }else{
             detail.dataPath = model.path;
         }
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:detail];
-        self.hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
-        self.hud.label.text = ModuleZW(@"加载中...");
-        [[self viewController] presentViewController:nav animated:YES completion:nil];
+       // UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:detail];
+//        self.hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
+//        self.hud.label.text = ModuleZW(@"加载中...");
+        [[self viewController].navigationController pushViewController:detail animated:YES];
+       // [[self viewController] presentViewController:nav animated:YES completion:nil];
     }
     
     //血压

@@ -31,6 +31,10 @@
 - (void)setupUI:(NSString *)content type:(NSString *)typeStr
 {
     
+    if([GlobalCommon stringEqualNull:content]){
+        content = @"有更新,是否升级";
+    }
+    
     self.backgroundColor = [UIColor whiteColor];
     //300
     CGFloat viewWidth = ScreenWidth*0.73;
@@ -56,7 +60,7 @@
     
     
     UIScrollView *contentBgView = [[UIScrollView alloc] init];
-    CGFloat bgViewH = contentH >= 35*4 ? 35*4 : 80;
+    CGFloat bgViewH = contentH >= 35*4 ? 35*4 : contentH+10;
     contentBgView.frame = CGRectMake(0, alerLabel.bottom, viewWidth, bgViewH);
     contentBgView.contentSize = CGSizeMake(viewWidth, bgViewH);
 

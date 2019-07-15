@@ -9,6 +9,7 @@
 #import "GlobalCommon.h"
 #import <sys/utsname.h>
 #import <CommonCrypto/CommonDigest.h>
+#import "AESCipher.h"
 
 @interface GlobalCommon()
 
@@ -530,4 +531,23 @@
     }
 }
 
++ (NSString *)AESEncodeWithString:(NSString *)str
+{
+    // 加密密钥
+    NSString *AESKey = @"AESkeyQWEasduigjgk";
+    
+    NSString *AESEncodeString = [AESCipher encryptAES:str key:AESKey];
+    
+    return AESEncodeString;
+}
+
++ (NSString *)AESDecodeWithString:(NSString *)str
+{
+    // 加密密钥
+    NSString *AESKey = @"AESkeyQWEasduigjgk";
+    
+    NSString *AESDecodeString = [AESCipher decryptAES:str key:AESKey];
+    
+    return AESDecodeString;
+}
 @end

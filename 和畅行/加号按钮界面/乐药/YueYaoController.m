@@ -248,11 +248,14 @@
             [weakSelf createConsumeView];
             weakSelf.isOnPay = YES;
         }else{
-            weakSelf.isOnPay = NO;
+           // weakSelf.isOnPay = NO;
+            [weakSelf createConsumeView];
+            weakSelf.isOnPay = YES;
         }
     } failureBlock:^(NSError *error) {
         weakSelf.isOnPay = NO;
     }];
+    
 }
 # pragma mark - 下方金额视图
 - (void)createConsumeView

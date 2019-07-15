@@ -55,4 +55,6 @@
 
 + (void)removeMaskView;
 
++ (NSString *)AESEncodeWithString:(NSString *)str;
++ (NSString *)AESDecodeWithString:(NSString *)str;
 @end
