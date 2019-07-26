@@ -129,7 +129,13 @@
 #define IS_IPHONE_6P (IS_IPHONE && [[UIScreen mainScreen] bounds].size.width == 414.0f)
 #define IS_IPHONE_6 (IS_IPHONE && [[UIScreen mainScreen] bounds].size.width == 375.0f)
 
-#define iPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+#define IS_IPHONE_X ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define IS_IPHONE_Xr ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(828, 1792), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define IS_IPHONE_Xs_Max ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2688), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define iPhoneX (IS_IPHONE_X || IS_IPHONE_Xr || IS_IPHONE_Xs_Max)
 #define kTabBarHeight (iPhoneX ? 83 : 44)
 #define kNavBarHeight (iPhoneX ? 88 : 64)
 #define kNavHeight 44

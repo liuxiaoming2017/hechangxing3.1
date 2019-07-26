@@ -11,6 +11,7 @@
 		030126C921F96334000FA318 /* Language.strings in Resources */ = {isa = PBXBuildFile; fileRef = 030126CB21F96334000FA318 /* Language.strings */; };
 		030126CF21F96683000FA318 /* ChangeLanguageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 030126CE21F96683000FA318 /* ChangeLanguageObject.m */; };
 		0303BDF820F34FFD006A9EDF /* MemberUserShance.m in Sources */ = {isa = PBXBuildFile; fileRef = 0303BDF720F34FFD006A9EDF /* MemberUserShance.m */; };
+		03051FF522C0997D00385DD0 /* AESCipher.m in Sources */ = {isa = PBXBuildFile; fileRef = 03051FF422C0997D00385DD0 /* AESCipher.m */; };
 		0306C5C921CCBEFA00DA5DC1 /* libSocialWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0306C5C721CCBEF900DA5DC1 /* libSocialWeChat.a */; };
 		0306C5CD21CCBF0B00DA5DC1 /* libSocialSina.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0306C5CB21CCBF0A00DA5DC1 /* libSocialSina.a */; };
 		0306C5D121CCBF1E00DA5DC1 /* libSocialQQ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0306C5D021CCBF1E00DA5DC1 /* libSocialQQ.a */; };
@@ -644,6 +645,8 @@
 		030126CE21F96683000FA318 /* ChangeLanguageObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChangeLanguageObject.m; sourceTree = "<group>"; };
 		0303BDF620F34FFD006A9EDF /* MemberUserShance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemberUserShance.h; sourceTree = "<group>"; };
 		0303BDF720F34FFD006A9EDF /* MemberUserShance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MemberUserShance.m; sourceTree = "<group>"; };
+		03051FF322C0997C00385DD0 /* AESCipher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AESCipher.h; sourceTree = "<group>"; };
+		03051FF422C0997D00385DD0 /* AESCipher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AESCipher.m; sourceTree = "<group>"; };
 		0306C5C721CCBEF900DA5DC1 /* libSocialWeChat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialWeChat.a; sourceTree = "<group>"; };
 		0306C5C821CCBEF900DA5DC1 /* UMSocialWechatHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialWechatHandler.h; sourceTree = "<group>"; };
 		0306C5CB21CCBF0A00DA5DC1 /* libSocialSina.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialSina.a; sourceTree = "<group>"; };
@@ -2872,6 +2875,8 @@
 		0385402720EF1A54002AC776 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				03051FF322C0997C00385DD0 /* AESCipher.h */,
+				03051FF422C0997D00385DD0 /* AESCipher.m */,
 				03A07C0A20EF625E00002274 /* GlobalCommon.h */,
 				03A07C0B20EF625E00002274 /* GlobalCommon.m */,
 				038CE87220EDE8F9005E9219 /* UserShareOnce.h */,
@@ -4305,6 +4310,7 @@
 				03439079210AB6B200B57142 /* YueYaoController.m in Sources */,
 				036FC0CC2118176E00C1A793 /* WenYinFileViewController.m in Sources */,
 				03F6931720FF2FD400308E38 /* SBJsonWriter.m in Sources */,
+				03051FF522C0997D00385DD0 /* AESCipher.m in Sources */,
 				03513ADB20E9CAD4004E2805 /* main.m in Sources */,
 				038CE87720EDF1BF005E9219 /* RootRequestController.m in Sources */,
 				03F97CFA21005DE300A0F842 /* WriteListController.m in Sources */,
@@ -4640,9 +4646,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shandong City Commercial Bank Cooperation Alliance Co., Ltd.";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3X65BCYVHU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4687,10 +4693,10 @@
 					"$(inherited)",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "cn.com.bankalliance.mdm.wfccb-YiDongYingXiao";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "cn.com.bankalliance.mdm.wfccb-YiDongYingXiao";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};
@@ -4703,9 +4709,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shandong City Commercial Bank Cooperation Alliance Co., Ltd.";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3X65BCYVHU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4751,10 +4757,10 @@
 					"$(inherited)",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "cn.com.bankalliance.mdm.wfccb-YiDongYingXiao";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "cn.com.bankalliance.mdm.wfccb-YiDongYingXiao";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};

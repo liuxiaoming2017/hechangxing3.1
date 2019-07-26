@@ -169,12 +169,12 @@
     CGFloat imageHeight = imageWidth*76.8/97.7;
     
     if(!self.packgeView){
-        self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenWidth*274/414)];
+        self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenWidth/1.5)];
             //414.000000    274.005362
         self.imageV.userInteractionEnabled = YES;
         [self.view addSubview:self.imageV];
             
-        self.packgeView = [[HeChangPackge alloc] initWithFrame:CGRectMake(0, -kNavBarHeight, ScreenWidth, ScreenWidth*274/414+20)];
+        self.packgeView = [[HeChangPackge alloc] initWithFrame:CGRectMake(0, -kNavBarHeight, ScreenWidth, ScreenWidth/1.5+20)];
         
         NSString *str = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
         if(str){
@@ -266,8 +266,20 @@
         [self.bgScrollView addSubview:self.recommendView];
         self.bgScrollView.contentSize = CGSizeMake(1, self.recommendView.bottom+20);
     }
+    
+    
+    
     [self.bgScrollView setContentSize:CGSizeMake(1, self.recommendView.bottom+20)];
    
+    
+}
+
+- (void)updateViewFrame
+{
+    self.readWriteView.frame = CGRectMake(self.readWriteView.left, _havePackage?self.packgeView.bottom-65:5, self.readWriteView.width, self.readWriteView.height);
+    self.remindView.frame = CGRectMake(self.remindView.left, self.activityImage?self.activityImage.bottom+10:self.readWriteView.bottom+10, self.remindView.width, self.remindView.height);
+    self.recommendView.frame = CGRectMake(self.recommendView.left,CGRectGetMaxY(self.remindView.frame)+10 , self.recommendView.width, self.recommendView.height);
+    [self.bgScrollView setContentSize:CGSizeMake(1, self.recommendView.bottom+20)];
     
 }
 
@@ -301,9 +313,6 @@
             self.isRefresh = NO;
         }
     }else{
-        [self createTopViewWithStatus:NO];
-        
-        [self addGradientLayer];
         [self.readWriteView initWithUI];
     }
 }
@@ -391,6 +400,7 @@
                     if(!self->_havePackage){
                         self->_havePackage = YES;
                         if(weakSelf.packgeView){ //之前没有和畅包,得展示和畅包,有则不变
+                            [weakSelf updateViewFrame];
                             [weakSelf addGradientLayer];
                         }
                     }

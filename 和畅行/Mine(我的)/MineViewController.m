@@ -150,7 +150,7 @@
     [backScrollView addSubview:imageV];
     [self insertSublayerWithImageView:imageV];
     
-    UIImageView *buttonBackImageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, backImageView.bottom+ 60, ScreenWidth - 30, 290)];
+    UIImageView *buttonBackImageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, backImageView.bottom+ 60, ScreenWidth - 30, 290-58)];
     buttonBackImageView.backgroundColor = [UIColor whiteColor];
     buttonBackImageView.userInteractionEnabled = YES;
     buttonBackImageView.layer.cornerRadius = 10;
@@ -164,7 +164,7 @@
     NSArray *titleArr           = @[@"待付款",@"待评价",
                                                  @"退款/售后",@"全部订单"];
     NSArray *imageArr        = @[@"我的待付款",@"我的待评价",@"我的退款售后",@"我的全部订单"];
-    listNamesArr                  = @[@"健康顾问团队",@"咨询记录",
+    listNamesArr                  = @[@"咨询记录",
                                                   @"地址管理",@"运动示范音",
                                                   @"设置"];
     for (int i=0; i<listNamesArr.count; i++) {
@@ -284,17 +284,17 @@
 
         [[bottomButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             switch (i) {
+//                case 0: {
+//                    [self showAlertWarmMessage:ModuleZW(@"尚未开放...")];
+//                }
+//                    break;
                 case 0: {
-                    [self showAlertWarmMessage:ModuleZW(@"尚未开放...")];
-                }
-                    break;
-                case 1: {
                     MyAvdisorysViewController *vc = [[MyAvdisorysViewController alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }
                     break;
-                case 2: {
+                case 1: {
                     HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
                     vc.noWebviewBack = YES;
                     vc.progressType = progress2;
@@ -305,13 +305,13 @@
                     
                 }
                     break;
-                case 3:  {
+                case 2:  {
                     SportDemonstratesViewController *vc = [[SportDemonstratesViewController alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }
                     break;
-                case 4: {
+                case 3: {
                     SetupController *vc = [[SetupController alloc] init];
                     CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:vc];
                     dispatch_async(dispatch_get_main_queue(), ^{

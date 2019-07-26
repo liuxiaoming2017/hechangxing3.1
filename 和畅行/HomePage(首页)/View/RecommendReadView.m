@@ -236,6 +236,7 @@
         NSLog(@"haha:%@",response);
         
     } failureBlock:^(NSError *error) {
+        
     }];
 }
 
@@ -243,6 +244,7 @@
 {
     
     [GlobalCommon addMaskView];
+   
     VersionUpdateView *updateView = [VersionUpdateView versionUpdateViewWithContent:contentStr type:typeStr];
     __weak __typeof(updateView)wupdateView = updateView;
     updateView.versionUpdateBlock = ^(BOOL isUpdate){
