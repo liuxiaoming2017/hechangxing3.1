@@ -21,6 +21,7 @@
 #import <UMCommonLog/UMCommonLogManager.h>
 #import "payRequsestHandler.h"
 #import "HeChangPackgeController.h"
+#import "EnRegistrController.h"
 #define margin 40
 #define leftOrigin 40
 
@@ -32,6 +33,8 @@
 @property (nonatomic,strong)UIButton *loginBtn;
 @property (nonatomic,strong)UIButton *ageButton;
 @property (nonatomic,strong)UIButton *leftButton;
+@property (nonatomic,strong)UIButton *registeredBT;
+@property (nonatomic,strong)UISegmentedControl *segment;
 @end
 
 @implementation LoginViewController
@@ -71,6 +74,11 @@
     segment.selectedSegmentIndex = 0;
     [segment addTarget:self action:@selector(selected:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:segment];
+    self.segment = segment;
+    if([UserShareOnce shareOnce].languageType){
+        segment.top = imageV.bottom - 0;
+    }
+  
     
     
     UIView *blueView  = [[UIView alloc]initWithFrame:CGRectMake(40, segment.bottom + 5, ScreenWidth/2 - 40, 1.5)];
@@ -78,9 +86,10 @@
     [self.view addSubview:blueView];
     self.blueView = blueView;
     
+ 
     
     userNameBox=[[UITextField alloc] init];
-    userNameBox.frame=CGRectMake(segment.left, segment.bottom+40, ScreenWidth - 80 ,30 );
+    userNameBox.frame=CGRectMake(segment.left, segment.bottom+40, ScreenWidth - 100 ,30 );
     userNameBox.borderStyle=UITextBorderStyleNone;
     userNameBox.returnKeyType=UIReturnKeyNext;
     userNameBox.keyboardType=UIKeyboardTypeNumberPad;
@@ -90,7 +99,7 @@
     userNameBox.placeholder=ModuleZW(@"  请输入手机号");
     [self.view addSubview:userNameBox];
     
-    UILabel *addNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(userNameBox.width - 40, 0, 35, 30)];
+    UILabel *addNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(userNameBox.width, 0, 35, 30)];
     addNumberLabel.text = @"+86";
     addNumberLabel.textColor = RGB_TextMidLightGray;
     [userNameBox addSubview:addNumberLabel];
@@ -147,14 +156,13 @@
     [rightBtn addTarget:self action:@selector(rightBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:rightBtn];
     
-    userNameBox.width = rightBtn.left-userNameBox.left;
+//    userNameBox.width = rightBtn.left-userNameBox.left;
 //    passWordBox.width = userNameBox.width;
     
     
     UIButton *loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     loginBtn.frame = CGRectMake(segment.left, passWordBox.bottom + 60, imageV3.width, 44);
-    loginBtn.layer.cornerRadius = 22.0;
-    loginBtn.layer.masksToBounds = YES;
+   
     loginBtn.backgroundColor = UIColorFromHex(0x1e82d2);
     [loginBtn setTitle:ModuleZW(@"登录") forState:UIControlStateNormal];
     loginBtn.titleLabel.font = [UIFont systemFontOfSize:18.0];
@@ -162,6 +170,9 @@
     [loginBtn addTarget:self action:@selector(userLogin) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:loginBtn];
     self.loginBtn = loginBtn;
+    
+    
+
     
     RAC(loginBtn, enabled) = [RACSignal combineLatest:@[userNameBox.rac_textSignal, passWordBox.rac_textSignal] reduce:^id _Nullable(NSString * username, NSString * password){
         if(username.length> 0 && password.length  > 0) {
@@ -180,6 +191,41 @@
     [self.view addSubview:promptLabel];
     self.promptLabel = promptLabel;
     
+    if([UserShareOnce shareOnce].languageType){
+        segment.hidden = YES;
+        self.blueView.hidden = YES;
+        segment.selectedSegmentIndex = 1;
+        [self selected:segment];
+        self.promptLabel.hidden = YES;
+        
+        loginBtn.height = 35;
+        UIButton *registeredBT = [UIButton buttonWithType:UIButtonTypeCustom];
+        registeredBT.frame = CGRectMake(segment.left, passWordBox.bottom + 110, imageV3.width, 35);
+        registeredBT.layer.cornerRadius = registeredBT.height/2;
+        registeredBT.layer.masksToBounds = YES;
+        registeredBT.backgroundColor = RGB(232, 241, 255);
+        [registeredBT setTitle:@"Create New Account" forState:UIControlStateNormal];
+        registeredBT.titleLabel.font = [UIFont systemFontOfSize:18.0];
+        [registeredBT setTitleColor:RGB_ButtonBlue forState:UIControlStateNormal];
+        [[registeredBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            EnRegistrController *enVC = [[EnRegistrController alloc]init];
+            [self.navigationController pushViewController:enVC animated:YES];
+        }];
+//        [registeredBT addTarget:self action:@selector(userLogin) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:registeredBT];
+        self.registeredBT = registeredBT;
+        self.ageButton.hidden = YES;
+        userNameBox.left = 40;
+        passWordBox.left = 40;
+    }else{
+        segment.hidden = NO;
+        self.blueView.hidden = NO;
+        
+        
+    }
+    
+    loginBtn.layer.cornerRadius = loginBtn.height/2;
+    loginBtn.layer.masksToBounds = YES;
     
     UILabel *otherLoginLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-100)/2.0, promptLabel.bottom+30, 100, 30)];
     otherLoginLabel.font = [UIFont systemFontOfSize:14];
@@ -188,7 +234,7 @@
     otherLoginLabel.text = ModuleZW(@"其他登录方式");
     [self.view addSubview:otherLoginLabel];
     
-    UIImageView *imageV4 = [[UIImageView alloc] initWithFrame:CGRectMake(otherLoginLabel.left-80, otherLoginLabel.top+otherLoginLabel.height/2.0, 80, 1)];
+    UIImageView *imageV4 = [[UIImageView alloc] initWithFrame:CGRectMake(otherLoginLabel.left-100, otherLoginLabel.top+otherLoginLabel.height/2.0, 100, 1)];
     imageV4.backgroundColor = UIColorFromHex(0xb8b8b8);
     [self.view addSubview:imageV4];
     
@@ -203,12 +249,22 @@
     [self.view addSubview:weixinBtn];
     
     
-    if (![WXApi isWXAppInstalled]) {
-        otherLoginLabel.hidden = YES;
-        imageV5.hidden = YES;
-        imageV4.hidden = YES;
-        weixinBtn.hidden = YES;
-    }
+//    if (![WXApi isWXAppInstalled]) {
+//
+//        otherLoginLabel.hidden = YES;
+//        imageV5.hidden = YES;
+//        imageV4.hidden = YES;
+//        weixinBtn.hidden = YES;
+//        if([UserShareOnce shareOnce].languageType){
+//            self.registeredBT.top = ScreenHeight - kTabBarHeight - 20;
+//            otherLoginLabel.top = self.registeredBT.top - 40;
+//            imageV5.top = otherLoginLabel.top + 15;
+//            imageV4.top = otherLoginLabel.top + 15;
+//            otherLoginLabel.hidden = NO;
+//            imageV5.hidden = NO;
+//            imageV4.hidden = NO;
+//        }
+//    }
     //从本地查找用户
     NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
     NSString* strcheck=[dicTmp objectForKey:@"ischeck"];
@@ -331,53 +387,18 @@
 }
 
 
-/*
- privilege =         [
- ]
- unionid = oD48ct2BfaaDLCIO70OTBtPZhj5M
- openid = orAqNwqb-7U7Nb9Vt3tDdejnMOIc
- headimgurl = http://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83erevfDZxULclPdNWhZrxeINicMCS1zUXIpwlXuE0EeE5h1Lwfg6rqc0wbHQ0aWjbmbVR2IsXx728icA/132
- nickname = 化身孤岛的鲸 🐳
- city = 石家庄
- country = 中国
- province = 河北
- sex = 1 男 2 女
- language = zh_CN
- 
- */
-
-
-
 
 # pragma mark - 微信登录
 - (void)weixinBtnAction
 {
     
+    if (![WXApi isWXAppInstalled]) {
+        [self showAlertWarmMessage:ModuleZW(@"未安装相关软件")];
+        return;
+    }
+    
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:APP_SECRET redirectURL:nil];
     [self loginByWeiXin];
-
-    /**
-     *  MD5加密后的字符串
-     */
-//    NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",@"weixinPayHcyPhonePlugin"];
-//    NSString *iPoneNumberMD5 = [[GlobalCommon md5:iPoneNumber] uppercaseString];
-//    NSDictionary *dic = @{@"pluginname":@"weixinPayHcyPhonePlugin",
-//                          @"token":iPoneNumberMD5};
-//
-//    NSLog(@"%@",dic);
-//    __weak typeof(self) weakSelf = self;
-//    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:@"weiq/weiq/getWeiqSecret.jhtml" parameters:dic successBlock:^(id response) {
-//
-//        NSString *str = [[response valueForKey:@"data"] valueForKey:@"secret"];
-//        if([GlobalCommon stringEqualNull:str]){
-//            str = APP_SECRET;
-//        }
-//        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:str redirectURL:nil];
-//        [weakSelf loginByWeiXin];
-//
-//    } failureBlock:^(NSError *error) {
-//        NSLog(@"%@",error);
-//    }];
     
 }
 #pragma   mark ----  微信登录
@@ -444,6 +465,16 @@
                 [self showAlertWarmMessage:ModuleZW(@"登录手机号不能为空")];
         return;
     }
+    if (userNameBox.text.length!=11||![userNameBox.text  hasPrefix:@"1"]) {
+        [self showAlertWarmMessage:ModuleZW(@"格式错误")];
+        return ;
+    }
+    
+    if(![self deptNumInputShouldNumber:userNameBox.text] ){
+        [self showAlertWarmMessage:ModuleZW(@"格式错误")];
+        return ;
+    }
+    
     
     NSString *aUrl = @"weiq/sms/getsmsCode.jhtml";
     /**
@@ -562,15 +593,11 @@
 {
     if (userNameBox.text.length!=11||![userNameBox.text  hasPrefix:@"1"]) {
         
-        [self showAlertWarmMessage:ModuleZW(@"请输入正确的手机号")];
+        [self showAlertWarmMessage:ModuleZW(@"格式错误")];
         
         return;
     }
-    if (passWordBox.text.length==0) {
-        
-        [self showAlertWarmMessage:ModuleZW(@"请输入短信验证码")];
-        return;
-    }
+  
     if (self.isChoose == NO){
         [self showAlertWarmMessage:ModuleZW(@"请阅读并同意《炎黄用户协议》")];
         return;
@@ -595,17 +622,36 @@
     
     NSString* devicesname=@"iPhone 7";
     
-    if (userNameBox.text.length==0) {
-        
-        [self showAlertWarmMessage:ModuleZW(@"请输入用户名或密码")];
-        
-        return;
+    if([UserShareOnce shareOnce].languageType){
+        if([userNameBox.text containsString:@"@"]){
+            if(![self isValidateEmail:userNameBox.text]){
+                [self showAlertWarmMessage:ModuleZW(@"格式错误")];
+                return ;
+            }
+        }else{
+            if(userNameBox.text.length != 10 ){
+                [self showAlertWarmMessage:ModuleZW(@"格式错误")];
+                return ;
+            }
+            
+            if(![self deptNumInputShouldNumber:userNameBox.text] ){
+                [self showAlertWarmMessage:ModuleZW(@"格式错误")];
+                return ;
+            }
+        }
+    }else{
+            if (userNameBox.text.length!=11||![userNameBox.text  hasPrefix:@"1"]) {
+                [self showAlertWarmMessage:ModuleZW(@"格式错误")];
+                return ;
+            }
+            
+            if(![self deptNumInputShouldNumber:userNameBox.text] ){
+                [self showAlertWarmMessage:ModuleZW(@"格式错误")];
+                return ;
+            }
     }
-    if (passWordBox.text.length==0) {
-        
-        [self showAlertWarmMessage:ModuleZW(@"请输入用户名或密码")];
-        return;
-    }
+   
+    
     
     if (self.isChoose == NO){
         [self showAlertWarmMessage:ModuleZW(@"请阅读并同意《炎黄用户协议》")];
@@ -664,8 +710,15 @@
 
 -(void)FoggetActive:(id)sender
 {
-    FindPassWordController *findVc = [[FindPassWordController alloc] init];
-    [self.navigationController pushViewController:findVc animated:YES];
+    
+    if([UserShareOnce shareOnce].languageType){
+        FindPassWordController *findVc = [[FindPassWordController alloc] init];
+        [self.navigationController pushViewController:findVc animated:YES];
+    }else{
+        self.segment.selectedSegmentIndex = 0;
+        [self selected:self.segment];
+    }
+  
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -682,6 +735,26 @@
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [userNameBox resignFirstResponder];
     [passWordBox resignFirstResponder];
+}
+
+- (BOOL) deptNumInputShouldNumber:(NSString *)str
+{
+    if (str.length == 0) {
+        return NO;
+    }
+    NSString *regex = @"[0-9]*";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    if ([pred evaluateWithObject:str]) {
+        return YES;
+    }
+    return NO;
+}
+
+-(BOOL)isValidateEmail:(NSString *)email
+{
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES%@",emailRegex];
+    return [emailTest evaluateWithObject:email];
 }
 
 @end

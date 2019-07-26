@@ -61,6 +61,9 @@
 @property (nonatomic,copy) NSString * languageType;
 @property (nonatomic,copy) NSString * loginType;
 
+@property (copy, nonatomic) NSString  *startTime;
+
+
 
 + (UserShareOnce *)shareOnce;
 +(void)attemptDealloc;

@@ -616,14 +616,14 @@
         int i = 0;
         if(_selectedArr.count > 0){
             for (SymptomModel *model in _selectedArr) {
-                if ([ModuleZW([cellData objectAtIndex:indexPath.row])  isEqualToString:model.part]) {
+                if ([ModuleZW([cellData objectAtIndex:indexPath.row])  isEqualToString:ModuleZW(model.part)]) {
                     if([model.fPrivate  isEqual: @1] ){
                         i++;
                     }
                 }
             }
         }
-        
+
         cell.typeLabel.text = ModuleZW([cellData objectAtIndex:indexPath.row]);
         cell.typeLabel.frame = CGRectMake(10, 10,70, cell.height - 20);
         if(i>0){

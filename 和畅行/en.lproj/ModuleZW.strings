@@ -12,16 +12,16 @@
 "账户密码登录"                     = "Login via password";
 "  请输入手机号"                   = "  Phone number" ;
 
-"请输入手机号"                     = "Phone number" ;
-"  请输入和畅账户"                = " Phone number" ;
+"请输入手机号"                     = "Email or phone number" ;
+"  请输入和畅账户"                = " Email or phone number" ;
 "  请输入密码"                       = "  Password";
-"忘记密码"                             = "Forgot password";
-"登录"                                     = "Log in";
+"忘记密码"                             = "Forgot password?";
+"登录"                                     = "Log In";
 "短信验证码登录"                   = "Log in via SMS"  ;
 "其他登录方式"                      = "OR";
 "微信"                                    = "WeChat";
 "欢迎登录"                             =  "Welcome";
-"获取验证码"                          = "Send SMS code";
+"获取验证码"                          = "Send  code";
 "已向您的手机发送验证码,收到后请输入"                     = "Check SMS";
 "60s后重新发送"                    = "60s Resend";
 "后重新发送"                          = " Resend";
@@ -188,10 +188,8 @@
 "收藏"                             = "Collect";
 "修改密码"                      = "Change Password";
 "用 户 名:"                       =   "User Name:";
-"手机号码:"                     =   "Phone number:";
+"手机号码:"                     =   "Email/Phone No.";
 "请输入原密码"               = "Original password";
-"请输入新密码"               = "New password";
-"请确认新密码"               = "Confirm";
 "授权并登录"                   =  "Submit And Login";
 "确认注销用户"               ="Sure to logout";
 "注销"                              = "Logout";
@@ -213,7 +211,6 @@
 "出生日期："                    = "Date of Birth:  ";
 "证件号码"                       =  "ID No. ";
 "证件号码："                    =  "ID No.: ";
-"手机号码"                        = "Phone Number ";
 "男"                                   =  "Male";
 "女"                                   =  "Femal";
 "加载中..."                        = "Loading…";
@@ -417,10 +414,9 @@
 "您输入的新密码与确认密码不一致"        ="The new password you entered is inconsistent with the confirmation";
 "修改密码成功"        ="The password was successfully changed.";
 "用  户  名: "        ="User name:";
-"手机号码:  "        ="Mobil number:";
 "请输入原密码"        ="Original password";
 "请输入新密码"        ="New password";
-"请确认新密码"        ="Confirm";
+"请确认新密码"        ="Confirm password";
 "当前用户:"        ="Current user:";
 " 请提出您的宝贵意见"        =" Please submit your valuable comments ";
 "您的意见已提交"        ="Your comments have been submitted";
@@ -1456,7 +1452,7 @@
 
 "意见反馈成功"     =   " Successful feedback";
 "请输入6-20位字符，可使用字母，数字或字符组合!"     =   "Enter 6-20 characters, which can be letters, numbers or symbols combination";
-"输入原密码不正确 "     =   "Wrong original password";
+"输入原密码不正确"     =   "Wrong original password";
 "密码确认不能为空"     =   " Password confirmation cannot be empty";
 "搜索疾病名称"     =   " Search names of disease";
 "没有"     =   " No";
@@ -1588,7 +1584,6 @@
 "同步时间"     =   "Synchronize time";
 "设置灸头网络密码"     =   "Set password";
 "找回灸头网络密码"     =   "Forgot password";
-"请输入新密码"     =   "Input new password";
 "再次输入新密码"     =   "Confirm password";
 "请输入您要设置的密码"     =   "Enter password";
 "两次密码不符,请重新输入"     =   "Passwords not match, please try again.";
@@ -1648,7 +1643,7 @@
 "温度正常"     =   "Normal temperature";
 "温度偏高"     =   "Temperature is high";
 
-"发现新版本,是否升级"    ="New version found, update or not?";
+"发现新版本"    ="New version found";
 "残忍拒绝"    ="No";
 "立即更新"    ="Yes, now";
 "你还没有乐药产品"    ="You have no treatment music";
@@ -1723,7 +1718,7 @@
 "已选症状(最多选5种)"=    "Symptoms selected(You can select 5 symptoms at most) ";
 "症状选择"=    "Select symptoms ";
 "提交"=    "Submit";
-"您还未选择症状"=    "You haven't selected your symptoms yet.您还未选择症状";
+"您还未选择症状"=    "You haven't selected your symptoms yet.";
 "血压检测"=    "Test BP ";
 "血压监测"=    "Monitor BP";
 "血糖检测"=    "Test Sugar";
@@ -1776,3 +1771,9 @@
 "经络详情" = "Meridian Details";
 "心率详情" = "Heart rate Details";
 "健康文化" =  "Health Culture";
+
+"未安装相关软件" = "No related software installed";
+"发送成功" = "Sent successfully";
+"密码修改成功" = "Password has been changed";
+"格式错误" = "Wrong format";
+"资讯详情" = "Health Culture";

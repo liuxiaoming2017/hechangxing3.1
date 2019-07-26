@@ -40,7 +40,8 @@
 
 
 @interface AppDelegate ()<WXApiDelegate>
-
+@property (nonatomic, strong) NSURLSession * session;
+@property (nonatomic, strong) NSURLSessionDataTask * dataTask;
 @end
 
 @implementation AppDelegate
@@ -50,6 +51,14 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
    // self.window.rootViewController = [self tabBar];
+    NSArray *languages = [[NSUserDefaults standardUserDefaults] valueForKey:@"AppleLanguages"];
+    NSLog(@"%@",languages);
+    if ([languages.firstObject isEqualToString:@"en-US"]||[languages.firstObject isEqualToString:@"ja-US"]||[languages.firstObject isEqualToString:@"en-CN"]||[languages.firstObject isEqualToString:@"en"]){
+        [UserShareOnce shareOnce].languageType = @"us-en";
+        //        [UserShareOnce shareOnce].languageType  = nil;
+    }else{
+        [UserShareOnce shareOnce].languageType  = nil;
+    }
     
     NSError *error = nil;
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&error];
@@ -63,9 +72,9 @@
     [[UITabBar appearance] setTranslucent:NO];
     
     //和缓医疗SDK注册,是和缓分配给的productId ffff
-    HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:HHSDK_id isDebug:NO isDevelop:YES];
-    hhSdk.cerName = @"2cDevTest";
-    [[HHMSDK alloc] startWithOption:hhSdk];
+//    HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:HHSDK_id isDebug:NO isDevelop:YES];
+//    hhSdk.cerName = @"2cDevTest";
+//    [[HHMSDK alloc] startWithOption:hhSdk];
 
     [UMCommonLogManager setUpUMCommonLogManager];
     [UMConfigure setLogEnabled:YES];
@@ -76,16 +85,11 @@
      [self.window makeKeyAndVisible];
     
     [ChangeLanguageObject initUserLanguage];
+    
+     self.session = [NSURLSession sharedSession];
    
     
-    NSArray *languages = [[NSUserDefaults standardUserDefaults] valueForKey:@"AppleLanguages"];
-    NSLog(@"%@",languages);
-    if ([languages.firstObject isEqualToString:@"en-US"]||[languages.firstObject isEqualToString:@"ja-US"]||[languages.firstObject isEqualToString:@"en-CN"]||[languages.firstObject isEqualToString:@"en"]){
-        [UserShareOnce shareOnce].languageType = @"us-en";
-//        [UserShareOnce shareOnce].languageType  = nil;
-    }else{
-        [UserShareOnce shareOnce].languageType  = nil;
-    }
+  
     
 //    URL_PRE
 

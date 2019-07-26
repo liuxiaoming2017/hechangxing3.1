@@ -36,7 +36,7 @@
 {
     // 设置导航默认标题的颜色及字体大小
     UILabel  *navTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 140, 43)];
-    navTitleLabel.text = @"资讯详情";
+    navTitleLabel.text = ModuleZW(@"资讯详情");
     navTitleLabel.font = [UIFont systemFontOfSize:18];
     navTitleLabel.textAlignment = NSTextAlignmentCenter;
     navTitleLabel.backgroundColor = [UIColor clearColor];

@@ -17,7 +17,7 @@
 #import "PressureViewController.h"
 #import "i9_MoxaMainViewController.h"
 #import "HCY_CallController.h"
-
+#import "WXPhoneController.h"
 
 @interface CommonTabBarController ()<HSTabBarDelegate,ZKIndexViewDelegate>
 
@@ -88,6 +88,13 @@
             break;
         case 3:
         {
+            
+            if(![UserShareOnce shareOnce].languageType){
+                if ([UserShareOnce shareOnce].username.length != 11) {
+                    [self showAlerVC];
+                    return;
+                }
+            }
             
              [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
             
@@ -169,7 +176,17 @@
     
     return currentVC;
 }
-
+-(void)showAlerVC {
+    UIAlertController *alVC= [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有绑定手机号码,绑定后才能享受服务,是否绑定?") preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        WXPhoneController *vc = [[WXPhoneController alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:(UIAlertActionStyleCancel) handler:nil];
+    [alVC addAction:sureAction];
+    [alVC addAction:cancelAction];
+    [self presentViewController:alVC animated:YES completion:nil];
+}
 
 
 - (void)didReceiveMemoryWarning {

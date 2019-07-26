@@ -131,7 +131,8 @@
         //档案最新
         if ([model.typeStr isEqualToString:@"oxygen"]){
             typeStr =ModuleZW(@"血氧");
-            self.contentLabel.text = model.density;
+            CGFloat density =  [model.density  floatValue];
+            self.contentLabel.text =[NSString stringWithFormat:@"%.0f%%",density*100];
         }else if ([model.typeStr isEqualToString:@"bloodPressure"]){
             typeStr = ModuleZW(@"血压");
             self.contentLabel.text = [NSString stringWithFormat:@"%@%@ %@%@",ModuleZW(@"收缩压"),model.highPressure,ModuleZW(@"舒张压"),model.lowPressure];

@@ -116,8 +116,7 @@
     }
 }
 
-
-- (void)getCookie {
+ - (void)getCookie {
     if (@available(iOS 9.0, *)) {
         //获取指定类型的website data
         NSSet *types = [[NSSet alloc] initWithObjects:@"WKWebsiteDataTypeCookies", nil];

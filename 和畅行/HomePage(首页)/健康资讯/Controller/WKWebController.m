@@ -24,7 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navTitleLabel.text = @"资讯详情";
+    self.navTitleLabel.text = ModuleZW(@"资讯详情");
     self.leftBtn.hidden = YES;
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setImage:[UIImage imageNamed:@"toolbar_sharing_new"] forState:UIControlStateNormal];

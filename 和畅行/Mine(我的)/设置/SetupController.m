@@ -160,10 +160,7 @@
             }
         }
         
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(didBecomeActiveNotification)
-                                                     name:UIApplicationDidBecomeActiveNotification
-                                                   object:nil];
+    
 }
     
 -(void)getPayRequest {
@@ -183,15 +180,6 @@
     }];
 }
 
--(void)didBecomeActiveNotification{
-    [self checkHaveUpdatewihType:2];
-}
-
--(void)dealloc{
- 
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-
-}
 
 # pragma mark - 检查更新
 - (void)checkHaveUpdatewihType:(int)typeInt
@@ -217,7 +205,11 @@
                     return ;
                 }
                 NSString *ytpeStr = [NSString stringWithFormat:@"%@",dic[@"isEnforcement"]];
-                [weakSelf showUpdateView:downUrl contentStr:dic[@"releaseContent"] typeStr:ytpeStr];
+                NSString *textStr = dic[@"releaseContent"];
+                if([GlobalCommon stringEqualNull:textStr]){
+                    textStr = @"无";
+                }
+                [weakSelf showUpdateView:downUrl contentStr:textStr typeStr:ytpeStr];
                 NSLog(@"升级了");
             }else{
                 if(typeInt == 1){
@@ -244,10 +236,35 @@
         if(isUpdate){
             NSURL *url = [NSURL URLWithString:downUrl];
             if (url) {
+                //该接口用于记录用户使用app下载网站资源记录
+                NSString *userSign = [UserShareOnce shareOnce].uid;
+                NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                CFShow(CFBridgingRetain(infoDictionary));
+                
+                NSString *versionStr = [infoDictionary objectForKey:@"CFBundleShortVersionString"];//版本
+                NSString *down_timeStr = [GlobalCommon getCurrentTimes];;//下载时间
+                
+                NSString * downloadStr1= [NSString stringWithFormat:@"channel=%@&downTime=%@&remark=%@&userSign=%@&userSource=1&version=%@",@"",down_timeStr,@"",userSign,versionStr];
+                NSString *downloadMD5 = [GlobalCommon md5Points:downloadStr1].uppercaseString;
+                downloadMD5 = [downloadMD5 lowercaseString];
+                NSString *downloadStr = [NSString stringWithFormat:@"%@user/download",DATAURL_PRE];
+                NSDictionary *downloadDic = @{ @"body":@{@"channel":@"",
+                                                         @"downTime":down_timeStr,
+                                                         @"remark":@"",
+                                                         @"userSign":userSign,
+                                                         @"userSource":@"1",
+                                                         @"version":versionStr}
+                                               };
+                
+                [[NetworkManager sharedNetworkManager] mainThreadRequestWithUrl:downloadStr token:downloadMD5 dic:downloadDic];
+                
                 [[UIApplication sharedApplication] openURL:url];
+                
             }
         }
         
+        
+      
         [GlobalCommon removeMaskView];
         [wupdateView removeFromSuperview];
     };

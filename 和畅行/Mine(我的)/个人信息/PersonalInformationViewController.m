@@ -157,6 +157,9 @@
                         [self birthDayActive];
                         break;
                     case 4:
+                        if([UserShareOnce shareOnce].languageType) {
+                            return ;
+                        }
                         if ([[UserShareOnce shareOnce].loginType isEqualToString:@"WX"]){
                             if([UserShareOnce shareOnce].username.length != 11){
                                 WXPhoneController *vc = [[WXPhoneController alloc]init];
@@ -563,7 +566,7 @@
       
     }
     
-    if(self.brithdayStr.length > 7){
+    if(![self.brithdayStr isEqualToString:ModuleZW(@"未设置")]&&[self.brithdayStr isEqualToString:ModuleZW(@"")]){
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"YYYY/MM/dd"];
         NSDate *tempDate = [dateFormatter dateFromString:_brithdayStr];

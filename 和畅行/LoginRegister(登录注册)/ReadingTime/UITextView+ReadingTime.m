@@ -75,6 +75,9 @@ static Method mySetText;
 
 - (void)readingTime_setText:(NSString *)text
 {
+    if([GlobalCommon stringEqualNull:text]){
+        text = @"无";
+    }
     /* 
      Note: if the method implementation has been exchanged 
      by the swizzling (ensured by the _cmd == @selector(setText:)

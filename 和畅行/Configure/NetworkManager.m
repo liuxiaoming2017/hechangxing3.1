@@ -91,6 +91,7 @@ static NSMutableArray *tasks;
     if([UserShareOnce shareOnce].languageType){
         [manager.requestSerializer setValue:[UserShareOnce shareOnce].languageType forHTTPHeaderField:@"language"];
     }
+    
         /* 设置请求服务器数类型式为 json */
         /*! 根据服务器的设定不同还可以设置 [AFJSONRequestSerializer serializer](常用) */
 
@@ -205,16 +206,16 @@ static NSMutableArray *tasks;
     else if (type == BAHttpRequestTypeHeadGet){
         
         AFHTTPSessionManager *manager = [self sharedAFManager];
-        NSDictionary *headers = @{@"version":@"ios_hcy-yh-3.1.3",
-                                  @"token":[UserShareOnce shareOnce].token,
-                                  @"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
-                                             [UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+//        NSDictionary *headers = @{@"version":@"ios_hcy-oem-3.1.3",
+//                                  @"token":[UserShareOnce shareOnce].token,
+//                                  @"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
+//                                             [UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
         
 //        for(NSString *key in headers.allKeys){
 //            [manager.requestSerializer setValue:[headers objectForKey:key] forHTTPHeaderField:key];
 //        }
         
-        [manager.requestSerializer setValue:@"ios_hcy-yh-3.1.3" forHTTPHeaderField:@"version"];
+        [manager.requestSerializer setValue:@"ios_hcy-oem-3.1.3" forHTTPHeaderField:@"version"];
         
         [manager.requestSerializer setValue:[UserShareOnce shareOnce].token forHTTPHeaderField:@"token"];
         [manager.requestSerializer setValue:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
@@ -387,6 +388,56 @@ static NSMutableArray *tasks;
             
         }];
     }
+}
+
+-(void)submitWithUrl:(NSString *)url token:(NSString *)token dic:(NSDictionary *)dic {
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer.timeoutInterval = 30;
+    AFJSONRequestSerializer *rqSerializer = [AFJSONRequestSerializer serializerWithWritingOptions:0];//NSJSONWritingPrettyPrinted
+    rqSerializer.stringEncoding = NSUTF8StringEncoding;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/css",@"text/xml",@"text/plain", @"application/javascript", @"image/*", nil];
+    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"content-type"];
+    [manager.requestSerializer setValue:token forHTTPHeaderField:@"token"];
+    
+    [manager POST:url  parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@------",responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+    }];
+    
+}
+
+
+
+-(void)mainThreadRequestWithUrl:(NSString *)myUrl token:(NSString *)token dic:(NSDictionary *)dic{
+    
+    NSString *dataStr = [self dictionaryToJson:dic];
+    dataStr =  [dataStr stringByReplacingOccurrencesOfString:@"'\\'" withString:@""];
+    dataStr =  [dataStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+    NSURL *url = [NSURL URLWithString:myUrl];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:token forHTTPHeaderField:@"token"];
+    NSData *data = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
+    [request setHTTPBody:data];
+    
+    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    NSDictionary  *  dic1  = [NSJSONSerialization JSONObjectWithData:received options:NSJSONReadingMutableContainers error:nil];
+    NSLog(@"--------------%@",dic1);
+    
+}
+-(NSString*)dictionaryToJson:(NSDictionary *)dic
+{
+    NSError *parseError = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+    
+    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
 #pragma mark - url 中文格式化

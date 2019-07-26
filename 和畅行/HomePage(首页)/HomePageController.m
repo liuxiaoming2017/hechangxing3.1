@@ -15,10 +15,17 @@
 #import "RecommendReadView.h"
 #import "HCY_HomeImageModel.h"
 
+#import "AFNetworking.h"
 
 #import "SugerViewController.h"
 #import "HCY_ActivityController.h"
 #import "TestViewController.h"
+
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#import <CoreTelephony/CTCarrier.h>
+#import "Reachability.h"
+
+#import <sys/utsname.h>
 @interface HomePageController ()<UIScrollViewDelegate>
 
 @property (nonatomic,strong) UIScrollView *bgScrollView;
@@ -58,6 +65,8 @@
 
 }
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColorFromHex(0xffffff);
@@ -70,11 +79,10 @@
    // [self handleNetworkGroup];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exchangeMemberChild:) name:exchangeMemberChildNotify object:nil];
+//    [UIApplication sharedApplication].windows
     
+    [UserShareOnce shareOnce].startTime = [GlobalCommon getCurrentTimes];
     
-//   TestViewController *nonDeviceCheck = [[TestViewController alloc] init];
-// nonDeviceCheck.hidesBottomBarWhenPushed = YES;
-//  [self.navigationController pushViewController:nonDeviceCheck animated:YES];
 }
 
 
@@ -524,6 +532,75 @@
         }
         self.bgScrollView.contentOffset = offset;
     }
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self buriedDataPoints];
+
+}
+
+//数据上传处理
+-(void)buriedDataPoints {
+    
+    
+    //此接口为用户新增用户信息使用   怎么判断新增客户? 后台判断
+    NSString *userSign = [UserShareOnce shareOnce].uid;
+    NSString *sexStr  = @"1";
+    NSLog(@"%@",[UserShareOnce shareOnce].birthday);
+    if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].gender]) {
+        if([[UserShareOnce shareOnce].gender isEqualToString:@"male"]){
+            sexStr = @"1";
+        }else if ([[UserShareOnce shareOnce].gender isEqualToString:@"female"]){
+            sexStr = @"2";
+        }else{
+            sexStr = @"0";
+        }
+    }
+    NSString *ageStr = @"";
+    if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].birthday]) {
+        ageStr =  [GlobalCommon calculateAgeStr:[UserShareOnce shareOnce].birthday];
+    }
+
+    NSString *infoStr = [NSString stringWithFormat:@"age=%@&remark=%@&sex=%@&userSign=%@&userSource=1",ageStr,@"",sexStr,userSign];
+    NSString *infoMD5 = [GlobalCommon md5Points:infoStr].uppercaseString;
+    infoMD5 = [infoMD5 lowercaseString];
+    NSString *urlStr = [NSString stringWithFormat:@"%@user/info",DATAURL_PRE];
+    NSDictionary *infodic = @{ @"body":@{@"age":ageStr,
+                                        @"remark":@"",
+                                        @"sex":sexStr,
+                                        @"userSign":userSign,
+                                        @"userSource":@"1"}
+                                        };
+    
+    [[NetworkManager sharedNetworkManager] submitWithUrl:urlStr token:infoMD5 dic:infodic];
+    
+    
+    //该接口用于记录用户使用app的设备信息
+    //    NSString *userSign = @"";
+    NSString *modelStr           = [GlobalCommon getCurrentDeviceModel];//型号
+    NSString *resolutionStr     = [GlobalCommon getScreenPix];//分辨率
+    NSString *operatorStr       = [GlobalCommon getOperator];//运营商
+    NSString *network_methodStr = [GlobalCommon internetStatus];//联网方式
+    
+   
+    NSString * deviceStr1= [NSString stringWithFormat:@"brand=iPhone&model=%@&networkMethod=%@&operator=%@&remark=%@&resolution=%@&system=iOS&userSign=%@&userSource=1",modelStr,network_methodStr,operatorStr,@"1",resolutionStr,userSign];
+    NSString *deviceMD5 = [GlobalCommon md5Points:deviceStr1].uppercaseString;
+    deviceMD5 = [deviceMD5 lowercaseString];
+    NSString *deviceStr = [NSString stringWithFormat:@"%@user/device",DATAURL_PRE];
+    NSDictionary *deviceDic = @{ @"body":@{@"brand":@"iPhone",
+                                @"model":modelStr,
+                                @"networkMethod":network_methodStr,
+                                @"operator":operatorStr,
+                                @"remark":@"1",
+                                @"system":@"iOS",
+                                @"userSign":userSign,
+                                @"resolution":resolutionStr,
+                                @"userSource":@"1"}
+                                };
+ [[NetworkManager sharedNetworkManager] submitWithUrl:deviceStr token:deviceMD5 dic:deviceDic];
+  
     
 }
 

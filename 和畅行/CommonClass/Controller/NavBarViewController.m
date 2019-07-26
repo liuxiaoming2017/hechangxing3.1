@@ -194,5 +194,23 @@
     
     
 }
-
+-(void)addEnPopButton{
+    
+    
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, ScreenHeight - kTabBarHeight - 11, ScreenWidth, 1)];
+    lineView.backgroundColor = RGB_TextGray;
+    [self.view addSubview:lineView];
+    
+    UIButton *popBT = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    popBT.frame = CGRectMake(20, ScreenHeight - kTabBarHeight, ScreenWidth - 40, 30);
+    [popBT setTitleColor:RGB(122, 124, 166) forState:(UIControlStateNormal)];
+    [popBT setTitle:@"Already have an account?" forState:(UIControlStateNormal)];
+    [popBT.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    [[popBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }];
+    [self.view addSubview:popBT];
+    self.popBT = popBT;
+    
+}
 @end

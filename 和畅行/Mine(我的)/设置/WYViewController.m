@@ -129,7 +129,7 @@
     TeleNameLb.width = textRect1.size.width;
     
     UILabel* TeleName_text_Lb=[[UILabel alloc ] init];
-    TeleName_text_Lb.frame=CGRectMake(TeleNameLb.frame.origin.x+TeleNameLb.frame.size.width, TeleImgView.frame.origin.y, 90, TeleImg.size.height/2);
+    TeleName_text_Lb.frame=CGRectMake(TeleNameLb.frame.origin.x+TeleNameLb.frame.size.width, TeleImgView.frame.origin.y, ScreenWidth - TeleNameLb.right, TeleImg.size.height/2);
     TeleName_text_Lb.textAlignment=0;
     TeleName_text_Lb.text=[NSString stringWithString:[UserShareOnce shareOnce].username];;
     TeleName_text_Lb.textColor=[UtilityFunc colorWithHexString:@"#c4c4c4"];
@@ -256,15 +256,15 @@
     }
     if (self.OriginalSec_TF.text.length<6||self.OriginalSec_TF.text.length>20)
     {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请输入6-20位字符，可使用字母，数字或字符组合！") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请输入6-20位字符，可使用字母，数字或字符组合!") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         [av show];
         [av release];
         return;
     }
     
-    
-    if (![self.OriginalSec_TF.text isEqualToString:[UserShareOnce shareOnce].passWord])
+    if (![self.OriginalSec_TF.text isEqualToString:[[NSUserDefaults standardUserDefaults] valueForKey:@"loginPassword"]])
     {
+        NSLog(@"%@",[UserShareOnce shareOnce].passWord);
         UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"输入原密码不正确") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         [av show];
         [av release];
@@ -278,7 +278,7 @@
         return;
     }
     if (self.NewSec_TF.text.length<6||self.NewSec_TF.text.length>20) {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请输入6-20位字符，可使用字母，数字或字符组合！") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请输入6-20位字符，可使用字母，数字或字符组合!") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         [av show];
         [av release];
         return;
@@ -335,7 +335,7 @@
     {
         if ([status intValue]==100) {
             id data=[dic objectForKey:@"data"];
-            [UserShareOnce shareOnce].passWord = self.NewSec_TF.text;
+            [[NSUserDefaults standardUserDefaults] setObject:self.NewSec_TF.text forKey:@"loginPassword"];
             NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
             if (dicTmp) {
                 [dicTmp setObject:self.NewSec_TF.text forKey:@"PASSWORDAES"];

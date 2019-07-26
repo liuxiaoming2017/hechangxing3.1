@@ -108,11 +108,23 @@
             [daArray addObject:ModuleZW(@"最新资讯")];
             if(![UserShareOnce shareOnce].languageType){
                 [daArray addObject:ModuleZW(@"健康讲座")];
+                if(array.count >0){
+                    for (NSDictionary *Dic in array) {
+                        [daArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"name"]]];
+                        [weakSelf.idArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"id"]]];
+                    }
+                }
+            }else{
+                if(array.count >0){
+                    NSDictionary *Dic = array[0];
+                    [daArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"name"]]];
+                    [weakSelf.idArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"id"]]];
+                }
+              
+              
             }
-            for (NSDictionary *Dic in array) {
-                [daArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"name"]]];
-                [weakSelf.idArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"id"]]];
-            }
+           
+            
             
             [self huoquwenzhang:daArray];
         }
