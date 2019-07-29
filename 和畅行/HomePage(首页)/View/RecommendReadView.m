@@ -253,6 +253,7 @@
             NSURL *url = [NSURL URLWithString:downUrl];
             if (url) {
                 //该接口用于记录用户使用app下载网站资源记录
+                /*
                 NSString *userSign = [UserShareOnce shareOnce].uid;
                 NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                 CFShow(CFBridgingRetain(infoDictionary));
@@ -273,6 +274,7 @@
                                                };
                 
                 [[NetworkManager sharedNetworkManager] mainThreadRequestWithUrl:downloadStr token:downloadMD5 dic:downloadDic];
+                 */
                 
                 [[UIApplication sharedApplication] openURL:url];
             }

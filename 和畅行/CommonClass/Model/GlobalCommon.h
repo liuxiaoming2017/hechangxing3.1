@@ -72,4 +72,7 @@
 //获取网路链接方式
 +(NSString *)internetStatus;
 
++ (NSString *)AESEncodeWithString:(NSString *)str;
++ (NSString *)AESDecodeWithString:(NSString *)str;
+
 @end

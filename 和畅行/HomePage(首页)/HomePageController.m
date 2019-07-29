@@ -547,11 +547,12 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self buriedDataPoints];
+  //  [self buriedDataPoints];
 
 }
 
 //数据上传处理
+/*
 -(void)buriedDataPoints {
     
     
@@ -613,7 +614,7 @@
   
     
 }
-
+*/
 
 
 

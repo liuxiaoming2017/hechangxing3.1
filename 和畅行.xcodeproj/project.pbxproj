@@ -379,6 +379,10 @@
 		03DEBC772108641D008434BD /* Helper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03DEBC752108641C008434BD /* Helper.mm */; };
 		03E36FE920EDB882000974E1 /* UtilityFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE820EDB882000974E1 /* UtilityFunc.m */; };
 		03EB041921E86B96000AA88B /* ZYAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB041721E86B95000AA88B /* ZYAudioManager.m */; };
+		03EBD1E922EE8B7C001FAD7A /* HWTFCursorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EBD1E222EE8B7A001FAD7A /* HWTFCursorView.m */; };
+		03EBD1EA22EE8B7C001FAD7A /* EnPassWordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EBD1E422EE8B7B001FAD7A /* EnPassWordController.m */; };
+		03EBD1EB22EE8B7C001FAD7A /* EnRegistrController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EBD1E722EE8B7B001FAD7A /* EnRegistrController.m */; };
+		03EBD1EC22EE8B7C001FAD7A /* EnCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EBD1E822EE8B7C001FAD7A /* EnCodeController.m */; };
 		03EE3C3D21D3982B00647E53 /* WenYinFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EE3C3C21D3982B00647E53 /* WenYinFileCell.m */; };
 		03F692D020FEEE9500308E38 /* ResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F692CF20FEEE9500308E38 /* ResultController.m */; };
 		03F692E920FF2DF000308E38 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F692D720FF2DED00308E38 /* ASIDownloadCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1335,6 +1339,14 @@
 		03E36FE820EDB882000974E1 /* UtilityFunc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UtilityFunc.m; sourceTree = "<group>"; };
 		03EB041721E86B95000AA88B /* ZYAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYAudioManager.m; sourceTree = "<group>"; };
 		03EB041821E86B96000AA88B /* ZYAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYAudioManager.h; sourceTree = "<group>"; };
+		03EBD1E122EE8B7A001FAD7A /* HWTFCursorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWTFCursorView.h; sourceTree = "<group>"; };
+		03EBD1E222EE8B7A001FAD7A /* HWTFCursorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWTFCursorView.m; sourceTree = "<group>"; };
+		03EBD1E322EE8B7B001FAD7A /* EnCodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnCodeController.h; sourceTree = "<group>"; };
+		03EBD1E422EE8B7B001FAD7A /* EnPassWordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnPassWordController.m; sourceTree = "<group>"; };
+		03EBD1E522EE8B7B001FAD7A /* EnRegistrController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnRegistrController.h; sourceTree = "<group>"; };
+		03EBD1E622EE8B7B001FAD7A /* EnPassWordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnPassWordController.h; sourceTree = "<group>"; };
+		03EBD1E722EE8B7B001FAD7A /* EnRegistrController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnRegistrController.m; sourceTree = "<group>"; };
+		03EBD1E822EE8B7C001FAD7A /* EnCodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnCodeController.m; sourceTree = "<group>"; };
 		03EE3C3B21D3982B00647E53 /* WenYinFileCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WenYinFileCell.h; sourceTree = "<group>"; };
 		03EE3C3C21D3982B00647E53 /* WenYinFileCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WenYinFileCell.m; sourceTree = "<group>"; };
 		03F692CE20FEEE9500308E38 /* ResultController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResultController.h; sourceTree = "<group>"; };
@@ -2985,6 +2997,7 @@
 		0390CF8220ECB88C000ECA53 /* LoginRegister(登录注册) */ = {
 			isa = PBXGroup;
 			children = (
+				03EBD1E022EE8B64001FAD7A /* English */,
 				03A07BFA20EF5BB600002274 /* ReadingTime */,
 				0385402D20EF1BF5002AC776 /* Model */,
 				03FBDF5E21927FB6006116FC /* LoginRequestController.h */,
@@ -3184,6 +3197,21 @@
 				0325A5EB210995F100275671 /* EEGDetailController.m */,
 			);
 			path = "心电图详情";
+			sourceTree = "<group>";
+		};
+		03EBD1E022EE8B64001FAD7A /* English */ = {
+			isa = PBXGroup;
+			children = (
+				03EBD1E322EE8B7B001FAD7A /* EnCodeController.h */,
+				03EBD1E822EE8B7C001FAD7A /* EnCodeController.m */,
+				03EBD1E622EE8B7B001FAD7A /* EnPassWordController.h */,
+				03EBD1E422EE8B7B001FAD7A /* EnPassWordController.m */,
+				03EBD1E522EE8B7B001FAD7A /* EnRegistrController.h */,
+				03EBD1E722EE8B7B001FAD7A /* EnRegistrController.m */,
+				03EBD1E122EE8B7A001FAD7A /* HWTFCursorView.h */,
+				03EBD1E222EE8B7A001FAD7A /* HWTFCursorView.m */,
+			);
+			path = English;
 			sourceTree = "<group>";
 		};
 		03F692D420FF2DDC00308E38 /* ASIHTTPRequest */ = {
@@ -4183,6 +4211,7 @@
 				030F51332101B0E1003C918F /* WKWebviewController.m in Sources */,
 				83E23EED21C0AD2D00B43298 /* HCY_CallCell.m in Sources */,
 				0379824120FC3832002015A3 /* Tools.m in Sources */,
+				03EBD1EA22EE8B7C001FAD7A /* EnPassWordController.m in Sources */,
 				036E85942186EB4C001B9BB4 /* CMPopTipView.m in Sources */,
 				835DB8DB21D3685D00B8DF99 /* HCY_ConsultingModel.m in Sources */,
 				832ED75F2278321800BFEEFC /* HPITableViewCell.m in Sources */,
@@ -4193,6 +4222,7 @@
 				C973090221BA6C9100060447 /* HCY_ActivationController.m in Sources */,
 				030F51392101C206003C918F /* MeridianIdentifierViewController.m in Sources */,
 				034A4E8C211A9AD900936A46 /* TZGifPhotoPreviewController.m in Sources */,
+				03EBD1E922EE8B7C001FAD7A /* HWTFCursorView.m in Sources */,
 				036E85972186EB4C001B9BB4 /* i9_blelistViewCell.m in Sources */,
 				832ED75C2278286A00BFEEFC /* HpiViewController.m in Sources */,
 				039661F121F1BF7F00754AAA /* PayMentViewController.m in Sources */,
@@ -4285,6 +4315,7 @@
 				03F692F320FF2F7D00308E38 /* Reachability.m in Sources */,
 				03A07C0020EF5BC300002274 /* UITextView+ReadingTime.m in Sources */,
 				032A7A1320E9F9AE003D4952 /* MallViewController.m in Sources */,
+				03EBD1EB22EE8B7C001FAD7A /* EnRegistrController.m in Sources */,
 				03A24CB2211437A1005B5BA1 /* LeMedicineViewController.m in Sources */,
 				039B2AE121255FD500D558F5 /* BreathCheckViewController.m in Sources */,
 				83E23EF721C24F7F00B43298 /* HCY_ActivityController.m in Sources */,
@@ -4441,6 +4472,7 @@
 				03FBDF7B21928078006116FC /* ArticleModel.m in Sources */,
 				03FBDF5C21927F8C006116FC /* LLBlurSidebar.m in Sources */,
 				C97308F921BA50FB00060447 /* SGScanningQRCodeView.m in Sources */,
+				03EBD1EC22EE8B7C001FAD7A /* EnCodeController.m in Sources */,
 				032A7A0820E9F7E2003D4952 /* CommonViewController.m in Sources */,
 				036E843A2186EAD3001B9BB4 /* NSString+FontAwesome.m in Sources */,
 				0390CF8820ECB94F000ECA53 /* LoginViewController.m in Sources */,

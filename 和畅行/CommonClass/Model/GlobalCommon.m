@@ -12,7 +12,7 @@
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 #import "Reachability.h"
-
+#import "AESCipher.h"
 #import <sys/utsname.h>
 
 @interface GlobalCommon()
@@ -743,5 +743,27 @@
     
     return net;
 }
+
+
++ (NSString *)AESEncodeWithString:(NSString *)str
+{
+    // 加密密钥
+    NSString *AESKey = @"AESkeyQWEasduigjgk";
+    
+    NSString *AESEncodeString = [AESCipher encryptAES:str key:AESKey];
+    
+    return AESEncodeString;
+}
+
++ (NSString *)AESDecodeWithString:(NSString *)str
+{
+    // 加密密钥
+    NSString *AESKey = @"AESkeyQWEasduigjgk";
+    
+    NSString *AESDecodeString = [AESCipher decryptAES:str key:AESKey];
+    
+    return AESDecodeString;
+}
+
 
 @end
