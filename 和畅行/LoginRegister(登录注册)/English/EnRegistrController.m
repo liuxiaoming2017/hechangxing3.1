@@ -66,17 +66,17 @@
         if(self.isPhone == NO){
             
             if(![weakself isValidateEmail:phoneTF.text]){
-                 [self showAlertWarmMessage:ModuleZW(@"格式错误")];
+                 [self showAlertWarmMessage:@"incorrect format of phone number/Email address"];
                 return ;
             }
         }else{
             if(phoneTF.text.length != 10 ){
-                 [self showAlertWarmMessage:ModuleZW(@"格式错误")];
+                 [self showAlertWarmMessage:@"incorrect format of phone number/Email address"];
                 return ;
             }
             
             if(![weakself deptNumInputShouldNumber:phoneTF.text] ){
-                [self showAlertWarmMessage:ModuleZW(@"格式错误")];
+                [self showAlertWarmMessage:@"incorrect format of phone number/Email address"];
                 return ;
             }
         }

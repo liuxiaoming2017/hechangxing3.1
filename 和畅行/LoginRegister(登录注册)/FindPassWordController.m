@@ -161,7 +161,7 @@
     self.pYzmTF=YZMTF;
     [self.view addSubview:YZMTF];
     
-    //
+
     UIImage* ObtainYzm_img=[UIImage imageNamed:@"Regist_YZM"];
     UIButton *YZMButton=[UIButton buttonWithType:UIButtonTypeCustom];
     YZMButton.frame=CGRectMake(YZMTF.frame.origin.x+YZMTF.frame.size.width+10.5,  sureSecTF.frame.origin.y+sureSecTF.frame.size.height+8, ObtainYzm_img.size.width/2 + 13,ObtainYzm_img.size.height/2);
@@ -173,14 +173,13 @@
     YZMbtn=YZMButton;
     [self.view addSubview:YZMbtn];
     
+    //    //    registrationTF.frame=CGRectMake(leftX, kNavBarHeight+27, registrationImageTextField.size.width/2, registrationImageTextField.size.height/2);
+
     UIButton *findpsButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *findImg=[UIImage imageNamed:ModuleZW(@"Find_Btn")];
-    [findpsButton setImage:findImg forState:UIControlStateNormal];
-    findpsButton.frame=CGRectMake((ScreenWidth-findImg.size.width/2)/2,YZMButton.frame.origin.y+YZMButton.frame.size.height+19, findImg.size.width/2,findImg.size.height/2);
-    [findpsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [findpsButton setTitleShadowColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.6f] forState:UIControlStateNormal];
-    findpsButton.titleLabel.shadowOffset=CGSizeMake(0.0f, -1.0f);
-    [findpsButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14.0f]];
+    findpsButton.frame=CGRectMake(leftX,YZMButton.frame.origin.y+YZMButton.frame.size.height+19, registrationTF.width,40);
+    [findpsButton setTitle:ModuleZW(@"提交")  forState:(UIControlStateNormal)];
+    [findpsButton setBackgroundColor:RGB_ButtonBlue];
+    [findpsButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [findpsButton addTarget:self action:@selector(userfindpasswordButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:findpsButton];
     ptCenter= self.view.center;
@@ -192,29 +191,29 @@
 -(void)userYZMButton
 {
     if([UserShareOnce shareOnce].languageType){
-        
+//
         if (self.RepInputphoneTF.text.length==0) {
-             [self showAlertWarmMessage:ModuleZW(@"格式错误")];
+             [self showAlertWarmMessage:@"incorrect format of phone number/Email address"];
             return;
         }
-        
+
         if([self.RepInputphoneTF.text containsString:@"@"]){
             if(![self isValidateEmail:self.RepInputphoneTF.text]){
-                [self showAlertWarmMessage:ModuleZW(@"格式错误")];
+                [self showAlertWarmMessage:@"incorrect format of phone number/Email address"];
                 return ;
             }
         }else{
             if(self.RepInputphoneTF.text.length != 10 ){
-                 [self showAlertWarmMessage:ModuleZW(@"格式错误")];
+                 [self showAlertWarmMessage:@"incorrect format of phone number/Email address"];
                 return ;
             }
-            
+
             if(![self deptNumInputShouldNumber:self.RepInputphoneTF.text] ){
-                 [self showAlertWarmMessage:ModuleZW(@"格式错误")];
+                [self showAlertWarmMessage:@"incorrect format of phone number/Email address"];
                 return ;
             }
         }
-        
+    
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.label.text = ModuleZW(@"加载中...");
         NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",self.RepInputphoneTF.text];
@@ -257,11 +256,11 @@
         
         
     }else{
-        if (self.RepInputphoneTF.text.length==0) {
-            
-            [self showAlertWarmMessage:ModuleZW(@"登录手机号不能为空")];
-            return;
-        }
+//        if (self.RepInputphoneTF.text.length==0) {
+//
+//            [self showAlertWarmMessage:ModuleZW(@"登录手机号不能为空")];
+//            return;
+//        }
         
         NSString *UrlPre=URL_PRE;
         NSString *aUrl = [NSString stringWithFormat:@"%@/password/captchaPassword.jhtml",UrlPre];

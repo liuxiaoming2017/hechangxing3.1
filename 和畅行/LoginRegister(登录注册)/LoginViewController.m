@@ -466,12 +466,12 @@
         return;
     }
     if (userNameBox.text.length!=11||![userNameBox.text  hasPrefix:@"1"]) {
-        [self showAlertWarmMessage:ModuleZW(@"格式错误")];
+        [self showAlertWarmMessage:ModuleZW(@"您输入的手机号格式错误")];
         return ;
     }
     
     if(![self deptNumInputShouldNumber:userNameBox.text] ){
-        [self showAlertWarmMessage:ModuleZW(@"格式错误")];
+        [self showAlertWarmMessage:ModuleZW(@"您输入的手机号格式错误")];
         return ;
     }
     
@@ -592,10 +592,13 @@
 - (void)smsCodeLoginAction
 {
     if (userNameBox.text.length!=11||![userNameBox.text  hasPrefix:@"1"]) {
-        
-        [self showAlertWarmMessage:ModuleZW(@"格式错误")];
-        
+        [self showAlertWarmMessage:ModuleZW(@"您输入的手机号格式错误")];
         return;
+    }
+    if(![self deptNumInputShouldNumber:userNameBox.text] ){
+        [self showAlertWarmMessage:ModuleZW(@"您输入的手机号格式错误")];
+        return ;
+        
     }
   
     if (self.isChoose == NO){
@@ -622,37 +625,19 @@
     
     NSString* devicesname=@"iPhone 7";
     
-    if([UserShareOnce shareOnce].languageType){
-        if([userNameBox.text containsString:@"@"]){
-            if(![self isValidateEmail:userNameBox.text]){
-                [self showAlertWarmMessage:ModuleZW(@"格式错误")];
-                return ;
-            }
-        }else{
-            if(userNameBox.text.length != 10 ){
-                [self showAlertWarmMessage:ModuleZW(@"格式错误")];
-                return ;
-            }
-            
-            if(![self deptNumInputShouldNumber:userNameBox.text] ){
-                [self showAlertWarmMessage:ModuleZW(@"格式错误")];
-                return ;
-            }
+    if(![UserShareOnce shareOnce].languageType){
+        
+        if (userNameBox.text.length!=11||![userNameBox.text  hasPrefix:@"1"]) {
+            [self showAlertWarmMessage:ModuleZW(@"您输入的手机号格式错误")];
+            return ;
         }
-    }else{
-            if (userNameBox.text.length!=11||![userNameBox.text  hasPrefix:@"1"]) {
-                [self showAlertWarmMessage:ModuleZW(@"格式错误")];
-                return ;
-            }
-            
-            if(![self deptNumInputShouldNumber:userNameBox.text] ){
-                [self showAlertWarmMessage:ModuleZW(@"格式错误")];
-                return ;
-            }
+        
+        if(![self deptNumInputShouldNumber:userNameBox.text] ){
+            [self showAlertWarmMessage:ModuleZW(@"您输入的手机号格式错误")];
+            return ;
+        }
     }
-   
-    
-    
+       
     if (self.isChoose == NO){
         [self showAlertWarmMessage:ModuleZW(@"请阅读并同意《炎黄用户协议》")];
         return;
