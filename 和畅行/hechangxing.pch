@@ -40,7 +40,7 @@
 #import <ReactiveObjC/ReactiveObjC.h>
 #import "CacheManager.h"
 //和缓
-//#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 
 
 #endif /* ____pch */

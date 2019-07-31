@@ -611,13 +611,13 @@
     if (model.medicRecordId!=nil&&![model.medicRecordId isKindOfClass:[NSNull class]]&&model.medicRecordId.length!=0){
 # pragma mark -  病历列表
         
-//        NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:[UserShareOnce shareOnce].userToken medicId:model.medicRecordId];
-//        NSLog(@"token:%@,iddddd:%@",[UserShareOnce shareOnce].userToken,model.medicRecordId);
-//        ResultSpeakController *vc = [[ResultSpeakController alloc] init];
-//        vc.urlStr = resultStr;
-//        vc.titleStr = @"病历详情";
-//        vc.hidesBottomBarWhenPushed = YES;
-//        [[self viewController].navigationController pushViewController:vc animated:YES];
+        NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:[UserShareOnce shareOnce].userToken medicId:model.medicRecordId];
+        NSLog(@"token:%@,iddddd:%@",[UserShareOnce shareOnce].userToken,model.medicRecordId);
+        ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+        vc.urlStr = resultStr;
+        vc.titleStr = @"病历详情";
+        vc.hidesBottomBarWhenPushed = YES;
+        [[self viewController].navigationController pushViewController:vc animated:YES];
         
         
     }

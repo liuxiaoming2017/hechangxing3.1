@@ -96,12 +96,6 @@
    [self requestPackgeNetWork];
 }
 
-//- (void)userBtnAction:(UIButton *)btn
-//{
-//    _isActivity = YES;
-//    _havePackage = YES;
-//    [self requestPackgeNetWork];
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -408,7 +402,7 @@
                     self->_havePackage = NO;
                 }
                 //本地没有缓存,则在这里展示页面,有缓存在上个接口展示页面
-                if(![weakSelf getLocalPackageContent]){
+                if(![weakSelf getLocalPackageContent22]){
                     [weakSelf showHomePackageView];
                     //和畅提醒加载需要一个加载框
                     [weakSelf.testActivityIndicator startAnimating];
@@ -526,6 +520,15 @@
         }else{
             _havePackage = NO;
         }
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)getLocalPackageContent22
+{
+    NSString *str = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+    if(str){
         return YES;
     }
     return NO;
