@@ -14,8 +14,6 @@
 
 @property (nonatomic, assign) CGFloat itemMargin;
 
-
-
 @property (nonatomic, weak) UIControl *maskView;
 
 @property (nonatomic, strong) NSMutableArray<HWCursorLabel *> *labels;

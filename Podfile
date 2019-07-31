@@ -10,8 +10,8 @@ pod 'SDWebImage', '~> 4.2.1'
 pod 'FMDB'
 pod 'PYPhotoBrowser', '~> 1.5.6'
 pod 'MJRefresh'
-pod 'HHDoctorSDK', :git => "http://code.hh-medic.com/hh_public/HHDoctorSDK.ios.git"
 pod 'YYModel'
+pod 'HHDoctorSDK', :git => "http://code.hh-medic.com/hh_public/HHDoctorSDK.ios.git"
 pod 'ReactiveObjC', '~> 2.1.0'
 end
 
