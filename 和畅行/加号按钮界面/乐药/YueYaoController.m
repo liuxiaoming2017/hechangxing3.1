@@ -846,7 +846,6 @@
  */
 - (void)BluetoothConnection{
     self.centralMgr = [[CBCentralManager alloc]initWithDelegate:self queue:nil];
-    
 }
 
 #pragma mark -- CBCentralManagerDelegate
@@ -1032,13 +1031,14 @@
             break;
         case CBCentralManagerStatePoweredOff:
         {
+            [[NSNotificationCenter defaultCenter] postNotificationName:LeyaoBluetoothOFF object:nil userInfo:nil];
             NSLog(@"蓝牙已关闭");
         }
             break;
         case CBCentralManagerStatePoweredOn:
         {
             NSLog(@"蓝牙已打开");
-            [self.centralMgr scanForPeripheralsWithServices:nil options:nil];
+            [self.centralMgr scanForPeripheralsWithServices:@[[CBUUID UUIDWithString:KUUID_SERVICE]]  options:@{CBCentralManagerScanOptionAllowDuplicatesKey:@YES}];
             
         }
             break;

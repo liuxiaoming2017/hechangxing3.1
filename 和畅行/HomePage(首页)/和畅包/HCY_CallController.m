@@ -77,14 +77,14 @@
         return;
     }
 
-//     HHMSDK *hhmSdk = [[HHMSDK alloc] init];
-//    __weak typeof(self) weakSelf = self;
-//    if(index.row==0||index.row==1){
-//        if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].uuid]){
-//            [self messageHintView];
-//            return;
-//        }
-//    }
+     HHMSDK *hhmSdk = [[HHMSDK alloc] init];
+    __weak typeof(self) weakSelf = self;
+    if(index.row==0||index.row==1){
+        if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].uuid]){
+            [self messageHintView];
+            return;
+        }
+    }
     NSInteger uuid = [[UserShareOnce shareOnce].uuid integerValue];
     
     if(index.row == 0) {
@@ -92,26 +92,26 @@
             [self showAlerVC];
             return;
         }
-//        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
-//            if(error){
-//                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
-//            }else{
-//                [hhmSdk startCall:HHCallTypeChild];
-//            }
-//        }];
+        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
+            if(error){
+                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
+            }else{
+                [hhmSdk startCall:HHCallTypeChild];
+            }
+        }];
 
     }else if (index.row == 1) {
         if ([UserShareOnce shareOnce].username.length != 11) {
             [self showAlerVC];
              return;
         }
-//        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
-//            if(error){
-//                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
-//            }else{
-//                [hhmSdk startCall:HHCallTypeAdult];
-//            }
-//        }];
+        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
+            if(error){
+                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
+            }else{
+                [hhmSdk startCall:HHCallTypeAdult];
+            }
+        }];
 
     }else {
 
@@ -119,6 +119,8 @@
         [self.navigationController pushViewController:adVC animated:YES];
 
     }
+ 
+    
 }
 -(void)showAlerVC {
     UIAlertController *alVC= [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有绑定手机号码,绑定后才能享受服务,是否绑定?") preferredStyle:(UIAlertControllerStyleAlert)];

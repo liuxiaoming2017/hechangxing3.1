@@ -227,7 +227,14 @@
                 if ([ytpeStr isEqualToString:@"0"]&&[typeStr isEqualToString:@"back"]) {
                     return;
                 }
-                [weakSelf showUpdateView:downUrl contentStr:textStr typeStr:ytpeStr];
+                
+                if([[UserShareOnce shareOnce].languageType isEqualToString:@"us-en"]){
+                    NSString *englistStr = @"The latest version comes whether you update?";
+                    [weakSelf showUpdateView:downUrl contentStr:englistStr typeStr:@"0"];
+                }else{
+                   [weakSelf showUpdateView:downUrl contentStr:textStr typeStr:ytpeStr];
+                }
+                
                 
                 NSLog(@"升级了");
             }

@@ -173,10 +173,10 @@
 #define SIZE_TextHuge                           18.0f
 
 //////////////蓝牙
-#define kPERIPHERAL_NAME        @"BPM-188"
-#define KUUID_SERVICE           @"18F0"
-#define kUUID_CHARACTER_RECEIVE @"2AF0"
-#define kUUID_CHARACTER_CONFIG  @"2AF0"
+#define kPERIPHERAL_NAME        @"yueluoyi"
+#define KUUID_SERVICE           @"FFE0"
+#define kUUID_CHARACTER_RECEIVE @"FFE1"
+#define kUUID_CHARACTER_CONFIG  @"FFE2"
 #define kUUID_CHARACTER_SEND    @"2AF1"
 
 #define kLoginSuccessNotification @"loginSuccsess"

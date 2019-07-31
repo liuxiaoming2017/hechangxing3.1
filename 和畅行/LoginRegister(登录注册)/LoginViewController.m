@@ -265,6 +265,7 @@
             imageV4.hidden = NO;
         }
     }
+    
     //从本地查找用户
     NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
     NSString* strcheck=[dicTmp objectForKey:@"ischeck"];
