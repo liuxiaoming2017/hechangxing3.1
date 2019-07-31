@@ -134,13 +134,10 @@
     if (self.isBluetoonState == NO) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请先连接设备") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles: nil];
         [alert show];
-        
-        
     }else{
         if (self.isLeyaoPlayState == NO) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请选择一首乐药进行播放") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles: nil];
             [alert show];
-            
             
         }else{
             

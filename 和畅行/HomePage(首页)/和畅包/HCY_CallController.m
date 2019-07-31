@@ -119,6 +119,8 @@
         [self.navigationController pushViewController:adVC animated:YES];
 
     }
+ 
+    
 }
 -(void)showAlerVC {
     UIAlertController *alVC= [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有绑定手机号码,绑定后才能享受服务,是否绑定?") preferredStyle:(UIAlertControllerStyleAlert)];

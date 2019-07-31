@@ -249,13 +249,13 @@
     [self.view addSubview:weixinBtn];
     
     
-//    if (![WXApi isWXAppInstalled]) {
-//
-//        otherLoginLabel.hidden = YES;
-//        imageV5.hidden = YES;
-//        imageV4.hidden = YES;
-//        weixinBtn.hidden = YES;
-//        if([UserShareOnce shareOnce].languageType){
+    if (![WXApi isWXAppInstalled]) {
+
+        otherLoginLabel.hidden = YES;
+        imageV5.hidden = YES;
+        imageV4.hidden = YES;
+        weixinBtn.hidden = YES;
+        if([UserShareOnce shareOnce].languageType){
 //            self.registeredBT.top = ScreenHeight - kTabBarHeight - 20;
 //            otherLoginLabel.top = self.registeredBT.top - 40;
 //            imageV5.top = otherLoginLabel.top + 15;
@@ -263,8 +263,9 @@
 //            otherLoginLabel.hidden = NO;
 //            imageV5.hidden = NO;
 //            imageV4.hidden = NO;
-//        }
-//    }
+        }
+    }
+    
     //从本地查找用户
     NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
     NSString* strcheck=[dicTmp objectForKey:@"ischeck"];
