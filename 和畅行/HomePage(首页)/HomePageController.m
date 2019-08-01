@@ -555,7 +555,7 @@
 }
 
 //数据上传处理
-/*
+
 -(void)buriedDataPoints {
     
     
@@ -577,9 +577,6 @@
         ageStr =  [GlobalCommon calculateAgeStr:[UserShareOnce shareOnce].birthday];
     }
 
-    NSString *infoStr = [NSString stringWithFormat:@"age=%@&remark=%@&sex=%@&userSign=%@&userSource=1",ageStr,@"",sexStr,userSign];
-    NSString *infoMD5 = [GlobalCommon md5Points:infoStr].uppercaseString;
-    infoMD5 = [infoMD5 lowercaseString];
     NSString *urlStr = [NSString stringWithFormat:@"%@user/info",DATAURL_PRE];
     NSDictionary *infodic = @{ @"body":@{@"age":ageStr,
                                         @"remark":@"",
@@ -588,7 +585,11 @@
                                         @"userSource":@"1"}
                                         };
     
-    [[NetworkManager sharedNetworkManager] submitWithUrl:urlStr token:infoMD5 dic:infodic];
+    [[BuredPoint sharedYHBuriedPoint] submitWithUrl:urlStr dic:infodic successBlock:^(id  _Nonnull response) {
+        
+    } failureBlock:^(NSError * _Nonnull error) {
+        
+    }];
     
     
     //该接口用于记录用户使用app的设备信息
@@ -598,10 +599,7 @@
     NSString *operatorStr       = [GlobalCommon getOperator];//运营商
     NSString *network_methodStr = [GlobalCommon internetStatus];//联网方式
     
-   
-    NSString * deviceStr1= [NSString stringWithFormat:@"brand=iPhone&model=%@&networkMethod=%@&operator=%@&remark=%@&resolution=%@&system=iOS&userSign=%@&userSource=1",modelStr,network_methodStr,operatorStr,@"1",resolutionStr,userSign];
-    NSString *deviceMD5 = [GlobalCommon md5Points:deviceStr1].uppercaseString;
-    deviceMD5 = [deviceMD5 lowercaseString];
+
     NSString *deviceStr = [NSString stringWithFormat:@"%@user/device",DATAURL_PRE];
     NSDictionary *deviceDic = @{ @"body":@{@"brand":@"iPhone",
                                 @"model":modelStr,
@@ -613,11 +611,16 @@
                                 @"resolution":resolutionStr,
                                 @"userSource":@"1"}
                                 };
- [[NetworkManager sharedNetworkManager] submitWithUrl:deviceStr token:deviceMD5 dic:deviceDic];
+    
+    [[BuredPoint sharedYHBuriedPoint] submitWithUrl:deviceStr dic:deviceDic successBlock:^(id  _Nonnull response) {
+        
+    } failureBlock:^(NSError * _Nonnull error) {
+        
+    }];
   
     
 }
-*/
+
 
 
 

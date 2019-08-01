@@ -16,7 +16,8 @@ extern BOOL isJY;
 extern BOOL isSF;
 extern BOOL isBF;
 
-
+//数据统计测试环境
+#define DATAURL_PRE @"http://47.92.160.74:8086/api/v1/"
 
 //测试环境
 //#define URL_PRE @"http://47.92.73.99:8080/healthlm/"
