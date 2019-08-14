@@ -88,8 +88,8 @@
     
      self.session = [NSURLSession sharedSession];
    
-    
-  
+    //埋点注册
+    [[BuredPoint sharedYHBuriedPoint]setTheSignatureWithSignStr:BuBuredPointKey  withOpenStr:@"1"];
     
 //    URL_PRE
 
@@ -428,7 +428,24 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
+    if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].uid]) return;
+    NSString *userSign = [UserShareOnce shareOnce].uid;
+    NSString *startTimeStr = [UserShareOnce shareOnce].startTime;
+    NSString *endTimeStr = [GlobalCommon getCurrentTimes];
 
+    NSString *accessurlStr = [NSString stringWithFormat:@"%@user/access",DATAURL_PRE];
+    NSDictionary *accessDic = @{ @"body":@{@"channel":@"1",
+                                           @"remark":@"1",
+                                           @"userSign":userSign,
+                                           @"startTime":startTimeStr,
+                                           @"userSource":@"1",
+                                           @"quitTime":endTimeStr,
+                                           @"flag":@"1"}
+                                 };
+    [[BuredPoint sharedYHBuriedPoint] mainThreadRequestWithUrl:accessurlStr dic:accessDic resultBlock:^(id  _Nonnull response) {
+        NSLog(@"%@",response);
+    }];
+   
+}
 
 @end

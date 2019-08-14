@@ -260,7 +260,7 @@
             NSURL *url = [NSURL URLWithString:downUrl];
             if (url) {
                 //该接口用于记录用户使用app下载网站资源记录
-                /*
+                
                 NSString *userSign = [UserShareOnce shareOnce].uid;
                 NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                 CFShow(CFBridgingRetain(infoDictionary));
@@ -268,9 +268,6 @@
                 NSString *versionStr = [infoDictionary objectForKey:@"CFBundleShortVersionString"];//版本
                 NSString *down_timeStr = [GlobalCommon getCurrentTimes];;//下载时间
                 
-                NSString * downloadStr1= [NSString stringWithFormat:@"channel=%@&downTime=%@&remark=%@&userSign=%@&userSource=1&version=%@",@"",down_timeStr,@"",userSign,versionStr];
-                NSString *downloadMD5 = [GlobalCommon md5Points:downloadStr1].uppercaseString;
-                downloadMD5 = [downloadMD5 lowercaseString];
                 NSString *downloadStr = [NSString stringWithFormat:@"%@user/download",DATAURL_PRE];
                 NSDictionary *downloadDic = @{ @"body":@{@"channel":@"",
                                                          @"downTime":down_timeStr,
@@ -280,8 +277,12 @@
                                                          @"version":versionStr}
                                                };
                 
-                [[NetworkManager sharedNetworkManager] mainThreadRequestWithUrl:downloadStr token:downloadMD5 dic:downloadDic];
-                 */
+                [[BuredPoint sharedYHBuriedPoint] submitWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
+                    
+                } failureBlock:^(NSError * _Nonnull error) {
+                    
+                }];
+                 
                 
                 [[UIApplication sharedApplication] openURL:url];
             }

@@ -631,6 +631,7 @@
 		C97308FC21BA50FB00060447 /* SGQRCodeTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C97308F421BA50FB00060447 /* SGQRCodeTool.m */; };
 		C973090221BA6C9100060447 /* HCY_ActivationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C973090121BA6C9100060447 /* HCY_ActivationController.m */; };
 		C973090521BE16B700060447 /* HCY_InformationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C973090421BE16B700060447 /* HCY_InformationController.m */; };
+		C9875CA122F1792C00936A73 /* YHDFBuriedPoint.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9875CA022F1792C00936A73 /* YHDFBuriedPoint.framework */; };
 		C99B717221B903BE00F1FF5F /* HCY_DAVisceraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */; };
 		C9E2E23921BE306800F45021 /* HCY_CarDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E2E23821BE306800F45021 /* HCY_CarDetailController.m */; };
 		C9FDB92721BE35AC00E726F3 /* HCY_UnderlineButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FDB92621BE35AC00E726F3 /* HCY_UnderlineButton.m */; };
@@ -1683,6 +1684,7 @@
 		C973090121BA6C9100060447 /* HCY_ActivationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_ActivationController.m; sourceTree = "<group>"; };
 		C973090321BE16B700060447 /* HCY_InformationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_InformationController.h; sourceTree = "<group>"; };
 		C973090421BE16B700060447 /* HCY_InformationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_InformationController.m; sourceTree = "<group>"; };
+		C9875CA022F1792C00936A73 /* YHDFBuriedPoint.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YHDFBuriedPoint.framework; sourceTree = "<group>"; };
 		C99B717021B903BE00F1FF5F /* HCY_DAVisceraCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_DAVisceraCell.h; sourceTree = "<group>"; };
 		C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_DAVisceraCell.m; sourceTree = "<group>"; };
 		C9E2E23721BE306800F45021 /* HCY_CarDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_CarDetailController.h; sourceTree = "<group>"; };
@@ -1709,6 +1711,7 @@
 				0377198C21056EE20010EA8B /* UIKit.framework in Frameworks */,
 				03CEFC0A21A64B6B0097CB17 /* moxibustion.framework in Frameworks */,
 				03D99E5921AD2CBE00C766FD /* UMShare.framework in Frameworks */,
+				C9875CA122F1792C00936A73 /* YHDFBuriedPoint.framework in Frameworks */,
 				038517022186AB8E001DD2B7 /* libWeChatSDK.a in Frameworks */,
 				0377198921056E700010EA8B /* libz.1.1.3.tbd in Frameworks */,
 				0306C5CD21CCBF0B00DA5DC1 /* libSocialSina.a in Frameworks */,
@@ -1970,6 +1973,7 @@
 		032A7A2320EA1E7C003D4952 /* Configure */ = {
 			isa = PBXGroup;
 			children = (
+				C9875CA022F1792C00936A73 /* YHDFBuriedPoint.framework */,
 				032A7A2420EA1E8B003D4952 /* GlobalDefine.h */,
 				038CE86E20EDE75D005E9219 /* Global.h */,
 				0334105620EDBDB800BD68C2 /* NetworkManager.h */,
@@ -4701,6 +4705,7 @@
 					"$(PROJECT_DIR)/和畅行/友盟分享",
 					"$(PROJECT_DIR)/和畅行/友盟分享/UMSocialUI",
 					"$(PROJECT_DIR)/Pods/HHDoctorSDK/HHDoctorSDK",
+					"$(PROJECT_DIR)/和畅行/Configure",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$SRCROOT/和畅行/hechangxing.pch";
@@ -4764,6 +4769,7 @@
 					"$(PROJECT_DIR)/和畅行/友盟分享",
 					"$(PROJECT_DIR)/和畅行/友盟分享/UMSocialUI",
 					"$(PROJECT_DIR)/Pods/HHDoctorSDK/HHDoctorSDK",
+					"$(PROJECT_DIR)/和畅行/Configure",
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
