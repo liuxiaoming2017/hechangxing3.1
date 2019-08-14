@@ -71,55 +71,55 @@
 
 -(void)comeToNextBlockCellwithIndex:(NSIndexPath *)index {
     
-    if ([UserShareOnce shareOnce].languageType){
-        AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
-        [self.navigationController pushViewController:adVC animated:YES];
-        return;
-    }
-
-     HHMSDK *hhmSdk = [[HHMSDK alloc] init];
-    __weak typeof(self) weakSelf = self;
-    if(index.row==0||index.row==1){
-        if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].uuid]){
-            [self messageHintView];
-            return;
-        }
-    }
-    NSInteger uuid = [[UserShareOnce shareOnce].uuid integerValue];
-    
-    if(index.row == 0) {
-        if ([UserShareOnce shareOnce].username.length != 11) {
-            [self showAlerVC];
-            return;
-        }
-        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
-            if(error){
-                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
-            }else{
-                [hhmSdk startCall:HHCallTypeChild];
-            }
-        }];
-
-    }else if (index.row == 1) {
-        if ([UserShareOnce shareOnce].username.length != 11) {
-            [self showAlerVC];
-             return;
-        }
-        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
-            if(error){
-                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
-            }else{
-                [hhmSdk startCall:HHCallTypeAdult];
-            }
-        }];
-
-    }else {
-
-        AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
-        [self.navigationController pushViewController:adVC animated:YES];
-
-    }
- 
+//    if ([UserShareOnce shareOnce].languageType){
+//        AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
+//        [self.navigationController pushViewController:adVC animated:YES];
+//        return;
+//    }
+//
+//     HHMSDK *hhmSdk = [[HHMSDK alloc] init];
+//    __weak typeof(self) weakSelf = self;
+//    if(index.row==0||index.row==1){
+//        if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].uuid]){
+//            [self messageHintView];
+//            return;
+//        }
+//    }
+//    NSInteger uuid = [[UserShareOnce shareOnce].uuid integerValue];
+//    
+//    if(index.row == 0) {
+//        if ([UserShareOnce shareOnce].username.length != 11) {
+//            [self showAlerVC];
+//            return;
+//        }
+//        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
+//            if(error){
+//                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
+//            }else{
+//                [hhmSdk startCall:HHCallTypeChild];
+//            }
+//        }];
+//
+//    }else if (index.row == 1) {
+//        if ([UserShareOnce shareOnce].username.length != 11) {
+//            [self showAlerVC];
+//             return;
+//        }
+//        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
+//            if(error){
+//                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
+//            }else{
+//                [hhmSdk startCall:HHCallTypeAdult];
+//            }
+//        }];
+//
+//    }else {
+//
+//        AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
+//        [self.navigationController pushViewController:adVC animated:YES];
+//
+//    }
+// 
     
 }
 -(void)showAlerVC {

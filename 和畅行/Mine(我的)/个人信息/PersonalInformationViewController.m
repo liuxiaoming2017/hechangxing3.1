@@ -571,6 +571,11 @@
         [dateFormatter setDateFormat:@"YYYY/MM/dd"];
         NSDate *tempDate = [dateFormatter dateFromString:_brithdayStr];
         [self.datePicker setDate:tempDate animated:YES];
+    }else{
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyy/MM/dd";
+        NSString *dateStr = [formatter  stringFromDate:[NSDate date]];
+        self.dateString = dateStr;
     }
 }
 
