@@ -25,6 +25,7 @@
     NSTimer *_timer;
     NSInteger _leftTime;
     NSInteger _childAge;//记录选择子账户的年龄
+    UIButton *_useNorm;
 }
 @end
 
@@ -41,7 +42,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.userInteractionEnabled = YES;
     
-    self.navTitleLabel.text = @"呼吸检测";
+    self.navTitleLabel.text = ModuleZW(@"呼吸检测");
     [self initWithController];
     [self bounceView];
 }
@@ -88,8 +89,8 @@
     imageView.image = [UIImage imageNamed:@"呼吸01"];
     [self.view addSubview:imageView];
     
-    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenSize.width/2-60, 80, 50, 20)];
-    _timeLabel.text = @"倒计时";
+    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenSize.width/2-100, 80, 100, 20)];
+    _timeLabel.text = ModuleZW(@"倒计时");
     _timeLabel.textAlignment = NSTextAlignmentRight;
     _timeLabel.textColor = [UIColor whiteColor];
     _timeLabel.font = [UIFont systemFontOfSize:15];
@@ -114,10 +115,11 @@
     
     //[self createLabelWith:CGRectMake(kScreenSize.width/2-70, imageView.bottom+36, 140, 20) text:@"请输入本次呼吸次数" fontSize:14 textColor:[UIColor whiteColor] textAlignment:NSTextAlignmentCenter tag:21 isBord:YES];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(kScreenSize.width/2-70, imageView.bottom+36, 140, 20)];
-    label.text = @"请输入本次呼吸次数";
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, imageView.bottom+36, ScreenWidth-20, 40)];
+    label.text = ModuleZW(@"请输入本次呼吸次数");
     label.font = [UIFont systemFontOfSize:14];
     label.textColor = [UIColor whiteColor];
+    label.numberOfLines = 0;
     label.textAlignment = NSTextAlignmentCenter;
     //label.tag = tag;
     [self.view addSubview:label];
@@ -131,18 +133,20 @@
     _breathCountTF.delegate = self;
     _breathCountTF.placeholder = @"- -";
     _breathCountTF.textAlignment = NSTextAlignmentCenter;
+    _breathCountTF.keyboardType = UIKeyboardTypeNumberPad;
     _breathCountTF.textColor = [Tools colorWithHexString:@"#1ca5ed"];
     _breathCountTF.font = [UIFont systemFontOfSize:18];
     [self.view addSubview:_breathCountTF];
     
     
     //开始检测
-    UIButton *startCheckButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-100, breathCount.bottom+30, 200, 40) target:self sel:@selector(startCheckClick:) tag:101 image:@"开始检测" title:nil];
+    UIButton *startCheckButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-100, breathCount.bottom+30, 200, 40) target:self sel:@selector(startCheckClick:) tag:101 image:ModuleZW(@"血压03") title:nil];
     [self.view addSubview:startCheckButton];
     
     //使用规范
-    UIButton *useNorm = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-30,startCheckButton.bottom+30, 60, 25) target:self sel:@selector(useNormClick:) tag:102 image:@"使用规范" title:nil];
+   UIButton *useNorm = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-30,startCheckButton.bottom+30, 60, 25) target:self sel:@selector(useNormClick:) tag:102 image:ModuleZW(@"使用规范") title:nil];
     [self.view addSubview:useNorm];
+    _useNorm = useNorm;
 }
 
 -(void)createLabelWith:(CGRect)frame text:(NSString *)text fontSize:(CGFloat)size textColor:(UIColor *)color textAlignment:(NSTextAlignment)alignment tag:(NSInteger)tag isBord:(BOOL)isBord{
@@ -198,11 +202,13 @@
     NSLog(@"点击开始检测按钮");
     [button setHidden:YES];
     
-    UIButton *commitButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-100, kScreenSize.height == 480? 350: 400, 200, 40) target:self sel:@selector(commitBtnClick:) tag:11 image:@"commit_green" title:nil];
+    UIButton *commitButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-100, kScreenSize.height == 480? 350: 400, 200, 40) target:self sel:@selector(commitBtnClick:) tag:11 image:ModuleZW(@"commit_green") title:nil];
     [self.view addSubview:commitButton];
     
-    UIButton *reCheckButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-100, kScreenSize.height == 480? 400: 450, 200, 40) target:self sel:@selector(reCheckBtnClick:) tag:12 image:@"recheck_blue" title:nil];
+    UIButton *reCheckButton = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-100, kScreenSize.height == 480? 400: 450, 200, 40) target:self sel:@selector(reCheckBtnClick:) tag:12 image:ModuleZW(@"recheck_blue") title:nil];
     [self.view addSubview:reCheckButton];
+    
+    _useNorm.top = reCheckButton.bottom + 20;
     
     //倒计时30s
     _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerRun) userInfo:nil repeats:YES];
@@ -217,7 +223,7 @@
         [_timeLabel setHidden:YES];
         [_instanceTimeLabel setHidden:YES];
         [_unitLabel setHidden:YES];
-        _endLabel = [Tools labelWith:@"计时结束" frame:CGRectMake(kScreenSize.width/2-60, 130, 120, 50) textSize:18 textColor:[UIColor whiteColor] lines:1 aligment:NSTextAlignmentCenter];
+        _endLabel = [Tools labelWith:ModuleZW(@"计时结束") frame:CGRectMake(kScreenSize.width/2-60, 130, 120, 50) textSize:18 textColor:[UIColor whiteColor] lines:1 aligment:NSTextAlignmentCenter];
         [self.view addSubview:_endLabel];
         if (_timer) {
             [_timer invalidate];
@@ -232,27 +238,43 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"正在计时中，请稍后...";
-        hud.minSize = CGSizeMake(132.f, 108.0f);
+        hud.label.text = ModuleZW(@"正在计时中，请稍后...");
+        hud.minSize = CGSizeMake(152.f, 120.0f);
+        hud.label.numberOfLines = 0;
         [hud hideAnimated:YES afterDelay:2];
         
     }else{
-        if([GlobalCommon isManyMember]){
-            __weak typeof(self) weakSelf = self;
-            SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
-            [subMember receiveSubIdWith:^(NSString *subId) {
-                NSLog(@"%@",subId);
-                if ([subId isEqualToString:@"user is out of date"]) {
-                    //登录超时
-                    
-                }else{
-                    [weakSelf requestNetworkData:subId];
-                }
-                [subMember hideHintView];
-            }];
-        }else{
-             [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+        NSString *str = @"";
+        if([GlobalCommon stringEqualNull:_breathCountTF.text]){
+            str =ModuleZW(@"温度值不能为空");
+        }else if([self->_breathCountTF.text integerValue] == 0){
+            str = ModuleZW(@"您的输入有误,请重新输入");
         }
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.removeFromSuperViewOnHide =YES;
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = str;
+        hud.label.numberOfLines = 0;
+        hud.minSize = CGSizeMake(132.f, 108.0f);
+        [hud hideAnimated:YES afterDelay:2];
+        [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+
+//        if([GlobalCommon isManyMember]){
+//            __weak typeof(self) weakSelf = self;
+//            SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
+//            [subMember receiveSubIdWith:^(NSString *subId) {
+//                NSLog(@"%@",subId);
+//                if ([subId isEqualToString:@"user is out of date"]) {
+//                    //登录超时
+//
+//                }else{
+//                    [weakSelf requestNetworkData:subId];
+//                }
+//                [subMember hideHintView];
+//            }];
+//        }else{
+//             [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
+//        }
         
         
     }
@@ -266,6 +288,9 @@
     NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
     [request addPostValue:subId forKey:@"memberChildId"];
     [request addPostValue:@(50) forKey:@"datatype"];
@@ -292,17 +317,17 @@
         NSString *resultStr = [[NSString alloc] init];
         if (_childAge>=18) {
             //成人，正常值16~20次/分
-            if (nums>=8 && nums <=10) {
-                resultStr = @"正常";
+            if (nums>=32 && nums <=40) {
+                resultStr = ModuleZW(@"正常");
             }else{
-                resultStr = @"不正常";
+                resultStr = ModuleZW(@"不正常");
             }
         }else{
             //儿童，正常值30~40次/分
-            if (nums>=15 && nums <=20) {
-                resultStr = @"正常";
-            }else if(nums <15){
-                resultStr = @"不正常";
+            if (nums>=60 && nums <=80) {
+                resultStr = ModuleZW(@"正常");
+            }else{
+                resultStr = ModuleZW(@"不正常");
             }
         }
         UIView *view = [[UIView alloc] initWithFrame:self.view.frame];
@@ -319,17 +344,17 @@
         imageView.userInteractionEnabled = YES;
         imageView.image = [UIImage imageNamed:@"bounceView"];
         
-        UIButton *confirmBtn = [Tools creatButtonWithFrame:CGRectMake(20, kScreenSize.height/2+90, kScreenSize.width-40, 40) target:self sel:@selector(confirmBtnClick2:) tag:21 image:@"确定" title:nil];
+        UIButton *confirmBtn = [Tools creatButtonWithFrame:CGRectMake(20, kScreenSize.height/2+90, kScreenSize.width-40, 40) target:self sel:@selector(confirmBtnClick2:) tag:21 image:ModuleZW(@"sureButton") title:nil];
                 
-        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:@"您当前呼吸节律%ld次/分",(long)nums*2] frame:CGRectMake(0, 60, imageView.bounds.size.width, 20) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:1 aligment:NSTextAlignmentCenter];
-        UILabel *resultLabel1 = [Tools labelWith:@"当前呼吸节律" frame:CGRectMake(imageView.bounds.size.width/2-90, 110, 110, 20) textSize:12 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentRight];
+        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前呼吸节律%ld次/分"),(long)nums*2] frame:CGRectMake(0, 60, imageView.bounds.size.width, 20) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:1 aligment:NSTextAlignmentCenter];
+        UILabel *resultLabel1 = [Tools labelWith:ModuleZW(@"当前呼吸节律") frame:CGRectMake(imageView.bounds.size.width/2-90, 110, 110, 20) textSize:12 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentRight];
         NSString *colorStr = [[NSString alloc] init];
-        if ([resultStr isEqualToString:@"正常"]) {
+        if ([resultStr isEqualToString:ModuleZW(@"正常")]) {
             colorStr = @"#68c900";
         }else{
             colorStr = @"#f60a0c";
         }
-        UILabel *resultLabel2 = [Tools labelWith:resultStr frame:CGRectMake(imageView.bounds.size.width/2+20, 110, 50, 20) textSize:12 textColor:[Tools colorWithHexString:colorStr] lines:1 aligment:NSTextAlignmentLeft];
+        UILabel *resultLabel2 = [Tools labelWith:resultStr frame:CGRectMake(resultLabel1.right, 110, 50, 20) textSize:12 textColor:[Tools colorWithHexString:colorStr] lines:1 aligment:NSTextAlignmentLeft];
         
         [imageView addSubview:countLabel];
         [imageView addSubview:resultLabel1];
@@ -343,7 +368,7 @@
         
         
     }else{
-        [self showAlertWarmMessage:@"提交数据失败"];
+        [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
         
     }
     
@@ -353,7 +378,7 @@
 
 -(void)requestError:(ASIHTTPRequest *)request{
     [self hidePreogressView];
-    [self showAlertWarmMessage:@"提交数据失败"];
+    [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
 }
 //点击确定
 -(void)confirmBtnClick2:(UIButton *)button{

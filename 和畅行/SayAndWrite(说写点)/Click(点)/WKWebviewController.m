@@ -27,8 +27,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
-    self.navTitleLabel.textColor = [UIColor whiteColor];
     self.preBtn.hidden = NO;
     //[self.leftBtn setImage:[UIImage imageNamed:@"user_01"] forState:UIControlStateNormal];
     self.leftBtn.hidden = YES;
@@ -72,6 +70,10 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
     [request addValue:[self getCookieValue] forHTTPHeaderField:@"Cookie"];
+    if([UserShareOnce shareOnce].languageType){
+        [request addValue:[UserShareOnce shareOnce].languageType forHTTPHeaderField:@"language"];
+    }
+    request.timeoutInterval = 20;
     [self.wkwebview loadRequest:request];
     [self.view addSubview:self.wkwebview];
     
@@ -153,7 +155,12 @@
 
 - (void)goBack:(UIButton *)btn
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    if (self.popInt == 111) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [self.navigationController popToRootViewControllerAnimated:YES];
+
+    }
 }
 
 #pragma mark - KVO

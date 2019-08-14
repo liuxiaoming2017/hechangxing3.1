@@ -156,7 +156,7 @@
     NSLog(@"%f",priceChinese);
     NSString *order_price   = @"";//1分钱测试
     order_price = [NSString stringWithFormat:@"%.0f",priceChinese];
-
+    
     //================================
     //预付单参数订单设置
     //================================
@@ -171,8 +171,9 @@
     [packageParams setObject: noncestr          forKey:@"nonce_str"];   //随机串
     [packageParams setObject: @"APP"            forKey:@"trade_type"];  //支付类型，固定为APP
     [packageParams setObject: order_name        forKey:@"body"];        //订单描述，展示给用户
-    [packageParams setObject: [NSString stringWithFormat:@"http://app.ky3h.com:8001/healthlm/payment/notify/sync/%@.jhtml",[dictionary objectForKey:@"sn"]]        forKey:@"notify_url"];  //支付结果异步通知
+    [packageParams setObject: [NSString stringWithFormat:@"%@payment/notify/sync/%@.jhtml",URL_PRE,[dictionary objectForKey:@"sn"]]        forKey:@"notify_url"];  //支付结果异步通知
     [packageParams setObject: [dictionary objectForKey:@"sn"]           forKey:@"out_trade_no"];//商户订单号
+    //196.168.1.1
     [packageParams setObject: @"196.168.1.1"    forKey:@"spbill_create_ip"];//发器支付的机器ip
     [packageParams setObject: order_price       forKey:@"total_fee"];       //订单金额，单位为分
     

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface RecommendReadView : UIView
-@property (nonatomic,strong) NSArray *recommendArr;
+@property (nonatomic,strong) NSMutableArray*recommendArr;
 @end

@@ -52,9 +52,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    
-    self.navTitleLabel.text = @"第三方支付";
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
-    self.navTitleLabel.textColor = [UIColor whiteColor];
+    self.navTitleLabel.text = ModuleZW(@"第三方支付");
     self.preBtn.hidden = NO;
     self.leftBtn.hidden = YES;
     self.rightBtn.hidden = YES;
@@ -79,7 +77,7 @@
     [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"CELL"];
     
     _tabArray = [[NSMutableArray alloc]initWithObjects:@"zhifubao.png",@"weixin.png", nil];
-    _zhifufangshiArray = [[NSMutableArray alloc]initWithObjects:@"支付宝支付",@"微信支付", nil];
+    _zhifufangshiArray = [[NSMutableArray alloc]initWithObjects:ModuleZW(@"支付宝支付"),ModuleZW(@"微信支付"), nil];
     
 //    _tabArray = [[NSMutableArray alloc]initWithObjects:@"weixin.png", nil];
 //    _zhifufangshiArray = [[NSMutableArray alloc]initWithObjects:@"微信支付", nil];
@@ -89,37 +87,35 @@
     self.view.backgroundColor = [UIColor whiteColor];
 
     [self generatePayOrders];
-    UIImageView *xiaofeijinerImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width - 105, 44)];
+    UIImageView *xiaofeijinerImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - kTabBarHeight, self.view.frame.size.width - 105, 44)];
     xiaofeijinerImage.image = [UIImage imageNamed:@"leyaoxiaofeijiner.png"];
     [self.view addSubview:xiaofeijinerImage];
-    UIImageView *jiesuanImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width -  105, self.view.frame.size.height - 44, 105, 44)];
-    jiesuanImage.image = [UIImage imageNamed:@"zhifudetu.png"];
-    [self.view addSubview:jiesuanImage];
     
-    UIImageView *gouwucheImage = [[UIImageView alloc]initWithFrame:CGRectMake(15, self.view.frame.size.height - 32, 20, 20)];
-    gouwucheImage.image = [UIImage imageNamed:@"qianbao.png"];
-    [self.view addSubview:gouwucheImage];
-    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, self.view.frame.size.height - 32, 50, 20)];
-    zongjinerLabel.text = @"总计：";
+    UIButton *jiesuanButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    jiesuanButton.frame = CGRectMake(self.view.frame.size.width -  105, self.view.frame.size.height - kTabBarHeight, 105, 44);
+    [jiesuanButton addTarget:self action:@selector(zhifujiesuanButton) forControlEvents:(UIControlEventTouchUpInside)];
+    [jiesuanButton setTitle:ModuleZW(@"去结算") forState:(UIControlStateNormal)];
+    [jiesuanButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    jiesuanButton.backgroundColor = RGB(68, 204, 82);
+    [self.view addSubview:jiesuanButton];
+    
+    
+    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 12, 50, 20)];
+    zongjinerLabel.text = ModuleZW(@"总计: ");
     zongjinerLabel.textColor = [UIColor whiteColor];
     zongjinerLabel.font = [UIFont systemFontOfSize:13];
-    [self.view addSubview:zongjinerLabel];
+    [xiaofeijinerImage addSubview:zongjinerLabel];
     
     
-    _jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(100, self.view.frame.size.height - 32, 60, 20)];
-    
-    
+    _jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(100, 12, 60, 20)];
     _jinerLabel.textColor = [UIColor whiteColor];
     _jinerLabel.font = [UIFont boldSystemFontOfSize:13];
     if (self.dingdanStr.length == 0) {
-        _jinerLabel.text  = [NSString stringWithFormat:@"¥%.1f",[_priceAPPStr floatValue]];
+        _jinerLabel.text  = [NSString stringWithFormat:@"¥%.2f",[_priceAPPStr floatValue]];
     }
-    [self.view addSubview:_jinerLabel];
+    [xiaofeijinerImage addSubview:_jinerLabel];
 
-    UIButton *jiesuanButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    jiesuanButton.frame = CGRectMake(self.view.frame.size.width - 105, self.view.frame.size.height - 44, 105, 44);
-    [jiesuanButton addTarget:self action:@selector(zhifujiesuanButton) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:jiesuanButton];
+  
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(zhifujieguo:) name:@"count" object:nil];
      
 
@@ -166,7 +162,7 @@
                 [self dingdanhaozhifu:@"alipayNativeAppPlugin"];
             }else if(tagCount == 6001){
                 // [self WXPayButton];
-                [self dingdanhaozhifu:@"weixinPayPlugin"];
+                [self dingdanhaozhifu:@"weixinPayHcyPhonePlugin"];
             }
         }else{
         if (tagCount == 6000) {
@@ -203,7 +199,13 @@
     NSURL *url = [NSURL URLWithString:aUrlle];
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    //ios_hcy-yh-1.0//andriod_phone_hcy-yh-33
+    [request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
+    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setRequestMethod:@"POST"];
     //[request setPostValue:idStr forKey:@"id"];
     //[request setPostValue:isreader forKey:@"isRead"];
@@ -217,8 +219,8 @@
     }else{
         [request setPostValue:_priceStr forKey:@"cardFees"];
     }
-    [request setPostValue:_priceAPPStr forKey:@"balance"];
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+    [request addPostValue:_priceAPPStr forKey:@"balance"];
+   // [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];
     [request setDidFailSelector:@selector(requestIsAPPpayReaderError:)];
@@ -231,7 +233,7 @@
 {
     [self hudWasHidden];
     
-    [self showAlertWarmMessage:@"网络连接错误"];
+    [self showAlertWarmMessage:requestErrorMessage];
     
 }
 -(void)requestIsAPPpayReaderCompleted:(ASIHTTPRequest *)request
@@ -259,8 +261,8 @@
       // }
         if ([self.paymentPluginId isEqualToString:@"alipayNativeAppPlugin"]) {
             
-            [AlipayRequestConfig alipayWithPartner:kPartnerID seller:kSellerAccount tradeNO:[AlipayToolKit genTradeNoWithTime] productName:self.namePay   productDescription:self.namePay amount:[self.shoukuandanDic objectForKey:@"amount"] notifyURL:[NSString stringWithFormat:@"http://app.ky3h.com:8001/healthlm/notify/sync/%@.jhtml",[_shoukuandanDic objectForKey:@"sn"]] itBPay:@"30m"];
-        }else if([self.paymentPluginId isEqualToString:@"weixinPayPlugin"]){
+            [AlipayRequestConfig alipayWithPartner:kPartnerID seller:kSellerAccount tradeNO:[_shoukuandanDic objectForKey:@"sn"] productName:self.namePay   productDescription:self.namePay amount:[self.shoukuandanDic objectForKey:@"amount"] notifyURL:[NSString stringWithFormat:@"%@payment/notify/async/%@.jhtml",URL_PRE,[_shoukuandanDic objectForKey:@"sn"]] itBPay:@"30m"];
+        }else if([self.paymentPluginId isEqualToString:@"weixinPayHcyPhonePlugin"]){
             
             
             [self sendPay_demoName:self.namePay Dictionary:self.shoukuandanDic];
@@ -287,7 +289,7 @@
     UIImageView *zhifufangshiImage = [[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 40, 40)];
     zhifufangshiImage.image = [UIImage imageNamed:self.tabArray[indexPath.row]];
     [cell addSubview:zhifufangshiImage];
-    UILabel *zhifufangshiLabel = [[UILabel alloc]initWithFrame:CGRectMake(110, 20, 100, 20)];
+    UILabel *zhifufangshiLabel = [[UILabel alloc]initWithFrame:CGRectMake(110, 20, 180, 20)];
     zhifufangshiLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
     zhifufangshiLabel.font = [UIFont systemFontOfSize:15];
     zhifufangshiLabel.text = _zhifufangshiArray[indexPath.row];
@@ -327,10 +329,13 @@
 - (void)WXPayButton{
     [self showHUD];
     NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/mobile/order/payment/submit.jhtml?sn=%@&paymentPluginId=%@&token=%@&JESSONID=%@",UrlPre,_dingdanStr,@"weixinPayPlugin",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID];
+    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/mobile/order/payment/submit.jhtml?sn=%@&paymentPluginId=%@&token=%@&JESSONID=%@",UrlPre,_dingdanStr,@"weixinPayHcyPhonePlugin",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID];
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:aUrlle];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];
@@ -363,9 +368,7 @@
             self.dingdanDic = [dic objectForKey:@"data"];
             _jinerLabel.text = [NSString stringWithFormat:@"¥%@",[self.dingdanDic  objectForKey:@"amount"]];
             [self sendPay_demoName:[self.dataDic objectForKey:@"name"] Dictionary:self.dingdanDic];
-//            if (_delegate) {
-//                [_delegate sendPay_demoName:[self.dataDic objectForKey:@"name"] Dictionary:self.dingdanDic];
-//            }
+
         }
         else if ([status intValue]==44) {
             UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"登录超时，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
@@ -442,7 +445,6 @@
         
         [self.navigationController popViewControllerAnimated:YES];
     }
-     [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -454,6 +456,9 @@
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:aUrlle];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];
@@ -467,7 +472,7 @@
     [self.view addSubview:progress_];
     [self.view bringSubviewToFront:progress_];
     progress_.delegate = self;
-    progress_.label.text = @"加载中...";
+    progress_.label.text = ModuleZW(@"加载中...");
     [progress_ showAnimated:YES];
     
 }
@@ -548,6 +553,9 @@
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:aUrlle];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];
@@ -583,7 +591,7 @@
             self.dingdanDic = [dic objectForKey:@"data"];
             NSLog(@"dic*******%@",dic);
             _jinerLabel.text = [NSString stringWithFormat:@"¥%@",[self.dingdanDic  objectForKey:@"amount"]];
-            [AlipayRequestConfig alipayWithPartner:kPartnerID seller:kSellerAccount tradeNO:[self.dataDic objectForKey:@"sn"] productName:[self.dataDic objectForKey:@"name"]   productDescription:[self.dataDic objectForKey:@"name"] amount:[self.dingdanDic objectForKey:@"amount"] notifyURL:[NSString stringWithFormat:@"http://app.ky3h.com:8001/healthlm/notify/sync/%@.jhtml",[_dingdanDic objectForKey:@"sn"]] itBPay:@"30m"];
+            [AlipayRequestConfig alipayWithPartner:kPartnerID seller:kSellerAccount tradeNO:[self.dataDic objectForKey:@"sn"] productName:[self.dataDic objectForKey:@"name"]   productDescription:[self.dataDic objectForKey:@"name"] amount:[self.dingdanDic objectForKey:@"amount"] notifyURL:[NSString stringWithFormat:@"%@payment/notify/async/%@.jhtml",URL_PRE,[_dingdanDic objectForKey:@"sn"]] itBPay:@"30m"];
         }
         else if ([status intValue]==44) {
             UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"登录超时，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];

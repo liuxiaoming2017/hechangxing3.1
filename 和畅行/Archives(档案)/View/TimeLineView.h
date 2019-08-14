@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HealthTipsModel.h"
 @interface TimeLineView : UIView
+
+@property (nonatomic,strong) HealthTipsModel*topModel;
+@property (nonatomic,strong)  MBProgressHUD *hud;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSArray *dataArr;
+@property (nonatomic,assign)  NSInteger typeInteger;
+
+-(void)relodTableViewWitDataArray:(NSMutableArray *)dataArray withType:(NSInteger)type withMemberID:(NSString *)memberID;
+
 - (id)initWithFrame:(CGRect)frame withData:(NSArray *)dataArr;
 @end

@@ -11,7 +11,7 @@
 #import "ASIFormDataRequest.h"
 #import "MBProgressHUD.h"
 #import "LPPopup.h"
-#import "MLAudioRecorder.h"
+
 #import "SBJson.h"
 
 #import "CustomNavigationController.h"
@@ -44,7 +44,7 @@
     UIView *yincangView;
     UIImageView *imageHong;
 }
-@property (nonatomic,strong) MLAudioRecorder *recorder;
+//@property (nonatomic,strong) MLAudioRecorder *recorder;
 @property (nonatomic,strong) UIButton* Recordbtn;
 @property (nonatomic,strong) UIImageView* RotateImg;
 @property (nonatomic, copy) NSString *filePath;
@@ -68,6 +68,8 @@
 
 /**soundCount*/
 @property (nonatomic,assign) CGFloat soundCount;
+@property (nonatomic,assign) BOOL isLound;
+
 @end
 
 @implementation MeridianIdentifierViewController
@@ -78,7 +80,7 @@
     
     preBtn.frame = CGRectMake(20, kStatusBarHeight+5, 80, 30);
     [preBtn setImage:[UIImage imageNamed:@"nav_bar_back"] forState:UIControlStateNormal];
-    [preBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [preBtn setTitle:ModuleZW(@"返回") forState:UIControlStateNormal];
     [preBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [preBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     preBtn.titleEdgeInsets = UIEdgeInsetsMake(1, -5, 0, 0);
@@ -91,7 +93,7 @@
 - (void)goBack:(UIButton *)btn
 {
     [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 
@@ -100,10 +102,9 @@
      [self setupContentView];
     
     [super viewDidLoad];
-    
+    self.isLound = NO;
     self.topView.backgroundColor = [UIColor clearColor];
-    self.navTitleLabel.text = @"经络功能状态评估";
-    self.navTitleLabel.textColor = [UIColor whiteColor];
+    self.navTitleLabel.text = ModuleZW(@"经络功能状态评估");
 }
 
 - (void)setupContentView
@@ -235,71 +236,7 @@
 }
 
 
-- (void)audio
-{
-    recordButton.selected = YES;
-    yincangView.hidden = NO;
-    
-    NSError *error1 = nil;
-    
-    AVAudioSession * audioSession = [AVAudioSession sharedInstance]; //得到AVAudioSession单例对象
-    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error: &error1];//设置类别,表示该应用同时支持播放和录音
-    [audioSession setActive:YES error: &error1];//启动音频会话管理,此时会阻断后台音乐的播放.
-    
-    //录音设置
-    NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc]init];
-    //设置录音格式  AVFormatIDKey==kAudioFormatLinearPCM
-    [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
-    //设置录音采样率(Hz) 如：AVSampleRateKey==8000/44100/96000（影响音频的质量）
-    [recordSetting setValue:[NSNumber numberWithFloat:44100] forKey:AVSampleRateKey];
-    //  [recordSetting setValue:[NSNumber numberWithFloat:9600] forKey:AVEncoderBitRateKey];
-    //AVEncoderBitRateKey
-    //录音通道数  1 或 2
-    [recordSetting setValue:[NSNumber numberWithInt:2] forKey:AVNumberOfChannelsKey];
-    //线性采样位数  8、16、24、32
-    [recordSetting setValue:[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
-    //录音的质量
-    [recordSetting setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsBigEndianKey];
-    [recordSetting setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
-    NSDate *  senddate=[NSDate date];
-    
-    NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
-    [dateformatter setDateFormat:@"YYYYMMdd-mm:hh:ss"];
-    
-    NSString *  locationString=[dateformatter stringFromDate:senddate];
-    NSLog(@"locationString:%@",locationString);
-//    [dateformatter release];
-    // NSString* path=[self getPathOfDocuments];
-    NSString *path = [ NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-    NSString *imageDir = [path stringByAppendingPathComponent:@"wybs"];
-    imageDir = [NSString stringWithFormat:@"%@/Caches/%@", path, [UserShareOnce shareOnce].username];
-    [self addSkipBackupAttributeToItemAtPath:imageDir];
-    BOOL isDir = NO;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    BOOL existed = [fileManager fileExistsAtPath:imageDir isDirectory:&isDir];
-    if ( !(isDir == YES && existed == YES) )
-    {
-        [fileManager createDirectoryAtPath:imageDir withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    
-    self.filePath=[imageDir stringByAppendingPathComponent:[NSString stringWithFormat:@"HY%@.aac",locationString]];
-    NSLog(@"filepath===%@",self.filePath);
-    // NSString *strUrl = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSURL *url = [NSURL fileURLWithPath:self.filePath];
-    //urlPlay = url;
-    
-    NSError *error;
-    //初始化
-    RecorderAcc = [[AVAudioRecorder alloc]initWithURL:url settings:recordSetting error:&error];
-    
-    
-    //开启音量检测
-    RecorderAcc.meteringEnabled = YES;
-    RecorderAcc.delegate = self;
-    
-    //判断设备是否支持录音
-    [self luyinWithrecording];
-}
+
 - (BOOL)addSkipBackupAttributeToItemAtPath:(NSString *) filePathString
 {
     NSURL* URL= [NSURL fileURLWithPath: filePathString];
@@ -322,7 +259,11 @@
     double lowPassResults = pow(10, (0.05 * [RecorderAcc peakPowerForChannel:0]));
 //    NSLog(@"声音大小：%lf",lowPassResults);
     self.soundCount += lowPassResults;
-    
+    if(lowPassResults > 0.2){
+        self.isLound = YES;
+    }
+//    double averSound = [RecorderAcc peakPowerForChannel:0];
+//    NSLog(@"*****:%f,########:%f,$$$$$$$$$:%f",self.soundCount,lowPassResults,averSound);
     
     //最大50  0
     //图片 小-》大
@@ -389,8 +330,8 @@
             if(granted){
                 [self recordAudio];
             }else{
-                UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"请打开麦克风权限" preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:NULL];
+                UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"录音权限被禁止") preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleCancel handler:NULL];
                 [alertVC addAction:alertAct1];
                 [self presentViewController:alertVC animated:YES completion:NULL];
             }
@@ -512,7 +453,7 @@
         //        if (self.filePath.length == 0) {
         //            [self audio];
         //        }
-        timerACC = [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(detectionVoices) userInfo:nil repeats:YES];
+        timerACC = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(detectionVoices) userInfo:nil repeats:YES];
         
     }
 
@@ -708,26 +649,28 @@
                 [timerACC invalidate];
             }
             
-            if ( self.soundCount < 0.6) {
+            if ( self.soundCount < 2.0 || !self.isLound) {
                 [self soundTooLow];
             }else{
-                if([GlobalCommon isManyMember]){
-                    SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
-                    __weak typeof(self) weakSelf = self;
-                    [subMember receiveSubIdWith:^(NSString *subId) {
-                        NSLog(@"%@",subId);
-                        if ([subId isEqualToString:@"user is out of date"]) {
-                            //登录超时
-                            
-                        }else{
-                            [weakSelf testMp3Upload];
-                            NSLog(@"选中的子账户id为：%@",subId);
-                        }
-                        [subMember hideHintView];
-                    }];
-                }else{
-                    [self testMp3Upload];
-                }
+                [self testMp3Upload];
+
+//                if([GlobalCommon isManyMember]){
+//                    SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
+//                    __weak typeof(self) weakSelf = self;
+//                    [subMember receiveSubIdWith:^(NSString *subId) {
+//                        NSLog(@"%@",subId);
+//                        if ([subId isEqualToString:@"user is out of date"]) {
+//                            //登录超时
+//                            
+//                        }else{
+//                            [weakSelf testMp3Upload];
+//                            NSLog(@"选中的子账户id为：%@",subId);
+//                        }
+//                        [subMember hideHintView];
+//                    }];
+//                }else{
+//                    [self testMp3Upload];
+//                }
                 
                 
             }
@@ -763,6 +706,9 @@
     ASIFormDataRequest *request=[[ASIFormDataRequest alloc]initWithURL:url1];
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setDelegate:self];
     [request setRequestMethod:@"POST"];
     [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
@@ -779,35 +725,43 @@
     NSString* reqstr=[request responseString];
     NSDictionary * dic=[reqstr JSONValue];
     id status=[dic objectForKey:@"status"];
+    
+    [self removeLocalFilePath];
+    
     if ([status intValue]==100)
     {
-       
-        LPPopup *popup = [LPPopup popupWithText:@"您的录音已成功上传，正在进行分析。分析报告审核完成后，会发送至您的手机上，请注意查收。"];
+        NSInteger code = [[[dic objectForKey:@"data"] objectForKey:@"code"] integerValue];
+        NSString *codeStr = [self stringWithCode:code];
+        LPPopup *popup = nil;
+        if([codeStr isEqualToString:@""]){
+            popup = [LPPopup popupWithText:ModuleZW(@"很抱歉，您所录制的声音无效，请重新辨识。")];
+        }else{
+//            popup = [LPPopup popupWithText:@"您的录音已成功上传，正在进行分析。分析报告审核完成后，会发送至您的手机上，请注意查收。"];
+        }
+        
         imageHong.hidden = NO;
+        [UserShareOnce shareOnce].isRefresh = YES;
         CGPoint point=self.view.center;
         point.y=point.y+130;
         [popup showInView:self.view
             centerAtPoint:point
                  duration:5.0f
                completion:nil];
-        NSFileManager *fileMgr = [NSFileManager defaultManager];
         
-        BOOL bRet = [fileMgr fileExistsAtPath:self.filePath];
-        if (bRet) {
-            NSError *err;
-            [fileMgr removeItemAtPath:self.filePath error:&err];
-        }
         UIButton* btn=(UIButton*)[self.view viewWithTag:10007];
         btn.enabled=YES;
         yincangView.hidden = YES;
         self.filePath = nil;
         recordButton.selected = NO;
         
-        NSInteger code = [[[dic objectForKey:@"data"] objectForKey:@"code"] integerValue];
-        NSString *codeStr = [self stringWithCode:code];
+        if([codeStr isEqualToString:@""]){
+            return ;
+        }
+        
         NSString *aUrlle= [NSString stringWithFormat:@"%@/member/service/reshow.jhtml?sn=%@&device=1",URL_PRE,codeStr];
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = aUrlle;
+        vc.titleStr = ModuleZW(@"经络辨识");
         [self.navigationController pushViewController:vc animated:YES];
     }
     else
@@ -815,11 +769,11 @@
         
         UIButton* btn=(UIButton*)[self.view viewWithTag:10007];
         btn.enabled=YES;
-        LPPopup *popup = [LPPopup popupWithText:@"抱歉，由于长时间无法连接到网络，系统将您的录音放在了“我的”的“未发出声的文件”里，您可以选择手工上传或删除。"];
+        LPPopup *popup = [LPPopup popupWithText:[dic objectForKey:@"data"]];
         timeNStager=0;
         [bianshiTime setFireDate:[NSDate distantFuture]];
         [self.Recordbtn setImage:[UIImage imageNamed:@"bs_an_kaishishibian.png"] forState:UIControlStateNormal];
-        [self.recorder stopRecording];
+        //[self.recorder stopRecording];
         CGPoint point=self.view.center;
         point.y=point.y+130;
         [popup showInView:self.view
@@ -838,7 +792,10 @@
     [self hudWasHidden];
     UIButton* btn=(UIButton*)[self.view viewWithTag:10007];
     btn.enabled=YES;
-    LPPopup *popup = [LPPopup popupWithText:@"抱歉，由于长时间无法连接到网络，系统将您的录音放在了“我的”的“未发出声的文件”里，您可以选择手工上传或删除。"];
+    
+    [self removeLocalFilePath];
+    
+    LPPopup *popup = [LPPopup popupWithText:requestErrorMessage];
     CGPoint point=self.view.center;
     point.y=point.y+130;
     [popup showInView:self.view
@@ -854,6 +811,16 @@
     return;
 }
 
+- (void)removeLocalFilePath
+{
+    NSFileManager *fileMgr = [NSFileManager defaultManager];
+    BOOL bRet = [fileMgr fileExistsAtPath:self.filePath];
+    if (bRet) {
+        NSError *err;
+        [fileMgr removeItemAtPath:self.filePath error:&err];
+    }
+}
+
 - (NSString *)stringWithCode:(NSInteger )code
 {
     NSArray *codeArr = @[@"21", @"24", @"22", @"25", @"23",
@@ -861,7 +828,7 @@
                          @"28", @"27", @"26", @"29", @"30",
                          @"32", @"31", @"34", @"33", @"35",
                          @"37", @"40", @"36", @"38", @"39"];
-    NSInteger codeIndex = [[codeArr objectAtIndex:code] integerValue];
+    NSInteger codeIndex = [[codeArr objectAtIndex:code-1] integerValue];
     NSString *codeStr = @"";
     if(codeIndex>=16&&codeIndex<=20){
         codeStr = [NSString stringWithFormat:@"JLBS-G%ld",codeIndex-15];
@@ -876,13 +843,17 @@
     }else{
         codeStr = @"";
     }
+    
+    NSString *jlbsStr = [GlobalCommon getStringWithSubjectSn:codeStr];
+    [[NSUserDefaults standardUserDefaults]setValue: jlbsStr forKey:@"Physical"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     return codeStr;
 }
 
 - (void)soundTooLow{
     
     [self hudWasHidden];
-    LPPopup *popup = [LPPopup popupWithText:@"抱歉，未采集到有效声音。请提高音调！"];
+    LPPopup *popup = [LPPopup popupWithText:ModuleZW(@"未采集到有效声音，请录制有效声音")];
     CGPoint point=self.view.center;
     point.y=point.y+130;
     [popup showInView:self.view
@@ -894,54 +865,6 @@
     return;
 }
 
-- (void)requestConverAndParseError:(ASIHTTPRequest *)request
-{
-    [self hudWasHidden];
-}
-- (void)requestConverAndParseCompleted:(ASIHTTPRequest *)request
-{
-    [self hudWasHidden];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    id status=[dic objectForKey:@"status"];
-    if ([status intValue]==100)
-    {
-        
-        LPPopup *popup = [LPPopup popupWithText:@"您的录音已成功上传，正在进行分析。分析报告审核完成后，会发送至您的手机上，请注意查收。"];
-        CGPoint point=self.view.center;
-        point.y=point.y+130;
-        [popup showInView:self.view
-            centerAtPoint:point
-                 duration:5.0f
-               completion:nil];
-        NSFileManager *fileMgr = [NSFileManager defaultManager];
-        
-        BOOL bRet = [fileMgr fileExistsAtPath:self.filePath];
-        if (bRet) {
-            NSError *err;
-            [fileMgr removeItemAtPath:self.filePath error:&err];
-        }
-        
-        timeNStager=0;
-        [bianshiTime setFireDate:[NSDate distantFuture]];
-        [self.Recordbtn setImage:[UIImage imageNamed:@"bs_an_kaishishibian.png"] forState:UIControlStateNormal];
-        [self.recorder stopRecording];
-    }
-    else
-    {
-        LPPopup *popup = [LPPopup popupWithText:@"抱歉，由于长时间无法连接到网络，系统将您的录音放在了“更多”的“闻音文件”里，您可以选择手工上传或删除。"];
-        CGPoint point=self.view.center;
-        timeNStager=0;
-        [bianshiTime setFireDate:[NSDate distantFuture]];
-        [self.Recordbtn setImage:[UIImage imageNamed:@"bs_an_kaishishibian.png"] forState:UIControlStateNormal];
-        [self.recorder stopRecording];
-        point.y=point.y+130;
-        [popup showInView:self.view
-            centerAtPoint:point
-                 duration:5.0f
-               completion:nil];
-    }
-}
 
 -(void)showHUD
 {
@@ -949,7 +872,7 @@
     [self.view addSubview:_progress];
     [self.view bringSubviewToFront:_progress];
     _progress.delegate = self;
-    _progress.label.text = @"加载中...";
+    _progress.label.text = ModuleZW(@"加载中...");
     [_progress showAnimated:YES];
 }
 

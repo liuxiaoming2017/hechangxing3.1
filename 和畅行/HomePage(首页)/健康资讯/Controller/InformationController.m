@@ -59,8 +59,8 @@
 {
     NSString *UrlPre=URL_PRE;
     
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/article/ healthCategoryList.jhtml",UrlPre];
-    aUrlle = [aUrlle stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *aUrlle= [NSString stringWithFormat:@"%@/article/healthCategoryList.jhtml",UrlPre];
+    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSDictionary *headDic = [NSDictionary dictionaryWithObject:@"ios_jlsl-yh-3" forKey:@"version"];
     
     __weak typeof(self) bself = self;
@@ -92,7 +92,7 @@
             [bself showAlertWarmMessage:[result objectForKey:@"data"]];
         }
     } failureBlock:^(NSError *error) {
-        [bself showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+        [bself showAlertWarmMessage:requestErrorMessage];
     }];
     
 }
@@ -119,7 +119,7 @@
             [bself showAlertWarmMessage:[result objectForKey:@"data"]];
         }
     } failureBlock:^(NSError *error) {
-        [bself showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+        [bself showAlertWarmMessage:requestErrorMessage];
     }];
     
     
@@ -136,7 +136,7 @@
         NSString *idStr = [idArr objectAtIndex:index];
         urlStr = [NSString stringWithFormat:@"%@/article/healthListByCategory/%@.jhtml",URL_PRE,idStr];
     }
-    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    urlStr = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     [self requestArticleDataWithUrl:urlStr];
 }
 

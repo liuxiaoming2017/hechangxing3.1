@@ -43,8 +43,28 @@
 
 @property (nonatomic,copy) NSString *passWord;
 
+
+@property (nonatomic,copy) NSString *uuid; //和缓id
+@property (nonatomic,copy) NSString *userToken; //和缓token
 @property (nonatomic,assign) BOOL isOnline;
+@property (nonatomic,copy) NSString *wxName;
+
+@property (nonatomic,assign) BOOL isRefresh; //一点一说一写 返回首页 刷新和畅提醒判断
+
+@property (nonatomic,copy) NSString *wherePop; //从哪里pop回来的
+@property (nonatomic,copy) NSString *bloodMemberID; //血压ID
+
+@property (nonatomic,strong) NSMutableArray *yueYaoBuyArr;
+
+@property (nonatomic,assign) float allYueYaoPrice;
+
+@property (nonatomic,copy) NSString * languageType;
+@property (nonatomic,copy) NSString * loginType;
+
+@property (copy, nonatomic) NSString  *startTime;
+
+
 
 + (UserShareOnce *)shareOnce;
-
++(void)attemptDealloc;
 @end

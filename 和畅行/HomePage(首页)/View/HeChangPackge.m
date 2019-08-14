@@ -8,10 +8,10 @@
 
 #import "HeChangPackge.h"
 #import "HeChangPackgeController.h"
+#import "HCY_ActivityController.h"
 
 @interface HeChangPackge()
 
-@property (nonatomic,strong) UILabel *remindLabel;
 @property (nonatomic,strong) UILabel *stateLabel;
 @property (nonatomic,strong) CAShapeLayer *shapeLayer;
 
@@ -33,20 +33,14 @@
 - (void)createupUI
 {
     
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height-20)];
-    //添加渐变色
-    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-    gradientLayer.frame = imageV.bounds;
-    gradientLayer.colors = [NSArray arrayWithObjects:(id)UIColorFromHex(0x1E82D2).CGColor,(id)UIColorFromHex(0x2B95EB).CGColor,(id)UIColorFromHex(0x05A1EE).CGColor, nil];
-    gradientLayer.startPoint = CGPointMake(0.5, 0);
-    gradientLayer.endPoint = CGPointMake(0.5, 1);
-    gradientLayer.locations = @[@0,@0.5,@1.0];
-    [imageV.layer addSublayer:gradientLayer];
-    [self addSubview:imageV];
+    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.width *274/414)];
+    
+    self.imageV.userInteractionEnabled = YES;
+    [self addSubview:self.imageV];
     
     //下方阴影效果
     CALayer *subLayer=[CALayer layer];
-    CGRect fixframe = imageV.frame;
+    CGRect fixframe = self.imageV.frame;
     subLayer.frame= fixframe;
     subLayer.cornerRadius=11;
     subLayer.backgroundColor=[UIColorFromHex(0xffffff) colorWithAlphaComponent:1.0].CGColor;
@@ -55,44 +49,50 @@
     subLayer.shadowOffset = CGSizeMake(2,5);//shadowOffset阴影偏移,x向右偏移3，y向下偏移2，默认(0, -3),这个跟shadowRadius配合使用
     subLayer.shadowOpacity = 0.6;//阴影透明度，默认0
     subLayer.shadowRadius = 11;//阴影半径，默认3
-    [self.layer insertSublayer:subLayer below:imageV.layer];
+//    [self.layer insertSublayer:subLayer below:self.imageV.layer];
     
     //CGFloat originX = (ScreenWidth - 122*3-18)/2.0;
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.height/2.0-30, 120, 30)];
-    titleLabel.font = [UIFont systemFontOfSize:21];
-    titleLabel.textAlignment = NSTextAlignmentLeft;
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.text = @"和畅包";
-    [self addSubview:titleLabel];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.width-200)/2.0, self.height/2.0-30, 200, 30)];
+    self.titleLabel.font = [UIFont systemFontOfSize:21];
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel.textColor = [UIColor whiteColor];
+    self.titleLabel.text = ModuleZW(@"和畅包");
+    [self addSubview:self.titleLabel];
     
-    self.remindLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.left, titleLabel.bottom, self.width-titleLabel.left*2, 60)];
+    CGFloat width = 300;
+    
+    self.remindLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-width)/2.0, self.titleLabel.bottom, width , 60)];
     self.remindLabel.font = [UIFont systemFontOfSize:16];
     self.remindLabel.numberOfLines = 0;
-    self.remindLabel.textAlignment = NSTextAlignmentLeft;
+    self.remindLabel.textAlignment = NSTextAlignmentCenter;
     self.remindLabel.textColor = [UIColor whiteColor];
-    NSString *str = @"您未完成和畅体检,全部完成体检后定制属于您的和畅服务包";
+    NSString *str = ModuleZW(@"您未完成和畅体检,全部完成体检后定制属于您的和畅服务包");
     self.remindLabel.text = str;
     [self addSubview:self.remindLabel];
     //CGSize strSize = [str boundingRectWithSize:CGSizeMake(self.remindLabel.width, 1200) options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont fontWithName:[[UIFont systemFontOfSize:1] fontName] size:15]} context:nil].size;
     //self.remindLabel.frame = CGRectMake(self.remindLabel.left, imgV.top+(imgV.height-strSize.height)/2.0, self.remindLabel.width, strSize.height);
     
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake((ScreenWidth-272)/2.0, imageV.bottom-20, 272, 40)];
-    bottomView.backgroundColor = [UIColor whiteColor];
-    bottomView.layer.cornerRadius = bottomView.height/2.0;
-    bottomView.clipsToBounds = YES;
-    [self addSubview:bottomView];
+//    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake((ScreenWidth-272)/2.0, self.imageV.bottom-20, 272, 40)];
+//    bottomView.backgroundColor = [UIColor whiteColor];
+//    bottomView.layer.cornerRadius = bottomView.height/2.0;
+//    bottomView.clipsToBounds = YES;
+//    [self addSubview:bottomView];
     
-   
-    UILabel *buttonLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, bottomView.width, 30)];
-    buttonLabel.font = [UIFont systemFontOfSize:16];
-    buttonLabel.textAlignment = NSTextAlignmentCenter;
-    buttonLabel.textColor = UIColorFromHex(0X1E82D2);
-    buttonLabel.text = @"请查看为您定制的和畅服务包";
-    [bottomView addSubview:buttonLabel];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
-    [bottomView addGestureRecognizer:tap];
+    self.toViewButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    [self.toViewButton addTarget:self action:@selector(pushAction) forControlEvents:(UIControlEventTouchUpInside)];
+    self.toViewButton.frame = CGRectMake(ScreenWidth/2.0 - 136, self.imageV.bottom - 25, 272, 60);
+   // [self addSubview:self.toViewButton];
+
+    
+    UIButton *tapButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    tapButton.frame = CGRectMake(10, self.height/2.0-30, self.width-120, 90);
+    [tapButton addTarget:self action:@selector(tapAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self addSubview:tapButton];
+    
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
+//    [bottomView addGestureRecognizer:tap];
     
     /*
     UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
@@ -136,57 +136,93 @@
      */
 }
 
-- (void)changePackgeTypeWithStatus:(NSInteger)status
+
+-(void)changeBackImageWithStr:(NSString *)str {
+    
+    if (str==nil || [str isKindOfClass:[NSNull class]]||str.length == 0) {
+        //添加渐变色
+//        CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+//        gradientLayer.frame = self.imageV.bounds;
+//        gradientLayer.colors = [NSArray arrayWithObjects:(id)UIColorFromHex(0x1E82D2).CGColor,(id)UIColorFromHex(0x2B95EB).CGColor,(id)UIColorFromHex(0x05A1EE).CGColor, nil];
+//        gradientLayer.startPoint = CGPointMake(0.5, 0);
+//        gradientLayer.endPoint = CGPointMake(0.5, 1);
+//        gradientLayer.locations = @[@0,@0.5,@1.0];
+//        [self.imageV.layer addSublayer:gradientLayer];
+        
+        [self.imageV setImage:[UIImage imageNamed:@"bg_blue"]];
+        
+    }else {
+        
+        NSString *imageUrl = [NSString stringWithFormat:@"%@%@",URL_PRE,str];
+        NSURL *url = [NSURL URLWithString:imageUrl];
+        [self.imageV sd_setImageWithURL:url];
+    }
+    
+}
+
+- (void)changePackgeTypeWithStatus:(NSInteger)status withXingStr:(NSString *)xingStr
 {
-    if(status == 7){
+    if(status >=0 && status <= 11){
+        
+    }else{
+        [MemberUserShance shareOnce].isOpenPackge = NO;
         [self updateImageView];
         return;
     }
-    
+    NSString *bingTaiStr = @"";
+    [MemberUserShance shareOnce].isOpenPackge = YES;
     switch (status) {
+        case 0:
+            bingTaiStr = ModuleZW(@"未病态");
+            break;
         case 1:
-           // [self createShapeLayerWithColor:UIColorFromHex(0x61D179)];
-            [self joinStringWithstr1:@"健康" WithStr2:@"未病" withColor:UIColorFromHex(0x61D179)];
+            bingTaiStr = ModuleZW(@"欲病态");
             break;
         case 2:
-          //  [self createShapeLayerWithColor:UIColorFromHex(0xC5C5C5)];
-            [self joinStringWithstr1:@"轻度" WithStr2:@"欲病" withColor:UIColorFromHex(0xC5C5C5)];
+            bingTaiStr = ModuleZW(@"欲病态");
             break;
         case 3:
-           // [self createShapeLayerWithColor:UIColorFromHex(0xED6363)];
-            [self joinStringWithstr1:@"重度" WithStr2:@"欲病" withColor:UIColorFromHex(0xED6363)];
+           bingTaiStr = ModuleZW(@"中重度已病态");
             break;
         case 4:
-           // [self createShapeLayerWithColor:UIColorFromHex(0xC5C5C5)];
-            [self joinStringWithstr1:@"轻度" WithStr2:@"已病" withColor:UIColorFromHex(0xC5C5C5)];
+            bingTaiStr = ModuleZW(@"重度已病态");
             break;
         case 5:
-           // [self createShapeLayerWithColor:UIColorFromHex(0xF68A3C)];
-            [self joinStringWithstr1:@"中度" WithStr2:@"已病" withColor:UIColorFromHex(0xF68A3C)];
+            bingTaiStr = ModuleZW(@"轻度已病态");
             break;
         case 6:
-           // [self createShapeLayerWithColor:UIColorFromHex(0xED6363)];
-            [self joinStringWithstr1:@"重度" WithStr2:@"已病" withColor:UIColorFromHex(0xED6363)];
+            bingTaiStr = ModuleZW(@"中度已病态");
+            break;
+        case 7:
+            bingTaiStr = ModuleZW(@"中重度已病态");
+            break;
+        case 8:
+            bingTaiStr = ModuleZW(@"重度已病态");
+            break;
+        case 9:
+            bingTaiStr = ModuleZW(@"中度已病态");
+            break;
+        case 10:
+            bingTaiStr = ModuleZW(@"中重度已病态");
+            break;
+        case 11:
+            bingTaiStr = ModuleZW(@"重度已病态");
             break;
         default:
             break;
     }
+     [self showYiBingTianWithStr:bingTaiStr withStr:xingStr];
 }
 
 - (void)updateImageView
 {
-//    UIImageView *imgV = [self viewWithTag:101];
-//    imgV.hidden = NO;
-//    if(shapeLayer){
-//        self.shapeLayer.sublayers = nil;
-//        [self.shapeLayer removeFromSuperlayer];
-//        self.shapeLayer = nil;
-//    }
-//    if(stateLabel){
-//        stateLabel.hidden = YES;
-//    }
-    NSString *str = @"您未完成和畅体检,全部完成体检后定制属于您的和畅服务包";
-    self.remindLabel.text = str;
+    
+//    NSString *str = ModuleZW(@"您未完成和畅体检,全部完成体检后定制属于您的和畅服务包");
+//    self.remindLabel.text = str;
+//    [self.toViewButton setBackgroundImage:[UIImage imageNamed:ModuleZW(@"和畅包未检测")] forState:(UIControlStateNormal)];
+    
+    self.hidden = YES;
+
 }
 
 
@@ -242,16 +278,56 @@
     
 }
 
+- (void)showWeiBingTianWithStr:(NSString *)str2
+{
+    NSString *str = [NSString stringWithFormat:@"您当前处在%@",str2];
+    self.remindLabel.text = str;
+}
+
+- (void)showYiBingTianWithStr:(NSString *)str1 withStr:(NSString *)str2
+{
+    NSString *stateStr = [NSString stringWithFormat:@"您当前属于%@",str1];
+    NSString *str = [NSString stringWithFormat:@"%@%@，%@",ModuleZW(stateStr),str2,ModuleZW(@"点击查看我们为您定制的和畅服务包")];
+    self.remindLabel.text = str;
+    [self.toViewButton setBackgroundImage:[UIImage imageNamed:ModuleZW(@"和畅包p")] forState:(UIControlStateNormal)];
+
+}
+
 - (void)tapAction
 {
+    if(![MemberUserShance shareOnce].isOpenPackge){
+        return;
+    }
     HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.viewController.navigationController pushViewController:vc animated:YES];
-    vc.titleStr = @"和畅包";
-    NSString *urlStr = [NSString stringWithFormat:@"%@/member/service/home/1/%@.jhtml",URL_PRE,[MemberUserShance shareOnce].idNum];
+    vc.titleStr = ModuleZW(@"和畅包");
+    //[MemberUserShance shareOnce].idNum
+    NSString *urlStr = [NSString stringWithFormat:@"%@member/service/home/1/%@.jhtml?isnew=1",URL_PRE,[MemberUserShance shareOnce].idNum];
     vc.progressType = progress2;
     vc.urlStr = urlStr;
     
+}
+
+-(void)pushAction {
+    
+    NSLog(@"pushModel.link:%@",_pushModel.link);
+    if(_pushModel.link==nil||[_pushModel.link isKindOfClass:[NSNull class]]||_pushModel.link.length == 0){
+        
+        [self tapAction];
+        
+        
+    }else {
+        HCY_ActivityController *vc = [[HCY_ActivityController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.viewController.navigationController pushViewController:vc animated:YES];
+        vc.titleStr = _pushModel.title;
+        NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,_pushModel.link];
+        vc.progressType = progress2;
+        vc.urlStr = urlStr;
+    }
+    
+   
 }
 
 @end

@@ -30,14 +30,18 @@
 
 #import <UMShare/UMShare.h>
 #import <UMCommon/UMCommon.h>
+
+
 #import <UMCommonLog/UMCommonLogManager.h>
 
 #import "SBJson.h"
-//#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+#import "ChangeLanguageObject.h"
+
 
 
 @interface AppDelegate ()<WXApiDelegate>
-
+@property (nonatomic, strong) NSURLSession * session;
+@property (nonatomic, strong) NSURLSessionDataTask * dataTask;
 @end
 
 @implementation AppDelegate
@@ -47,6 +51,14 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
    // self.window.rootViewController = [self tabBar];
+    NSArray *languages = [[NSUserDefaults standardUserDefaults] valueForKey:@"AppleLanguages"];
+    NSLog(@"%@",languages);
+    if ([languages.firstObject isEqualToString:@"en-US"]||[languages.firstObject isEqualToString:@"ja-US"]||[languages.firstObject isEqualToString:@"en-CN"]||[languages.firstObject isEqualToString:@"en"]){
+        [UserShareOnce shareOnce].languageType = @"us-en";
+        //        [UserShareOnce shareOnce].languageType  = nil;
+    }else{
+        [UserShareOnce shareOnce].languageType  = nil;
+    }
     
     NSError *error = nil;
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&error];
@@ -54,43 +66,44 @@
     [session setActive:YES error:&error];
     
     [UserShareOnce shareOnce].isOnline = NO;
+    [UserShareOnce shareOnce].yueYaoBuyArr = [NSMutableArray arrayWithCapacity:0];
+    [UserShareOnce shareOnce].allYueYaoPrice = 0;
     
     [[UITabBar appearance] setTranslucent:NO];
     
-    //和缓医疗SDK注册
-//    HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:@"9001" isDebug:YES isDevelop:YES];
+    //和缓医疗SDK注册,是和缓分配给的productId ffff
+//    HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:HHSDK_id isDebug:NO isDevelop:NO];
 //    hhSdk.cerName = @"2cDevTest";
 //    [[HHMSDK alloc] startWithOption:hhSdk];
-    
-    
-     [self returnMainPage2];
-    
-    [self.window makeKeyAndVisible];
-    
+
     [UMCommonLogManager setUpUMCommonLogManager];
     [UMConfigure setLogEnabled:YES];
-    [UMConfigure initWithAppkey:@"5bbacd04b465f5db4c000073" channel:@"App Store"];
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:APP_SECRET redirectURL:nil];
-   //  [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
-    [self getAppSecret];
+    [UMConfigure initWithAppkey:Youmeng_id channel:@"App Store"];
+    
+    [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
+     [self returnMainPage2];
+     [self.window makeKeyAndVisible];
+    
+    [ChangeLanguageObject initUserLanguage];
+    
+     self.session = [NSURLSession sharedSession];
+   
+    //埋点注册
+    [[BuredPoint sharedYHBuriedPoint]setTheSignatureWithSignStr:BuBuredPointKey  withOpenStr:@"1"];
+    
+//    URL_PRE
+
+    //创建本地数据库
+    [[CacheManager sharedCacheManager] createDataBase];
+    
+    for (int i = 0; i < 20; ++i) {
+        NSLog(@"%d",i);
+    }
+    
     return YES;
 }
 
-- (void)getAppSecret
-{
-    /**
-     *  MD5加密后的字符串
-     */
-    NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",@"weixinPayPlugin"];
-    NSString *iPoneNumberMD5 = [GlobalCommon md5:iPoneNumber];
-    NSDictionary *dic = @{@"pluginname":@"weixinPayPlugin",@"token":iPoneNumberMD5};
-    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:@"weiq/weiq/getWeiqSecret.jhtml" parameters:dic successBlock:^(id response) {
-        
-    } failureBlock:^(NSError *error) {
-        
-    }];
-    
-}
+
 
 
 -(void)returnMainPage{
@@ -119,32 +132,44 @@
 {
     HomePageController *homeVC = [[HomePageController alloc] init];
     CustomNavigationController *homeNav = [[CustomNavigationController alloc] initWithRootViewController:homeVC];
-    //homeVC.tabBarItem.title = @"首页";
-    homeVC.tabBarItem.image = [[UIImage imageNamed:@"HomeNormal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} forState:UIControlStateNormal];
+    
+    UIEdgeInsets edgeInset = UIEdgeInsetsMake(-1, 0, 1, 0);
+    UIOffset offSet = UIOffsetMake(0, 1);
+    
+    homeVC.tabBarItem.title = ModuleZW(@"首页");
+    homeVC.tabBarItem.image = [[UIImage imageNamed:@"HomeNormal"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     homeVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"HomeSelect"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    [homeVC.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 0, -6, 0)];
+    [homeVC.tabBarItem setImageInsets:edgeInset];
+    homeVC.tabBarItem.titlePositionAdjustment =offSet;
     
     ArchivesController *ArchiveVC = [[ArchivesController alloc] init];
     CustomNavigationController *ArchiveNav = [[CustomNavigationController alloc] initWithRootViewController:ArchiveVC];
-    //ArchiveVC.tabBarItem.title = @"档案";
+    ArchiveVC.tabBarItem.title = ModuleZW(@"档案");
     ArchiveVC.tabBarItem.image = [UIImage imageNamed:@"docNormal"];
     ArchiveVC.tabBarItem.selectedImage = [UIImage imageNamed:@"docSelect"];
-    [ArchiveVC.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 0, -6, 0)];
+    [ArchiveVC.tabBarItem setImageInsets:edgeInset];
+    ArchiveVC.tabBarItem.titlePositionAdjustment = offSet;
     
-    //MallViewController *mallVC = [[MallViewController alloc] init];
+    
     EDWKWebViewController *mallVC = [[EDWKWebViewController alloc] initWithUrlString:[NSString stringWithFormat:@"%@mobileIndex.html",URL_PRE]];
     CustomNavigationController *mallNav = [[CustomNavigationController alloc] initWithRootViewController:mallVC];
-    //mallVC.tabBarItem.title = @"商城";
+    mallVC.tabBarItem.title = ModuleZW(@"商城");
     mallVC.tabBarItem.image = [UIImage imageNamed:@"MallNormal"];
-    mallVC.tabBarItem.selectedImage = [UIImage imageNamed:@"Mallelect"];
-    [mallVC.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 0, -6, 0)];
+    mallVC.tabBarItem.selectedImage = [UIImage imageNamed:@"MallSelect"];
+    [mallVC.tabBarItem setImageInsets:edgeInset];
+    mallVC.tabBarItem.titlePositionAdjustment = offSet;
     
     MineViewController *mineVC = [[MineViewController alloc] init];
     CustomNavigationController *mineNav = [[CustomNavigationController alloc] initWithRootViewController:mineVC];
-    //mineVC.tabBarItem.title = @"我的";
+    mineVC.tabBarItem.title = ModuleZW(@"我的");
     mineVC.tabBarItem.image = [UIImage imageNamed:@"MyNormal"];
-    mineVC.tabBarItem.selectedImage = [UIImage imageNamed:@"Myelect"];
-    [mineVC.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 0, -6, 0)];
+   
+   
+    mineVC.tabBarItem.selectedImage = [UIImage imageNamed:@"MySelect"];
+    [mineVC.tabBarItem setImageInsets:edgeInset];
+    mineVC.tabBarItem.titlePositionAdjustment = offSet;
     
     CommonTabBarController *tabBar = [[CommonTabBarController alloc] init];
     tabBar.viewControllers = @[homeNav,ArchiveNav,mallNav,mineNav];
@@ -162,7 +187,6 @@
     [session setCategory:AVAudioSessionCategoryPlayback error:nil];
     //这样做，可以在按home键进入后台后 ，播放一段时间，几分钟吧。但是不能持续播放网络歌曲，若需要持续播放网络歌曲，还需要申请后台任务id，具体做法是：
     _bgTaskId=[AppDelegate backgroundPlayerID:_bgTaskId];
-    
 }
 
 +(UIBackgroundTaskIdentifier)backgroundPlayerID:(UIBackgroundTaskIdentifier)backTaskId
@@ -301,10 +325,7 @@
     if ([url.host isEqualToString:@"safepay"]) {
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
             NSLog(@"result = %@",[resultDic objectForKey:@"memo"]);
-            NSString *str = [NSString stringWithFormat:@"%@",[resultDic objectForKey:@"memo"]];
-            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-            [av show];
-            
+           
             if ([[resultDic objectForKey:@"resultStatus"]integerValue] == 9000 ) {
                 
                 NSDictionary * dic = @{@"count":@"1"};
@@ -407,7 +428,24 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
+    if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].uid]) return;
+    NSString *userSign = [UserShareOnce shareOnce].uid;
+    NSString *startTimeStr = [UserShareOnce shareOnce].startTime;
+    NSString *endTimeStr = [GlobalCommon getCurrentTimes];
 
+    NSString *accessurlStr = [NSString stringWithFormat:@"%@user/access",DATAURL_PRE];
+    NSDictionary *accessDic = @{ @"body":@{@"channel":@"1",
+                                           @"remark":@"1",
+                                           @"userSign":userSign,
+                                           @"startTime":startTimeStr,
+                                           @"userSource":@"1",
+                                           @"quitTime":endTimeStr,
+                                           @"flag":@"1"}
+                                 };
+    [[BuredPoint sharedYHBuriedPoint] mainThreadRequestWithUrl:accessurlStr dic:accessDic resultBlock:^(id  _Nonnull response) {
+        NSLog(@"%@",response);
+    }];
+   
+}
 
 @end

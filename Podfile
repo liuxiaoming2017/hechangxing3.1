@@ -1,9 +1,17 @@
 platform:ios,'9.0'
+use_frameworks!
+
+inhibit_all_warnings!
+
 target '和畅行'do
 pod 'AFNetworking'
 pod 'MJExtension'
-pod 'SDWebImage'
+pod 'SDWebImage', '~> 4.2.1'
 pod 'FMDB'
-pod 'PYPhotoBrowser'
-pod 'HHDoctorSDK', :git => "http://code.hh-medic.com/hh_public/HHDoctorSDK.ios.git", :branch => 'no/utdid'
+pod 'PYPhotoBrowser', '~> 1.5.6'
+pod 'MJRefresh'
+pod 'YYModel'
+pod 'HHDoctorSDK', :git => "http://code.hh-medic.com/hh_public/HHDoctorSDK.ios.git"
+pod 'ReactiveObjC', '~> 2.1.0'
 end
+

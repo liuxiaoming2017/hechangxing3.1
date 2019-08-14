@@ -29,9 +29,9 @@
 
 -(void)dealloc{
     [super dealloc];
-    [_leyaoPath release];
-    [_otherPaths release];
-    [_fileurl release];
+   // [_leyaoPath release];
+   // [_otherPaths release];
+    //[_fileurl release];
     [_LeMedicArray release];
     [_LeMedicArrayId release];
     [_bfztbutton release];
@@ -50,7 +50,7 @@
 
 - (void)goBack:(UIButton *)btn
 {
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void) showHUD
@@ -97,7 +97,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor=[UtilityFunc colorWithHexString:@"#f2f1ef"];
-    self.navTitleLabel.text = @"我的乐药";
+    self.navTitleLabel.text = ModuleZW(@"我的乐药");
     
     UIImage* LeMedicineTypeImg=[UIImage imageNamed:@"LeMedicineType_img.png"];
     UIImageView* LeMedicineImgView=[[UIImageView alloc] init];
@@ -108,7 +108,7 @@
     
     UILabel* TYPE_Name=[[UILabel alloc] init];
     TYPE_Name.frame=CGRectMake(0, (LeMedicineImgView.frame.size.height-21)/2+kNavBarHeight, 120, 21);
-    TYPE_Name.text=@"名称";
+    TYPE_Name.text=ModuleZW(@"名称");
     
     TYPE_Name.font=[UIFont systemFontOfSize:13];
     TYPE_Name.textAlignment = NSTextAlignmentCenter;
@@ -171,6 +171,9 @@
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     [request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];
@@ -520,7 +523,7 @@
         else{
             
             
-            urlpath = [urlpath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            urlpath = [urlpath stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
             NSURL *url = [NSURL URLWithString:urlpath];
             BOOL fileExists = [fileManager fileExistsAtPath:urlpath];
             if (fileExists)
@@ -580,7 +583,7 @@
                 NSLog(@"不存在");
                 
                 NSString* aurl=[NSString stringWithFormat:@"%@",NewFileName];
-                aurl = [aurl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                aurl = [aurl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
                 for (int i=0; i<btnbfzt.subviews.count; i++)
                 {
                     UIView* view=[btnbfzt.subviews objectAtIndex:i];
@@ -609,7 +612,7 @@
     }
     else{
         
-        urlpath = [urlpath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        urlpath = [urlpath stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
         NSURL *url = [NSURL URLWithString:urlpath];
         BOOL fileExists = [fileManager fileExistsAtPath:urlpath];
         if (fileExists)

@@ -21,6 +21,7 @@
 @property (nonatomic,retain) NSString  *currDevDes;
 @property (nonatomic,retain)UIAlertView *searchAlert;
 @property (retain,nonatomic) BTDevItem *addDevice;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabelEn;
 
 @end
 
@@ -38,28 +39,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.leftBtn.hidden = YES;
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;
-    self.navTitleLabel.text = @"灸大夫隔物灸仪列表";
-    self.navTitleLabel.textColor = [UIColor whiteColor];
+    self.navTitleLabel.text = ModuleZW(@"灸大夫隔物灸仪列表");
     
     if(_deviceNetName != nil){
-        _mCurrentConnect.text = [NSString stringWithFormat:@"%@:%@",@"现连接灸头网络名称",_deviceNetName];
+        _mCurrentConnect.text = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"现连接灸头网络名称"),_deviceNetName];
     }else{
-        _mCurrentConnect.text = @"当前未连接设备";
+        _mCurrentConnect.text = ModuleZW(@"当前未连接设备");
     }
+    _titleLabelEn.text = ModuleZW(@"灸头网络列表");
     _mTableList.dataSource = self;
     _mTableList.delegate = self;
     _deviceList = [NSMutableArray new];
+    [_mRefreshBtn setTitle:ModuleZW(@"刷新列表") forState:(UIControlStateNormal)];
     _deviceMeshnameList = [NSMutableArray new];
     if (SUPPORT_YES == [[moxibustion getInstance] getBluetoothSupportState]
         && STATE_ON == [[moxibustion getInstance] getBluetoothOpenState])
     {
         [[moxibustion getInstance] discoverDevice];
         
-        _searchAlert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"正在努力搜索灸大夫隔物灸仪..." delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+        _searchAlert = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"正在努力搜索灸大夫隔物灸仪...") delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
         [_searchAlert show];
     }
     // Do any additional setup after loading the view.
@@ -83,7 +84,7 @@
     {
         [[moxibustion getInstance] discoverDevice];
         
-        _searchAlert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"正在努力搜索灸大夫隔物灸仪..." delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+        _searchAlert = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"正在努力搜索灸大夫隔物灸仪...") delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
         [_searchAlert show];
     }
 }
@@ -138,7 +139,7 @@
 //    i9_BluetoothPeripheralModule *module;
 //    i9_BluetoothPeripheralModule *module = [[i9_BluetoothClientFactory getInstance] getPeripheralInfInArrByUUID:[[pheral identifier] UUIDString]];
 //    NSString *str;
-    NSString *name = [NSString stringWithFormat:@"%@:%@",@"灸头ID",devcie.bodyCode];
+    NSString *name = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"灸头ID"),devcie.bodyCode];
     cell.mMechineName.text = name;
     cell.delegate = self;
     cell.mContectBtn.section = section;
@@ -164,7 +165,7 @@
     [view addSubview:line1];
     
     UILabel *tittle =  [[UILabel alloc] initWithFrame:CGRectMake(15, 10, SCREEN_WID - 70, 40)];
-    tittle.text = [NSString stringWithFormat:@"%@:%@",@"灸头网络名称",[_deviceMeshnameList objectAtIndex:section]];
+    tittle.text = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"灸头网络名称"),[_deviceMeshnameList objectAtIndex:section]];
     [view addSubview:tittle];
     
     UIButton *contentBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WID - 48, 10, 40, 40)];
@@ -213,7 +214,7 @@
         [[moxibustion getInstance] disConnect];
         [self performSelector:@selector(reConnectDevice) withObject:nil afterDelay:0.7];
     }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"正在连接AJi9-%@灸头网络,请输入三位密码",_addDevice.u_Name] message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"完成",nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:ModuleZW(@"正在连接AJi9-%@灸头网络,请输入三位密码"),_addDevice.u_Name] message:@"" delegate:self cancelButtonTitle:ModuleZW(@"取消") otherButtonTitles:ModuleZW(@"完成"),nil];
         alert.tag = 2;
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         UITextField *textField = [alert textFieldAtIndex:0];
@@ -239,7 +240,7 @@
     if([org isEqualToString:src] || [_addDevice.password isEqualToString:@"0000"]){
         [self doConnectDevice];
     }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"正在添加灸头%@到当前灸头网络,请输入三位密码",_addDevice.bodyCode] message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"完成",nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:ModuleZW(@"正在添加灸头%@到当前灸头网络,请输入三位密码"),_addDevice.bodyCode] message:@"" delegate:self cancelButtonTitle:ModuleZW(@"取消") otherButtonTitles:ModuleZW(@"完成"),nil];
         alert.tag = 1;
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         UITextField *textField = [alert textFieldAtIndex:0];
@@ -258,7 +259,7 @@
             if([text isEqualToString:[[moxibustion getInstance] getDevicePassWord:_addDevice]]){
                 [self doConnectDevice];
             }else{
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的三位密码错误，请您再次输入" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"完成",nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:ModuleZW(@"您输入的三位密码错误，请您再次输入") message:@"" delegate:self cancelButtonTitle:ModuleZW(@"取消") otherButtonTitles:ModuleZW(@"完成"),nil];
                 alert.alertViewStyle = UIAlertViewStylePlainTextInput;
                 alert.tag = 1;
                 UITextField *textField = [alert textFieldAtIndex:0];
@@ -276,7 +277,7 @@
                 [[moxibustion getInstance] disConnect];
                 [self performSelector:@selector(reConnectDevice) withObject:nil afterDelay:0.7];
             }else{
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您输入的三位密码错误，请您再次输入" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"完成",nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:ModuleZW(@"您输入的三位密码错误，请您再次输入") message:@"" delegate:self cancelButtonTitle:ModuleZW(@"取消") otherButtonTitles:ModuleZW(@"完成"),nil];
                 alert.alertViewStyle = UIAlertViewStylePlainTextInput;
                 alert.tag = 2;
                 UITextField *textField = [alert textFieldAtIndex:0];
@@ -299,7 +300,7 @@
 }
 
 -(void)doConnectDevice{
-    _searchAlert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"正在连接隔物灸仪" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+    _searchAlert = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message: ModuleZW(@"正在连接隔物灸仪") delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
     [_searchAlert show];
     [[moxibustion getInstance] disConnect];
     [self performSelector:@selector(ChangeDeviceName) withObject:nil afterDelay:0.8];

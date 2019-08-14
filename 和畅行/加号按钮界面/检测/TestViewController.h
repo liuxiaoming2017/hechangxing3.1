@@ -16,6 +16,14 @@
 
 @property (nonatomic,assign) long createDate;
 
-@property (nonatomic,copy) NSString *valueStr;
-
+//血压高压
+@property (nonatomic,copy) NSString *highPressure;
+//血压低压
+@property (nonatomic,copy) NSString *lowPressure;
+//血糖
+@property (nonatomic,copy) NSString *levels;
+//心跳
+@property (nonatomic,copy) NSString *pulse;
+@property (nonatomic,copy) NSString *type;
+@property (nonatomic,assign) long inputDate;
 @end

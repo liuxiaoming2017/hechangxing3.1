@@ -28,15 +28,17 @@
     if (self) {
        _btnArray = [[NSMutableArray alloc]init];
        
-        NSArray *imagesData = @[@"erxue",@"yundong",@"yinyue",@"xueya",@"liuyan",@"dianhua",@"aijiu"];
-        NSArray *imagesNameData = @[@"耳穴",@"运动",@"音乐",@"血压",@"留言",@"电话",@"艾灸"];
+        //NSArray *imagesData = @[@"erxue",@"yundong",@"yinyue",@"xueya",@"liuyan",@"dianhua",@"aijiu"];
+        NSArray *imagesData = @[@"yinyue",@"yundong",@"aijiu",@"dianhua",@"shipin",@"xueya",@"liuyan",@"erxue"];
+        NSArray *imagesNameData = @[ModuleZW(@"音乐"),ModuleZW(@"运动"),
+                                                            ModuleZW(@"艾灸"),ModuleZW(@"电话"),
+                                                            ModuleZW(@"视频"),ModuleZW(@"血压"),
+                                                            ModuleZW(@"留言"),ModuleZW(@"耳穴")];
         if([UserShareOnce shareOnce].isOnline){
-//            imagesData = @[@"yundong",@"xueya",@"dianhua",@"aijiu"];
-//            imagesNameData = @[@"运动",@"血压",@"电话",@"艾灸"];
-            imagesData = @[@"yundong",@"xueya",@"dianhua"];
-            imagesNameData = @[@"运动",@"血压",@"电话"];
+
         }
-        NSInteger lieshu = imagesData.count/3+imagesData.count%3;
+        //NSInteger lieshu = imagesData.count/3+imagesData.count%3;
+        NSInteger lieshu = imagesData.count%3;
         for(int i=0;i<imagesData.count;i++){
             //row排数;col列数
             int row = i/3;
@@ -46,16 +48,21 @@
             
             CGFloat margin = (ScreenWidth-ICON_W*3)/4.0;
             
-            CGFloat topY = ScreenHeight  - lieshu * (ICON_W + MARGIN)-60;
+            CGFloat topY = ScreenHeight  - lieshu * (ICON_W + MARGIN);
+            NSLog(@"yyyy:%f",topY);
             if(iPhoneX){
-                topY = ScreenHeight  - lieshu * (ICON_W + MARGIN)-85;
+                topY = ScreenHeight  - lieshu * (ICON_W + MARGIN)-34;
             }
             
             
-            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(margin*(col+1) + col * ICON_W, topY + 25 + row * (ICON_W + MARGIN), ICON_W, ICON_W)];
-            if((imagesData.count%3 == 1) && (i==imagesData.count-1)){
-                button.frame = CGRectMake(margin*(col+2) + (col+1) * ICON_W, topY + 25 + row * (ICON_W + MARGIN), ICON_W, ICON_W);
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(margin*(col+1) + col * ICON_W, ScreenHeight - topY  + row * (ICON_W + MARGIN), ICON_W, ICON_W)];
+           
+            if(i==7){
+                button.frame = CGRectMake(margin*3 + 2 * ICON_W, ScreenHeight - topY  + row * (ICON_W + MARGIN), ICON_W, ICON_W);
             }
+//            if((imagesData.count%3 == 1) && (i==imagesData.count-1)){
+//                button.frame = CGRectMake(margin*(col+2) + (col+1) * ICON_W, topY + 25 + row * (ICON_W + MARGIN), ICON_W, ICON_W);
+//            }
             [button setImage:[UIImage imageNamed:imagesData[i]] forState:UIControlStateNormal];
             button.tag = 100+i;
             [button addTarget:self action:@selector(pushButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -63,11 +70,18 @@
             
             UILabel *name = [[UILabel alloc]init];
             name.text = imagesNameData[i];
-            name.frame = CGRectMake(30 + col * (40+MARGIN), CGRectGetMaxY(button.frame )+ 12, 80, 15);
+            name.frame = CGRectMake(30 + col * (40+MARGIN), CGRectGetMaxY(button.frame )+ 12, 120, 15);
             name.font =[UIFont systemFontOfSize:15];
             name.textColor = [UIColor whiteColor];
             name.centerX = button.centerX;
             name.textAlignment = NSTextAlignmentCenter;
+            
+            if (i == 4){
+                if ([UserShareOnce shareOnce].languageType){
+                    button.hidden = YES;
+                    name.hidden  = YES;
+                }
+            }
             
             [self addSubview:button];
             [self addSubview:name];

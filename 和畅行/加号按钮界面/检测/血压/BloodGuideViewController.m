@@ -15,6 +15,11 @@
 
 @implementation BloodGuideViewController
 
+- (void)dealloc
+{
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -24,7 +29,7 @@
     scrollView.tag = 1024;
     [self.view addSubview:scrollView];
     
-    NSArray *arr = @[@"bloodguide1",@"bloodguide2",@"bloodguide3",@"bloodguide4"];
+    NSArray *arr = @[ModuleZW(@"bloodguide1"),ModuleZW(@"bloodguide2"),ModuleZW(@"bloodguide3"),ModuleZW(@"bloodguide4")];
     for(NSInteger i=0;i<arr.count;i++){
         UIImageView *imageV = [[UIImageView alloc] init];
         if(i==0){
@@ -62,13 +67,13 @@
 {
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kScreenSize.height-110, kScreenSize.width, 110)];
     imageView.userInteractionEnabled = YES;
-    imageView.image = [UIImage imageNamed:@"流程介绍页_02"];
+    imageView.image = [UIImage imageNamed:ModuleZW(@"流程介绍页_02")];
     [self.view addSubview:imageView];
     
-    UIButton *checkInstance = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-60, 18, 120, 30) target:self sel:@selector(chekInstaceClick:) tag:11 image:@"立即检测" title:nil];
+    UIButton *checkInstance = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-60, 18, 120, 30) target:self sel:@selector(chekInstaceClick:) tag:11 image:ModuleZW(@"立即检测") title:nil];
     [imageView addSubview:checkInstance];
     
-    UIButton *neverCaution = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-60, 63, 120, 30) target:self sel:@selector(neverCautionClick:) tag:12 image:@"不再提醒" title:nil];
+    UIButton *neverCaution = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-60, 63, 120, 30) target:self sel:@selector(neverCautionClick:) tag:12 image:ModuleZW(@"不再提醒") title:nil];
     [imageView addSubview:neverCaution];
 }
 

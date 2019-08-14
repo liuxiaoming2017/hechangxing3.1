@@ -50,7 +50,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 30;
+    NSString *contentStr = [NSString string];
+    if(_menuArr.count > indexPath.row){
+        contentStr = [_menuArr objectAtIndex:indexPath.row];
+    }
+    
+    CGRect textRect = [contentStr boundingRectWithSize:CGSizeMake(tableView.width - 20, MAXFLOAT)
+                                                options:NSStringDrawingUsesLineFragmentOrigin
+                                             attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]}
+                                                context:nil];
+    return 10 + textRect.size.height;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -62,17 +71,16 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if(cell == nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
-    
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, tableView.width, 20)];
-    titleLabel.textAlignment = NSTextAlignmentLeft;
-    titleLabel.font = [UIFont systemFontOfSize:15];
+    cell.textLabel.numberOfLines = 0;
+    cell.textLabel.textAlignment = NSTextAlignmentLeft;
+    cell.textLabel.font = [UIFont systemFontOfSize:15];
     if(_menuArr.count > indexPath.row){
-        titleLabel.text = [_menuArr objectAtIndex:indexPath.row];
+        cell.textLabel.text = [_menuArr objectAtIndex:indexPath.row];
     }
-    [cell.contentView addSubview:titleLabel];
+    
     return cell;
 }
 

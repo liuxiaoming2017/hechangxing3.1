@@ -71,7 +71,12 @@
     NSMutableArray *marr = [NSMutableArray arrayWithCapacity:0];
     while ([rs next]) {
         OrganDiseaseModel *model = [[OrganDiseaseModel alloc] init];
-        model.content = [rs stringForColumn:@"content"];
+        if ([UserShareOnce shareOnce].languageType){
+            model.content = [rs stringForColumn:@"content_en"];
+        }else{
+            model.content = [rs stringForColumn:@"content"];
+        }
+        
         model.MICD = [rs stringForColumn:@"MICD"];
         model.MTJI = [rs stringForColumn:@"MTJI"];
         model.SEX = [rs intForColumn:@"SEX"];
@@ -85,12 +90,20 @@
     if([_database close]){
         [_database open];
     }
-    NSString *sql = @"select * from ICD10 where content like ?";
+     NSString *sql = @"select * from ICD10 where content like ?";
+    if ([UserShareOnce shareOnce].languageType){
+        sql = @"select * from ICD10 where content_en like ?";
+    }
+   
     FMResultSet *rs = [_database executeQuery:sql,[NSString stringWithFormat:@"%%%@%%",keyWords]];
     NSMutableArray *marr = [NSMutableArray arrayWithCapacity:0];
     while ([rs next]) {
         OrganDiseaseModel *model = [[OrganDiseaseModel alloc] init];
-        model.content = [rs stringForColumn:@"content"];
+        if ([UserShareOnce shareOnce].languageType){
+            model.content = [rs stringForColumn:@"content_en"];
+        }else{
+            model.content = [rs stringForColumn:@"content"];
+        }
         model.MICD = [rs stringForColumn:@"MICD"];
         model.MTJI = [rs stringForColumn:@"MTJI"];
         model.SEX = [rs intForColumn:@"SEX"];

@@ -19,7 +19,7 @@
 
 #define currentMonth [currentMonthString integerValue]
 SonAccount *sonAccount;
-@interface AlterViewController ()<ZHPickViewDelegate,ASIHTTPRequestDelegate,ASIProgressDelegate>
+@interface AlterViewController ()<ZHPickViewDelegate,ASIHTTPRequestDelegate,ASIProgressDelegate,UITextFieldDelegate>
 @property(nonatomic,retain)ZHPickView *pickview;
 @property(nonatomic,retain)NSIndexPath *indexPath;
 @property (nonatomic ,retain) NSMutableArray *imagesArray;//图片数组
@@ -60,7 +60,7 @@ SonAccount *sonAccount;
 {
     self.dataArray = nil;
     self.datePicker = nil;
-    self.dataDictionary = nil;
+    self.model = nil;
     self.customPicker = nil;
 }
 
@@ -70,7 +70,7 @@ SonAccount *sonAccount;
     [self.view addSubview:progress_];
     [self.view bringSubviewToFront:progress_];
     progress_.delegate = self;
-    progress_.label.text = @"加载中...";
+    progress_.label.text = ModuleZW(@"加载中...");
     [progress_ showAnimated:YES];
 }
 
@@ -91,29 +91,29 @@ SonAccount *sonAccount;
 }
 -(void)RightsAction
 {
-    if ([BirthDay_btn.titleLabel.text isEqualToString:@""]||[BirthDay_btn.titleLabel.text isEqualToString:@"请输入出生日期"]   ) {
-        [self showAlertWarmMessage:@"请输入出生日期"];
+    if ([BirthDay_btn.titleLabel.text isEqualToString:@""]||[BirthDay_btn.titleLabel.text isEqualToString:ModuleZW(@"请输入出生日期")]   ) {
+        [self showAlertWarmMessage:ModuleZW(@"请输入出生日期")];
         return;
     }
     if ([self isBlankString:Yh_TF.text]) {
-         [self showAlertWarmMessage:@"请输入称呼"];
+         [self showAlertWarmMessage:ModuleZW(@"请输入称呼")];
         
         return;
     }
     NSLog(@"--- >> %@",Certificates_Number_Tf.text);
-    if ([self isBlankString:Certificates_Number_Tf.text] || [Certificates_Number_Tf.text isEqualToString:@"请输入证件号码"] || [Certificates_Number_Tf.text isEqualToString:@"请输入身份证号"]) {
-        [self showAlertWarmMessage:@"请输入证件号码"];
+    if ([self isBlankString:Certificates_Number_Tf.text] || [Certificates_Number_Tf.text isEqualToString:ModuleZW(@"请输入证件号码")] || [Certificates_Number_Tf.text isEqualToString:ModuleZW(@"请输入身份证号")]) {
+        [self showAlertWarmMessage:ModuleZW(@"请输入证件号码")];
         return;
     }
     
     
     if (![NSString stringWithIDCardValidate:Certificates_Number_Tf.text]) {
-        [self showAlertWarmMessage:@"请输入正确证件号码"];
+        [self showAlertWarmMessage:ModuleZW(@"请输入正确证件号码")];
         return;
     }
     
-    if ([self isBlankString:TelephoneLb_Tf.text] || [TelephoneLb_Tf.text isEqualToString:@"请输入手机号"]) {
-        [self showAlertWarmMessage:@"请输入手机号"];
+    if ([self isBlankString:TelephoneLb_Tf.text] || [TelephoneLb_Tf.text isEqualToString:ModuleZW(@"请输入手机号")]) {
+        [self showAlertWarmMessage:ModuleZW(@"请输入手机号")];
         return;
     }
     [self showHUD];
@@ -122,15 +122,21 @@ SonAccount *sonAccount;
     
     NSString *UrlPre=URL_PRE;
     NSString *aUrl = nil;
+    
     if ([self.category isEqualToString:@"addMember"]) {
         aUrl = [NSString stringWithFormat:@"%@/member/memberModifi/save.jhtml",UrlPre];
+    }else{
+        aUrl = [NSString stringWithFormat:@"%@/member/memberModifi/update.jhtml",UrlPre];
     }
-    aUrl = [NSString stringWithFormat:@"%@/member/memberModifi/update.jhtml",UrlPre];
+
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     NSLog(@"---- >  %@",Certificates_Number_Tf.text);
-    [request setPostValue:[self.dataDictionary objectForKey:@"id"] forKey:@"Id"];
+    [request setPostValue:self.model.familyID forKey:@"Id"];
     [request setPostValue:Yh_TF.text forKey:@"name"];
     [request setPostValue:Certificates_Number_Tf.text forKey:@"IDCard"];
     [request setPostValue:IsYiBao forKey:@"isMedicare"];
@@ -153,7 +159,7 @@ SonAccount *sonAccount;
 {
     [self hudWasHidden];
     
-    [self showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+    [self showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
 }
 - (void)requestuserinfossCompleteds:(ASIHTTPRequest *)request
 {
@@ -165,11 +171,11 @@ SonAccount *sonAccount;
     id status=[dic objectForKey:@"status"];
     NSLog(@"%@",[dic objectForKey:@"status"]);
     if ([status intValue]==100) {
+        [self changeMemberChildWithData:[dic objectForKey:@"data"]];
+        [self showAlertWarmMessage:ModuleZW(@"信息更新成功")];
         
-        [self showAlertWarmMessage:@"信息更新成功"];
-        
-        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"信息更新成功" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"信息更新成功") preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [self.navigationController popViewControllerAnimated:YES];
         }];
         [alertVC addAction:alertAct1];
@@ -179,12 +185,31 @@ SonAccount *sonAccount;
     else if ([status intValue]==44)
     {
         
-        [self showAlertWarmMessage:@"登录超时，请重新登录"];
+        [self showAlertWarmMessage:ModuleZW(@"登录超时，请重新登录")];
     }else{
         NSString *str = [dic objectForKey:@"data"];
         [self showAlertWarmMessage:str];
     }
     
+}
+
+- (void)changeMemberChildWithData:(NSArray *)arrMem
+{
+    NSMutableArray *memberArr = [NSMutableArray arrayWithCapacity:0];
+    for (NSDictionary *dic in  arrMem) {
+        ChildMemberModel *model = [ChildMemberModel mj_objectWithKeyValues:dic];
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
+        [memberArr addObject:data];
+    }
+    
+    NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberChirldArr"];
+    if (arr.count) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"memberChirldArr"];
+    }
+    NSArray *modelArr = [[NSArray alloc] initWithArray:memberArr];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:modelArr forKey:@"memberChirldArr"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 //-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -211,9 +236,9 @@ SonAccount *sonAccount;
     self.view.frame=tempRect;
     NSString *str = nil;
     if ([self.category isEqualToString:@"addMember"]) {
-        str = @"家庭成员";
+        str = ModuleZW(@"家庭成员");
     }else{
-        str = @"修改信息";
+        str = ModuleZW(@"修改信息");
     }
     self.navTitleLabel.text = str;
     self.view.backgroundColor=[UtilityFunc colorWithHexString:@"##f2f1ef"];
@@ -233,26 +258,42 @@ SonAccount *sonAccount;
     tableview.delegate=self;
     tableview.dataSource=self;
     tableview.bounces = NO;
-    tableview.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
+    tableview.separatorStyle=UITableViewCellSeparatorStyleNone;
     tableview.backgroundColor=[UIColor clearColor];
     _PersonInfoTableView=tableview;
     [self.view addSubview:tableview];
-  
+    
+    UITapGestureRecognizer *tableViewGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewTouchInSide)];
+    tableViewGesture.numberOfTapsRequired = 1;//几个手指点击
+    tableViewGesture.cancelsTouchesInView = NO;//是否取消点击处的其他action
+    [_PersonInfoTableView addGestureRecognizer:tableViewGesture];
+    
+    [self.view addSubview:self.topView];
+
     PersionInfoArray=[NSMutableArray new];
-    [PersionInfoArray addObject:@"称呼："];
+    [PersionInfoArray addObject:ModuleZW(@"称呼：")];
     //    [PersionInfoArray addObject:@"用户名"];
-    [PersionInfoArray addObject:@"性别："];
-    [PersionInfoArray addObject:@"出生日期："];
-    [PersionInfoArray addObject:@"是否有医疗保险："];
-    [PersionInfoArray addObject:@"证件号码："];
-    [PersionInfoArray addObject:@"手机号码："];
+    [PersionInfoArray addObject:ModuleZW(@"性别：")];
+    [PersionInfoArray addObject:ModuleZW(@"出生日期：")];
+    [PersionInfoArray addObject:ModuleZW(@"是否有医疗保险：")];
+    [PersionInfoArray addObject:ModuleZW(@"证件号码：")];
+    [PersionInfoArray addObject:ModuleZW(@"手机号码：")];
     ptCenterper=self.view.center;
+    
+    
     
     
     UIButton *commitBtn = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-147.5, 380, 295, 45) target:self sel:@selector(RightsAction) tag:444 image:@"家庭成员_提交" title:nil];
     [self.view addSubview:commitBtn];
     [self.view bringSubviewToFront:commitBtn];
     
+}
+
+// ------tableView 上添加的自定义手势
+- (void)tableViewTouchInSide{
+    [self.view endEditing:YES];
+    [self restoreView];
+    [_pickview remove];
 }
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -291,7 +332,7 @@ SonAccount *sonAccount;
         
         
         UILabel* YhLb=[[UILabel alloc] init];
-        YhLb.frame=CGRectMake(45, (cell.frame.size.height-21)/2, 50, 21);
+        YhLb.frame=CGRectMake(45, (cell.frame.size.height-21)/2, 120, 21);
         YhLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
         YhLb.font=[UIFont systemFontOfSize:14];
         YhLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
@@ -301,29 +342,38 @@ SonAccount *sonAccount;
         
         Yh_TF=[[UITextField alloc] init];
         Yh_TF.frame=CGRectMake(YhLb.frame.origin.x+YhLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-YhLb.frame.origin.x-YhLb.frame.size.width-5-20.5, 21);
-        Yh_TF.text = [self.dataDictionary objectForKey:@"name"];
+        
+        if ([self.model.name isEqualToString:[UserShareOnce shareOnce].username]) {
+            Yh_TF.text= [[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]]? [UserShareOnce shareOnce].username:[UserShareOnce shareOnce].name;
+        }else if (self.model.name.length> 26){
+            Yh_TF.text = [UserShareOnce shareOnce].wxName;
+        }else{
+            Yh_TF.text = self.model.name;
+        }
         Yh_TF.textAlignment = NSTextAlignmentRight;
         [Yh_TF setValue:[UtilityFunc colorWithHexString:@"#333333"] forKeyPath:@"_placeholderLabel.textColor"];
         [Yh_TF setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
         Yh_TF.returnKeyType=UIReturnKeyDone;
         Yh_TF.delegate=self;
+        [Yh_TF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+
         [cell addSubview:Yh_TF];
         Yh_TF.font=[UIFont systemFontOfSize:14];
     }
     else if (indexPath.row==1)
     {
         UILabel* SexLb=[[UILabel alloc] init];
-        SexLb.frame=CGRectMake(45, (cell.frame.size.height-21)/2, 60, 21);
+        SexLb.frame=CGRectMake(45, (cell.frame.size.height-21)/2, 80, 21);
         SexLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
         SexLb.font=[UIFont systemFontOfSize:14];
         SexLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
         [cell addSubview:SexLb];
         SexLb.backgroundColor=[UIColor whiteColor];
         
-        NSArray *segmentedArray = [[NSArray alloc] initWithObjects:@"男",@"女",nil];
+        NSArray *segmentedArray = [[NSArray alloc] initWithObjects:ModuleZW(@"男"),ModuleZW(@"女"),nil];
         _SegSex=[[UISegmentedControl alloc] initWithItems:segmentedArray];
-        if ([self.dataDictionary objectForKey:@"gender"] != [NSNull null]) {
-            if ([[self.dataDictionary objectForKey:@"gender"]isEqualToString:@"male"]) {
+        if (![GlobalCommon stringEqualNull:self.model.gender]) {
+            if ( [self.model.gender isEqualToString:@"male"]) {
                 _SegSex.selectedSegmentIndex = 0;
                 SexStr = @"male";
             }else{
@@ -332,7 +382,7 @@ SonAccount *sonAccount;
             }
         }
         
-        _SegSex.frame=CGRectMake(ScreenWidth-80-20.5, (cell.frame.size.height-26)/2, 80, 26);
+        _SegSex.frame=CGRectMake(ScreenWidth-80-40.5, (cell.frame.size.height-26)/2, 100, 26);
         
         _SegSex.segmentedControlStyle = UISegmentedControlStyleBordered;//设置样
         _SegSex.tintColor = [UtilityFunc colorWithHexString:@"#5eb4fd"];
@@ -342,7 +392,7 @@ SonAccount *sonAccount;
     }
     else if(indexPath.row == 2){
         UILabel* BirthDayLb=[[UILabel alloc] init];
-        BirthDayLb.frame=CGRectMake(45, (cell.frame.size.height-21)/2, 90, 21);
+        BirthDayLb.frame=CGRectMake(45, (cell.frame.size.height-21)/2, 120, 21);
         BirthDayLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
         BirthDayLb.font=[UIFont systemFontOfSize:14];
         BirthDayLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
@@ -352,10 +402,10 @@ SonAccount *sonAccount;
         BirthDay_btn=[UIButton buttonWithType:UIButtonTypeCustom];
         BirthDay_btn.frame=CGRectMake(BirthDayLb.frame.origin.x+BirthDayLb.frame.size.width+5,  (cell.frame.size.height-21)/2, ScreenWidth-BirthDayLb.frame.origin.x-BirthDayLb.frame.size.width-5-20.5, 21);
         BirthDay_btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-        if ([[self.dataDictionary objectForKey:@"birthday"]isEqual:[NSNull null]]) {
-            [BirthDay_btn setTitle:@"请输入出生日期" forState:UIControlStateNormal];
+        if ([GlobalCommon stringEqualNull:self.model.birthday]) {
+            [BirthDay_btn setTitle:ModuleZW(@"请输入出生日期") forState:UIControlStateNormal];
         }else{
-            [BirthDay_btn setTitle:[self.dataDictionary objectForKey:@"birthday"] forState:UIControlStateNormal];
+            [BirthDay_btn setTitle:self.model.birthday forState:UIControlStateNormal];
         }
         
         [BirthDay_btn addTarget:self action:@selector(BirthDayActive:) forControlEvents:UIControlEventTouchUpInside];
@@ -374,13 +424,13 @@ SonAccount *sonAccount;
         [cell addSubview:SexLb];
         SexLb.backgroundColor=[UIColor whiteColor];
         
-        NSArray *segmentedArray = [[NSArray alloc] initWithObjects:@"有",@"无",nil];
+        NSArray *segmentedArray = [[NSArray alloc] initWithObjects:ModuleZW(@"有"),ModuleZW(@"无"),nil];
         _YiHunSex=[[UISegmentedControl alloc] initWithItems:segmentedArray];
         [_YiHunSex addTarget:self action:@selector(YiHunSexAction1:) forControlEvents:UIControlEventValueChanged];
         _YiHunSex.frame=CGRectMake(ScreenWidth-80-20.5, (cell.frame.size.height-26)/2, 80, 26);
         _YiHunSex.segmentedControlStyle = UISegmentedControlStyleBordered;//设置样
         _YiHunSex.tintColor = [UtilityFunc colorWithHexString:@"#5eb4fd"];
-        if ([[self.dataDictionary objectForKey:@"isMedicare"]isEqual:[NSNull null]]||[[self.dataDictionary objectForKey:@"isMedicare"]isEqualToString:@"no"]) {
+        if ([GlobalCommon stringEqualNull:self.model.isMedicare]||[self.model.isMedicare isEqualToString:@"no"]) {
             _YiHunSex.selectedSegmentIndex = 1;
             IsYiBao = @"no";
         }else{
@@ -394,7 +444,7 @@ SonAccount *sonAccount;
     else if (indexPath.row == 4)
     {
         UILabel* Certificates_NumberLb=[[UILabel alloc] init];
-        Certificates_NumberLb.frame=CGRectMake(45, (cell.frame.size.height-21)/2, 75, 21);
+        Certificates_NumberLb.frame=CGRectMake(45, (cell.frame.size.height-21)/2, 120, 21);
         Certificates_NumberLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
         Certificates_NumberLb.font=[UIFont systemFontOfSize:14];
         Certificates_NumberLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
@@ -407,15 +457,15 @@ SonAccount *sonAccount;
         Certificates_Number_Tf.delegate=self;
         Certificates_Number_Tf.textAlignment = NSTextAlignmentRight;
         Certificates_Number_Tf.returnKeyType=UIReturnKeyDone;
-        if ([[self.dataDictionary objectForKey:@"idcard"]isEqual:[NSNull null]]) {
-            Certificates_Number_Tf.text = @"请输入身份证号";
+        if ([GlobalCommon stringEqualNull:self.model.idcard]) {
+            Certificates_Number_Tf.text =ModuleZW( @"请输入身份证号");
         }else{
-            Certificates_Number_Tf.text=[self.dataDictionary objectForKey:@"idcard"];
+            Certificates_Number_Tf.text=self.model.idcard;
         }
         [Certificates_Number_Tf setValue:[UtilityFunc colorWithHexString:@"#333333"] forKeyPath:@"_placeholderLabel.textColor"];
         [Certificates_Number_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
         [cell addSubview:Certificates_Number_Tf];
-        Certificates_Number_Tf.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
+        Certificates_Number_Tf.keyboardType=UIKeyboardTypeASCIICapable;
         Certificates_Number_Tf.textColor=[UtilityFunc colorWithHexString:@"#333333"];
         Certificates_Number_Tf.font=[UIFont systemFontOfSize:14];
        
@@ -424,7 +474,7 @@ SonAccount *sonAccount;
     else if (indexPath.row == 5)
     {
         UILabel* TelephoneLb=[[UILabel alloc] init];
-        TelephoneLb.frame=CGRectMake(45, (cell.frame.size.height-21)/2, 75, 21);
+        TelephoneLb.frame=CGRectMake(45, (cell.frame.size.height-21)/2, 120, 21);
         TelephoneLb.text=[PersionInfoArray objectAtIndex:indexPath.row];
         TelephoneLb.font=[UIFont systemFontOfSize:14];
         TelephoneLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
@@ -437,12 +487,12 @@ SonAccount *sonAccount;
         TelephoneLb_Tf.returnKeyType=UIReturnKeyDone;
         TelephoneLb_Tf.delegate=self;
         TelephoneLb_Tf.textAlignment = NSTextAlignmentRight;
-        if ([[self.dataDictionary objectForKey:@"mobile"]isEqual:[NSNull null]]) {
-            TelephoneLb_Tf.text = @"请输入手机号";
+        if ([GlobalCommon stringEqualNull:self.model.mobile]) {
+            TelephoneLb_Tf.text = ModuleZW(@"请输入手机号");
         }else{
-            TelephoneLb_Tf.text=[self.dataDictionary objectForKey:@"mobile"];
+            TelephoneLb_Tf.text=self.model.mobile;
         }
-        TelephoneLb_Tf.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
+        TelephoneLb_Tf.keyboardType=UIKeyboardTypeNumberPad;
         [TelephoneLb_Tf setValue:[UtilityFunc colorWithHexString:@"#333333"] forKeyPath:@"_placeholderLabel.textColor"];
         [TelephoneLb_Tf setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
         TelephoneLb_Tf.font=[UIFont systemFontOfSize:14];
@@ -450,6 +500,10 @@ SonAccount *sonAccount;
         
         
     }
+    
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(10, cell.bottom-1, ScreenWidth - 20, 1)];
+    lineView.backgroundColor =RGB(230, 230, 230);
+    [cell addSubview:lineView];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor=[UIColor whiteColor];
     return cell;
@@ -502,16 +556,16 @@ SonAccount *sonAccount;
     }
     
     UIAlertController *alectSheet = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"身份证" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:ModuleZW(@"身份证") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
     }];
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"军官证" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:ModuleZW(@"军官证") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
     }];
-    UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"护照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:ModuleZW(@"护照") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
     }];
-    UIAlertAction *action4 = [UIAlertAction actionWithTitle:@"其他" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action4 = [UIAlertAction actionWithTitle:ModuleZW(@"其他") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
     }];
     
@@ -556,7 +610,7 @@ SonAccount *sonAccount;
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     if (textField == Certificates_Number_Tf || textField == TelephoneLb_Tf) {
-        if ([textField.text isEqualToString:@"请输入证件号码"] || [textField.text isEqualToString:@"请输入身份证号"] || [textField.text isEqualToString:@"请输入手机号"]) {
+        if ([textField.text isEqualToString:ModuleZW(@"请输入证件号码")] || [textField.text isEqualToString:ModuleZW(@"请输入身份证号")] || [textField.text isEqualToString:ModuleZW(@"请输入手机号")]) {
             textField.text = nil;
         }
     }
@@ -564,7 +618,7 @@ SonAccount *sonAccount;
     if (textField == Yh_TF) {
         return;
     }
-    [ self resizeViewForInput:nil ];
+   // [ self resizeViewForInput:nil ];
     
 }
 -(void)resizeViewForInput:(id)sender
@@ -611,7 +665,63 @@ SonAccount *sonAccount;
 }
 
 
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+    
+    [_pickview remove];
+}
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    if (textField == TelephoneLb_Tf) {
+        //这里的if时候为了获取删除操作,如果没有次if会造成当达到字数限制后删除键也不能使用的后果.
+        if (range.length == 1 && string.length == 0) {
+            return YES;
+        }
+        //so easy
+        else if (TelephoneLb_Tf.text.length >= 11) {
+            TelephoneLb_Tf.text = [textField.text substringToIndex:11];
+            return NO;
+        }
+    }
+    
+    if (textField == Yh_TF) {
+        
+        if (range.length == 1 && string.length == 0) {
+            return YES;
+        }
+        //so easy
+        else if (Yh_TF.text.length >= 11) {
+            Yh_TF.text = [textField.text substringToIndex:11];
+            return NO;
+        }
+        
+        
+        if (textField.text.length >= 10)
+        {
+            [self.view endEditing:YES];
+            return NO;
+        }
+    }
+    return YES;
+}
+
+
+
+-(void)textFieldDidChange:(UITextField * )textField
+{
+    if (textField == Yh_TF) {
+        if (textField.text.length > 8) {
+            textField.text = [textField.text substringToIndex:8];
+        }
+    }
+}
+
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [_pickview remove];
+}
 /*
 #pragma mark - Navigation
 

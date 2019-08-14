@@ -6,6 +6,13 @@
 //
 
 #import "CustomNavigationController.h"
+#import "MoxaHelpViewController.h"
+#import "MySportController.h"
+#import "ResultSpeakController.h"
+#import "BloodPressureNonDeviceViewController.h"
+#import "SugerViewController.h"
+#import "SGScanningQRCodeVC.h"
+
 
 @interface CustomNavigationController ()<UIGestureRecognizerDelegate>
 
@@ -32,12 +39,30 @@
 }
 
 #pragma mark - UIGestureRecognizerDelegate
-//  防止导航控制器只有一个rootViewcontroller时触发手势
+//  防止导航控制器只有一个rootViewcontroller时触发手势 滑动返回
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
     // 根据具体控制器对象决定是否开启全屏右滑返回
     
     if ([[self valueForKey:@"_isTransitioning"] boolValue]) {
         return NO;
+    }
+    
+    if(self.viewControllers>0){
+        UIViewController *vc = (UIViewController *)[self.viewControllers objectAtIndex:[self.viewControllers count] - 1];
+        if([[self.viewControllers objectAtIndex:[self.viewControllers count] - 1] isKindOfClass:[MoxaHelpViewController class]] || [[self.viewControllers objectAtIndex:[self.viewControllers count] - 1] isKindOfClass:[MySportController class]] ){
+            
+            return NO;
+        }
+        if([vc isKindOfClass:[ResultSpeakController class]]){
+            ResultSpeakController *vcc = ( ResultSpeakController *)vc;
+            if([vcc.titleStr isEqualToString:ModuleZW(@"季度报告详情")]||[vcc.titleStr isEqualToString:ModuleZW(@"血糖监测")]||[vcc.titleStr isEqualToString:ModuleZW(@"血压监测")]||[vcc.titleStr isEqualToString:ModuleZW(@"血压详情")]){
+                return NO;
+            }
+        }
+        if([vc isKindOfClass:[BloodPressureNonDeviceViewController class]]||[vc isKindOfClass:[SugerViewController class]]||[vc isKindOfClass:[SGScanningQRCodeVC class]]){
+            return NO;
+        }
+        
     }
     
     // 解决右滑和UITableView左滑删除的冲突

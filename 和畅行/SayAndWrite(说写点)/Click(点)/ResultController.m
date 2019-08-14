@@ -1,4 +1,4 @@
-//
+        //
 //  ResultController.m
 //  和畅行
 //
@@ -13,6 +13,9 @@
 #import "SBJson.h"
 #import "JSONKit.h"
 
+#import "QuestionListController.h"
+#import "TipClickController.h"
+
 @interface ResultController ()<WKUIDelegate,WKNavigationDelegate>
 
 @end
@@ -21,18 +24,39 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navTitleLabel.text = @"健康档案";
+    self.navTitleLabel.text = ModuleZW(@"健康档案");
     NSString *str = [NSString stringWithFormat:@"member/service/reshow.jhtml?sn=%@&device=1",self.TZBSstr];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,str];
     
+    
     [self customeViewWithStr:urlStr];
 }
+
+# pragma mark - 解决侧滑返回指定控制器
+- (void)willMoveToParentViewController:(UIViewController*)parent
+{
+    
+    
+}
+
+- (void)didMoveToParentViewController:(UIViewController*)parent
+{
+    NSMutableArray *tempArr = self.navigationController.viewControllers.mutableCopy;
+    for(UIViewController *vc in self.navigationController.viewControllers){
+        if([vc isKindOfClass:[QuestionListController class]]||[vc isKindOfClass:[TipClickController class]]){
+            [tempArr removeObject:vc];
+        }
+    }
+    self.navigationController.viewControllers = tempArr;
+}
+
 
 
 - (void)goBack:(UIButton *)btn
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

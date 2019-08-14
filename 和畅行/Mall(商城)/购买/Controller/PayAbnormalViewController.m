@@ -20,35 +20,34 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-   
-    self.navTitleLabel.text = @"支付信息";
+    self.navTitleLabel.text = ModuleZW(@"支付信息");
     
     self.view.backgroundColor = [UIColor whiteColor];
-    UIImageView *beijingImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 280)];
-    beijingImage.image = [UIImage imageNamed:@"zhifubeijingtupian.png"];
+    UIImageView *beijingImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, 300)];
+    beijingImage.image = [UIImage imageNamed:@"zhifubeijingtupian"];
     [self.view addSubview:beijingImage];
     
-    UIImageView *zhifuchenggongImage = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width - 158.5) / 2, 84, 158.5, 158.5)];
+    UIImageView *zhifuchenggongImage = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width - 158.5) / 2, kNavBarHeight + 20, 158.5, 158.5)];
     zhifuchenggongImage.image = [UIImage imageNamed:@"zhifushibai.png"];
     [self.view addSubview:zhifuchenggongImage];
     
-    UILabel *chenggongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 84 + 158.5 + 20, self.view.frame.size.width, 20)];
+    UILabel *chenggongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, zhifuchenggongImage.bottom + 20, self.view.frame.size.width, 20)];
     chenggongLabel.textAlignment = NSTextAlignmentCenter;
-    chenggongLabel.text = @"支付异常";
+    chenggongLabel.text = ModuleZW(@"支付异常");
     chenggongLabel.textColor = [UIColor whiteColor];
     chenggongLabel.font = [UIFont systemFontOfSize:22];
     [self.view addSubview:chenggongLabel];
     
-    UILabel *chashouLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 84 + 158.5 + 60, self.view.frame.size.width, 20)];
+    UILabel *chashouLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, chenggongLabel.bottom + 10, self.view.frame.size.width, 20)];
     chashouLabel.textColor = [UIColor whiteColor];
-    chashouLabel.text = @"当前支付异常，请重新支付";
+    chashouLabel.text = ModuleZW(@"当前支付异常，请重新支付");
     chashouLabel.textAlignment = NSTextAlignmentCenter;
     chashouLabel.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:chashouLabel];
     
     UIButton *wanchengButton = [UIButton buttonWithType:UIButtonTypeCustom];
     wanchengButton.frame = CGRectMake((self.view.frame.size.width - 210) / 2, 254 + 158.5, 210, 40);
-    [wanchengButton setBackgroundImage:[UIImage imageNamed:@"zhongxinzhifu.png"] forState:UIControlStateNormal];
+    [wanchengButton setBackgroundImage:[UIImage imageNamed:@"zhongxinzhifu"] forState:UIControlStateNormal];
     [wanchengButton addTarget:self action:@selector(chongxinButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:wanchengButton];
     

@@ -9,6 +9,7 @@
 #import "SayAndWriteController.h"
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
+#import "HCY_FamilyListModel.h"
 
 @interface AlterViewController : SayAndWriteController<MBProgressHUDDelegate,UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate>
 {
@@ -61,7 +62,7 @@
 @property( nonatomic ,copy)  NSString* UrlHttpImg;
 @property( nonatomic ,retain) NSString *currentMonthString;
 @property (nonatomic ,retain) NSMutableArray *dataArray;//数据源数组
-@property (nonatomic ,retain) NSMutableDictionary *dataDictionary;
+@property (nonatomic ,retain) HCY_FamilyListModel  *model;
 
 @property (nonatomic,copy) NSString *category;
 

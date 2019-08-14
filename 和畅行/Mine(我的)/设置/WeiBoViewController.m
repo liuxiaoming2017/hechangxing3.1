@@ -34,7 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navTitleLabel.text = @"官方微博";
+    self.navTitleLabel.text =ModuleZW( @"官方微博");
     self.view.backgroundColor=[UtilityFunc colorWithHexString:@"#f2f1ef"];
     
     LBReadingTimeScrollPanel *scrollPanel1 = [[LBReadingTimeScrollPanel alloc] initWithFrame:CGRectZero];
@@ -43,7 +43,7 @@
     
     UITextView* weiboTV=[[UITextView alloc] init];
     weiboTV.frame=CGRectMake(15, kNavBarHeight+5, ScreenWidth-30, ScreenHeight-310);
-    weiboTV.text=weiboSpace;
+    weiboTV.text=ModuleZW(weiboSpace);
     weiboTV.enableReadingTime = YES;
     weiboTV.userInteractionEnabled=YES;
     weiboTV.scrollEnabled=NO;
@@ -75,13 +75,12 @@
     
     
     UIButton *weiboButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *weiboImg=[UIImage imageWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"newguanzhu" ofType:@"png"]];
-    [weiboButton setImage:weiboImg forState:UIControlStateNormal];
-    
-    weiboButton.frame=CGRectMake((ScreenWidth-weiboImg.size.width/2)/2,weiboTV.bottom+20, weiboImg.size.width/2,weiboImg.size.height/2);
+    [weiboButton setTitle:ModuleZW(@"欢迎关注") forState:(UIControlStateNormal)];
+    weiboButton.frame=CGRectMake((ScreenWidth-180)/2,weiboTV.bottom+20, 180,35);
     [weiboButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [weiboButton setTitleShadowColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.6f] forState:UIControlStateNormal];
-    weiboButton.titleLabel.shadowOffset=CGSizeMake(0.0f, -1.0f);
+    [weiboButton setBackgroundColor:RGB(79, 163, 252)];
+    weiboButton.layer.masksToBounds = YES;
+    weiboButton.layer.cornerRadius = 5;
     [weiboButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14.0f]];
     [weiboButton addTarget:self action:@selector(weiboButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:weiboButton];

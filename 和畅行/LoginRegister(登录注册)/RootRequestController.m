@@ -60,8 +60,14 @@
         [dic setObject:[[UIDevice currentDevice] systemVersion] forKey:@"osver"];
         [dic setObject:widthheight forKey:@"resolution"];
         [dic setObject:timeSp forKey:@"time"];
-        [dic setObject:[dicTmp objectForKey:@"USERNAME"] forKey:@"username"];
-        [dic setObject:[dicTmp objectForKey:@"PASSWORDAES"] forKey:@"password"];
+        NSString *usernameStr = [GlobalCommon AESDecodeWithString:[dicTmp objectForKey:@"USERNAME"]];
+        NSString *passwordStr = [GlobalCommon AESDecodeWithString:[dicTmp objectForKey:@"PASSWORDAES"]];
+        if([usernameStr isEqualToString:@""] || usernameStr == nil || usernameStr.length == 0 ){
+            usernameStr = [dicTmp objectForKey:@"USERNAME"];
+            passwordStr = [dicTmp objectForKey:@"PASSWORDAES"];
+        }
+        [dic setObject:usernameStr forKey:@"username"];
+        [dic setObject:passwordStr forKey:@"password"];
         [dic setObject:@"" forKey:@"brand"];
         [dic setObject:@"" forKey:@"devmodel"];
        // __block typeof(self) blockSelf = self;
@@ -71,54 +77,40 @@
 //        } failureBlock:^(NSError *error) {
 //
 //        }];
-    }else{
+    }else if ([strcheck isEqualToString:@"2"]){
+        
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+        NSString *unionidStr = [GlobalCommon AESDecodeWithString:[dicTmp valueForKey:@"UNIONID"]];
+        if([unionidStr isEqualToString:@""] || unionidStr == nil || unionidStr.length == 0 ){
+            unionidStr = [dicTmp valueForKey:@"UNIONID"];
+        }
+        [dic setObject:unionidStr forKey:@"unionid"];
+        [dic setObject:[dicTmp valueForKey:@"SCREENNAME"] forKey:@"screen_name"];
+        [dic setObject:[dicTmp valueForKey:@"GENDER"] forKey:@"gender"];
+        [dic setObject:[dicTmp valueForKey:@"PROFILEIMAGEURL"] forKey:@"profile_image_url"];
+        // __block typeof(self) blockSelf = self;
+        [self userLoginWithWeiXParams:dic withCheck:2];
+        
+    }else if ([strcheck isEqualToString:@"3"]){
+        NSString *PhoneStr = [GlobalCommon AESDecodeWithString:[dicTmp valueForKey:@"PhoneShortMessage"]];
+        if([PhoneStr isEqualToString:@""] || PhoneStr == nil || PhoneStr.length == 0 ){
+            PhoneStr = [dicTmp valueForKey:@"PhoneShortMessage"];
+        }
+        [self userLoginWithShortMessage:PhoneStr];
+    }
+    else{
         [appDelegate() returnMainPage];
     }
     
 }
 
-/*
-- (void)GetMemberChild
-{
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrl = [NSString stringWithFormat:@"%@/member/memberModifi/selectMemberChild.jhtml?mobile=%@",UrlPre,g_userInfo.UserName];
-    NSMutableDictionary *headDic = [NSMutableDictionary dictionaryWithCapacity:0];
-    [headDic setObject:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",g_userInfo.token,g_userInfo.JSESSIONID] forKey:@"Cookie"];
-    __block typeof(self) blockSelf = self;
-    [[NetWorkSharedInstance sharedInstance] networkWithRequestUrlStr:aUrl RequestMethod:@"GET" PostDictionay:nil headDictionay:headDic Success:^(id result, int flag) {
-        id status=[result objectForKey:@"status"];
-        if ([status intValue]==100)
-        {
-            id data=[result objectForKey:@"data"];
-            g_userInfo.mengberchildId=[data objectForKey:@"id"];
-            NSString *greetStr = [NSString stringWithFormat:@"登录成功,欢迎%@",g_userInfo.UserName];
-            HomeViewController *mainview = [[HomeViewController alloc] init];
-            CustomNavigationController *nav=[[CustomNavigationController alloc]initWithRootViewController:mainview];
-            [UIApplication sharedApplication].keyWindow.rootViewController = nav;
-            
-            
-            [GlobalCommon showMessage:greetStr duration:2.0];
-            
-        }else{
-//            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:[result objectForKey:@"data"] preferredStyle:UIAlertControllerStyleAlert];
-//            UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-//                [appDelegate() returnMainPage];
-//            }];
-//            [alertVC addAction:alertAct1];
-//            [self presentViewController:alertVC animated:YES completion:NULL];
-            [blockSelf showAlertWarmMessage:[result objectForKey:@"data"]];
-        }
-    } Fail:^(id error, int flag) {
-        [blockSelf showAlertWarmMessage:@"抱歉登录失败，请重试"];
-    }];
-}
-*/
 
 - (void)showAlertWarmMessage:(NSString *)message
 {
 
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [appDelegate() returnMainPage];
     }];
     

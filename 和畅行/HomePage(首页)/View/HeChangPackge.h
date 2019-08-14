@@ -8,10 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+#import "HCY_HomeImageModel.h"
 @interface HeChangPackge : UIView
 
 @property(nonatomic,strong) UILabel *contentLabel;
+@property(nonatomic,strong) UIImageView *imageV;
+@property(nonatomic,strong) UILabel *titleLabel;
+@property(nonatomic,strong) UILabel *remindLabel;
+@property(nonatomic,strong) UIButton *toViewButton ;
+@property(nonatomic,strong) HCY_HomeImageModel *pushModel;
 
-- (void)changePackgeTypeWithStatus:(NSInteger)status;
+//- (void)changePackgeTypeWithStatus:(NSInteger)status;
 
+-(void)changeBackImageWithStr:(NSString *)str;
+
+- (void)changePackgeTypeWithStatus:(NSInteger)status withXingStr:(NSString *)xingStr;
 @end

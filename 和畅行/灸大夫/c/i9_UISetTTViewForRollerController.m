@@ -66,14 +66,17 @@
     _synWendu.layer.borderColor = RGB(49, 141, 214).CGColor;
     _synWendu.layer.borderWidth =1.0;
     _synWendu.layer.cornerRadius =5.0;
+    [_synWendu setTitle:ModuleZW(@"同步温度") forState:(UIControlStateNormal)];
     
     _synTime.layer.borderColor = RGB(49, 141, 214).CGColor;
     _synTime.layer.borderWidth =1.0;
     _synTime.layer.cornerRadius =5.0;
+     [_synTime setTitle:ModuleZW(@"同步时间") forState:(UIControlStateNormal)];
     
     _openBtn.layer.borderColor = RGB(49, 141, 214).CGColor;
     _openBtn.layer.borderWidth =1.0;
     _openBtn.layer.cornerRadius =8.0;
+    [_openBtn setTitle:ModuleZW(@"确定") forState:(UIControlStateNormal)];
 }
 
 -(void)seti9ChannelView:(NewChannelView*)view BlurView:(UIViewController*)blueView{
@@ -143,22 +146,22 @@
     sjVal = (sjVal == 0)?1:sjVal;
     [_wenduPicker selectRow:(wdVal-38) inComponent:0 animated:NO];
     [_timePicker selectRow:(sjVal-1) inComponent:0 animated:NO];
-    _moxaNumLable.text = [NSString stringWithFormat:@"%d号灸头",channal];
+    _moxaNumLable.text = [NSString stringWithFormat:ModuleZW(@"%d号灸头"),channal];
     [self showWenduStats];
 }
 
 -(void)showWenduStats{
     int wdVal = [_wenduPicker selectedRowInComponent:0]%_wenduArrynum+38;
     if(wdVal < 45){
-        _wenduRemind.text = @"温度正常";
+        _wenduRemind.text = ModuleZW(@"温度正常");
         _wenduRemind.textColor = RGB(49, 141, 214);
         _wenduRemind.hidden = YES;
     }else if(wdVal >= 45 && wdVal < 48){
-        _wenduRemind.text = @"温度微高";
+        _wenduRemind.text = ModuleZW(@"温度微高");
         _wenduRemind.textColor = RGB(49, 141, 214);
         _wenduRemind.hidden = NO;
     }else if(wdVal >= 48){
-        _wenduRemind.text = @"温度过高";
+        _wenduRemind.text = ModuleZW(@"温度过高");
         _wenduRemind.textColor = [UIColor redColor];
         _wenduRemind.hidden = NO;
     }

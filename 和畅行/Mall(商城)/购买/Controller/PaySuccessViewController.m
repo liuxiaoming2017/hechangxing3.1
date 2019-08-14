@@ -9,7 +9,7 @@
 #import "PaySuccessViewController.h"
 
 #import "EDWKWebViewController.h"
-//#import "PersonContentssViewController.h"
+#import "YueYaoController.h"
 
 @interface PaySuccessViewController ()
 
@@ -23,35 +23,41 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
+    //清理z选中的订单
+    [UserShareOnce shareOnce].allYueYaoPrice = 0;
+    [[UserShareOnce shareOnce].yueYaoBuyArr removeAllObjects];
 
+    self.navTitleLabel.text = ModuleZW(@"支付信息");
     
-    self.navTitleLabel.text = @"支付信息";
-    
-    UIImageView *beijingImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 280)];
-    beijingImage.image = [UIImage imageNamed:@"zhifubeijingtupian.png"];
+    UIImageView *beijingImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, 300)];
+    beijingImage.image = [UIImage imageNamed:@"zhifubeijingtupian"];
     [self.view addSubview:beijingImage];
    
-    UIImageView *zhifuchenggongImage = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width - 158.5) / 2, 84, 158.5, 158.5)];
-    zhifuchenggongImage.image = [UIImage imageNamed:@"zhifuchenggong.png"];
+    UIImageView *zhifuchenggongImage = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width - 158.5) / 2, kNavBarHeight + 20, 158.5, 158.5)];
+    zhifuchenggongImage.image = [UIImage imageNamed:@"zhifuchenggong"];
     [self.view addSubview:zhifuchenggongImage];
    
-    UILabel *chenggongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 84 + 158.5 + 20, self.view.frame.size.width, 20)];
+    UILabel *chenggongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  zhifuchenggongImage.bottom + 20, self.view.frame.size.width, 20)];
     chenggongLabel.textAlignment = NSTextAlignmentCenter;
-    chenggongLabel.text = @"支付成功";
+    chenggongLabel.text = ModuleZW(@"支付成功");
     chenggongLabel.textColor = [UIColor whiteColor];
     chenggongLabel.font = [UIFont systemFontOfSize:22];
     [self.view addSubview:chenggongLabel];
    
-    UILabel *chashouLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 84 + 158.5 + 60, self.view.frame.size.width, 20)];
+    UILabel *chashouLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  chenggongLabel.bottom + 10, self.view.frame.size.width, 50)];
     chashouLabel.textColor = [UIColor whiteColor];
-    chashouLabel.text = @"您已成功购买商品，请注意查收";
+    chashouLabel. numberOfLines = 2;
+    chashouLabel.text = ModuleZW(@"您已成功购买商品，请注意查收");
     chashouLabel.textAlignment = NSTextAlignmentCenter;
     chashouLabel.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:chashouLabel];
 
     UIButton *wanchengButton = [UIButton buttonWithType:UIButtonTypeCustom];
     wanchengButton.frame = CGRectMake((self.view.frame.size.width - 210) / 2, 254 + 158.5, 210, 40);
-    [wanchengButton setBackgroundImage:[UIImage imageNamed:@"zhifuwancheng.png"] forState:UIControlStateNormal];
+    [wanchengButton setBackgroundColor:RGB(109, 192, 235)];
+    wanchengButton.layer.cornerRadius = 8;
+    wanchengButton.layer.masksToBounds = YES;
+    [wanchengButton setTitle:ModuleZW(@"确认完成") forState:(UIControlStateNormal)];
     [wanchengButton addTarget:self action:@selector(wanchengButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:wanchengButton];
                             
@@ -65,15 +71,15 @@
         /**
          *  通过点击乐药界面push出的购物车界面
          */
-//        if ([vcHome isKindOfClass:[LeyaoZKViewController class]]) {
-//            /**
-//             *  乐药购买成功后将购物车清空
-//             */
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"PayStatues" object:nil];
-//            [self.navigationController popToViewController:vcHome animated:YES];
-//
-//
-//        }
+        if ([vcHome isKindOfClass:[YueYaoController class]]) {
+            /**
+             *  乐药购买成功后将购物车清空
+             */
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PayStatues" object:nil];
+            [self.navigationController popToViewController:vcHome animated:YES];
+
+
+        }
         /**
          *  通过点击健康商城界面push出的购物车界面
          */

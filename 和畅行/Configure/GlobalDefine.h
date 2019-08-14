@@ -129,15 +129,20 @@
 #define IS_IPHONE_6P (IS_IPHONE && [[UIScreen mainScreen] bounds].size.width == 414.0f)
 #define IS_IPHONE_6 (IS_IPHONE && [[UIScreen mainScreen] bounds].size.width == 375.0f)
 
-#define iPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
-#define kTabBarHeight (iPhoneX ? 83 : 49)
+#define IS_IPHONE_X ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define IS_IPHONE_Xr ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(828, 1792), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define IS_IPHONE_Xs_Max ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2688), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define iPhoneX (IS_IPHONE_X || IS_IPHONE_Xr || IS_IPHONE_Xs_Max)
+#define kTabBarHeight (iPhoneX ? 83 : 44)
 #define kNavBarHeight (iPhoneX ? 88 : 64)
 #define kNavHeight 44
 #define kStatusBarHeight (iPhoneX ? 44 : 20)
 
 #define leYaoStatus @"leYaoStatus"
 
-//////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - app define
 
 
@@ -151,6 +156,15 @@
 #define RGB_TextLightDark                       RGB(50.0f, 50.0f, 50.0f)
 #define RGB_TextDark                            RGB(10.0f, 10.0f, 10.0f)
 #define RGB_TextAppOrange                       RGB(224.0f, 83.0f, 51.0f)
+#define RGB_TextAppBlue                         RGB( 88, 147, 219)
+#define RGB_TextOrange                       UIColorFromHex(0Xffa200)
+
+#define RGB_TextAppGray                        RGB( 135, 135, 135)
+
+#define RGB_TextGray                       UIColorFromHex(0x8e8e93)
+#define RGB_ButtonBlue                          RGB(30, 130, 210)
+
+
 #define SIZE_TextSmall                          10.0f
 #define SIZE_TextContentNormal                  13.0f
 #define SIZE_TextTitleMini                      15.0f
@@ -159,10 +173,10 @@
 #define SIZE_TextHuge                           18.0f
 
 //////////////蓝牙
-#define kPERIPHERAL_NAME        @"BPM-188"
-#define KUUID_SERVICE           @"18F0"
-#define kUUID_CHARACTER_RECEIVE @"2AF0"
-#define kUUID_CHARACTER_CONFIG  @"2AF0"
+#define kPERIPHERAL_NAME        @"yueluoyi"
+#define KUUID_SERVICE           @"FFE0"
+#define kUUID_CHARACTER_RECEIVE @"FFE1"
+#define kUUID_CHARACTER_CONFIG  @"FFE2"
 #define kUUID_CHARACTER_SEND    @"2AF1"
 
 #define kLoginSuccessNotification @"loginSuccsess"
@@ -196,6 +210,8 @@
 #define kPERIPHERAL_DATA @"BLEPeripheralData"//血压数据
 
 #define kOXYGEN_DATA @"BLEOxygenData"//血氧数据
+
+#define exchangeMemberChildNotify @"exchangeMemberChildNotify"
 
 //档案cell的类型
 typedef enum {

@@ -69,14 +69,16 @@
     _titleLabel.font = [UIFont systemFontOfSize:15];
     _titleLabel.textColor = UIColorFromHex(0x009ef3);
     _titleLabel.textAlignment = NSTextAlignmentCenter;
-    if (![[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]] && [UserShareOnce shareOnce].name != nil) {
-        _titleLabel.text = [NSString stringWithFormat:@"欢迎：%@",[UserShareOnce shareOnce].name];
-    }else if (![[UserShareOnce shareOnce].username isKindOfClass:[NSNull class]] && [UserShareOnce shareOnce].username != nil){
-        _titleLabel.text = [NSString stringWithFormat:@"欢迎：%@",[UserShareOnce shareOnce].username];
+    
+    
+    if ([MemberUserShance shareOnce].name.length < 26){
+        _titleLabel.text =[NSString stringWithFormat:@"欢迎：%@", [MemberUserShance shareOnce].name];
+    }else{
+        _titleLabel.text =[NSString stringWithFormat:@"欢迎：%@", [UserShareOnce shareOnce].wxName];
     }
+
     [_showView addSubview:_titleLabel];
     
-   
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _titleLabel.bottom+5, _showView.frame.size.width, _showView.frame.size.height-_titleLabel.bottom-5) style:UITableViewStylePlain];
     
@@ -154,35 +156,40 @@
 
     UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 10, 100, 24)];
     nameLabel.font = [UIFont systemFontOfSize:13];
-    nameLabel.text = model.name;
+    if ( model.name.length > 27) {
+        nameLabel.text =  [UserShareOnce shareOnce].wxName;
+    }else {
+        nameLabel.text = model.name;
+    }
+        
     [cell addSubview:nameLabel];
     
     int sesss ;
     int age ;
-    UILabel *sexLabel = [[UILabel alloc] initWithFrame:CGRectMake(_tableView.frame.size.width/2 + 20, 10, 20, 24)];
+    UILabel *sexLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.right + 10, 10, 40, 24)];
     sexLabel.font = [UIFont systemFontOfSize:13];
-    UILabel *ageLabel = [[UILabel alloc] initWithFrame:CGRectMake(_tableView.frame.size.width-80, 10, 70, 24)];
+    UILabel *ageLabel = [[UILabel alloc] initWithFrame:CGRectMake(sexLabel.right+10, 10, 70, 24)];
     ageLabel.font = [UIFont systemFontOfSize:13];
     [cell addSubview:sexLabel];
     [cell addSubview:ageLabel];
-    if ([model.birthday isEqual:[NSNull null]] ) {
-        NSString *sex = @"";
-        if ([[UserShareOnce shareOnce].gender isEqual:[NSNull null]]||[[UserShareOnce shareOnce].gender isEqualToString:@"male"]) {
-            sex =@"男" ;
-        }else{
-            sex = @"女";
-        }
-        sexLabel.text = [NSString stringWithFormat:@"%@",sex];
-        ageLabel.text = [NSString stringWithFormat:@"%@岁",@"0"];
-        
+    
+    NSString *sex = @"";
+    ;
+
+    if([GlobalCommon stringEqualNull:model.gender]){
+        sex =@"—" ;
+    }else if ([model.gender isEqualToString:@"male"]){
+        sex = @"男";
     }else{
-        NSString *sex = @"";
-        if ([model.gender isEqual:[NSNull null]]||[model.gender isEqualToString:@"male"]) {
-            sex =@"男" ;
-        }else{
-            sex = @"女";
-        }
-        
+        sex = @"女";
+    }
+    sexLabel.text = sex;
+
+    if ([model.birthday isKindOfClass:[NSNull class]] ||model.birthday == nil|| model.birthday.length ==0) {
+        ageLabel.text =@"未知";
+    }else if ([model.birthday isEqualToString:@"请选择您的出生日期"]){
+        ageLabel.text =@"未知";
+    } else{
         NSString *str = [model.birthday substringToIndex:4];
         sesss = [str intValue];
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
@@ -193,7 +200,6 @@
         now=[NSDate date];
         comps = [calendar components:unitFlags fromDate:now];
         age = (int)[comps year] - sesss;
-        sexLabel.text = [NSString stringWithFormat:@"%@",sex];
         ageLabel.text = [NSString stringWithFormat:@"%d岁",age];
     }
     UIImageView *lineView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 43, tableView.frame.size
@@ -217,6 +223,9 @@
 //    }
     NSString *memberId = [NSString stringWithFormat:@"%@",model.idNum];
     self.myBlock(memberId);
+    if(self.mynameBlock){
+        self.mynameBlock(model.name);
+    }
     [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%@",@(indexPath.row)] forKey:@"selectedMemberIndex"];
     [[NSUserDefaults standardUserDefaults] setObject:memberId forKey:@"selectedMemberId"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -237,6 +246,11 @@
     }
 }
 
+-(void)receiveNameWith:(SelectNameCellBlock)block{
+    if(!self.mynameBlock) {
+        self.mynameBlock = [block copy];
+    }
+}
 
 
 @end

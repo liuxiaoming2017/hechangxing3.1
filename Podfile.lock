@@ -15,60 +15,82 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - DACircularProgress (2.3.1)
+  - FLAnimatedImage (1.0.12)
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
-  - HHDoctorSDK (2.0.6.3):
-    - HHDoctorSDK/Base (= 2.0.6.3)
-  - HHDoctorSDK/Base (2.0.6.3)
-  - MBProgressHUD (1.0.0)
+  - HHDoctorSDK (2.0.6):
+    - HHDoctorSDK/Base (= 2.0.6)
+    - NIMSDK
+  - HHDoctorSDK/Base (2.0.6):
+    - NIMSDK
+  - MBProgressHUD (1.1.0)
   - MJExtension (3.0.13)
-  - PYPhotoBrowser (1.2.5):
+  - MJRefresh (3.1.15.7)
+  - NIMSDK (6.7.0)
+  - PYPhotoBrowser (1.5.6):
     - DACircularProgress
     - MBProgressHUD
-    - SDWebImage
-  - SDWebImage (4.0.0):
-    - SDWebImage/Core (= 4.0.0)
-  - SDWebImage/Core (4.0.0)
+    - SDWebImage/GIF (~> 4.2.1)
+  - ReactiveObjC (2.1.2)
+  - SDWebImage (4.2.3):
+    - SDWebImage/Core (= 4.2.3)
+  - SDWebImage/Core (4.2.3)
+  - SDWebImage/GIF (4.2.3):
+    - FLAnimatedImage (~> 1.0)
+    - SDWebImage/Core
+  - YYModel (1.0.4)
 
 DEPENDENCIES:
   - AFNetworking
   - FMDB
-  - HHDoctorSDK (from `http://code.hh-medic.com/hh_public/HHDoctorSDK.ios.git`, branch `no/utdid`)
+  - HHDoctorSDK (from `http://code.hh-medic.com/hh_public/HHDoctorSDK.ios.git`)
   - MJExtension
-  - PYPhotoBrowser
-  - SDWebImage
+  - MJRefresh
+  - PYPhotoBrowser (~> 1.5.6)
+  - ReactiveObjC (~> 2.1.0)
+  - SDWebImage (~> 4.2.1)
+  - YYModel
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
     - DACircularProgress
+    - FLAnimatedImage
     - FMDB
     - MBProgressHUD
     - MJExtension
+    - MJRefresh
+    - NIMSDK
     - PYPhotoBrowser
+    - ReactiveObjC
     - SDWebImage
+    - YYModel
 
 EXTERNAL SOURCES:
   HHDoctorSDK:
-    :branch: no/utdid
     :git: http://code.hh-medic.com/hh_public/HHDoctorSDK.ios.git
 
 CHECKOUT OPTIONS:
   HHDoctorSDK:
-    :commit: cdd35a3e507d94d8e4b0a9ed3d4165054c47310b
+    :commit: 293b0a79e129ce0958629ba5a63ef965ebedc677
     :git: http://code.hh-medic.com/hh_public/HHDoctorSDK.ios.git
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
-  HHDoctorSDK: f5de46e477d8776d0f74e54b64ef4a2fc8de8e1f
-  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  HHDoctorSDK: ce2fbdd51343f26ee94520681fd4e8b71b40e96d
+  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
-  PYPhotoBrowser: 832154ec5e61c2c321d9be0e69af1fda8731e5ac
-  SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
+  MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
+  NIMSDK: 4dc1f5171a359adea8945e012ee868773d9b01dd
+  PYPhotoBrowser: 74f6526b290069a55943ed92e5a21f84c6d90ecf
+  ReactiveObjC: 7b6782ae39f9ac0f57205c3b0c0b69b9dd7048c0
+  SDWebImage: 791bb72962b3492327ddcac4b1880bd1b5458431
+  YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: f3f0bb818fff64118782e0d848228f6f83fe6eae
+PODFILE CHECKSUM: 5399b45418cbfda59e961439346814d6c2f748d3
 
 COCOAPODS: 1.5.3

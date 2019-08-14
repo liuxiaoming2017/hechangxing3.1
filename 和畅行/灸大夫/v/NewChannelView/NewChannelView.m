@@ -127,7 +127,7 @@
             tiemLable.font = [UIFont systemFontOfSize:18.0];
         }
       
-        tiemLable.text = @"未工作";
+        tiemLable.text = ModuleZW(@"未工作");
         [_mMoxaHead addSubview:tiemLable];
         [self addSubview:_mMoxaHead];
        
@@ -311,7 +311,7 @@
     states = s;
     if(states == CHANNEL_NOLINK)
     {
-        tiemLable.text = @"未连接";
+        tiemLable.text = ModuleZW(@"未连接");
         if(showWarnning == YES){
             [self StopWarnning];
         }
@@ -320,7 +320,7 @@
     }
     else if(states == CHANNEL_STOP)
     {
-        tiemLable.text = @"未工作";
+        tiemLable.text = ModuleZW(@"未工作");
         if(showWarnning == YES){
             [self StopWarnning];
         }
@@ -347,7 +347,7 @@
         [swicthBtn.imageView.layer removeAnimationForKey:@"close"];
         [swicthBtn setImage:[UIImage imageNamed:@"switch_onblue"] forState:UIControlStateNormal];
     }else if(states == CHANNEL_LINKING){
-        tiemLable.text = @"连接中";
+        tiemLable.text = ModuleZW(@"连接中");
         if(showWarnning == YES){
             [self StopWarnning];
         }

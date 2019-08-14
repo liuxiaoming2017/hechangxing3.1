@@ -17,11 +17,11 @@
     int pageNo;
     int STtimeer;
     UIButton* YZMbtn;
-    NSString* YZMcode;
 }
 @property(nonatomic,strong) UITextField* RepInputphoneTF;
 @property(nonatomic,strong) UITextField* TtempInputsecTF;
 @property(nonatomic,strong) UITextField * NewInputSecTF;
 @property(nonatomic,strong) UITextField* AgainInputSecTF;
 @property(nonatomic,strong) UITextField * pYzmTF;
+@property(nonatomic,copy) NSString* YZMcode;
 @end

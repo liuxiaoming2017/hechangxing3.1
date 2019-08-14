@@ -10,4 +10,6 @@
 
 @interface ReadOrWriteView : UIView
 
+-(void)setButtonImageWithArray:(NSMutableArray *)array;
+-(void)initWithUI;
 @end

@@ -9,13 +9,13 @@
 #import "UserShareOnce.h"
 
 static UserShareOnce *shareOnce = nil;
-
+static dispatch_once_t onceToken;
+static dispatch_once_t onceToken1;
 @implementation UserShareOnce
 
 + (UserShareOnce *)shareOnce
 {
     
-    static dispatch_once_t onceToken;
     dispatch_once(&onceToken,^{
         shareOnce = [[UserShareOnce alloc] init];
     });
@@ -24,8 +24,8 @@ static UserShareOnce *shareOnce = nil;
 
 +(id)allocWithZone:(struct _NSZone *)zone
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+//    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken1, ^{
         shareOnce = [super allocWithZone:zone];
     });
     
@@ -49,5 +49,35 @@ static UserShareOnce *shareOnce = nil;
              };
 }
 
+- (id)mj_newValueFromOldValue:(id)oldValue property:(MJProperty *)property{
+    
+    if (oldValue == [NSNull null]) {
+        
+        if ([oldValue isKindOfClass:[NSArray class]]) {
+            
+            return  @[];
+            
+        }else if([oldValue isKindOfClass:[NSDictionary class]]){
+            
+            return @{};
+            
+        }else{
+            
+            return @"";
+            
+        }
+        
+    }
+    
+    return oldValue;
+    
+}
+
++(void)attemptDealloc{
+    
+    shareOnce =nil;
+     onceToken=0l;
+    onceToken1 =0l;
+}
 
 @end

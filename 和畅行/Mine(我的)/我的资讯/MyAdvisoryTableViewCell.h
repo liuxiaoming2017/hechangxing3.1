@@ -9,10 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface MyAdvisoryTableViewCell : UITableViewCell
-@property (nonatomic ,strong) UIImageView *bottomView;
-@property (nonatomic ,strong) UILabel *nameLabel;
-@property (nonatomic ,strong) UILabel *sexLabel;
 @property (nonatomic ,strong) UILabel *answerLabel;
 @property (nonatomic ,strong) UILabel *contentlabel;
 @property (nonatomic ,strong) UILabel *timeLabel;
+@property (nonatomic,strong) CALayer *subLayer;
 @end

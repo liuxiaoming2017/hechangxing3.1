@@ -12,6 +12,9 @@
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 #import "SBJson.h"
+#import "SGScanningQRCodeVC.h"
+#import "SGAlertView.h"
+#import "HCY_InformationController.h"
 @interface BoundBlockViewController ()<UITextFieldDelegate,MBProgressHUDDelegate>
 {
     MBProgressHUD* progress_;
@@ -21,10 +24,7 @@
 
 @implementation BoundBlockViewController
 
-- (void)dealloc
-{
-    [super dealloc];
-}
+
 
 -(void)backClick:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
@@ -33,43 +33,71 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.navTitleLabel.text = @"我的卡包";
+    self.navTitleLabel.text = ModuleZW(@"添加至卡包");
     self.view.backgroundColor = [UIColor whiteColor];
-    UIImageView *diImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, kNavBarHeight+5, self.view.frame.size.width - 20, 55)];
+  
     
-    diImageView.image = [UIImage imageNamed:@"xinkadi.png"];
-    [self.view addSubview:diImageView];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, kNavBarHeight + 70, ScreenWidth, 30)];
+    titleLabel.text = ModuleZW(@"请在输入框输入服务卡号");
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.font = [UIFont systemFontOfSize:17];
+    [self.view addSubview:titleLabel];
     
-    UIImageView *kaImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10,20,20,15)];
-    
-    kaImageView.image = [UIImage imageNamed:@"xinkabao.png"];
-    
-    _textField = [[UITextField alloc]initWithFrame:CGRectMake(50, 80, self.view.frame.size.width - 70, 55)];
+    _textField = [[UITextField alloc]initWithFrame:CGRectMake(15, titleLabel.bottom + 30, ScreenWidth - 30, 55)];
     _textField.delegate = self;
-    _textField.placeholder = @"请输入卡号";
+    _textField.layer.cornerRadius = 10;
+    _textField.layer.masksToBounds = YES;
+    _textField.textAlignment = NSTextAlignmentCenter;
+    _textField.layer.borderWidth =1.0f;
+    _textField.layer.borderColor = RGB_TextAppBlue.CGColor;;
+    _textField.placeholder = ModuleZW(@"请输入卡号");
+    _textField.borderStyle = UITextBorderStyleRoundedRect;
     _textField.returnKeyType=UIReturnKeyDone;
-    //UIView *redView=[[UIView alloc]initWithFrame:CGRectMake(10, 20, 20, 15)];
-    // redView.backgroundColor=[UIColor redColor];
-    [diImageView addSubview:kaImageView];
-    //    _textField.leftView = redView;
-    //    _textField.leftViewMode=UI_textFieldViewModeAlways;
-    //    [redView release];
     [self.view addSubview:_textField];
+    
+    
     UIButton *bangButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    bangButton.frame = CGRectMake(10, diImageView.bottom+20, self.view.frame.size.width - 20, 45);
-    [bangButton setBackgroundImage:[UIImage imageNamed:@"xinkabang.png"] forState:UIControlStateNormal];
+    bangButton.frame = CGRectMake(ScreenWidth/2 - 75, _textField.bottom+50, 150, 50);
+    [bangButton setTitle:ModuleZW(@"添加至卡包") forState:(UIControlStateNormal)];
+    [bangButton setBackgroundColor:RGB_ButtonBlue];
+    bangButton.layer.cornerRadius = 25;
+    bangButton.layer.masksToBounds = YES;
     [bangButton addTarget:self action:@selector(bangButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:bangButton];
     
     
+    UIButton *flickingBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - 13 ,ScreenHeight - 200, 50, 50) target:self sel:@selector(flickingClick) tag:31 image:nil title:ModuleZW(@"二维码")];
+    [flickingBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [flickingBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [flickingBtn setImage:[UIImage imageNamed:@"二维码"] forState:(UIControlStateNormal)];
+    [self.view addSubview:flickingBtn];
+   
+    
+     [flickingBtn setTitleEdgeInsets:UIEdgeInsetsMake(flickingBtn.imageView.frame.size.height +30 ,-flickingBtn.imageView.frame.size.width -18, 0.0,0.0)];
+    
+    
 }
+-(void)flickingClick{
+    
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if (authStatus == AVAuthorizationStatusRestricted || authStatus ==AVAuthorizationStatusDenied) {
+        //无权限 可以做一个友好的提示
+        [self showAlertWarmMessage:ModuleZW(@"请您先去设置允许APP访问您的相机 设置>隐私>相机")];
+        return ;
+    } else {  
+        SGScanningQRCodeVC *vc = [[SGScanningQRCodeVC alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+   
+}
+
+
 - (void)bangButton{
     if ([_textField.text isEqualToString:@""]) {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"卡号不能为空" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"卡号不能为空") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         [av show];
         
-        [av release];
         return;
     }
     [self showHUD];
@@ -78,25 +106,12 @@
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
     [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    
-    
-    //[request setPostValue:self.UrlHttpImg forKey:@"memberImage"];
-    
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    //[request setPostValue:[UserShareOnce shareOnce].uid forKey:@"id"];
     [request setPostValue:_textField.text forKey:@"code"];
-    
-    //    //[request setPostValue:TelephoneLb_Tf.text forKey:@"phone"];
-    // [request setPostValue:@"2" forKey:@"weight"];
-    //[request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    
-    //
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    // [request setPostValue:AddressLb_Tf.text forKey:@"address"];
-    
-    // [request setPostValue:Certificates_Number_Tf.text forKey:@"idNumber"];
-    
-    
+
     [request setTimeOutSeconds:20];
     [request setRequestMethod:@"POST"];
     [request setDelegate:self];
@@ -105,58 +120,71 @@
     [request startAsynchronous];
     
     
+//    NSDictionary *dic = @{@"memberId":[UserShareOnce shareOnce].uid,
+//                          @"code":_textField.text};
+   
+//
+    
+    
+//
+//    NSString *str = @"/member/cashcard/bind.jhtml";
+
+//            //为网络请求添加请
+//    NSDictionary *headers = @{@"token":[UserShareOnce shareOnce].token,
+//                              @"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID],
+//                              @"version":@"ios_hcy-yh-1.0"};
+
+//    [[NetworkManager sharedNetworkManager]requestWithType:1 urlString:str headParameters:nil parameters:dic successBlock:^(id response) {
+//
+//
+////        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+//
+//
+//                NSLog(@"%@",response);
+//
+//
+//            } failureBlock:^(NSError *error) {
+//
+//                NSLog(@"%@",error);
+//            }];
+    
+    
 }
 - (void)requesstuserinfoError:(ASIHTTPRequest *)request
 {
-    [self hudWasHidden:nil];
+    [self hudWasHidden];
     //[SSWaitViewEx removeWaitViewFrom:self.view];
     
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉，请检查您的网络是否畅通" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉，请检查您的网络是否畅通") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
     [av show];
     [av release];
 }
 - (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
 {
-    [self hudWasHidden:nil];
+    [self hudWasHidden];
     NSString* reqstr=[request responseString];
     //NSLog(@"dic==%@",reqstr);
     NSDictionary * dic=[reqstr JSONValue];
-    //NSLog(@"dic==%@",dic);
+    NSLog(@"dic==%@",dic);
     id status=[dic objectForKey:@"status"];
     //NSLog(@"234214324%@",status);
     if ([status intValue]== 100) {
-        
-        //        sonAccount.name = Yh_TF.text;
-        //        sonAccount.gender = SexStr;
-        //        sonAccount.birthday = BirthDay_btn.titleLabel.text;
-        //
-        //        sonAccount.mobile = TelephoneLb_Tf.text;
-        //        sonAccount.idCard = CertificatesType;
-        //        //[UserShareOnce shareOnce].idNumber=Certificates_Number_Tf.text;
-        //        sonAccount.medicare = IsYiBao;
-        // [UserShareOnce shareOnce].memberImage=self.UrlHttpImg;
-        //NSLog(@"111111%@",[dic objectForKey:@"data"]);
-        
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"信息更新成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-        [av show];
-        av.tag=10007;
-        [av release];
-        _textField.text = @"";
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"cardNameSuccess" object:nil];
+        [GlobalCommon showMessage:ModuleZW(@"服务卡添加成功") duration:1];
+        [self.navigationController popViewControllerAnimated:YES];
         
     }
     else if ([status intValue]== 44)
     {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"登录超时，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         av.tag  = 100008;
         [av show];
-        [av release];
-    }
-    else  {
+    } else  {
         NSString *str = [dic objectForKey:@"data"];
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:str delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         
         [av show];
-        [av release];
     }
 }
 -(void) showHUD
@@ -165,13 +193,12 @@
     [self.view addSubview:progress_];
     [self.view bringSubviewToFront:progress_];
     progress_.delegate = self;
-    progress_.label.text = @"加载中...";
+    progress_.label.text = ModuleZW(@"加载中...");
     [progress_ showAnimated:YES];
 }
 
-- (void)hudWasHidden:(MBProgressHUD *)hud
+- (void)hudWasHidden
 {
-    NSLog(@"Hud: %@", hud);
     // Remove HUD from screen when the HUD was hidded
     [progress_ removeFromSuperview];
     [progress_ release];
@@ -239,13 +266,14 @@
 }
 
 /*
-#pragma mark - Navigation
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

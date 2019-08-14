@@ -22,8 +22,11 @@
 @property (nonatomic,copy) NSString *name;
 @property (nonatomic,copy) NSString *weight;
 
+@property (nonatomic,assign) BOOL isOpenPackge;
+
 + (MemberUserShance *)shareOnce;
 
 - (void)setMemberModel:(ChildMemberModel *)model;
 
++(void)attemptDealloc;
 @end

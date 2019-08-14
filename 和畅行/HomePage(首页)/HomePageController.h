@@ -9,5 +9,11 @@
 #import "NavBarViewController.h"
 
 @interface HomePageController : NavBarViewController
-
+{
+    BOOL _isTest;
+    
+    BOOL _havePackage;//是否有卡包
+    
+    BOOL _isActivity;//是否有活动
+}
 @end

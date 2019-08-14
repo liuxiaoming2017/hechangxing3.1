@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #ifndef kSidebarWidth
-#define kSidebarWidth 199.0 // 侧栏宽度，设屏宽为320，右侧留一条空白可以看到背后页面内容
+#define kSidebarWidth 240 // 侧栏宽度，设屏宽为320，右侧留一条空白可以看到背后页面内容
 #endif
 
 @interface LLBlurSidebar : UIViewController

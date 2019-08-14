@@ -10,4 +10,6 @@
 
 @interface GanYuSchemeController : SayAndWriteController
 
+@property (nonatomic,assign) BOOL notYiChi;
+
 @end

@@ -22,7 +22,7 @@
     [super viewDidLoad];
     self.view.backgroundColor=[UtilityFunc colorWithHexString:@"##f2f1ef"];
     navView.backgroundColor = UIColorFromHex(0x009ef3);
-    titleLabel.text = @"忘记密码";
+    titleLabel.text = ModuleZW(@"忘记密码");
     [self addBackBtn];
     
     UIImage *registrationImageTextField = [UIImage imageNamed:@"RegistTF_bg.png"];
@@ -48,11 +48,15 @@
     
     registrationTF.leftViewMode = UITextFieldViewModeAlways;  //左边距为15pix
     registrationTF.leftView = leftview1;
-    
+    registrationTF.tag = 111;
     registrationTF.delegate=self;
-    registrationTF.placeholder=@"请输入您的手机号";
+    registrationTF.placeholder=ModuleZW(@"请输入手机号");
     registrationTF.returnKeyType=UIReturnKeyNext;
-    registrationTF.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
+    if([UserShareOnce shareOnce].languageType){
+        registrationTF.keyboardType=UIKeyboardTypeDefault;
+    }else{
+        registrationTF.keyboardType=UIKeyboardTypeNumberPad;
+    }
     self.RepInputphoneTF=registrationTF;
     [self.view addSubview:self.RepInputphoneTF];
     
@@ -82,7 +86,8 @@
     
     Regist_Sec_TF.delegate=self;
     Regist_Sec_TF.secureTextEntry=YES;
-    Regist_Sec_TF.placeholder=@"请输入您的新密码";
+    Regist_Sec_TF.tag = 112;
+    Regist_Sec_TF.placeholder=ModuleZW(@"请输入新密码");
     self.TtempInputsecTF=Regist_Sec_TF;
     [self.view addSubview:Regist_Sec_TF];
     
@@ -116,7 +121,8 @@
     
     sureSecTF.secureTextEntry=YES;
     sureSecTF.returnKeyType=UIReturnKeyNext;
-    sureSecTF.placeholder=@"请确认您的新密码";
+    sureSecTF.tag = 113;
+    sureSecTF.placeholder=ModuleZW(@"请确认新密码");
     self.NewInputSecTF=sureSecTF;
     [self.view addSubview:sureSecTF];
     
@@ -148,70 +154,143 @@
     
     YZMTF.font=[UIFont systemFontOfSize:14];
     YZMTF.delegate=self;
-    YZMTF.placeholder=@"请输入手机验证码";
+    YZMTF.placeholder=ModuleZW(@"请输入验证码");
+    YZMTF.tag = 114;
     YZMTF.returnKeyType=UIReturnKeyDone;
+    YZMTF.keyboardType=UIKeyboardTypeNumberPad;
     self.pYzmTF=YZMTF;
     [self.view addSubview:YZMTF];
     
-    //
+
     UIImage* ObtainYzm_img=[UIImage imageNamed:@"Regist_YZM"];
     UIButton *YZMButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    YZMButton.frame=CGRectMake(YZMTF.frame.origin.x+YZMTF.frame.size.width+23.5,  sureSecTF.frame.origin.y+sureSecTF.frame.size.height+8, ObtainYzm_img.size.width/2,ObtainYzm_img.size.height/2);
+    YZMButton.frame=CGRectMake(YZMTF.frame.origin.x+YZMTF.frame.size.width+10.5,  sureSecTF.frame.origin.y+sureSecTF.frame.size.height+8, ObtainYzm_img.size.width/2 + 13,ObtainYzm_img.size.height/2);
     [YZMButton setBackgroundImage:ObtainYzm_img forState:UIControlStateNormal];
-    [YZMButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+    [YZMButton setTitle:ModuleZW(@"获取验证码") forState:UIControlStateNormal];
     [YZMButton addTarget:self action:@selector(userYZMButton) forControlEvents:UIControlEventTouchUpInside];
     [YZMButton setTitleColor:[UIColor colorWithRed:112.0f/255.0f green:0 blue:0 alpha:1] forState:UIControlStateNormal];
-    YZMButton.titleLabel.font=[UIFont systemFontOfSize:13];
+    YZMButton.titleLabel.font=[UIFont systemFontOfSize:12];
     YZMbtn=YZMButton;
     [self.view addSubview:YZMbtn];
     
+    //    //    registrationTF.frame=CGRectMake(leftX, kNavBarHeight+27, registrationImageTextField.size.width/2, registrationImageTextField.size.height/2);
+
     UIButton *findpsButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *findImg=[UIImage imageWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"Find_Btn" ofType:@"png"]];
-    [findpsButton setImage:findImg forState:UIControlStateNormal];
-    findpsButton.frame=CGRectMake((ScreenWidth-findImg.size.width/2)/2,YZMButton.frame.origin.y+YZMButton.frame.size.height+19, findImg.size.width/2,findImg.size.height/2);
-    [findpsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [findpsButton setTitleShadowColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.6f] forState:UIControlStateNormal];
-    findpsButton.titleLabel.shadowOffset=CGSizeMake(0.0f, -1.0f);
-    [findpsButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14.0f]];
+    findpsButton.frame=CGRectMake(leftX,YZMButton.frame.origin.y+YZMButton.frame.size.height+19, registrationTF.width,40);
+    [findpsButton setTitle:ModuleZW(@"提交")  forState:(UIControlStateNormal)];
+    [findpsButton setBackgroundColor:RGB_ButtonBlue];
+    [findpsButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [findpsButton addTarget:self action:@selector(userfindpasswordButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:findpsButton];
     ptCenter= self.view.center;
-    pageNo=300;
+    pageNo=60;
     STtimeer=60;
 }
 
 # pragma mark - 获取验证码
 -(void)userYZMButton
 {
-    if (self.RepInputphoneTF.text.length==0) {
+    if([UserShareOnce shareOnce].languageType){
+//
+        if (self.RepInputphoneTF.text.length==0) {
+             [self showAlertWarmMessage:@"incorrect format of phone number/Email address"];
+            return;
+        }
+
+        if([self.RepInputphoneTF.text containsString:@"@"]){
+            if(![self isValidateEmail:self.RepInputphoneTF.text]){
+                [self showAlertWarmMessage:@"incorrect format of phone number/Email address"];
+                return ;
+            }
+        }else{
+            if(self.RepInputphoneTF.text.length != 10 ){
+                 [self showAlertWarmMessage:@"incorrect format of phone number/Email address"];
+                return ;
+            }
+
+            if(![self deptNumInputShouldNumber:self.RepInputphoneTF.text] ){
+                [self showAlertWarmMessage:@"incorrect format of phone number/Email address"];
+                return ;
+            }
+        }
+    
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.label.text = ModuleZW(@"加载中...");
+        NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",self.RepInputphoneTF.text];
+        NSString *tokenStr = [GlobalCommon md5:iPoneNumber].uppercaseString;
+        NSString *urlStr = [NSString string];
+        NSDictionary *dic = [NSDictionary dictionary];
+        if([self.RepInputphoneTF.text containsString:@"@"]){
+            urlStr  = @"/login/send/email.jhtml";
+            dic = @{@"email":self.RepInputphoneTF.text,
+                    @"token":tokenStr,
+                    @"type":@"1"};
+        }else{
+            urlStr  = @"/login/send/phone.jhtml";
+            dic = @{@"phone":self.RepInputphoneTF.text,
+                    @"token":tokenStr,
+                    @"type":@"1"};
+            
+        }
+        __weak typeof(self) weakSelf = self;
+        [[NetworkManager sharedNetworkManager] requestWithType:BAHttpRequestTypePost urlString:urlStr parameters:dic successBlock:^(id response) {
+            NSLog(@"%@",response);
+            [hud hideAnimated:YES];
+            if ([response[@"status"] integerValue] == 100){
+                
+                weakSelf.YZMcode= [NSString stringWithString:[response objectForKey:@"data"]];//;
+                self->timer=[NSTimer scheduledTimerWithTimeInterval:1
+                                                            target:weakSelf
+                                                           selector:@selector(getResults)
+                                                           userInfo:nil
+                                                            repeats:YES];
+              
+            }else{
+                [self showAlertWarmMessage:response[@"message"]];
+            }
+            
+        } failureBlock:^(NSError *error) {
+            [hud hideAnimated:YES];
+            [self showAlertWarmMessage:requestErrorMessage];
+        }];
         
-        [self showAlertWarmMessage:@"登录手机号不能为空"];
-        return;
+        
+    }else{
+//        if (self.RepInputphoneTF.text.length==0) {
+//
+//            [self showAlertWarmMessage:ModuleZW(@"登录手机号不能为空")];
+//            return;
+//        }
+        
+        NSString *UrlPre=URL_PRE;
+        NSString *aUrl = [NSString stringWithFormat:@"%@/password/captchaPassword.jhtml",UrlPre];
+        NSDate *datenow = [NSDate date];
+        NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+        
+        /**
+         *  MD5加密后的字符串
+         */
+        NSString *iPoneNumber = [NSString stringWithFormat:@"%@",self.RepInputphoneTF.text];
+        NSString *iPoneNumberMds = [GlobalCommon md5:iPoneNumber];
+        
+        [GlobalCommon showMBHudTitleWithView:self.view];
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+        if([UserShareOnce shareOnce].languageType){
+            [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+        }
+        [request setPostValue:self.RepInputphoneTF.text forKey:@"username"];
+        [request setPostValue:timeSp forKey:@"time"];
+        [request setPostValue:iPoneNumberMds forKey:@"UserPhoneKey"];
+        [request setTimeOutSeconds:20];
+        [request setRequestMethod:@"POST"];
+        [request setDelegate:self];
+        
+        [request setDidFailSelector:@selector(requestYZMError:)];
+        [request setDidFinishSelector:@selector(requestYZMCompleted:)];
+        [request startAsynchronous];
     }
     
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrl = [NSString stringWithFormat:@"%@/password/captchaPassword.jhtml",UrlPre];
-    NSDate *datenow = [NSDate date];
-    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
-    
-    /**
-     *  MD5加密后的字符串
-     */
-    NSString *iPoneNumber = [NSString stringWithFormat:@"%@",self.RepInputphoneTF.text];
-    NSString *iPoneNumberMds = [GlobalCommon md5:iPoneNumber];
-    
-    
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request setPostValue:self.RepInputphoneTF.text forKey:@"username"];
-    [request setPostValue:timeSp forKey:@"time"];
-    [request setPostValue:iPoneNumberMds forKey:@"UserPhoneKey"];
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    
-    [request setDidFailSelector:@selector(requestYZMError:)];
-    [request setDidFinishSelector:@selector(requestYZMCompleted:)];
-    [request startAsynchronous];
+  
     
     /*
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
@@ -265,12 +344,13 @@
 
 - (void)requestYZMError:(ASIHTTPRequest *)request
 {
-   [self showAlertWarmMessage:@"短信验证码发送失败，请重试"];
+    [GlobalCommon hideMBHudTitleWithView:self.view];
+   [self showAlertWarmMessage:ModuleZW(@"短信验证码发送失败，请重试")];
     return;
 }
 - (void)requestYZMCompleted:(ASIHTTPRequest *)request
 {
- 
+    [GlobalCommon hideMBHudTitleWithView:self.view];
     NSString* reqstr=[request responseString];
     NSDictionary * dic=[reqstr JSONValue];
     NSLog(@"dic==%@",dic);
@@ -278,8 +358,8 @@
     if (status!=nil)
     {
         if ([status intValue]==100) {
-            
-            LPPopup *popup = [LPPopup popupWithText:@"请在300秒内输入验证码"];
+        
+            LPPopup *popup = [LPPopup popupWithText:ModuleZW(@"请在60秒内输入验证码")];
             CGPoint point=self.view.center;
             point.y=point.y+130;
             [popup showInView:self.view
@@ -287,7 +367,7 @@
                      duration:5.0f
                    completion:nil];
             
-            YZMcode= [NSString stringWithString:[dic objectForKey:@"data"]];//;
+            self.YZMcode= [NSString stringWithString:[dic objectForKey:@"data"]];//;
             timer=[NSTimer scheduledTimerWithTimeInterval:1
                                                    target:self
                                                  selector:@selector(getResults)
@@ -297,7 +377,7 @@
         
         else if ([status intValue]==44)
         {
-            [self showAlertWarmMessage:@"登录超时，请重新登录"];
+            [self showAlertWarmMessage:ModuleZW(@"登录超时，请重新登录")];
             return;
         }else{
             
@@ -308,7 +388,7 @@
     }
     else
     {
-        [self showAlertWarmMessage:@"短信验证码发送失败，请重试"];
+        [self showAlertWarmMessage:ModuleZW(@"短信验证码发送失败，请重试")];
         
         return;
         
@@ -320,41 +400,41 @@
     if (pageNo==0)
     {
         [timer invalidate];
-        pageNo=300;
+        pageNo=60;
         YZMbtn.titleLabel.font=[UIFont systemFontOfSize:13];
-        [YZMbtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [YZMbtn setTitle:ModuleZW(@"获取验证码") forState:UIControlStateNormal];
         return;
     }
-    YZMbtn.titleLabel.font=[UIFont systemFontOfSize:7];
-    [YZMbtn setTitle:[NSString stringWithFormat:@"请在%i秒内输入验证码",pageNo--] forState:UIControlStateNormal];
+    YZMbtn.titleLabel.font=[UIFont systemFontOfSize:10];
+    [YZMbtn setTitle:[NSString stringWithFormat:@"%is%@",pageNo--,ModuleZW(@"后重新发送")] forState:UIControlStateNormal];
 }
 
 # pragma mark - 提交按钮
 -(void)userfindpasswordButton
 {
     if (self.TtempInputsecTF.text.length==0) {
-        [self showAlertWarmMessage:@"临时密码不能为空"];
+        [self showAlertWarmMessage:ModuleZW(@"临时密码不能为空")];
         return;
     }
     if (self.TtempInputsecTF.text.length<6||self.TtempInputsecTF.text.length>20)
     {
-        [self showAlertWarmMessage:@"请输入6-20位字符，可使用字母，数字或字符组合！"];
+        [self showAlertWarmMessage:ModuleZW(@"请输入6-20位字符，可使用字母，数字或字符组合!")];
         return;
     }
     
     
     if (self.NewInputSecTF.text.length==0) {
-        [self showAlertWarmMessage:@"新密码不能为空"];
+        [self showAlertWarmMessage:ModuleZW(@"新密码不能为空")];
         return;
     }
     if (self.NewInputSecTF.text.length<6||self.NewInputSecTF.text.length>20) {
-        [self showAlertWarmMessage:@"请输入6-20位字符，可使用字母，数字或字符组合！"];
+        [self showAlertWarmMessage:ModuleZW(@"请输入6-20位字符，可使用字母，数字或字符组合!")];
         return;
     }
     
     
     if (![self.NewInputSecTF.text isEqualToString:self.TtempInputsecTF.text]) {
-        [self showAlertWarmMessage:@"两次输入的密码不一致"];
+        [self showAlertWarmMessage:ModuleZW(@"两次输入的密码不一致")];
         return;
     }
     // NSString* md5str=[UtilityFunc md5:self.AgainInputSecTF.text];
@@ -378,7 +458,7 @@
         {
             if ([status intValue]==100) {
                 [weakSelf.navigationController popViewControllerAnimated:YES];
-                [GlobalCommon showMessage:@"密码修改成功" duration:2.0];
+                [GlobalCommon showMessage:ModuleZW(@"密码修改成功") duration:2.0];
             }
             else
             {
@@ -387,25 +467,43 @@
             }
         }
     } failureBlock:^(NSError *error) {
-        [weakSelf showAlertWarmMessage:@"抱歉修改密码失败，请重试"];
+        [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
+}
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    for(NSInteger i=111;i<115;i++){
+        UITextField *field = (UITextField *)[self.view viewWithTag:i];
+        [field resignFirstResponder];
+    }
 }
 
 
 
+//判断是否为电话号码
+
+- (BOOL) deptNumInputShouldNumber:(NSString *)str
+{
+    if (str.length == 0) {
+        return NO;
+    }
+    NSString *regex = @"[0-9]*";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    if ([pred evaluateWithObject:str]) {
+        return YES;
+    }
+    return NO;
+}
+
+-(BOOL)isValidateEmail:(NSString *)email
+{
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES%@",emailRegex];
+    return [emailTest evaluateWithObject:email];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -21,7 +21,7 @@
 
 @interface AppPayViewController ()<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate>
 {
-    MBProgressHUD* progress_;
+    MBProgressHUD* _progress;
 }
 @property (nonatomic ,strong) UITableView *tableView;
 @property (nonatomic ,strong) NSMutableArray *tabArray;
@@ -109,7 +109,7 @@
         [self dingdanhaozhifu:@"alipayNativeAppPlugin"];
         }else if(tagCount == 3001){
            // [self WXPayButton];
-        [self dingdanhaozhifu:@"weixinPayPlugin"];
+        [self dingdanhaozhifu:@"weixinPayHcyPhonePlugin"];
         }
     }
 }
@@ -123,6 +123,9 @@
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setRequestMethod:@"POST"];
     //[request setPostValue:idStr forKey:@"id"];
     //[request setPostValue:isreader forKey:@"isRead"];
@@ -147,26 +150,26 @@
 }
 -(void) showHUD
 {
-    progress_ = [[MBProgressHUD alloc] initWithView:self.view];
-    [self.view addSubview:progress_];
-    [self.view bringSubviewToFront:progress_];
-    progress_.delegate = self;
-    progress_.labelText = @"加载中...";
-    [progress_ show:YES];
+    _progress = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:_progress];
+    [self.view bringSubviewToFront:_progress];
+    _progress.delegate = self;
+    _progress.label.text = @"加载中...";
+    [_progress showAnimated:YES];
 }
 
-- (void)hudWasHidden:(MBProgressHUD *)hud
+- (void)hudWasHidden
 {
-    NSLog(@"Hud: %@", hud);
-    // Remove HUD from screen when the HUD was hidded
-    [progress_ removeFromSuperview];
     
-    progress_ = nil;
+    // Remove HUD from screen when the HUD was hidded
+    [_progress removeFromSuperview];
+    
+    _progress = nil;
     
 }
 -(void)requestIsAPPpayReaderError:(ASIHTTPRequest *)request
 {
-    [self hudWasHidden:nil];
+    [self hudWasHidden];
     
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络连接错误" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
     [av show];
@@ -174,7 +177,7 @@
 }
 -(void)requestIsAPPpayReaderCompleted:(ASIHTTPRequest *)request
 {
-    [self hudWasHidden:nil];
+    [self hudWasHidden];
     NSString* reqstr=[request responseString];
     NSDictionary * dic=[reqstr JSONValue];
     id status=[dic objectForKey:@"status"];
@@ -185,8 +188,8 @@
         self.namePay = [[dic objectForKey:@"data"]objectForKey:@"name"];
         if ([self.paymentPluginId isEqualToString:@"alipayNativeAppPlugin"]) {
             
-              [AlipayRequestConfig alipayWithPartner:kPartnerID seller:kSellerAccount tradeNO:[AlipayToolKit genTradeNoWithTime] productName:self.namePay   productDescription:self.namePay amount:[self.shoukuandanDic objectForKey:@"amount"] notifyURL:[NSString stringWithFormat:@"http://app.ky3h.com:8001/healthlm/notify/sync/%@.jhtml",[_shoukuandanDic objectForKey:@"sn"]] itBPay:@"30m"];
-        }else if([self.paymentPluginId isEqualToString:@"weixinPayPlugin"]){
+              [AlipayRequestConfig alipayWithPartner:kPartnerID seller:kSellerAccount tradeNO:[AlipayToolKit genTradeNoWithTime] productName:self.namePay   productDescription:self.namePay amount:[self.shoukuandanDic objectForKey:@"amount"] notifyURL:[NSString stringWithFormat:@"%@payment/notify/async/%@.jhtml",URL_PRE,[_shoukuandanDic objectForKey:@"sn"]] itBPay:@"30m"];
+        }else if([self.paymentPluginId isEqualToString:@"weixinPayHcyPhonePlugin"]){
             
             [self sendPay_demoName:self.namePay Dictionary:self.shoukuandanDic];
         }

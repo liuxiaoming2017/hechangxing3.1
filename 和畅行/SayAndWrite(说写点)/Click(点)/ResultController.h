@@ -8,6 +8,7 @@
 
 #import "WKWebviewController.h"
 
+
 @interface ResultController : WKWebviewController
 
 @property (nonatomic,copy) NSString *TZBSstr;

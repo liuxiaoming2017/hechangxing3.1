@@ -17,7 +17,7 @@
 @end
 
 @interface SongListCell : UITableViewCell
-
+@property (nonatomic,strong) CALayer *subLayer;
 @property (nonatomic,strong) UIImageView *iconImage;
 @property (nonatomic,strong) UILabel *titleLabel;
 @property (nonatomic,strong) UIButton *downloadBtn;
@@ -35,5 +35,5 @@
 
 - (void)downloadSuccess;
 
-- (void)downloadFail;
+- (void)downloadFailWithImageStr:(NSString *)nameStr;
 @end

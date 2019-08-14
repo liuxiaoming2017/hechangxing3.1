@@ -31,7 +31,7 @@
     _title1.textColor = [UIColor blackColor];
     [self addSubview:_title1];
     
-    NSArray *anwerArr = [NSArray arrayWithObjects:@"没有（根本不)",@"很少（有一点)",@"有时（有些)",@"经常（相当)",@"总是（非常)", nil];
+    NSArray *anwerArr = [NSArray arrayWithObjects:ModuleZW(@"没有（根本不)"),ModuleZW(@"很少（有一点)"),ModuleZW(@"有时（有些)"),ModuleZW(@"经常（相当)"),ModuleZW(@"总是（非常)"), nil];
     NSArray *imageArr = [NSArray arrayWithObjects:@"option01",@"option02",@"option03",@"option04",@"option05", nil];
     NSArray *imageSelectArr = [NSArray arrayWithObjects:@"option01_press",@"option02_press",@"option03_press",@"option04_press",@"option05_press", nil];
     for(NSInteger i=0;i<5;i++){

@@ -54,5 +54,7 @@ typedef NSURLSessionTask BAURLSessionTask;
              parameters:(NSDictionary *)parameters
            successBlock:(BAResponseSuccess)successBlock
            failureBlock:(BAResponseFail)failureBlock;
+-(void)submitWithUrl:(NSString *)url token:(NSString *)token dic:(NSDictionary *)dic;
 
+-(void)mainThreadRequestWithUrl:(NSString *)myUrl token:(NSString *)token dic:(NSDictionary *)dic;
 @end

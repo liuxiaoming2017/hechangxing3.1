@@ -17,6 +17,7 @@
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "ArchivesController.h"
+#import "HCY_FamilyListModel.h"
 //#import "MainViewController.h"
 
 //SSUserInfo* [UserShareOnce shareOnce];
@@ -44,7 +45,7 @@ NSString *isYiBao;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navTitleLabel.text = @"家庭成员";
+    self.navTitleLabel.text =ModuleZW(@"家庭成员") ;
     [self createView];
     
 }
@@ -57,8 +58,8 @@ NSString *isYiBao;
     UIImageView *personImage = [[UIImageView alloc]initWithFrame:CGRectMake(20, 14.25, 61 / 2, 43 / 2)];
     personImage.image = [UIImage imageNamed:@"221323_03.png"];
     [addFamilyView addSubview:personImage];
-    UILabel *addLabel = [[UILabel alloc]initWithFrame:CGRectMake(65, 17.5, 100, 15)];
-    addLabel.text = @"添加家庭成员";
+    UILabel *addLabel = [[UILabel alloc]initWithFrame:CGRectMake(65, 17.5, 170, 15)];
+    addLabel.text = ModuleZW(@"添加家庭成员");
     addLabel.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     addLabel.font = [UIFont systemFontOfSize:14];
     [addFamilyView addSubview:addLabel];
@@ -102,15 +103,53 @@ NSString *isYiBao;
 {
     
     [self showHUD];
-    [ZYGASINetworking GET_Path:@"/member/memberModifi/list.jhtml" params:@{@"memberId":[UserShareOnce shareOnce].uid} completed:^(id JSON, NSString *stringData) {
-        [self hudWasHidden];
-        [self requestResourceslistCompletedWith:JSON];
-    } failed:^(NSError *error) {
-        [self hudWasHidden];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:@"/member/memberModifi/list.jhtml" parameters:@{@"memberId":[UserShareOnce shareOnce].uid} successBlock:^(id response) {
+        [weakSelf hudWasHidden];
         
-        [self showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+        id status=[response objectForKey:@"status"];
+        if ([status intValue]==100)   {
+            [self.dataArray removeAllObjects];
+            for (NSDictionary *dic  in [response objectForKey:@"data"]) {
+                HCY_FamilyListModel *model = [[HCY_FamilyListModel alloc]init];
+                [model yy_modelSetWithDictionary:dic];
+                [self.dataArray addObject:model];
+            }
+            [self.memberTable reloadData];
+        } else if ([status intValue]==44) {
+            
+            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                LoginViewController *vc = [[LoginViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }];
+            [alertVC addAction:alertAct1];
+            [self presentViewController:alertVC animated:YES completion:NULL];
+            
+        }else{
+            NSString *str = [response objectForKey:@"data"];
+            [self showAlertWarmMessage:str];
+            
+        }
         
+        
+        
+        [weakSelf requestResourceslistCompletedWith:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf hudWasHidden];
+
+        [weakSelf showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
     }];
+    
+//    [ZYGASINetworking GET_Path:@"/member/memberModifi/list.jhtml" params:@{@"memberId":[UserShareOnce shareOnce].uid} completed:^(id JSON, NSString *stringData) {
+//        [self hudWasHidden];
+//        [self requestResourceslistCompletedWith:JSON];
+//    } failed:^(NSError *error) {
+//        [self hudWasHidden];
+//
+//        [self showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+//
+//    }];
 }
 -(void) showHUD
 {
@@ -118,7 +157,7 @@ NSString *isYiBao;
     [self.view addSubview:progress_];
     [self.view bringSubviewToFront:progress_];
     progress_.delegate = self;
-    progress_.label.text = @"加载中...";
+    progress_.label.text = ModuleZW(@"加载中...");
     [progress_ showAnimated:YES];
 }
 
@@ -134,33 +173,7 @@ NSString *isYiBao;
 
 - (void)requestResourceslistCompletedWith:(NSDictionary *)dic
 {
-    [self hudWasHidden];
-    id status=[dic objectForKey:@"status"];
-    NSLog(@"11111111%@",dic);
-    if ([status intValue]==100)
-    {
-//        [self.dataArray removeAllObjects];
-        self.dataArray=[dic objectForKey:@"data"];
-        [self.memberTable reloadData];
-    }
-    else if ([status intValue]==44)
-    {
-        
-        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"登录超时，请重新登录" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            LoginViewController *vc = [[LoginViewController alloc] init];
-            [self.navigationController pushViewController:vc animated:YES];
-        }];
-        [alertVC addAction:alertAct1];
-        [self presentViewController:alertVC animated:YES completion:NULL];
-        
-        
-    }else{
-        NSString *str = [dic objectForKey:@"data"];
-        [self showAlertWarmMessage:str];
-       
-    }
-    
+   
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -169,58 +182,31 @@ NSString *isYiBao;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     FamilyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CELL" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if ([[self.dataArray[indexPath.row] objectForKey:@"name"] isKindOfClass:[NSNull class]]) {
-        cell.nameLabel.text = @"未知";
+    
+    HCY_FamilyListModel *model = _dataArray[indexPath.row];
+    
+    if (![GlobalCommon stringEqualNull:model.name]) {
+        cell.nameLabel.text = model.name;
+        if( model.name.length > 26) {
+            cell.nameLabel.text = [UserShareOnce shareOnce].wxName;
+        }
     }else{
-        if ([[self.dataArray[indexPath.row] objectForKey:@"name"]isEqualToString:[UserShareOnce shareOnce].username]) {
-            cell.nameLabel.text = [[UserShareOnce shareOnce].name isKindOfClass:[NSNull class]]? [UserShareOnce shareOnce].username:[UserShareOnce shareOnce].name;
-        }else{
-            cell.nameLabel.text = [self.dataArray[indexPath.row] objectForKey:@"name"];
+        NSString *name = [UserShareOnce shareOnce].name;
+        if (![GlobalCommon stringEqualNull:name]){
+            cell.nameLabel.text = name;
+        }
+        if( [[self.dataArray[indexPath.row] objectForKey:@"name"] length] > 26) {
+            cell.nameLabel.text = [UserShareOnce shareOnce].wxName;
         }
     }
     
     int sesss = 0;
     int age  = 0;
     
-    if ( [[self.dataArray[indexPath.row]objectForKey:@"birthday"] isEqual:[NSNull null]]) {
-        if ([[UserShareOnce shareOnce].birthday isEqual:[NSNull null]]) {
-            age = 0;
-        }else{
-            NSString *str = [[UserShareOnce shareOnce].birthday substringToIndex:4];
-            sesss = [str intValue];
-            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-            NSDate *now;
-            NSDateComponents *comps = [[NSDateComponents alloc] init];
-            NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |
-            NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-            now=[NSDate date];
-            comps = [calendar components:unitFlags fromDate:now];
-            age = (int)[comps year] - sesss;
-        }
-        NSString *sex = @"";
-        if ([[UserShareOnce shareOnce].gender isEqual:[NSNull null]]) {
-            sex = @"未知";
-        }else if ([[UserShareOnce shareOnce].gender isEqualToString:@"male"]) {
-            sex =@"男" ;
-        }else if([[UserShareOnce shareOnce].gender isEqualToString:@"femal"]){
-            sex = @"女";
-        }
-        
-        NSString *sexStr = [NSString stringWithFormat:@"(%@%d岁)",sex,age];
-        
-        cell.sexLabel.text = sexStr;
-        
-    }else{
-        NSString *sex = @"";
-        if ([[self.dataArray[indexPath.row] objectForKey:@"gender"] isEqual:[NSNull null]]) {
-            sex =@"未知" ;
-        }else if([[self.dataArray[indexPath.row] objectForKey:@"gender"] isEqualToString:@"male"]){
-            sex = @"男";
-        }else{
-            sex = @"女";
-        }
-        
-        NSString *str = [[self.dataArray[indexPath.row] objectForKey:@"birthday"] substringToIndex:4];
+//    NSString *birthdayStr =  model.birthday;
+    
+    if(![GlobalCommon stringEqualNull:model.birthday]&&![model.birthday isEqualToString:ModuleZW(@"请选择您的出生日期")]){
+        NSString *str = [model.birthday substringToIndex:4];
         sesss = [str intValue];
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
         NSDate *now;
@@ -230,15 +216,31 @@ NSString *isYiBao;
         now=[NSDate date];
         comps = [calendar components:unitFlags fromDate:now];
         age = (int)[comps year] - sesss;
-        NSString *sexStr = [NSString stringWithFormat:@"(%@%d岁)",sex,age];
-        cell.sexLabel.text = sexStr;
-        
+    }else {
+        age = 1111;
     }
     
-    if ([[self.dataArray[indexPath.row] objectForKey:@"mobile"]isEqual:[NSNull null]]) {
-        cell.phoneLabel.text = @"无";
+    if ([GlobalCommon stringEqualNull: model.gender]) {
+        sex = ModuleZW(@"未知");
+    }else if ([model.gender isEqualToString:@"male"]) {
+        sex =ModuleZW(@"男");
+    }else if([model.gender isEqualToString:@"female"]){
+        sex = ModuleZW(@"女");
+    }
+    NSString *sexStr = [NSString string];
+    if (age == 1111){
+        sexStr = [NSString stringWithFormat:@"(%@ %@)",sex,ModuleZW(@"未知")];
+    }else {
+        sexStr = [NSString stringWithFormat:@"(%@%d%@)",sex,age,ModuleZW(@"岁")];
+    }
+    cell.sexLabel.text = sexStr;
+    
+
+    
+    if ([GlobalCommon stringEqualNull:model.mobile]) {
+        cell.phoneLabel.text = ModuleZW(@"无");
     }else{
-        cell.phoneLabel.text = [self.dataArray[indexPath.row] objectForKey:@"mobile"];
+        cell.phoneLabel.text = model.mobile;
     }
     UIImage* CellDeleImg=[UIImage imageNamed:@"2_1wq5.png"];
     UIButton* CellDeleImgView=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -265,12 +267,12 @@ NSString *isYiBao;
 -(void)checkBtnClick:(UIButton *) button{
     //NSLog(@"点击了第%ld个查看报告",button.tag - 500);
     //NSLog(@"%@",_dataArray);
-    NSDictionary *dic = _dataArray[button.tag - 500];
+    HCY_FamilyListModel *model = _dataArray[button.tag - 500];
     UITabBarController *main = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
     main.selectedIndex = 1;
     UINavigationController *nav = main.selectedViewController;
     ArchivesController *vc = (ArchivesController *)nav.topViewController;
-    vc.memberId = [NSString stringWithFormat:@"%@",dic[@"id"]];
+    vc.memberId = [NSString stringWithFormat:@"%@",model.familyID];
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     window.rootViewController = main;
 }
@@ -279,9 +281,9 @@ NSString *isYiBao;
 {
     _tag = (float)sender.tag - 10000 ;
     
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"确认删除吗" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:NULL];
-    UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"确认删除吗") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:NULL];
+    UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self deleteAction];
     }];
     [alertVC addAction:alertAct1];
@@ -292,14 +294,20 @@ NSString *isYiBao;
 
 - (void)deleteAction
 {
+    HCY_FamilyListModel *model = _dataArray[_tag];
     NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/memberModifi/delete.jhtml?memberId=%@&id=%@",UrlPre,[UserShareOnce shareOnce].uid,[self.dataArray[_tag]objectForKey:@"id"]];
+    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/memberModifi/delete.jhtml?memberId=%@&id=%@",UrlPre,[UserShareOnce shareOnce].uid,model.familyID];
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     NSURL *url = [NSURL URLWithString:aUrlle];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];
@@ -314,7 +322,7 @@ NSString *isYiBao;
     [self hudWasHidden];
     //[SSWaitViewEx removeWaitViewFrom:self.view];
     
-    [self showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+    [self showAlertWarmMessage:requestErrorMessage];
     
 }
 
@@ -332,6 +340,8 @@ NSString *isYiBao;
     id status=[dic objectForKey:@"status"];
     if ([status intValue] == 100)
     {
+
+        [self changeMemberChildWithData:[dic objectForKey:@"data"]];
         [self GetResource];
 //        NSLog(@"%@",[dic objectForKey:@"data"]);
 //        [self.memberTable reloadData];
@@ -343,10 +353,34 @@ NSString *isYiBao;
         //        [avv release];
     }
 }
+
+- (void)changeMemberChildWithData:(NSArray *)arrMem
+{
+     NSMutableArray *memberArr = [NSMutableArray arrayWithCapacity:0];
+    for (NSDictionary *dic in  arrMem) {
+        ChildMemberModel *model = [ChildMemberModel mj_objectWithKeyValues:dic];
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
+        [memberArr addObject:data];
+    }
+    
+    NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberChirldArr"];
+    if (arr.count) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"memberChirldArr"];
+    }
+    NSArray *modelArr = [[NSArray alloc] initWithArray:memberArr];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:modelArr forKey:@"memberChirldArr"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    if (indexPath.row == 0) {
+        return;
+    }
+    HCY_FamilyListModel *model = self.dataArray[indexPath.row];
     AlterViewController *alterVC = [[AlterViewController alloc]init];
-    alterVC.dataDictionary = self.dataArray[indexPath.row];
+    alterVC.model = model;
     [self.navigationController pushViewController:alterVC animated:YES];
 }
 

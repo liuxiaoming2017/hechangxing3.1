@@ -63,16 +63,26 @@ typedef void(^EDLoadRequestAction)(void);
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
-    self.navTitleLabel.textColor = [UIColor whiteColor];
-    [self.leftBtn setImage:[UIImage imageNamed:@"user_01"] forState:UIControlStateNormal];
     [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
-    self.navTitleLabel.text = @"和畅商城";
-    self.preBtn.hidden = YES;
+    if(self.isCollect){
+        self.preBtn.hidden = NO;
+        self.leftBtn.hidden = YES;
+        self.navTitleLabel.text = self.titleStr;
+    }else{
+        self.preBtn.hidden = YES;
+        self.leftBtn.hidden = NO;
+        self.navTitleLabel.text = ModuleZW(@"和畅商城");
+    }
+    
     
     [self.view addSubview:self.webview];
     [self.webview addSubview:self.indicatorView];
     [self startToLoadRequest];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.leftBtn.hidden = YES;
 }
 
 - (void)startToLoadRequest {
@@ -127,6 +137,19 @@ typedef void(^EDLoadRequestAction)(void);
     
     NSLog(@"#############%@",[navigationAction.request allHTTPHeaderFields]);
     
+    if(self.isCollect){
+        if([strRequest isEqualToString:[NSString stringWithFormat:@"%@mobileIndex.html",URL_PRE]]){
+            decisionHandler(WKNavigationActionPolicyAllow);
+            //修改位置
+            AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            UIViewController *controller = app.window.rootViewController;
+            UITabBarController  *rvc = (UITabBarController  *)controller;
+            [rvc setSelectedIndex:2];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            return;
+        }
+    }
+    
         NSArray *array = [strRequest componentsSeparatedByString:@"="];
         if ([array[0] isEqualToString:[NSString stringWithFormat:@"%@%@",URL_PRE,@"member/mobile/order/payment.jhtml?sn"]]) {
             decisionHandler(WKNavigationActionPolicyCancel);
@@ -154,10 +177,10 @@ typedef void(^EDLoadRequestAction)(void);
         webViewConfig.processPool = [EDWKWebViewController sharedProcessPool];
         
         _webview = [[WKWebView alloc] initWithFrame:CGRectZero configuration:webViewConfig];
-        if(iPhoneX){
-            _webview.frame = CGRectMake(0, self.topView.bottom, Screen_Width, Screen_Height-self.topView.bottom-83);
+        if(self.isCollect){
+            _webview.frame = CGRectMake(0, self.topView.bottom, Screen_Width, Screen_Height-self.topView.bottom);
         }else{
-            _webview.frame = CGRectMake(0, self.topView.bottom, Screen_Width, Screen_Height-self.topView.bottom-49);
+            _webview.frame = CGRectMake(0, self.topView.bottom, Screen_Width, Screen_Height-self.topView.bottom-kTabBarHeight);
         }
         _webview.UIDelegate = self;
         _webview.navigationDelegate = self;
@@ -172,12 +195,12 @@ typedef void(^EDLoadRequestAction)(void);
         webViewConfig.userContentController = userContentController;
         webViewConfig.processPool = [EDWKWebViewController sharedProcessPool];
         
-        _cookieWebview = [[WKWebView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, Screen_Width, Screen_Height-self.topView.bottom-83) configuration:webViewConfig];
-        if(iPhoneX){
-            _cookieWebview.frame = CGRectMake(0, self.topView.bottom, Screen_Width, Screen_Height-self.topView.bottom-83);
+        if(self.isCollect){
+            _cookieWebview = [[WKWebView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, Screen_Width, Screen_Height-self.topView.bottom) configuration:webViewConfig];
         }else{
-            _cookieWebview.frame = CGRectMake(0, self.topView.bottom, Screen_Width, Screen_Height-self.topView.bottom-49);
+            _cookieWebview = [[WKWebView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, Screen_Width, Screen_Height-self.topView.bottom-kTabBarHeight) configuration:webViewConfig];
         }
+        
         _cookieWebview.UIDelegate = self;
         _cookieWebview.navigationDelegate = self;
     }

@@ -15,37 +15,32 @@
 }
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        UIImageView *diImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, ScreenWidth-20, 125)];
-        diImageView.image = [UIImage imageNamed:@"zixundishitu.png"];
-        [self addSubview:diImageView];
-        _bottomView = [[UIImageView alloc]init];
-        _bottomView.image = [UIImage imageNamed:@"我的咨询1_02.png"];
-        [self addSubview:_bottomView];
         
-        _nameLabel = [[UILabel alloc]init];
-        _nameLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
-        _nameLabel.font = [UIFont systemFontOfSize:12];
-        [self addSubview:_nameLabel];
-        _sexLabel = [[UILabel alloc]init];
-        _sexLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
-        _sexLabel.font = [UIFont systemFontOfSize:12];
-        [self addSubview:_sexLabel];
+        
+        UIImageView *backView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 10, ScreenWidth - 30, 130)];
+        backView.layer.cornerRadius = 10;
+        backView.layer.masksToBounds = YES;
+        backView.userInteractionEnabled = YES;
+        backView.backgroundColor = [UIColor whiteColor];
+        [self insertSublayerWithImageView:backView];
+        [self addSubview:backView];
+        
         
         _answerLabel = [[UILabel alloc]init];
-        //_answerLabel.textColor = [UtilityFunc colorWithHexString:@"#fe6f5f"];
-        _answerLabel.font = [UIFont systemFontOfSize:12];
-        [self addSubview:_answerLabel];
+        _answerLabel.font = [UIFont systemFontOfSize:16];
+        _answerLabel.textColor = RGB_TextAppOrange;
+        [backView addSubview:_answerLabel];
         
         _contentlabel = [[UILabel alloc]init];
-        _contentlabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
-        _contentlabel.font = [UIFont systemFontOfSize:11];
+        _contentlabel.textColor = [UIColor blackColor];
+        _contentlabel.font = [UIFont systemFontOfSize:16];
         _contentlabel.numberOfLines = 0;
-        [self addSubview:_contentlabel];
+        [backView addSubview:_contentlabel];
        
         _timeLabel = [[UILabel alloc]init];
-        _timeLabel.textColor = [UtilityFunc colorWithHexString:@"#666666"];
-        _timeLabel.font = [UIFont systemFontOfSize:11];
-        [self addSubview:_timeLabel];
+        _timeLabel.textColor = RGB_TextGray;
+        _timeLabel.font = [UIFont systemFontOfSize:16];
+        [backView addSubview:_timeLabel];
         
         
     }
@@ -53,15 +48,31 @@
 }
 - (void)layoutSubviews{
     [super layoutSubviews];
-    _nameLabel.frame = CGRectMake(23, 22,60, 15);
-    _bottomView.frame = CGRectMake(5, 5, self.frame.size.width - 10, self.frame.size.height - 5);
-    _sexLabel.frame = CGRectMake(90, 22, 100, 15);
-    _answerLabel.frame = CGRectMake(self.frame.size.width - 83, 22, 60, 15);
-    _contentlabel.frame = CGRectMake(23, 55, self.frame.size.width - 46, 50);
-    _timeLabel.frame = CGRectMake(self.frame.size.width - 133, 105, 110, 15);
+    _contentlabel.frame = CGRectMake(10, 10, ScreenWidth - 60, 90);
+    _answerLabel.frame = CGRectMake(ScreenWidth - 110, 100, 60, 30);
+    _timeLabel.frame = CGRectMake(20, 100, 200, 30);
     
 }
-
+-(void)insertSublayerWithImageView:(UIImageView *)imageV
+{
+    if(!_subLayer){
+        _subLayer=[CALayer layer];
+        CGRect fixframe = imageV.frame;
+        _subLayer.frame= fixframe;
+        _subLayer.cornerRadius=8;
+        _subLayer.backgroundColor=[UIColorFromHex(0xffffff) colorWithAlphaComponent:1.0].CGColor;
+        
+        _subLayer.masksToBounds=NO;
+        _subLayer.shadowColor = [UIColor lightGrayColor].CGColor;//shadowColor阴影颜色
+        _subLayer.shadowOffset = CGSizeMake(0,1);//shadowOffset阴影偏移,x向右偏移3，y向下偏移2，默认(0, -3),这个跟shadowRadius配合使用
+        _subLayer.shadowOpacity = 0.4;//阴影透明度，默认0
+        _subLayer.shadowRadius = 4;//阴影半径，默认3
+        [self.layer insertSublayer:_subLayer below:imageV.layer];
+    }else{
+        _subLayer.frame = imageV.frame;
+    }
+    
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

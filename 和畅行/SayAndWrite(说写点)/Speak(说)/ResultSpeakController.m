@@ -7,8 +7,10 @@
 //
 
 #import "ResultSpeakController.h"
+#import "MeridianIdentifierViewController.h"
+#import "TipSpeakController.h"
 
-@interface ResultSpeakController ()
+@interface ResultSpeakController ()<UIGestureRecognizerDelegate>
 
 @end
 
@@ -16,13 +18,39 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navTitleLabel.text = @"健康档案";
+    
+    self.navTitleLabel.text = self.titleStr;
     [self customeViewWithStr:self.urlStr];
+    
+    if([self.titleStr isEqualToString:@"季度报告详情"]){
+        [self.navigationController.interactivePopGestureRecognizer setEnabled:YES];
+        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    }
+    //
+}
+
+# pragma mark - 解决侧滑返回指定控制器
+- (void)didMoveToParentViewController:(UIViewController*)parent
+{
+    
+    NSMutableArray *tempArr = self.navigationController.viewControllers.mutableCopy;
+    for(UIViewController *vc in self.navigationController.viewControllers){
+        if([vc isKindOfClass:[MeridianIdentifierViewController class]]||[vc isKindOfClass:[TipSpeakController class]]){
+            [tempArr removeObject:vc];
+        }
+    }
+    self.navigationController.viewControllers = tempArr;
+    
+    
+}
+
+
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
+    return YES;
 }
 
 #pragma mark - WKNavigationDelegate
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    
     NSString *strRequest = [navigationAction.request.URL.absoluteString stringByRemovingPercentEncoding];
     if([navigationAction.request allHTTPHeaderFields][@"Cookie"]){
         decisionHandler(WKNavigationActionPolicyAllow);
@@ -36,28 +64,17 @@
         NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:navigationAction.request.URL];
         urlRequest.allHTTPHeaderFields = headerFields;
         [urlRequest setValue:[self getCookieValue] forHTTPHeaderField:@"Cookie"];
+        if([UserShareOnce shareOnce].languageType){
+            [urlRequest setValue:[UserShareOnce shareOnce].languageType forHTTPHeaderField:@"language"];
+        }
         [webView loadRequest:urlRequest];
         
     }
-    
     
     NSLog(@"str*****:%@",strRequest);
     //decisionHandler(WKNavigationActionPolicyAllow);
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

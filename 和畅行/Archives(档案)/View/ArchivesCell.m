@@ -8,7 +8,7 @@
 
 #import "ArchivesCell.h"
 #import "ArchiveModel.h"
-#import <UIImageView+WebCache.h>
+#import "UIImageView+WebCache.h"
 
 @implementation ArchivesCell
 
@@ -87,7 +87,7 @@
         resultLabel.text = archive.symptom;
         resultLabel.frame = CGRectMake((ScreenWidth-60)/2.0, 5, 60, 40);
         [iconImage sd_setImageWithURL:[NSURL URLWithString:archive.iconImage] placeholderImage:[UIImage imageNamed:@"jinluo_default_icon"]];
-        typeLabel.text = @"经络辨识";
+        typeLabel.text = @"经络";
         iconImage.frame = CGRectMake(15, 10, 30, 30);
         typeLabel.frame = CGRectMake(iconImage.right+30, 5, 60, 40);
         

@@ -16,7 +16,8 @@
 #import "BloodGuideViewController.h"
 #import "PressureViewController.h"
 #import "i9_MoxaMainViewController.h"
-//#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+#import "HCY_CallController.h"
+#import "WXPhoneController.h"
 
 @interface CommonTabBarController ()<HSTabBarDelegate,ZKIndexViewDelegate>
 
@@ -43,6 +44,7 @@
     [[UIApplication sharedApplication].keyWindow addSubview:zkView];
 }
 
+<<<<<<< HEAD
 /*
 - (void)test
 {
@@ -71,6 +73,9 @@
     NSLog(@"result:%@",resultStr);
 }
 */
+=======
+
+>>>>>>> zw
 
 # pragma mark - ZKIndexViewDelegate
 - (void)indexClickWitbNumber:(NSInteger)tag
@@ -85,39 +90,45 @@
     NSInteger index = tag - 100;
     switch (index) {
         case 0:
-            if([UserShareOnce shareOnce].isOnline){
-                 vc = [[MySportController alloc] initWithAllSport];
-            }else{
-                vc = [[YueYaoController alloc] initWithType:YES];
-            }
+                vc = [[YueYaoController alloc] initWithType:NO];
             
             break;
         case 1:
-            if([UserShareOnce shareOnce].isOnline){
-                if([[[NSUserDefaults standardUserDefaults] objectForKey:@"bloodNeverCaution"] isEqualToString:@"1"]){
-                    vc = [[PressureViewController alloc] init];
-                }else{
-                    BloodGuideViewController * vc1 = [[BloodGuideViewController alloc] init];
-                    vc1.isBottom = YES;
-                    vc1.hidesBottomBarWhenPushed = YES;
-                    [[self selectedViewController] pushViewController:vc1 animated:YES];
-                    return;
-                }
-            }else{
+        {
+            NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
+            NSString *yueyaoIndex = [GlobalCommon getSportTypeFrom:physicalStr];
+            if(yueyaoIndex == nil){
                 vc = [[MySportController alloc] initWithAllSport];
+                
+            }else{
+                vc = [[MySportController alloc] initWithSportType:[yueyaoIndex integerValue]];
             }
+        }
             
             break;
         case 2:
-            if([UserShareOnce shareOnce].isOnline){
-               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4008118899"]];
-            }else{
-                 vc = [[YueYaoController alloc] initWithType:NO];
-            }
+            
+        {
+            i9_MoxaMainViewController * vc1 = [[i9_MoxaMainViewController alloc] init];
+            vc1.hidesBottomBarWhenPushed = YES;
+            [[self selectedViewController] pushViewController:vc1 animated:YES];
+            return ;
+        }
+           
            
             break;
         case 3:
         {
+            
+            if(![UserShareOnce shareOnce].languageType){
+                if ([UserShareOnce shareOnce].username.length != 11) {
+                    [self showAlerVC];
+                    return;
+                }
+            }
+            
+             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
+            
             if([UserShareOnce shareOnce].isOnline){
                 i9_MoxaMainViewController * vc1 = [[i9_MoxaMainViewController alloc] init];
                 vc1.hidesBottomBarWhenPushed = YES;
@@ -127,11 +138,7 @@
                 if([[[NSUserDefaults standardUserDefaults] objectForKey:@"bloodNeverCaution"] isEqualToString:@"1"]){
                     vc = [[PressureViewController alloc] init];
                 }else{
-                    BloodGuideViewController * vc1 = [[BloodGuideViewController alloc] init];
-                    vc1.isBottom = YES;
-                    vc1.hidesBottomBarWhenPushed = YES;
-                    [[self selectedViewController] pushViewController:vc1 animated:YES];
-                    return;
+                    
                 }
             }
             
@@ -139,16 +146,24 @@
             
             break;
         case 4:
-            vc = [[AdvisorysViewController alloc] init];
+            vc = [[HCY_CallController alloc] init];
             break;
         case 5:
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4008118899"]];
-            break;
-        case 6:{
-            i9_MoxaMainViewController * vc1 = [[i9_MoxaMainViewController alloc] init];
+        {
+            BloodGuideViewController * vc1 = [[BloodGuideViewController alloc] init];
+            vc1.isBottom = YES;
             vc1.hidesBottomBarWhenPushed = YES;
             [[self selectedViewController] pushViewController:vc1 animated:YES];
+            return;
         }
+            
+            break;
+        case 6:{
+            vc = [[AdvisorysViewController alloc] init];
+        }
+            break;
+        case 7:
+            vc = [[YueYaoController alloc] initWithType:YES];
             break;
         default:
             break;
@@ -192,7 +207,17 @@
     
     return currentVC;
 }
-
+-(void)showAlerVC {
+    UIAlertController *alVC= [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有绑定手机号码,绑定后才能享受服务,是否绑定?") preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        WXPhoneController *vc = [[WXPhoneController alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:(UIAlertActionStyleCancel) handler:nil];
+    [alVC addAction:sureAction];
+    [alVC addAction:cancelAction];
+    [self presentViewController:alVC animated:YES completion:nil];
+}
 
 
 - (void)didReceiveMemoryWarning {

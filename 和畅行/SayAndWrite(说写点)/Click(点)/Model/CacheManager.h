@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class QuestionModel;
-//@class AnwerModel;
+@class RemindModel;
 @interface CacheManager : NSObject
 
 - (void)insertQuestionModel:(QuestionModel *)model;
@@ -18,10 +18,19 @@
 - (void)updateQuestionModels:(NSArray *)arr;
 - (NSMutableArray *)getQuestionModels;
 - (BOOL)createDataBase;
-- (id)initManage;
++ (CacheManager *)sharedCacheManager;
 
-//- (void)insertAnswerModel:(AnwerModel *)model;
-- (void)insertAnswerModels:(NSArray *)arr;
-- (void)updateAnswerModels:(NSArray *)arr;
-- (NSArray *)getAnswerModelsWithName:(NSString *)nameStr;
+
+
+- (void)updateOrinsertRemindModels:(NSArray *)arr withCustId:(NSNumber *)custId;
+- (NSMutableArray *)getRemindModelsWith:(NSNumber *)custID;
+
+- (void)inserthealthArticleModels:(NSArray *)arr;
+- (NSMutableArray *)gethealthArticleModels;
+
+- (void)updateRemindModel:(RemindModel *)model;
+
+
+- (void)insertArchiveModels:(NSArray *)arr;
+- (NSMutableArray *)gethealthArchivesModelsWithIndex:(NSInteger)index andRows:(NSInteger)row;
 @end

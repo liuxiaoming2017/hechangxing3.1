@@ -176,7 +176,6 @@
     shortTime = 0;
     lowestTemp = 0;
 
-    self.topView.backgroundColor = UIColorFromHex(0x1e82d2);
     self.leftBtn.hidden = YES;
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;
@@ -243,9 +242,10 @@
     
     UILabel *remnderlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _headinfView.bottom, ScreenWidth, 40)];
     remnderlabel.font = [UIFont systemFontOfSize:16];
+    remnderlabel.numberOfLines = 2;
     remnderlabel.textAlignment = NSTextAlignmentLeft;
     remnderlabel.textColor = [UIColor orangeColor];
-    remnderlabel.text = @" 温馨提示:儿童灸疗温度不宜超过39℃";
+    remnderlabel.text = ModuleZW(@" 温馨提示:儿童灸疗温度不宜超过39℃");
     [self.view addSubview:remnderlabel];
     
     
@@ -270,8 +270,8 @@
         view.frame = CGRectMake(ScreenWidth/2.0-100, kStatusBarHeight, 200, 44);
         NSLog(@"---view = %@",[view description]);
         _indicatorLab = (UIClickLabel*)[view viewWithTag:1];
-        [_indicatorLab setTextColor:[UIColor whiteColor]];
-        [_indicatorLab addUnderLine:@"设备搜寻中"];
+        [_indicatorLab setTextColor:[UIColor blackColor]];
+        [_indicatorLab addUnderLine:ModuleZW(@"设备搜寻中")];
         _searchIndicator = (UIActivityIndicatorView *)[view viewWithTag:2];
         [_searchIndicator setHidden:YES];
         _coverIndicatorBtn = (UIButton*)[view viewWithTag:3];
@@ -289,7 +289,7 @@
         
         isFirstIn = false;
     }
-    [_headinfView.mChoosePlanBtn setTitle:@"当前无灸疗计划" forState:UIControlStateNormal];
+    [_headinfView.mChoosePlanBtn setTitle:ModuleZW(@"当前无灸疗计划") forState:UIControlStateNormal];
 }
 
 
@@ -316,20 +316,20 @@
     if([[moxibustion getInstance] getBluetoothConnectState] == CONNECT_ON){
         BTDevItem * item = [[moxibustion getInstance] getConnectDevice];
         if([PubFunc isEmpty:item.u_Name]){
-            [_indicatorLab addUnderLine:@"未连接"];
+            [_indicatorLab addUnderLine:ModuleZW(@"未连接")];
             [self showGuidanceView];
         }else{
             [self hideGuidanceView];
-            [_indicatorLab addUnderLine:[NSString stringWithFormat:@"%@-%@",@"已连接AJi9",item.u_Name]];
+            [_indicatorLab addUnderLine:[NSString stringWithFormat:@"%@-%@",ModuleZW(@"已连接AJi9"),item.u_Name]];
             
         }
     }else if( [[moxibustion getInstance] getBluetoothConnectState] == CONNECT_OFF)
     {
-        [_indicatorLab addUnderLine:@"未连接"];
+        [_indicatorLab addUnderLine:ModuleZW(@"未连接")];
         [self showGuidanceView];
     }
     else{
-        [_indicatorLab addUnderLine:@"连接中"];
+        [_indicatorLab addUnderLine:ModuleZW(@"连接中")];
     }
 }
 
@@ -505,11 +505,11 @@
     {
         if([[moxibustion getInstance] getBluetoothConnectState] == CONNECT_OFF)
         {
-            [OMGToast showWithText:@"请连接灸大夫隔物灸仪" duration:1.5f];
+            [OMGToast showWithText:ModuleZW(@"请连接灸大夫隔物灸仪") duration:1.5f];
         }
         else
         {
-            [OMGToast showWithText:@"请连接灸头" duration:1.5f];
+            [OMGToast showWithText:ModuleZW(@"请连接灸头") duration:1.5f];
         }
     }
     else if([view getStates] == CHANNEL_WORK)
@@ -553,11 +553,11 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
 -(void)OpenAllChannel{
     int wdVal = 0;
     if([[moxibustion getInstance] getBluetoothOpenState] != STATE_ON){
-        [OMGToast showWithText:@"请打开手机蓝牙" duration:1.5f];
+        [OMGToast showWithText:ModuleZW(@"请打开手机蓝牙") duration:1.5f];
         return;
     }
     if([[moxibustion getInstance] getBluetoothConnectState] != CONNECT_ON){
-        [OMGToast showWithText:@"请连接灸头" duration:1.5f];
+        [OMGToast showWithText:ModuleZW(@"请连接灸头") duration:1.5f];
          return;
     }
     for (int i = 0; i < _channelArray.count; i++)
@@ -659,7 +659,7 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
                 }
                 else{
                     if(stru.mCtrlTime == 0){
-                        [OMGToast showWithText:@"请设置温度" duration:1.5f];
+                        [OMGToast showWithText:ModuleZW(@"请设置温度") duration:1.5f];
                     }
                 }
                 //记录开始时间，不用校正时间
@@ -686,7 +686,7 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
                     stru.mCtrlState = JAEXECUTE_STATE_RUN;
                 }else{
                     if(stru.mCtrlTime == 0){
-                        [OMGToast showWithText:@"请设置温度" duration:1.5f];
+                        [OMGToast showWithText:ModuleZW(@"请设置温度") duration:1.5f];
                     }
                 }
                 //记录开始时间，不用校正时间
@@ -730,13 +730,13 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
     if([PubFunc isAlert]){
         return;
     }
-    NSArray *strArray = [NSArray arrayWithObjects:@"您设置的温度已进入高温区\n有可能导致灸疗部位起水泡！",
-                         @"您设置的温度比较高\n很有可能导致灸疗部位起水泡的哦!",
-                         @"您设置的温度已经很高了\n很容易导致灸疗部位起水泡哦!",
-                         @"您设置的温度已经到顶了\n灸疗部位很容易起水泡哦!",nil
+    NSArray *strArray = [NSArray arrayWithObjects:ModuleZW(@"您设置的温度已进入高温区\n有可能导致灸疗部位起水泡！"),
+                         ModuleZW(@"您设置的温度比较高\n很有可能导致灸疗部位起水泡的哦!"),
+                         ModuleZW(@"您设置的温度已经很高了\n很容易导致灸疗部位起水泡哦!"),
+                         ModuleZW(@"您设置的温度已经到顶了\n灸疗部位很容易起水泡哦!"),nil
                          ];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:strArray[index] delegate:self
-                                          cancelButtonTitle:@"重新设置" otherButtonTitles:@"确定", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:ModuleZW(@"温馨提示") message:strArray[index] delegate:self
+                                          cancelButtonTitle:ModuleZW(@"重新设置") otherButtonTitles:ModuleZW(@"确定"), nil];
     
     alert.tag = 4;
     [alert show];
@@ -758,9 +758,9 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
 -(void)trackCommunicationfresh{
     [self freshIndicatorLab];
     if([self checkHasMoxaNotWork]){
-        [_headinfView.mSwitch setTitle:@"一键开" forState:UIControlStateNormal];
+        [_headinfView.mSwitch setTitle:ModuleZW(@"一键开") forState:UIControlStateNormal];
     }else{
-        [_headinfView.mSwitch setTitle:@"全部关" forState:UIControlStateNormal];
+        [_headinfView.mSwitch setTitle:ModuleZW(@"全部关") forState:UIControlStateNormal];
     }
 }
 
@@ -845,18 +845,18 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
         if(mPassword_state == WPASSWORD_CHECK)
         {
             //找回密码失败
-            [self popUpMsgForPassword:@"找回密码失败"];
+            [self popUpMsgForPassword:ModuleZW(@"找回密码失败")];
         }
         else if(mPassword_state == WPASSWORD_MODIFY)
         {
             //设置密码失败
-            [self popUpMsgForPassword:@"设置密码失败"];
+            [self popUpMsgForPassword:ModuleZW(@"设置密码失败")];
         }
     }
     else if(commC.strucCmd == CMD_SETPASSWORD)
     {
         //设置密码失败
-        [self popUpMsgForPassword:@"设置密码失败"];
+        [self popUpMsgForPassword:ModuleZW(@"设置密码失败")];
     }
     else if(commC.strucCmd == CMD_LIGHT)
     {
@@ -913,8 +913,8 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
 {
     if(mPassword_state == WPASSWORD_CHECK)
     {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"您正在连接灸大夫隔物灸仪AJi9-%@网络",name] message:@"请输入3位数字" delegate:self
-                         cancelButtonTitle:@"取消" otherButtonTitles:@"确定", @"找回密码失败", nil];
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:ModuleZW(@"您正在连接灸大夫隔物灸仪AJi9-%@网络"),name] message:ModuleZW(@"请输入3位数字") delegate:self
+                         cancelButtonTitle:ModuleZW(@"取消") otherButtonTitles:ModuleZW(@"确定"), ModuleZW(@"找回密码失败"), nil];
         alert.alertViewStyle = UIAlertViewStyleSecureTextInput;
         [[alert textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeDecimalPad];
         [[alert textFieldAtIndex:0] addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
@@ -923,8 +923,8 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
     }
     else if(mPassword_state == WPASSWORD_MODIFY)
     {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"设置灸大夫隔物灸仪密码" message:@"请输入6位数字\n(必须把所有灸头拨下来)" delegate:self
-                         cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:ModuleZW(@"设置灸大夫隔物灸仪密码") message:ModuleZW(@"请输入6位数字\n(必须把所有灸头拨下来)") delegate:self
+                         cancelButtonTitle:ModuleZW(@"取消") otherButtonTitles:ModuleZW(@"确定"), nil];
         alert.alertViewStyle = UIAlertViewStyleSecureTextInput;
         [[alert textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeDecimalPad];
         [[alert textFieldAtIndex:0] addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
@@ -963,11 +963,11 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
             NSString *passwordStr = [tf text];
             if([passwordStr length] != 3)
             {
-                [self popUpMsgForPassword:@"请输入3位数字"];
+                [self popUpMsgForPassword:ModuleZW(@"请输入3位数字")];
                 [tf setText:@""];
             }
             else if(![self isPureInt:passwordStr]){
-                [self popUpMsgForPassword:@"必须输入数字(0~9)"];
+                [self popUpMsgForPassword:ModuleZW(@"必须输入数字(0~9)")];
                 [tf setText:@""];
             }
             else
@@ -979,7 +979,7 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
                 }
                 else
                 {
-                    [self popUpMsgForPassword:@"密码错误"];
+                    [self popUpMsgForPassword:ModuleZW(@"密码错误")];
                     [tf setText:@""];
                 }
             }
@@ -1051,7 +1051,7 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
 - (void)popUpMsgForPassword:(NSString *) _message
 {
     //时间
-    UIAlertView *promptAlert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:_message delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+    UIAlertView *promptAlert = [[UIAlertView alloc] initWithTitle:ModuleZW(@"温馨提示") message:_message delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
     
     [NSTimer scheduledTimerWithTimeInterval:1.5f
                                      target:self
@@ -1172,7 +1172,7 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
             else if(cmd == CMD_ACKSETPASSWORD)
             {
                 if([moxibustion getInstance].isSetPwd){
-                    [OMGToast showWithText:@"设置密码成功" duration:1.5f];
+                    [OMGToast showWithText:ModuleZW(@"设置密码成功" )duration:1.5f];
                     [moxibustion getInstance].isSetPwd = NO;
                 }
             }
@@ -1352,7 +1352,7 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
     
     NSString *jsonString = [self jsonStringWithArr:arr];
     
-    
+    /*
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
     [dic setObject:jsonString forKey:@"data"];
     [dic setObject:@"1234" forKey:@"qdbs"];
@@ -1363,6 +1363,37 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
     } failed:^(NSError *error) {
         
     }];
+     */
+    
+    NSString *aUrl = [NSString stringWithFormat:@"%@%@",URL_PRE,urlStr];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+    [request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
+    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
+    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+    
+    [request setPostValue:jsonString forKey:@"data"];
+    [request setPostValue:@"1234" forKey:@"qdbs"];
+    [request setPostValue:[UserShareOnce shareOnce].username forKey:@"member"];
+    [request setTimeOutSeconds:20];
+    [request setRequestMethod:@"POST"];
+    [request setDelegate:self];
+    [request setDidFailSelector:@selector(requesstuserinfoError:)];
+    [request setDidFinishSelector:@selector(requesstCardCompleted:)];
+    [request startAsynchronous];
+}
+
+- (void)requesstuserinfoError:(ASIHTTPRequest *)request
+{
+    
+    
+}
+
+- (void)requesstCardCompleted:(ASIHTTPRequest *)request
+{
+    
 }
 
 - (NSString *)jsonStringWithArr:(NSArray *)arr
@@ -1528,10 +1559,10 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
 -(void)controlSound{
     bVoiceOn = !bVoiceOn;
     if(bVoiceOn){
-        [OMGToast showWithText:@"声音已经打开" duration:1.5f];
+        [OMGToast showWithText:ModuleZW(@"声音已经打开") duration:1.5f];
     }else{
         [self stopMedia];
-        [OMGToast showWithText:@"声音已经关闭" duration:1.5f];
+        [OMGToast showWithText:ModuleZW(@"声音已经关闭") duration:1.5f];
     }
     [BlueToothCommon setMoxaVoiceEn:bVoiceOn];
 }
@@ -1616,13 +1647,13 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
  */
 - (void)warnningAlertView:(int)index {
     if(index > 3)return;
-    NSArray *strArray = [NSArray arrayWithObjects:@"您设置的温度已进入高温区\n有可能导致灸疗部位起水泡！",
-                         @"您设置的温度比较高\n很有可能导致灸疗部位起水泡的哦!",
-                         @"您设置的温度已经很高了\n很容易导致灸疗部位起水泡哦!",
-                         @"您设置的温度已经到顶了\n灸疗部位很容易起水泡哦!",nil
+    NSArray *strArray = [NSArray arrayWithObjects:ModuleZW(@"您设置的温度已进入高温区\n有可能导致灸疗部位起水泡！"),
+                         ModuleZW(@"您设置的温度比较高\n很有可能导致灸疗部位起水泡的哦!"),
+                         ModuleZW(@"您设置的温度已经很高了\n很容易导致灸疗部位起水泡哦!"),
+                         ModuleZW(@"您设置的温度已经到顶了\n灸疗部位很容易起水泡哦!"),nil
                          ];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:strArray[index] delegate:self
-                                          cancelButtonTitle:@"重新设置" otherButtonTitles:@"确定", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:ModuleZW(@"温馨提示") message:strArray[index] delegate:self
+                                          cancelButtonTitle:ModuleZW(@"重新设置") otherButtonTitles:ModuleZW(@"确定"), nil];
     
     //alert.alertViewStyle = UIAlertViewStyleSecureTextInput;
     alert.tag = 4;
@@ -1894,7 +1925,7 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
     
     _progressView.delegate = self;
     _progressView.tag = 2;
-    _progressView.labelText = @"正在请求注册...";
+    _progressView.labelText = ModuleZW(@"正在请求注册...");
     
     [_progressView showWhileExecuting:@selector(requestRegisterTask:) onTarget:self withObject:number animated:YES];
     
@@ -1906,7 +1937,7 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
     
     _progressView.delegate = self;
     _progressView.tag = 3;
-    _progressView.labelText = @"正在登录···";
+    _progressView.labelText = ModuleZW(@"正在登录···");
     
     [_progressView showWhileExecuting:@selector(requestLoginTask) onTarget:self withObject:nil animated:YES];
 }
@@ -1933,10 +1964,10 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
 
 - (void)SwitchBtnOnclink:(id)sender{
     UIButton *btn = (UIButton *)sender;
-    if([btn.titleLabel.text isEqualToString:@"一键开"]){
+    if([btn.titleLabel.text isEqualToString:ModuleZW(@"一键开")]){
         [self OpenAllChannel];
-    }else if([btn.titleLabel.text isEqualToString:@"全部关"]){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"是否要关闭所有灸头" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    }else if([btn.titleLabel.text isEqualToString:ModuleZW(@"全部关")]){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:ModuleZW(@"温馨提示") message:ModuleZW(@"是否要关闭所有灸头") delegate:self cancelButtonTitle:ModuleZW(@"取消") otherButtonTitles:ModuleZW(@"确定"), nil];
         alert.tag = 5;
         [alert show];
     }

@@ -142,7 +142,7 @@
 -(void)setWenDuVal:(int)wdVal setShiJianVal:(int)sjVal _channal:(int)channal{
     [_timeSlider setinitValue:sjVal];
     [_tempSlider setinitValue:wdVal];
-    _moxaNumLable.text = [NSString stringWithFormat:@"%d号灸头",channal];
+    _moxaNumLable.text = [NSString stringWithFormat:ModuleZW(@"%d号灸头"),channal];
     [self showWenduStats];
 }
 
@@ -159,11 +159,11 @@
 
 -(void)showWenduStats{
     if(_tempSlider.value < 45){
-        _tempRemindLable.text = @"状态：温度正常";
+        _tempRemindLable.text = ModuleZW(@"状态：温度正常");
     }else if(_tempSlider.value >= 45 && _tempSlider.value < 48){
-        _tempRemindLable.text = @"状态：温度微高";
+        _tempRemindLable.text = ModuleZW(@"状态：温度微高");
     }else if(_tempSlider.value >= 48){
-        _tempRemindLable.text = @"状态：温度过高";
+        _tempRemindLable.text = ModuleZW(@"状态：温度过高");
     }
 }
 

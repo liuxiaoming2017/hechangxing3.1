@@ -13,6 +13,8 @@
 @property (nonatomic,copy) NSString *memberId;
 @property (nonatomic,assign) NSInteger currentIndex;
 
+
 - (void)requestNetworkWithIndex:(NSInteger)index;
+- (void)selectIndexWithString:(NSString *)str;
 
 @end

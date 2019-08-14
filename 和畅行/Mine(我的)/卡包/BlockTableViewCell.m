@@ -11,52 +11,111 @@
 @implementation BlockTableViewCell
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        _imageV = [[UIImageView alloc]init];
-        _backImage = [[UIImageView alloc] init];
-        _backImage.image = [UIImage imageNamed:@"我的卡包_04.png"];
-        [self addSubview:_backImage];
-
-        _imageV.image = [UIImage imageNamed:@"我的咨询_21.png"];
-        [self addSubview:_imageV];
-        _mLabel = [[UILabel alloc] init];
-        _mLabel.text = @"500";
-        _mLabel.textAlignment = NSTextAlignmentCenter;
-        _mLabel.font = [UIFont systemFontOfSize:17];
-        _mLabel.textColor = [UIColor whiteColor];
-        [self addSubview:_mLabel];
-        _hLabel = [[UILabel alloc] init];
-        _hLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
-        _hLabel.text = @"会员卡：";
-        _hLabel.font = [UIFont systemFontOfSize:10];
-        [self addSubview:_hLabel];
-        _yLabel = [[UILabel alloc] init];
-        _yLabel.text = @"有效期：";
-        _yLabel.font = [UIFont systemFontOfSize:10];
-        _yLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
-        [self addSubview:_yLabel];
-        _wLabel = [[UILabel alloc]init];
-        _wLabel.text = @"1000元";
-        _wLabel.textColor = [UtilityFunc colorWithHexString:@"#575e64"];
-        _wLabel.font= [UIFont systemFontOfSize:10];
-        [self addSubview:_wLabel];
-        _tLabel = [[UILabel alloc]init];
-        _tLabel.textColor = [UtilityFunc colorWithHexString:@"#fc5856"];
-        _tLabel.text = @"2015.02.30";
-        _tLabel.font = [UIFont systemFontOfSize:10];
-        [self addSubview:_tLabel];
+      
+        [self customView];
+       
         
     }
     return self;
 }
+
+
+-(void)customView {
+    
+    
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5,ScreenWidth - 40, 130)];
+    //添加渐变色
+    [imageV.layer addSublayer:[UIColor setGradualChangingColor:imageV fromColor:@"4294E1" toColor:@"D1BDFF"]];
+    imageV.layer.cornerRadius = 10;
+    imageV.layer.masksToBounds = YES;
+    [self addSubview:imageV];
+    
+    
+    _hLabel = [[UILabel alloc] init];
+    _hLabel.frame = CGRectMake(10, 10, 200, 30);
+    _hLabel.textColor = [UIColor whiteColor];
+    _hLabel.text = @"视频问诊半年卡";
+    _hLabel.font = [UIFont systemFontOfSize:21];
+    [imageV addSubview:_hLabel];
+    
+    _mLabel = [[UILabel alloc] init];
+    _mLabel.frame = CGRectMake(10,_hLabel.bottom , imageV.width - 20, 60 );
+    _mLabel.numberOfLines = 2;
+    _mLabel.text = @"阿道夫沙发沙发沙发上发送到发的是飞洒发士大夫撒按时发生";
+    _mLabel.font = [UIFont systemFontOfSize:14];
+    _mLabel.textColor = [UIColor whiteColor];
+    [imageV addSubview:_mLabel];
+    
+    
+    _imageV = [[UIImageView alloc]init];
+    _imageV.frame  =CGRectMake(imageV.width - 60,  5, 50, 45);
+    _imageV.image = [UIImage imageNamed:ModuleZW(@"未激活")];
+    _imageV.hidden  = YES;
+    [imageV addSubview:_imageV];
+   
+    _yLabel = [[UILabel alloc] init];
+    _yLabel.frame = CGRectMake(10, _mLabel.bottom , 160, 20);
+    _yLabel.text = @"2019-11-11到期";
+    _yLabel.font = [UIFont systemFontOfSize:12];
+    _yLabel.textColor = [UIColor whiteColor];
+    [imageV addSubview:_yLabel];
+    
+    
+}
+
+
+-(void)setCarListDataWithModel:(HYC_CardsModel *)model {
+    NSString *timeStr = [NSString string];
+    if ([model.kindStr isEqualToString:ModuleZW(@"现金卡")]){
+        NSString *str = [model.cashcard valueForKey:@"name"];
+          _hLabel.text = str;
+        _mLabel.text = [NSString stringWithFormat:@"%@ : %@元",ModuleZW(@"余额"),model.balance];
+        timeStr = [NSString stringWithFormat:@"%@",[model.cashcard valueForKey:@"endDate"]];
+        _yLabel.text  =[NSString stringWithFormat:@"%@%@",[self getDateStringWithTimeStr:timeStr],ModuleZW(@"到期")] ;
+    }else{
+        _hLabel.text = model.card_name;
+        if (model.cardDescription==nil || [model.cardDescription isKindOfClass:[NSNull class]]||model.cardDescription.length == 0) {
+            _mLabel.text = ModuleZW(@"暂无");
+        }else{
+            _mLabel.text = model.cardDescription;
+        }
+        if([model.kindStr isEqualToString:ModuleZW(@"现金卡")]){
+            _imageV.hidden = YES;
+        }else{
+            
+            if ([model.status  isEqualToString:@"1"]){
+                _imageV.hidden = NO;
+            }else{
+                 _imageV.hidden = YES;
+            }
+        }
+        
+        timeStr = model.exprise_time;
+        if(![GlobalCommon stringEqualNull:timeStr]){
+            NSString *endTimeStr =  [NSString stringWithFormat:@"%@%@",timeStr,ModuleZW(@"到期")];
+            _yLabel.text = endTimeStr;
+        }else{
+             _yLabel.text = ModuleZW(@"永久有效");
+        }
+    }
+   
+
+}
+
+
+-(NSString *)getDateStringWithTimeStr:(NSString *)str{
+    NSTimeInterval time=[str doubleValue]/1000;//传入的时间戳str如果是精确到毫秒的记得要/1000
+    NSDate *detailDate=[NSDate dateWithTimeIntervalSince1970:time];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; //实例化一个NSDateFormatter对象
+    //设定时间格式,这里可以设置成自己需要的格式
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
+    return currentDateStr;
+}
+
+
 - (void)layoutSubviews{
     [super layoutSubviews];
-    _backImage.frame = CGRectMake(0, 0, self.frame.size.width, 139 / 2);
-    _imageV.frame  =CGRectMake(0, 0, 101, 139 / 2);
-    _mLabel.frame = CGRectMake(0, 0, 101, 139 /2 );
-    _hLabel.frame = CGRectMake(105, 15, 60, 15);
-    _yLabel.frame = CGRectMake(105, 40, 60, 15);
-    _wLabel.frame = CGRectMake(145, 15, 80, 15);
-    _tLabel.frame = CGRectMake(145, 40, 200, 15);
 }
 - (void)awakeFromNib {
     // Initialization code

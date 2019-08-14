@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^SelectCellBlock)(NSString *subId);
-
+typedef void(^SelectNameCellBlock)(NSString *nameString);
 @interface SubMemberView : UIView
 
 @property (nonatomic, assign) CGFloat cellHeight;//设置cell高度
@@ -17,6 +17,7 @@ typedef void(^SelectCellBlock)(NSString *subId);
 -(void)hideHintView;//隐藏view
 
 @property (nonatomic, copy) SelectCellBlock myBlock;
+@property (nonatomic, copy) SelectNameCellBlock mynameBlock;
 -(void)receiveSubIdWith:(SelectCellBlock )block;
-
+-(void)receiveNameWith:(SelectNameCellBlock )block;
 @end

@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface MyView : UIImageView
+@property (nonatomic,assign)BOOL isClick;
 -(void)addTarget:(id)target action:(SEL)action;
 @end

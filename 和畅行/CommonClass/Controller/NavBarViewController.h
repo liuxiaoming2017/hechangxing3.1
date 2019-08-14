@@ -21,11 +21,19 @@
 
 @property (nonatomic,strong) UIButton *leftBtn;
 
+@property (nonatomic,strong) UIButton *popBT;
+
 - (void)showAlertViewController:(NSString *)message;
 
 - (void)showAlertWarmMessage:(NSString *)message;
 
+-(void)showHudWithString:(NSString *)string ;
+
 - (void)goBack:(UIButton *)btn;
 
 - (void)userBtnAction:(UIButton *)btn;
+
+-(void)insertSublayerWithImageView:(UIImageView *)imageV with:(UIView *)view;
+
+-(void)addEnPopButton;
 @end

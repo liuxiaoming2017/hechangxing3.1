@@ -17,6 +17,7 @@
 @interface FeedbackViewController ()<UITextViewDelegate>
 @property(nonatomic,retain) UITextView* acceptTV;
 @property (nonatomic ,retain) UILabel *textLabel;
+@property (nonatomic,strong)UIButton *submitBT;
 
 @end
 
@@ -36,7 +37,7 @@
 
 - (void)goBack:(UIButton *)btn
 {
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad
@@ -44,7 +45,7 @@
     [super viewDidLoad];
      self.view.backgroundColor=[UtilityFunc colorWithHexString:@"#ffffff"];
     
-    self.navTitleLabel.text = @"意见反馈";
+    self.navTitleLabel.text = ModuleZW(@"意见反馈");
     
     UIImage* userImg=[UIImage imageNamed:@"Feedback_UserImg.png"];
     UIImageView* UserImgView=[[UIImageView alloc] init];
@@ -53,8 +54,8 @@
     [self.view addSubview:UserImgView];
    
     UILabel* UserNameLb=[[UILabel alloc ] init];
-    UserNameLb.frame=CGRectMake(UserImgView.frame.origin.x+UserImgView.frame.size.width+8.5, kNavBarHeight+10.5, 200, userImg.size.height/2);
-    UserNameLb.text=@"感谢您提出宝贵意见";
+    UserNameLb.frame=CGRectMake(UserImgView.right+8.5, kNavBarHeight+10.5, ScreenWidth -UserImgView.right -12 , userImg.size.height/2);
+    UserNameLb.text=ModuleZW(@"感谢您提出的宝贵意见");
     UserNameLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
     UserNameLb.font=[UIFont systemFontOfSize:12];
     [self.view addSubview:UserNameLb];
@@ -73,7 +74,7 @@
     [self.view addSubview:Linelb1];
     
     _textLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, kNavBarHeight+41, ScreenWidth-20, 20)];
-    _textLabel.text = @" 请提出宝贵意见";
+    _textLabel.text = ModuleZW(@" 请提出您的宝贵意见");
     _textLabel.font = [UIFont systemFontOfSize:13];
     _textLabel.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     [self.view addSubview:_textLabel];
@@ -87,8 +88,9 @@
 //    _acceptTV.textColor=[UtilityFunc colorWithHexString:@"#676767"];
     UIView *grayView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40)];
     grayView.backgroundColor=[UtilityFunc colorWithHexString:@"#f1f3f6"];
-    _acceptTV.inputAccessoryView=grayView;
+   // _acceptTV.inputAccessoryView=grayView;
     _acceptTV.tag = 125;
+    [_acceptTV setReturnKeyType:UIReturnKeyDone];
     //_textLabel.hidden = [_acceptTV hasText];
     UIButton *doneButton=[UIButton buttonWithType:UIButtonTypeCustom];
     doneButton.frame=CGRectMake(self.view.frame.size.width - 80, 0, 50, 40);
@@ -112,16 +114,37 @@
    
     
     UIButton *findpsButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *findImg=[UIImage imageWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"Feedback_btn" ofType:@"png"]];
+    UIImage *findImg=[UIImage imageNamed:ModuleZW(@"Feedback_btn")];
     [findpsButton setImage:findImg forState:UIControlStateNormal];
     findpsButton.frame=CGRectMake((ScreenWidth-findImg.size.width/2)/2,Linelb2.frame.origin.y+Linelb2.frame.size.height+(((ScreenHeight-kNavBarHeight-36)/2)-findImg.size.height/2)/2, findImg.size.width/2,findImg.size.height/2);
     [findpsButton addTarget:self action:@selector(userFeedbackButton) forControlEvents:UIControlEventTouchUpInside];
+    findpsButton.userInteractionEnabled = NO;
+    findpsButton.alpha = 0.4;
+    _submitBT = findpsButton;
     [self.view addSubview:findpsButton];
        // Do any additional setup after loading the view.
 }
 - (void)textDidChanges:(NSNotificationCenter*)notifi{
     _textLabel.hidden = [_acceptTV hasText];
+    if([_acceptTV hasText]){
+        _submitBT.userInteractionEnabled = YES;
+        _submitBT.alpha = 1;
+    }else{
+        _submitBT.userInteractionEnabled = NO;
+        _submitBT.alpha = 0.4;
+    }
 }
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+       // [self.view endEditing:YES];
+        return NO;//这里返回NO，就代表return键值失效，即页面上按下return，不会出现换行，如果为yes，则输入页面会换行
+    }
+    return YES;
+}
+
+
 
 - (void)doneButtonAction:(UIButton *)sender{
     NSLog(@"%s",__FUNCTION__);
@@ -159,8 +182,7 @@
 -(void)userFeedbackButton
 {
     if (_acceptTV.text.length==0) {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请填写反馈意见" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-        av.tag = 1000;
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请填写反馈意见") delegate:nil cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         [av show];
         
         return;
@@ -171,7 +193,10 @@
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url1 = [NSURL URLWithString:aUrlle];
     ASIFormDataRequest *request=[[ASIFormDataRequest alloc]initWithURL:url1];
-   // [request addRequestHeader:@"token" value:g_userInfo.token];
+    if([UserShareOnce shareOnce].languageType){
+        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+    }
+    // [request addRequestHeader:@"token" value:g_userInfo.token];
    // [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",g_userInfo.token,g_userInfo.JSESSIONID]];
     [request setDelegate:self];
     [request setRequestMethod:@"GET"];
@@ -185,7 +210,7 @@
     //[self hudWasHidden:nil];
     //[SSWaitViewEx removeWaitViewFrom:self.view];
     
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"抱歉，请检查您的网络是否畅通" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉，请检查您的网络是否畅通") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
     [av show];
     
 }
@@ -196,14 +221,14 @@
     id status=[dic objectForKey:@"status"];
     if ([status intValue]==100)
     {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"意见反馈成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"意见反馈成功") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         av.tag = 1000;
         [av show];
         
     }
     else
     {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"登录超时，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
         av.tag =  100008;
         [av show];
         

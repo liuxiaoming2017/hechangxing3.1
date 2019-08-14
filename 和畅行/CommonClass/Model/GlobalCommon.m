@@ -9,6 +9,11 @@
 #import "GlobalCommon.h"
 #import <sys/utsname.h>
 #import <CommonCrypto/CommonDigest.h>
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#import <CoreTelephony/CTCarrier.h>
+#import "Reachability.h"
+#import "AESCipher.h"
+#import <sys/utsname.h>
 
 @interface GlobalCommon()
 
@@ -73,7 +78,7 @@
 //                                labelSize.width+40,
 //                                labelSize.height+30);
     showview.frame = CGRectMake((screenSize.width - labelSize.width - 40)/2,
-                                ScreenHeight-labelSize.height-65,
+                                ScreenHeight-labelSize.height-65-10,
                                 labelSize.width+40,
                                 labelSize.height+30);
     
@@ -139,6 +144,35 @@
     } completion:^(BOOL finished) {
         [showview removeFromSuperview];
     }];
+}
+
++(NSString *)getStringWithSubjectSn:(NSString *)nameStr
+{
+    NSArray *arr = [nameStr componentsSeparatedByString:@"-"];
+    NSString *returnStr = @"";
+    if(arr.count>0){
+        NSString *str1 = [arr objectAtIndex:1];
+        NSString *firstStr = [str1 substringToIndex:1];
+        NSString *lastStr = [str1 substringFromIndex:str1.length-1];
+        NSInteger numberIndex = [lastStr integerValue];
+        if([firstStr isEqualToString:@"G"]){
+            NSArray *arr = @[@"大宫",@"加宫",@"上宫",@"少宫",@"左角宫"];
+            returnStr = [arr objectAtIndex:numberIndex-1];
+        }else if([firstStr isEqualToString:@"S"]){
+            NSArray *arr = @[@"上商",@"少商",@"钛商",@"右商",@"左商"];
+            returnStr = [arr objectAtIndex:numberIndex-1];
+        }else if([firstStr isEqualToString:@"J"]){
+            NSArray *arr = @[@"大角",@"判角",@"上角",@"少角",@"钛角"];
+            returnStr = [arr objectAtIndex:numberIndex-1];
+        }else if([firstStr isEqualToString:@"Z"]){
+            NSArray *arr = @[@"判徵",@"上徵",@"少徵",@"右徵",@"质徵"];
+            returnStr = [arr objectAtIndex:numberIndex-1];
+        }else if([firstStr isEqualToString:@"Y"]){
+            NSArray *arr = @[@"大羽",@"上羽",@"少羽",@"桎羽",@"众羽"];
+            returnStr = [arr objectAtIndex:numberIndex-1];
+        }
+    }
+    return returnStr;
 }
 
 +(NSString *)getSubjectSnFrom:(NSString *)subjectName{
@@ -223,42 +257,42 @@
 +(NSString *)getSportNameWithIndex:(NSInteger)index
 {
     if(index == 1){
-        return @"预备";
+        return ModuleZW(@"预备   ");
     }else if(index == 2){
-        return @"第一式";
+        return ModuleZW(@"第一式");
     }
     else if(index == 3){
-        return @"第二式";
+        return ModuleZW(@"第二式");
     }else if (index == 4){
-        return @"第三式";
+        return ModuleZW(@"第三式");
     }else if (index == 5){
-        return @"第四式";
+        return ModuleZW(@"第四式");
     }else if (index == 6){
-        return @"第五式";
+        return ModuleZW(@"第五式");
     }else if (index == 7){
-        return @"第六式";
+        return ModuleZW(@"第六式");
     }else if (index == 8){
-        return @"第七式";
+        return ModuleZW(@"第七式");
     }else if (index == 9){
-        return @"第八式";
+        return ModuleZW(@"第八式");
     }
-    return @"全部";
+    return ModuleZW(@"全部   ");
 }
 
 +(NSString *)getRemindTRypeWithStr:(NSString *)typeStr
 {
     if([typeStr isEqualToString:@"yizhan"]){
-        return @"一站";
+        return  ModuleZW(@"一站");
     }else if ([typeStr isEqualToString:@"yiting"]){
-        return @"一听";
+        return ModuleZW(@"一听");
     }else if ([typeStr isEqualToString:@"yitui"]){
-        return @"一推";
+        return ModuleZW(@"一推");
     }else if ([typeStr isEqualToString:@"yishuo"]){
-        return @"一说";
+        return ModuleZW(@"一说");
     }else if ([typeStr isEqualToString:@"yixie"]){
-        return @"一写";
+        return ModuleZW(@"一写");
     }else if ([typeStr isEqualToString:@"yidian"]){
-        return @"一点";
+        return ModuleZW(@"一点");
     }
     return nil;
 }
@@ -278,6 +312,20 @@
         [fileManager createDirectoryAtPath:folderPath withIntermediateDirectories:YES attributes:nil error:nil];
     }
     [GlobalCommon addSkipBackupAttributeToItemAtPath:folderPath];
+    return folderPath;
+}
+
++ (NSString*)createYueYaoZhiFufilepath
+{
+    NSString *path = [ NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *str = [NSString stringWithFormat:@"yueyaozhifuTemp/%@/", [MemberUserShance shareOnce].name];
+    NSString *folderPath = [path stringByAppendingPathComponent:str];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL fileExists = [fileManager fileExistsAtPath:folderPath];
+    if(!fileExists)
+    {
+        [fileManager createDirectoryAtPath:folderPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
     return folderPath;
 }
 
@@ -355,9 +403,9 @@
     subLayer.backgroundColor=[UIColorFromHex(0xc5c5c5) colorWithAlphaComponent:1.0].CGColor;
     subLayer.masksToBounds=NO;
     subLayer.shadowColor = UIColorFromHex(0xc5c5c5).CGColor;//shadowColor阴影颜色
-    subLayer.shadowOffset = CGSizeMake(2,5);//shadowOffset阴影偏移,x向右偏移3，y向下偏移2，默认(0, -3),这个跟shadowRadius配合使用
+    subLayer.shadowOffset = CGSizeMake(2,2);//shadowOffset阴影偏移,x向右偏移3，y向下偏移2，默认(0, -3),这个跟shadowRadius配合使用
     subLayer.shadowOpacity = 0.6;//阴影透明度，默认0
-    subLayer.shadowRadius = 8;//阴影半径，默认3
+    subLayer.shadowRadius = 3;//阴影半径，默认3
     [mainView.layer insertSublayer:subLayer below:imageV.layer];
 }
 
@@ -391,7 +439,7 @@
 {
     
     MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:view];
-    progress.label.text = @"请稍后";
+    progress.label.text = ModuleZW(@"请稍后");
     progress.tag = 101;
     [view addSubview:progress];
     [view bringSubviewToFront:progress];
@@ -432,5 +480,275 @@
             ];
     
 }
+
+
+
+
+//获取当前的时间
+
++(NSString*)getCurrentTimes{
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    
+        NSDate *datenow = [NSDate date];
+    NSString *currentTimeString = [formatter stringFromDate:datenow];
+    
+    NSLog(@"currentTimeString =  %@",currentTimeString);
+    
+    return currentTimeString;
+    
+}
+
++ (BOOL)stringEqualNull:(NSString *)str
+{
+    if([str isEqual:[NSNull null]] || str == nil || str.length == 0 || [str isEqualToString:@"(null)"]){
+        return YES;
+    }else{
+        return NO;
+    }
+}
+
+
++(NSString *)getNowTimeTimestamp{
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+    
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss SSS"]; // ----------设置你想要的格式,hh与HH的区别:分别表示12小时制,24小时制
+    
+    //设置时区,这个对于时间的处理有时很重要
+    
+    NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];
+    
+    [formatter setTimeZone:timeZone];
+    
+    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+    
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]*1000];
+    
+    return timeSp;
+}
+
++ (void)addMaskView
+{
+    UIView *maskView = [[UIApplication sharedApplication].keyWindow viewWithTag:111111112];
+    if(!maskView){
+        UIView *maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        maskView.backgroundColor = [UIColor blackColor];
+        maskView.alpha = 0.3;
+        maskView.tag = 111111112;
+        
+        [[UIApplication sharedApplication].keyWindow addSubview:maskView];
+    }
+}
+
++ (void)removeMaskView
+{
+    UIView *maskView = [[UIApplication sharedApplication].keyWindow viewWithTag:111111112];
+    if(maskView){
+        [maskView removeFromSuperview];
+    }
+}
+
+
+//计算年龄
++(NSString *)calculateAgeStr:(NSString *)str{
+    //截取身份证的出生日期并转换为日期格式
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy/mm/dd";
+    NSDate *birthDate =  [formatter dateFromString:str];
+    NSTimeInterval dateDiff = [birthDate timeIntervalSinceNow];
+    
+    // 计算年龄
+    int age  =  trunc(dateDiff/(60*60*24))/365;
+    NSString *ageStr = [NSString stringWithFormat:@"%d", -age];
+    
+    return ageStr;
+}
+
+//获取手机型号
++ (NSString *)getCurrentDeviceModel{
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    
+    NSString *deviceModel = [NSString stringWithCString:systemInfo.machine encoding:NSASCIIStringEncoding];
+    
+    
+    if ([deviceModel isEqualToString:@"iPhone3,1"])    return @"iPhone 4";
+    if ([deviceModel isEqualToString:@"iPhone3,2"])    return @"iPhone 4";
+    if ([deviceModel isEqualToString:@"iPhone3,3"])    return @"iPhone 4";
+    if ([deviceModel isEqualToString:@"iPhone4,1"])    return @"iPhone 4S";
+    if ([deviceModel isEqualToString:@"iPhone5,1"])    return @"iPhone 5";
+    if ([deviceModel isEqualToString:@"iPhone5,2"])    return @"iPhone 5 (GSM+CDMA)";
+    if ([deviceModel isEqualToString:@"iPhone5,3"])    return @"iPhone 5c (GSM)";
+    if ([deviceModel isEqualToString:@"iPhone5,4"])    return @"iPhone 5c (GSM+CDMA)";
+    if ([deviceModel isEqualToString:@"iPhone6,1"])    return @"iPhone 5s (GSM)";
+    if ([deviceModel isEqualToString:@"iPhone6,2"])    return @"iPhone 5s (GSM+CDMA)";
+    if ([deviceModel isEqualToString:@"iPhone7,1"])    return @"iPhone 6 Plus";
+    if ([deviceModel isEqualToString:@"iPhone7,2"])    return @"iPhone 6";
+    if ([deviceModel isEqualToString:@"iPhone8,1"])    return @"iPhone 6s";
+    if ([deviceModel isEqualToString:@"iPhone8,2"])    return @"iPhone 6s Plus";
+    if ([deviceModel isEqualToString:@"iPhone8,4"])    return @"iPhone SE";
+    // 日行两款手机型号均为日本独占，可能使用索尼FeliCa支付方案而不是苹果支付
+    if ([deviceModel isEqualToString:@"iPhone9,1"])    return @"iPhone 7";
+    if ([deviceModel isEqualToString:@"iPhone9,2"])    return @"iPhone 7 Plus";
+    if ([deviceModel isEqualToString:@"iPhone9,3"])    return @"iPhone 7";
+    if ([deviceModel isEqualToString:@"iPhone9,4"])    return @"iPhone 7 Plus";
+    if ([deviceModel isEqualToString:@"iPhone10,1"])   return @"iPhone_8";
+    if ([deviceModel isEqualToString:@"iPhone10,4"])   return @"iPhone_8";
+    if ([deviceModel isEqualToString:@"iPhone10,2"])   return @"iPhone_8_Plus";
+    if ([deviceModel isEqualToString:@"iPhone10,5"])   return @"iPhone_8_Plus";
+    if ([deviceModel isEqualToString:@"iPhone10,3"])   return @"iPhone X";
+    if ([deviceModel isEqualToString:@"iPhone10,6"])   return @"iPhone X";
+    if ([deviceModel isEqualToString:@"iPhone11,8"])   return @"iPhone XR";
+    if ([deviceModel isEqualToString:@"iPhone11,2"])   return @"iPhone XS";
+    if ([deviceModel isEqualToString:@"iPhone11,6"])   return @"iPhone XS Max";
+    if ([deviceModel isEqualToString:@"iPhone11,4"])   return @"iPhone XS Max";
+    if ([deviceModel isEqualToString:@"iPod1,1"])      return @"iPod Touch 1G";
+    if ([deviceModel isEqualToString:@"iPod2,1"])      return @"iPod Touch 2G";
+    if ([deviceModel isEqualToString:@"iPod3,1"])      return @"iPod Touch 3G";
+    if ([deviceModel isEqualToString:@"iPod4,1"])      return @"iPod Touch 4G";
+    if ([deviceModel isEqualToString:@"iPod5,1"])      return @"iPod Touch (5 Gen)";
+    if ([deviceModel isEqualToString:@"iPad1,1"])      return @"iPad";
+    if ([deviceModel isEqualToString:@"iPad1,2"])      return @"iPad 3G";
+    if ([deviceModel isEqualToString:@"iPad2,1"])      return @"iPad 2 (WiFi)";
+    if ([deviceModel isEqualToString:@"iPad2,2"])      return @"iPad 2";
+    if ([deviceModel isEqualToString:@"iPad2,3"])      return @"iPad 2 (CDMA)";
+    if ([deviceModel isEqualToString:@"iPad2,4"])      return @"iPad 2";
+    if ([deviceModel isEqualToString:@"iPad2,5"])      return @"iPad Mini (WiFi)";
+    if ([deviceModel isEqualToString:@"iPad2,6"])      return @"iPad Mini";
+    if ([deviceModel isEqualToString:@"iPad2,7"])      return @"iPad Mini (GSM+CDMA)";
+    if ([deviceModel isEqualToString:@"iPad3,1"])      return @"iPad 3 (WiFi)";
+    if ([deviceModel isEqualToString:@"iPad3,2"])      return @"iPad 3 (GSM+CDMA)";
+    if ([deviceModel isEqualToString:@"iPad3,3"])      return @"iPad 3";
+    if ([deviceModel isEqualToString:@"iPad3,4"])      return @"iPad 4 (WiFi)";
+    if ([deviceModel isEqualToString:@"iPad3,5"])      return @"iPad 4";
+    if ([deviceModel isEqualToString:@"iPad3,6"])      return @"iPad 4 (GSM+CDMA)";
+    if ([deviceModel isEqualToString:@"iPad4,1"])      return @"iPad Air (WiFi)";
+    if ([deviceModel isEqualToString:@"iPad4,2"])      return @"iPad Air (Cellular)";
+    if ([deviceModel isEqualToString:@"iPad4,4"])      return @"iPad Mini 2 (WiFi)";
+    if ([deviceModel isEqualToString:@"iPad4,5"])      return @"iPad Mini 2 (Cellular)";
+    if ([deviceModel isEqualToString:@"iPad4,6"])      return @"iPad Mini 2";
+    if ([deviceModel isEqualToString:@"iPad4,7"])      return @"iPad Mini 3";
+    if ([deviceModel isEqualToString:@"iPad4,8"])      return @"iPad Mini 3";
+    if ([deviceModel isEqualToString:@"iPad4,9"])      return @"iPad Mini 3";
+    if ([deviceModel isEqualToString:@"iPad5,1"])      return @"iPad Mini 4 (WiFi)";
+    if ([deviceModel isEqualToString:@"iPad5,2"])      return @"iPad Mini 4 (LTE)";
+    if ([deviceModel isEqualToString:@"iPad5,3"])      return @"iPad Air 2";
+    if ([deviceModel isEqualToString:@"iPad5,4"])      return @"iPad Air 2";
+    if ([deviceModel isEqualToString:@"iPad6,3"])      return @"iPad Pro 9.7";
+    if ([deviceModel isEqualToString:@"iPad6,4"])      return @"iPad Pro 9.7";
+    if ([deviceModel isEqualToString:@"iPad6,7"])      return @"iPad Pro 12.9";
+    if ([deviceModel isEqualToString:@"iPad6,8"])      return @"iPad Pro 12.9";
+    
+    if ([deviceModel isEqualToString:@"AppleTV2,1"])      return @"Apple TV 2";
+    if ([deviceModel isEqualToString:@"AppleTV3,1"])      return @"Apple TV 3";
+    if ([deviceModel isEqualToString:@"AppleTV3,2"])      return @"Apple TV 3";
+    if ([deviceModel isEqualToString:@"AppleTV5,3"])      return @"Apple TV 4";
+    
+    if ([deviceModel isEqualToString:@"i386"])         return @"Simulator";
+    if ([deviceModel isEqualToString:@"x86_64"])       return @"Simulator";
+    return deviceModel;
+}
+
+//获取屏幕分辨率
++(NSString *)getScreenPix{
+    NSString *screenPix = @"";
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    CGSize size = rect.size;
+    CGFloat width = size.width;
+    CGFloat height = size.height;
+    CGFloat scale_screen = [UIScreen mainScreen].scale;
+    screenPix = [NSString stringWithFormat:@"%.0fx%.0f",width*scale_screen,height*scale_screen];
+    return screenPix;
+}
+
+
+//获取本机运营商名称
++(NSString *)getOperator{
+    CTTelephonyNetworkInfo *info = [[CTTelephonyNetworkInfo alloc] init];
+    
+    CTCarrier *carrier = [info subscriberCellularProvider];
+    
+    NSString *mobile;
+    
+    
+    if (!carrier.isoCountryCode) {
+        
+        NSLog(@"没有SIM卡");
+        
+        mobile = @"0";
+        
+    }else{
+        
+        mobile = [carrier carrierName];
+        if([mobile isEqualToString:@"中国移动"]){
+            mobile = @"1";
+        }else  if([mobile isEqualToString:@"中国联通"]){
+            mobile = @"2";
+        }else  if([mobile isEqualToString:@"中国电信"]){
+            mobile = @"3";
+        }else{
+            mobile = @"0";
+        }
+        
+        
+    }
+    return mobile;
+}
+
+//获取网路链接方式
++(NSString *)internetStatus {
+    
+    Reachability *reachability   = [Reachability reachabilityWithHostName:@"www.apple.com"];
+    NetworkStatus internetStatus = [reachability currentReachabilityStatus];
+    NSString *net = @"WIFI";
+    switch (internetStatus) {
+        case ReachableViaWiFi:
+            net = @"1";
+            break;
+            
+        case ReachableViaWWAN:
+            net = @"2";
+            //net = [self getNetType ];   //判断具体类型
+            break;
+            
+        case NotReachable:
+            net = @"0";
+            
+        default:
+            break;
+    }
+    
+    return net;
+}
+
+
++ (NSString *)AESEncodeWithString:(NSString *)str
+{
+    // 加密密钥
+    NSString *AESKey = @"AESkeyQWEasduigjgk";
+    
+    NSString *AESEncodeString = [AESCipher encryptAES:str key:AESKey];
+    
+    return AESEncodeString;
+}
+
++ (NSString *)AESDecodeWithString:(NSString *)str
+{
+    // 加密密钥
+    NSString *AESKey = @"AESkeyQWEasduigjgk";
+    
+    NSString *AESDecodeString = [AESCipher decryptAES:str key:AESKey];
+    
+    return AESDecodeString;
+}
+
 
 @end

@@ -54,13 +54,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navTitleLabel.text = @"健康讲座";
+    self.navTitleLabel.text = ModuleZW(@"健康讲座");
     [self downloadData];
 }
 
 - (void)goBack:(UIButton *)btn
 {
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -79,7 +79,7 @@
     [self.view addSubview:_progress];
     [self.view bringSubviewToFront:_progress];
     _progress.delegate = self;
-    _progress.label.text = @"加载中...";
+    _progress.label.text = ModuleZW(@"加载中...");
     [_progress showAnimated:YES];
 }
 
@@ -99,7 +99,7 @@
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.removeFromSuperViewOnHide =YES;
             hud.mode = MBProgressHUDModeText;
-            hud.label.text = @"未登录或登录超时，请重新登录";
+            hud.label.text = ModuleZW(@"未登录或登录超时，请重新登录");
             hud.minSize = CGSizeMake(132.f, 108.0f);
             [hud hideAnimated:YES afterDelay:2];
             LoginViewController *login = [[LoginViewController alloc] init];
@@ -162,7 +162,7 @@
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.removeFromSuperViewOnHide =YES;
             hud.mode = MBProgressHUDModeText;
-            hud.label.text = @"未登录或登录超时，请重新登录";
+            hud.label.text = ModuleZW(@"未登录或登录超时，请重新登录");
             hud.minSize = CGSizeMake(132.f, 108.0f);
             [hud hideAnimated:YES afterDelay:2];
             LoginViewController *login = [[LoginViewController alloc] init];
@@ -203,7 +203,7 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"取消预约失败";
+        hud.label.text = ModuleZW(@"取消预约失败");
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hideAnimated:YES afterDelay:2];
     }

@@ -9,8 +9,8 @@
 #import "ZYGASINetworking.h"
 /************* 需注意kAPI_BASE_URL与path的格式（是否带/）    *************/
 /************* 若要使用此封装实际需要根据需要更改kAPI_BASE_URL *************/
-NSString * kAPI_BASE_URL = URL_PRE;
-static BOOL sg_shouldAutoEncode = YES;
+//NSString * kAPI_BASE_URL = URL_PRE;
+//static BOOL sg_shouldAutoEncode = YES;
 static NSDictionary *sg_httpHeaders = nil;
 
 @implementation ZYGASINetworking
@@ -23,9 +23,9 @@ static NSDictionary *sg_httpHeaders = nil;
     });
     return net;
 }
-+ (void)updateBaseUrl:(NSString *)baseUrl {
-    kAPI_BASE_URL = baseUrl;
-}
+//+ (void)updateBaseUrl:(NSString *)baseUrl {
+//    kAPI_BASE_URL = baseUrl;
+//}
 //+ (void)shouldAutoEncodeUrl:(BOOL)shouldAutoEncode {
 //    sg_shouldAutoEncode = shouldAutoEncode;
 //}
@@ -40,8 +40,8 @@ static NSDictionary *sg_httpHeaders = nil;
 
 + (ASIHTTPRequest *)GET_Path:(NSString *)path completed:(KKCompletedBlock )completeBlock failed:(KKFailedBlock )failed
 {
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kAPI_BASE_URL,path];
-    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,path];
+    urlStr = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlStr];
     __weak ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     request.requestMethod = @"GET";
@@ -67,7 +67,7 @@ static NSDictionary *sg_httpHeaders = nil;
     
     [request startAsynchronous];
     
-    kNSLog(@"ASIClient GET: %@",[request url]);
+    //NSLog(@"ASIClient GET: %@",[request url]);
     
     return request;
 }
@@ -79,9 +79,9 @@ static NSDictionary *sg_httpHeaders = nil;
         [paramsString appendFormat:@"%@=%@",key,obj];
         [paramsString appendString:@"&"];
     }];
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@?%@",kAPI_BASE_URL,path,paramsString];
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@?%@",URL_PRE,path,paramsString];
     urlStr = [urlStr substringToIndex:urlStr.length-1];
-    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    urlStr = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     NSURL *url = [NSURL URLWithString:urlStr];
     __weak ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -107,7 +107,7 @@ static NSDictionary *sg_httpHeaders = nil;
     
     [request startAsynchronous];
     
-    kNSLog(@"ASIClient GET: %@",[request url]);
+    //NSLog(@"ASIClient GET: %@",[request url]);
     
     return request;
 }
@@ -115,13 +115,15 @@ static NSDictionary *sg_httpHeaders = nil;
 
 + (ASIHTTPRequest *)POST_Path:(NSString *)path params:(NSDictionary *)paramsDic completed:(KKCompletedBlock )completeBlock failed:(KKFailedBlock )failed
 {
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kAPI_BASE_URL,path];
-    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,path];
+    urlStr = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlStr];
     __weak ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     request.requestMethod = @"POST";
     //为网络请求添加请求头
-    NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+    NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID],
+                              @"language" :[UserShareOnce shareOnce].languageType
+                              };
     [self configCommonHttpHeaders:headers];
     for (NSString *key in sg_httpHeaders.allKeys) {
         if (sg_httpHeaders[key] != nil) {
@@ -145,7 +147,7 @@ static NSDictionary *sg_httpHeaders = nil;
     
     [request startAsynchronous];
     
-    kNSLog(@"ASIClient POST: %@ %@",[request url],paramsDic);
+    //NSLog(@"ASIClient POST: %@ %@",[request url],paramsDic);
     
     return request;
 }
@@ -192,8 +194,8 @@ static NSDictionary *sg_httpHeaders = nil;
     
     [request startAsynchronous];
     
-    kNSLog(@"ASIClient 下载文件：%@ ",path);
-    kNSLog(@"ASIClient 保存路径：%@",filePath);
+    //NSLog(@"ASIClient 下载文件：%@ ",path);
+    //NSLog(@"ASIClient 保存路径：%@",filePath);
     
     return request;
 }
@@ -207,7 +209,7 @@ static NSDictionary *sg_httpHeaders = nil;
     NSURL *url = [NSURL URLWithString:path];
     __weak ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     //为网络请求添加请求头
-    NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+    NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID],@"language" :[UserShareOnce shareOnce].languageType };
     [self configCommonHttpHeaders:headers];
     for (NSString *key in sg_httpHeaders.allKeys) {
         if (sg_httpHeaders[key] != nil) {
@@ -240,8 +242,8 @@ static NSDictionary *sg_httpHeaders = nil;
     
     [request startAsynchronous];
     
-    kNSLog(@"ASIClient 文件上传：%@ file=%@ key=%@",path,filePath,fileKey);
-    kNSLog(@"ASIClient 文件上传参数：%@",params);
+    //NSLog(@"ASIClient 文件上传：%@ file=%@ key=%@",path,filePath,fileKey);
+    //NSLog(@"ASIClient 文件上传参数：%@",params);
     
     return request;
 }
@@ -256,7 +258,7 @@ static NSDictionary *sg_httpHeaders = nil;
     __weak ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     [request setData:fData forKey:dataKey];
     //为网络请求添加请求头
-    NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+    NSDictionary *headers = @{@"version":@"ios_hcy-yh-1.0",@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID],@"language" :[UserShareOnce shareOnce].languageType };
     [self configCommonHttpHeaders:headers];
     for (NSString *key in sg_httpHeaders.allKeys) {
         if (sg_httpHeaders[key] != nil) {
@@ -288,8 +290,8 @@ static NSDictionary *sg_httpHeaders = nil;
     
     [request startAsynchronous];
     
-    kNSLog(@"ASIClient 文件上传：%@ size=%.2f MB  key=%@",path,fData.length/1024.0/1024.0,dataKey);
-    kNSLog(@"ASIClient 文件上传参数：%@",params);
+    //NSLog(@"ASIClient 文件上传：%@ size=%.2f MB  key=%@",path,fData.length/1024.0/1024.0,dataKey);
+    //NSLog(@"ASIClient 文件上传参数：%@",params);
     
     return request;
 }
@@ -350,7 +352,7 @@ static NSDictionary *sg_httpHeaders = nil;
         if ([[NSFileManager defaultManager] fileExistsAtPath:tempForDownPath]) {
             //NSError *errorForDelete = [NSError errorWithDomain:@"删除临时文件发生错误！" code:2015 userInfo:@{@"删除临时文件发生错误": @"中文",@"delete the temp fife error":@"English"}];
             //[[NSFileManager defaultManager] removeItemAtPath:tempForDownPath error:&errorForDelete];
-            kNSLog(@"l  %d> %s",__LINE__,__func__);
+            //NSLog(@"l  %d> %s",__LINE__,__func__);
         }
     }];
     
@@ -360,11 +362,11 @@ static NSDictionary *sg_httpHeaders = nil;
     
     [request startAsynchronous];
     
-    kNSLog(@"ASIClient 下载文件：%@ ",path);
-    kNSLog(@"ASIClient 保存路径：%@",filePath);
+    //NSLog(@"ASIClient 下载文件：%@ ",path);
+    //NSLog(@"ASIClient 保存路径：%@",filePath);
     if (downProgress >0 && downProgress) {
         if (downProgress >=1.0) downProgress = 0.9999;
-        kNSLog(@"ASIClient 上次下载已完成：%.2f/100",downProgress*100);
+        //NSLog(@"ASIClient 上次下载已完成：%.2f/100",downProgress*100);
     }
     return request;
 }

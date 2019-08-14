@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HYC_CardsModel.h"
 @interface BlockTableViewCell : UITableViewCell
-@property (nonatomic ,retain) UIImageView *imageV;
-@property (nonatomic ,retain) UILabel *mLabel;
-@property (nonatomic ,retain) UILabel *hLabel;
-@property (nonatomic ,retain) UILabel *yLabel;
-@property (nonatomic ,retain) UILabel *wLabel;
-@property (nonatomic ,retain) UILabel *tLabel;
-@property (nonatomic ,retain) UIImageView *backImage;
+@property (nonatomic ,strong) UIImageView *imageV;
+@property (nonatomic ,strong) UILabel *mLabel;
+@property (nonatomic ,strong) UILabel *hLabel;
+@property (nonatomic ,strong) UILabel *yLabel;
+
+
+-(void)setCarListDataWithModel:(HYC_CardsModel *)model;
 @end
