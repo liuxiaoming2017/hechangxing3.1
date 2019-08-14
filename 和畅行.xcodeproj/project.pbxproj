@@ -376,6 +376,7 @@
 		03DEBC71210863AB008434BD /* LiveMonitorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DEBC70210863AA008434BD /* LiveMonitorVC.m */; };
 		03DEBC74210863CC008434BD /* LeadPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DEBC72210863CB008434BD /* LeadPlayer.m */; };
 		03DEBC772108641D008434BD /* Helper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03DEBC752108641C008434BD /* Helper.mm */; };
+		03E088F322FA6F120089E86A /* Pods_和畅行.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 039EB91E21CF773300AE4A0D /* Pods_和畅行.framework */; };
 		03E36FE920EDB882000974E1 /* UtilityFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE820EDB882000974E1 /* UtilityFunc.m */; };
 		03EB041921E86B96000AA88B /* ZYAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB041721E86B95000AA88B /* ZYAudioManager.m */; };
 		03EBD1E922EE8B7C001FAD7A /* HWTFCursorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EBD1E222EE8B7A001FAD7A /* HWTFCursorView.m */; };
@@ -635,7 +636,6 @@
 		C9FDB92721BE35AC00E726F3 /* HCY_UnderlineButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FDB92621BE35AC00E726F3 /* HCY_UnderlineButton.m */; };
 		C9FDB92B21BE3D4900E726F3 /* HCY_ConsumptionListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FDB92921BE3D4900E726F3 /* HCY_ConsumptionListCell.m */; };
 		C9FDB92C21BE3D4900E726F3 /* HCY_ConsumptionListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9FDB92A21BE3D4900E726F3 /* HCY_ConsumptionListCell.xib */; };
-		FE24DEDD0ACD5ABDE401CDEF /* Pods____.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3992630D9BF859D26B53112 /* Pods____.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1700,6 +1700,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03E088F322FA6F120089E86A /* Pods_和畅行.framework in Frameworks */,
 				03D99E5F21AD335E00C766FD /* libSocialSina.a in Frameworks */,
 				03D99E5D21AD335100C766FD /* libSocialQQ.a in Frameworks */,
 				03D99E5B21AD334300C766FD /* libSocialWeChat.a in Frameworks */,
@@ -1733,7 +1734,6 @@
 				0390CF7F20ECB5D0000ECA53 /* CoreFoundation.framework in Frameworks */,
 				0390CF8020ECB5D0000ECA53 /* Foundation.framework in Frameworks */,
 				0306C5C921CCBEFA00DA5DC1 /* libSocialWeChat.a in Frameworks */,
-				FE24DEDD0ACD5ABDE401CDEF /* Pods____.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3761,7 +3761,7 @@
 				03513AC520E9CAD3004E2805 /* Frameworks */,
 				03513AC620E9CAD3004E2805 /* Resources */,
 				AF39BC23D98947F91514DB68 /* [CP] Embed Pods Frameworks */,
-				C8C7563DF0D5A7E9210D7736 /* [CP] Copy Pods Resources */,
+				BFAA0FAE2B18DFE5C32480DF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -4153,7 +4153,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-和畅行/Pods-和畅行-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C8C7563DF0D5A7E9210D7736 /* [CP] Copy Pods Resources */ = {
+		BFAA0FAE2B18DFE5C32480DF /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -4691,7 +4691,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3X65BCYVHU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4740,7 +4740,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = com.ky3h.hechangxing;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};
@@ -4754,7 +4754,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3X65BCYVHU;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4804,7 +4804,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = com.ky3h.hechangxing;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};
