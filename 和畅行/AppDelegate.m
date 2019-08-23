@@ -37,7 +37,10 @@
 #import "SBJson.h"
 #import "ChangeLanguageObject.h"
 
+#import <PgySDK/PgyManager.h>
+#import <PgyUpdate/PgyUpdateManager.h>
 
+#import "MassageArmchairVC.h"
 
 @interface AppDelegate ()<WXApiDelegate>
 @property (nonatomic, strong) NSURLSession * session;
@@ -72,9 +75,14 @@
     [[UITabBar appearance] setTranslucent:NO];
     
     //和缓医疗SDK注册,是和缓分配给的productId ffff
-//    HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:HHSDK_id isDebug:NO isDevelop:NO];
-//    hhSdk.cerName = @"2cDevTest";
-//    [[HHMSDK alloc] startWithOption:hhSdk];
+    #if TARGET_IPHONE_SIMULATOR
+    
+    #else
+        HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:HHSDK_id isDebug:NO isDevelop:NO];
+        hhSdk.cerName = @"2cDevTest";
+        [[HHMSDK alloc] startWithOption:hhSdk];
+    #endif
+   
 
     [UMCommonLogManager setUpUMCommonLogManager];
     [UMConfigure setLogEnabled:YES];
@@ -91,7 +99,8 @@
     //埋点注册
     [[BuredPoint sharedYHBuriedPoint]setTheSignatureWithSignStr:BuBuredPointKey  withOpenStr:@"1"];
     
-//    URL_PRE
+//    
+    
 
     //创建本地数据库
     [[CacheManager sharedCacheManager] createDataBase];
@@ -99,6 +108,14 @@
     for (int i = 0; i < 20; ++i) {
         NSLog(@"%d",i);
     }
+    
+    NSLog(@"%@,%@,%@",APP_ID,APP_SECRET,URL_PRE);
+    
+//    蒲公英SDK
+    //启动基本SDK
+    [[PgyManager sharedPgyManager] startManagerWithAppId:@"da15cba9ecb9d085233da45a1422f52c"];
+    //启动更新检查SDK
+    [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"da15cba9ecb9d085233da45a1422f52c"];
     
     return YES;
 }
@@ -115,7 +132,8 @@
 }
 
 -(void)returnMainPage2{
-    RootRequestController *homeVc = [[RootRequestController alloc] init];
+    //RootRequestController *homeVc = [[RootRequestController alloc] init];
+    MassageArmchairVC *homeVc = [[MassageArmchairVC alloc] init];
     self.window.rootViewController = homeVc;
     
 }

@@ -26,6 +26,8 @@
 #import "Reachability.h"
 
 #import <sys/utsname.h>
+
+
 @interface HomePageController ()<UIScrollViewDelegate>
 
 @property (nonatomic,strong) UIScrollView *bgScrollView;

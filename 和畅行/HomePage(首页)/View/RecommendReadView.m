@@ -18,6 +18,8 @@
 #import "HCY_ConsultingModel.h"
 #import "VersionUpdateView.h"
 
+#import <PgyUpdate/PgyUpdateManager.h>
+
 @interface RecommendReadView()<UICollectionViewDataSource,UICollectionViewDelegate>
 
 @property (nonatomic,strong) UICollectionView *collectionV;
@@ -40,6 +42,7 @@
 
 - (void)setupUI
 {
+    
     self.backgroundColor = UIColorFromHex(0xFFFFFF);
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(23, 15, 200, 25)];
     //titleLabel.textColor = UIColorFromHex(0x7D7D7D);
@@ -199,6 +202,12 @@
 # pragma mark - 检查更新
 - (void)checkHaveUpdateWithType:(NSString *)typeStr
 {
+    
+    if(!isProduct){
+        [[PgyUpdateManager sharedPgyManager] checkUpdate];
+        return;
+    }
+    
     //ios_hcy-oem-1.0 hcy_android_oem-oem-1.0
     NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     NSString *headStr = [NSString stringWithFormat:@"ios_hcy-oem-%@",nowVersion];

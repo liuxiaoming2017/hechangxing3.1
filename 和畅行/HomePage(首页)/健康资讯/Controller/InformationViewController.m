@@ -18,6 +18,8 @@
 #import "UIImageView+WebCache.h"
 #import "HeChangPackgeController.h"
 
+#import "InformationCell.h"
+
 @interface InformationViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,ASIProgressDelegate,MBProgressHUDDelegate,HYSegmentedControlDelegate>
 {
     MBProgressHUD* progress_;
@@ -163,7 +165,10 @@
     _healthTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _BaoGaosegment.bottom, ScreenWidth, ScreenHeight-_BaoGaosegment.bottom) style:UITableViewStylePlain];
     _healthTableView.tableFooterView = [[UIView alloc]init];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    _healthTableView.rowHeight = 84;
+    _healthTableView.rowHeight = 85;
+    _healthTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _healthTableView.backgroundView = nil;
+    _healthTableView.backgroundColor = [UIColor clearColor];
     _healthTableView.delegate = self;
     _healthTableView.dataSource = self;
     [self.view addSubview:_healthTableView];
@@ -363,8 +368,19 @@
     return self.healthArray.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *CellIdentifier = @"LeMedicineCell";
     
+    InformationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InformationCell"];
+    if(cell == nil){
+        cell = [[InformationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"InformationCell"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    if(self.healthArray.count > indexPath.row){
+        ArticleModel *model = [self.healthArray objectAtIndex:indexPath.row];
+        [cell setDataWithModel:model];
+    }
+    
+    /*
+    static NSString *CellIdentifier = @"LeMedicineCell";
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         if (cell == nil)
         {
@@ -418,7 +434,7 @@
         timeLabel.text = confromTimespStr;
         [cell addSubview:timeLabel];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
+        */
         
         
         return cell;

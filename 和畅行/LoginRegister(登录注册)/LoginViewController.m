@@ -25,6 +25,7 @@
 #define margin 40
 #define leftOrigin 40
 
+
 @interface LoginViewController ()
 @property (nonatomic, strong) UIView *blueView;
 @property (nonatomic, strong) UILabel *addNumberLabel;
@@ -399,6 +400,7 @@
     }
     
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:APP_SECRET redirectURL:nil];
+    
     [self loginByWeiXin];
     
 }
