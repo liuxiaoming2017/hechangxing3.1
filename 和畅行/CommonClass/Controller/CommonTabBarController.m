@@ -44,53 +44,22 @@
     [[UIApplication sharedApplication].keyWindow addSubview:zkView];
 }
 
-<<<<<<< HEAD
-/*
-- (void)test
-{
-    HHMSDK *sdk = [[HHMSDK alloc] init];
-    [sdk addWithDelegate:self];
-    [sdk loginWithUuid:100002514 completion:^(NSError * _Nullable error) {
-        if(error){
-            
-        }else{
-            [sdk startCall:HHCallTypeAdult];
-        }
-    }];
-}
 
-- (void)test2
-{
-    //获取病例列表
-    NSString *resultStr = [[HHMSDK default] getMedicListWithUserToken:testToken];
-    NSLog(@"result:%@",resultStr);
-}
-
-- (void)test3
-{
-    //获取病例详情
-    NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:testToken medicId:testMedicId];
-    NSLog(@"result:%@",resultStr);
-}
-*/
-=======
-
->>>>>>> zw
 
 # pragma mark - ZKIndexViewDelegate
 - (void)indexClickWitbNumber:(NSInteger)tag
 {
     [zkView removeFromSuperview];
     
-//    [self test2];
-    return;
+    //    [self test2];
+    //    return;
     
     UIViewController *vc = nil;
     
     NSInteger index = tag - 100;
     switch (index) {
         case 0:
-                vc = [[YueYaoController alloc] initWithType:NO];
+            vc = [[YueYaoController alloc] initWithType:NO];
             
             break;
         case 1:
@@ -114,8 +83,8 @@
             [[self selectedViewController] pushViewController:vc1 animated:YES];
             return ;
         }
-           
-           
+            
+            
             break;
         case 3:
         {
@@ -127,7 +96,7 @@
                 }
             }
             
-             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
             
             if([UserShareOnce shareOnce].isOnline){
                 i9_MoxaMainViewController * vc1 = [[i9_MoxaMainViewController alloc] init];
@@ -226,13 +195,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

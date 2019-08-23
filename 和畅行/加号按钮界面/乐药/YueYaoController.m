@@ -232,9 +232,9 @@
         [self requestYueyaoListWithType:@"大宫"];
     }
     
-    [self getPayRequest];
+   // [self getPayRequest];
     
-    
+    self.isOnPay = NO;
 }
 
 

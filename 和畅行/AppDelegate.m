@@ -51,14 +51,19 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
    // self.window.rootViewController = [self tabBar];
+    
     NSArray *languages = [[NSUserDefaults standardUserDefaults] valueForKey:@"AppleLanguages"];
-    NSLog(@"%@",languages);
+    NSMutableArray *larray = [NSMutableArray arrayWithArray:languages];
+    [larray replaceObjectAtIndex:0 withObject:@"en-US"];
+    [[NSUserDefaults standardUserDefaults] setValue:larray forKey:@"AppleLanguages"];
+    
     if ([languages.firstObject isEqualToString:@"en-US"]||[languages.firstObject isEqualToString:@"ja-US"]||[languages.firstObject isEqualToString:@"en-CN"]||[languages.firstObject isEqualToString:@"en"]){
         [UserShareOnce shareOnce].languageType = @"us-en";
         //        [UserShareOnce shareOnce].languageType  = nil;
     }else{
         [UserShareOnce shareOnce].languageType  = nil;
     }
+    
     
     NSError *error = nil;
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&error];

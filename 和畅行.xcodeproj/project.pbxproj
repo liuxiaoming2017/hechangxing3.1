@@ -642,9 +642,6 @@
 /* Begin PBXFileReference section */
 		03003E4C21CB707B003C89EE /* ServiceBlockCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServiceBlockCell.h; sourceTree = "<group>"; };
 		03003E4D21CB707B003C89EE /* ServiceBlockCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServiceBlockCell.m; sourceTree = "<group>"; };
-		030126C521F9628F000FA318 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
-		030126C621F96290000FA318 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		030126CA21F96334000FA318 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Language.strings"; sourceTree = "<group>"; };
 		030126CC21F96337000FA318 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Language.strings; sourceTree = "<group>"; };
 		030126CD21F96683000FA318 /* ChangeLanguageObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChangeLanguageObject.h; sourceTree = "<group>"; };
 		030126CE21F96683000FA318 /* ChangeLanguageObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChangeLanguageObject.m; sourceTree = "<group>"; };
@@ -3802,7 +3799,6 @@
 			knownRegions = (
 				en,
 				Base,
-				"zh-Hans",
 			);
 			mainGroup = 03513ABF20E9CAD3004E2805;
 			productRefGroup = 03513AC920E9CAD3004E2805 /* Products */;
@@ -4522,7 +4518,6 @@
 		030126CB21F96334000FA318 /* Language.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				030126CA21F96334000FA318 /* zh-Hans */,
 				030126CC21F96337000FA318 /* en */,
 			);
 			name = Language.strings;
@@ -4532,7 +4527,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				03513AD220E9CAD3004E2805 /* Base */,
-				030126C521F9628F000FA318 /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -4541,7 +4535,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				03513AD720E9CAD4004E2805 /* Base */,
-				030126C621F96290000FA318 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -4742,7 +4735,7 @@
 					"$(inherited)",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.harmonyYi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4807,7 +4800,7 @@
 					"$(inherited)",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.harmonyYi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

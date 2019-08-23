@@ -92,7 +92,7 @@
     userNameBox.frame=CGRectMake(segment.left, segment.bottom+40, ScreenWidth - 100 ,30 );
     userNameBox.borderStyle=UITextBorderStyleNone;
     userNameBox.returnKeyType=UIReturnKeyNext;
-    userNameBox.keyboardType=UIKeyboardTypeNumberPad;
+    userNameBox.keyboardType=UIKeyboardTypeEmailAddress;
     userNameBox.clearButtonMode=UITextFieldViewModeWhileEditing;
     userNameBox.delegate=self;
     userNameBox.font=[UIFont systemFontOfSize:15.0];

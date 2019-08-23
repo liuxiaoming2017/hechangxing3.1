@@ -16,15 +16,7 @@ extern BOOL isJY;
 extern BOOL isSF;
 extern BOOL isBF;
 
-<<<<<<< HEAD
-#define URL_PRE @"http://47.92.73.99:8080/healthlm"
-//#define URL_PRE @"http://eky3h.com/healthlm/"
-#define URL_PRE22 @"http://10.1.71.104:10080/hcy/"
-/*
- http://47.92.73.99:8080/healthlm          测试地址
- http://app.ky3h.com:8001/healthlm/ 正式地址
- */
-=======
+
 //数据统计测试环境
 #define DATAURL_PRE @"http://47.92.160.74:8086/api/v1/"
 
@@ -37,7 +29,6 @@ extern BOOL isBF;
 //#define URL_PRE @"http://10.1.71.14:8080/hcy-system/"
 
 
->>>>>>> zw
 
 #define testUUId 100002514
 #define testToken  @"ECEEDCCD74B7D54BCF6690B7E26262B73F0D04F68EA2608F6783B874E4F50EEF"
@@ -201,5 +192,8 @@ extern BOOL isBF;
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 
 
+//#define hhh
+
 #define  ModuleZW(zwString)          NSLocalizedStringFromTable(zwString, @"ModuleZW", nil)
+//#define  ModuleZW(zwString)        [[NSJSONSerialization JSONObjectWithData:[[NSData alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"test" ofType:@"json"]] options:kNilOptions error:nil] objectForKey:zwString]
 #define kDictIsEmpty(dic) ([dic isKindOfClass:[NSNull class]])

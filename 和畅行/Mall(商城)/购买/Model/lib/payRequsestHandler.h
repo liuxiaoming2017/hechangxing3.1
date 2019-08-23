@@ -40,26 +40,36 @@
 
 // 账号帐户资料
 //更改商户把相关参数后可测试
+//wx2101d2fcba50b476  wx674b879fc693ceb9
+#define APP_ID          @"wx2101d2fcba50b476"               //APPID
+#define APP_SECRET      @"18fc112061353466c4d1be4b1d6b53f5" //appsecret
 
-#define APP_ID          @""               //APPID
-#define APP_SECRET      @"" //appsecret
+
 //商户号，填写商户对应参数
-#define MCH_ID          @""
+#define MCH_ID          @"1274470401"
 //商户API密钥，填写相应参数
-#define PARTNER_ID      @""
+#define PARTNER_ID      @"KY3HYANHUANGDONGFANGCCCCCCCCCCCC"
 //支付结果回调页面
 #define NOTIFY_URL      @"http://wxpay.weixin.qq.com/pub_v2/pay/notify.v2.php"
 //获取服务器端支付数据地址（商户自定义）
 #define SP_URL          @"http://wxpay.weixin.qq.com/pub_v2/app/app_pay.php"
 
+//和缓医疗SDK注册,8248是和缓分配给的productId 9001是测试id
+#define HHSDK_id        @"8248"
+//mmm
+//友盟ID
+#define Youmeng_id      @"5bbacd04b465f5db4c000073"
+
+//埋点设置key
+#define BuBuredPointKey      @"6e21212ba021e3d09db25d1c4f2bc4b4"
 
 @interface payRequsestHandler : NSObject{
-	//预支付网关url地址
+    //预支付网关url地址
     NSString *payUrl;
-
+    
     //lash_errcode;
     long     last_errcode;
-	//debug信息
+    //debug信息
     NSMutableString *debugInfo;
     NSString *appid,*mchid,*spkey;
 }
@@ -79,3 +89,4 @@
 - ( NSMutableDictionary *)sendPay_demoName:(NSString *)name dictionary:(NSMutableDictionary *)dictionary;
 
 @end
+
