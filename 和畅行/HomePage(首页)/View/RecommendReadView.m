@@ -124,11 +124,11 @@
 //            [weakSelf.collectionV reloadData];
         
         }
-        [weakSelf checkHaveUpdateWithType:@"on"];
+       // [weakSelf checkHaveUpdateWithType:@"on"];
 
     } failureBlock:^(NSError *error) {
         NSLog(@"%@",error);
-        [weakSelf checkHaveUpdateWithType:@"on"];
+       // [weakSelf checkHaveUpdateWithType:@"on"];
         [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
     
@@ -187,7 +187,7 @@
 
 
 -(void)didBecomeActiveNotification{
-    [self checkHaveUpdateWithType:@"back"];
+   // [self checkHaveUpdateWithType:@"back"];
 }
 
 -(void)dealloc{
