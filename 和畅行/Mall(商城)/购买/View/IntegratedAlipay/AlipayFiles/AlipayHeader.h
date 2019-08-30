@@ -44,7 +44,7 @@
  *  partner:合作身份者ID,以 2088 开头由 16 位纯数字组成的字符串。
  *
  */
-#define kPartnerID @"2088701095950295"
+
 
 
 /**
@@ -67,7 +67,7 @@
 /**
  *  private_key:商户方的私钥,pkcs8 格式。
  */
-#define kPrivateKey @"MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAKxSA4CfAAGrROcZ2h2BX/o17pARjDshInt4IsBSFdgkst9TYU4pxkFf8xU6bbawuD4YDNSoyDPTYKQYjk7xDRsd+vltrSukL6MKWa0qL1NVDLxM/nxtmSQb9hnWPa+J5hkgIBhgbBklJA9yxF06IyqX/AwrVaKXwxYb2cAe4qgnAgMBAAECgYA4wIoGwlbuNcnrksgTD5jcfwaizCSzFKaWo2pOjLpFBVEj3AIgDAIPZdpZE3UuxeToDmOrZisJZoRdhvjXZuw5h7xpgB75zgkAefeKvFv/xqGEJRLUYXlzL2cRCZCbuCoxFE3uxSke5y5OkjxUugXsCrh5OhV3redfjve1HO/mgQJBANOJkpcQ9SNW+2XVlIncuwPX3B9OFk9izevo0hYVhvDb3By4l3wVvW+X0EpYGI7QC0u50dPImwPs2H7d0PXZUYsCQQDQij83rAkvBaXmRWqPiwCo3XQe/njargbCPjxbXo9ZZZkR1qwfc7lzuw097WtOly2F5TGVDUsYf1skZNQoaF9VAkEAqc1x1T+wdzi4PotOW8fKexBISvzEnd7jCy5tjXqkQi1KJ+fo+Zr94FkNws+qjuDjYFr92rHZ9TGmq1flB6P1dwJBAMaDc55ZY/yhEcXcOo4eMiiNdqaycvUoSELL38TShP8Cme3DPuJJ1TX3z6ktwsJzYuBcxxAuMVhGk8pXOSamBGkCQQCrbpSJ1cpTiNCq8RZuZ69lcQQUFF18Uz5KyXaGRikJXvLr6U26rMoTaAWsr7ONXGnRr0LAHVL/2bPnnB5tea41"
+
 
 
 #endif
