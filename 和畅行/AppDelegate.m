@@ -57,6 +57,8 @@
     [larray replaceObjectAtIndex:0 withObject:@"en-US"];
     [[NSUserDefaults standardUserDefaults] setValue:larray forKey:@"AppleLanguages"];
     
+    
+    NSLog(@"%@",languages);
     if ([languages.firstObject isEqualToString:@"en-US"]||[languages.firstObject isEqualToString:@"ja-US"]||[languages.firstObject isEqualToString:@"en-CN"]||[languages.firstObject isEqualToString:@"en"]){
         [UserShareOnce shareOnce].languageType = @"us-en";
         //        [UserShareOnce shareOnce].languageType  = nil;

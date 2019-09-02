@@ -55,6 +55,8 @@
 
 @property (nonatomic,assign) BOOL isPlaying;
 
+@property (nonatomic,assign) BOOL isBackground;
+
 /**
  *  蓝牙连接必要对象
  */
@@ -122,6 +124,8 @@
     [self playControl];
     
     [self createRemoteCommandCenter];
+    
+    [self addObservers];
     
 }
 
@@ -205,33 +209,62 @@
         CMTime total = weakSelf.avPlayer.currentItem.duration;
         CGFloat totalTime = CMTimeGetSeconds(total);
         
-        //监听锁屏状态 lock=1则为锁屏状态
-        uint64_t locked;
-        __block int token = 0;
-        notify_register_dispatch("com.apple.springboard.lockstate",&token,dispatch_get_main_queue(),^(int t){
-        });
-        notify_get_state(token, &locked);
-        
-        //监听屏幕点亮状态 screenLight = 1则为变暗关闭状态
-        uint64_t screenLight;
-        __block int lightToken = 0;
-        notify_register_dispatch("com.apple.springboard.hasBlankedScreen",&lightToken,dispatch_get_main_queue(),^(int t){
-        });
-        notify_get_state(lightToken, &screenLight);
-        
-        BOOL isShowLyricsPoster = NO;
-        // NSLog(@"screenLight=%llu locked=%llu",screenLight,locked);
-        if (screenLight == 0 && locked == 1) {
-            //点亮且锁屏时
-            isShowLyricsPoster = YES;
-        }else if(screenLight){
-            return;
-        }
+//        //监听锁屏状态 lock=1则为锁屏状态
+//        uint64_t locked;
+//        __block int token = 0;
+//        notify_register_dispatch("com.apple.springboard.lockstate",&token,dispatch_get_main_queue(),^(int t){
+//        });
+//        notify_get_state(token, &locked);
+//
+//        //监听屏幕点亮状态 screenLight = 1则为变暗关闭状态
+//        uint64_t screenLight;
+//        __block int lightToken = 0;
+//        notify_register_dispatch("com.apple.springboard.hasBlankedScreen",&lightToken,dispatch_get_main_queue(),^(int t){
+//        });
+//        notify_get_state(lightToken, &screenLight);
+//
+//        BOOL isShowLyricsPoster = NO;
+//        // NSLog(@"screenLight=%llu locked=%llu",screenLight,locked);
+//        if (screenLight == 0 && locked == 1) {
+//            //点亮且锁屏时
+//            isShowLyricsPoster = YES;
+//        }else if(screenLight){
+//            return;
+//        }
         
         //展示锁屏歌曲信息，上面监听屏幕锁屏和点亮状态的目的是为了提高效率
-        [weakSelf showLockScreenTotaltime:totalTime andCurrentTime:currentTime andRate:weakSelf.avPlayer.rate andLyricsPoster:isShowLyricsPoster];
+        if(weakSelf.isBackground){
+            [weakSelf showLockScreenTotaltime:totalTime andCurrentTime:currentTime andRate:weakSelf.avPlayer.rate andLyricsPoster:YES];
+        }
+        
         
     }];
+}
+
+- (void)addObservers {
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(removePlayerPlayerLayer)
+                   name:UIApplicationDidEnterBackgroundNotification
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(resetPlayerPlayerLayer)
+                   name:UIApplicationWillEnterForegroundNotification
+                 object:nil];
+    
+}
+
+- (void)removePlayerPlayerLayer
+{
+    NSLog(@"进入后台");
+    self.isBackground = YES;
+}
+
+- (void)resetPlayerPlayerLayer
+{
+    NSLog(@"进入前台");
+    self.isBackground = NO;
 }
 
 # pragma mark - 展示锁屏歌曲信息：图片、歌词、进度、演唱者 播放速率

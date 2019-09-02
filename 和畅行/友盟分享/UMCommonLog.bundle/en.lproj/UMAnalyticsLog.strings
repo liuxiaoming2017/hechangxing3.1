@@ -72,7 +72,30 @@ analytics_init_error55 = "[AIE10014]MobClickGameAnalytics level不能为空 http
 analytics_init_error56 = "[AIE10014]MobClickGameAnalytics 请检查currencyAmount和virtualAmount是否正确 https://developer.umeng.com/docs/66632/detail/67001?um_channel=sdk";
 analytics_init_error57 = "[AIE10014]请检查参数是否正确 https://developer.umeng.com/docs/66632/detail/67001?um_channel=sdk";
 
+analytics_init_error58 = "[AIE1008]超级属性设置失败 key：%@ 只能是%@、%@、%@、%@、%@字段，其他不能使用 https://developer.umeng.com/docs/66632/detail/67191?um_channel=sdk";
+analytics_init_error59 = "[AIE10006]自定义属性中事件的key %@ 必须是NSString类型,key不能大于%d字节 https://developer.umeng.com/docs/66991/detail/id?um_channel=sdk";
+analytics_init_error60 = "[AIE10006]自定义属性中事件的key value 不能为空 https://developer.umeng.com/docs/66991/detail/id?um_channel=sdk";
+analytics_init_error61 = "[AIE10006]自定义属性中事件的value %@ 只能是NSString,NSNumber,NSArray类型,value不能大于%d字节 https://developer.umeng.com/docs/66991/detail/id?um_channel=sdk";
 
+analytics_init_error62 = "[AIE10006]自定义属性中事件的value 中的数组只能是NSString或NSNumber类型 https://developer.umeng.com/docs/66991/detail/id?um_channel=sdk";
+analytics_init_error63 = "[AIE10006]自定义属性中事件value中array的值不能大于%d字节 https://developer.umeng.com/docs/66991/detail/id?um_channel=sdk";
+analytics_init_error64 = "[AIE10006]自定义属性key：%@ 的value中的数组不能大于 %d 条 https://developer.umeng.com/docs/66991/detail/id?um_channel=sdk";
+analytics_init_error65 = "[AIE10006]自定义属性不能大于 %d 条 https://developer.umeng.com/docs/66991/detail/id?um_channel=sdk";
+
+analytics_init_error66 = "[AIE1008]设置失败 key：%@ 不能大于%d字节 https://developer.umeng.com/docs/66632/detail/67191?um_channel=sdk";
+
+analytics_init_error67 = "[AIE1008]设置失败 value：%@ 不能大于%d字节 https://developer.umeng.com/docs/66632/detail/67191?um_channel=sdk";
+
+analytics_init_error68 = "预置事件条数大于 %d ";
+analytics_init_error69 = "propertyName字节大于 %d ";
+
+analytics_init_error70 = "eventId:%@ 时长必须大于0小于 %d 毫秒 ";
+analytics_init_error71 = "eventId不能为空 ";
+analytics_init_error72 = "label %@ 不能大于 %d字节 ";
+analytics_init_error73 = "label 必须是NSString类型 ";
+analytics_init_error74 = "link 必须是NSUrl类型 ";
+analytics_init_error75 = "link 不能为空 ";
+analytics_init_error76 = "property的key只能是NSString类型且不能为空";
 
 
 
@@ -102,7 +125,15 @@ analytics_init_warn22 = "不确定event 类型";
 
 analytics_init_warn23 = "[AIE10010]Dplus %@ 过长，截取%ld字节 https://developer.umeng.com/docs/66632/detail/66996?um_channel=sdk";
 
+analytics_init_warn24 = "key:%@ 超出限制字节，已被截取到%ld字节";
+analytics_init_warn25 = "value:%@ 超出限制字节，已被截取到%ld字节";
+analytics_init_warn26 = "预置事件条数大于 %ld ，已被截取只取前 %ld 条";
 
+analytics_init_warn27 = "此方法不生效，如果使用请将setAutoPageEnabled方法设置为NO";
+
+analytics_init_warn28 = "setAutoPageEnabled已调用过，此方法只能调用一次，建议在初始化之前使用";
+
+analytics_init_warn29 = "建议不要在初始化之前使用事件，在初始化之前调用的事件有可能会丢失";
 
 
 
@@ -125,6 +156,7 @@ analytics_init_info12 = "数据过大，进行拆包";
 analytics_init_info13 = "数据过大，进行Dplus拆包";
 analytics_init_info14 = "数据过大，进行analytics拆包";
 
+analytics_init_info15 = "已将是否自动获取页面设置为%@";
 
 
 

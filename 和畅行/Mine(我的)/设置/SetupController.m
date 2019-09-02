@@ -169,7 +169,8 @@
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
         id status=[response objectForKey:@"status"];
         if([status intValue] == 200){
-            self->listNamesArr = @[@"意见反馈",@"关于我们",@"检查更新"];
+            //self->listNamesArr = @[@"意见反馈",@"关于我们",@"检查更新"];
+            self->listNamesArr = @[@"意见反馈",@"关于我们"];
         }else{
             self->listNamesArr = @[@"意见反馈",@"关于我们"];
         }
