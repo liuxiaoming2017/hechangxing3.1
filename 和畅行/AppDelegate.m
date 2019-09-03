@@ -40,7 +40,7 @@
 #import <PgySDK/PgyManager.h>
 #import <PgyUpdate/PgyUpdateManager.h>
 
-#import "MassageArmchairVC.h"
+#import "ArmchairHomeVC.h"
 
 @interface AppDelegate ()<WXApiDelegate>
 @property (nonatomic, strong) NSURLSession * session;
@@ -133,7 +133,7 @@
 
 -(void)returnMainPage2{
     //RootRequestController *homeVc = [[RootRequestController alloc] init];
-    MassageArmchairVC *homeVc = [[MassageArmchairVC alloc] init];
+    ArmchairHomeVC *homeVc = [[ArmchairHomeVC alloc] init];
     self.window.rootViewController = homeVc;
     
 }

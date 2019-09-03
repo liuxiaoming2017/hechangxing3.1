@@ -94,6 +94,8 @@
 		03535F0320F74BDA00664FA9 /* QuestionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03535F0220F74BDA00664FA9 /* QuestionModel.m */; };
 		035BBC5A21ABA4E900AB537D /* UIButton+BACountDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 035BBC5821ABA4E900AB537D /* UIButton+BACountDown.m */; };
 		035BBC6021ABDF2300AB537D /* GovSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035BBC5E21ABDF2200AB537D /* GovSectionView.m */; };
+		035F31F4231D0604009A0D94 /* ArmchairHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F31F3231D0604009A0D94 /* ArmchairHomeVC.m */; };
+		035F31F8231D0705009A0D94 /* ArmchairHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F31F7231D0705009A0D94 /* ArmchairHomeCell.m */; };
 		036285992106BB020090020D /* CellUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 036285982106BB020090020D /* CellUtil.m */; };
 		036A66732113ECA70096A006 /* PrivateDoctorListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036A666D2113ECA50096A006 /* PrivateDoctorListViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		036A66742113ECA70096A006 /* PrivateCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036A666F2113ECA60096A006 /* PrivateCheckViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -811,6 +813,10 @@
 		035BBC5821ABA4E900AB537D /* UIButton+BACountDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+BACountDown.m"; sourceTree = "<group>"; };
 		035BBC5E21ABDF2200AB537D /* GovSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GovSectionView.m; sourceTree = "<group>"; };
 		035BBC5F21ABDF2200AB537D /* GovSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GovSectionView.h; sourceTree = "<group>"; };
+		035F31F2231D0604009A0D94 /* ArmchairHomeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArmchairHomeVC.h; sourceTree = "<group>"; };
+		035F31F3231D0604009A0D94 /* ArmchairHomeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArmchairHomeVC.m; sourceTree = "<group>"; };
+		035F31F6231D0705009A0D94 /* ArmchairHomeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArmchairHomeCell.h; sourceTree = "<group>"; };
+		035F31F7231D0705009A0D94 /* ArmchairHomeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArmchairHomeCell.m; sourceTree = "<group>"; };
 		036285972106BB020090020D /* CellUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CellUtil.h; sourceTree = "<group>"; };
 		036285982106BB020090020D /* CellUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CellUtil.m; sourceTree = "<group>"; };
 		036859DD222783DE00B10BE7 /* Pods_和畅行.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_和畅行.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2175,8 +2181,11 @@
 		035260B1230BD4E900A716C8 /* 按摩椅 */ = {
 			isa = PBXGroup;
 			children = (
+				035F31F5231D06DC009A0D94 /* view */,
 				035260B2230BD59100A716C8 /* MassageArmchairVC.h */,
 				035260B3230BD59100A716C8 /* MassageArmchairVC.m */,
+				035F31F2231D0604009A0D94 /* ArmchairHomeVC.h */,
+				035F31F3231D0604009A0D94 /* ArmchairHomeVC.m */,
 			);
 			path = "按摩椅";
 			sourceTree = "<group>";
@@ -2272,6 +2281,15 @@
 				03799C1320F845AD004024D1 /* CacheManager.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		035F31F5231D06DC009A0D94 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				035F31F6231D0705009A0D94 /* ArmchairHomeCell.h */,
+				035F31F7231D0705009A0D94 /* ArmchairHomeCell.m */,
+			);
+			path = view;
 			sourceTree = "<group>";
 		};
 		036A666C2113EC8D0096A006 /* 私人服务 */ = {
@@ -4292,6 +4310,7 @@
 				034A4E8E211A9AD900936A46 /* TZImagePickerController.m in Sources */,
 				03F6930F20FF2FD400308E38 /* SBJsonTokeniser.m in Sources */,
 				C97308E221BA0E9800060447 /* UIColor+Gradient.m in Sources */,
+				035F31F8231D0705009A0D94 /* ArmchairHomeCell.m in Sources */,
 				038CE87420EDE8F9005E9219 /* UserShareOnce.m in Sources */,
 				03FBDF832192825C006116FC /* RecommendReadView.m in Sources */,
 				03A7CB1F2303BD6F00A1B7D9 /* CommonTabBarController.m in Sources */,
@@ -4371,6 +4390,7 @@
 				036FC0E92118281100C1A793 /* SetupController.m in Sources */,
 				036E85982186EB4C001B9BB4 /* ConnectBtn.m in Sources */,
 				03439079210AB6B200B57142 /* YueYaoController.m in Sources */,
+				035F31F4231D0604009A0D94 /* ArmchairHomeVC.m in Sources */,
 				036FC0CC2118176E00C1A793 /* WenYinFileViewController.m in Sources */,
 				03F6931720FF2FD400308E38 /* SBJsonWriter.m in Sources */,
 				03051FF522C0997D00385DD0 /* AESCipher.m in Sources */,
