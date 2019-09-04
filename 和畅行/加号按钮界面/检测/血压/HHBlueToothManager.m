@@ -36,7 +36,7 @@
         return;
     }
     
-    if ((!self.peripheral || (self.peripheral.state == CBPeripheralStateDisconnected))&&([peripheral.name isEqualToString:kPERIPHERAL_NAME])) {
+    if ((!self.peripheral || (self.peripheral.state == CBPeripheralStateDisconnected))&&([peripheral.name isEqualToString:blood_kPERIPHERAL_NAME])) {
         self.peripheral = [peripheral copy];
         [self.manager connectPeripheral:peripheral options:nil];
     }
@@ -89,7 +89,7 @@
     }
     
     for (CBService *service in services) {
-        if ([[service.UUID UUIDString] isEqualToString:KUUID_SERVICE]) {
+        if ([[service.UUID UUIDString] isEqualToString:blood_KUUID_SERVICE]) {
             [peripheral discoverCharacteristics:nil forService:service];
             return ;
         }
@@ -115,7 +115,7 @@
         
         NSLog(@"[character.UUID UUIDString] : %@",[character.UUID UUIDString]);
         
-        if ([[character.UUID UUIDString] isEqualToString:kUUID_CHARACTER_RECEIVE]) {
+        if ([[character.UUID UUIDString] isEqualToString:blood_kUUID_CHARACTER_RECEIVE]) {
             self.characteristic = character;
             [self.peripheral setNotifyValue:YES forCharacteristic:self.characteristic];
             //取到characteristic后发出通知，把此时当做与设备真正的连接，在接收通知的地方进行相应的处理
@@ -123,7 +123,7 @@
 //            [[NSNotificationCenter defaultCenter] postNotificationName:kPERIPHERAL_CONNECTED object:nil userInfo:nil];
         }
         
-        if ([[character.UUID UUIDString] isEqualToString:kUUID_CHARACTER_SEND]) {
+        if ([[character.UUID UUIDString] isEqualToString:blood_kUUID_CHARACTER_SEND]) {
             self.characteristic = character;
             
             Byte byte[] = {0x02,0x40,0xdc,0x01,0xa1,0x3c};

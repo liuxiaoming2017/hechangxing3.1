@@ -75,6 +75,7 @@
 		034A4E8C211A9AD900936A46 /* TZGifPhotoPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034A4E7B211A9AD800936A46 /* TZGifPhotoPreviewController.m */; };
 		034A4E8D211A9AD900936A46 /* TZImageCropManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 034A4E7E211A9AD900936A46 /* TZImageCropManager.m */; };
 		034A4E8E211A9AD900936A46 /* TZImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034A4E7F211A9AD900936A46 /* TZImagePickerController.m */; };
+		034D1A4E231E0AEC0078BE52 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034D1A4D231E0AEC0078BE52 /* CoreBluetooth.framework */; };
 		03513ACD20E9CAD3004E2805 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03513ACC20E9CAD3004E2805 /* AppDelegate.m */; };
 		03513AD320E9CAD3004E2805 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03513AD120E9CAD3004E2805 /* Main.storyboard */; };
 		03513AD520E9CAD4004E2805 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03513AD420E9CAD4004E2805 /* Assets.xcassets */; };
@@ -770,6 +771,7 @@
 		034A4E7D211A9AD900936A46 /* TZAssetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZAssetCell.h; sourceTree = "<group>"; };
 		034A4E7E211A9AD900936A46 /* TZImageCropManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZImageCropManager.m; sourceTree = "<group>"; };
 		034A4E7F211A9AD900936A46 /* TZImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZImagePickerController.m; sourceTree = "<group>"; };
+		034D1A4D231E0AEC0078BE52 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		03513AC820E9CAD3004E2805 /* 和畅行.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "和畅行.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03513ACB20E9CAD3004E2805 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		03513ACC20E9CAD3004E2805 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -1697,6 +1699,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				034D1A4E231E0AEC0078BE52 /* CoreBluetooth.framework in Frameworks */,
 				03E088F322FA6F120089E86A /* Pods_和畅行.framework in Frameworks */,
 				03D99E5F21AD335E00C766FD /* libSocialSina.a in Frameworks */,
 				03D99E5D21AD335100C766FD /* libSocialQQ.a in Frameworks */,
@@ -2952,6 +2955,7 @@
 		0390CF7B20ECB5CF000ECA53 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				034D1A4D231E0AEC0078BE52 /* CoreBluetooth.framework */,
 				83C5F8232272FF1A00889370 /* HHDoctorSDK.framework */,
 				036859DD222783DE00B10BE7 /* Pods_和畅行.framework */,
 				039EB91E21CF773300AE4A0D /* Pods_和畅行.framework */,

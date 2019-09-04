@@ -179,6 +179,13 @@
 #define kUUID_CHARACTER_CONFIG  @"FFE2"
 #define kUUID_CHARACTER_SEND    @"2AF1"
 
+
+#define blood_kPERIPHERAL_NAME        @"BPM-188"
+#define blood_KUUID_SERVICE           @"18F0"
+#define blood_kUUID_CHARACTER_RECEIVE @"2AF0"
+#define blood_kUUID_CHARACTER_CONFIG  @"2AF0"
+#define blood_kUUID_CHARACTER_SEND    @"2AF1"
+
 #define kLoginSuccessNotification @"loginSuccsess"
 
 /*
