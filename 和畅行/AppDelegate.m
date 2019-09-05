@@ -63,10 +63,10 @@
         [UserShareOnce shareOnce].languageType = @"us-en";
         //        [UserShareOnce shareOnce].languageType  = nil;
     }else{
-        [UserShareOnce shareOnce].languageType  = nil;
+        [UserShareOnce shareOnce].languageType  = @"us-en";
     }
     
-    
+    NSLog(@"#######:%@",[UserShareOnce shareOnce].languageType);
 //    NSError *error = nil;
 //    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&error];
 //    AVAudioSession *session = [AVAudioSession sharedInstance];
