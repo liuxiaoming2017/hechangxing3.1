@@ -40,7 +40,11 @@
 #import <ReactiveObjC/ReactiveObjC.h>
 #import "CacheManager.h"
 //和缓
-#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+#if TARGET_IPHONE_SIMULATOR
+
+#else
+        #import <HHDoctorSDK/HHDoctorSDK-Swift.h>
+#endif
 //数据埋点
 #import <YHDFBuriedPoint/BuredPoint.h>
 #import "Masonry.h"

@@ -179,6 +179,12 @@
 #define kUUID_CHARACTER_CONFIG  @"FFE2"
 #define kUUID_CHARACTER_SEND    @"2AF1"
 
+#define blood_kPERIPHERAL_NAME        @"BPM-188"
+#define blood_KUUID_SERVICE           @"18F0"
+#define blood_kUUID_CHARACTER_RECEIVE @"2AF0"
+#define blood_kUUID_CHARACTER_CONFIG  @"2AF0"
+#define blood_kUUID_CHARACTER_SEND    @"2AF1"
+
 #define kLoginSuccessNotification @"loginSuccsess"
 
 /*
@@ -212,6 +218,9 @@
 #define kOXYGEN_DATA @"BLEOxygenData"//血氧数据
 
 #define exchangeMemberChildNotify @"exchangeMemberChildNotify"
+
+#define OGA530AppKey @"sdk_530w_yhdf4"
+#define OGA530AppSecret @"MIIBUwIBADANBgkqhkiG9w0BAQEFAASCAT0wggE5AgEAAkEAk/iaz03xc3uNn9E1TcOeQ2NInQnN0+YiZnAGGuEkfYqBqp1Cl4mi/f0AvKagck3ShCQrSZgeS/9eVtPpKQMpmQIDAQABAkBwsCWFtsAoyHFEwtirTkya2WOVZMABngOYq7uagNd/Wu28zVo54Pmm5b9qbM2W6jL4QqS7oX8RLpGHLkYLiniZAiEA5HuQF5ElWs8Z1tNqKDXRMfMwOeHwyh3u11Z0w5flWPsCIQClysJTySm9Q3/r9ZYWabpNO/6I7mhb2YwD3mgq+/nrewIgSh57Y+nGAGtmqnXy3hB3SIjngB93iVmkfV6iikDgObkCIGs4hhTJtETCsqhXW4mDNwlcE3FbPgKo3vRhkdy6uRahAiBfeGnlyvdBI5dg+WCzzovuKVkxmdYR8F2p8WN1p7zxGw=="
 
 //档案cell的类型
 typedef enum {

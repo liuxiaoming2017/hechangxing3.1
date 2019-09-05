@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh_CN</string>
 	<key>CFBundleDisplayName</key>
-	<string>和畅依</string>
+	<string>和畅依测试版</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -27,7 +27,7 @@
 			<string>weixin</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wx2101d2fcba50b476</string>
+				<string>wx690147712c2a80af</string>
 			</array>
 		</dict>
 		<dict>
@@ -40,7 +40,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>3.2</string>
+	<string>3.5</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>safepay</string>

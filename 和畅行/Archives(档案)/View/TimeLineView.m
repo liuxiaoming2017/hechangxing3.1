@@ -625,16 +625,27 @@
     //病历列表
     if (![GlobalCommon stringEqualNull:model.medicRecordId]){
 # pragma mark -  病历列表
-        if (![GlobalCommon stringEqualNull:model.userToken]) {
-//            NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:model.userToken medicId:model.medicRecordId];
-//            NSLog(@"token:%@,iddddd:%@",[UserShareOnce shareOnce].userToken,model.medicRecordId);
-//            ResultSpeakController *vc = [[ResultSpeakController alloc] init];
-//            vc.urlStr = resultStr;
-//            vc.titleStr = @"病历详情";
-//            vc.hidesBottomBarWhenPushed = YES;
-//            [[self viewController].navigationController pushViewController:vc animated:YES];
-        }        
+
         
+        
+        #if TARGET_IPHONE_SIMULATOR
+        
+        #else
+         if (![GlobalCommon stringEqualNull:model.medicRecordId]){
+            NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:[UserShareOnce shareOnce].userToken medicId:model.medicRecordId];
+             ////            NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:model.userToken medicId:model.medicRecordId];
+            //测试环境
+            //NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:@"E97C4CD92C12E6C935CDAA39C1380DC7CCCB578FFE9820E7F43A1807648A85D9" medicId:@"1566359270792"];
+            NSLog(@"token:%@,iddddd:%@",[UserShareOnce shareOnce].userToken,model.medicRecordId);
+            ResultSpeakController *vc = [[ResultSpeakController alloc] init];
+            vc.urlStr = resultStr;
+            vc.titleStr = @"病历详情";
+            vc.hidesBottomBarWhenPushed = YES;
+            [[self viewController].navigationController pushViewController:vc animated:YES];
+         }
+        #endif
+        
+                
     }
     
     

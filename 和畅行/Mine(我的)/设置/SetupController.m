@@ -225,19 +225,14 @@
     
 -(void)getPayRequest {
     
-    NSString *urlStr = @"/resources/isfree.jhtml";
-    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
-        id status=[response objectForKey:@"status"];
-        if([status intValue] == 200){
-            self->listNamesArr = @[@"意见反馈",@"关于我们",@"检查更新"];
-        }else{
-            self->listNamesArr = @[@"意见反馈",@"关于我们"];
-        }
-         [self layoutView];
-    } failureBlock:^(NSError *error) {
-        self->listNamesArr = @[@"意见反馈",@"关于我们"];
-         [self layoutView];
-    }];
+    if([[UserShareOnce shareOnce].username isEqualToString:@"13665541112"] || [[UserShareOnce shareOnce].username isEqualToString:@"18163865881"]){
+        self.listNamesArr = @[@"意见反馈",@"关于我们"];
+    }else{
+        self.listNamesArr = @[@"意见反馈",@"关于我们",@"检查更新"];
+    }
+    
+    [self layoutView];
+    
 }
 
 
