@@ -107,7 +107,7 @@
     
     
     _yLabel = [[UILabel alloc] init];
-    _yLabel.frame = CGRectMake(_mLabel.left , _contentLabel.bottom , 160, 30);
+    _yLabel.frame = CGRectMake(_mLabel.left , _contentLabel.bottom , 300, 30);
     _yLabel.text = ModuleZW(@"剩余服务");
     _yLabel.font = [UIFont systemFontOfSize:16];
     _yLabel.textColor = [UIColor whiteColor];
@@ -119,7 +119,7 @@
     self.serviceTableView.separatorStyle = UITableViewCellEditingStyleNone;
     self.serviceTableView.dataSource = self;
     self.serviceTableView.delegate = self;
-    self.serviceTableView.rowHeight = 30;
+    self.serviceTableView.estimatedRowHeight = 100;
     [imageV addSubview:self.serviceTableView];
     
     

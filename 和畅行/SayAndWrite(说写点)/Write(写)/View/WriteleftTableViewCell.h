@@ -14,7 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,strong) UIView *backView;
 @property (nonatomic ,strong) UILabel *typeLabel;
 @property (nonatomic ,strong) UILabel *numberLabel;
-@property (nonatomic,strong) CALayer *subLayer;
 
 -(void)customViewrRowAtIndexPath:(NSIndexPath *)indexPath withArray:(NSArray *)dataArray;
 @end

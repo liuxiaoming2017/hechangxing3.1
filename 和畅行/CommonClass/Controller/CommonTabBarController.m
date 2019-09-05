@@ -64,13 +64,18 @@
             break;
         case 1:
         {
-            NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
-            NSString *yueyaoIndex = [GlobalCommon getSportTypeFrom:physicalStr];
-            if(yueyaoIndex == nil){
-                vc = [[MySportController alloc] initWithAllSport];
-                
+            if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
+                UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:@"您还不是会员" delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
+                [av show];
             }else{
-                vc = [[MySportController alloc] initWithSportType:[yueyaoIndex integerValue]];
+                NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
+                NSString *yueyaoIndex = [GlobalCommon getSportTypeFrom:physicalStr];
+                if(yueyaoIndex == nil){
+                    vc = [[MySportController alloc] initWithAllSport];
+                    
+                }else{
+                    vc = [[MySportController alloc] initWithSportType:[yueyaoIndex integerValue]];
+                }
             }
         }
             

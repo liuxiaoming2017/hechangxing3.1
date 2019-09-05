@@ -41,6 +41,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy)   NSString *endDate;
 //现金卡数据
 @property (nonatomic,copy)   NSDictionary *cashcard;
+
+
+//服务项目
+@property (nonatomic,copy)   NSString *serviceKindStr;
+@property (nonatomic,copy)   NSString *serviceNumberStr;
 @end
 
 NS_ASSUME_NONNULL_END

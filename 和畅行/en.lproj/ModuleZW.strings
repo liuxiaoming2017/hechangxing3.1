@@ -111,7 +111,7 @@
 "轮播暂停"                           =  "Pause";
 "播放乐药"                           =   "Play";
 "动作示范音"                       =  "Audio";
-"全部"                                  =  "All    ";
+"全部  >"                                  =  "All >";
 "全部   "                               =  "  All          ";
 "预备   "                               =   "Prepare  ";
 "第一式   起式"                    =  "Exercise One: Warm-up";
@@ -713,7 +713,7 @@
 "心率过缓"        ="Heart rate is too slow ";
 "心率过速"        ="Heart rate is too fast ";
 "心率正常"        ="Heart rate is normal ";
-"数据上传成功"        ="Data uploaded successfully ";
+"上传成功"        ="Uploaded successfully ";
 "有"        ="Have";
 "无"        ="Haven’t";
 "欢迎："        ="Welcome:";
@@ -1426,7 +1426,7 @@
 "是否要关闭所有灸头"     =   "  Are you sure to close all the devices?";
 "声音 "     =   " Sound";
 "设置 "     =   " Settings";
-"声音已经打开 "     =   " Sound on";
+"声音已经打开"     =   " Sound on";
 "声音已经关闭"     =   "  Sound off";
 "当前没有在线的灸头 "     =   " No device on line";
 "找回密码"     =   " Retrieve password";
@@ -1776,3 +1776,36 @@
 "发送成功" = "Sent successfully";
 "密码修改成功" = "Password has been changed";
 "资讯详情" = "Health Culture";
+
+
+"Shao Gong" = "少宫";
+"Zuojue Gong" = "左角宫";
+"Shang Gong" = "上宫";
+"Jia Gong" = "加宫";
+"Da Gong" = "大宫";
+
+"Shao Jue" = "少角";
+"Pan Jue" = "判角";
+"Shang Jue" = "上角";
+"Tai Jue" = "鈦角";
+"Da Jue" = "大角";
+
+
+"Shao Shang" = "少商";
+"Zuo Shang" = "左商";
+"Shang Shang" = "上商";
+"You Shang" = "右商";
+"Tai Shang" = "鈦商";
+
+"Shao Yu" = "少羽";
+"Zhi Yu" = "桎羽";
+"Shang Yu" = "上羽";
+"Zhong Yu" = "众羽";
+"Da Yu" = "大羽";
+
+
+"Shao Zhi" = "少徵";
+"Pan Zhi" = "判徵";
+"You Zhi" = "右徵";
+"Zhi Zhi" = "质徵";
+"Shang Zhi" = "上徵";

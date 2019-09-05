@@ -62,15 +62,16 @@
             CGSize textSize = [scaleValueLabel.text sizeWithAttributes:@{ NSFontAttributeName : scaleValueLabel.font}];
             scaleValueLabel.frame = CGRectMake(self.scaleSpacing *  (i - self.mixscaleCount +1 ) - textSize.width / 2-3, self.rulerHeight / 2 - textSize.height - self.scaleValueMargin+2, 0, 0);
             [scaleValueLabel sizeToFit];
+            scaleValueLabel.textAlignment = NSTextAlignmentCenter;
             [self addSubview:scaleValueLabel];
             [self.scaleValueLabels addObject:scaleValueLabel];
             
             if(value/10 == (int)i/10&&value% 10 == 0){
                 scaleValueLabel.textColor = UIColorFromHex(0Xffa200);
-                scaleValueLabel.font = [UIFont systemFontOfSize:12];
+                scaleValueLabel.font = [UIFont systemFontOfSize:12/[UserShareOnce shareOnce].fontSize];
             }else{
                 scaleValueLabel.textColor = UIColorFromHex(0XC6C6C6);
-                scaleValueLabel.font = [UIFont systemFontOfSize:9];
+                scaleValueLabel.font = [UIFont systemFontOfSize:9/[UserShareOnce shareOnce].fontSize];
             }
            
         }

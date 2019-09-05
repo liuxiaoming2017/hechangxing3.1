@@ -205,9 +205,9 @@
     
     //根据个人经络最新一条信息展示
     NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
-    
+
     if (![GlobalCommon stringEqualNull:physicalStr]) {
-        
+        physicalStr = ModuleZW(physicalStr);
         NSArray * segmentedArray = @[
                                      @[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"],
                                      @[@"上商", @"少商", @"钛商", @"右商", @"左商"],
@@ -248,9 +248,9 @@
             [weakSelf createConsumeView];
             weakSelf.isOnPay = YES;
         }else{
-           // weakSelf.isOnPay = NO;
+            weakSelf.isOnPay = NO;
             [weakSelf createConsumeView];
-            weakSelf.isOnPay = YES;
+//            weakSelf.isOnPay = YES;
         }
     } failureBlock:^(NSError *error) {
         weakSelf.isOnPay = NO;

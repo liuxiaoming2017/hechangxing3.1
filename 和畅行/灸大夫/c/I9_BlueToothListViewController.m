@@ -43,7 +43,7 @@
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;
     self.navTitleLabel.text = ModuleZW(@"灸大夫隔物灸仪列表");
-    
+    self.navTitleLabel.font = [UIFont systemFontOfSize:17/[UserShareOnce shareOnce].fontSize];
     if(_deviceNetName != nil){
         _mCurrentConnect.text = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"现连接灸头网络名称"),_deviceNetName];
     }else{

@@ -53,7 +53,7 @@
     
     //CGFloat originX = (ScreenWidth - 122*3-18)/2.0;
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.width-200)/2.0, self.height/2.0-30, 200, 30)];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, self.height/2.0-50, ScreenWidth - 40, 30)];
     self.titleLabel.font = [UIFont systemFontOfSize:21];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.textColor = [UIColor whiteColor];
@@ -62,7 +62,7 @@
     
     CGFloat width = 300;
     
-    self.remindLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-width)/2.0, self.titleLabel.bottom, width , 60)];
+    self.remindLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-width)/2.0, self.titleLabel.bottom, width , 80)];
     self.remindLabel.font = [UIFont systemFontOfSize:16];
     self.remindLabel.numberOfLines = 0;
     self.remindLabel.textAlignment = NSTextAlignmentCenter;

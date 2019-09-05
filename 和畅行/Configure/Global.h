@@ -23,11 +23,13 @@ extern BOOL isBF;
 //#define URL_PRE @"http://47.92.73.99:8080/healthlm/"
 
 //生产环境
-#define URL_PRE @"http://eky3h.com/healthlm/"
+//#define URL_PRE @"http://eky3h.com/healthlm/"
 
 //#define URL_PRE @"http://10.1.71.14:8080/hcy-system/"
-
-
+#define URL_PRE @"http://10.1.71.181:8080/healthlm/"
+//http://10.1.71.181:8080/healthlm/
+//#define URL_PRE @"http://10.1.71.113:8888/hcy-system/"
+//http://10.1.71.113:8888/hcy-system
 
 #define testUUId 100002514
 #define testToken  @"ECEEDCCD74B7D54BCF6690B7E26262B73F0D04F68EA2608F6783B874E4F50EEF"

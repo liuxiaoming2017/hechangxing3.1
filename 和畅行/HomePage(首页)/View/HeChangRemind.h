@@ -12,6 +12,8 @@
 
 @property(nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *dataArr;
+@property (nonatomic,strong) UILabel *titleLabel;
+@property (nonatomic,strong) UILabel *timeLabel;
 
 - (id)initWithFrame:(CGRect)frame withDataArr:(NSMutableArray *)arr;
 - (void)updateViewWithData:(NSMutableArray *)arr withHeight:(CGFloat)height;

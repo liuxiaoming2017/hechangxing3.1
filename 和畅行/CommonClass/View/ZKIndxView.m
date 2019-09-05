@@ -67,14 +67,21 @@
             button.tag = 100+i;
             [button addTarget:self action:@selector(pushButtonClick:) forControlEvents:UIControlEventTouchUpInside];
             
+            CGRect textRect = [imagesNameData[i] boundingRectWithSize:CGSizeMake(120, MAXFLOAT)
+                                                              options:NSStringDrawingUsesLineFragmentOrigin
+                                                           attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}
+                                                              context:nil];
             
             UILabel *name = [[UILabel alloc]init];
             name.text = imagesNameData[i];
-            name.frame = CGRectMake(30 + col * (40+MARGIN), CGRectGetMaxY(button.frame )+ 12, 120, 15);
+            name.numberOfLines = 2;
+            name.frame = CGRectMake(30 + col * (40+MARGIN), CGRectGetMaxY(button.frame )+ 5, 120, textRect.size.height);
             name.font =[UIFont systemFontOfSize:15];
             name.textColor = [UIColor whiteColor];
             name.centerX = button.centerX;
             name.textAlignment = NSTextAlignmentCenter;
+            
+            
             
             if (i == 4){
                 if ([UserShareOnce shareOnce].languageType){

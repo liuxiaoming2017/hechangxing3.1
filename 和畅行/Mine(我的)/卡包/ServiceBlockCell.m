@@ -30,27 +30,53 @@
     
     CGFloat cellWidth = ScreenWidth - 20 -20*2-10;
     
-    self.typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 100, 30)];
+    self.typeLabel = [[UILabel alloc] init];
     self.typeLabel.textAlignment=NSTextAlignmentLeft;
+    self.typeLabel.numberOfLines = 0;
     self.typeLabel.font=[UIFont systemFontOfSize:13.0];
     self.typeLabel.textColor=[UIColor whiteColor];
     self.typeLabel.backgroundColor=[UIColor clearColor];
-    [self addSubview:self.typeLabel];
+    [self.contentView addSubview:self.typeLabel];
 
-    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(cellWidth/2.0-40, 0, 80, 30)];
+    self.contentLabel = [[UILabel alloc] init];
     self.contentLabel.textAlignment=NSTextAlignmentCenter;
     self.contentLabel.font=[UIFont systemFontOfSize:13.0];
+    self.contentLabel.numberOfLines = 0;
     self.contentLabel.textColor=[UIColor whiteColor];
     self.contentLabel.backgroundColor=[UIColor clearColor];
-    [self addSubview:self.contentLabel];
+    [self.contentView addSubview:self.contentLabel];
     
     self.tradeBtn = [HCY_UnderlineButton buttonWithType:(UIButtonTypeCustom)];
-    self.tradeBtn.frame =CGRectMake(cellWidth-90, 0, 85, 30);
     self.tradeBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    [self.tradeBtn.titleLabel setNumberOfLines:0];
     self.tradeBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [self.tradeBtn addTarget:self action:@selector(consultingAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.tradeBtn setColor:[UIColor whiteColor]];
-    [self addSubview:self.tradeBtn];
+    [self.contentView addSubview:self.tradeBtn];
+    
+    [self.typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView.mas_top).offset(2);
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(-2);
+        make.leading.equalTo(self.contentView.mas_leading).offset(5);
+        make.width.mas_equalTo((self.contentView.width- 60)/2);
+        make.height.greaterThanOrEqualTo(@(30));
+    }];
+    
+    [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView.mas_top).offset(2);
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(-2);
+        make.left.equalTo(self.typeLabel.mas_right);
+        make.width.mas_equalTo(60);
+        make.height.greaterThanOrEqualTo(@(30));
+    }];
+    
+    [self.tradeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView.mas_top).offset(2);
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(-2);
+        make.trailing.equalTo(self.contentView.mas_trailing).offset(-5);
+        make.width.mas_equalTo((self.contentView.width- 60)/2);
+        make.height.greaterThanOrEqualTo(@(30));
+    }];
 }
 
 - (void)consultingAction:(UIButton *)btn

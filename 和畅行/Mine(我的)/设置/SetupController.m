@@ -22,7 +22,7 @@
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSArray *listNamesArr;
 @property (nonatomic,strong) NSArray *listImagesArr;
-
+@property (nonatomic,strong) NSMutableArray *buttonArray;
 @end
 
 @implementation SetupController
@@ -45,13 +45,10 @@
     
     self.navTitleLabel.text = ModuleZW(@"设置");
     self.view.backgroundColor = RGB_AppWhite;
-    
+    self.buttonArray = [NSMutableArray array];
     [self getPayRequest];
     
-
-  
-   
-   
+   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSize:) name:@"CHANGESIZE" object:nil];
 }
     
 -(void)layoutView{
@@ -78,7 +75,7 @@
             [bottomButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
             [bottomButton setTitleEdgeInsets:UIEdgeInsetsMake(0,10,0,0)];
             [bottomButton setImageEdgeInsets:UIEdgeInsetsMake(0, backImageView.width - 20 , 0, -backImageView.width + 40)];
-            
+            [self.buttonArray addObject:bottomButton];
             [[bottomButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
                 switch (i) {
                     case 0:
@@ -119,7 +116,10 @@
                 UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
                 button.frame = CGRectMake(30, backImageView.bottom + 220 + 10*i, ScreenWidth - 60, 44);
                 [button setTitle:changeArray[i] forState:(UIControlStateNormal)];
+                [button.titleLabel setFont:[UIFont systemFontOfSize:18]];
                 button.layer.cornerRadius = 22;
+                button.tag = 1000 + i;
+                [self.buttonArray addObject:button];
                 if(i == 0){
                     [button setBackgroundColor:UIColorFromHex(0X1e82d2)];
                 }else{
@@ -160,6 +160,66 @@
             }
         }
         
+    UIButton *fontBT = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    fontBT.frame = CGRectMake(20, ScreenHeight - 100, ScreenWidth - 40, 40);
+    [fontBT setBackgroundColor:RGB_ButtonBlue];
+    [fontBT setTitle:@"字体大小" forState:(UIControlStateNormal)];
+    
+    
+    
+    [[fontBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        
+        NSString *fontStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"YHFont"];
+        CGFloat fontSize = 1.0;
+        if(![GlobalCommon stringEqualNull:fontStr]){
+            fontSize = [fontStr floatValue];
+        }
+        
+        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:@"" message:ModuleZW(@"设置字体大小") preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *smallAction = [UIAlertAction actionWithTitle:ModuleZW(@"小") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            [[NSUserDefaults standardUserDefaults]setValue:@"1.0" forKey:@"YHFont"];
+            [UserShareOnce shareOnce].fontSize = 1.0;
+            if(fontSize != 1.0){
+                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGESIZE" object:nil];
+            }
+        }];
+        
+        UIAlertAction *middleAction = [UIAlertAction actionWithTitle:ModuleZW(@"中") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            [[NSUserDefaults standardUserDefaults]setValue:@"1.1" forKey:@"YHFont"];
+            [UserShareOnce shareOnce].fontSize = 1.1;
+            if(fontSize != 1.1){
+                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGESIZE" object:nil];
+            }
+        }];
+        UIAlertAction *bigAction = [UIAlertAction actionWithTitle:ModuleZW(@"大") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            [[NSUserDefaults standardUserDefaults]setValue:@"1.2" forKey:@"YHFont"];
+            [UserShareOnce shareOnce].fontSize = 1.2;
+            if(fontSize != 1.2){
+                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGESIZE" object:nil];
+            }
+        }];
+        UIAlertAction *superBigAction = [UIAlertAction actionWithTitle:ModuleZW(@"超大") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            [[NSUserDefaults standardUserDefaults]setValue:@"1.3" forKey:@"YHFont"];
+            [UserShareOnce shareOnce].fontSize = 1.3;
+            if(fontSize != 1.3){
+                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGESIZE" object:nil];
+            }
+            
+        }];
+        
+        UIAlertAction *cencelAction = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:nil];
+        
+        [alerVC addAction:smallAction];
+        [alerVC addAction:middleAction];
+        [alerVC addAction:bigAction];
+        [alerVC addAction:superBigAction];
+        [alerVC addAction:cencelAction];
+        
+      
+        [self presentViewController:alerVC animated:YES completion:nil];
+        
+    }];
+    [self.view addSubview:fontBT];
     
 }
     
@@ -291,5 +351,18 @@
     
     
 }
+
+-(void)changeSize:(NSNotification *)notifi {
+    for (UIButton *button in self.buttonArray ) {
+        if(button.tag==1000||button.tag == 1001){
+            [button.titleLabel setFont:[UIFont systemFontOfSize:18]];
+        }else{
+            [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        }
+    }
+}
+
+
+
 
 @end

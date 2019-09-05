@@ -28,6 +28,7 @@
         
         _answerLabel = [[UILabel alloc]init];
         _answerLabel.font = [UIFont systemFontOfSize:16];
+        _answerLabel.textAlignment = NSTextAlignmentRight;
         _answerLabel.textColor = RGB_TextAppOrange;
         [backView addSubview:_answerLabel];
         
@@ -49,7 +50,7 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     _contentlabel.frame = CGRectMake(10, 10, ScreenWidth - 60, 90);
-    _answerLabel.frame = CGRectMake(ScreenWidth - 110, 100, 60, 30);
+    _answerLabel.frame = CGRectMake(ScreenWidth - 150, 100, 100, 30);
     _timeLabel.frame = CGRectMake(20, 100, 200, 30);
     
 }

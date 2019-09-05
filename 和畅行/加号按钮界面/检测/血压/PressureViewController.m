@@ -68,6 +68,7 @@ static int const tick = 80;
     [super viewDidLoad];
     
     self.navTitleLabel.text =  ModuleZW(@"血压心率检测");
+    self.navTitleLabel.font = [UIFont systemFontOfSize:18/[UserShareOnce shareOnce].fontSize];
     [self initWithController];
     
     self.isHidden = NO;
@@ -102,7 +103,7 @@ static int const tick = 80;
     _shrinkPressureLabel.textColor = [UIColor blackColor];
     [imageView addSubview:_shrinkPressureLabel];
     
-    UILabel *shrinkUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  + 40, 50, 60, 30) text:@"mmHg" textSize:19];
+    UILabel *shrinkUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  + 40, 50, 100, 30) text:@"mmHg" textSize:19];
     shrinkUnit.textAlignment = NSTextAlignmentLeft;
     shrinkUnit.textColor = [UIColor blackColor];
     [imageView addSubview:shrinkUnit];
@@ -118,13 +119,13 @@ static int const tick = 80;
     _diastolicPressureLabel.textColor = [UIColor blackColor];
     [imageView addSubview:_diastolicPressureLabel];
     
-    UILabel *diastolicUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 + 40, shrinkUnit.bottom + 50, 60, 30) text:@"mmHg" textSize:19];
+    UILabel *diastolicUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 + 40, shrinkUnit.bottom + 50, 100, 30) text:@"mmHg" textSize:19];
     diastolicUnit.textAlignment = NSTextAlignmentLeft;
     diastolicUnit.textColor = [UIColor blackColor];
     [imageView addSubview:diastolicUnit];
     
     //脉搏
-    UILabel *pulse = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  - 100, diastolicUnit.bottom + 50, 70, 30) text:ModuleZW(@"心率") textSize:14];
+    UILabel *pulse = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  - 130, diastolicUnit.bottom + 50, 100, 30) text:ModuleZW(@"心率") textSize:14];
     pulse.textAlignment = NSTextAlignmentRight;
     pulse.textColor = [UIColor blackColor];
     [imageView addSubview:pulse];
@@ -148,9 +149,9 @@ static int const tick = 80;
 
 -(void)createButton{
     UIButton *startCheckBt = [UIButton  buttonWithType:(UIButtonTypeCustom)];
-    startCheckBt.frame = CGRectMake(ScreenWidth/2 - 55,420, 110, 26);
+    startCheckBt.frame = CGRectMake(ScreenWidth/2 - 70,420, 140, 30);
     startCheckBt.backgroundColor = RGB_ButtonBlue;
-    startCheckBt.layer.cornerRadius = 13;
+    startCheckBt.layer.cornerRadius = 15;
     [startCheckBt setTitle:ModuleZW(@"开始检测") forState:(UIControlStateNormal)];
     startCheckBt.layer.masksToBounds = YES;
     [startCheckBt.titleLabel setFont:[UIFont systemFontOfSize:14]];
@@ -179,9 +180,9 @@ static int const tick = 80;
     
     
     UIButton *nonDeviceCheckBt = [UIButton  buttonWithType:(UIButtonTypeCustom)];
-    nonDeviceCheckBt.frame = CGRectMake(ScreenWidth/2 - 55,_startCheck.bottom+40, 110, 26);
+    nonDeviceCheckBt.frame = CGRectMake(ScreenWidth/2 - 70,_startCheck.bottom+40, 140, 30);
     nonDeviceCheckBt.backgroundColor = RGB_ButtonBlue;
-    nonDeviceCheckBt.layer.cornerRadius = 13;
+    nonDeviceCheckBt.layer.cornerRadius = 15;
     [nonDeviceCheckBt setTitle:ModuleZW(@"手动录入") forState:(UIControlStateNormal)];
     nonDeviceCheckBt.layer.masksToBounds = YES;
     [nonDeviceCheckBt.titleLabel setFont:[UIFont systemFontOfSize:14]];

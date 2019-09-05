@@ -10,7 +10,6 @@
 
 @interface RemindCell : UITableViewCell
 
-@property (nonatomic,strong) CALayer *subLayer;
 
 @property (nonatomic,strong) UILabel *typeLabel;
 @property (nonatomic,strong) UILabel *contentLabel;

@@ -24,6 +24,7 @@
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 #import "Reachability.h"
+#import "LoginViewController.h"
 
 #import <sys/utsname.h>
 @interface HomePageController ()<UIScrollViewDelegate>
@@ -58,6 +59,18 @@
         // [self requestUI];
         [UserShareOnce shareOnce].isRefresh = NO;
     }
+    
+    
+}
+
+-(void)changeSize:(NSNotification *)notifi {
+    _packgeView.titleLabel.font = [UIFont systemFontOfSize:21];
+    _packgeView.remindLabel.font = [UIFont systemFontOfSize:16];
+    _remindView.titleLabel.font = [UIFont systemFontOfSize:18];
+    _remindView.timeLabel.font = [UIFont systemFontOfSize:13];
+    _recommendView.titleLabel.font = [UIFont systemFontOfSize:17];
+    [_remindView.tableView reloadData];
+    [_recommendView.collectionV reloadData];
 }
 
 -(void)viewDidDisappear:(BOOL)animated {
@@ -69,6 +82,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = UIColorFromHex(0xffffff);
     self.topView.backgroundColor = [UIColor clearColor];
     self.isRefresh = YES;
@@ -79,6 +93,7 @@
    // [self handleNetworkGroup];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exchangeMemberChild:) name:exchangeMemberChildNotify object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSize:) name:@"CHANGESIZE" object:nil];
 //    [UIApplication sharedApplication].windows
     
     [UserShareOnce shareOnce].startTime = [GlobalCommon getCurrentTimes];
@@ -146,7 +161,6 @@
     
     
     [self.view addSubview:self.topView];
-    //self.packgeView.pushModel = self.pushModel;
     
     if (self.pushModel.picurl!=nil && ![self.pushModel.picurl isKindOfClass:[NSNull class]]&&self.pushModel.picurl.length != 0) {
         NSString *imageUrl = [NSString stringWithFormat:@"%@%@",URL_PRE,self.pushModel.picurl];
@@ -251,20 +265,19 @@
         }
         self.remindView = [[HeChangRemind alloc] initWithFrame:CGRectMake(self.packgeView.left,   self.activityImage?self.activityImage.bottom+10:self.readWriteView.bottom+10, self.readWriteView.width, 58+mutableArr.count*(45+14)) withDataArr:mutableArr];
         [self.bgScrollView addSubview:self.remindView];
-        
-        
+
     }
     if(!self.recommendView){
         CGFloat width = (ScreenWidth - 23 - 10)/2.5;
         self.recommendView = [[RecommendReadView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.remindView.frame)+10, ScreenWidth, width*0.75+7+40+55)];
         [self.bgScrollView addSubview:self.recommendView];
         self.bgScrollView.contentSize = CGSizeMake(1, self.recommendView.bottom+20);
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeTableSize:) name:@"CHANGETABLESIZE" object:nil];
+        
     }
     
-    
-    
     [self.bgScrollView setContentSize:CGSizeMake(1, self.recommendView.bottom+20)];
-   
     
 }
 
@@ -275,6 +288,15 @@
     self.recommendView.frame = CGRectMake(self.recommendView.left,CGRectGetMaxY(self.remindView.frame)+10 , self.recommendView.width, self.recommendView.height);
     [self.bgScrollView setContentSize:CGSizeMake(1, self.recommendView.bottom+20)];
     
+}
+
+-(void)changeTableSize:(NSNotification *)notifi {
+    
+    self.remindView.tableView.height = self.remindView.tableView.contentSize.height;
+    self.remindView.height = 58 +  self.remindView.tableView.height;
+    NSLog(@"%f",self.remindView.tableView.height);
+    self.recommendView.top = self.remindView.bottom+10;
+    NSLog(@"%f",self.remindView.bottom);
 }
 
 # pragma mark - 活动页跳转
@@ -449,6 +471,9 @@
     
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:paramDic successBlock:^(id response) {
         
+//        LoginViewController *login = [[LoginViewController alloc] init];
+//        [self.navigationController pushViewController:login animated:YES];
+        return ;
         if([[response objectForKey:@"status"] integerValue] == 100){
             
             id jlbsData = [[response objectForKey:@"data"] objectForKey:@"jlbs"];

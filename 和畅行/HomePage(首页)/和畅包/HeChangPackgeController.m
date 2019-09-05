@@ -42,6 +42,7 @@
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     
     NSString *strRequest = [navigationAction.request.URL.absoluteString stringByRemovingPercentEncoding];
+
     //NSString *ganyuStr = [NSString stringWithFormat:@"%@hcy/member/action/ganyufangan",URL_PRE];
     NSString *ganyuStr = [NSString stringWithFormat:@"%@member/action/ganyufangan",URL_PRE];
     NSLog(@"%@",strRequest);
@@ -71,6 +72,11 @@
         [self.navigationController pushViewController:vc animated:YES];
         return;
     }else if ([strRequest isEqualToString:yundong]){ //进入运动
+        
+        if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
+            [self showAlertWarmMessage:@"您还不是会员"];
+            return;
+        }
         decisionHandler(WKNavigationActionPolicyCancel);
         NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
         NSString *yueyaoIndex = [GlobalCommon getSportTypeFrom:physicalStr];
@@ -104,7 +110,15 @@
             decisionHandler(WKNavigationActionPolicyCancel);
 
         }else{
-            NSMutableURLRequest *request= [NSMutableURLRequest requestWithURL:navigationAction.request.URL];
+            
+            if([strRequest hasSuffix:@"html"]){
+                strRequest = [strRequest stringByAppendingString:[NSString stringWithFormat:@"?fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+            }else{
+                strRequest = [strRequest stringByAppendingString:[NSString stringWithFormat:@"&fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+            }
+            
+            NSURL *url = [NSURL URLWithString:strRequest];
+            NSMutableURLRequest *request= [NSMutableURLRequest requestWithURL:url];
             NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UserShareOnce shareOnce].token,@"token",[UserShareOnce shareOnce].JSESSIONID,@"JSESSIONID", nil];
             [request addValue:[self readCurrentCookieWith:dic] forHTTPHeaderField:@"Cookie"];
             if([UserShareOnce shareOnce].languageType){

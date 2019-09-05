@@ -115,13 +115,13 @@
             
             for (int k = 0; k < 2; k++) {
                 
-                UILabel *leftlabel =  [[UILabel alloc]initWithFrame:CGRectMake(backImageView.width/2 - 100,bloodLabel.bottom + 10 + 84*k, 80, 30)];
+                UILabel *leftlabel =  [[UILabel alloc]initWithFrame:CGRectMake(0,bloodLabel.bottom + 10 + 84*k, backImageView.width/2 - 5, 30)];
                 leftlabel.text = leftArray[k];
                 leftlabel.textAlignment = NSTextAlignmentRight;
                 leftlabel.font  =  [UIFont systemFontOfSize:14];
                 [backImageView addSubview:leftlabel];
                 
-                UILabel *rightlabel =  [[UILabel alloc]initWithFrame:CGRectMake(backImageView.width/2 - 10,bloodLabel.bottom + 10 + 84*k, 110, 30)];
+                UILabel *rightlabel =  [[UILabel alloc]initWithFrame:CGRectMake(backImageView.width/2 + 5,bloodLabel.bottom + 10 + 84*k, leftlabel.width, 30)];
                 rightlabel.text = rightArray[k];
                 rightlabel.font  =  [UIFont systemFontOfSize:19];
                 [backImageView addSubview:rightlabel];
@@ -167,13 +167,13 @@
             bloodLabel.textColor = RGB_TextGray;
             [backImageView addSubview:bloodLabel];
             
-            UILabel *leftlabel =  [[UILabel alloc]initWithFrame:CGRectMake(backImageView.width/2 - 100,bloodLabel.bottom + 10 , 80, 30)];
+            UILabel *leftlabel =  [[UILabel alloc]initWithFrame:CGRectMake(5,bloodLabel.bottom + 10 ,backImageView.width/2 - 5, 30)];
             leftlabel.text = ModuleZW(@"心率");
             leftlabel.textAlignment = NSTextAlignmentRight;
             leftlabel.font  =  [UIFont systemFontOfSize:14];
             [backImageView addSubview:leftlabel];
             
-            UILabel *rightlabel =  [[UILabel alloc]initWithFrame:CGRectMake(backImageView.width/2 - 10,bloodLabel.bottom + 10 , 90, 30)];
+            UILabel *rightlabel =  [[UILabel alloc]initWithFrame:CGRectMake(backImageView.width/2 + 5,bloodLabel.bottom + 10 , leftlabel.width, 30)];
             rightlabel.text = @"60BBPM";
             rightlabel.font  =  [UIFont systemFontOfSize:19];
             [backImageView addSubview:rightlabel];
@@ -370,7 +370,7 @@
 -(UIDatePicker *)datePicker{
     if(!_datePicker){
         self.datePicker = [[UIDatePicker alloc] init];
-        self.datePicker.frame = CGRectMake(30, 40, _bottomView.width - 80, 200);
+        self.datePicker.frame = CGRectMake(30, 40, _bottomView.width - 60, 200);
         if([UserShareOnce shareOnce].languageType){
             self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"us"];
         }else{

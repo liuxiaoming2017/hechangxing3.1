@@ -46,7 +46,7 @@
                                        ModuleZW( @"体质调理方案"),
                                        ModuleZW( @"状态护理方案")];
     for(NSInteger i=0;i<titleArr.count;i++){
-        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 5+(imageHeight+30)*i, 200, 20)];
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 5+(imageHeight+30)*i, ScreenWidth - 100, 20)];
         titleLabel.font = [UIFont systemFontOfSize:15];
         titleLabel.textAlignment = NSTextAlignmentLeft;
         titleLabel.textColor = [UIColor blackColor];
@@ -57,8 +57,8 @@
     
     
     UIButton *allBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    allBtn.frame = CGRectMake(ScreenWidth-60, 5, 50, 20);
-    NSString *buttonStr = [NSString stringWithFormat:@"%@ >",ModuleZW(@"全部")];
+    allBtn.frame = CGRectMake(ScreenWidth-80, 5, 80, 20);
+    NSString *buttonStr = ModuleZW(@"全部  >");
     [allBtn setTitle:buttonStr forState:UIControlStateNormal];
     allBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [allBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

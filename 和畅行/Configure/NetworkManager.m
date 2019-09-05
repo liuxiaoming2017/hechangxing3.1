@@ -272,6 +272,46 @@ static NSMutableArray *tasks;
     
 }
 
+
+- (void)requestWithformDataWithurlString:(NSString *)urlString
+             parameters:(NSDictionary *)parameters
+              formDataBlock:(BAResponseForm)formDataBlock
+           successBlock:(BAResponseSuccess)successBlock
+           failureBlock:(BAResponseFail)failureBlock
+{
+    BAURLSessionTask *sessionTask = nil;
+    AFHTTPSessionManager *manager = [self sharedAFManager];
+    
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,urlString];
+    /*! 检查地址中是否有中文 */
+    NSString *URLString = [NSURL URLWithString:urlStr] ? urlStr : [self strUTF8Encoding:urlStr];
+    
+    sessionTask = [manager POST:URLString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+//        if (formDataBlock)
+//        {
+//            formDataBlock(formData);
+//        }
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        if (successBlock)
+        {
+            successBlock(responseObject);
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (failureBlock)
+        {
+            failureBlock(error);
+            NSLog(@"错误信息：%@",error);
+        }
+    }];
+    
+}
+
 - (void)requestWithType:(BAHttpRequestType)type
               urlString:(NSString *)urlString
          headParameters:(NSDictionary *)headerDic

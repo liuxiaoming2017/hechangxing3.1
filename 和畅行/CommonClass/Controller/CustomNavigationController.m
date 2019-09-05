@@ -55,7 +55,7 @@
         }
         if([vc isKindOfClass:[ResultSpeakController class]]){
             ResultSpeakController *vcc = ( ResultSpeakController *)vc;
-            if([vcc.titleStr isEqualToString:ModuleZW(@"季度报告详情")]||[vcc.titleStr isEqualToString:ModuleZW(@"血糖监测")]||[vcc.titleStr isEqualToString:ModuleZW(@"血压监测")]||[vcc.titleStr isEqualToString:ModuleZW(@"血压详情")]){
+            if([vcc.titleStr isEqualToString:ModuleZW(@"季度报告详情")]||[vcc.titleStr isEqualToString:ModuleZW(@"血糖监测")]||[vcc.titleStr isEqualToString:ModuleZW(@"血压监测")]||[vcc.titleStr isEqualToString:ModuleZW(@"血压详情")]||[vcc.titleStr isEqualToString:ModuleZW(@"血糖详情")]){
                 return NO;
             }
         }

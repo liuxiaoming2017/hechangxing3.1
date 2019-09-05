@@ -58,7 +58,7 @@
     
     
     UIButton *bangButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    bangButton.frame = CGRectMake(ScreenWidth/2 - 75, _textField.bottom+50, 150, 50);
+    bangButton.frame = CGRectMake(ScreenWidth/2 - 90, _textField.bottom+50, 180, 50);
     [bangButton setTitle:ModuleZW(@"添加至卡包") forState:(UIControlStateNormal)];
     [bangButton setBackgroundColor:RGB_ButtonBlue];
     bangButton.layer.cornerRadius = 25;
@@ -67,14 +67,17 @@
     [self.view addSubview:bangButton];
     
     
-    UIButton *flickingBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - 13 ,ScreenHeight - 200, 50, 50) target:self sel:@selector(flickingClick) tag:31 image:nil title:ModuleZW(@"二维码")];
+    UIButton *flickingBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - 20 ,ScreenHeight - 200, 40, 40) target:self sel:@selector(flickingClick) tag:31 image:@"二维码" title:nil];
     [flickingBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [flickingBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-    [flickingBtn setImage:[UIImage imageNamed:@"二维码"] forState:(UIControlStateNormal)];
     [self.view addSubview:flickingBtn];
    
+    UILabel *codeLabel = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/2 - 100, flickingBtn.bottom+ 5, 200, 25)];
+    codeLabel.text = ModuleZW(@"二维码");
+    codeLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:codeLabel];
     
-     [flickingBtn setTitleEdgeInsets:UIEdgeInsetsMake(flickingBtn.imageView.frame.size.height +30 ,-flickingBtn.imageView.frame.size.width -18, 0.0,0.0)];
+     [flickingBtn setTitleEdgeInsets:UIEdgeInsetsMake(flickingBtn.imageView.frame.size.height +30 ,-flickingBtn.imageView.frame.size.width -40, 0.0,0.0)];
     
     
 }
@@ -120,35 +123,6 @@
     [request startAsynchronous];
     
     
-//    NSDictionary *dic = @{@"memberId":[UserShareOnce shareOnce].uid,
-//                          @"code":_textField.text};
-   
-//
-    
-    
-//
-//    NSString *str = @"/member/cashcard/bind.jhtml";
-
-//            //为网络请求添加请
-//    NSDictionary *headers = @{@"token":[UserShareOnce shareOnce].token,
-//                              @"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID],
-//                              @"version":@"ios_hcy-yh-1.0"};
-
-//    [[NetworkManager sharedNetworkManager]requestWithType:1 urlString:str headParameters:nil parameters:dic successBlock:^(id response) {
-//
-//
-////        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
-//
-//
-//                NSLog(@"%@",response);
-//
-//
-//            } failureBlock:^(NSError *error) {
-//
-//                NSLog(@"%@",error);
-//            }];
-    
-    
 }
 - (void)requesstuserinfoError:(ASIHTTPRequest *)request
 {
@@ -170,9 +144,13 @@
     //NSLog(@"234214324%@",status);
     if ([status intValue]== 100) {
 
+        if([[[dic valueForKey:@"data"] valueForKey:@"member"] valueForKey:@"bindCard"]){
+            [UserShareOnce shareOnce].bindCard = [[[dic valueForKey:@"str"] valueForKey:@"member"] valueForKey:@"bindCard"];
+        }
         [[NSNotificationCenter defaultCenter] postNotificationName:@"cardNameSuccess" object:nil];
         [GlobalCommon showMessage:ModuleZW(@"服务卡添加成功") duration:1];
         [self.navigationController popViewControllerAnimated:YES];
+        
         
     }
     else if ([status intValue]== 44)
@@ -181,10 +159,8 @@
         av.tag  = 100008;
         [av show];
     } else  {
-        NSString *str = [dic objectForKey:@"data"];
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:str delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-        
-        [av show];
+        NSString *str = [[dic valueForKey:@"data"] valueForKey:@"data"];
+        [self showAlertWarmMessage:str];
     }
 }
 -(void) showHUD

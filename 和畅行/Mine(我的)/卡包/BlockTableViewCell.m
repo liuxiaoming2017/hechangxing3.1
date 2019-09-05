@@ -32,7 +32,7 @@
     
     
     _hLabel = [[UILabel alloc] init];
-    _hLabel.frame = CGRectMake(10, 10, 200, 30);
+    _hLabel.frame = CGRectMake(10, 10, self.width - 40, 30);
     _hLabel.textColor = [UIColor whiteColor];
     _hLabel.text = @"视频问诊半年卡";
     _hLabel.font = [UIFont systemFontOfSize:21];

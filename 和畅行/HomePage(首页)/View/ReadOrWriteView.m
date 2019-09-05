@@ -96,14 +96,19 @@
     switch (btn.tag) {
         case 100:
         {
+            if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
+                UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还不是会员" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+                [av show];
+                return;
+            }
             if([self isFirestClickThePageWithString:@"speak"]){
                 vc = [[MeridianIdentifierViewController alloc] init];
             }else{
                 vc = [[TipSpeakController alloc] init];
             }
-            
             vc.hidesBottomBarWhenPushed = YES;
             [self.viewController.navigationController pushViewController:vc animated:YES];
+            
         }
             break;
            case 101:
@@ -114,8 +119,14 @@
                 vc = [[TipWriteController alloc] init];
             }
             
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.viewController.navigationController pushViewController:vc animated:YES];
+            if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
+                UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还不是会员" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+                [av show];
+            }else{
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.viewController.navigationController pushViewController:vc animated:YES];
+            }
+           
         }
             break;
             case 102:
@@ -185,5 +196,6 @@
     }
     return NO;
 }
+
 
 @end

@@ -382,10 +382,11 @@
     
     //lbname.frame.origin.x+lbname.frame.size.width+5+30
     UILabel* lbBuy_Date=[[UILabel alloc] init];
-    lbBuy_Date.frame=CGRectMake((ScreenWidth-130)/2.0, (cell.frame.size.height-23)/2, 130, 23);
+    lbBuy_Date.frame=CGRectMake(lbname.right , (cell.frame.size.height-23)/2, ScreenWidth -lbname.right - 50 , 23);
     lbBuy_Date.backgroundColor=[UIColor clearColor];
     lbBuy_Date.textColor=[UtilityFunc colorWithHexString:@"#666666"];
     lbBuy_Date.font=[UIFont systemFontOfSize:11];
+    lbBuy_Date.textAlignment = NSTextAlignmentCenter;
     lbBuy_Date.text=confromTimespStr;
     [cell addSubview:lbBuy_Date];
    

@@ -37,7 +37,7 @@
     [self.backImageView.layer addSublayer:[UIColor setGradualChangingColor:self.backImageView fromColor:@"4294E1" toColor:@"D1BDFF"]];
     self.backImageView.layer.cornerRadius = 10;
     self.backImageView.layer.masksToBounds = YES;
-    [self addSubview:self.backImageView];
+    [self.contentView addSubview:self.backImageView];
     
     self.quarterLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.backImageView.width, 80)];
     self.quarterLabel.backgroundColor = [UIColor clearColor];

@@ -36,6 +36,12 @@
 
 - (void)customeViewWithStr:(NSString *)urlStr
 {
+    
+    if([urlStr hasSuffix:@"html"]){
+        urlStr = [urlStr stringByAppendingString:[NSString stringWithFormat:@"?fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+    }else{
+        urlStr = [urlStr stringByAppendingString:[NSString stringWithFormat:@"&fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+    }
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
     // 设置偏好设置
     config.preferences = [[WKPreferences alloc] init];

@@ -20,7 +20,7 @@
 
 @interface RecommendReadView()<UICollectionViewDataSource,UICollectionViewDelegate>
 
-@property (nonatomic,strong) UICollectionView *collectionV;
+
 
 @end
 
@@ -155,6 +155,7 @@
     HCY_ConsultingModel *tipModel = self.recommendArr[indexPath.row];
     RecommendCollectCell *cell = (RecommendCollectCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     cell.imageV.hidden = NO;
+    cell.titleLabel.font = [UIFont systemFontOfSize:15];
     [cell.imageV sd_setImageWithURL:[NSURL URLWithString:tipModel.picture]];
     cell.titleLabel.text = tipModel.title;
     return cell;

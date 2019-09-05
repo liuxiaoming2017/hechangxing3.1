@@ -451,6 +451,34 @@
     imageView.userInteractionEnabled = YES;
     imageView.image = [UIImage imageNamed:@"bounceView"];
 
+    UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您今天测量血糖%ld次，正常%ld次，异常%ld次\n您当前检测%@血糖值为%.1fmmol/L"),(long)_totalCount,(long)_nomalCount,(long)_unNomalCount,self.typeLabel.text,self.sugerValue] frame:CGRectMake(0, 80, imageView.bounds.size.width, 20) textSize:12 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
+    [imageView addSubview:countLabel];
+    CGRect textRect1 = [countLabel.text  boundingRectWithSize:CGSizeMake(imageView.bounds.size.width-40, MAXFLOAT)
+                                                      options:NSStringDrawingUsesLineFragmentOrigin
+                                                   attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]}
+                                                      context:nil];
+    countLabel.height = textRect1.size.height;
+    
+    UILabel *hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, countLabel.bottom + 10, imageView.bounds.size.width-40, 60)];
+    
+    hintLabel.numberOfLines = 0;
+    hintLabel.font = [UIFont systemFontOfSize:12];
+    NSMutableAttributedString *hintString = [[NSMutableAttributedString alloc] initWithString:_result];
+    NSRange range;
+    if ([_result isEqualToString:kNomal]) {
+        range = NSMakeRange(4, 2);
+    }else if ([_result isEqualToString:[NSString stringWithFormat:kFullHigh,self.sugerValue]]){
+        range = NSMakeRange(8, 2);
+    }else{
+        range = NSMakeRange(5, 2);
+    }
+    hintLabel.attributedText = hintString;
+    [imageView addSubview:hintLabel];
+    NSString *str = [NSString stringWithFormat:@"%@",hintString];
+    CGRect hintRect = [str boundingRectWithSize:CGSizeMake(imageView.width - 40, MAXFLOAT) options:(NSStringDrawingOptions)NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil];
+    hintLabel.height = hintRect.size.height;
+    
+    imageView.height = countLabel.height + hintLabel.height + 80;
     
     UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [sureBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
@@ -468,32 +496,7 @@
     [lookBtn addTarget:self action:@selector(lookClickBtn:) forControlEvents:UIControlEventTouchUpInside];
     [view2 addSubview:lookBtn];
 
-    UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您今天测量血糖%ld次，正常%ld次，异常%ld次\n您当前检测%@血糖值为%.1fmmol/L"),(long)_totalCount,(long)_nomalCount,(long)_unNomalCount,self.typeLabel.text,self.sugerValue] frame:CGRectMake(0, 80, imageView.bounds.size.width, 20) textSize:12 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
-    [imageView addSubview:countLabel];
-    CGRect textRect1 = [countLabel.text  boundingRectWithSize:CGSizeMake(imageView.bounds.size.width-40, MAXFLOAT)
-                                                  options:NSStringDrawingUsesLineFragmentOrigin
-                                               attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]}
-                                                  context:nil];
-    countLabel.height = textRect1.size.height;
     
-    UILabel *hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, countLabel.bottom + 10, imageView.bounds.size.width-40, 60)];
-    
-    hintLabel.numberOfLines = 0;
-    hintLabel.font = [UIFont systemFontOfSize:12];
-    NSMutableAttributedString *hintString = [[NSMutableAttributedString alloc] initWithString:_result];
-    NSRange range;
-    if ([_result isEqualToString:kNomal]) {
-        range = NSMakeRange(4, 2);
-    }else if ([_result isEqualToString:[NSString stringWithFormat:kFullHigh,self.sugerValue]]){
-        range = NSMakeRange(8, 2);
-    }else{
-        range = NSMakeRange(5, 2);
-    }
-
-//    [hintString addAttribute:NSForegroundColorAttributeName value:[Tools colorWithHexString:@"f60a0c"] range:range];
-    hintLabel.attributedText = hintString;
-    [imageView addSubview:hintLabel];
-    //创建两个tableView
     
     [view2 addSubview:imageView];
     [self.view addSubview:view];
@@ -652,7 +655,7 @@
 -(UIDatePicker *)datePicker{
     if(!_datePicker){
         self.datePicker = [[UIDatePicker alloc] init];
-        self.datePicker.frame = CGRectMake(30, 40, _bottomView.width - 80, 200);
+        self.datePicker.frame = CGRectMake(30, 40, _bottomView.width - 60, 200);
         if([UserShareOnce shareOnce].languageType){
             self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"us"];
         }else{

@@ -10,19 +10,16 @@
 
 @interface TimeLineCell : UITableViewCell
 
-@property (nonatomic,strong) CALayer *subLayer;
 @property (nonatomic,strong) UIImageView *leftImageV;
 @property (nonatomic,strong) UILabel *contentLabel;
 @property (nonatomic,strong) UILabel *timeLabel;
 @property (nonatomic,strong) UILabel *createDateLabel;
-@property (nonatomic, strong) UILabel *typeLabel;
-@property (nonatomic, strong) UILabel *kindLabel;
 @property (nonatomic, strong)UIImageView *lineImageV2;
 @property (nonatomic, strong)UIImageView *kindImage;
+@property (nonatomic,strong) UIImageView *imageV;
 
 
 - (void)assignmentCellWithModel:(HealthTipsModel *)model withType:(NSInteger )typeInteger;
-- (void)configCellWithModel1;
-- (void)configCellWithModel2;
+
 
 @end

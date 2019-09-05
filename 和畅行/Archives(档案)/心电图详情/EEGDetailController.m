@@ -44,7 +44,7 @@
         [timer invalidate];
     }
     timer = nil;
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad {
@@ -88,9 +88,12 @@
     [[NSRunLoop mainRunLoop]addTimer:timer forMode:NSDefaultRunLoopMode];
     //开始循环
     [timer fire];
+    
 }
 
-
+- (void)leftBtnClick{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 //刷新方式绘制
 - (void)timerRefresnFun

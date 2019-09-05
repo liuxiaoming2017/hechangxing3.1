@@ -62,9 +62,10 @@
 @property (nonatomic,copy) NSString * loginType;
 
 @property (copy, nonatomic) NSString  *startTime;
-
-
-
+//字体大小设置倍数
+@property (assign, nonatomic) CGFloat  fontSize;
+//
+@property (copy, nonatomic) NSString  *bindCard;
 + (UserShareOnce *)shareOnce;
 +(void)attemptDealloc;
 @end

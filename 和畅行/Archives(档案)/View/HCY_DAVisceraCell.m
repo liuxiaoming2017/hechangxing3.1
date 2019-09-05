@@ -108,17 +108,7 @@
     
 }
 
-- (void)configCellWithModel1
-{
-    self.timeLabel.frame = CGRectMake(10, 0, 80, 20);
-    
-    
-}
 
-- (void)configCellWithModel2
-{
-    
-}
 
 
 //为cell 赋值

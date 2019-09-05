@@ -13,61 +13,34 @@
 #import "HCY_CarDetailController.h"
 #import "HYC_CardsModel.h"
 #import "LoginViewController.h"
-
+#import "AllServiceCell.h"
 @interface BlockViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,retain) UITableView *tableView;
 @property (nonatomic,retain) NSMutableArray *dataArray;
 @property (nonatomic,strong) UILabel *nullLabel;
 //请求页数
 @property (nonatomic,assign) NSInteger pageInteger;
+@property (nonatomic,strong) UIView *listBackView;
+@property (nonatomic,strong)UITableView *listTableView;
+@property (nonatomic,strong)NSMutableArray *allServiceArray;
+@property (nonatomic,strong)NSMutableDictionary *allServiceDic;
 @end
 
 @implementation BlockViewController
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"cardNameSuccess" object:nil];
-}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
     self.navTitleLabel.text = ModuleZW(@"我的卡包");
+    self.allServiceArray = [NSMutableArray array];
+    self.allServiceDic = [NSMutableDictionary dictionary];
     [[NSNotificationCenter defaultCenter] addObserver :self selector:@selector(cardNameSuccess) name:@"cardNameSuccess" object:nil];
     [self getDatawithpageInteger:self.pageInteger];
-    
     [self layoutView];
     
     
-//    NSString *str1 = [NSString stringWithFormat:@"/member/cashcard/getCard.jhtml?imageCode=%@",@"QzM1R1I3WFJTTEtWVzJPRkRCWg=="];
-//
-//    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:str1 parameters:nil successBlock:^(id response) {
-//        //             [hud hideAnimated:YES];
-//        if ([response[@"status"] integerValue] == 100){
-//            HCY_CarDetailController *vc = [[HCY_CarDetailController alloc]init];
-//            vc.dateDic = response;
-//            [self.navigationController pushViewController:vc animated:YES];
-//        } else if ([response[@"status"] intValue]== 44) {
-//
-//            UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") preferredStyle:(UIAlertControllerStyleAlert)];
-//            UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-//                LoginViewController *loginVC = [[LoginViewController alloc]init];
-//                [self.navigationController pushViewController:loginVC animated:YES];
-//            }];
-//            [alerVC addAction:suerAction];
-//            [self presentViewController:alerVC animated:YES completion:nil];
-//        } else  {
-//            NSString *str = [response objectForKey:@"data"];
-//            UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:str preferredStyle:(UIAlertControllerStyleAlert)];
-//            UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-//            }];
-//            [alerVC addAction:suerAction];
-//            [self presentViewController:alerVC animated:YES completion:nil];
-//
-//        }
-//    } failureBlock:^(NSError *error) {
-//
-//    }];
 }
 
 - (void)cardNameSuccess
@@ -85,6 +58,13 @@
 -(void)layoutView {
     UIButton *marryStateBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth - 55, kNavBarHeight + 13, 36, 36) target:self sel:@selector(addAction) tag:1000 image:@"HCY_addcard" title:nil];
     [self.view addSubview:marryStateBtn];
+    
+    UIButton *allServiceBT = [Tools creatButtonWithFrame:CGRectMake(20, kNavBarHeight + 13, 100, 36) target:self sel:@selector(allServiceAction) tag:1000 image:nil title:ModuleZW(@"全部服务")];
+    allServiceBT.backgroundColor = RGB_ButtonBlue;
+    allServiceBT.layer.cornerRadius = 18;
+    [allServiceBT.titleLabel setFont:[UIFont systemFontOfSize:16/[UserShareOnce shareOnce].fontSize]];
+    allServiceBT.layer.masksToBounds  = YES;
+    [self.view addSubview:allServiceBT];
     
     UILabel *blockLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, marryStateBtn.top, 200, 36)];
     blockLabel.text = ModuleZW(@"我的卡包");
@@ -160,7 +140,7 @@
            
             NSArray *oneArray = [response valueForKey:@"data"];
             NSArray *dataArray = [response valueForKey:@"attr_data"];
-            
+            self.allServiceDic =  [response valueForKey:@"stat_data"];
             if ( dataArray.count == 0 && oneArray.count == 0){
                 self.nullLabel.hidden = NO;
                 self.tableView.hidden = YES;
@@ -212,17 +192,36 @@
     [self.navigationController pushViewController:boundBlockVC animated:YES];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.dataArray.count;
+    if (tableView == self.tableView) {
+        return self.dataArray.count;
+    }else{
+        return [self.allServiceDic allKeys].count;
+    }
+    
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    BlockTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BlockTableViewCell" forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    HYC_CardsModel *model =  _dataArray[indexPath.row];
-    [cell setCarListDataWithModel:model];
-    return cell;
+    if (tableView == self.tableView) {
+        BlockTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BlockTableViewCell" forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        HYC_CardsModel *model =  _dataArray[indexPath.row];
+        [cell setCarListDataWithModel:model];
+        return cell;
+    }else{
+        AllServiceCell * cell =[tableView dequeueReusableCellWithIdentifier:@"AllServiceCell"];
+        if(cell==nil){
+            cell = [[AllServiceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AllServiceCell"];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        HYC_CardsModel *model =  _allServiceArray[indexPath.row];
+        [cell setAllServicValueWithModel:model];
+        return cell;
+    }
+  
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (tableView == self.listTableView) return;
     
     HYC_CardsModel *model = self.dataArray[indexPath.row];
     
@@ -245,6 +244,50 @@
    
 }
 
-
+//全部服务展示按钮
+-(void)allServiceAction{
+    
+    
+    for (int i = 0; i < [_allServiceDic allKeys].count; i++) {
+        HYC_CardsModel *model = [[HYC_CardsModel alloc]init];
+        model.serviceKindStr = [_allServiceDic allKeys][i];
+        NSDictionary *dic = _allServiceDic[model.serviceKindStr];
+        NSString *numberStr = [NSString stringWithFormat:@"%@ %@",dic[@"value"],dic[@"unit"]];
+        model.serviceNumberStr = numberStr;
+        [_allServiceArray addObject:model];
+    }
+    
+    if(!self.listBackView) {
+        self.listBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+        self.listBackView.backgroundColor = RGBA(0, 0, 0, 0.55);
+        self.listBackView.hidden = NO;
+        [self.view addSubview:self.listBackView];
+        
+        self.listTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, kNavBarHeight + 20  , ScreenWidth - 40 , ScreenHeight - kTabBarHeight - kNavBarHeight - 20) style:UITableViewStylePlain];
+        self.listTableView.backgroundColor = UIColorFromHex(0Xffffff);
+        self.listTableView.separatorStyle = UITableViewCellEditingStyleNone;
+        self.listTableView.layer.cornerRadius = 8;
+        self.listTableView.dataSource = self;
+        self.listTableView.delegate = self;
+        self.listTableView.estimatedRowHeight = 100;
+        self.listTableView.contentInset = UIEdgeInsetsMake(20, 0, 20, 0);
+        [self.listBackView addSubview:self.listTableView];
+        UIButton *closeButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        closeButton.frame = CGRectMake(ScreenWidth - 40, kNavBarHeight -10, 30, 30);
+        [closeButton setBackgroundImage:[UIImage imageNamed:@"消费记录取消icon"] forState:(UIControlStateNormal)];
+        [[closeButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            self.listBackView.hidden = YES;
+        }];
+        [self.listBackView addSubview:closeButton];
+    }else{
+        self.listBackView.hidden = NO;
+    }
+    
+}
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (self.listBackView&&self.listBackView.hidden == NO) {
+        self.listBackView.hidden = YES;
+    }
+}
 
 @end

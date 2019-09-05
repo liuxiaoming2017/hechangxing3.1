@@ -94,7 +94,7 @@
         }
         if(i< 2){
             UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            button.frame = CGRectMake((backImageView.width-40)*(2*i+1)/4 - 25 ,backImageView.height - 40, 100, 26);
+            button.frame = CGRectMake((backImageView.width - 240)*(i+1)/3+ 120 *i  ,backImageView.height - 40, 120, 26);
             button.backgroundColor = RGB_ButtonBlue;
             button.layer.cornerRadius = 13;
             button.layer.masksToBounds = YES;

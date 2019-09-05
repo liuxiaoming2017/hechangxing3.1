@@ -11,7 +11,6 @@
 
 @implementation RemindCell
 
-@synthesize subLayer;
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
@@ -32,62 +31,80 @@
 
 - (void)setupUI
 {
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 35+14)];
-    imageV.layer.cornerRadius = 8.0;
-    imageV.layer.masksToBounds = YES;
-    imageV.backgroundColor = [UIColor whiteColor];
-    [self addSubview:imageV];
-     [self insertSublayerWithImageView:imageV];
-    
-    self.lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, imageV.top+10, 2, 15+14)];
-    [self addSubview:self.lineImageV];
-    
     self.backgroundColor = [UIColor clearColor];
+    UIImageView *imageV = [[UIImageView alloc] init];
+    imageV.layer.cornerRadius = 8.0;
+    imageV.backgroundColor = [UIColor whiteColor];
+    [self.contentView addSubview:imageV];
+    imageV.layer.shadowColor = RGB_TextGray.CGColor;
+    imageV.layer.shadowOffset = CGSizeMake(0,0);
+    imageV.layer.shadowOpacity = 0.5;
+    imageV.layer.shadowRadius = 5;
     
-    self.typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 8+14, 80, 16)];
+    self.lineImageV = [[UIImageView alloc] init];
+    [imageV  addSubview:self.lineImageV];
+    
+    
+    self.typeLabel = [[UILabel alloc] init];
     self.typeLabel.textAlignment=NSTextAlignmentLeft;
     self.typeLabel.font=[UIFont systemFontOfSize:13.0];
+    self.typeLabel.numberOfLines = 0;
     self.typeLabel.textColor=UIColorFromHex(0x8E8E93);
     self.typeLabel.backgroundColor=[UIColor clearColor];
-    [self addSubview:self.typeLabel];
+    [imageV  addSubview:self.typeLabel];
+
     
-//    UIImageView *lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(self.typeLabel.right+10, 44, ScreenWidth-14*2-self.typeLabel.right-10-5, 1)];
-//    lineImageV.backgroundColor = UIColorFromHex(0xDADADA);
-    
-    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right+15, 8+7, 200, 30)];
+    self.contentLabel = [[UILabel alloc] init];
     self.contentLabel.textAlignment=NSTextAlignmentLeft;
     self.contentLabel.font=[UIFont systemFontOfSize:13.0];
     self.contentLabel.textColor=UIColorFromHex(0x8E8E93);
     self.contentLabel.backgroundColor=[UIColor clearColor];
-    [self addSubview:self.contentLabel];
+    self.contentLabel.numberOfLines = 0;
+    [imageV  addSubview:self.contentLabel];
     
-    self.circleImageV = [[UIImageView alloc] initWithFrame:CGRectMake(self.contentLabel.right+5, 24+3, 6, 6)];
+    self.circleImageV = [[UIImageView alloc] init];
     self.circleImageV.backgroundColor = [UIColor redColor];
     self.circleImageV.layer.cornerRadius = 3.0;
     self.circleImageV.layer.masksToBounds = YES;
+    [imageV  addSubview:self.circleImageV];
     
-    [self addSubview:self.circleImageV];
+    [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView.mas_top).offset(5);
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(-5);
+        make.leading.equalTo(self.contentView.mas_leading).offset(10);
+        make.trailing.equalTo(self.contentView.mas_trailing).offset(-10);
+    }];
+    
+    [self.lineImageV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(imageV.mas_top).offset(10);
+        make.bottom.equalTo(imageV.mas_bottom).offset(-10);
+        make.leading.equalTo(imageV.mas_leading);
+        make.width.mas_equalTo(2);
+    }];
+    
+    [self.typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(imageV.mas_top);
+        make.bottom.equalTo(imageV.mas_bottom);
+        make.leading.equalTo(imageV.mas_leading).offset(15);
+        make.width.mas_equalTo(70);
+        make.height.greaterThanOrEqualTo(@(49));
+    }];
+    
+    [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(imageV.mas_top);
+        make.bottom.equalTo(imageV.mas_bottom);
+        make.leading.equalTo(self.typeLabel.mas_leading).offset(70);
+        make.trailing.equalTo(imageV.mas_trailing).offset(-30);
+        make.height.greaterThanOrEqualTo(@(49));
+    }];
+    
+    [self.circleImageV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(imageV.mas_centerY);
+        make.size.mas_equalTo(CGSizeMake(6, 6));
+        make.trailing.equalTo(imageV.mas_trailing).offset(-15);
+        
+    }];
 }
 
--(void)insertSublayerWithImageView:(UIImageView *)imageV
-{
-    if(!subLayer){
-        subLayer=[CALayer layer];
-        CGRect fixframe = imageV.frame;
-        subLayer.frame= fixframe;
-        subLayer.cornerRadius=8;
-        subLayer.backgroundColor=[UIColorFromHex(0xffffff) colorWithAlphaComponent:1.0].CGColor;
-        //UIColorFromHex(0xDEDEDDE) [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1.0] 0XEEEEEE
-        subLayer.masksToBounds=NO;
-        subLayer.shadowColor = [UIColor lightGrayColor].CGColor;//shadowColor阴影颜色
-        subLayer.shadowOffset = CGSizeMake(0,1);//shadowOffset阴影偏移,x向右偏移3，y向下偏移2，默认(0, -3),这个跟shadowRadius配合使用
-        subLayer.shadowOpacity = 0.4;//阴影透明度，默认0
-        subLayer.shadowRadius = 4;//阴影半径，默认3
-        [self.layer insertSublayer:subLayer below:imageV.layer];
-    }else{
-        subLayer.frame = imageV.frame;
-    }
-    
-}
 
 @end

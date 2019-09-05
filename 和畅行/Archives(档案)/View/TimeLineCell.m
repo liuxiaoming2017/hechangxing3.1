@@ -9,8 +9,6 @@
 #import "TimeLineCell.h"
 @implementation TimeLineCell
 
-@synthesize subLayer;
-
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -23,82 +21,104 @@
 
 - (void)setupView
 {
-    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 80, 20)];
+    
+    self.timeLabel = [[UILabel alloc] init];
     self.timeLabel.textAlignment=NSTextAlignmentLeft;
     self.timeLabel.font=[UIFont systemFontOfSize:16.0];
     self.timeLabel.textColor=[UIColor blackColor];
     self.timeLabel.backgroundColor=[UIColor clearColor];
     self.timeLabel.text = @"11-23";
-    [self addSubview:self.timeLabel];
+    [self.contentView addSubview:self.timeLabel];
     
-    UIImageView *lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, self.timeLabel.bottom+5, 1, 20)];
+    UIImageView *lineImageV = [[UIImageView alloc] init];
     lineImageV.backgroundColor = UIColorFromHex(0xe2e2e2);
-    [self addSubview:lineImageV];
+    [self.contentView addSubview:lineImageV];
     
-    
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(65 , lineImageV.bottom-5, ScreenWidth-75, 49)];
+    UIImageView *imageV = [[UIImageView alloc] init];
     imageV.layer.cornerRadius = 8.0;
-    imageV.layer.masksToBounds = YES;
     imageV.backgroundColor = [UIColor whiteColor];
-    [self addSubview:imageV];
-    [self insertSublayerWithImageView:imageV];
+    [self.contentView addSubview:imageV];
+    self.imageV = imageV;
+
+    imageV.layer.shadowColor = RGB_TextGray.CGColor;
+    imageV.layer.shadowOffset = CGSizeMake(0,0);
+    imageV.layer.shadowOpacity = 0.5;
+    imageV.layer.shadowRadius = 5;
     
-    self.createDateLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  imageV.top+imageV.height/2.0-10, 60, 20)];
+    
+    self.createDateLabel = [[UILabel alloc]init];
     self.createDateLabel.font=[UIFont systemFontOfSize:13.0];
     self.createDateLabel.textAlignment = NSTextAlignmentCenter;
     self.createDateLabel.textColor=UIColorFromHex(0x8E8E93);
     self.createDateLabel.text = @"08:08";
-    [self addSubview:self.createDateLabel];
+    [self.contentView addSubview:self.createDateLabel];
     
-    UIImageView *circleImageV = [[UIImageView alloc] initWithFrame:CGRectMake(20, imageV.top+imageV.height/2.0-10, 20, 20)];
-    //UIImageView *circleImageV = [[UIImageView alloc] initWithFrame:CGRectZero];
-    circleImageV.layer.cornerRadius = circleImageV.width/2.0;
-    circleImageV.layer.masksToBounds = YES;
-    circleImageV.backgroundColor = UIColorFromHex(0xe2e2e2);
-//    [self addSubview:circleImageV];
     
-    self.typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 35,49)];
-    self.typeLabel.text = ModuleZW(@"经络");
-    self.typeLabel.textColor = [UIColor blackColor];
-    self.typeLabel.font = [UIFont systemFontOfSize:16];
-//    [imageV addSubview:self.typeLabel];
-    
-    self.kindImage = [[UIImageView alloc]initWithFrame:CGRectMake(9, 9, 31, 31)];
+    self.kindImage = [[UIImageView alloc]init];
     self.kindImage.image = [UIImage imageNamed:@"经络Icon"];
     [imageV addSubview:self.kindImage];
+
     
-    self.kindLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.typeLabel.right, self.typeLabel.bottom - 30, 55, 15)];
-    self.kindLabel.text = @"(mmHg)";
-    self.kindLabel.textColor = RGB(128, 128, 128);;
-    self.kindLabel.font = [UIFont systemFontOfSize:12];
-//    [imageV addSubview:self.kindLabel];
-    
-    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.kindImage.right+ 30, 0, imageV.width - self.kindImage.right - 55, imageV.height)];
+    self.contentLabel = [[UILabel alloc] init];
     self.contentLabel.font=[UIFont systemFontOfSize:16];
     self.contentLabel.textColor=RGB(128, 128, 128);
     self.contentLabel.text = @"大羽";
-    self.contentLabel.numberOfLines = 2;
+    self.contentLabel.numberOfLines = 0;
     [imageV addSubview:self.contentLabel];
 
-   
     
-    self.lineImageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(lineImageV.left, 105-20, 1, 20)];
+    self.lineImageV2 = [[UIImageView alloc] init];
     self.lineImageV2.backgroundColor = UIColorFromHex(0xe2e2e2);
-    [self addSubview:self.lineImageV2];
+    [self.contentView addSubview:self.lineImageV2];
+    
+    [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView.mas_top).offset(10.0);
+        make.size.mas_equalTo(CGSizeMake(80, 20));
+        make.leading.equalTo(self.contentView.mas_leading).offset(10.0);
+    }];
+    [lineImageV  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.timeLabel.mas_bottom).offset(5);
+        make.size.mas_equalTo(CGSizeMake(1, 20));
+        make.left.equalTo(self.contentView.mas_left).offset(30);
+    }];
+    [self.createDateLabel  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(lineImageV.mas_bottom);
+        make.size.mas_equalTo(CGSizeMake(60, 20));
+        make.left.equalTo(self.contentView.mas_left);
+    }];
+    [self.lineImageV2  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.createDateLabel.mas_bottom);
+        make.width.mas_equalTo(1);
+        make.left.equalTo(self.contentView.mas_left).offset(30);
+        make.bottom.equalTo(self.contentView.mas_bottom);
+    }];
+    
+    
+    [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(lineImageV.mas_bottom).offset(-5);
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(-5);
+        make.leading.equalTo(self.contentView.mas_leading).offset(65);
+        make.trailing.equalTo(self.contentView.mas_trailing).offset(-10);
+        
+    }];
+    
+    [self.kindImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(imageV.mas_top).offset(9);
+        make.left.equalTo(imageV.mas_left).offset(9);
+        make.size.mas_equalTo(CGSizeMake(31, 31));
+    }];
+    
+    [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.imageV.mas_top);
+        make.bottom.equalTo(self.imageV.mas_bottom);
+        make.leading.equalTo(self.imageV.mas_leading).offset(60);
+        make.trailing.equalTo(self.imageV.mas_trailing);
+        make.height.greaterThanOrEqualTo(@(49));
+    }];
     
 }
 
-- (void)configCellWithModel1
-{
-    self.timeLabel.frame = CGRectMake(10, 0, 80, 20);
-    
-    
-}
 
-- (void)configCellWithModel2
-{
-    
-}
 
 
 //为cell 赋值
@@ -163,8 +183,9 @@
         }else{
             self.contentLabel.text = model.name;
         }
-        
-        self.timeLabel.text = model.date;
+        NSString *timeStr = [model.date stringByReplacingOccurrencesOfString:@"日" withString:@""];
+        timeStr = [timeStr stringByReplacingOccurrencesOfString:@"月" withString:@"-"];
+        self.timeLabel.text = timeStr;
         self.createDateLabel.text = model.time;
     }else  if (typeInteger == 10||typeInteger == 9){
         typeStr = ModuleZW(@"心率");
@@ -175,6 +196,15 @@
         timerStr = [self getDateStringWithOtherTimeStr:timerStr];
         NSString *str = [NSString stringWithFormat:@"%@",model.createDate];
         self.createDateLabel.text = [self getDateStringWithTimeStr:str];
+    }else  if (typeInteger == 14){
+        if(![GlobalCommon stringEqualNull:model.content]){
+            self.contentLabel.text = model.content;
+        }else{
+            self.contentLabel.text = ModuleZW(@"我的上传报告");
+        }
+        NSString *timerStr = [NSString stringWithFormat:@"%@",model.createDate];
+        self.timeLabel.text = [self getDateStringWithOtherTimeStr:timerStr];
+        self.createDateLabel.text = [self getDateStringWithTimeStr:timerStr];
     }else{
         if ([model.subjectCategorySn isEqualToString:@"TZBS"]){
             typeStr = ModuleZW(@"体质");
@@ -227,7 +257,6 @@
     }else{
         salaryStr1 = self.contentLabel.text;
     }
-    self.typeLabel.numberOfLines = 2;
     NSMutableAttributedString *salaryStr = [[NSMutableAttributedString alloc]initWithString:salaryStr1];
     [salaryStr beginEditing];
     [salaryStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12] range:NSMakeRange(salaryStr1.length - kindStr.length ,kindStr.length)];
@@ -236,36 +265,6 @@
     [salaryStr endEditing];
     self.contentLabel.attributedText = salaryStr;
     self.kindImage.image = [UIImage imageNamed:kindIcon];
-    
-    
-    
-//    if ([UserShareOnce shareOnce].languageType){
-//        NSString *salaryStr1 = [NSString string];
-//        if (kindStr.length > 0){
-//            salaryStr1 =  [NSString stringWithFormat:@"%@\n%@",typeStr,kindStr];
-//        }else{
-//            salaryStr1 = typeStr;
-//        }
-//        self.typeLabel.numberOfLines = 2;
-//        NSMutableAttributedString *salaryStr = [[NSMutableAttributedString alloc]initWithString:salaryStr1];
-//        [salaryStr beginEditing];
-//        [salaryStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12] range:NSMakeRange(salaryStr1.length - kindStr.length ,kindStr.length)];
-//        [salaryStr addAttribute:NSForegroundColorAttributeName value:RGB(128, 128, 128) range:NSMakeRange(salaryStr1.length - kindStr.length ,kindStr.length)];
-//
-//        [salaryStr endEditing];
-//        self.typeLabel.attributedText = salaryStr;
-//        self.typeLabel.attributedText = salaryStr;
-//        CGRect textRect = [typeStr boundingRectWithSize:CGSizeMake(MAXFLOAT, 59)
-//                                                options:NSStringDrawingUsesLineFragmentOrigin
-//                                             attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]}
-//                                                context:nil];
-//        [self.typeLabel setFrame:CGRectMake(10, 0, textRect.size.width, 49)];
-//        self.kindLabel.text = @"";
-//        self.contentLabel.numberOfLines = 2;
-//        self.contentLabel.textAlignment = NSTextAlignmentCenter;
-//        self.contentLabel.frame = CGRectMake(self.typeLabel.right+ 5, 0, ScreenWidth-85 - self.typeLabel.right, 49);
-//
-//    }
     
 }
 
@@ -292,31 +291,11 @@
 }
 
 
--(void)insertSublayerWithImageView:(UIImageView *)imageV
-{
-    if(!subLayer){
-        subLayer=[CALayer layer];
-        CGRect fixframe = imageV.frame;
-        subLayer.frame= fixframe;
-        subLayer.cornerRadius=8;
-        subLayer.backgroundColor=[UIColorFromHex(0xffffff) colorWithAlphaComponent:1.0].CGColor;
-        
-        subLayer.masksToBounds=NO;
-        subLayer.shadowColor = [UIColor lightGrayColor].CGColor;//shadowColor阴影颜色
-        subLayer.shadowOffset = CGSizeMake(0,1);//shadowOffset阴影偏移,x向右偏移3，y向下偏移2，默认(0, -3),这个跟shadowRadius配合使用
-        subLayer.shadowOpacity = 0.4;//阴影透明度，默认0
-        subLayer.shadowRadius = 4;//阴影半径，默认3
-        [self.layer insertSublayer:subLayer below:imageV.layer];
-    }else{
-        subLayer.frame = imageV.frame;
-    }
-    
-}
-
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
 }
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

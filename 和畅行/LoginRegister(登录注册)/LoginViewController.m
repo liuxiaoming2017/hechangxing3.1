@@ -99,7 +99,7 @@
     userNameBox.placeholder=ModuleZW(@"  请输入手机号");
     [self.view addSubview:userNameBox];
     
-    UILabel *addNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(userNameBox.width, 0, 35, 30)];
+    UILabel *addNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(userNameBox.width - 40, 0, 40, 30)];
     addNumberLabel.text = @"+86";
     addNumberLabel.textColor = RGB_TextMidLightGray;
     [userNameBox addSubview:addNumberLabel];
@@ -146,7 +146,7 @@
     [self.view addSubview:imageV3];
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightBtn.frame = CGRectMake(imageV3.right-120, passWordBox.top, 120, passWordBox.height);
+    rightBtn.frame = CGRectMake(imageV3.right-140, passWordBox.top, 140, passWordBox.height);
     rightBtn.tag = 2018;
     [rightBtn setTitle:ModuleZW(@"获取验证码") forState:UIControlStateNormal];
     
@@ -272,13 +272,15 @@
     if ([strcheck isEqualToString:@"1"])
     {
         isCheck=YES;
-        userNameBox.text=[dicTmp objectForKey:@"USERNAME"];
-        passWordBox.text=[dicTmp objectForKey:@"PASSWORDAES"];
+        userNameBox.text=[GlobalCommon AESDecodeWithString:[dicTmp objectForKey:@"USERNAME"]];
+        passWordBox.text=[GlobalCommon AESDecodeWithString:[dicTmp objectForKey:@"PASSWORDAES"]];
         if(userNameBox.text.length>0&&passWordBox.text.length>0)
         {
             _loginBtn.backgroundColor = UIColorFromHex(0x1e82d2);
             _loginBtn.enabled = YES;
         }
+        self.segment.selectedSegmentIndex = 1;
+        [self selected:self.segment];
     }
     else
     {

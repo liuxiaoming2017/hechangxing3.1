@@ -44,7 +44,9 @@
     [self layoutMineView];
 }
 
+-(void)dealloc{
 
+}
 
 -(void)layoutMineView{
     
@@ -121,7 +123,7 @@
             self.photoButton = photoButton;
             
         }else {
-            leftLabel.frame = CGRectMake(30, kNavBarHeight + 90 + 45 *(i-1), 110, 45);
+            leftLabel.frame = CGRectMake(30, kNavBarHeight + 90 + 45 *(i-1), 150, 45);
             UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
             button.frame = CGRectMake(leftLabel.right + 20, leftLabel.top, ScreenWidth - leftLabel.right - 50, 45);
             [button setTitle:contentArray[i] forState:(UIControlStateNormal)];
@@ -129,6 +131,7 @@
             [button setTitleColor: [UIColor blackColor] forState:(UIControlStateNormal)];
             [button.titleLabel setFrame:button.bounds];
             [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+            __weak typeof(self) weakSelf = self;
             [[button rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
                 switch (i) {
                     case 1: {
@@ -140,21 +143,21 @@
                             
                         }];
                         UIAlertAction *action1 = [UIAlertAction actionWithTitle:ModuleZW(@"确认") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-                            self.nameStr = [[alertVc textFields] objectAtIndex:0].text;
-                            [button setTitle:self.nameStr forState:(UIControlStateNormal)];
-                            [self commitClick];
+                            weakSelf.nameStr = [[alertVc textFields] objectAtIndex:0].text;
+                            [button setTitle:weakSelf.nameStr forState:(UIControlStateNormal)];
+                            [weakSelf commitClick];
                         }];
                         UIAlertAction *action2 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:nil];
                         [alertVc addAction:action2];
                         [alertVc addAction:action1];
-                        [self presentViewController:alertVc animated:YES completion:nil];
+                        [weakSelf presentViewController:alertVc animated:YES completion:nil];
                     }
                         break;
                     case 2:
-                        [self sexClick:x];
+                        [weakSelf sexClick:x];
                         break;
                     case 3:
-                        [self birthDayActive];
+                        [weakSelf birthDayActive];
                         break;
                     case 4:
                         if([UserShareOnce shareOnce].languageType) {
@@ -163,7 +166,7 @@
                         if ([[UserShareOnce shareOnce].loginType isEqualToString:@"WX"]){
                             if([UserShareOnce shareOnce].username.length != 11){
                                 WXPhoneController *vc = [[WXPhoneController alloc]init];
-                                [self.navigationController pushViewController:vc animated:YES];
+                                [weakSelf.navigationController pushViewController:vc animated:YES];
                             }
                         }
                         break;
@@ -172,7 +175,7 @@
                 }
             }];
             if(i == 3){
-                _brithdayButton = button;
+                weakSelf.brithdayButton = button;
             }
             UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(button.width + 10, 15 , 12, 15)];
             iconImageView.image = [UIImage imageNamed:@"1我的_09"];
@@ -211,19 +214,20 @@
         [btn setTitle:arr[i] forState:(UIControlStateNormal)];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         btn.titleLabel.font = [UIFont systemFontOfSize:14];
+         __weak typeof(self) weakSelf = self;
         [[btn rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
             [blackView removeFromSuperview];
             switch (i) {
                 case 0:
                     [button setTitle:ModuleZW(@"男") forState:(UIControlStateNormal)];
-                    self.sexStr = ModuleZW(@"男");
-                    [self commitClick];
+                    weakSelf.sexStr = ModuleZW(@"男");
+                    [weakSelf commitClick];
                     break;
                     
                 case 1:
                     [button setTitle:ModuleZW(@"女") forState:(UIControlStateNormal)];
-                    self.sexStr = ModuleZW(@"女");
-                    [self commitClick];
+                    weakSelf.sexStr = ModuleZW(@"女");
+                    [weakSelf commitClick];
                     break;
                     
                 default:
@@ -550,11 +554,12 @@
             [button setTitle:buttonTitleArray[i] forState:(UIControlStateNormal)];
             [button setTitleColor:UIColorFromHex(0Xffa200) forState:(UIControlStateNormal)];
             [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
+            __weak typeof(self) weakSelf = self;
             [[button rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
                 if(i == 1){
-                    self.brithdayStr = self.dateString;
-                    [self->_brithdayButton setTitle:self->_brithdayStr forState:(UIControlStateNormal)];
-                     [self commitClick];
+                    weakSelf.brithdayStr = self.dateString;
+                    [weakSelf.brithdayButton setTitle:self->_brithdayStr forState:(UIControlStateNormal)];
+                     [weakSelf commitClick];
                 }
                 backView.hidden = YES;
             }];

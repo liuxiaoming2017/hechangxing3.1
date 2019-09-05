@@ -152,7 +152,7 @@
     for (int i = 0; i < titleArr.count; i++) {
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(wenX * i + marin, 10, 60, 60)];
         titleLabel.text = [titleArr objectAtIndex:i];
-        titleLabel.font = [UIFont systemFontOfSize:50.0];
+        titleLabel.font = [UIFont systemFontOfSize:50.0/[UserShareOnce shareOnce].fontSize];
         titleLabel.textColor = UIColorFromHex(0xFFFFFF);
         titleLabel.tag = 2018+i;
         titleLabel.alpha = 0.44;
@@ -304,7 +304,7 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [btn setTitle:[NSString stringWithFormat:@"%ld",(long)currentTime] forState:UIControlStateNormal];
-                btn.titleLabel.font = [UIFont systemFontOfSize:90];
+                btn.titleLabel.font = [UIFont systemFontOfSize:90/[UserShareOnce shareOnce].fontSize];
                 
             });
         }];

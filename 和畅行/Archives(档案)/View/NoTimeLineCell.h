@@ -12,12 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NoTimeLineCell : UITableViewCell
 
-@property (nonatomic,strong) CALayer *subLayer;
 @property (nonatomic,strong) UIImageView *leftImageV;
 @property (nonatomic,strong) UILabel *contentLabel;
-@property (nonatomic,strong) UILabel *timeLabel;
 @property (nonatomic,strong) UILabel *createDateLabel;
-@property (nonatomic,strong) UILabel *typeLabel;
 @property (nonatomic, strong)UIImageView *lineImageV2;
 @property (nonatomic, strong) UILabel *kindLabel;
 @property (nonatomic, strong)UIImageView *kindImage;

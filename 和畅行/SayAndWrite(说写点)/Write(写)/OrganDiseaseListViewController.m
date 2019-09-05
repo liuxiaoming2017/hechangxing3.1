@@ -257,7 +257,7 @@
                             OrganDiseaseModel *selectedModel = nil;
                             for (int k=0; k<self->_selectedArr.count; k++) {
                                 selectedModel = self->_selectedArr[k];
-                                if ([selectedModel.content isEqualToString:tapModel.content]) {
+                                if ([selectedModel.MICD isEqualToString:tapModel.MICD]) {
                                     alreadySelected = YES;
                                     break;
                                 }

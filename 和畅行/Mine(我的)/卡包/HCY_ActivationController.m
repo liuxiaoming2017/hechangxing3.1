@@ -65,7 +65,7 @@
     
     
     
-    UITextView *contentTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, carTitleLabel.bottom ,imageWidth - 20, 25)];
+    UITextView *contentTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, carTitleLabel.bottom ,imageWidth - 20, 30)];
     
     
     contentTextView.text  = [NSString stringWithFormat:@"%@：%@",ModuleZW(@"卡号"),_model.card_no];;
@@ -123,7 +123,7 @@
     txtLabel.text =  [NSString stringWithFormat:ModuleZW(@"您将激活%@,是否继续?"),_model.card_name] ;
     txtLabel.textColor = RGB_TextLightGray;
     txtLabel.font = [UIFont systemFontOfSize:17];
-    txtLabel.numberOfLines = 2;
+    txtLabel.numberOfLines = 0;
     txtLabel.textAlignment = NSTextAlignmentCenter;
     [whiteView addSubview:txtLabel];
     

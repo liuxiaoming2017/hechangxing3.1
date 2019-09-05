@@ -162,7 +162,7 @@
 }
 
 - (void)leftBtnClick{
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (BOOL)prefersStatusBarHidden{

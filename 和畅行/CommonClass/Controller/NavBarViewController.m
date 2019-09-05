@@ -20,17 +20,16 @@
 
 @synthesize topView,preBtn,rightBtn,leftBtn;
 
-- (void)dealloc
-{
-    
-}
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupNav];
     
-   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadImageSuccess) name:@"uploadImageSuccess" object:nil];
+    
 }
+
 
 -(void)setupNav
 {
@@ -213,4 +212,8 @@
     self.popBT = popBT;
     
 }
+
+
+
+
 @end

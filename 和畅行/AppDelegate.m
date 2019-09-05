@@ -60,6 +60,12 @@
         [UserShareOnce shareOnce].languageType  = nil;
     }
     
+    NSString *fontStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"YHFont"];
+    if(![GlobalCommon stringEqualNull:fontStr]){
+        [UserShareOnce shareOnce].fontSize = [fontStr floatValue];
+    }else{
+        [UserShareOnce shareOnce].fontSize = 1;
+    }
     NSError *error = nil;
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&error];
     AVAudioSession *session = [AVAudioSession sharedInstance];
@@ -128,12 +134,13 @@
 }
 
 
+
 - (UITabBarController *)tabBar
 {
     HomePageController *homeVC = [[HomePageController alloc] init];
     CustomNavigationController *homeNav = [[CustomNavigationController alloc] initWithRootViewController:homeVC];
     
-     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} forState:UIControlStateNormal];
+     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14/[UserShareOnce shareOnce].fontSize]} forState:UIControlStateNormal];
     
     UIEdgeInsets edgeInset = UIEdgeInsetsMake(-1, 0, 1, 0);
     UIOffset offSet = UIOffsetMake(0, 1);
