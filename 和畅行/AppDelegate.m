@@ -138,8 +138,8 @@
 }
 
 -(void)returnMainPage2{
-    //RootRequestController *homeVc = [[RootRequestController alloc] init];
-    ArmchairHomeVC *homeVc = [[ArmchairHomeVC alloc] init];
+    RootRequestController *homeVc = [[RootRequestController alloc] init];
+    //ArmchairHomeVC *homeVc = [[ArmchairHomeVC alloc] init];
     self.window.rootViewController = homeVc;
     
 }

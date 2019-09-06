@@ -18,6 +18,7 @@
 #import "i9_MoxaMainViewController.h"
 #import "HCY_CallController.h"
 #import "WXPhoneController.h"
+#import "ArmchairHomeVC.h"
 
 @interface CommonTabBarController ()<HSTabBarDelegate,ZKIndexViewDelegate>
 
@@ -137,6 +138,9 @@
         }
             break;
         case 7:
+            vc = [[ArmchairHomeVC alloc] init];
+            break;
+        case 8:
             vc = [[YueYaoController alloc] initWithType:YES];
             break;
         default:
