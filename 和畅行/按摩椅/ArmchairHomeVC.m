@@ -25,6 +25,14 @@
 
 @implementation ArmchairHomeVC
 
+- (void)dealloc
+{
+    self.recommendV = nil;
+    self.dataArr = nil;
+    self.bgScrollView = nil;
+    self.collectionV = nil;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

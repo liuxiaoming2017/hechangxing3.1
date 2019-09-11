@@ -22,6 +22,13 @@
 
 @implementation ArmchairThemeVC
 
+- (void)dealloc
+{
+    self.collectionV = nil;
+    self.dataArr = nil;
+    self.pageView = nil;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
