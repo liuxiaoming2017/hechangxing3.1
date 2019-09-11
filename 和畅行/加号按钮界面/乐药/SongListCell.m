@@ -74,7 +74,7 @@
 - (void)downloadFailWithImageStr:(NSString *)nameStr
 {
     if([nameStr isEqualToString:@"乐药未购买icon"]){
-        self.downloadBtn.frame = CGRectMake(ScreenWidth - 100 , 30, 70, 20);
+        self.downloadBtn.frame = CGRectMake(ScreenWidth - 110 , 30, 80, 20);
         self.downloadBtn.backgroundColor = RGB(253, 134, 40);
         self.downloadBtn.layer.cornerRadius = 10;
         self.downloadBtn.layer.masksToBounds = YES;

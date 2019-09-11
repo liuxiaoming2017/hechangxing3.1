@@ -34,7 +34,7 @@
 @property (nonatomic,strong) UIDatePicker *datePicker;
 @property (nonatomic,strong) UIView *backView;
 @property (nonatomic,copy)  NSString *dateString;
-
+@property (nonatomic,strong) UIButton *phoneBT;
 @end
 
 @implementation PersonalInformationViewController
@@ -44,6 +44,26 @@
     [self layoutMineView];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    if ([[UserShareOnce shareOnce].loginType isEqualToString:@"WX"]){
+        if([self deptNumInputShouldNumber:[UserShareOnce shareOnce].username]){
+            self.phoneStr  = [UserShareOnce shareOnce].username;
+        }else{
+            self.phoneStr = ModuleZW(@"未绑定");
+        }
+    }else{
+        if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].username]) {
+            if([self deptNumInputShouldNumber:[UserShareOnce shareOnce].username]){
+                self.phoneStr  = [UserShareOnce shareOnce].username;
+            }else{
+                self.phoneStr = @"";
+            }
+        }
+    }
+    [self.phoneBT setTitle:self.phoneStr forState:(UIControlStateNormal)];
+}
 -(void)dealloc{
 
 }
@@ -166,6 +186,7 @@
                         if ([[UserShareOnce shareOnce].loginType isEqualToString:@"WX"]){
                             if([UserShareOnce shareOnce].username.length != 11){
                                 WXPhoneController *vc = [[WXPhoneController alloc]init];
+                                vc.pushType = 1;
                                 [weakSelf.navigationController pushViewController:vc animated:YES];
                             }
                         }
@@ -176,6 +197,9 @@
             }];
             if(i == 3){
                 weakSelf.brithdayButton = button;
+            }
+            if(i == 4){
+                weakSelf.phoneBT = button;
             }
             UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(button.width + 10, 15 , 12, 15)];
             iconImageView.image = [UIImage imageNamed:@"1我的_09"];

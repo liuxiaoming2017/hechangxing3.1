@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface WXPhoneController : SayAndWriteController
+@property (nonatomic,assign)int pushType;
 
 @end
 

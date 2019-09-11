@@ -117,7 +117,6 @@
         cell.typeLabel.text =ModuleZW(model.type);
         NSLog(@"####%@,&&&%@",model.type,model.advice);
         cell.typeLabel.font=[UIFont systemFontOfSize:13.0];
-        cell.contentLabel.left = cell.typeLabel.right + 10;
         cell.contentLabel.font=[UIFont systemFontOfSize:13.0];
         if([model.type isEqualToString:ModuleZW(@"一说")]){
             cell.lineImageV.backgroundColor = UIColorFromHex(0X66A8E9);

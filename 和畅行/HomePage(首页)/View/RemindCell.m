@@ -36,7 +36,7 @@
     imageV.layer.cornerRadius = 8.0;
     imageV.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:imageV];
-    imageV.layer.shadowColor = RGB_TextGray.CGColor;
+    imageV.layer.shadowColor = RGB(200, 200, 200).CGColor;
     imageV.layer.shadowOffset = CGSizeMake(0,0);
     imageV.layer.shadowOpacity = 0.5;
     imageV.layer.shadowRadius = 5;
@@ -93,7 +93,7 @@
     [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(imageV.mas_top);
         make.bottom.equalTo(imageV.mas_bottom);
-        make.leading.equalTo(self.typeLabel.mas_leading).offset(70);
+        make.leading.equalTo(imageV.mas_leading).offset(85);
         make.trailing.equalTo(imageV.mas_trailing).offset(-30);
         make.height.greaterThanOrEqualTo(@(49));
     }];

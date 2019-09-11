@@ -44,8 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 //服务项目
-@property (nonatomic,copy)   NSString *serviceKindStr;
-@property (nonatomic,copy)   NSString *serviceNumberStr;
+@property (nonatomic,copy)   NSString *name;
+@property (nonatomic,copy)   NSString *value;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -35,7 +35,7 @@
     [self.view bringSubviewToFront:lineView];
     UILabel *titleLabel = [Tools labelWith:@"讲座说明：" frame:CGRectMake(5, 25, 100, 10) textSize:11 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentLeft];
     [self.view addSubview:titleLabel];
-    UILabel *contentLabel = [Tools labelWith:@"在线预约养生类、慢病类、职业防护类、两性保健类、亲子健康类等健康主题的讲座或沙龙服务。" frame:CGRectMake(15, 60, kScreenSize.width-25, 30) textSize:11 textColor:[Tools colorWithHexString:@"#333"] lines:0 aligment:NSTextAlignmentLeft];
+    UILabel *contentLabel = [Tools labelWith:@"在线预约养生类、慢病类、职业防护类、两性保健类、亲子健康类等健康主题的讲座或沙龙服务。" frame:CGRectMake(15, 40, kScreenSize.width-25, 50) textSize:11 textColor:[Tools colorWithHexString:@"#333"] lines:0 aligment:NSTextAlignmentLeft];
     [self.view addSubview:contentLabel];
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 95, kScreenSize.width, 25)];

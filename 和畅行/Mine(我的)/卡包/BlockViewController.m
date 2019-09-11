@@ -17,13 +17,12 @@
 @interface BlockViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,retain) UITableView *tableView;
 @property (nonatomic,retain) NSMutableArray *dataArray;
+@property (nonatomic,retain) NSMutableArray *servieArray;
 @property (nonatomic,strong) UILabel *nullLabel;
 //请求页数
 @property (nonatomic,assign) NSInteger pageInteger;
 @property (nonatomic,strong) UIView *listBackView;
 @property (nonatomic,strong)UITableView *listTableView;
-@property (nonatomic,strong)NSMutableArray *allServiceArray;
-@property (nonatomic,strong)NSMutableDictionary *allServiceDic;
 @end
 
 @implementation BlockViewController
@@ -34,8 +33,6 @@
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
     self.navTitleLabel.text = ModuleZW(@"我的卡包");
-    self.allServiceArray = [NSMutableArray array];
-    self.allServiceDic = [NSMutableDictionary dictionary];
     [[NSNotificationCenter defaultCenter] addObserver :self selector:@selector(cardNameSuccess) name:@"cardNameSuccess" object:nil];
     [self getDatawithpageInteger:self.pageInteger];
     [self layoutView];
@@ -46,6 +43,8 @@
 - (void)cardNameSuccess
 {
     [self getDatawithpageInteger:self.pageInteger];
+    [self.listTableView reloadData];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -81,6 +80,7 @@
     [self.view addSubview:self.nullLabel];
     
     self.dataArray = [NSMutableArray array];
+    self.servieArray = [NSMutableArray array];
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(17, kNavBarHeight+65, self.view.frame.size.width - 34, self.view.frame.size.height - kNavBarHeight-60) style:UITableViewStylePlain];
     self.tableView.separatorStyle = UITableViewCellEditingStyleNone;
     self.tableView.showsVerticalScrollIndicator = NO;
@@ -136,11 +136,12 @@
         [hud hideAnimated:YES];
         NSLog(@"%@",response);
         if ([response[@"status"] integerValue] == 100){
-                [self.dataArray removeAllObjects];
-           
-            NSArray *oneArray = [response valueForKey:@"data"];
-            NSArray *dataArray = [response valueForKey:@"attr_data"];
-            self.allServiceDic =  [response valueForKey:@"stat_data"];
+            [self.dataArray removeAllObjects];
+           [self.servieArray removeAllObjects];
+        
+            NSArray *oneArray = [[response valueForKey:@"data"] valueForKey:@"data"];
+            NSArray *dataArray = [[response valueForKey:@"data"] valueForKey:@"attr_data"];
+            NSArray *servieceArray  =  [[response valueForKey:@"data"] valueForKey:@"stat_data"];
             if ( dataArray.count == 0 && oneArray.count == 0){
                 self.nullLabel.hidden = NO;
                 self.tableView.hidden = YES;
@@ -159,6 +160,12 @@
                 model.kindStr = ModuleZW(@"卡");
                 [model yy_modelSetWithJSON:dic];
                 [self.dataArray addObject:model];
+            }
+            
+            for (NSDictionary *dic in servieceArray ) {
+                HYC_CardsModel *model = [[HYC_CardsModel alloc]init];
+                [model yy_modelSetWithJSON:dic];
+                [self.servieArray addObject:model];
             }
             
             
@@ -195,7 +202,7 @@
     if (tableView == self.tableView) {
         return self.dataArray.count;
     }else{
-        return [self.allServiceDic allKeys].count;
+        return self.servieArray.count;
     }
     
 }
@@ -212,7 +219,7 @@
             cell = [[AllServiceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AllServiceCell"];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-        HYC_CardsModel *model =  _allServiceArray[indexPath.row];
+        HYC_CardsModel *model =  _servieArray[indexPath.row];
         [cell setAllServicValueWithModel:model];
         return cell;
     }
@@ -246,16 +253,6 @@
 
 //全部服务展示按钮
 -(void)allServiceAction{
-    
-    
-    for (int i = 0; i < [_allServiceDic allKeys].count; i++) {
-        HYC_CardsModel *model = [[HYC_CardsModel alloc]init];
-        model.serviceKindStr = [_allServiceDic allKeys][i];
-        NSDictionary *dic = _allServiceDic[model.serviceKindStr];
-        NSString *numberStr = [NSString stringWithFormat:@"%@ %@",dic[@"value"],dic[@"unit"]];
-        model.serviceNumberStr = numberStr;
-        [_allServiceArray addObject:model];
-    }
     
     if(!self.listBackView) {
         self.listBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];

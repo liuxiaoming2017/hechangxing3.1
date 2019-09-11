@@ -65,7 +65,14 @@
     self.wkwebview.navigationDelegate = self;
     // 与webview UI交互代理
     self.wkwebview.UIDelegate = self;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",URL_PRE,urlStr]];
+    NSString *urlString = [NSString string];
+    if([urlStr hasSuffix:@"html"]){
+        urlString = [urlStr stringByAppendingString:[NSString stringWithFormat:@"?fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+    }else{
+        urlString = [urlStr stringByAppendingString:[NSString stringWithFormat:@"&fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+    }
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",URL_PRE,urlString]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
 //    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UserShareOnce shareOnce].token,@"token",[UserShareOnce shareOnce].JSESSIONID,@"JSESSIONID", nil];
 //    [request addValue:[self readCurrentCookieWith:dic] forHTTPHeaderField:@"Cookie"];

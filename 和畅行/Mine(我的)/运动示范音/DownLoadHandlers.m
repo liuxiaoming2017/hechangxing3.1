@@ -71,6 +71,7 @@ static DownLoadHandlers *sharedDownloadhandler = nil;
     //    if (_downloading) {
     //        return;
     //    }
+    
     NSURL *url = [NSURL URLWithString:_url];
     _request = [ASIHTTPRequest requestWithURL:url];
     [_request setTimeOutSeconds:60];

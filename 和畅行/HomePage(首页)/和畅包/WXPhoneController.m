@@ -29,7 +29,7 @@
 
 -(void) layoutWXPhoneView {
     UITextField  *userNameBox=[[UITextField alloc] init];
-    userNameBox.frame=CGRectMake(40, ScreenHeight/2 - 100 , ScreenWidth - 80 ,30 );
+    userNameBox.frame=CGRectMake(40, ScreenHeight/2 - 100 , ScreenWidth - 130 ,30 );
     userNameBox.borderStyle=UITextBorderStyleNone;
     userNameBox.returnKeyType=UIReturnKeyNext;
     userNameBox.keyboardType=UIKeyboardTypeNumberPad;
@@ -40,7 +40,7 @@
     [self.view addSubview:userNameBox];
     _userNameBox = userNameBox;
     
-    UILabel *addNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(userNameBox.width - 40, 0, 35, 30)];
+    UILabel *addNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(userNameBox.width, 0, 50, 30)];
     addNumberLabel.text = @"+86";
     addNumberLabel.textColor = RGB_TextMidLightGray;
     [userNameBox addSubview:addNumberLabel];
@@ -50,7 +50,7 @@
     [self.view addSubview:imageV2];
     
     UITextField  * passWordBox=[[UITextField alloc]init];
-    passWordBox.frame=CGRectMake(40, imageV2.bottom+10, 200 ,userNameBox.height );
+    passWordBox.frame=CGRectMake(40, imageV2.bottom+10, ScreenWidth - 200 ,userNameBox.height );
     passWordBox.clearButtonMode=UITextFieldViewModeWhileEditing;
     passWordBox.delegate = self;
     passWordBox.font=[UIFont systemFontOfSize:15.0];
@@ -66,7 +66,7 @@
     [self.view addSubview:imageV3];
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightBtn.frame = CGRectMake(imageV3.right-120, passWordBox.top, 120, passWordBox.height);
+    rightBtn.frame = CGRectMake(imageV3.right-130, passWordBox.top, 130, passWordBox.height);
     rightBtn.tag = 2018;
     [rightBtn setTitle:ModuleZW(@"获取验证码") forState:UIControlStateNormal];
     
@@ -76,8 +76,6 @@
     [rightBtn addTarget:self action:@selector(rightBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:rightBtn];
     
-    userNameBox.width = rightBtn.left-userNameBox.left;
-    passWordBox.width = userNameBox.width;
     
     
     UIButton *loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -246,5 +244,16 @@
         [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
     
+}
+
+
+- (void)goBack:(UIButton *)btn
+{
+    if (self.pushType == 0) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+
+    }
 }
 @end
