@@ -280,7 +280,6 @@
 		0377198C21056EE20010EA8B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0377198B21056EE10010EA8B /* UIKit.framework */; };
 		0377198E21056F5F0010EA8B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0377198D21056F5F0010EA8B /* QuartzCore.framework */; };
 		03771991210580BA0010EA8B /* ResultSpeakController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03771990210580BA0010EA8B /* ResultSpeakController.m */; };
-		03779104232209BF002FA63E /* Pods_和畅行.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 039EB91E21CF773300AE4A0D /* Pods_和畅行.framework */; };
 		0379823D20FC32F4002015A3 /* QuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0379823C20FC32F4002015A3 /* QuestionCell.m */; };
 		0379824120FC3832002015A3 /* Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 0379824020FC3832002015A3 /* Tools.m */; };
 		03799C1420F845AD004024D1 /* CacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03799C1320F845AD004024D1 /* CacheManager.m */; };
@@ -449,6 +448,7 @@
 		03FBDF97219285A0006116FC /* NavBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF96219285A0006116FC /* NavBarViewController.m */; };
 		03FBDF9A2192B066006116FC /* TimeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF992192B066006116FC /* TimeLineView.m */; };
 		03FBDF9D2192B0B3006116FC /* TimeLineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF9C2192B0B3006116FC /* TimeLineCell.m */; };
+		38C3A8CF11542A4CBC21AC9F /* Pods____.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3992630D9BF859D26B53112 /* Pods____.framework */; };
 		832ED75C2278286A00BFEEFC /* HpiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832ED75B2278286A00BFEEFC /* HpiViewController.m */; };
 		832ED75F2278321800BFEEFC /* HPITableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832ED75E2278321800BFEEFC /* HPITableViewCell.m */; };
 		835DB8DB21D3685D00B8DF99 /* HCY_ConsultingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 835DB8DA21D3685D00B8DF99 /* HCY_ConsultingModel.m */; };
@@ -1788,7 +1788,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03779104232209BF002FA63E /* Pods_和畅行.framework in Frameworks */,
 				035260B0230BD4B200A716C8 /* OGABluetooth530.framework in Frameworks */,
 				03D99E5F21AD335E00C766FD /* libSocialSina.a in Frameworks */,
 				03D99E5D21AD335100C766FD /* libSocialQQ.a in Frameworks */,
@@ -1826,6 +1825,7 @@
 				0390CF7F20ECB5D0000ECA53 /* CoreFoundation.framework in Frameworks */,
 				0390CF8020ECB5D0000ECA53 /* Foundation.framework in Frameworks */,
 				0306C5C921CCBEFA00DA5DC1 /* libSocialWeChat.a in Frameworks */,
+				38C3A8CF11542A4CBC21AC9F /* Pods____.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
