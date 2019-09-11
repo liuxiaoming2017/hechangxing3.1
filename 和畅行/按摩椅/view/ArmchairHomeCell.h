@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) UIImageView *imageV;
 @property (nonatomic,strong) UILabel *titleLabel;
 
+@property (nonatomic,strong) CALayer *subLayer;
 @end
 
 NS_ASSUME_NONNULL_END

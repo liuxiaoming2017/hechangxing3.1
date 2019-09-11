@@ -115,7 +115,7 @@
     if(self.dataArr.count>indexPath.row){
         RemindModel *model = [self.dataArr objectAtIndex:indexPath.row];
         cell.typeLabel.text =ModuleZW(model.type);
-        NSLog(@"%@",model.type);
+        NSLog(@"####%@,&&&%@",model.type,model.advice);
         cell.typeLabel.font=[UIFont systemFontOfSize:13.0];
         cell.contentLabel.font=[UIFont systemFontOfSize:13.0];
         if([model.type isEqualToString:ModuleZW(@"一说")]){

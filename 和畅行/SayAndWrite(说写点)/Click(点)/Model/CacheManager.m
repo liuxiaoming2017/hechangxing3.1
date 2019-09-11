@@ -97,7 +97,7 @@ static CacheManager *__cacheManager = nil;
     //4.数据库中创建表（可创建多张）
     NSString *questionSql = @"create table if not exists questionTable ('question_id' integer,'order_num' integer, 'createDate' text,'modifyDate' text,'name' text,'reverse' bool,'typeName' text,'allIDStr' text,'classifyId' text)";
     //首页提醒
-    NSString *remindSql = @"create table if not exists homeRemindTable ('custid' integer,'advice' text,'action' text, 'isDone' bool,'confId' integer)";
+    NSString *remindSql = @"create table if not exists homeRemindTable ('custid' integer,'advice' text,'type' text, 'isDone' bool,'confId' integer)";
     //首页新闻
     NSString *healthArticleSql = @"create table if not exists healthArticleTable ('picture' text,'title' text,'path' text,'createDate' text)";
     
@@ -123,9 +123,9 @@ static CacheManager *__cacheManager = nil;
 
 - (void)updateOrinsertRemindModel:(RemindModel *)model withCustId:(NSNumber *)custId
 {
-    FMResultSet *set = [_db executeQuery:@"select custid from homeRemindTable where custid = ? and advice = ? and action = ?",custId,model.advice,model.action];
+    FMResultSet *set = [_db executeQuery:@"select custid from homeRemindTable where custid = ? and advice = ? and type = ?",custId,model.advice,model.type];
     if(![set next]){
-        [_db executeUpdate:@"insert into homeRemindTable(custid,advice,action,isDone,confId) values (?,?,?,?,?)",custId,model.advice,model.action,[NSNumber numberWithBool:model.isDone],[NSNumber numberWithInteger:model.confId]];
+        [_db executeUpdate:@"insert into homeRemindTable(custid,advice,type,isDone,confId) values (?,?,?,?,?)",custId,model.advice,model.type,[NSNumber numberWithBool:model.isDone],[NSNumber numberWithInteger:model.confId]];
     }
     [set close];
 }
@@ -199,7 +199,7 @@ static CacheManager *__cacheManager = nil;
     
     FMResultSet *set = [_db executeQuery:@"select custid from homeRemindTable where custid = ? and confId = ?",[NSNumber numberWithInteger:model.custid],[NSNumber numberWithInteger:model.confId]];
     if([set next]){
-        [_db executeUpdate:@"update homeRemindTable set custid = ?,advice = ?,action = ?,isDone = ?,confId = ?",[NSNumber numberWithInteger:model.custid],model.advice,model.action,[NSNumber numberWithBool:model.isDone],[NSNumber numberWithInteger:model.confId]];
+        [_db executeUpdate:@"update homeRemindTable set custid = ?,advice = ?,type = ?,isDone = ?,confId = ?",[NSNumber numberWithInteger:model.custid],model.advice,model.type,[NSNumber numberWithBool:model.isDone],[NSNumber numberWithInteger:model.confId]];
     }
     [set close];
 }
@@ -259,7 +259,7 @@ static CacheManager *__cacheManager = nil;
         RemindModel *model = [[RemindModel alloc] init];
         model.custid = [set intForColumn:@"custid"];
         model.advice = [set stringForColumn:@"advice"];
-        model.action = [set stringForColumn:@"action"];
+        model.type = [set stringForColumn:@"type"];
         model.isDone = [set boolForColumn:@"isDone"];
         model.confId = [set intForColumn:@"confId"];
         [mutabArr addObject:model];

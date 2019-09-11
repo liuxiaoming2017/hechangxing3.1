@@ -29,16 +29,16 @@
        _btnArray = [[NSMutableArray alloc]init];
        
         //NSArray *imagesData = @[@"erxue",@"yundong",@"yinyue",@"xueya",@"liuyan",@"dianhua",@"aijiu"];
-        NSArray *imagesData = @[@"yinyue",@"yundong",@"aijiu",@"dianhua",@"shipin",@"xueya",@"liuyan",@"erxue"];
+        NSArray *imagesData = @[@"yinyue",@"yundong",@"aijiu",@"dianhua",@"shipin",@"xueya",@"liuyan",@"anmoyi",@"erxue"];
         NSArray *imagesNameData = @[ModuleZW(@"音乐"),ModuleZW(@"运动"),
                                                             ModuleZW(@"艾灸"),ModuleZW(@"电话"),
                                                             ModuleZW(@"视频"),ModuleZW(@"血压"),
-                                                            ModuleZW(@"留言"),ModuleZW(@"耳穴")];
+                                                            ModuleZW(@"留言"),@"按摩椅",ModuleZW(@"耳穴")];
         if([UserShareOnce shareOnce].isOnline){
 
         }
-        //NSInteger lieshu = imagesData.count/3+imagesData.count%3;
-        NSInteger lieshu = imagesData.count%3;
+        NSInteger lieshu = imagesData.count/3+imagesData.count%3;
+        //NSInteger lieshu = imagesData.count%3;
         for(int i=0;i<imagesData.count;i++){
             //row排数;col列数
             int row = i/3;
@@ -48,21 +48,23 @@
             
             CGFloat margin = (ScreenWidth-ICON_W*3)/4.0;
             
-            CGFloat topY = ScreenHeight  - lieshu * (ICON_W + MARGIN);
+            CGFloat topY = ScreenHeight  - lieshu * (ICON_W + MARGIN) +80;
             NSLog(@"yyyy:%f",topY);
             if(iPhoneX){
-                topY = ScreenHeight  - lieshu * (ICON_W + MARGIN)-34;
+                topY = ScreenHeight  - lieshu * (ICON_W + MARGIN)-34 +80;
             }
             
             
             UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(margin*(col+1) + col * ICON_W, ScreenHeight - topY  + row * (ICON_W + MARGIN), ICON_W, ICON_W)];
            
-            if(i==7){
-                button.frame = CGRectMake(margin*3 + 2 * ICON_W, ScreenHeight - topY  + row * (ICON_W + MARGIN), ICON_W, ICON_W);
-            }
+//            if(i==7){
+//                button.frame = CGRectMake(margin*3 + 2 * ICON_W, ScreenHeight - topY  + row * (ICON_W + MARGIN), ICON_W, ICON_W);
+//            }
+            
 //            if((imagesData.count%3 == 1) && (i==imagesData.count-1)){
 //                button.frame = CGRectMake(margin*(col+2) + (col+1) * ICON_W, topY + 25 + row * (ICON_W + MARGIN), ICON_W, ICON_W);
 //            }
+            
             [button setImage:[UIImage imageNamed:imagesData[i]] forState:UIControlStateNormal];
             button.tag = 100+i;
             [button addTarget:self action:@selector(pushButtonClick:) forControlEvents:UIControlEventTouchUpInside];
