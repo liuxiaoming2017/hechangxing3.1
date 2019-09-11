@@ -402,7 +402,7 @@
     }
     
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:APP_SECRET redirectURL:nil];
-    
+    NSLog(@"haha:%@,%@",APP_ID,APP_SECRET);
     [self loginByWeiXin];
     
 }

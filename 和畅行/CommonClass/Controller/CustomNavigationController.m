@@ -12,7 +12,7 @@
 #import "BloodPressureNonDeviceViewController.h"
 #import "SugerViewController.h"
 #import "SGScanningQRCodeVC.h"
-
+#import "ArmchairThemeVC.h"
 
 @interface CustomNavigationController ()<UIGestureRecognizerDelegate>
 
@@ -59,7 +59,7 @@
                 return NO;
             }
         }
-        if([vc isKindOfClass:[BloodPressureNonDeviceViewController class]]||[vc isKindOfClass:[SugerViewController class]]||[vc isKindOfClass:[SGScanningQRCodeVC class]]){
+        if([vc isKindOfClass:[BloodPressureNonDeviceViewController class]]||[vc isKindOfClass:[SugerViewController class]]||[vc isKindOfClass:[SGScanningQRCodeVC class]]||[vc isKindOfClass:[ArmchairThemeVC class]]){
             return NO;
         }
         

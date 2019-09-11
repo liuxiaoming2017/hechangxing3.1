@@ -23,7 +23,11 @@ extern BOOL isBF;
 
 //测试环境
 #define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://47.92.73.99:8080/healthlm/")
-//#define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://10.1.71.181:8080/healthlm/")
+
+//预发布 http://47.92.73.99:8080/healthlm/
+
+//测试  http://10.1.71.181:8080/healthlm/
+
 //生产环境
 //#define URL_PRE @"http://eky3h.com/healthlm/"
 
@@ -195,5 +199,5 @@ extern BOOL isBF;
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 
 
-#define  ModuleZW(zwString)          NSLocalizedStringFromTable(zwString, @"ModuleZW1", nil)
+#define  ModuleZW(zwString)          NSLocalizedStringFromTable(zwString, @"ModuleZW", nil)
 #define kDictIsEmpty(dic) ([dic isKindOfClass:[NSNull class]])
