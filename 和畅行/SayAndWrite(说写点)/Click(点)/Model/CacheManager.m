@@ -161,6 +161,10 @@ static CacheManager *__cacheManager = nil;
 
 - (void)inserthealthArticleModels:(NSArray *)arr
 {
+    FMResultSet *set = [_db executeQuery:@"select * from healthArticleTable"];
+    if([set next]){
+        [_db executeUpdate:@"delete from healthArticleTable"];
+    }
     for(HCY_ConsultingModel *model in arr){
         [self inserthealthArticleModel:model];
     }

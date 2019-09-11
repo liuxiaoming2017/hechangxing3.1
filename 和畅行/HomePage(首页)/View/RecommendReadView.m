@@ -108,9 +108,12 @@
         NSLog(@"%@",response);
         if ([response[@"status"] integerValue] == 100){
             
+            [weakSelf.recommendArr removeAllObjects];
+            
             for (NSDictionary *dic in [[response valueForKey:@"data"] valueForKey:@"content"]) {
                 HCY_ConsultingModel *tipModel = [[HCY_ConsultingModel alloc] init];
                 [tipModel yy_modelSetWithJSON:dic];
+                tipModel.numID = [weakSelf.recommendArr count];
                 [weakSelf.recommendArr addObject:tipModel];
             }
             

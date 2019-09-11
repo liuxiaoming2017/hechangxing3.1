@@ -117,6 +117,8 @@
 		036A66D02114023F0096A006 /* SonAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 036A66CC2114023F0096A006 /* SonAccount.m */; };
 		036A66D3211403DA0096A006 /* NSString+Extesion.m in Sources */ = {isa = PBXBuildFile; fileRef = 036A66D2211403D90096A006 /* NSString+Extesion.m */; };
 		036C8E0C23289B4800729889 /* Pods_和畅行.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036C8E0B23289B4800729889 /* Pods_和畅行.framework */; };
+		036C8E0F23289E1400729889 /* ArmchairDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 036C8E0E23289E1400729889 /* ArmchairDetailVC.m */; };
+		036C8E122328A27B00729889 /* ArmchairCommonVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 036C8E112328A27B00729889 /* ArmchairCommonVC.m */; };
 		036E25F9230A36F30043CF2C /* PgySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E25F8230A36F30043CF2C /* PgySDK.framework */; };
 		036E840E2186EAB1001B9BB4 /* i9_UISetTTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E84002186EAAF001B9BB4 /* i9_UISetTTViewController.m */; };
 		036E840F2186EAB1001B9BB4 /* MoxaHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E84042186EAAF001B9BB4 /* MoxaHelpViewController.m */; };
@@ -893,6 +895,10 @@
 		036A66D1211403D90096A006 /* NSString+Extesion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extesion.h"; sourceTree = "<group>"; };
 		036A66D2211403D90096A006 /* NSString+Extesion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extesion.m"; sourceTree = "<group>"; };
 		036C8E0B23289B4800729889 /* Pods_和畅行.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_和畅行.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		036C8E0D23289E1400729889 /* ArmchairDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArmchairDetailVC.h; sourceTree = "<group>"; };
+		036C8E0E23289E1400729889 /* ArmchairDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArmchairDetailVC.m; sourceTree = "<group>"; };
+		036C8E102328A27B00729889 /* ArmchairCommonVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArmchairCommonVC.h; sourceTree = "<group>"; };
+		036C8E112328A27B00729889 /* ArmchairCommonVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArmchairCommonVC.m; sourceTree = "<group>"; };
 		036E25F8230A36F30043CF2C /* PgySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PgySDK.framework; sourceTree = "<group>"; };
 		036E83FE2186EAAF001B9BB4 /* FindBackPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindBackPasswordViewController.h; sourceTree = "<group>"; };
 		036E83FF2186EAAF001B9BB4 /* i9_UISetTTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = i9_UISetTTViewController.h; sourceTree = "<group>"; };
@@ -2274,10 +2280,14 @@
 				035F31F5231D06DC009A0D94 /* view */,
 				035260B2230BD59100A716C8 /* MassageArmchairVC.h */,
 				035260B3230BD59100A716C8 /* MassageArmchairVC.m */,
+				036C8E102328A27B00729889 /* ArmchairCommonVC.h */,
+				036C8E112328A27B00729889 /* ArmchairCommonVC.m */,
 				035F31F2231D0604009A0D94 /* ArmchairHomeVC.h */,
 				035F31F3231D0604009A0D94 /* ArmchairHomeVC.m */,
 				0351C58F23278C3B0035A9EA /* ArmchairThemeVC.h */,
 				0351C59023278C3B0035A9EA /* ArmchairThemeVC.m */,
+				036C8E0D23289E1400729889 /* ArmchairDetailVC.h */,
+				036C8E0E23289E1400729889 /* ArmchairDetailVC.m */,
 				03B4E4D5232636B9003518EA /* armChair.plist */,
 			);
 			path = "按摩椅";
@@ -4422,6 +4432,7 @@
 				032A7A0420E9F6EB003D4952 /* CustomNavigationController.m in Sources */,
 				03771991210580BA0010EA8B /* ResultSpeakController.m in Sources */,
 				C99B717221B903BE00F1FF5F /* HCY_DAVisceraCell.m in Sources */,
+				036C8E0F23289E1400729889 /* ArmchairDetailVC.m in Sources */,
 				03535EFB20F7425100664FA9 /* QuestionListController.m in Sources */,
 				034A4E8D211A9AD900936A46 /* TZImageCropManager.m in Sources */,
 				C9E2E23921BE306800F45021 /* HCY_CarDetailController.m in Sources */,
@@ -4444,6 +4455,7 @@
 				03EBD1E922EE8B7C001FAD7A /* HWTFCursorView.m in Sources */,
 				036E85972186EB4C001B9BB4 /* i9_blelistViewCell.m in Sources */,
 				832ED75C2278286A00BFEEFC /* HpiViewController.m in Sources */,
+				036C8E122328A27B00729889 /* ArmchairCommonVC.m in Sources */,
 				039661F121F1BF7F00754AAA /* PayMentViewController.m in Sources */,
 				034A4E8A211A9AD900936A46 /* TZProgressView.m in Sources */,
 				03F6931C20FF30B700308E38 /* JSONKit.m in Sources */,
