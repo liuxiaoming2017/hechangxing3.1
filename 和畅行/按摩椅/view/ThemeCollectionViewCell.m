@@ -16,6 +16,8 @@
 
 - (void)reloadDataWithArray:(NSArray *)array
 {
+    
+    
     for(NSInteger i = 0;i<array.count;i++){
         NSDictionary *dic = [array objectAtIndex:i];
         NSInteger column = i / 3;
