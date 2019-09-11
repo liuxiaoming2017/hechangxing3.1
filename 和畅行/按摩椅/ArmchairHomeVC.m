@@ -25,6 +25,14 @@
 
 @implementation ArmchairHomeVC
 
+- (void)dealloc
+{
+    self.recommendV = nil;
+    self.dataArr = nil;
+    self.bgScrollView = nil;
+    self.collectionV = nil;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -50,7 +58,9 @@
     self.preBtn.hidden = NO;
     self.leftBtn.hidden = YES;
     self.navTitleLabel.text = @"按摩椅";
-    
+    [self.rightBtn setImage:[UIImage imageNamed:@"按摩开关_关"] forState:UIControlStateNormal];
+    [self.rightBtn setImage:[UIImage imageNamed:@"按摩开关_开"] forState:UIControlStateSelected];
+    self.rightBtn.hidden = NO;
     
     if (!self.bgScrollView){
         self.bgScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight)];

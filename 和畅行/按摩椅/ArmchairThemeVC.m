@@ -22,6 +22,13 @@
 
 @implementation ArmchairThemeVC
 
+- (void)dealloc
+{
+    self.collectionV = nil;
+    self.dataArr = nil;
+    self.pageView = nil;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -32,8 +39,16 @@
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"armChair" ofType:@"plist"];
     NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:filePath];
     
-    NSArray *titleArr = [dic allKeys];
-    self.dataArr = [dic allValues];
+    NSMutableArray *mutableArr = [NSMutableArray arrayWithCapacity:0];
+    NSArray *titleArr = @[@"专属",@"主题",@"区域",@"功效",@"场景"];
+    for(NSString *key in titleArr){
+        NSArray *arr = [dic objectForKey:key];
+        [mutableArr addObject:arr];
+    }
+
+    self.dataArr = [mutableArr copy];
+    
+   
     
     self.pageView = [[GLYPageView alloc] initWithFrame:CGRectMake(0.f, kNavBarHeight, ScreenWidth, 50.f) titlesArray:titleArr];
     self.pageView.delegate = self;
@@ -83,7 +98,12 @@
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ThemeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MCContent" forIndexPath:indexPath];
+    NSLog(@"row:%ld",indexPath.row);
+    ThemeCollectionViewCell *cell = (ThemeCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"MCContent" forIndexPath:indexPath];
+    //复用会存在问题
+    for(UIView *view in cell.subviews) {
+        [view removeFromSuperview];
+    }
     [cell reloadDataWithArray:[self.dataArr objectAtIndex:indexPath.row]];
     cell.highlighted = NO;
     return cell;
