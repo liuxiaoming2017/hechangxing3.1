@@ -80,6 +80,7 @@
     //[self addSubview:self.bluetoothBg];
     
     self.strengthBg = [UIImageView new];
+    self.strengthBg.image = [UIImage imageNamed:@"按钮背景"];
     CGFloat width = CGRectGetMaxX(self.bluetoothBg.frame)+ 50*SCREEN_WIDTH_Size ;
     self.strengthBg.frame = CGRectMake(self.width - 240, 24/2*SCREEN_HEIGHT_Size, 210, 100/2*SCREEN_WIDTH_Size);
     self.strengthBg.userInteractionEnabled = YES;
