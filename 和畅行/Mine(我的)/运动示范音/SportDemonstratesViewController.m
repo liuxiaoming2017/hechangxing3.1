@@ -150,7 +150,7 @@
     NSURL *url = [NSURL URLWithString:aUrlle];
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
+    [request addRequestHeader:@"version" value:@"ios_hcy"];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
     if([UserShareOnce shareOnce].languageType){
         [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];

@@ -72,7 +72,7 @@
                                                            options:NSStringDrawingUsesLineFragmentOrigin
                                                         attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
                                                            context:nil];
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 105 + textRect.size.height + height)];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 125 + textRect.size.height + height)];
     [imageV.layer addSublayer:[UIColor setGradualChangingColor:imageV fromColor:@"4294E1" toColor:@"D1BDFF"]];
     imageV.layer.cornerRadius = 10;
     imageV.layer.masksToBounds = YES;
@@ -206,9 +206,14 @@
     NSString* reqstr=[request responseString];
     NSDictionary * dic=[reqstr JSONValue];
     id status=[dic objectForKey:@"status"];
+    NSLog(@"%@",dic);
     if ([status intValue]== 100) {
-
-        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:[dic objectForKey:@"message"] preferredStyle:(UIAlertControllerStyleAlert)];
+        
+        if([[[dic valueForKey:@"data"] valueForKey:@"member"] valueForKey:@"bindCard"]){
+            [UserShareOnce shareOnce].bindCard = [[[dic valueForKey:@"data"] valueForKey:@"member"] valueForKey:@"bindCard"];
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"cardNameSuccess" object:nil];
+        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"服务卡添加成功") preferredStyle:(UIAlertControllerStyleAlert)];
         UIAlertAction *sureAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
             [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]animated:YES];
             
@@ -223,7 +228,7 @@
         av.tag  = 100008;
         [av show];
     } else  {
-        NSString *str = [dic objectForKey:@"data"];
+        NSString *str = [[dic valueForKey:@"data"] valueForKey:@"data"];
         [self showAlertViewController:str];
     }
 }

@@ -90,7 +90,7 @@
  
     
     userNameBox=[[UITextField alloc] init];
-    userNameBox.frame=CGRectMake(segment.left, segment.bottom+40, ScreenWidth - 100 ,30 );
+    userNameBox.frame=CGRectMake(segment.left, segment.bottom+40, ScreenWidth - 140 ,30 );
     userNameBox.borderStyle=UITextBorderStyleNone;
     userNameBox.returnKeyType=UIReturnKeyNext;
     userNameBox.keyboardType=UIKeyboardTypeNumberPad;
@@ -100,7 +100,7 @@
     userNameBox.placeholder=ModuleZW(@"  请输入手机号");
     [self.view addSubview:userNameBox];
     
-    UILabel *addNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(userNameBox.width - 40, 0, 40, 30)];
+    UILabel *addNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(userNameBox.width, 0, 50, 30)];
     addNumberLabel.text = @"+86";
     addNumberLabel.textColor = RGB_TextMidLightGray;
     [userNameBox addSubview:addNumberLabel];
@@ -228,7 +228,7 @@
     loginBtn.layer.cornerRadius = loginBtn.height/2;
     loginBtn.layer.masksToBounds = YES;
     
-    UILabel *otherLoginLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-100)/2.0, promptLabel.bottom+30, 100, 30)];
+    UILabel *otherLoginLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-120)/2.0, promptLabel.bottom+30, 120, 30)];
     otherLoginLabel.font = [UIFont systemFontOfSize:14];
     otherLoginLabel.textAlignment = NSTextAlignmentCenter;
     otherLoginLabel.textColor = UIColorFromHex(0xcecece);

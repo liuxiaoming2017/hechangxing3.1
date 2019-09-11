@@ -111,6 +111,7 @@
 "轮播暂停"                           =  "Pause";
 "播放乐药"                           =   "Play";
 "动作示范音"                       =  "Audio";
+"全部"                                  =  "All";
 "全部  >"                                  =  "All >";
 "全部   "                               =  "  All          ";
 "预备   "                               =   "Prepare  ";
@@ -530,26 +531,7 @@
 "和畅经络运动"        ="Harmony meridian exercise";
 "请去个人中心->我的->运动示范音中下载示范音，不然您将无法收听到语音播放"        ="Please go to Personal Center->Me->Exercise Demo Recording to download the demo record. Otherwise you will not be able to listen to the voice playback. ";
 "请去下载乐药"        ="Download treatment music";
-"上商"        ="Shang Shang";
-"少商"        ="Shao Shang ";
-"钛商"        ="Tai Shang ";
-"右商"        ="You Shang";
-"左商n"        ="Zuo Shang";
-"大角"        ="Da Jue";
-"判角"        ="Pan Jue";
-"上角"        ="Shang Jue";
-"少角"        ="Shao Jue";
-"钛角"        ="Tai Jue";
-"判徵"        ="Pan Zhi";
-"上徵"        ="Shang Zhi";
-"少徵"        ="Shao Zhi";
-"右徵"        ="You Zhi";
-"质徵"        ="Zhi Zhi";
-"大羽"        ="Da Yu";
-"上羽"        ="Shang Yu";
-"少羽"        ="Shao Yu";
-"桎羽"        ="Zhi Yu";
-"众羽"        ="Zhong Yu";
+
 "计时结束"        ="Timing over";
 "打开"        ="Open";
 "关闭"        ="Close";
@@ -624,11 +606,6 @@
 "高山流水"        ="Lateral Bending";
 "俯身探海"        ="Strengthened Bend Over";
 "俯身抱月"        ="Baby Cradle";
-"宫"        ="Gong";
-"商"        ="Shang ";
-"角"        ="Jue ";
-"徵"        ="Zhi ";
-"羽"        ="Yu ";
 "结算"        ="CHECKOUT";
 "强"        ="Strong ";
 "弱"        ="Weak ";
@@ -1809,3 +1786,26 @@
 "You Zhi" = "右徵";
 "Zhi Zhi" = "质徵";
 "Shang Zhi" = "上徵";
+
+
+"您设置的温度已进入高温区"    =      "The temperature you set is high";
+"有可能导致灸疗部位起水泡！"    =      "May cause blisters on treated area!";
+"您设置的温度比较高"    =      "The temperature you set is high";
+"很有可能导致灸疗部位起水泡哦!"    =      "May easily cause blisters on treated area!";
+"您设置的温度已经很高了"    =      "he temperature you set is high";
+"很容易导致灸疗部位起水泡哦!"    =      "May easily cause blisters on treated area!";
+"您设置的温度已经到顶了"    =      "The temperature you set has reached the maximum";
+"灸疗部位很容易起水泡哦!"    =      "May easily cause blisters on treated area!";
+"重新设置"    =      "Reset";
+"温馨提示"    =      "Tips";
+
+"您还不是会员"    =      "You are not yet a member";
+"请输入说明内容"    =      "Please enter a description";
+"上传报告"    =      "Upload report";
+"报告列表"    =      "Report list";
+"我的上传报告"    =      "My report uploaded";
+"报告详情"    =      "Detail";
+"全部服务"    =      "All services";
+"我的上传报告"    =      "My report uploaded";
+"字体大小"    =      "Font size";
+

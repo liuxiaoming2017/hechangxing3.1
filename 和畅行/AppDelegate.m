@@ -40,7 +40,7 @@
 #import <PgySDK/PgyManager.h>
 #import <PgyUpdate/PgyUpdateManager.h>
 
-#import "ArmchairHomeVC.h"
+//#import "ArmchairHomeVC.h"
 
 @interface AppDelegate ()<WXApiDelegate>
 @property (nonatomic, strong) NSURLSession * session;
@@ -55,13 +55,16 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
    // self.window.rootViewController = [self tabBar];
     NSArray *languages = [[NSUserDefaults standardUserDefaults] valueForKey:@"AppleLanguages"];
+    NSMutableArray *larray = [NSMutableArray arrayWithArray:languages];
+    [larray replaceObjectAtIndex:0 withObject:@"en-US"];
+    [[NSUserDefaults standardUserDefaults] setValue:larray forKey:@"AppleLanguages"];
     NSLog(@"%@",languages);
-    if ([languages.firstObject isEqualToString:@"en-US"]||[languages.firstObject isEqualToString:@"ja-US"]||[languages.firstObject isEqualToString:@"en-CN"]||[languages.firstObject isEqualToString:@"en"]){
-        [UserShareOnce shareOnce].languageType = @"us-en";
-        //        [UserShareOnce shareOnce].languageType  = nil;
-    }else{
+//    if ([languages.firstObject isEqualToString:@"en-US"]||[languages.firstObject isEqualToString:@"ja-US"]||[languages.firstObject isEqualToString:@"en-CN"]||[languages.firstObject isEqualToString:@"en"]){
+//        [UserShareOnce shareOnce].languageType = @"us-en";
+//        //        [UserShareOnce shareOnce].languageType  = nil;
+//    }else{
         [UserShareOnce shareOnce].languageType  = nil;
-    }
+//    }
     
     NSString *fontStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"YHFont"];
     if(![GlobalCommon stringEqualNull:fontStr]){
@@ -138,8 +141,8 @@
 }
 
 -(void)returnMainPage2{
-    //RootRequestController *homeVc = [[RootRequestController alloc] init];
-    ArmchairHomeVC *homeVc = [[ArmchairHomeVC alloc] init];
+    RootRequestController *homeVc = [[RootRequestController alloc] init];
+//    ArmchairHomeVC *homeVc = [[ArmchairHomeVC alloc] init];
     self.window.rootViewController = homeVc;
     
 }

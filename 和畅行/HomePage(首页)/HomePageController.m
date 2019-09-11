@@ -475,7 +475,7 @@
         
 //        LoginViewController *login = [[LoginViewController alloc] init];
 //        [self.navigationController pushViewController:login animated:YES];
-        return ;
+//        return ;
         if([[response objectForKey:@"status"] integerValue] == 100){
             
             id jlbsData = [[response objectForKey:@"data"] objectForKey:@"jlbs"];

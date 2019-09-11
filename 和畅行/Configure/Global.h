@@ -22,13 +22,13 @@ extern BOOL isBF;
 #define DATAURL_PRE @"http://47.92.160.74:8086/api/v1/"
 
 //测试环境
-#define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://10.1.71.181:8080/healthlm/")
-
+#define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://47.92.73.99:8080/healthlm/")
+//#define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://10.1.71.181:8080/healthlm/")
 //生产环境
 //#define URL_PRE @"http://eky3h.com/healthlm/"
 
 //#define URL_PRE @"http://10.1.71.14:8080/hcy-system/"
-#define URL_PRE @"http://10.1.71.181:8080/healthlm/"
+//#define URL_PRE @"http://10.1.71.181:8080/healthlm/"
 //http://10.1.71.181:8080/healthlm/
 //#define URL_PRE @"http://10.1.71.113:8888/hcy-system/"
 //http://10.1.71.113:8888/hcy-system
@@ -195,5 +195,5 @@ extern BOOL isBF;
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 
 
-#define  ModuleZW(zwString)          NSLocalizedStringFromTable(zwString, @"ModuleZW", nil)
+#define  ModuleZW(zwString)          NSLocalizedStringFromTable(zwString, @"ModuleZW1", nil)
 #define kDictIsEmpty(dic) ([dic isKindOfClass:[NSNull class]])

@@ -67,6 +67,7 @@
 @property(nonatomic,assign)int repeatClickInt;
 @property(nonatomic,strong)NSMutableArray * photos;//放图片的数组
 @property(nonatomic,strong)UIImageView *backImageView;
+@property(nonatomic,strong)UIView *backView;
 
 @end
 
@@ -237,7 +238,7 @@
 # pragma mark ----- 上拉刷新
 -(void)loadMoreDataOther {
     //档案最新
-    if (_typeUrlInteger == 2||_typeUrlInteger == 1){
+    if (_typeUrlInteger == 2||_typeUrlInteger == 1||_typeUrlInteger == 14){
         [self.timeLinvView.tableView.mj_footer endRefreshing];
         return;
     };
@@ -294,10 +295,7 @@
     else if([str isEqualToString:ModuleZW(@"报告列表")])    self.typeUrlInteger = 14;
     NSLog(@"%@",str);
     self.pageInteger = 1;
-    if(self.typeUrlInteger == 2&&![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
-        [self showAlertWarmMessage:@"您还不是会员" ];
-        return;
-    }
+   
     [_dataListArray removeAllObjects];
     [self.timeLinvView.tableView reloadData];
     
@@ -373,8 +371,15 @@
     }else{
         self.wkwebview.hidden = NO;
     }
+    
+    NSString *urlString = [NSString string];
+    if([urlStr hasSuffix:@"html"]){
+        urlString = [urlStr stringByAppendingString:[NSString stringWithFormat:@"?fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+    }else{
+        urlString = [urlStr stringByAppendingString:[NSString stringWithFormat:@"&fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+    }
 //    self.tableView.hidden = YES;
-    NSURL *url = [NSURL URLWithString:urlStr];
+    NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [self.wkwebview loadRequest:request];
     
@@ -756,7 +761,7 @@
         _uploadReportView.backgroundColor = RGB_AppWhite;
         [self.view addSubview:_uploadReportView];
         
-        UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10,   10, ScreenWidth - 20, 280)];
+        UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10,   10, ScreenWidth - 20, 300)];
         backImageView.backgroundColor = [UIColor whiteColor];
         backImageView.layer.cornerRadius = 10;
         backImageView.userInteractionEnabled = YES;
@@ -768,39 +773,43 @@
         [self.uploadReportView addSubview:backImageView];
         self.backImageView =  backImageView;
         
-        _textView = [[CPTextViewPlaceholder alloc]initWithFrame:CGRectMake(15, 15, backImageView.width - 30, 160)];
+        UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(10, 10, backImageView.width - 20, 210)];
+        backView.backgroundColor = [UIColor whiteColor];
+        backView.layer.borderColor = RGB(221, 221, 221).CGColor;
+        backView.layer.borderWidth =0.5;
+        [backImageView addSubview:backView];
+        self.backView = backView;
+        
+        _textView = [[CPTextViewPlaceholder alloc]initWithFrame:CGRectMake(5, 5, backView.width - 10, 190)];
         _textView.delegate = self;
-        _textView.layer.borderColor = RGB(221, 221, 221).CGColor;
         _textView.textContainerInset = UIEdgeInsetsMake(10, 0, 20, 10);
-        _textView.layer.borderWidth =0.5;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChangess) name:UITextViewTextDidChangeNotification object:self.textView];
         
         _textView.font = [UIFont systemFontOfSize:15];
         _textView.textColor = [UtilityFunc colorWithHexString:@"#666666"];
         
-        _textViews = [[UITextView alloc]initWithFrame:CGRectMake(15,15, backImageView.width - 30, 50)];
+        _textViews = [[UITextView alloc]initWithFrame:CGRectMake(10,5, backView.width - 30, 100)];
         _textView.keyboardType = UIKeyboardTypeDefault;
         _textView.returnKeyType = UIReturnKeyDone;
-        _textViews.text = ModuleZW(@"请输入说明内容");
+        _textViews.text = ModuleZW(@"请输入您想咨询的内容");
         _textViews.font = [UIFont systemFontOfSize:15];
         _textViews.textColor =RGB(162, 162, 162);
-        [backImageView addSubview:_textViews];
+        [backView addSubview:_textViews];
         _textView.backgroundColor = [UIColor clearColor];
-        //    _textViews.backgroundColor = [UIColor redColor];
-        [backImageView addSubview:_textView];
+        [backView addSubview:_textView];
         
-        UILabel *numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(_textView.width - 100, _textView.height - 30, 90, 20)];
+        UILabel *numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(backView.width - 100, backView.height - 20, 90, 20)];
         numberLabel.text = @"0/200";
         numberLabel.textColor =RGB(162, 162, 162);
         numberLabel.textAlignment = NSTextAlignmentRight;
-        [_textView addSubview:numberLabel];
+        [backView addSubview:numberLabel];
         _numberLabel = numberLabel;
         
         // 1. 常见一个发布图片时的photosView
         PYPhotosView *publishPhotosView = [PYPhotosView photosView];
         publishPhotosView.py_x = 15;
-        publishPhotosView.py_y = _textView.bottom + 10;
+        publishPhotosView.py_y = backView.bottom + 10;
         publishPhotosView.photoWidth = (backImageView.width-50)/4 ;
         publishPhotosView.photoHeight = (backImageView.width-50)/4 ;
         // 2.1 设置本地图片
@@ -817,7 +826,7 @@
         
         
         UIButton *photoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        photoButton.frame = CGRectMake(backImageView.width/8-20, _textView.bottom - 10 +  (backImageView.width-50)/8 , 40, 40) ;
+        photoButton.frame = CGRectMake(backImageView.width/8-20, backView.bottom + 20 , 40, 40) ;
         [photoButton setBackgroundImage:[UIImage imageNamed:@"专家咨询添加图片"] forState:UIControlStateNormal];
         [photoButton addTarget:self action:@selector(photoAction) forControlEvents:UIControlEventTouchUpInside];
         [backImageView addSubview:photoButton];
@@ -1053,21 +1062,21 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     if (self.photos.count < 4 ) {
         self.photoButton.hidden = NO;
         self.photoButton.left = (ScreenWidth - 20)/8-20 + (((ScreenWidth - 20)-50)/4 + 10)*self.photos.count;
-        self.photoButton.top = self->_textView.bottom +30;
-        self.self.backImageView.height = 280;
+        self.photoButton.top = self->_backView.bottom +20;
+        self.backImageView.height = 320;
     }else if (self.photos.count > 3&&self.photos.count < 8 ){
         self.photoButton.hidden = NO;
         self.photoButton.left = (ScreenWidth - 20)/8-20 + (((ScreenWidth - 20)-50)/4 + 10)*(self.photos.count%4);
-        self.photoButton.top = self->_textView.bottom +  20 +  (self->_backImageView.width-50)/4 +10;
-        self.self.backImageView.height = 280 + (self->_backImageView.width-50)/4 + 10;
+        self.photoButton.top = self->_backView.bottom +20 +  (self->_backImageView.width-50)/4 +10;
+        self.backImageView.height = 320 + (self->_backImageView.width-50)/4 + 10;
     } else if(self.photos.count == 8 ){
         self.photoButton.hidden = NO;
-        self.backImageView.height = 280 + (self->_backImageView.width-50)/2 + 20;
-        self.photoButton.top = self->_textView.bottom +  30 +  (self->_backImageView.width-50)/2 +10;
+        self.backImageView.height = 320 + (self->_backImageView.width-50)/2 + 20;
+        self.photoButton.top = self->_backView.bottom +30 +  (self->_backImageView.width-50)/2 +10;
     }else{
         self.photoButton.hidden = YES;
-        self.backImageView.height = 280 + (self->_backImageView.width-50)/2 + 20;
-        self.photoButton.top = self->_textView.bottom +  20 +  (self->_backImageView.width-50)/2 +10;
+        self.backImageView.height = 320 + (self->_backImageView.width-50)/2 + 20;
+        self.photoButton.top = self->_backView.bottom +20 +  (self->_backImageView.width-50)/2 +10;
         
     }
     if(self.photos.count>0){

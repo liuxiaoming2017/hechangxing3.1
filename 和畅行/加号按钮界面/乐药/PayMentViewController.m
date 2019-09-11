@@ -538,7 +538,7 @@
     {
         if ([status intValue]==100)
         {
-            self.dataArray = [dic objectForKey:@"data"];
+            self.dataArray = [[dic valueForKey:@"data"] valueForKey:@"data"];
             if (self.dataArray.count == 0) {
                 self.cardBackImg.hidden = NO;
                 self.no_CardImage.hidden = NO;

@@ -54,6 +54,8 @@
     _priceCountt = self.price;
     self.navTitleLabel.text = ModuleZW(@"支付信息");
     [self initWithController];
+    self.preBtn.hidden = NO;
+    self.leftBtn.hidden = YES;
     
 }
 -(void)backClick:(UIButton *)button{

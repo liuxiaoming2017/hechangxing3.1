@@ -422,6 +422,12 @@
 - (void)sectionGestTap:(NSInteger)section withTapGesture:(UITapGestureRecognizer *)gest
 {
     
+    if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还不是会员" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+        [av show];
+        return;
+    }
+    
     HealthTipsModel *model = [[HealthTipsModel alloc]init];
     if(_dataArr.count > 0) {
         model = _dataArr[0];
@@ -611,6 +617,12 @@
     
     if ([model.type isEqualToString:@"REPORT"] ) {
         
+        if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
+            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还不是会员" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+            [av show];
+            return;
+        }
+        
         NSString *idNim = [NSString stringWithFormat:@"%@",self.memberIDStr];
         if([GlobalCommon stringEqualNull:model.link]) return;
         NSString *url = [[NSString alloc] initWithFormat:@"%@%@",URL_PRE,model.link];
@@ -651,6 +663,12 @@
     
     //季度报告
     if (model.quarter != nil && ![model.quarter isKindOfClass:[NSNull class]]&&model.quarter.length != 0) {
+        
+        if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
+            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还不是会员" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+            [av show];
+            return;
+        }
         
         NSString *idNim = [NSString stringWithFormat:@"%@",self.memberIDStr];
         

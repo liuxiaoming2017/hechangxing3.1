@@ -131,7 +131,6 @@
     
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉，请检查您的网络是否畅通") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
     [av show];
-    [av release];
 }
 - (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
 {
@@ -145,8 +144,9 @@
     if ([status intValue]== 100) {
 
         if([[[dic valueForKey:@"data"] valueForKey:@"member"] valueForKey:@"bindCard"]){
-            [UserShareOnce shareOnce].bindCard = [[[dic valueForKey:@"str"] valueForKey:@"member"] valueForKey:@"bindCard"];
+            [UserShareOnce shareOnce].bindCard = [[[dic valueForKey:@"data"] valueForKey:@"member"] valueForKey:@"bindCard"];
         }
+        NSLog(@"%@", [[[dic valueForKey:@"data"] valueForKey:@"member"] valueForKey:@"bindCard"]);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"cardNameSuccess" object:nil];
         [GlobalCommon showMessage:ModuleZW(@"服务卡添加成功") duration:1];
         [self.navigationController popViewControllerAnimated:YES];

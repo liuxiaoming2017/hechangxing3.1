@@ -41,7 +41,7 @@
     imageV.layer.cornerRadius = 8.0;
     imageV.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:imageV];
-    imageV.layer.shadowColor = RGB_TextGray.CGColor;
+    imageV.layer.shadowColor = RGB(200, 200, 200).CGColor;
     imageV.layer.shadowOffset = CGSizeMake(0,0);
     imageV.layer.shadowOpacity = 0.5;
     imageV.layer.shadowRadius = 5;
