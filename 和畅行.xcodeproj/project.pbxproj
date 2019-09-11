@@ -82,6 +82,9 @@
 		03513AD520E9CAD4004E2805 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03513AD420E9CAD4004E2805 /* Assets.xcassets */; };
 		03513AD820E9CAD4004E2805 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03513AD620E9CAD4004E2805 /* LaunchScreen.storyboard */; };
 		03513ADB20E9CAD4004E2805 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 03513ADA20E9CAD4004E2805 /* main.m */; };
+		0351C59123278C3B0035A9EA /* ArmchairThemeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0351C59023278C3B0035A9EA /* ArmchairThemeVC.m */; };
+		0351C59423278C670035A9EA /* GLYPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0351C59323278C670035A9EA /* GLYPageView.m */; };
+		0351C59723278DB20035A9EA /* ThemeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0351C59623278DB20035A9EA /* ThemeCollectionViewCell.m */; };
 		035260B0230BD4B200A716C8 /* OGABluetooth530.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 035260AF230BD4B200A716C8 /* OGABluetooth530.framework */; };
 		035260B4230BD59100A716C8 /* MassageArmchairVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 035260B3230BD59100A716C8 /* MassageArmchairVC.m */; };
 		03535EE720F701DF00664FA9 /* TipWriteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03535EE620F701DF00664FA9 /* TipWriteController.m */; };
@@ -365,6 +368,8 @@
 		03B1A19B211995CF00B23339 /* AdvisorysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B1A199211995CF00B23339 /* AdvisorysViewController.m */; };
 		03B1A19E2119966A00B23339 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B1A19C2119966A00B23339 /* NSString+Emoji.m */; };
 		03B1A1A12119969E00B23339 /* CPTextViewPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B1A1A02119969E00B23339 /* CPTextViewPlaceholder.m */; };
+		03B4E4D12325FBD6003518EA /* SublayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B4E4D02325FBD6003518EA /* SublayerView.m */; };
+		03B4E4D6232636B9003518EA /* armChair.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03B4E4D5232636B9003518EA /* armChair.plist */; };
 		03C1F50720F491B700A341A8 /* RemindModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C1F50620F491B700A341A8 /* RemindModel.m */; };
 		03C2319821EC20E6003F0FCC /* sportShiFanYin.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03C2319721EC20E6003F0FCC /* sportShiFanYin.plist */; };
 		03C4D1F220F44DF800D7BF02 /* NSString+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C4D1F120F44DF800D7BF02 /* NSString+Utility.m */; };
@@ -819,6 +824,12 @@
 		03513AD720E9CAD4004E2805 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		03513AD920E9CAD4004E2805 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03513ADA20E9CAD4004E2805 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0351C58F23278C3B0035A9EA /* ArmchairThemeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArmchairThemeVC.h; sourceTree = "<group>"; };
+		0351C59023278C3B0035A9EA /* ArmchairThemeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArmchairThemeVC.m; sourceTree = "<group>"; };
+		0351C59223278C670035A9EA /* GLYPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLYPageView.h; sourceTree = "<group>"; };
+		0351C59323278C670035A9EA /* GLYPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLYPageView.m; sourceTree = "<group>"; };
+		0351C59523278DB20035A9EA /* ThemeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThemeCollectionViewCell.h; sourceTree = "<group>"; };
+		0351C59623278DB20035A9EA /* ThemeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThemeCollectionViewCell.m; sourceTree = "<group>"; };
 		035260AF230BD4B200A716C8 /* OGABluetooth530.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OGABluetooth530.framework; sourceTree = "<group>"; };
 		035260B2230BD59100A716C8 /* MassageArmchairVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MassageArmchairVC.h; sourceTree = "<group>"; };
 		035260B3230BD59100A716C8 /* MassageArmchairVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MassageArmchairVC.m; sourceTree = "<group>"; };
@@ -1349,6 +1360,9 @@
 		03B1A19D2119966A00B23339 /* NSString+Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emoji.h"; sourceTree = "<group>"; };
 		03B1A19F2119969E00B23339 /* CPTextViewPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPTextViewPlaceholder.h; sourceTree = "<group>"; };
 		03B1A1A02119969E00B23339 /* CPTextViewPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPTextViewPlaceholder.m; sourceTree = "<group>"; };
+		03B4E4CF2325FBD6003518EA /* SublayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SublayerView.h; sourceTree = "<group>"; };
+		03B4E4D02325FBD6003518EA /* SublayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SublayerView.m; sourceTree = "<group>"; };
+		03B4E4D5232636B9003518EA /* armChair.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = armChair.plist; sourceTree = "<group>"; };
 		03C1F50520F491B700A341A8 /* RemindModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemindModel.h; sourceTree = "<group>"; };
 		03C1F50620F491B700A341A8 /* RemindModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemindModel.m; sourceTree = "<group>"; };
 		03C2319721EC20E6003F0FCC /* sportShiFanYin.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = sportShiFanYin.plist; sourceTree = "<group>"; };
@@ -2261,6 +2275,9 @@
 				035260B3230BD59100A716C8 /* MassageArmchairVC.m */,
 				035F31F2231D0604009A0D94 /* ArmchairHomeVC.h */,
 				035F31F3231D0604009A0D94 /* ArmchairHomeVC.m */,
+				0351C58F23278C3B0035A9EA /* ArmchairThemeVC.h */,
+				0351C59023278C3B0035A9EA /* ArmchairThemeVC.m */,
+				03B4E4D5232636B9003518EA /* armChair.plist */,
 			);
 			path = "按摩椅";
 			sourceTree = "<group>";
@@ -2361,8 +2378,14 @@
 		035F31F5231D06DC009A0D94 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				0351C59223278C670035A9EA /* GLYPageView.h */,
+				0351C59323278C670035A9EA /* GLYPageView.m */,
 				035F31F6231D0705009A0D94 /* ArmchairHomeCell.h */,
 				035F31F7231D0705009A0D94 /* ArmchairHomeCell.m */,
+				03B4E4CF2325FBD6003518EA /* SublayerView.h */,
+				03B4E4D02325FBD6003518EA /* SublayerView.m */,
+				0351C59523278DB20035A9EA /* ThemeCollectionViewCell.h */,
+				0351C59623278DB20035A9EA /* ThemeCollectionViewCell.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -4005,6 +4028,7 @@
 				036E855D2186EB2A001B9BB4 /* i9_UISetTTViewForRoller.xib in Resources */,
 				83DC66402275414600B10F23 /* 血压15.png in Resources */,
 				036E84D22186EB1A001B9BB4 /* btn_aijiu_recipe_2.png in Resources */,
+				03B4E4D6232636B9003518EA /* armChair.plist in Resources */,
 				83DC66472275414600B10F23 /* 使用规范.png in Resources */,
 				83DC66502275414600B10F23 /* recheck_blue.png in Resources */,
 				036E84EF2186EB1A001B9BB4 /* ic_no_recipe.png in Resources */,
@@ -4508,6 +4532,7 @@
 				036E84362186EAD3001B9BB4 /* UIBlueToothInfo.m in Sources */,
 				0325A5F92109C29900275671 /* MySportCell.m in Sources */,
 				03FBDF7E219280BE006116FC /* ArchivesController.m in Sources */,
+				0351C59123278C3B0035A9EA /* ArmchairThemeVC.m in Sources */,
 				0385170C2186AB9F001DD2B7 /* payRequsestHandler.mm in Sources */,
 				03FBDF742192806F006116FC /* InformationController.m in Sources */,
 				03CECBF5210EF00700A443B8 /* AVPlayerObject.m in Sources */,
@@ -4546,6 +4571,7 @@
 				03513ADB20E9CAD4004E2805 /* main.m in Sources */,
 				038CE87720EDF1BF005E9219 /* RootRequestController.m in Sources */,
 				03F97CFA21005DE300A0F842 /* WriteListController.m in Sources */,
+				03B4E4D12325FBD6003518EA /* SublayerView.m in Sources */,
 				0338E4FA212BC0DD00BBF576 /* TestBaseViewController.m in Sources */,
 				036A66752113ECA70096A006 /* PrivateServiceViewController.m in Sources */,
 				03A07C0320EF5BE800002274 /* RegistrationNoteController.m in Sources */,
@@ -4592,6 +4618,7 @@
 				039C23852123C99A00F9AFA3 /* BloodGuideViewController.m in Sources */,
 				03799C1420F845AD004024D1 /* CacheManager.m in Sources */,
 				03F692D020FEEE9500308E38 /* ResultController.m in Sources */,
+				0351C59723278DB20035A9EA /* ThemeCollectionViewCell.m in Sources */,
 				03F97D1321007FB700A0F842 /* DBManager.m in Sources */,
 				C9B3069823054C54008D6D38 /* FSSegmentTitleView.m in Sources */,
 				034A4E87211A9AD900936A46 /* TZPhotoPreviewCell.m in Sources */,
@@ -4662,6 +4689,7 @@
 				03F692EB20FF2DF000308E38 /* ASIHTTPRequest.m in Sources */,
 				035260B4230BD59100A716C8 /* MassageArmchairVC.m in Sources */,
 				0370A85821114E4F00447DFB /* HeChangPackgeController.m in Sources */,
+				0351C59423278C670035A9EA /* GLYPageView.m in Sources */,
 				036E85962186EB4C001B9BB4 /* OMGToast.m in Sources */,
 				03F6931820FF2FD400308E38 /* SBJsonUTF8Stream.m in Sources */,
 				036A667F2113ECBB0096A006 /* PrivateDoctorModel.m in Sources */,
