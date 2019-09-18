@@ -10,6 +10,7 @@
 #import "InsidelayerView.h"
 #import "CommandButtonView.h"
 #import "HCYSlider.h"
+#import "UIButton+ExpandScope.h"
 
 typedef enum : NSInteger {
     PointDirectTop,
@@ -56,7 +57,11 @@ typedef enum : NSInteger {
 
 @property (nonatomic, copy) NSString *titleStr;
 
+@property (nonatomic, strong) UILabel *acupointLabel; //穴位介绍
+
 @property (nonatomic, strong) OGA530Subscribe *ogaSubscribe;
+
+@property (nonatomic,strong) UILabel *navTimeLabel;
 
 @end
 
@@ -125,6 +130,13 @@ typedef enum : NSInteger {
     CommandButtonView *comandView301 = (CommandButtonView *)[self.middleView viewWithTag:301];
     [comandView301 setButtonViewSelect:respond.executeRollFoot];
     
+    //按摩强度
+    HCYSlider *slider1 = (HCYSlider *)[self.middleView viewWithTag:310];
+    slider1.currentSliderValue = respond.status4DStrength;
+    //气囊强度
+    HCYSlider *slider2 = (HCYSlider *)[self.middleView viewWithTag:311];
+    slider2.currentSliderValue = respond.statusAirStrength;
+    
     //时间
     NSString *minute = [NSString stringWithFormat:@"%d", respond.timeMinute];
     NSString *sec = @"";
@@ -134,7 +146,7 @@ typedef enum : NSInteger {
          sec = [NSString stringWithFormat:@"%d", respond.timeSecond];
     }
     self.timeLabel.text = [NSString stringWithFormat:@"%@:%@",minute,sec];
-    
+    self.navTimeLabel.text = [NSString stringWithFormat:@"%@:%@",minute,sec];
     
     /******气压******/
     CommandButtonView *command400 = (CommandButtonView *)[self.qiyaView viewWithTag:400];
@@ -163,13 +175,13 @@ typedef enum : NSInteger {
     /******高级特殊******/
     CommandButtonView *gaoji200 = (CommandButtonView *)[self.advancedView viewWithTag:200];
     [gaoji200 setButtonViewSelect:respond.executeNeckShoulder4D];
-    CommandButtonView *gaoji201 = (CommandButtonView *)[self.advancedView viewWithTag:200];
+    CommandButtonView *gaoji201 = (CommandButtonView *)[self.advancedView viewWithTag:201];
     [gaoji201 setButtonViewSelect:respond.executeWaistBackRoll];
-    CommandButtonView *gaoji202 = (CommandButtonView *)[self.advancedView viewWithTag:200];
+    CommandButtonView *gaoji202 = (CommandButtonView *)[self.advancedView viewWithTag:202];
     [gaoji202 setButtonViewSelect:respond.statusKneeMassage];
-    CommandButtonView *gaoji203 = (CommandButtonView *)[self.advancedView viewWithTag:200];
+    CommandButtonView *gaoji203 = (CommandButtonView *)[self.advancedView viewWithTag:203];
     [gaoji203 setButtonViewSelect:respond.executeLegWarm];
-    CommandButtonView *gaoji204 = (CommandButtonView *)[self.advancedView viewWithTag:200];
+    CommandButtonView *gaoji204 = (CommandButtonView *)[self.advancedView viewWithTag:204];
     [gaoji204 setButtonViewSelect:(respond.statusSweden1 || respond.statusSweden2)? YES: NO];
     
     /******按摩椅姿势调节******/
@@ -187,23 +199,40 @@ typedef enum : NSInteger {
     [postView505 setButtonViewSelect:respond.statusPostBackUp];
     CommandButtonView *postView506 = (CommandButtonView *)[self.postBottomView viewWithTag:506];
     [postView506 setButtonViewSelect:respond.statusPostLegDown];
+    
+    //穴位
+    NSLog(@"斜方-风池:%@,斜方-肩中:%@,斜方-肩井:%@,阔背-心俞:%@,腰背-肾俞:%@,臀大肌-环中:%@,臀大肌-环跳:%@",respond.statusXieFangFengChi ? @"YES":@"NO",respond.statusXieFangJianZhong?@"YES":@"NO",respond.statusXieFangJianJing ? @"YES":@"NO",respond.statusKuoBeiXinShu?@"YES":@"NO",respond.statusYaoBeiShenShu ? @"YES":@"NO",respond.statusTunDaJiHuanZhong?@"YES":@"NO",respond.statusTunDaJiHuanTiao ? @"YES":@"NO");
 }
 
-# pragma mark - CommandButtonDelegate
+# pragma mark - CommandButtonDelegate 发送按摩椅指令
 - (void)commandActionWithModel:(ArmChairModel *)model
 {
+    NSLog(@"----发送----:%@,%d",model.command,[model.command intValue]);
     
-    [[OGA530BluetoothManager shareInstance] sendCommand:model.command success:nil];
+    [[OGA530BluetoothManager shareInstance] sendCommand:model.command success:^(BOOL success) {
+        if(success){
+            NSLog(@"++++指令成功了++++");
+        }
+    }];
 }
 
 
 - (void)initUI
 {
+    
+    self.navTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-240)/2.0, 2+kStatusBarHeight, 240, 40)];
+    self.navTimeLabel.font = [UIFont systemFontOfSize:18];
+    self.navTimeLabel.textAlignment = NSTextAlignmentCenter;
+    self.navTimeLabel.textColor = [UIColor blackColor];
+    self.navTimeLabel.hidden = YES;
+    [self.topView addSubview:self.navTimeLabel];
+    
+    
     if (!self.bgScrollView){
         self.bgScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-100)];
         self.bgScrollView.showsVerticalScrollIndicator = NO;
         
-        self.bgScrollView.backgroundColor = [UIColor colorWithRed:239/255.0 green:243/255.0 blue:246/255.0 alpha:1.0];
+        self.bgScrollView.backgroundColor = [UIColor whiteColor];
         self.bgScrollView.bounces = YES;
         self.bgScrollView.delegate = self;
         self.bgScrollView.contentSize = CGSizeMake(1, ScreenHeight-kNavBarHeight-100);
@@ -219,7 +248,7 @@ typedef enum : NSInteger {
             break;
         }
     }
-    NSLog(@"yyyy:%d",[zhuanshuArr containsObject:self.armchairModel]);
+    
     if(!self.isAdvanced && !isZhuanshu){
         UIButton *likeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         likeBtn.frame = CGRectMake(self.rightBtn.left-42, 2+kStatusBarHeight, 37, 40);
@@ -243,12 +272,31 @@ typedef enum : NSInteger {
     [self.bgScrollView addSubview:self.upsideView];
     
     
-    InsidelayerView *layerView = [[InsidelayerView alloc] initWithFrame:CGRectMake(25, 34, 80, 90)];
+    InsidelayerView *layerView = [[InsidelayerView alloc] initWithFrame:CGRectMake(25, 34-8, 80+30, 90+40)];
     [layerView insertSublayerFromeView:self.upsideView];
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, layerView.width, 20)];
+    titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14];
+    titleLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
+    //titleLabel.backgroundColor = [UIColor redColor];
+    titleLabel.text = @"肩中俞/肩井";
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    [layerView addSubview:titleLabel];
+    
+    self.acupointLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, titleLabel.bottom, layerView.width-16, layerView.height-titleLabel.bottom-5)];
+    self.acupointLabel.font = [UIFont fontWithName:@"PingFang SC" size:12];
+    self.acupointLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
+    //self.acupointLabel.backgroundColor = [UIColor orangeColor];
+    self.acupointLabel.text = @"保健功效：宣肺解表，散风活络、缓解肩部酸痛。调气行血，解郁散结。";
+    self.acupointLabel.numberOfLines = 0;
+    self.acupointLabel.textAlignment = NSTextAlignmentLeft;
+    [layerView addSubview:self.acupointLabel];
+    
     [self.upsideView addSubview:layerView];
     
+    CGFloat animationLeft = layerView.right+30 > (ScreenWidth-142)/2.0 ? layerView.right+30 : (ScreenWidth-142)/2.0;
     
-    UIView *animationView = [[UIView alloc] initWithFrame:CGRectMake((ScreenWidth-142)/2.0, 25, 142, 134)];
+    UIView *animationView = [[UIView alloc] initWithFrame:CGRectMake(animationLeft, 25, 142, 134)];
     animationView.tag = 1024;
     //animationView.backgroundColor = [UIColor orangeColor];
     //NSArray *timeArr = @[@3.0,@2.8,@2.6,@2.4,@2.2];
@@ -287,6 +335,7 @@ typedef enum : NSInteger {
     [self.playBtn setImage:[UIImage imageNamed:@"按摩_播放"] forState:UIControlStateNormal];
     [self.playBtn setImage:[UIImage imageNamed:@"按摩_暂停"] forState:UIControlStateSelected];
     [self.playBtn addTarget:self action:@selector(playAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.playBtn setHitTestEdgeInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [animationView addSubview:self.playBtn];
     
     [self.upsideView addSubview:animationView];
@@ -395,9 +444,12 @@ typedef enum : NSInteger {
         label.textAlignment = NSTextAlignmentCenter;
         [self.middleView addSubview:label];
         
-        HCYSlider *slider1 = [[HCYSlider alloc]initWithFrame:CGRectMake(label.right+5, label.top+4, layerView2.right-10-label.right-10, 15)];
+       // HCYSlider *slider1 = [[HCYSlider alloc]initWithFrame:CGRectMake(label.right+5, label.top+4, layerView2.right-10-label.right-10, 15) withTag:200+i];
+        HCYSlider *slider1 = [[HCYSlider alloc]initWithFrame:CGRectMake(label.right-5, label.top+4-8, layerView2.right-10-label.right-10+20, 15+16) withTag:200+i];
         slider1.currentValueColor = [UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0];
+        //slider1.backgroundColor = [UIColor orangeColor];
         slider1.maxValue = 5;
+        slider1.tag = 310+i;
         slider1.delegate = self;
         [self.middleView addSubview:slider1];
     }
@@ -511,7 +563,7 @@ typedef enum : NSInteger {
     panpress.delegate = self;
     [self.postBottomView addGestureRecognizer:panpress];
     
-    NSLog(@"****%f",self.postBottomView.frame.origin.y);
+    //NSLog(@"****%f",self.postBottomView.frame.origin.y);
     
 }
 
@@ -522,10 +574,10 @@ typedef enum : NSInteger {
     
     button.selected = !button.selected;
     if(button.selected){
-        NSArray *arr = [[CacheManager sharedCacheManager] getArmchairModel];
-        if(arr.count>0){
+//        NSArray *arr = [[CacheManager sharedCacheManager] getArmchairModel];
+//        if(arr.count>0){
             [[CacheManager sharedCacheManager] insertArmchairModel:self.armchairModel];
-        }
+      //  }
     }else{
         [[CacheManager sharedCacheManager] deleteArmchairModel:self.armchairModel];
     }
@@ -542,9 +594,11 @@ typedef enum : NSInteger {
 {
     NSLog(@"yyyyyyy:%f",scrollView.contentOffset.y);
     if(scrollView.contentOffset.y > 180){
-        self.navTitleLabel.text = @"15:00";
+        self.navTitleLabel.hidden = YES;
+        self.navTimeLabel.hidden = NO;
     }else{
-        self.navTitleLabel.text = @"高级按摩";
+        self.navTimeLabel.hidden = YES;
+        self.navTitleLabel.hidden = NO;
     }
 }
 
@@ -768,10 +822,22 @@ typedef enum : NSInteger {
     return layer;
 }
 
-# pragma mark - HCYSliderDelegate
-- (void)HCYSliderButtonAction:(NSString *)str
+# pragma mark - HCYSliderDelegate 按摩强度加减指令
+- (void)HCYSliderButtonAction:(BOOL)add withTag:(NSInteger)tag
 {
-    
+    if(tag == 200){ //按摩强度
+        if(add){    //加
+            [[OGA530BluetoothManager shareInstance] sendCommand:k530Command_MassageStrengthAdd success:nil];
+        }else{      //减
+            [[OGA530BluetoothManager shareInstance] sendCommand:k530Command_MassageStrength success:nil];
+        }
+    }else if (tag == 201){ //气囊强度
+        if(add){    //加
+            [[OGA530BluetoothManager shareInstance] sendCommand:k530Command_AirStrengthAdd success:nil];
+        }else{      //减
+            [[OGA530BluetoothManager shareInstance] sendCommand:k530Command_AirStrength success:nil];
+        }
+    }
 }
 
 @end

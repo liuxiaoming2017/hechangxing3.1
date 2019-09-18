@@ -121,8 +121,11 @@
 -(void)setupLineView:(UIView *)lineView withCount:(int)count
 {
     
-    
-    NSArray *colorArr = @[[UIColor colorWithRed:211/255.0 green:241/255.0 blue:187/255.0 alpha:1.0],[UIColor colorWithRed:252/255.0 green:198/255.0 blue:184/255.0 alpha:1.0],[UIColor colorWithRed:254/255.0 green:231/255.0 blue:185/255.0 alpha:1.0]];
+    NSArray *colorArr = @[
+                          [UIColor colorWithRed:211/255.0 green:241/255.0 blue:187/255.0 alpha:1.0],
+                          [UIColor colorWithRed:254/255.0 green:231/255.0 blue:185/255.0 alpha:1.0],
+                          [UIColor colorWithRed:252/255.0 green:198/255.0 blue:184/255.0 alpha:1.0]
+                          ];
     
     UIBezierPath *linePath = [UIBezierPath bezierPath];
     [linePath moveToPoint:CGPointMake(0, lineView.bounds.size.height/2)];

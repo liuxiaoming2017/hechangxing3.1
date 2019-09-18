@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol HCYSliderDelegate <NSObject>
 
-- (void)HCYSliderButtonAction:(NSString *)str;
+- (void)HCYSliderButtonAction:(BOOL)add withTag:(NSInteger)tag;
 
 @end
 
@@ -37,6 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) CGFloat maxValue;
 
 @property (nonatomic,weak) id <HCYSliderDelegate> delegate;
+
+
+- (id)initWithFrame:(CGRect)frame withTag:(NSInteger )tag;
 
 @end
 
