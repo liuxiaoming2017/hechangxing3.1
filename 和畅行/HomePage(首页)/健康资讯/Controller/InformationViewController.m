@@ -469,7 +469,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-    vc.titleStr = ModuleZW(@"健康文化");
+    vc.titleStr = ModuleZW(@"健康资讯");
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,[self.healthArray[indexPath.row] objectForKey:@"path"]];
     vc.urlStr = urlStr;
     [self.navigationController pushViewController:vc animated:YES];

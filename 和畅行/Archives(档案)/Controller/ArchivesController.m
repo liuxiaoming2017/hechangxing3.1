@@ -996,7 +996,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     [self.photos addObject:image];
     [self.publishPhotosView reloadDataWithImages:self.photos];
-    
+    [self updateThePage];
     bottomView.top = self.publishPhotosView.bottom+20;
     
 }

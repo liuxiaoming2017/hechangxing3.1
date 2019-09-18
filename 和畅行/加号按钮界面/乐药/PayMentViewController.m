@@ -572,7 +572,7 @@
         UIView *diView = [[UIView alloc]initWithFrame:CGRectMake(0,_tableView.bottom+65+(139 / 2 +10)*i, self.view.frame.size.width, 139 / 2 +10)];
         [scrollView addSubview:diView];
         
-        NSDate *datas = [[NSDate alloc]initWithTimeIntervalSince1970:[[self.dataArray[i] objectForKey:@"bindDate"] doubleValue]/1000.00];
+        NSDate *datas = [[NSDate alloc]initWithTimeIntervalSince1970:[[[self.dataArray[i]objectForKey:@"cashcard"]objectForKey:@"endDate"] doubleValue]/1000.00];
         NSDateFormatter *formatters = [[NSDateFormatter alloc] init];
         [formatters setDateStyle:NSDateFormatterMediumStyle];
         [formatters setTimeStyle:NSDateFormatterShortStyle];

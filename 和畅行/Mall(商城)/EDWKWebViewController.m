@@ -121,7 +121,7 @@ typedef void(^EDLoadRequestAction)(void);
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    [self.indicatorView stopAnimating];
+    
 
     if (webView == self.cookieWebview) {
         //cookieWebview加载成功后开始加载真正的url
@@ -130,6 +130,7 @@ typedef void(^EDLoadRequestAction)(void);
         }
         return;
     }
+    [self.indicatorView stopAnimating];
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {

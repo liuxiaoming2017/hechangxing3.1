@@ -30,14 +30,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+
     if(self.dateDic){
         [self layoutCarDetailView];
     }else{
         [self requestPurchaseHistory];
     }
-
    
 }
 
@@ -279,6 +277,7 @@
 
 - (void)requesstuserinfoError:(ASIHTTPRequest *)request
 {
+    [self layoutCarDetailView];
     [GlobalCommon hideMBHudWithView:self.view];
     [self showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
 }
@@ -305,8 +304,8 @@
         [self layoutCarDetailView];
 
     }else{
+        [self layoutCarDetailView];
         [self showAlertWarmMessage:[dic objectForKey:@"message"]];
-
     }
     
 }

@@ -46,11 +46,13 @@
 
 -(void)layoutUploadReportDView{
     
-    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, kNavBarHeight + 15, ScreenWidth - 30, ScreenHeight - kNavBarHeight - 30 -kTabBarHeight +44 )];
+    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight  - kNavBarHeight - 20)];
+    [self.view addSubview:scrollView];
+    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, ScreenWidth - 30, ScreenHeight - kNavBarHeight - 30 -kTabBarHeight +44 )];
     backImageView.layer.cornerRadius = 8.0;
     backImageView.backgroundColor = [UIColor whiteColor];
     backImageView.userInteractionEnabled = YES;
-    [self.view  addSubview:backImageView];
+    [scrollView  addSubview:backImageView];
     self.backImageView = backImageView;
     
     backImageView.layer.shadowColor = RGB_TextGray.CGColor;
@@ -115,6 +117,7 @@
 
     PYPhotosView * photosView = [PYPhotosView photosViewWithThumbnailUrls:self.model.pictures originalUrls:self.model.pictures];
     photosView.py_x = 15;
+    photosView.placeholderImage = [UIImage imageNamed:@"noMessage"];
     photosView.py_y = contentlabel.bottom + 30;
     photosView.photoWidth =  (backImageView.width-50)/4 ;;
     photosView.photoHeight = (backImageView.width-50)/4 ; ;
@@ -122,10 +125,12 @@
     photosView.delegate = self;
     [backImageView addSubview:photosView];
 
-    
+    backImageView.height =  photosView.bottom + 30;
+    scrollView.contentSize = CGSizeMake(ScreenWidth, backImageView.height + 40);
 }
 
 #pragma mark - PYPhotosViewDelegate
+
 
 // 进入预览图片时调用, 可以在此获得预览控制器，实现对导航栏的自定义
 - (void)photosView:(PYPhotosView *)photosView didPreviewImagesWithPreviewControlelr:(PYPhotosPreviewController *)previewControlelr{

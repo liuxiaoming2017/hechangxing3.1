@@ -237,23 +237,9 @@
                         titleStr = ModuleZW( @"待评价");
                         urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=completed",URL_PRE];
                         break;
-                    case 2:{
-                        HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-                        vc.noWebviewBack = YES;
-                        vc.progressType = progress2;
-                        vc.titleStr = ModuleZW(@"退款记录");
-                        vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/returns/list_refunds.jhtml",URL_PRE];
-                        vc.hidesBottomBarWhenPushed = YES;
-                        [self.navigationController pushViewController:vc animated:YES];
-                        return ;
-                        //                    HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-                        //                    vc.noWebviewBack = YES;
-                        //                    vc.progressType = progress2;
-                        //                    vc.titleStr = ModuleZW(@"退货记录");
-                        //                    vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/returns/list_returns.jhtml",URL_PRE];
-                        //                    vc.hidesBottomBarWhenPushed = YES;
-                        //                    [self.navigationController pushViewController:vc animated:YES];
-                    }
+                    case 2:
+                        titleStr = ModuleZW( @"退款记录");
+                        urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=refund&",URL_PRE];
                         break;
                     case 3:
                         titleStr = ModuleZW(@"全部订单");

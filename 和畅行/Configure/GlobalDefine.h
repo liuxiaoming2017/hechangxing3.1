@@ -135,11 +135,11 @@
 
 #define IS_IPHONE_Xs_Max ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2688), [[UIScreen mainScreen] currentMode].size) : NO)
 
-#define iPhoneX (IS_IPHONE_X || IS_IPHONE_Xr || IS_IPHONE_Xs_Max)
-#define kTabBarHeight (iPhoneX ? 83 : 44)
-#define kNavBarHeight (iPhoneX ? 88 : 64)
+#define iPhoneX111 (IS_IPHONE_X || IS_IPHONE_Xr || IS_IPHONE_Xs_Max)
+#define kTabBarHeight (iPhoneX111 ? 83 : 44)
+#define kNavBarHeight (iPhoneX111 ? 88 : 64)
 #define kNavHeight 44
-#define kStatusBarHeight (iPhoneX ? 44 : 20)
+#define kStatusBarHeight (iPhoneX111 ? 44 : 20)
 
 #define leYaoStatus @"leYaoStatus"
 
