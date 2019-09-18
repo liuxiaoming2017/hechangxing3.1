@@ -201,5 +201,5 @@ extern BOOL isBF;
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 
 
-#define  ModuleZW(zwString)          NSLocalizedStringFromTable(zwString, @"ModuleZW1", nil)
+#define  ModuleZW(zwString)          NSLocalizedStringFromTable(zwString, @"ModuleZW", nil)
 #define kDictIsEmpty(dic) ([dic isKindOfClass:[NSNull class]])

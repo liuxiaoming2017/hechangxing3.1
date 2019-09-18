@@ -654,6 +654,7 @@
 		C973090521BE16B700060447 /* HCY_InformationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C973090421BE16B700060447 /* HCY_InformationController.m */; };
 		C9875CA122F1792C00936A73 /* YHDFBuriedPoint.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9875CA022F1792C00936A73 /* YHDFBuriedPoint.framework */; };
 		C99B717221B903BE00F1FF5F /* HCY_DAVisceraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */; };
+		C9A2D3302331C68B00AC5185 /* NSBundle+Language.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A2D32F2331C68B00AC5185 /* NSBundle+Language.m */; };
 		C9B306472304F84E008D6D38 /* HealthLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B306462304F84D008D6D38 /* HealthLectureViewController.m */; };
 		C9B306562304FC73008D6D38 /* LectureDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B306552304FC73008D6D38 /* LectureDetailViewController.m */; };
 		C9B30675230506B0008D6D38 /* 支付失败图片.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B3065E230506B0008D6D38 /* 支付失败图片.png */; };
@@ -1777,6 +1778,8 @@
 		C9875CA022F1792C00936A73 /* YHDFBuriedPoint.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YHDFBuriedPoint.framework; sourceTree = "<group>"; };
 		C99B717021B903BE00F1FF5F /* HCY_DAVisceraCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_DAVisceraCell.h; sourceTree = "<group>"; };
 		C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_DAVisceraCell.m; sourceTree = "<group>"; };
+		C9A2D32E2331C68B00AC5185 /* NSBundle+Language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Language.h"; sourceTree = "<group>"; };
+		C9A2D32F2331C68B00AC5185 /* NSBundle+Language.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+Language.m"; sourceTree = "<group>"; };
 		C9B306452304F84D008D6D38 /* HealthLectureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HealthLectureViewController.h; sourceTree = "<group>"; };
 		C9B306462304F84D008D6D38 /* HealthLectureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HealthLectureViewController.m; sourceTree = "<group>"; };
 		C9B306542304FC73008D6D38 /* LectureDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LectureDetailViewController.h; sourceTree = "<group>"; };
@@ -3087,6 +3090,8 @@
 				038CE87320EDE8F9005E9219 /* UserShareOnce.m */,
 				030126CD21F96683000FA318 /* ChangeLanguageObject.h */,
 				030126CE21F96683000FA318 /* ChangeLanguageObject.m */,
+				C9A2D32E2331C68B00AC5185 /* NSBundle+Language.h */,
+				C9A2D32F2331C68B00AC5185 /* NSBundle+Language.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4708,6 +4713,7 @@
 				036A66D3211403DA0096A006 /* NSString+Extesion.m in Sources */,
 				03F692EC20FF2DF000308E38 /* ASIInputStream.m in Sources */,
 				039BE71421A7E07C004652AA /* NoTimeLineCell.m in Sources */,
+				C9A2D3302331C68B00AC5185 /* NSBundle+Language.m in Sources */,
 				83C5F8222272EED300889370 /* WriteleftTableViewCell.m in Sources */,
 				034A4E88211A9AD900936A46 /* TZVideoPlayerController.m in Sources */,
 				03101DE02330D6AA00C5F35E /* ArmchairAcheTestVC.m in Sources */,
