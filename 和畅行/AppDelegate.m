@@ -68,7 +68,7 @@
 //    }
     
      [UserShareOnce shareOnce].languageType  = nil;
-    
+     [[UIButton appearance] setExclusiveTouch:YES];
     NSString *fontStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"YHFont"];
     if(![GlobalCommon stringEqualNull:fontStr]){
         [UserShareOnce shareOnce].fontSize = [fontStr floatValue];

@@ -231,6 +231,7 @@
     if (tableView == self.listTableView) return;
     
     HYC_CardsModel *model = self.dataArray[indexPath.row];
+    NSLog(@"%@",self.dataArray);
     
     if([model.kindStr isEqualToString:ModuleZW(@"现金卡")] )return;
     

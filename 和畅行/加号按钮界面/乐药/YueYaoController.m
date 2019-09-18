@@ -19,6 +19,7 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "ShoppingController.h"
 
+#define SCREEN_WIDTH_Size ([UIScreen mainScreen].bounds.size.width)/375
 @interface YueYaoController ()<UITableViewDelegate,UITableViewDataSource,songListCellDelegate,DownloadHandlerDelegate,CBCentralManagerDelegate,CBPeripheralDelegate,MuscicNoramlDeleaget>
 
 {
@@ -55,7 +56,7 @@
 @property (nonatomic, strong) CBCentralManager *centralMgr;
 @property (nonatomic, strong) CBPeripheral *discoveredPeripheral;
 @property (strong, nonatomic) CBCharacteristic* writeCharacteristic;
-
+@property (nonatomic,strong) UIButton *blueTBT;
 /**
  乐药开关
  */
@@ -110,6 +111,46 @@
 //    [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
 //    [audioSession setActive:YES error:nil];
     
+    if(self.isYueLuoyi){
+        if(![[[NSUserDefaults standardUserDefaults]valueForKey:@"YueLuoyi"] isEqualToString:@"1111"]){
+            [self layoutPromptView];
+        }
+        
+        
+    }
+    
+}
+
+-(void)layoutPromptView{
+    
+    UIView *blackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+    blackView.backgroundColor = [UIColor blackColor];
+    blackView.alpha = 0.8;
+    [self.view addSubview:blackView];
+    
+    
+    UIButton *iKnowBT = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    iKnowBT.frame = CGRectMake(ScreenWidth - 150,  kScreenSize.height- kNavBarHeight - 160 - 100, 100, 50);
+    [iKnowBT setBackgroundImage:[UIImage imageNamed:ModuleZW(@"我知道了")] forState:(UIControlStateNormal)];
+    [[iKnowBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [[NSUserDefaults standardUserDefaults]setValue:@"1111" forKey:@"YueLuoyi"];
+        [blackView removeFromSuperview];
+        self.musciView.userInteractionEnabled = YES;
+        self.blueTBT.userInteractionEnabled = YES;
+    }];
+    [blackView addSubview:iKnowBT];
+    
+    NSArray *imageArray = @[@"左边箭头",@"右边箭头"];
+    for (int i = 0; i < 2; i++) {
+        UIImageView *leftImagaView = [[UIImageView alloc]initWithFrame:CGRectMake(40 + (ScreenWidth - 180 - 40)*i, kScreenSize.height- kNavBarHeight - 160, 120, 120)];
+        leftImagaView.image = [UIImage imageNamed:ModuleZW(imageArray[i])];
+        [blackView addSubview:leftImagaView];
+    }
+    
+    self.musciView.userInteractionEnabled = NO;
+    self.blueTBT.userInteractionEnabled = NO;
+    [self.view addSubview:self.musciView];
+    [self.view addSubview:self.blueTBT];
 }
 
 - (void)PaySuccess
@@ -229,6 +270,7 @@
         }
     }
     if ([GlobalCommon stringEqualNull:physicalStr]){
+        [hysegmentControl changeSegmentedControlWithIndex:0];
         [self requestYueyaoListWithType:@"大宫"];
     }
     
@@ -823,11 +865,21 @@
 
 #pragma -mark 蓝牙初始化界面
 - (void)BluBluetoothView{
-    
-    self.musciView = [[MuisicNoraml alloc]initWithFrame:CGRectMake(0, kScreenSize.height- kNavBarHeight - 75, kScreenSize.width, 150)];
+    //ScreenHeight  - kTabBarHeight - 16
+    self.musciView = [[MuisicNoraml alloc]initWithFrame:CGRectMake(0, kScreenSize.height- kTabBarHeight - 80, kScreenSize.width, 100/2*SCREEN_WIDTH_Size + 20)];
     self.musciView.delegate = self;
-    
     [self.view addSubview:self.musciView];
+    
+    UIButton *blueTBT = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    blueTBT.frame = CGRectMake(40,  self.musciView.top +10 , self.musciView.height - 20, self.musciView.height - 20);
+    [blueTBT setBackgroundImage:[UIImage imageNamed:@"蓝牙未连接"] forState:(UIControlStateNormal)];
+    [[blueTBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请先连接设备") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles: nil];
+        [alert show];
+    }];
+    [self.view addSubview:blueTBT];
+    self.blueTBT = blueTBT;
+    blueTBT.userInteractionEnabled = YES;
 }
 
 #pragma mark - 主动断开连接
@@ -907,7 +959,8 @@
     //蓝牙链接失败
     self.isBleLink = NO;
     // [self.centralMgr connectPeripheral:peripheral options:nil];
-    self.musciView.bluetoothBg.image = [UIImage imageNamed:@"关蓝牙"];
+    [_blueTBT setBackgroundImage:[UIImage imageNamed:@"蓝牙未连接"] forState:(UIControlStateNormal)];
+    _blueTBT.userInteractionEnabled = YES;
     
     
 }
@@ -972,7 +1025,9 @@
              */
             [[NSNotificationCenter defaultCenter] postNotificationName:LeyaoBluetoothON object:nil userInfo:nil];
             
-            self.musciView.bluetoothBg.image = [UIImage imageNamed:@"开蓝牙"];
+            [_blueTBT setBackgroundImage:[UIImage imageNamed:@"蓝牙已连接"] forState:(UIControlStateNormal)];
+            _blueTBT.userInteractionEnabled = NO;
+
             //蓝牙链接成功
             self.isBleLink = YES;
         }
@@ -1033,6 +1088,8 @@
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:LeyaoBluetoothOFF object:nil userInfo:nil];
             NSLog(@"蓝牙已关闭");
+            [_blueTBT setBackgroundImage:[UIImage imageNamed:@"蓝牙未连接"] forState:(UIControlStateNormal)];
+            _blueTBT.userInteractionEnabled = YES;
         }
             break;
         case CBCentralManagerStatePoweredOn:
@@ -1046,6 +1103,8 @@
         default:
         {
             NSLog(@"未知的蓝牙错误");
+            [_blueTBT setBackgroundImage:[UIImage imageNamed:@"蓝牙未连接"] forState:(UIControlStateNormal)];
+            _blueTBT.userInteractionEnabled = YES;
         }
             break;
     }

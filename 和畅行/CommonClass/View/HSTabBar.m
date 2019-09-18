@@ -45,7 +45,7 @@
     CGPoint temp = self.plusBtn.center;
     temp.x=self.frame.size.width/2;
     temp.y=self.frame.size.height/2;
-    if(iPhoneX){
+    if(iPhoneX111){
         temp.y = self.frame.size.height/2.0-(83-49)/2.0;
     }
     self.plusBtn.center=temp;

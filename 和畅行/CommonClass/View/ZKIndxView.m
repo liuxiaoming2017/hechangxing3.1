@@ -50,7 +50,7 @@
             
             CGFloat topY = ScreenHeight  - lieshu * (ICON_W + MARGIN) +80;
             NSLog(@"yyyy:%f",topY);
-            if(iPhoneX){
+            if(iPhoneX111){
                 topY = ScreenHeight  - lieshu * (ICON_W + MARGIN)-34 +80;
             }
             
@@ -99,7 +99,7 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setImage:[UIImage imageNamed:@"tabBar_publish_icon_selected"] forState:(UIControlStateNormal)];
         button.frame = CGRectMake(ScreenWidth/2-25,ScreenHeight - 50, 50, 50);
-        if(iPhoneX){
+        if(iPhoneX111){
             button.top = ScreenHeight - 50 - 34;
         }
         [button addTarget:self action:@selector(dismissClick:) forControlEvents:(UIControlEventTouchUpInside)];

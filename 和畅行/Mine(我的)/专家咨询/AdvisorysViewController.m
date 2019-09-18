@@ -129,7 +129,7 @@
     // 1. 常见一个发布图片时的photosView
     PYPhotosView *publishPhotosView = [PYPhotosView photosView];
     publishPhotosView.py_x = 15;
-    publishPhotosView.py_y = _textView.bottom + 10;
+    publishPhotosView.py_y = backView.bottom + 10;
     publishPhotosView.photoWidth = (backImageView.width-50)/4 ;
     publishPhotosView.photoHeight = (backImageView.width-50)/4 ;
     // 2.1 设置本地图片
@@ -402,9 +402,14 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     [self.photos addObject:image];
     [self.publishPhotosView reloadDataWithImages:self.photos];
-    
+    if (self.photos.count < 4 ) {
+        self.photoButton.hidden = NO;
+        self.photoButton.left = (ScreenWidth - 20)/8-20 + (((ScreenWidth - 20)-50)/4 + 10)*self.photos.count;
+    }else{
+        self.photoButton.hidden = YES;
+    }
     bottomView.top = self.publishPhotosView.bottom+20;
-    
+
 }
 
 //该方法弃用
@@ -602,6 +607,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     //得到子账户的id
     self.subId = subId;
 }
+
+
 
 
 - (void)requestResourceslistFinish:(ASIHTTPRequest *)request

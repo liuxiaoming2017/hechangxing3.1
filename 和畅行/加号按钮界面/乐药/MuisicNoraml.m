@@ -77,7 +77,7 @@
     self.bluetoothBg = [[UIImageView alloc] initWithFrame:CGRectMake(115/2 *SCREEN_WIDTH_Size, 34/2*SCREEN_HEIGHT_Size, 45*SCREEN_WIDTH_Size, 45*SCREEN_HEIGHT_Size)];
     self.bluetoothBg.image = [UIImage imageNamed:@"关蓝牙"];
     
-    //[self addSubview:self.bluetoothBg];
+//    [self addSubview:self.bluetoothBg];
     
     self.strengthBg = [UIImageView new];
     self.strengthBg.image = [UIImage imageNamed:@"按钮背景"];

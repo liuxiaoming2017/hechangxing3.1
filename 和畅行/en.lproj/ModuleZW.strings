@@ -634,7 +634,7 @@
 "视频咨询"        ="Video consultation";
 "将二维码/条码放入框内即可自动扫描"        ="Scan QR code/ barcode ";
 "手动输入"        ="Input manually";
-"请在输入框输入服务卡号"        ="Input card number";
+"请在输入框输入服务卡密码"        ="Input card number";
 "请输入卡号"        ="Input card number";
 "添加至卡包"        ="Add to card pack";
 "添加"        ="Add";
@@ -1809,3 +1809,16 @@
 "我的上传报告"    =      "My report uploaded";
 "字体大小"    =      "Font size";
 
+
+"请输入服务卡密码"  = "Enter service card password";
+"请在输入框内输入服务卡密码"  = "Service card password";
+"服务卡密码不能为空"  = "Service card password cannot be empty.";
+
+"小"  = "Small";
+"中"  = "Medium";
+"大"  = "Large";
+"超大"  = "Extra Large";
+
+"我知道了"  = "我知道了En";
+"左边箭头"  = "左边箭头En";
+"右边箭头"  = "右边箭头En";
