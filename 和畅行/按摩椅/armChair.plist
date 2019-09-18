@@ -7,26 +7,26 @@
 		<dict>
 			<key>name</key>
 			<string>大师精选</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_MassageMaster</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>轻松自在</string>
-			<key>iamge</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_MassageRelease</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>关节呵护</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_KneeCare</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>脊柱支柱</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_SpinalReleasePressure</string>
 		</dict>
 	</array>
 	<key>主题</key>
@@ -34,38 +34,38 @@
 		<dict>
 			<key>name</key>
 			<string>上班族</string>
-			<key>iamge</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_Sedentary</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>驾车族</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_Traceller</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>低头族</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_TextNeck</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>御宅派</string>
-			<key>iamge</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_CosyComfort</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>运动派</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_Athlete</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>爱购派</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_Shopping</string>
 		</dict>
 	</array>
 	<key>区域</key>
@@ -73,20 +73,20 @@
 		<dict>
 			<key>name</key>
 			<string>巴黎式</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_Balinese</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>中式</string>
 			<key>iamge</key>
-			<string></string>
+			<string>k530Command_MassageChinese</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>泰式</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_MassageThai</string>
 		</dict>
 	</array>
 	<key>功效</key>
@@ -94,38 +94,38 @@
 		<dict>
 			<key>name</key>
 			<string>深层按摩</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_MassageDeepTissue</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>美臀塑型</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_MassageHipsShapping</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>活血循环</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_MassageBloodCirculation</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>元气复苏</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_MassageEnergyRecovery</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>活力唤醒</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_MassageMotionRecovery</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>绽放魅力</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_MassageBalanceMind</string>
 		</dict>
 	</array>
 	<key>场景</key>
@@ -133,20 +133,203 @@
 		<dict>
 			<key>name</key>
 			<string>清晨唤醒</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_MassageAMRoutine</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>瞬间补眠</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_MassageMiddayRest</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>夜晚助眠</string>
-			<key>image</key>
-			<string></string>
+			<key>command</key>
+			<string>k530Command_MassageSweetDreams</string>
+		</dict>
+	</array>
+	<key>姿势</key>
+	<array>
+		<dict>
+			<key>name</key>
+			<string>零重力</string>
+			<key>command</key>
+			<string>k530Command_AngleZero</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>收纳</string>
+			<key>command</key>
+			<string>k530Command_AngleAdmission</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>展开</string>
+			<key>command</key>
+			<string>k530Command_AngleOpen</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>倒背</string>
+			<key>command</key>
+			<string>k530Command_Backdown</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>抬腿</string>
+			<key>command</key>
+			<string>k530Command_legUp</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>上小腿升</string>
+			<key>command</key>
+			<string>k530Command_UpperLegStretch</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>下小腿升</string>
+			<key>command</key>
+			<string>k530Command_LowerLegStretch</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>升背</string>
+			<key>command</key>
+			<string>k530Command_BackUp</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>降腿</string>
+			<key>command</key>
+			<string>k530Command_legDown</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>上小腿降</string>
+			<key>command</key>
+			<string>k530Command_UpperLegShrink</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>下小腿降</string>
+			<key>command</key>
+			<string>k530Command_LowerLegShrink</string>
+		</dict>
+	</array>
+	<key>基础</key>
+	<array>
+		<dict>
+			<key>name</key>
+			<string>揉捏</string>
+			<key>command</key>
+			<string>k530Command_MovementKnead</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>敲击</string>
+			<key>command</key>
+			<string>k530Command_MovementKnock</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>指压</string>
+			<key>command</key>
+			<string>k530Command_MovementShiatsu</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>推拿</string>
+			<key>command</key>
+			<string>k530Command_MovementRoll</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>拍打</string>
+			<key>command</key>
+			<string>k530Command_MovementClap</string>
+		</dict>
+	</array>
+	<key>特殊</key>
+	<array>
+		<dict>
+			<key>name</key>
+			<string>肩颈4D</string>
+			<key>command</key>
+			<string>k530Command_NeckShoulder4D</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>腰部滚压</string>
+			<key>command</key>
+			<string>k530Command_WaistRoll</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>膝盖按摩</string>
+			<key>command</key>
+			<string>k530Command_MassageKnee</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>小腿加热</string>
+			<key>command</key>
+			<string>k530Command_LegWarm</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>瑞典</string>
+			<key>command</key>
+			<string>k530Command_MovementSweden</string>
+		</dict>
+	</array>
+	<key>气压</key>
+	<array>
+		<dict>
+			<key>name</key>
+			<string>气压_全身</string>
+			<key>command</key>
+			<string>k530Command_AirAllBody</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>气压_肩颈</string>
+			<key>command</key>
+			<string>k530Command_AirShoulder</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>气压_手臂</string>
+			<key>command</key>
+			<string>k530Command_AirArm</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>气压_腰臂</string>
+			<key>command</key>
+			<string>k530Command_AirSeat</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>气压_小腿</string>
+			<key>command</key>
+			<string>k530Command_AirLeg</string>
+		</dict>
+	</array>
+	<key>背部脚底</key>
+	<array>
+		<dict>
+			<key>name</key>
+			<string>背部加热</string>
+			<key>command</key>
+			<string>k530Command_BackWarm</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>脚底滚轮</string>
+			<key>command</key>
+			<string>k530Command_FootRoll</string>
 		</dict>
 	</array>
 </dict>

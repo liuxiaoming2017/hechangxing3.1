@@ -7,10 +7,23 @@
 //
 
 #import "NavBarViewController.h"
+#import "ArmChairModel.h"
+
+#import <OGABluetooth530/OGABluetooth530.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+
 @interface ArmchairCommonVC : NavBarViewController
+
+
+
+@property (nonatomic, strong) ArmChairModel *armchairModel;
+
+//获取本地plist数据
+- (NSArray *)loadDataPlistWithStr:(NSString *)str;
+
 
 @end
 

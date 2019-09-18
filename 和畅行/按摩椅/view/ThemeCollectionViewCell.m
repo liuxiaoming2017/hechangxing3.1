@@ -8,6 +8,7 @@
 
 #import "ThemeCollectionViewCell.h"
 #import "SublayerView.h"
+#import "ArmChairModel.h"
 
 #define cellW 108
 #define themeCellMargin (ScreenWidth-cellW*3)/4.0
@@ -19,11 +20,12 @@
     
     
     for(NSInteger i = 0;i<array.count;i++){
-        NSDictionary *dic = [array objectAtIndex:i];
+
+        ArmChairModel *model = [array objectAtIndex:i];
         NSInteger column = i / 3;
         NSInteger row = i % 3;
         SublayerView *layerView = [[SublayerView alloc] initWithFrame:CGRectMake(themeCellMargin+(108+themeCellMargin)*row, themeCellMargin + (115+themeCellMargin)*column, cellW, 115)];
-        [layerView setImageV:[dic objectForKey:@"name"] withTitleLabel:[dic objectForKey:@"name"]];
+        [layerView setImageVandTitleLabelwithModel:model];
         layerView.tag = 100 + i;
         [self addSubview:layerView];
         
@@ -34,8 +36,10 @@
 
 - (void)tapAction:(UITapGestureRecognizer *)gesture
 {
-    UIView *hh = [gesture view];
-    NSLog(@"hhh:%d",hh.tag);
+    SublayerView *hh = (SublayerView *)[gesture view];
+    if([self.delegate respondsToSelector:@selector(selectTackWithModel:)]){
+        [self.delegate selectTackWithModel:hh.model];
+    }
 }
 
 @end

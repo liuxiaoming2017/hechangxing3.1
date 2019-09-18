@@ -54,10 +54,11 @@
     
 }
 
-- (void)setImageV:(NSString *)imageV withTitleLabel:(NSString *)title
+- (void)setImageVandTitleLabelwithModel:(ArmChairModel *)model
 {
-    self.imageV.image = [UIImage imageNamed:imageV];
-     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:title attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size:14],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
+    self.model = model;
+    self.imageV.image = [UIImage imageNamed:model.name];
+     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:model.name attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size:14],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
     self.titleLabel.attributedText = string;
 }
 

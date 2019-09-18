@@ -38,7 +38,7 @@
   
     
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, kNavBarHeight + 70, ScreenWidth, 30)];
-    titleLabel.text = ModuleZW(@"请在输入框输入服务卡号");
+    titleLabel.text = ModuleZW(@"请在输入框输入服务密码");
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.font = [UIFont systemFontOfSize:17];
@@ -51,7 +51,7 @@
     _textField.textAlignment = NSTextAlignmentCenter;
     _textField.layer.borderWidth =1.0f;
     _textField.layer.borderColor = RGB_TextAppBlue.CGColor;;
-    _textField.placeholder = ModuleZW(@"请输入卡号");
+    _textField.placeholder = ModuleZW(@"请输入服务密码");
     _textField.borderStyle = UITextBorderStyleRoundedRect;
     _textField.returnKeyType=UIReturnKeyDone;
     [self.view addSubview:_textField];

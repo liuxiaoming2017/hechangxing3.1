@@ -6,11 +6,15 @@
 //  Copyright © 2019 刘晓明. All rights reserved.
 //
 
-#import "NavBarViewController.h"
+#import "ArmchairCommonVC.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ArmchairDetailVC : NavBarViewController
+@interface ArmchairDetailVC : ArmchairCommonVC
+
+- (id)initWithType:(BOOL )isAdvanced withTitleStr:(NSString *)titleStr;
+
+- (void)commandActionWithModel:(ArmChairModel *)model;
 
 @end
 

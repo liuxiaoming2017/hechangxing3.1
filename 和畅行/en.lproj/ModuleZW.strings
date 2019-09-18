@@ -634,8 +634,8 @@
 "视频咨询"        ="Video consultation";
 "将二维码/条码放入框内即可自动扫描"        ="Scan QR code/ barcode ";
 "手动输入"        ="Input manually";
-"请在输入框输入服务卡号"        ="Input card number";
-"请输入卡号"        ="Input card number";
+"请在输入框输入服务密码"        ="Input card number";
+"请输入服务密码"        ="Input card number";
 "添加至卡包"        ="Add to card pack";
 "添加"        ="Add";
 "病历存档详情"        ="Record details";

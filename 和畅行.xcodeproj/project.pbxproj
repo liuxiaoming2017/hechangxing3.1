@@ -20,6 +20,7 @@
 		030F51332101B0E1003C918F /* WKWebviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 030F51322101B0E1003C918F /* WKWebviewController.m */; };
 		030F51362101B2A2003C918F /* ResultWriteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 030F51352101B2A2003C918F /* ResultWriteController.m */; };
 		030F51392101C206003C918F /* MeridianIdentifierViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 030F51372101C206003C918F /* MeridianIdentifierViewController.m */; };
+		03101DE02330D6AA00C5F35E /* ArmchairAcheTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 03101DDF2330D6AA00C5F35E /* ArmchairAcheTestVC.m */; };
 		0310F5B021EB7FB60005731F /* MySportController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310F5AF21EB7FB60005731F /* MySportController.m */; };
 		03140CF9227FD9BC00BC79D9 /* QuestionTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03140CF8227FD9BC00BC79D9 /* QuestionTableCell.xib */; };
 		031F0C612304E9F200C71A9E /* PgyUpdate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 031F0C602304E9F200C71A9E /* PgyUpdate.framework */; };
@@ -100,6 +101,7 @@
 		035F31F4231D0604009A0D94 /* ArmchairHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F31F3231D0604009A0D94 /* ArmchairHomeVC.m */; };
 		035F31F8231D0705009A0D94 /* ArmchairHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F31F7231D0705009A0D94 /* ArmchairHomeCell.m */; };
 		036285992106BB020090020D /* CellUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 036285982106BB020090020D /* CellUtil.m */; };
+		036721672329EB93001F863E /* HCYSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 036721662329EB93001F863E /* HCYSlider.m */; };
 		036A66732113ECA70096A006 /* PrivateDoctorListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036A666D2113ECA50096A006 /* PrivateDoctorListViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		036A66742113ECA70096A006 /* PrivateCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036A666F2113ECA60096A006 /* PrivateCheckViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		036A66752113ECA70096A006 /* PrivateServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036A66722113ECA70096A006 /* PrivateServiceViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -329,6 +331,7 @@
 		038B52FD21E83C8C00D592C9 /* SportDemonstratesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 038B52FA21E83C8C00D592C9 /* SportDemonstratesViewController.m */; };
 		038CE87420EDE8F9005E9219 /* UserShareOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = 038CE87320EDE8F9005E9219 /* UserShareOnce.m */; };
 		038CE87720EDF1BF005E9219 /* RootRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 038CE87620EDF1BF005E9219 /* RootRequestController.m */; };
+		038F8CE4232F599B0052C4BA /* OGBluetoothListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 038F8CE2232F599B0052C4BA /* OGBluetoothListView.m */; };
 		0390CF7F20ECB5D0000ECA53 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0390CF7C20ECB5D0000ECA53 /* CoreFoundation.framework */; };
 		0390CF8020ECB5D0000ECA53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0390CF7D20ECB5D0000ECA53 /* Foundation.framework */; };
 		0390CF8820ECB94F000ECA53 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0390CF8720ECB94F000ECA53 /* LoginViewController.m */; };
@@ -375,11 +378,15 @@
 		03C1F50720F491B700A341A8 /* RemindModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C1F50620F491B700A341A8 /* RemindModel.m */; };
 		03C2319821EC20E6003F0FCC /* sportShiFanYin.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03C2319721EC20E6003F0FCC /* sportShiFanYin.plist */; };
 		03C4D1F220F44DF800D7BF02 /* NSString+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C4D1F120F44DF800D7BF02 /* NSString+Utility.m */; };
+		03C5913D2331BB030058EF33 /* ArmchairTestResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C5913C2331BB030058EF33 /* ArmchairTestResultVC.m */; };
 		03CECBF5210EF00700A443B8 /* AVPlayerObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CECBF4210EF00700A443B8 /* AVPlayerObject.m */; };
 		03CEFC0A21A64B6B0097CB17 /* moxibustion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CEFC0921A64B6A0097CB17 /* moxibustion.framework */; };
 		03CEFC0D21A64BA80097CB17 /* i9_MoxaMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CEFC0B21A64BA70097CB17 /* i9_MoxaMainViewController.m */; };
 		03CEFC1321A64EF40097CB17 /* ZKIndxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CEFC1221A64EF30097CB17 /* ZKIndxView.m */; };
 		03CEFC1621A68E580097CB17 /* GuidanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CEFC1421A68E580097CB17 /* GuidanceView.m */; };
+		03D1BF592328D38600F2BDD6 /* ArmChairModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D1BF582328D38600F2BDD6 /* ArmChairModel.m */; };
+		03D1BF5C2328E22F00F2BDD6 /* InsidelayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D1BF5B2328E22F00F2BDD6 /* InsidelayerView.m */; };
+		03D1BF5F2328E9D000F2BDD6 /* CommandButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D1BF5E2328E9D000F2BDD6 /* CommandButtonView.m */; };
 		03D1E50321D7B0E10089E6CA /* VersionUpdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D1E50221D7B0E00089E6CA /* VersionUpdateView.m */; };
 		03D99E5921AD2CBE00C766FD /* UMShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D99E5821AD2CBD00C766FD /* UMShare.framework */; };
 		03D99E5B21AD334300C766FD /* libSocialWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D99E5A21AD334300C766FD /* libSocialWeChat.a */; };
@@ -708,6 +715,8 @@
 		030F51352101B2A2003C918F /* ResultWriteController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ResultWriteController.m; sourceTree = "<group>"; };
 		030F51372101C206003C918F /* MeridianIdentifierViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeridianIdentifierViewController.m; sourceTree = "<group>"; };
 		030F51382101C206003C918F /* MeridianIdentifierViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeridianIdentifierViewController.h; sourceTree = "<group>"; };
+		03101DDE2330D6AA00C5F35E /* ArmchairAcheTestVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArmchairAcheTestVC.h; sourceTree = "<group>"; };
+		03101DDF2330D6AA00C5F35E /* ArmchairAcheTestVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArmchairAcheTestVC.m; sourceTree = "<group>"; };
 		0310F5AF21EB7FB60005731F /* MySportController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySportController.m; sourceTree = "<group>"; };
 		03140CF8227FD9BC00BC79D9 /* QuestionTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuestionTableCell.xib; sourceTree = "<group>"; };
 		031F0C602304E9F200C71A9E /* PgyUpdate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PgyUpdate.framework; sourceTree = "<group>"; };
@@ -861,6 +870,8 @@
 		035F31F7231D0705009A0D94 /* ArmchairHomeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArmchairHomeCell.m; sourceTree = "<group>"; };
 		036285972106BB020090020D /* CellUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CellUtil.h; sourceTree = "<group>"; };
 		036285982106BB020090020D /* CellUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CellUtil.m; sourceTree = "<group>"; };
+		036721652329EB92001F863E /* HCYSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCYSlider.h; sourceTree = "<group>"; };
+		036721662329EB93001F863E /* HCYSlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCYSlider.m; sourceTree = "<group>"; };
 		036859DD222783DE00B10BE7 /* Pods_和畅行.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_和畅行.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		036A666D2113ECA50096A006 /* PrivateDoctorListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivateDoctorListViewController.m; sourceTree = "<group>"; };
 		036A666E2113ECA60096A006 /* PrivateServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateServiceViewController.h; sourceTree = "<group>"; };
@@ -1273,6 +1284,8 @@
 		038CE87320EDE8F9005E9219 /* UserShareOnce.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserShareOnce.m; sourceTree = "<group>"; };
 		038CE87520EDF1BF005E9219 /* RootRequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootRequestController.h; sourceTree = "<group>"; };
 		038CE87620EDF1BF005E9219 /* RootRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootRequestController.m; sourceTree = "<group>"; };
+		038F8CE2232F599B0052C4BA /* OGBluetoothListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBluetoothListView.m; sourceTree = "<group>"; };
+		038F8CE3232F599B0052C4BA /* OGBluetoothListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBluetoothListView.h; sourceTree = "<group>"; };
 		0390CF7C20ECB5D0000ECA53 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		0390CF7D20ECB5D0000ECA53 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0390CF7E20ECB5D0000ECA53 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1375,6 +1388,8 @@
 		03C2319721EC20E6003F0FCC /* sportShiFanYin.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = sportShiFanYin.plist; sourceTree = "<group>"; };
 		03C4D1F020F44DF800D7BF02 /* NSString+Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Utility.h"; sourceTree = "<group>"; };
 		03C4D1F120F44DF800D7BF02 /* NSString+Utility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utility.m"; sourceTree = "<group>"; };
+		03C5913B2331BB020058EF33 /* ArmchairTestResultVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArmchairTestResultVC.h; sourceTree = "<group>"; };
+		03C5913C2331BB030058EF33 /* ArmchairTestResultVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArmchairTestResultVC.m; sourceTree = "<group>"; };
 		03CECBF3210EF00700A443B8 /* AVPlayerObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVPlayerObject.h; sourceTree = "<group>"; };
 		03CECBF4210EF00700A443B8 /* AVPlayerObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVPlayerObject.m; sourceTree = "<group>"; };
 		03CEFC0921A64B6A0097CB17 /* moxibustion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = moxibustion.framework; sourceTree = "<group>"; };
@@ -1384,6 +1399,12 @@
 		03CEFC1221A64EF30097CB17 /* ZKIndxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZKIndxView.m; sourceTree = "<group>"; };
 		03CEFC1421A68E580097CB17 /* GuidanceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuidanceView.m; sourceTree = "<group>"; };
 		03CEFC1521A68E580097CB17 /* GuidanceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuidanceView.h; sourceTree = "<group>"; };
+		03D1BF572328D38600F2BDD6 /* ArmChairModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArmChairModel.h; sourceTree = "<group>"; };
+		03D1BF582328D38600F2BDD6 /* ArmChairModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArmChairModel.m; sourceTree = "<group>"; };
+		03D1BF5A2328E22F00F2BDD6 /* InsidelayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InsidelayerView.h; sourceTree = "<group>"; };
+		03D1BF5B2328E22F00F2BDD6 /* InsidelayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InsidelayerView.m; sourceTree = "<group>"; };
+		03D1BF5D2328E9D000F2BDD6 /* CommandButtonView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommandButtonView.h; sourceTree = "<group>"; };
+		03D1BF5E2328E9D000F2BDD6 /* CommandButtonView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommandButtonView.m; sourceTree = "<group>"; };
 		03D1E50121D7B0E00089E6CA /* VersionUpdateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionUpdateView.h; sourceTree = "<group>"; };
 		03D1E50221D7B0E00089E6CA /* VersionUpdateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionUpdateView.m; sourceTree = "<group>"; };
 		03D5F84F2322224900B9536F /* payRequsestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = payRequsestHandler.h; sourceTree = "<group>"; };
@@ -2277,6 +2298,7 @@
 		035260B1230BD4E900A716C8 /* 按摩椅 */ = {
 			isa = PBXGroup;
 			children = (
+				03D1BF562328D32500F2BDD6 /* model */,
 				035F31F5231D06DC009A0D94 /* view */,
 				035260B2230BD59100A716C8 /* MassageArmchairVC.h */,
 				035260B3230BD59100A716C8 /* MassageArmchairVC.m */,
@@ -2288,6 +2310,10 @@
 				0351C59023278C3B0035A9EA /* ArmchairThemeVC.m */,
 				036C8E0D23289E1400729889 /* ArmchairDetailVC.h */,
 				036C8E0E23289E1400729889 /* ArmchairDetailVC.m */,
+				03101DDE2330D6AA00C5F35E /* ArmchairAcheTestVC.h */,
+				03101DDF2330D6AA00C5F35E /* ArmchairAcheTestVC.m */,
+				03C5913B2331BB020058EF33 /* ArmchairTestResultVC.h */,
+				03C5913C2331BB030058EF33 /* ArmchairTestResultVC.m */,
 				03B4E4D5232636B9003518EA /* armChair.plist */,
 			);
 			path = "按摩椅";
@@ -2395,8 +2421,16 @@
 				035F31F7231D0705009A0D94 /* ArmchairHomeCell.m */,
 				03B4E4CF2325FBD6003518EA /* SublayerView.h */,
 				03B4E4D02325FBD6003518EA /* SublayerView.m */,
+				03D1BF5D2328E9D000F2BDD6 /* CommandButtonView.h */,
+				03D1BF5E2328E9D000F2BDD6 /* CommandButtonView.m */,
+				03D1BF5A2328E22F00F2BDD6 /* InsidelayerView.h */,
+				03D1BF5B2328E22F00F2BDD6 /* InsidelayerView.m */,
+				036721652329EB92001F863E /* HCYSlider.h */,
+				036721662329EB93001F863E /* HCYSlider.m */,
 				0351C59523278DB20035A9EA /* ThemeCollectionViewCell.h */,
 				0351C59623278DB20035A9EA /* ThemeCollectionViewCell.m */,
+				038F8CE3232F599B0052C4BA /* OGBluetoothListView.h */,
+				038F8CE2232F599B0052C4BA /* OGBluetoothListView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -3349,6 +3383,15 @@
 				835DB8DA21D3685D00B8DF99 /* HCY_ConsultingModel.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		03D1BF562328D32500F2BDD6 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				03D1BF572328D38600F2BDD6 /* ArmChairModel.h */,
+				03D1BF582328D38600F2BDD6 /* ArmChairModel.m */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 		03DEBC6B21086369008434BD /* 心电图详情 */ = {
@@ -4445,6 +4488,7 @@
 				C9B306472304F84E008D6D38 /* HealthLectureViewController.m in Sources */,
 				835DB8DB21D3685D00B8DF99 /* HCY_ConsultingModel.m in Sources */,
 				832ED75F2278321800BFEEFC /* HPITableViewCell.m in Sources */,
+				038F8CE4232F599B0052C4BA /* OGBluetoothListView.m in Sources */,
 				03799C1920F899AD004024D1 /* AnwerModel.m in Sources */,
 				034A4E82211A9AD900936A46 /* TZImageManager.m in Sources */,
 				034A4E8B211A9AD900936A46 /* UIView+Layout.m in Sources */,
@@ -4467,6 +4511,7 @@
 				036E85912186EB4C001B9BB4 /* MoxiHeadInfView_i9.m in Sources */,
 				03439082210AB8BB00B57142 /* HYSegmentedControl.m in Sources */,
 				034A4E89211A9AD900936A46 /* NSBundle+TZImagePicker.m in Sources */,
+				036721672329EB93001F863E /* HCYSlider.m in Sources */,
 				03FBDF752192806F006116FC /* InformationDedailssViewController.m in Sources */,
 				036E84152186EAB1001B9BB4 /* SetNetsPassWordViewController.m in Sources */,
 				C9B3069123050772008D6D38 /* PaymentInfoViewController.m in Sources */,
@@ -4538,6 +4583,7 @@
 				C9B30694230507C5008D6D38 /* CardModel.m in Sources */,
 				036FC0D621181AF400C1A793 /* MyAvdisorysViewController.m in Sources */,
 				0385401920EF06AB002AC776 /* NSDictionary+Extension.m in Sources */,
+				03D1BF592328D38600F2BDD6 /* ArmChairModel.m in Sources */,
 				036A66892113F6A30096A006 /* ZYGASINetworking.m in Sources */,
 				039B2AD4212522D000D558F5 /* TestViewController.m in Sources */,
 				0390CF8B20ECB975000ECA53 /* RegisterViewController.m in Sources */,
@@ -4565,6 +4611,7 @@
 				035BBC5A21ABA4E900AB537D /* UIButton+BACountDown.m in Sources */,
 				036A667E2113ECBB0096A006 /* SelectedAdvisorModel.m in Sources */,
 				036E84412186EAD3001B9BB4 /* UIImage+Util.m in Sources */,
+				03C5913D2331BB030058EF33 /* ArmchairTestResultVC.m in Sources */,
 				034A4E83211A9AD900936A46 /* TZPhotoPickerController.m in Sources */,
 				036E84132186EAB1001B9BB4 /* i9_UISetTTViewForRollerController.m in Sources */,
 				83E23EF421C202B100B43298 /* HCY_HomeImageModel.m in Sources */,
@@ -4584,6 +4631,7 @@
 				03051FF522C0997D00385DD0 /* AESCipher.m in Sources */,
 				03513ADB20E9CAD4004E2805 /* main.m in Sources */,
 				038CE87720EDF1BF005E9219 /* RootRequestController.m in Sources */,
+				03D1BF5C2328E22F00F2BDD6 /* InsidelayerView.m in Sources */,
 				03F97CFA21005DE300A0F842 /* WriteListController.m in Sources */,
 				03B4E4D12325FBD6003518EA /* SublayerView.m in Sources */,
 				0338E4FA212BC0DD00BBF576 /* TestBaseViewController.m in Sources */,
@@ -4658,6 +4706,7 @@
 				039BE71421A7E07C004652AA /* NoTimeLineCell.m in Sources */,
 				83C5F8222272EED300889370 /* WriteleftTableViewCell.m in Sources */,
 				034A4E88211A9AD900936A46 /* TZVideoPlayerController.m in Sources */,
+				03101DE02330D6AA00C5F35E /* ArmchairAcheTestVC.m in Sources */,
 				03F97D0321005EE300A0F842 /* SymptomModel.m in Sources */,
 				0337A724218ADC6C005A4693 /* PECropViewController.m in Sources */,
 				03F6931220FF2FD400308E38 /* SBJsonStreamParserAccumulator.m in Sources */,
@@ -4742,6 +4791,7 @@
 				036E85B22186EB75001B9BB4 /* BaseControlViewController.m in Sources */,
 				03FBDF762192806F006116FC /* RecommendDetailVC.m in Sources */,
 				0338E507212C057E00BBF576 /* MessageModel.m in Sources */,
+				03D1BF5F2328E9D000F2BDD6 /* CommandButtonView.m in Sources */,
 				0385167921869EDB001DD2B7 /* IXAttributeTapLabel.m in Sources */,
 				C97308F821BA50FB00060447 /* ScanSuccessJumpVC.m in Sources */,
 				03F692EA20FF2DF000308E38 /* ASIFormDataRequest.m in Sources */,

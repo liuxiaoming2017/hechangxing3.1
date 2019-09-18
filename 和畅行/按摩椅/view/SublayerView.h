@@ -7,14 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ArmChairModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SublayerView : UIView
 
+@property (nonatomic,strong) ArmChairModel *model;
+
 -(void)insertSublayerFromeView:(UIView *)view;
 
-- (void)setImageV:(NSString *)imageV withTitleLabel:(NSString *)title;
+- (void)setImageVandTitleLabelwithModel:(ArmChairModel *)model;
 
 @end
 

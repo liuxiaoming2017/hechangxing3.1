@@ -447,6 +447,16 @@
     
 }
 
++ (void)showMBHudTitleWithView:(UIView *)view withTitle:(NSString *)title
+{
+    MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:view];
+    progress.label.text = title;
+    progress.tag = 101;
+    [view addSubview:progress];
+    [view bringSubviewToFront:progress];
+    [progress showAnimated:YES];
+}
+
 + (void)hideMBHudTitleWithView:(UIView *)view
 {
     MBProgressHUD *progress = (MBProgressHUD *)[view viewWithTag:101];

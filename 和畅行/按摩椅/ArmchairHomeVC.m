@@ -10,6 +10,9 @@
 #import "ArmchairHomeCell.h"
 #import "SublayerView.h"
 #import "ArmchairThemeVC.h"
+#import "ArmchairDetailVC.h"
+#import "OGBluetoothListView.h"
+#import "ArmchairAcheTestVC.h"
 
 #define margin ((ScreenWidth-107*3)/4.0)
 
@@ -21,6 +24,11 @@
 @property (nonatomic, strong) NSMutableArray *dataArr;
 
 @property (nonatomic, strong) UIView *recommendV;
+
+@property (nonatomic, weak) OGBluetoothListView *listView;
+
+@property (nonatomic, strong) OGA530Subscribe *subscribe;
+
 @end
 
 @implementation ArmchairHomeVC
@@ -37,8 +45,12 @@
     [super viewDidLoad];
     
     [self initUI];
+    self.navTitleLabel.text = @"按摩椅";
     
     self.dataArr = [NSMutableArray arrayWithCapacity:0];
+    
+//    NSArray *arr = @[@"大师精选",@"轻松自在",@"关节呵护",@"脊柱支柱",@"高级按摩",@"更多按摩"];
+//    self.dataArr = [mutableArr copy];
     
     UIView *view = [[UIView alloc] init];
     view.frame = CGRectMake(14,kNavBarHeight+20,107.5,115);
@@ -51,16 +63,64 @@
     
     [self createBottomView];
     
+//    NSString *deviceUUID = [[NSUserDefaults standardUserDefaults] objectForKey:OGADeviceUUID];
+//    NSLog(@"deviceUUID:%@",deviceUUID);
+//    if(deviceUUID){
+//        BOOL status = [[OGA530BluetoothManager shareInstance] autoConnectDevice:deviceUUID];
+//        NSLog(@"status:%d",status);
+//    }else{
+//       [self scanPeripheral];
+//    }
+    
+    [self scanPeripheral];
+    
+    __weak typeof(self) weakSelf = self;
+    self.subscribe = [[OGA530Subscribe alloc] init];
+    [[OGA530BluetoothManager shareInstance] addSubscribe:self.subscribe];
+    [self.subscribe setRespondBlock:^(OGA530Respond * _Nonnull respond) {
+        
+        [weakSelf didUpdateValueForChair:respond];
+    }];
+    
+}
+
+- (void)didUpdateValueForChair:(OGA530Respond *)respond {
+    
+    self.rightBtn.selected = respond.powerOn;
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSArray *arr = [[CacheManager sharedCacheManager] getArmchairModel];
+    
+    if(arr.count>0){
+        self.dataArr = [arr copy];
+    }else{
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"armChair" ofType:@"plist"];
+        NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:filePath];
+        
+        self.dataArr = [ArmChairModel mj_objectArrayWithKeyValuesArray:[dic objectForKey:@"专属"]];
+        ArmChairModel *model1 = [[ArmChairModel alloc] init];
+        model1.name = @"高级按摩";
+        model1.command = @"";
+        ArmChairModel *model2 = [[ArmChairModel alloc] init];
+        model2.name = @"更多按摩";
+        model2.command = @"";
+        [self.dataArr addObject:model1];
+        [self.dataArr addObject:model2];
+        
+        [[CacheManager sharedCacheManager] addArmchairModelWithArr:self.dataArr];
+    }
+    
+    [self.collectionV reloadData];
+    
 }
 
 - (void)initUI
 {
-    self.preBtn.hidden = NO;
-    self.leftBtn.hidden = YES;
-    self.navTitleLabel.text = @"按摩椅";
-    [self.rightBtn setImage:[UIImage imageNamed:@"按摩开关_关"] forState:UIControlStateNormal];
-    [self.rightBtn setImage:[UIImage imageNamed:@"按摩开关_开"] forState:UIControlStateSelected];
-    self.rightBtn.hidden = NO;
     
     if (!self.bgScrollView){
         self.bgScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight)];
@@ -88,7 +148,7 @@
     
     
     SublayerView *imageV = [[SublayerView alloc] initWithFrame:CGRectMake(recommendLabel.left, recommendLabel.bottom+10, 108, 115)];
-    [imageV setImageV:@"大师精选" withTitleLabel:@"高级按摩"];
+    //[imageV setImageV:@"大师精选" withTitleLabel:@"大师精选"];
     [imageV insertSublayerFromeView:self.recommendV];
     
     [self.recommendV addSubview:imageV];
@@ -151,24 +211,117 @@
 #pragma mark <UICollectionViewDataSource>
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 10;
+    return self.dataArr.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ArmchairHomeCell *cell = (ArmchairHomeCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
-    cell.imageV.image = [UIImage imageNamed:@"一写"];
-    cell.titleLabel.text = @"哈哈哈哈";
+    ArmChairModel *model = [self.dataArr objectAtIndex:indexPath.row];
+    cell.imageV.image = [UIImage imageNamed:model.name];
+    cell.titleLabel.text = model.name;
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    ArmchairThemeVC *vc = [[ArmchairThemeVC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-    
+    ArmChairModel *model = [self.dataArr objectAtIndex:indexPath.row];
+    if([model.name isEqualToString:@"更多按摩"]){
+        ArmchairThemeVC *vc = [[ArmchairThemeVC alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if ([model.name isEqualToString:@"高级按摩"]){
+//        ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:YES withTitleStr:model.name];
+//        vc.armchairModel = model;
+//        [self.navigationController pushViewController:vc animated:YES];
+        
+        ArmchairAcheTestVC *vc = [[ArmchairAcheTestVC alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    }else{
+        ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:model.name];
+        vc.armchairModel = model;
+        [vc commandActionWithModel:model];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
+
+# pragma mark - 按摩椅连接相关
+
+- (OGBluetoothListView *)listView {
+    if (!_listView) {
+        
+        OGBluetoothListView *bluetoothListView = [[OGBluetoothListView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        [self.view addSubview:bluetoothListView];
+        
+        __weak typeof(self) weakself = self;
+        [bluetoothListView setSelectedPeripheral:^(CBPeripheral *peripheral) {
+            
+            [weakself connect:peripheral];
+        }];
+        [bluetoothListView setScanPeripheralCancel:^{
+            
+            [[OGA530BluetoothManager shareInstance] stopSacnPeripheral:nil];
+        }];
+        _listView = bluetoothListView;
+    }
+    return _listView;
+}
+
+- (void)scanPeripheral
+{
+    __weak typeof(self) weakSelf = self;
+    
+    [[OGA530BluetoothManager shareInstance] scanPeripheral:^(NSMutableArray * _Nonnull array) {
+        
+        //下次进来自动连接
+        if(array.count>0){
+            NSString *uuidStr = [[NSUserDefaults standardUserDefaults] objectForKey:OGADeviceUUID];
+            if(uuidStr){
+                for(CBPeripheral *peripheral in array){
+                    NSString *identifier = [NSString stringWithFormat:@"%@",peripheral.identifier];
+                    if([identifier isEqualToString:uuidStr]){
+                        [weakSelf connect:peripheral];
+                        return ;
+                    }
+                }
+            }
+        }
+        
+        weakSelf.listView.array = array;
+    } timeoutSacn:nil];
+}
+
+
+- (void)connect:(CBPeripheral *)peripheral {
+    
+//    [SVProgressHUD show];
+//    [SVProgressHUD dismissWithDelay:5];
+    
+    __weak typeof(self) weakself = self;
+    
+    //[GlobalCommon showMBHudTitleWithView:self.view withTitle:@"连接设备"];
+    
+    [[OGA530BluetoothManager shareInstance] stopSacnPeripheral:^{
+        
+    }];
+    
+    [[OGA530BluetoothManager shareInstance] connectPeripheral:peripheral connect:^{
+        NSLog(@"uuid:%@",peripheral.identifier);
+        NSString *uuidStr = [NSString stringWithFormat:@"%@",peripheral.identifier];
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:uuidStr forKey:OGADeviceUUID];
+        [userDefaults synchronize];
+        [weakself.listView removeFromSuperview];
+        weakself.listView = nil;
+        NSLog(@"连接成功");
+        
+       // [SVProgressHUD dismiss];
+        
+        //[GlobalCommon hideMBHudTitleWithView:weakself.view];
+        
+    }];
+}
+
 
 
 @end

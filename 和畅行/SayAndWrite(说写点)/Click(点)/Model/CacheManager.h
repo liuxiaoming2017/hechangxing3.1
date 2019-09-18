@@ -10,6 +10,8 @@
 
 @class QuestionModel;
 @class RemindModel;
+@class ArmChairModel;
+
 @interface CacheManager : NSObject
 
 - (void)insertQuestionModel:(QuestionModel *)model;
@@ -33,4 +35,11 @@
 
 - (void)insertArchiveModels:(NSArray *)arr;
 - (NSMutableArray *)gethealthArchivesModelsWithIndex:(NSInteger)index andRows:(NSInteger)row;
+
+
+- (void)addArmchairModelWithArr:(NSArray *)arr;
+- (void)insertArmchairModel:(ArmChairModel *)model;
+- (BOOL)selectArmchairModel:(ArmChairModel *)model;
+- (void)deleteArmchairModel:(ArmChairModel *)model;
+- (NSMutableArray *)getArmchairModel;
 @end
