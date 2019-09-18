@@ -103,6 +103,7 @@
     UIView *suantengView = [[UIView alloc] initWithFrame:CGRectMake(28, label2.bottom+8, ScreenWidth-56, 20)];
     suantengView.layer.backgroundColor = [UIColor colorWithRed:246/255.0 green:247/255.0 blue:249/255.0 alpha:1.0].CGColor;
     suantengView.layer.cornerRadius = 10.0;
+    suantengView.clipsToBounds = YES;
     [self.view addSubview:suantengView];
     
     for(NSInteger i = 0;i<2;i++){
@@ -111,24 +112,31 @@
         [self.view addSubview:lineV];
     }
     
-    [self setupLineView:pilaoView colors:colorArr1];
-    [self setupLineView:suantengView colors:colorArr];
+    [self setupLineView:pilaoView withCount:2];
+    [self setupLineView:suantengView withCount:1];
 }
 
 
 
--(void)setupLineView:(UIView *)lineView colors:(NSArray *)colorArr
+-(void)setupLineView:(UIView *)lineView withCount:(int)count
 {
+    
+    
+    NSArray *colorArr = @[[UIColor colorWithRed:211/255.0 green:241/255.0 blue:187/255.0 alpha:1.0],[UIColor colorWithRed:252/255.0 green:198/255.0 blue:184/255.0 alpha:1.0],[UIColor colorWithRed:254/255.0 green:231/255.0 blue:185/255.0 alpha:1.0]];
+    
     UIBezierPath *linePath = [UIBezierPath bezierPath];
     [linePath moveToPoint:CGPointMake(0, lineView.bounds.size.height/2)];
-    [linePath addLineToPoint:CGPointMake(lineView.bounds.size.width*2/3, lineView.bounds.size.height/2)];
+    [linePath addLineToPoint:CGPointMake(lineView.bounds.size.width*count/3, lineView.bounds.size.height/2)];
     
     __block float a = 0;
     
-    for(UIColor *color in colorArr){
+    for(int i=0;i<count;i++){
+        
+        UIColor *color = [colorArr objectAtIndex:i];
+        
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
         //每次动画的持续时间
-        animation.duration = 1;
+        animation.duration = 0.75;
         //动画起始位置
         animation.fromValue = @(0);
         //动画结束位置
@@ -142,7 +150,7 @@
         //strokeStart defaults to zero and strokeEnd to one.
         shapeLayer.strokeStart = a;
         //分成了多少段，每次加多少分之一
-        shapeLayer.strokeEnd = a + 1.0/colorArr.count;
+        shapeLayer.strokeEnd = a + 1.0/count;
         //添加动画
         [shapeLayer addAnimation:animation forKey:@"strokeEndAnimation"];
         [lineView.layer addSublayer:shapeLayer];
