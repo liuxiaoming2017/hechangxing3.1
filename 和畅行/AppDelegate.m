@@ -41,7 +41,7 @@
 #import <PgyUpdate/PgyUpdateManager.h>
 
 #import <OGABluetooth530/OGABluetooth530.h>
-
+#import "NSBundle+Language.h"
 //#import "ArmchairHomeVC.h"
 
 @interface AppDelegate ()<WXApiDelegate>
@@ -57,19 +57,16 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
    // self.window.rootViewController = [self tabBar];
 
-//    NSArray *languages = [[NSUserDefaults standardUserDefaults] valueForKey:@"AppleLanguages"];
-//    NSMutableArray *larray = [NSMutableArray arrayWithArray:languages];
-//    [larray replaceObjectAtIndex:0 withObject:@"en-US"];
-//    [[NSUserDefaults standardUserDefaults] setValue:larray forKey:@"AppleLanguages"];
-//    NSLog(@"%@",languages);
-//    if ([languages.firstObject isEqualToString:@"en-US"]||[languages.firstObject isEqualToString:@"ja-US"]||[languages.firstObject isEqualToString:@"en-CN"]||[languages.firstObject isEqualToString:@"en"]){
-//        [UserShareOnce shareOnce].languageType = @"us-en";
-//        //        [UserShareOnce shareOnce].languageType  = nil;
-//    }else{
-//        [UserShareOnce shareOnce].languageType  = nil;
-//    }
+    //强制英文
+    [[NSUserDefaults standardUserDefaults] setObject:@"en" forKey:@"Language"];
+    [NSBundle setLanguage:@"en"];
+     [UserShareOnce shareOnce].languageType  = @"us-en";
     
-     [UserShareOnce shareOnce].languageType  = nil;
+    //强制中文
+//    [[NSUserDefaults standardUserDefaults] setObject:@"zh" forKey:@"Language"];
+//    [NSBundle setLanguage:@"zh"];
+//    [UserShareOnce shareOnce].languageType  = nil;
+    
      [[UIButton appearance] setExclusiveTouch:YES];
     NSString *fontStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"YHFont"];
     if(![GlobalCommon stringEqualNull:fontStr]){
