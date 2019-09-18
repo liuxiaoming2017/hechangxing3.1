@@ -39,6 +39,8 @@
 + (void)showMBHudTitleWithView:(UIView *)view;
 + (void)hideMBHudTitleWithView:(UIView *)view;
 
++ (void)showMBHudTitleWithView:(UIView *)view withTitle:(NSString *)title;
+
 +(UIImage *)columnBarImage;
 
 + (BOOL)isManyMember;

@@ -10,7 +10,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class ThemeCollectionViewCell;
+@class ArmChairModel;
+
+@protocol ThemeCollectionCellDelegate<NSObject>
+
+- (void)selectTackWithModel:(ArmChairModel *)model;
+
+@end
+
 @interface ThemeCollectionViewCell : UICollectionViewCell
+@property (nonatomic,weak) id<ThemeCollectionCellDelegate>delegate;
 - (void)reloadDataWithArray:(NSArray *)array;
 @end
 

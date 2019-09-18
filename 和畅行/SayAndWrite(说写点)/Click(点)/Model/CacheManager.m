@@ -15,6 +15,7 @@
 #import "RemindModel.h"
 
 #import "HealthTipsModel.h"
+#import "ArmChairModel.h"
 
 @interface CacheManager()
 
@@ -104,13 +105,17 @@ static CacheManager *__cacheManager = nil;
     //健康档案
    // NSString *archiveSql = @"create table if not exists archiveTable ('custid' integer,'sn' text,'link' text,'date' text,'name' text,'typeName' text,'type' text,'year' text,'time' text,'createTime' text)";
     
+    //按摩椅收藏
+    NSString *armchairStr = @"create table if not exists armchairTable ('name' text,'command' text)";
+    
     //5.执行更新操作 此处database直接操作，不考虑多线程问题，多线程问题，用FMDatabaseQueue 每次数据库操作之后都会返回bool数值，YES，表示success，NO，表示fail,可以通过 @see lastError @see lastErrorCode @see lastErrorMessage
     BOOL result = [_db executeUpdate:questionSql];
     result  &= [_db executeUpdate:remindSql];
     result  &= [_db executeUpdate:healthArticleSql];
-   // result  &= [_db executeUpdate:archiveSql];
+    result  &= [_db executeUpdate:armchairStr];
     return result;
 }
+
 # pragma mark - 往表中插入数据
 - (void)insertQuestionModel:(QuestionModel *)model
 {
@@ -147,6 +152,7 @@ static CacheManager *__cacheManager = nil;
         [self insertQuestionModel:model];
     }
 }
+
 
 - (void)updateOrinsertRemindModels:(NSArray *)arr withCustId:(NSNumber *)custId
 {
@@ -316,6 +322,58 @@ static CacheManager *__cacheManager = nil;
         [mutabArr addObject:model];
         
         
+    }
+    [set close];
+    
+    return mutabArr;
+}
+
+# pragma mark - 按摩椅添加收藏
+- (void)addArmchairModelWithArr:(NSArray *)arr
+{
+    for(ArmChairModel *model in arr){
+        [self insertArmchairModel:model];
+    }
+}
+
+- (void)insertArmchairModel:(ArmChairModel *)model
+{
+    FMResultSet *set = [_db executeQuery:@"select name from armchairTable where name = ?",model.name];
+    if(![set next]){
+        [_db executeUpdate:@"insert into armchairTable(name,command) values (?,?)",model.name,model.command];
+    }
+    [set close];
+}
+
+
+- (void)deleteArmchairModel:(ArmChairModel *)model
+{
+    FMResultSet *set = [_db executeQuery:@"select name from armchairTable where name = ?",model.name];
+    if([set next]){
+        [_db executeUpdate:@"delete from armchairTable where name = ?",model.name];
+    }
+    [set close];
+}
+
+- (BOOL)selectArmchairModel:(ArmChairModel *)model
+{
+    FMResultSet *set = [_db executeQuery:@"select name from armchairTable where name = ?",model.name];
+    if([set next]){
+        return YES;
+    }
+    return NO;
+}
+
+- (NSMutableArray *)getArmchairModel
+{
+    NSMutableArray *mutabArr = [NSMutableArray arrayWithCapacity:0];
+    FMResultSet *set = [_db executeQuery:@"select * from armchairTable"];
+    
+    while ([set next]) {
+        ArmChairModel *model = [[ArmChairModel alloc] init];
+        model.name = [set stringForColumn:@"name"];
+        model.command = [set stringForColumn:@"command"];
+        [mutabArr addObject:model];
     }
     [set close];
     

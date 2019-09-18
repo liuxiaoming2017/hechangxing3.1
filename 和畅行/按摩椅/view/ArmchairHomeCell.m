@@ -47,7 +47,7 @@
     self.titleLabel.font = [UIFont systemFontOfSize:15];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.textColor = UIColorFromHex(0x7D7D7D);
-    self.titleLabel.highlightedTextColor = [UIColor redColor];
+    self.titleLabel.highlightedTextColor = UIColorFromHex(0X1E82D2);
     self.titleLabel.text = @"发卡拉";
     self.titleLabel.numberOfLines = 0;
     [self addSubview:self.titleLabel];

@@ -40,6 +40,8 @@
 #import <PgySDK/PgyManager.h>
 #import <PgyUpdate/PgyUpdateManager.h>
 
+#import <OGABluetooth530/OGABluetooth530.h>
+
 //#import "ArmchairHomeVC.h"
 
 @interface AppDelegate ()<WXApiDelegate>
@@ -111,9 +113,6 @@
     //埋点注册
     [[BuredPoint sharedYHBuriedPoint]setTheSignatureWithSignStr:BuBuredPointKey  withOpenStr:@"1"];
     
-//    
-    
-
     //创建本地数据库
     [[CacheManager sharedCacheManager] createDataBase];
     
@@ -128,6 +127,10 @@
     [[PgyManager sharedPgyManager] startManagerWithAppId:@"da15cba9ecb9d085233da45a1422f52c"];
     //启动更新检查SDK
     [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"da15cba9ecb9d085233da45a1422f52c"];
+    
+    //奥佳华按摩椅
+    [[OGA530BluetoothManager shareInstance] setAppkey:OGA530AppKey appSecret:OGA530AppSecret];
+    [[OGA530BluetoothManager shareInstance] setIsLog:YES];
     
     return YES;
 }

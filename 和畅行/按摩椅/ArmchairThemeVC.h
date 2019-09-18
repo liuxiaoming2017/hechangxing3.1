@@ -6,11 +6,11 @@
 //  Copyright © 2019 刘晓明. All rights reserved.
 //
 
-#import "NavBarViewController.h"
+#import "ArmchairCommonVC.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ArmchairThemeVC : NavBarViewController
+@interface ArmchairThemeVC : ArmchairCommonVC
 
 @end
 

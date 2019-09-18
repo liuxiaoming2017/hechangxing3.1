@@ -41,6 +41,8 @@ extern BOOL isBF;
 #define testToken  @"ECEEDCCD74B7D54BCF6690B7E26262B73F0D04F68EA2608F6783B874E4F50EEF"
 #define testMedicId @"1541041785333"
 
+
+
 //问卷类别sn
 #define kBody @"TZBS"
 #define kMental @"XLBS"

@@ -9,8 +9,9 @@
 #import "ArmchairThemeVC.h"
 #import "GLYPageView.h"
 #import "ThemeCollectionViewCell.h"
+#import "ArmchairDetailVC.h"
 
-@interface ArmchairThemeVC ()<UIScrollViewDelegate,GLYPageViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
+@interface ArmchairThemeVC ()<UIScrollViewDelegate,GLYPageViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,ThemeCollectionCellDelegate>
 
 @property (nonatomic, assign) CGFloat      startOffsetX;
 @property (nonatomic ,strong) GLYPageView  *pageView;
@@ -18,6 +19,7 @@
 
 @property (nonatomic,strong) UICollectionView *collectionV;
 @property (nonatomic,strong) NSArray *dataArr;
+@property (nonatomic, strong) OGA530Subscribe *subscribe;
 @end
 
 @implementation ArmchairThemeVC
@@ -32,9 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.preBtn.hidden = NO;
-    self.leftBtn.hidden = YES;
-    self.navTitleLabel.text = @"按摩椅";
+    
     
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"armChair" ofType:@"plist"];
     NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:filePath];
@@ -42,8 +42,9 @@
     NSMutableArray *mutableArr = [NSMutableArray arrayWithCapacity:0];
     NSArray *titleArr = @[@"专属",@"主题",@"区域",@"功效",@"场景"];
     for(NSString *key in titleArr){
-        NSArray *arr = [dic objectForKey:key];
-        [mutableArr addObject:arr];
+        NSArray *arr = [self loadDataPlistWithStr:key];
+        NSArray *arr2 = [ArmChairModel mj_objectArrayWithKeyValuesArray:arr];
+        [mutableArr addObject:arr2];
     }
 
     self.dataArr = [mutableArr copy];
@@ -72,6 +73,20 @@
     self.collectionV.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.collectionV];
     [self.collectionV registerClass:[ThemeCollectionViewCell class] forCellWithReuseIdentifier:@"MCContent"];
+    
+    __weak typeof(self) weakSelf = self;
+    self.subscribe = [[OGA530Subscribe alloc] init];
+    [[OGA530BluetoothManager shareInstance] addSubscribe:self.subscribe];
+    [self.subscribe setRespondBlock:^(OGA530Respond * _Nonnull respond) {
+        
+        [weakSelf didUpdateValueForChair:respond];
+    }];
+    
+}
+
+- (void)didUpdateValueForChair:(OGA530Respond *)respond {
+    
+    self.rightBtn.selected = respond.powerOn;
     
 }
 
@@ -105,6 +120,7 @@
         [view removeFromSuperview];
     }
     [cell reloadDataWithArray:[self.dataArr objectAtIndex:indexPath.row]];
+    cell.delegate = self;
     cell.highlighted = NO;
     return cell;
 }
@@ -117,6 +133,16 @@
 - (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath
 {
     
+}
+
+# pragma mark - ThemeCollectionCellDelegate
+- (void)selectTackWithModel:(ArmChairModel *)model
+{
+    NSLog(@"modelname:%@,***command:%@",model.name,model.command);
+    ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:model.name];
+    vc.armchairModel = model;
+    [vc commandActionWithModel:model];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end
