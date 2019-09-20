@@ -74,10 +74,11 @@
     }else{
         [UserShareOnce shareOnce].fontSize = 1;
     }
-    NSError *error = nil;
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&error];
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setActive:YES error:&error];
+    
+//    NSError *error = nil;
+//    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&error];
+//    AVAudioSession *session = [AVAudioSession sharedInstance];
+//    [session setActive:YES error:&error];
     
     [UserShareOnce shareOnce].isOnline = NO;
     [UserShareOnce shareOnce].yueYaoBuyArr = [NSMutableArray arrayWithCapacity:0];

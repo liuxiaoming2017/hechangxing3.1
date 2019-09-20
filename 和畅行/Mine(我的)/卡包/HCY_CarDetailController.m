@@ -226,8 +226,17 @@
         av.tag  = 100008;
         [av show];
     } else  {
+        
         NSString *str = [[dic valueForKey:@"data"] valueForKey:@"data"];
-        [self showAlertViewController:str];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"cardNameSuccess" object:nil];
+        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:str preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *sureAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]animated:YES];
+            
+        }];
+        [alerVC addAction:sureAction];
+        [self presentViewController:alerVC animated:YES completion:nil];
+        
     }
 }
 

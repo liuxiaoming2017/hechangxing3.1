@@ -122,19 +122,14 @@
             
             [weakSelf.collectionV reloadData];
             
-//            for (NSDictionary *dic in [response valueForKey:@"data"] ) {
-//                HCY_ConsultingModel *tipModel = [[HCY_ConsultingModel alloc] init];
-//                [tipModel yy_modelSetWithJSON:dic];
-//                [weakSelf.recommendArr addObject:tipModel];
-//            }
-//            [weakSelf.collectionV reloadData];
-        
         }
-        [weakSelf checkHaveUpdateWithType:@"on"];
+        [weakSelf requestVersionDataWithType:@"on"];
+        
+        
 
     } failureBlock:^(NSError *error) {
         NSLog(@"%@",error);
-        [weakSelf checkHaveUpdateWithType:@"on"];
+        [weakSelf requestVersionDataWithType:@"on"];
         [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
     
@@ -194,13 +189,45 @@
 
 
 -(void)didBecomeActiveNotification{
-    [self checkHaveUpdateWithType:@"back"];
+    [self requestVersionDataWithType:@"back"];
 }
 
 -(void)dealloc{
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+}
+
+# pragma mark - 后台版本判断
+- (void)requestVersionDataWithType:(NSString *)type
+{
+    
+    NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    
+    
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"noAppstoreCheck"]){
+        [self checkHaveUpdateWithType:type];
+        
+    }
+    
+    //__weak typeof(self) weakSelf = self;
+    
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:[NSString stringWithFormat:@"login/version.jhtml?id=ios"] parameters:nil successBlock:^(id response) {
+        if([[response objectForKey:@"status"] intValue] == 100){
+            NSDictionary *dic = [response objectForKey:@"data"];
+            NSString *Resultstr = [dic objectForKey:@"version"];
+            if([Resultstr isEqualToString:nowVersion]){ //需要审核
+                [UserShareOnce shareOnce].bindCard = @"1";
+            }else{ //针对之前用户
+                [[NSUserDefaults standardUserDefaults] setObject:@"noAppstoreCheck" forKey:@"noAppstoreCheck"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                //[weakSelf checkHaveUpdateWithType:type];
+            }
+        }
+        
+    } failureBlock:^(NSError *error) {
+       
+    }];
 }
 
 # pragma mark - 检查更新
