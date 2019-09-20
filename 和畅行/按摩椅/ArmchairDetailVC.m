@@ -106,11 +106,14 @@ typedef enum : NSInteger {
     }];
     [[OGA530BluetoothManager shareInstance] addSubscribe:self.ogaSubscribe];
 
+    
+    // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DidEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+    
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewDidDisappear:(BOOL)animated {
     
-    [super viewWillDisappear:animated];
+    [super viewDidDisappear:animated];
     
     [[OGA530BluetoothManager shareInstance] removeSubscribe:self.ogaSubscribe];
 }
@@ -121,7 +124,11 @@ typedef enum : NSInteger {
     //开关
     self.rightBtn.selected = respond.powerOn;
     self.playBtn.selected = respond.pause;
+    if(!respond.powerOn){
+        [self.navigationController popViewControllerAnimated:NO];
+    }
     
+    [self layerAnimationWithPause:respond.pause];
     
     //背部加热
     CommandButtonView *comandView300 = (CommandButtonView *)[self.middleView viewWithTag:300];
@@ -308,6 +315,7 @@ typedef enum : NSInteger {
         animationImageV.size = size;
         animationImageV.center = CGPointMake(animationView.width/2.0, animationView.height/2.0);
         animationImageV.image = image;
+        animationImageV.tag = 600+i;
         [animationView addSubview:animationImageV];
         
         
@@ -351,6 +359,27 @@ typedef enum : NSInteger {
     
     [self createPostBottomView];
     
+}
+
+- (void)addAnimation
+{
+    UIView *animationView = [self.upsideView viewWithTag:1024];
+    
+    NSArray *timeArr = @[@3.0,@3.0,@3.0,@3.0,@3.0];
+    for(NSInteger i = 5;i>0;i--){
+        UIImageView *animationImageV = (UIImageView *)[animationView viewWithTag:600+i];
+    
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+        //默认是顺时针效果，若将fromValue和toValue的值互换，则为逆时针效果
+        animation.fromValue = [NSNumber numberWithFloat:0.f];
+        animation.toValue = [NSNumber numberWithFloat: M_PI *2];
+        animation.duration =[[timeArr objectAtIndex:i-1] doubleValue];
+        animation.autoreverses = NO;
+        animation.fillMode = kCAFillModeForwards;
+        animation.repeatCount = MAXFLOAT;
+        [animationImageV.layer addAnimation:animation forKey:@"animation"];
+        
+    }
 }
 
 # pragma mark - 高级按摩手法
@@ -592,7 +621,7 @@ typedef enum : NSInteger {
 # pragma mark - scrollviewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"yyyyyyy:%f",scrollView.contentOffset.y);
+    //NSLog(@"yyyyyyy:%f",scrollView.contentOffset.y);
     if(scrollView.contentOffset.y > 180){
         self.navTitleLabel.hidden = YES;
         self.navTimeLabel.hidden = NO;
@@ -734,35 +763,73 @@ typedef enum : NSInteger {
 #pragma mark - 播放，暂停
 - (void)playAction:(UIButton *)button
 {
-    __weak typeof(self) weakSelf = self;
+   // __weak typeof(self) weakSelf = self;
     [[OGA530BluetoothManager shareInstance] sendCommand:k530Command_Pause success:^(BOOL success) {
         if (success) {
-            weakSelf.playBtn.selected = !weakSelf.playBtn.selected;
-            [weakSelf layerAnimationWithPause:weakSelf.playBtn.selected];
+           // weakSelf.playBtn.selected = !weakSelf.playBtn.selected;
+           // [weakSelf layerAnimationWithPause:weakSelf.playBtn.selected];
         }
     }];
     
 }
-
+# pragma mark - 动画的开始，暂停
 - (void)layerAnimationWithPause:(BOOL )select
 {
     UIView *animationView = [self.upsideView viewWithTag:1024];
     CALayer *layer = animationView.layer;
     
     if(select){
-        CFTimeInterval pausedTime = [layer
-                                     convertTime:CACurrentMediaTime() fromLayer:nil];
-        layer.speed = 0.0;
-        layer.timeOffset = pausedTime;
+        if(layer.speed == 1.0){
+            NSLog(@"暂停啦暂停啦");
+            CFTimeInterval pausedTime = [layer
+                                         convertTime:CACurrentMediaTime() fromLayer:nil];
+            layer.speed = 0.0;
+            layer.timeOffset = pausedTime;
+        }
+       
     }else{
         //继续layer上面的动画
-        CFTimeInterval pausedTime = [layer timeOffset];
-        layer.speed = 1.0;
-        layer.timeOffset = 0.0;
-        layer.beginTime = 0.0;
-        CFTimeInterval timeSincePause = [layer
-                                         convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
-        layer.beginTime = timeSincePause;
+        if(layer.speed == 0.0){ //动画处于暂停状态，让他开始 避免重复
+            NSLog(@"开始开始开始");
+            CFTimeInterval pausedTime = [layer timeOffset];
+            layer.speed = 1.0;
+            layer.timeOffset = 0.0;
+            layer.beginTime = 0.0;
+            CFTimeInterval timeSincePause = [layer
+                                             convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
+            layer.beginTime = timeSincePause;
+        }
+        
+    }
+}
+
+- (void)DidBecomeActive
+{
+    
+    BOOL isBlueToothPoweredOn = [[OGA530BluetoothManager shareInstance] isBlueToothPoweredOn];
+    if(!isBlueToothPoweredOn){
+        self.rightBtn.selected = NO;
+        [UserShareOnce shareOnce].ogaConnected = NO;
+        [self.navigationController popViewControllerAnimated:NO];
+    }
+    
+        //animation
+    UIView *animationView = [self.upsideView viewWithTag:1024];
+    CALayer *layer = animationView.layer;
+    if([layer animationForKey:@"animation"]){
+        //继续layer上面的动画
+        if(layer.speed == 0.0){ //动画处于暂停状态，让他开始 避免重复
+            NSLog(@"开始开始开始");
+            CFTimeInterval pausedTime = [layer timeOffset];
+            layer.speed = 1.0;
+            layer.timeOffset = 0.0;
+            layer.beginTime = 0.0;
+            CFTimeInterval timeSincePause = [layer
+                                             convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
+            layer.beginTime = timeSincePause;
+        }
+    }else{
+        [self addAnimation];
     }
 }
 
@@ -838,6 +905,23 @@ typedef enum : NSInteger {
             [[OGA530BluetoothManager shareInstance] sendCommand:k530Command_AirStrength success:nil];
         }
     }
+}
+
+- (NSString *)acupointSringWithTitle:(NSString *)title
+{
+    
+    NSDictionary *dic = @{
+                          @"风池":@"保健功效：平肝息风，疏风解表，祛风通络，提神醒脑，缓解眼睛疲劳与肩部酸痛",
+                          @"天柱":@"保健功效：平肝息风，疏风解表，祛风通络，提神醒脑，缓解眼睛疲劳与肩部酸痛",
+                          @"肩中":@"保健功效：宣肺解表，散风活络、缓解肩部酸痛。调气行血，解郁散结。",
+                          @"肩井":@"保健功效：宣肺解表，散风活络、缓解肩部酸痛。调气行血，解郁散结。",
+                          @"心俞":@"保健功效：补气养血，滋养心神，清心火，益心气，宁心神",
+                          @"肾俞":@"保健功效：生精化髓，纳气归根，益肾壮阳，腰强利水祛湿",
+                          @"环中":@"",
+                          @"环跳":@"",
+                          };
+    
+    return @"";
 }
 
 @end

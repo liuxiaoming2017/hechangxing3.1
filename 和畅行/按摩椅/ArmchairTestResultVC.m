@@ -7,12 +7,24 @@
 //
 
 #import "ArmchairTestResultVC.h"
+#import "ArmchairAcheTestVC.h"
 
-@interface ArmchairTestResultVC ()
-
+@interface ArmchairTestResultVC ()<UIGestureRecognizerDelegate>
+@property (nonatomic,assign) int acheResult;
+@property (nonatomic,assign) int fatigueResult;
 @end
 
 @implementation ArmchairTestResultVC
+
+- (id)initWithacheResult:(int )acheResult withfatigueResult:(int )fatigueResult
+{
+    self = [super init];
+    if(self){
+        self.acheResult = acheResult;
+        self.fatigueResult = fatigueResult;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,8 +52,12 @@
     [self.view addSubview:imageV];
     
     
-    NSArray *colorArr = @[[UIColor colorWithRed:252/255.0 green:198/255.0 blue:184/255.0 alpha:1.0],[UIColor colorWithRed:254/255.0 green:231/255.0 blue:185/255.0 alpha:1.0],[UIColor colorWithRed:211/255.0 green:241/255.0 blue:187/255.0 alpha:1.0],];
-    NSArray *colorArr1 = @[[UIColor colorWithRed:252/255.0 green:198/255.0 blue:184/255.0 alpha:1.0],[UIColor colorWithRed:254/255.0 green:231/255.0 blue:185/255.0 alpha:1.0]];
+    NSArray *colorArr = @[
+                          [UIColor colorWithRed:211/255.0 green:241/255.0 blue:187/255.0 alpha:1.0],
+                          [UIColor colorWithRed:254/255.0 green:231/255.0 blue:185/255.0 alpha:1.0],
+                          [UIColor colorWithRed:252/255.0 green:198/255.0 blue:184/255.0 alpha:1.0]
+                          ];
+//    NSArray *colorArr1 = @[[UIColor colorWithRed:252/255.0 green:198/255.0 blue:184/255.0 alpha:1.0],[UIColor colorWithRed:254/255.0 green:231/255.0 blue:185/255.0 alpha:1.0]];
     NSArray *titleArr = @[@"重度",@"中度",@"轻度"];
     for(NSInteger i=0;i<3;i++){
         UIView *view1 = [[UIView alloc] init];
@@ -71,6 +87,10 @@
     self.pilaoLabel.text = @"中度";
     self.pilaoLabel.textAlignment = NSTextAlignmentLeft;
     self.pilaoLabel.textColor = [UIColor colorWithRed:254/255.0 green:231/255.0 blue:185/255.0 alpha:1.0];
+    if(self.acheResult<4){
+        self.pilaoLabel.textColor = [colorArr objectAtIndex:self.acheResult - 1];
+        self.pilaoLabel.text = [titleArr objectAtIndex:self.acheResult - 1];
+    }
     [self.view addSubview:self.pilaoLabel];
     
     UIView *pilaoView = [[UIView alloc] initWithFrame:CGRectMake(28, label1.bottom+8, ScreenWidth-56, 20)];
@@ -98,6 +118,10 @@
     self.suantengLabel.text = @"轻度";
     self.suantengLabel.textAlignment = NSTextAlignmentLeft;
     self.suantengLabel.textColor = [UIColor colorWithRed:254/255.0 green:231/255.0 blue:185/255.0 alpha:1.0];
+    if(self.fatigueResult<4){
+        self.suantengLabel.textColor = [colorArr objectAtIndex:self.fatigueResult - 1];
+        self.suantengLabel.text = [titleArr objectAtIndex:self.acheResult - 1];
+    }
     [self.view addSubview:self.suantengLabel];
     
     UIView *suantengView = [[UIView alloc] initWithFrame:CGRectMake(28, label2.bottom+8, ScreenWidth-56, 20)];
@@ -112,8 +136,8 @@
         [self.view addSubview:lineV];
     }
     
-    [self setupLineView:pilaoView withCount:2];
-    [self setupLineView:suantengView withCount:1];
+    [self setupLineView:pilaoView withCount:self.acheResult];
+    [self setupLineView:suantengView withCount:self.fatigueResult];
 }
 
 
@@ -162,6 +186,29 @@
     }
     
     
+}
+
+- (void)goBack:(UIButton *)btn
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+# pragma mark - 解决侧滑返回指定控制器
+- (void)didMoveToParentViewController:(UIViewController*)parent
+{
+    
+    NSMutableArray *tempArr = self.navigationController.viewControllers.mutableCopy;
+    for(UIViewController *vc in self.navigationController.viewControllers){
+        if([vc isKindOfClass:[ArmchairAcheTestVC class]]){
+            [tempArr removeObject:vc];
+        }
+    }
+    self.navigationController.viewControllers = tempArr;
+}
+
+
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
+    return YES;
 }
 
 @end

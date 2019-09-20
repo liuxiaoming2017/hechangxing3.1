@@ -10,6 +10,8 @@
 #import "MessageViewController.h"
 #import "UIButton+WebCache.h"
 #import "PersonalInformationViewController.h"
+#import "UIButton+ExpandScope.h"
+
 #define kLOGIN_CHECK @"/login/logincheck.jhtml"
 
 @interface NavBarViewController ()
@@ -61,6 +63,7 @@
     preBtn.titleEdgeInsets = UIEdgeInsetsMake(1, -5, 0, 0);
     preBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     preBtn.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
+    //[preBtn setHitTestEdgeInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [preBtn addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:preBtn];
     preBtn.hidden = YES;

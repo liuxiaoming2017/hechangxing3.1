@@ -449,14 +449,24 @@
     
 }
 
-+ (void)showMBHudTitleWithView:(UIView *)view withTitle:(NSString *)title
++ (void)showMBHudWithTitle:(NSString *)title
 {
-    MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:view];
+    
+    
+    
+    MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
     progress.label.text = title;
-    progress.tag = 101;
-    [view addSubview:progress];
-    [view bringSubviewToFront:progress];
+    progress.tag = 102;
+    [[[UIApplication sharedApplication] keyWindow] addSubview:progress];
+    [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:progress];
     [progress showAnimated:YES];
+}
+
++ (void)hideMBHud
+{
+    MBProgressHUD *progress = (MBProgressHUD *)[[[UIApplication sharedApplication] keyWindow] viewWithTag:102];
+    [progress removeFromSuperview];
+    progress = nil;
 }
 
 + (void)hideMBHudTitleWithView:(UIView *)view

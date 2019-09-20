@@ -66,6 +66,9 @@
 @property (assign, nonatomic) CGFloat  fontSize;
 //
 @property (copy, nonatomic) NSString  *bindCard;
+
+@property (nonatomic,assign) BOOL ogaConnected;
+
 + (UserShareOnce *)shareOnce;
 +(void)attemptDealloc;
 @end

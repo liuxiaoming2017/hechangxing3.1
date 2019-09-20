@@ -28,10 +28,28 @@
     [self.rightBtn setImage:[UIImage imageNamed:@"按摩开关_开"] forState:UIControlStateSelected];
     self.rightBtn.hidden = NO;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DidBecomeActive) name:UIApplicationWillEnterForegroundNotification object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+}
+
+- (void)DidBecomeActive
+{
     
 }
 
+- (NSString *)resultStringWithStatus
+{
+    BOOL isBlueToothPoweredOn = [[OGA530BluetoothManager shareInstance] isBlueToothPoweredOn];
+    if(!isBlueToothPoweredOn){
+        return @"请先打开蓝牙";
+    }
+    if(![UserShareOnce shareOnce].ogaConnected){
+        return @"设备未连接";
+    }
+    
+    return @"";
+}
 
 
 - (NSArray *)loadDataPlistWithStr:(NSString *)str
@@ -47,6 +65,7 @@
     return arr;
     
 }
+
 
 - (NSArray *)arrayWithStr:(NSString *)str
 {

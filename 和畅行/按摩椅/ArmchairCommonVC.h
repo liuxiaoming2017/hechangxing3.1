@@ -24,6 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 //获取本地plist数据
 - (NSArray *)loadDataPlistWithStr:(NSString *)str;
 
+- (void)DidBecomeActive;
+
+- (NSString *)resultStringWithStatus;
 
 @end
 

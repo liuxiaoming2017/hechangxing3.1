@@ -32,6 +32,7 @@
 		032735952105A33400554516 /* ColumnBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 032735932105A33300554516 /* ColumnBar.m */; };
 		032735982105CE0900554516 /* ArchivesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 032735972105CE0900554516 /* ArchivesCell.m */; };
 		0327359B2105CFCE00554516 /* ArchiveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327359A2105CFCE00554516 /* ArchiveModel.m */; };
+		0328F62B2334A6CC00BD25F7 /* ICD10.db in Resources */ = {isa = PBXBuildFile; fileRef = 0328F62A2334A6CB00BD25F7 /* ICD10.db */; };
 		032A7A0420E9F6EB003D4952 /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A0320E9F6EB003D4952 /* CustomNavigationController.m */; };
 		032A7A0820E9F7E2003D4952 /* CommonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A0720E9F7E2003D4952 /* CommonViewController.m */; };
 		032A7A1320E9F9AE003D4952 /* MallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A1220E9F9AE003D4952 /* MallViewController.m */; };
@@ -433,7 +434,6 @@
 		03F97D082100676F00A0F842 /* symptom.txt in Resources */ = {isa = PBXBuildFile; fileRef = 03F97D072100676F00A0F842 /* symptom.txt */; };
 		03F97D0F21007F7900A0F842 /* OrganDiseaseListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F97D0E21007F7900A0F842 /* OrganDiseaseListViewController.m */; };
 		03F97D1321007FB700A0F842 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F97D1121007FB600A0F842 /* DBManager.m */; };
-		03F97D1421007FB700A0F842 /* ICD10.db in Resources */ = {isa = PBXBuildFile; fileRef = 03F97D1221007FB600A0F842 /* ICD10.db */; };
 		03F97D1721007FE200A0F842 /* OrganDiseaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F97D1621007FE200A0F842 /* OrganDiseaseModel.m */; };
 		03F97D1A2100808200A0F842 /* AdvisoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F97D192100808200A0F842 /* AdvisoryTableViewCell.m */; };
 		03FBDF4421927DB3006116FC /* UMCommonLog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 03FBDF4321927DB3006116FC /* UMCommonLog.bundle */; };
@@ -736,6 +736,7 @@
 		032735972105CE0900554516 /* ArchivesCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArchivesCell.m; sourceTree = "<group>"; };
 		032735992105CFCE00554516 /* ArchiveModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArchiveModel.h; sourceTree = "<group>"; };
 		0327359A2105CFCE00554516 /* ArchiveModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArchiveModel.m; sourceTree = "<group>"; };
+		0328F62A2334A6CB00BD25F7 /* ICD10.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = ICD10.db; sourceTree = "<group>"; };
 		032A7A0220E9F6EB003D4952 /* CustomNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationController.h; sourceTree = "<group>"; };
 		032A7A0320E9F6EB003D4952 /* CustomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationController.m; sourceTree = "<group>"; };
 		032A7A0620E9F7E2003D4952 /* CommonViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonViewController.h; sourceTree = "<group>"; };
@@ -1502,7 +1503,6 @@
 		03F97D0E21007F7900A0F842 /* OrganDiseaseListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrganDiseaseListViewController.m; sourceTree = "<group>"; };
 		03F97D1021007FB600A0F842 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		03F97D1121007FB600A0F842 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
-		03F97D1221007FB600A0F842 /* ICD10.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = ICD10.db; sourceTree = "<group>"; };
 		03F97D1521007FE100A0F842 /* OrganDiseaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrganDiseaseModel.h; sourceTree = "<group>"; };
 		03F97D1621007FE200A0F842 /* OrganDiseaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrganDiseaseModel.m; sourceTree = "<group>"; };
 		03F97D182100808100A0F842 /* AdvisoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvisoryTableViewCell.h; sourceTree = "<group>"; };
@@ -3508,7 +3508,7 @@
 				03F97D072100676F00A0F842 /* symptom.txt */,
 				03F97D1021007FB600A0F842 /* DBManager.h */,
 				03F97D1121007FB600A0F842 /* DBManager.m */,
-				03F97D1221007FB600A0F842 /* ICD10.db */,
+				0328F62A2334A6CB00BD25F7 /* ICD10.db */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4074,7 +4074,6 @@
 				83DC662C2275414600B10F23 /* Wybs_WinZhi_Img_bg.png in Resources */,
 				83DC66532275414600B10F23 /* 完成.png in Resources */,
 				83DC65CA2275414600B10F23 /* 星星_点亮.png in Resources */,
-				03F97D1421007FB700A0F842 /* ICD10.db in Resources */,
 				036E851A2186EB1A001B9BB4 /* add_device.png in Resources */,
 				839E0C552213E0540090F179 /* InfoPlist.strings in Resources */,
 				C9B3067F230506B0008D6D38 /* 支付图标.png in Resources */,
@@ -4209,6 +4208,7 @@
 				83DC661C2275414600B10F23 /* YD_YInYueSF.png in Resources */,
 				036E84F82186EB1A001B9BB4 /* btn_detailtxt_normal.png in Resources */,
 				C9B3067A230506B0008D6D38 /* 数量背景.png in Resources */,
+				0328F62B2334A6CC00BD25F7 /* ICD10.db in Resources */,
 				83D4C50F221FE1C700006CA9 /* sportImageText_en.plist in Resources */,
 				036E85042186EB1A001B9BB4 /* icon_gou.png in Resources */,
 				83DC66172275414600B10F23 /* YD_BF.png in Resources */,
@@ -5042,7 +5042,7 @@
 					"$(inherited)",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -5107,7 +5107,7 @@
 					"$(inherited)",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ky3h.hechangxing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

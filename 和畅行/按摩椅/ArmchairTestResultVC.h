@@ -13,6 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ArmchairTestResultVC : ArmchairCommonVC
 @property (nonatomic,strong) UILabel *pilaoLabel;
 @property (nonatomic,strong) UILabel *suantengLabel;
+
+- (id)initWithacheResult:(int )acheResult withfatigueResult:(int )fatigueResult;
+
 @end
 
 NS_ASSUME_NONNULL_END

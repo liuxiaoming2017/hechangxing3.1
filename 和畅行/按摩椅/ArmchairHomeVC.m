@@ -16,7 +16,10 @@
 
 #define margin ((ScreenWidth-107*3)/4.0)
 
-@interface ArmchairHomeVC ()<UICollectionViewDataSource,UICollectionViewDelegate>
+#define startDevice @"启动设备"
+#define connectDevice @"连接设备"
+
+@interface ArmchairHomeVC ()<UICollectionViewDataSource,UICollectionViewDelegate,MBProgressHUDDelegate>
 
 @property (nonatomic,strong) UICollectionView *collectionV;
 @property (nonatomic,strong) UIScrollView *bgScrollView;
@@ -31,10 +34,13 @@
 
 @property (nonatomic, strong) OGA530Subscribe *subscribe;
 
+@property (nonatomic, strong) MBProgressHUD *progressHud;
+
+@property (nonatomic, assign) BOOL isManual;
 @end
 
 @implementation ArmchairHomeVC
-@synthesize bluetoothBtn;
+@synthesize bluetoothBtn,isManual;
 
 - (void)dealloc
 {
@@ -42,12 +48,14 @@
     self.dataArr = nil;
     self.bgScrollView = nil;
     self.collectionV = nil;
+    self.progressHud = nil;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self initUI];
+  //  [self initUI];
+    
     self.navTitleLabel.text = @"按摩椅";
     
     self.dataArr = [NSMutableArray arrayWithCapacity:0];
@@ -60,7 +68,7 @@
     view.layer.cornerRadius = 8;
     [self.bgScrollView addSubview:view];
     
-    [self createRecommendView];
+   // [self createRecommendView];
     
     [self createBottomView];
  
@@ -84,29 +92,29 @@
     }];
     
     //UIApplicationWillEnterForegroundNotification UIApplicationWillResignActiveNotification
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DidBecomeActive) name:UIApplicationWillEnterForegroundNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DidBecomeActive) name:UIApplicationWillEnterForegroundNotification object:nil];
+//
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
-- (void)becomeActive
-{
-    NSLog(@"becomeActive");
-}
+# pragma mark - 应用进入前台,以及上拉出设置栏通知执行方法
 - (void)DidBecomeActive
 {
     NSLog(@"DidBecomeActive");
-    BOOL isBlueToothPoweredOn = [[OGA530BluetoothManager shareInstance] isBlueToothPoweredOff];
-    if(isBlueToothPoweredOn){
+    BOOL isBlueToothPoweredOn = [[OGA530BluetoothManager shareInstance] isBlueToothPoweredOn];
+    if(!isBlueToothPoweredOn){
         bluetoothBtn.selected = NO;
         self.rightBtn.selected = NO;
+        [UserShareOnce shareOnce].ogaConnected = NO;
+    }else{
+        [self scanPeripheral];
     }
 }
 
 - (void)didUpdateValueForChair:(OGA530Respond *)respond {
     
     self.rightBtn.selected = respond.powerOn;
-    NSLog(@"蓝牙开启：%@",[[OGA530BluetoothManager shareInstance] isBlueToothPoweredOn] ? @"YES" : @"NO");
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -120,6 +128,14 @@
 {
     [super viewWillAppear:animated];
     
+    
+    if(![[OGA530BluetoothManager shareInstance] isBlueToothPoweredOn]){
+        [UserShareOnce shareOnce].ogaConnected = NO;
+        bluetoothBtn.selected = NO;
+    }else{
+        bluetoothBtn.selected = [UserShareOnce shareOnce].ogaConnected;
+    }
+    
     if(self.dataArr.count==0){
         NSArray *arr = [[CacheManager sharedCacheManager] getArmchairModel];
         
@@ -130,8 +146,7 @@
         [self addLocalTack];
     }
     [self.collectionV reloadData];
-    
-    
+
 }
 
 - (void)bluetoothBtnAction:(UIButton *)button
@@ -223,12 +238,14 @@
   //  CGFloat margin = ((ScreenWidth-107*3)/4.0);
     
     UILabel *label = [[UILabel alloc] init];
-    label.frame = CGRectMake(margin,self.recommendV.bottom+15,120,20);
+    //label.frame = CGRectMake(margin,self.recommendV.bottom+15,120,20);
+    label.frame = CGRectMake(margin,kNavBarHeight+15,120,20);
     label.font = [UIFont fontWithName:@"PingFang SC" size:16];
     label.text = @"按摩手法";
     label.textAlignment = NSTextAlignmentLeft;
     label.alpha = 1.0;
-    [self.bgScrollView addSubview:label];
+    //[self.bgScrollView addSubview:label];
+    [self.view addSubview:label];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake(107+margin, 111+margin);
@@ -238,18 +255,22 @@
     layout.minimumInteritemSpacing = 0;
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
-    self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom, ScreenWidth-margin, 125*4+50) collectionViewLayout:layout];
+    //self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom, ScreenWidth-margin, 125*4+50) collectionViewLayout:layout];
+     self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom+8, ScreenWidth-margin, ScreenHeight-label.bottom-8) collectionViewLayout:layout];
     self.collectionV.delegate = self;
     self.collectionV.dataSource = self;
     self.collectionV.showsHorizontalScrollIndicator = NO;
+    self.collectionV.showsVerticalScrollIndicator = NO;
     self.collectionV.backgroundColor = [UIColor clearColor];
-    self.collectionV.scrollEnabled = NO;
+   // self.collectionV.scrollEnabled = NO;
     
     [self.collectionV registerClass:[ArmchairHomeCell class] forCellWithReuseIdentifier:@"cellId"];
     
-    [self.bgScrollView addSubview:self.collectionV];
+    [self.view addSubview:self.collectionV];
     
-    self.bgScrollView.contentSize = CGSizeMake(1, self.collectionV.bottom+10);
+//    [self.bgScrollView addSubview:self.collectionV];
+//
+//    self.bgScrollView.contentSize = CGSizeMake(1, self.collectionV.bottom+10);
 }
 
 # pragma mark - 推荐按摩点击事件
@@ -283,7 +304,34 @@
     if([model.name isEqualToString:@"更多按摩"]){
         ArmchairThemeVC *vc = [[ArmchairThemeVC alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
-    }else if ([model.name isEqualToString:@"高级按摩"]){
+    }else{
+        
+        NSString *statusStr = [self resultStringWithStatus];
+        if(![statusStr isEqualToString:@""]){
+            [GlobalCommon showMessage2:statusStr duration2:1.0];
+            return;
+        }else{
+            
+            if([OGA530BluetoothManager shareInstance].respondModel.powerOn == NO){
+                
+                [self showProgressHUD:startDevice];
+                
+                [[OGA530BluetoothManager shareInstance] sendCommand:k530Command_PowerOn success:^(BOOL success) {
+                    NSLog(@"启动设备成功啦");
+                }];
+            }else{
+                NSLog(@"开机了开机了");
+                [self nextVCWithModel:model];
+            }
+        }
+        
+        
+    }
+}
+
+- (void)nextVCWithModel:(ArmChairModel *)model
+{
+    if ([model.name isEqualToString:@"高级按摩"]){
         ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:YES withTitleStr:model.name];
         vc.armchairModel = model;
         [self.navigationController pushViewController:vc animated:YES];
@@ -300,6 +348,7 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
+
 
 # pragma mark - 按摩椅连接相关
 
@@ -323,16 +372,23 @@
     return _listView;
 }
 
+# pragma mark - 搜索设备
 - (void)scanPeripheral
 {
     __weak typeof(self) weakSelf = self;
-    
+    if([UserShareOnce shareOnce].ogaConnected){
+        return;
+    }
     [[OGA530BluetoothManager shareInstance] scanPeripheral:^(NSMutableArray * _Nonnull array) {
+        
+        if(weakSelf.bluetoothBtn.selected){
+            return;
+        }
+       // BOOL isHave = NO;
         
         //下次进来自动连接
         if(array.count>0){
             NSString *uuidStr = [[NSUserDefaults standardUserDefaults] objectForKey:OGADeviceUUID];
-            
             if(uuidStr){
                 for(CBPeripheral *peripheral in array){
                     NSString *identifier = [NSString stringWithFormat:@"%@",peripheral.identifier];
@@ -341,19 +397,27 @@
                         return ;
                     }
                 }
+                [weakSelf showProgressHUD:connectDevice];
             }else{
                 weakSelf.listView.array = array;
             }
             
+        }else{
+            if(!weakSelf.progressHud){
+                [GlobalCommon showMessage2:@"未搜索到设备" duration2:1.0];
+            }
         }
     } timeoutSacn:nil];
 }
 
-# pragma mark - 手动连接
+# pragma mark - 手动搜索设备
 - (void)manualScanPeripheral
 {
     __weak typeof(self) weakSelf = self;
-    
+    isManual = YES;
+    if(self.progressHud){
+        self.progressHud = nil;
+    }
     if([[OGA530BluetoothManager shareInstance] isBlueToothPoweredOff]){
         [GlobalCommon showMessage2:@"请先打开蓝牙" duration2:1.0];
         return;
@@ -366,15 +430,67 @@
     } timeoutSacn:nil];
 }
 
+# pragma mark - 提示框自动消失方法,进入到这个方法代表设备连接失败
+- (void)hudWasHidden:(MBProgressHUD *)hud
+{
+    //self.progressHud = nil;
+    
+    if([hud.label.text isEqualToString:startDevice]){
+        self.progressHud = nil;
+        return;
+    }
+    
+    NSString *uuidStr = [[NSUserDefaults standardUserDefaults] objectForKey:OGADeviceUUID];
+    if(!uuidStr || (isManual && !self.bluetoothBtn.selected)){
+        [GlobalCommon showMessage2:@"连接失败" duration2:1.0];
+        return;
+    }
+    if(!self.bluetoothBtn.selected){
+        [GlobalCommon showMessage2:@"未搜索到设备" duration2:1.0];
+    }
+}
 
+- (void)showProgressHUD:(NSString *)titleStr
+{
+    if(!self.progressHud){
+        self.progressHud = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
+        
+        self.progressHud.label.text = titleStr;
+        self.progressHud.tag = 102;
+        [[[UIApplication sharedApplication] keyWindow] addSubview:self.progressHud];
+        [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:self.progressHud];
+        [self.progressHud showAnimated:YES];
+        
+        self.progressHud.delegate = self;
+        
+        if([titleStr isEqualToString:startDevice]){
+            [self.progressHud hideAnimated:YES afterDelay:6.0];
+        }else{
+            [self.progressHud hideAnimated:YES afterDelay:4.0];
+        }
+        
+    }
+}
+
+# pragma mark - 连接设备
 - (void)connect:(CBPeripheral *)peripheral {
     
-//    [SVProgressHUD show];
-//    [SVProgressHUD dismissWithDelay:5];
-    
+
     __weak typeof(self) weakself = self;
     
-    //[GlobalCommon showMBHudTitleWithView:self.view withTitle:@"连接设备"];
+    [self showProgressHUD:connectDevice];
+    
+//    MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
+//
+//    progress.label.text = @"连接设备";
+//    progress.tag = 102;
+//    [[[UIApplication sharedApplication] keyWindow] addSubview:progress];
+//    [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:progress];
+//    [progress showAnimated:YES];
+//
+//    progress.delegate = self;
+//
+//    [progress hideAnimated:YES afterDelay:3.0];
     
     [[OGA530BluetoothManager shareInstance] stopSacnPeripheral:^{
         
@@ -388,65 +504,23 @@
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setObject:uuidStr forKey:OGADeviceUUID];
         [userDefaults synchronize];
-        [weakself.listView removeFromSuperview];
-        weakself.listView = nil;
-        weakself.bluetoothBtn.selected = YES;
+       
         NSLog(@"连接成功");
-        
-       // [SVProgressHUD dismiss];
-        
-        //[GlobalCommon hideMBHudTitleWithView:weakself.view];
+        dispatch_async(dispatch_get_main_queue(), ^{
+           
+            //[progress removeFromSuperview];
+            
+            [weakself.progressHud removeFromSuperview];
+            weakself.progressHud = nil;
+            
+            [weakself.listView removeFromSuperview];
+            weakself.listView = nil;
+            weakself.bluetoothBtn.selected = YES;
+            
+            [UserShareOnce shareOnce].ogaConnected = YES;
+        });
         
     }];
-}
-
-#pragma mark - 蓝牙的状态
--(void)centralManagerDidUpdateState:(CBCentralManager *)central{
-    switch (central.state) {
-        case CBCentralManagerStateUnknown:
-        {
-            NSLog(@"无法获取设备的蓝牙状态");
-        }
-            break;
-        case CBCentralManagerStateResetting:
-        {
-            NSLog(@"蓝牙重置");
-            
-        }
-            break;
-        case CBCentralManagerStateUnsupported:
-        {
-            NSLog(@"该设备不支持蓝牙");
-            
-        }
-            break;
-        case CBCentralManagerStateUnauthorized:
-        {
-            NSLog(@"未授权蓝牙权限");
-        }
-            break;
-        case CBCentralManagerStatePoweredOff:
-        {
-            NSLog(@"蓝牙已关闭");
-        }
-            break;
-        case CBCentralManagerStatePoweredOn:
-        {
-            NSLog(@"蓝牙已打开");
-            
-            
-        }
-            break;
-            
-        default:
-        {
-            NSLog(@"未知的蓝牙错误");
-            
-        }
-            break;
-    }
-    //[self getConnectState];
-    
 }
 
 @end

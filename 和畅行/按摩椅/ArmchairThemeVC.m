@@ -34,10 +34,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"armChair" ofType:@"plist"];
-    NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:filePath];
+//    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"armChair" ofType:@"plist"];
+//    NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:filePath];
     
     NSMutableArray *mutableArr = [NSMutableArray arrayWithCapacity:0];
     NSArray *titleArr = @[@"专属",@"主题",@"区域",@"功效",@"场景"];
@@ -96,10 +94,17 @@
     self.startOffsetX = scrollView.contentOffset.x;
 }
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self.pageView externalScrollView:scrollView totalPage:5 startOffsetX:scrollView.contentOffset.x];
+}
+
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self.pageView externalScrollView:scrollView totalPage:5 startOffsetX:self.startOffsetX];
 }
+
 #pragma mark GLYPageViewDelegate
 - (void)pageViewSelectdIndex:(NSInteger)index
 {
@@ -139,10 +144,39 @@
 - (void)selectTackWithModel:(ArmChairModel *)model
 {
     NSLog(@"modelname:%@,***command:%@",model.name,model.command);
-    ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:model.name];
-    vc.armchairModel = model;
-    [vc commandActionWithModel:model];
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    NSString *statusStr = [self resultStringWithStatus];
+    if(![statusStr isEqualToString:@""]){
+        [GlobalCommon showMessage2:statusStr duration2:1.0];
+        return;
+    }else{
+        if([OGA530BluetoothManager shareInstance].respondModel.powerOn == NO){
+            [self showProgressHud];
+            [[OGA530BluetoothManager shareInstance] sendCommand:k530Command_PowerOn success:^(BOOL success) {
+
+            }];
+        }else{
+
+            ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:model.name];
+            vc.armchairModel = model;
+            [vc commandActionWithModel:model];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+ 
+    
+}
+
+- (void)showProgressHud
+{
+    MBProgressHUD *progressHud = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
+    progressHud.label.text = @"启动设备";
+    progressHud.tag = 102;
+    [[[UIApplication sharedApplication] keyWindow] addSubview:progressHud];
+    [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:progressHud];
+    [progressHud showAnimated:YES];
+    [progressHud hideAnimated:YES afterDelay:6.0];
+    
 }
 
 @end
