@@ -18,7 +18,7 @@
 #import "HCY_ConsultingModel.h"
 #import "VersionUpdateView.h"
 
-#import <PgyUpdate/PgyUpdateManager.h>
+//#import <PgyUpdate/PgyUpdateManager.h>
 
 @interface RecommendReadView()<UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -208,7 +208,7 @@
 {
     
     if(!isProduct){
-        [[PgyUpdateManager sharedPgyManager] checkUpdate];
+      //  [[PgyUpdateManager sharedPgyManager] checkUpdate];
         return;
     }
     
