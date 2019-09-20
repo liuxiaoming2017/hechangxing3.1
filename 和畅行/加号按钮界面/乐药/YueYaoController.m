@@ -19,11 +19,14 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "ShoppingController.h"
 
-#define SCREEN_WIDTH_Size ([UIScreen mainScreen].bounds.size.width)/375
+#import <MediaPlayer/MediaPlayer.h>
+#import <notify.h>
+
 @interface YueYaoController ()<UITableViewDelegate,UITableViewDataSource,songListCellDelegate,DownloadHandlerDelegate,CBCentralManagerDelegate,CBPeripheralDelegate,MuscicNoramlDeleaget>
 
 {
     NSInteger SegIndex;
+    id _playerTimeObserver;
 }
 
 @property (nonatomic,strong) HYSegmentedControl *hysegmentControl;
@@ -35,7 +38,7 @@
 
 @property (nonatomic,copy) NSString *selectSongName;//当前播放的乐药
 
-@property (strong, nonatomic) AVAudioPlayer *avPlayer;
+@property (strong, nonatomic) AVPlayer *avPlayer;
 
 @property (assign, nonatomic) BOOL isYueLuoyi;
 
@@ -50,13 +53,17 @@
 @property (nonatomic,copy) NSString *typeStr;
 @property (nonatomic,strong) UIView *backView;
 
+@property (nonatomic,assign) BOOL isPlaying;
+
+@property (nonatomic,assign) BOOL isBackground;
+
 /**
  *  蓝牙连接必要对象
  */
 @property (nonatomic, strong) CBCentralManager *centralMgr;
 @property (nonatomic, strong) CBPeripheral *discoveredPeripheral;
 @property (strong, nonatomic) CBCharacteristic* writeCharacteristic;
-@property (nonatomic,strong) UIButton *blueTBT;
+
 /**
  乐药开关
  */
@@ -70,6 +77,7 @@
 
 @end
 
+
 @implementation YueYaoController
 @synthesize hysegmentControl,downhander,jinerLabel,allPrice;
 
@@ -81,6 +89,7 @@
     self.avPlayer = nil;
     self.tableView = nil;
     self.hysegmentControl = nil;
+    [self removeObserver];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PayStatues" object:nil];
     [UserShareOnce shareOnce].allYueYaoPrice = 0.0;
     [[UserShareOnce shareOnce].yueYaoBuyArr removeAllObjects];
@@ -92,6 +101,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.isOnPay = NO;
+    self.isPlaying = NO;
     if(self.isYueLuoyi){
         self.navTitleLabel.text = @"樂絡怡";
     }else{
@@ -111,47 +121,185 @@
 //    [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
 //    [audioSession setActive:YES error:nil];
     
-    if(self.isYueLuoyi){
-        if(![[[NSUserDefaults standardUserDefaults]valueForKey:@"YueLuoyi"] isEqualToString:@"1111"]){
-            [self layoutPromptView];
-        }
-        
-        
-    }
+    [self playControl];
+    
+    [self createRemoteCommandCenter];
+    
+    [self addObservers];
     
 }
 
--(void)layoutPromptView{
-    
-    UIView *blackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
-    blackView.backgroundColor = [UIColor blackColor];
-    blackView.alpha = 0.8;
-    [self.view addSubview:blackView];
-    
-    
-    UIButton *iKnowBT = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    iKnowBT.frame = CGRectMake(ScreenWidth - 150,  kScreenSize.height- kNavBarHeight - 160 - 100, 100, 50);
-    [iKnowBT setBackgroundImage:[UIImage imageNamed:ModuleZW(@"我知道了")] forState:(UIControlStateNormal)];
-    [[iKnowBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        [[NSUserDefaults standardUserDefaults]setValue:@"1111" forKey:@"YueLuoyi"];
-        [blackView removeFromSuperview];
-        self.musciView.userInteractionEnabled = YES;
-        self.blueTBT.userInteractionEnabled = YES;
-    }];
-    [blackView addSubview:iKnowBT];
-    
-    NSArray *imageArray = @[@"左边箭头",@"右边箭头"];
-    for (int i = 0; i < 2; i++) {
-        UIImageView *leftImagaView = [[UIImageView alloc]initWithFrame:CGRectMake(40 + (ScreenWidth - 180 - 40)*i, kScreenSize.height- kNavBarHeight - 180, 120, 120)];
-        leftImagaView.image = [UIImage imageNamed:ModuleZW(imageArray[i])];
-        [blackView addSubview:leftImagaView];
-    }
-    
-    self.musciView.userInteractionEnabled = NO;
-    self.blueTBT.userInteractionEnabled = NO;
-    [self.view addSubview:self.musciView];
-    [self.view addSubview:self.blueTBT];
+- (void)remoteControlReceivedWithEvent:(UIEvent *)event{
+    NSLog(@"%ld",event.type);
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"songRemoteControlNotification" object:self userInfo:@{@"eventSubtype":@(event.subtype)}];
 }
+
+# pragma mark -  锁屏界面开启和监控远程控制事件
+- (void)createRemoteCommandCenter{
+   
+    MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
+    
+    //   MPFeedbackCommand对象反映了当前App所播放的反馈状态. MPRemoteCommandCenter对象提供feedback对象用于对媒体文件进行喜欢, 不喜欢, 标记的操作. 效果类似于网易云音乐锁屏时的效果
+    
+    //    commandCenter.togglePlayPauseCommand 耳机线控的暂停/播放
+    __weak typeof(self) weakSelf = self;
+    [commandCenter.pauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+        [weakSelf.avPlayer pause];
+        return MPRemoteCommandHandlerStatusSuccess;
+    }];
+    [commandCenter.playCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+        [weakSelf.avPlayer play];
+        return MPRemoteCommandHandlerStatusSuccess;
+    }];
+//        [commandCenter.previousTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+//            NSLog(@"上一首");
+//            return MPRemoteCommandHandlerStatusSuccess;
+//        }];
+//    
+//    [commandCenter.nextTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+//        NSLog(@"下一首");
+//        return MPRemoteCommandHandlerStatusSuccess;
+//    }];
+    
+
+    //在控制台拖动进度条调节进度（仿QQ音乐的效果）
+    [commandCenter.changePlaybackPositionCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+        CMTime totlaTime = weakSelf.avPlayer.currentItem.duration;
+        MPChangePlaybackPositionCommandEvent * playbackPositionEvent = (MPChangePlaybackPositionCommandEvent *)event;
+        [weakSelf.avPlayer seekToTime:CMTimeMake(totlaTime.value*playbackPositionEvent.positionTime/CMTimeGetSeconds(totlaTime), totlaTime.timescale) completionHandler:^(BOOL finished) {
+        }];
+        return MPRemoteCommandHandlerStatusSuccess;
+    }];
+    
+   
+
+    
+}
+
+# pragma mark -  移除观察者
+- (void)removeObserver{
+    
+    [self.avPlayer removeTimeObserver:_playerTimeObserver];
+    _playerTimeObserver = nil;
+    
+    MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
+    [commandCenter.likeCommand removeTarget:self];
+    [commandCenter.dislikeCommand removeTarget:self];
+    [commandCenter.bookmarkCommand removeTarget:self];
+    [commandCenter.nextTrackCommand removeTarget:self];
+    [commandCenter.skipForwardCommand removeTarget:self];
+    [commandCenter.changePlaybackPositionCommand removeTarget:self];
+    commandCenter = nil;
+}
+
+# pragma mark - 播放控制和监测
+- (void)playControl{
+    
+    //后台播放音频设置,需要在Capabilities->Background Modes中勾选Audio,Airplay,and Picture in Picture
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    [session setActive:YES error:nil];
+    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+    
+    
+    __weak YueYaoController * weakSelf = self;
+    _playerTimeObserver = [weakSelf.avPlayer addPeriodicTimeObserverForInterval:CMTimeMake(0.1*30, 30) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
+        
+        CGFloat currentTime = CMTimeGetSeconds(time);
+        
+        CMTime total = weakSelf.avPlayer.currentItem.duration;
+        CGFloat totalTime = CMTimeGetSeconds(total);
+        
+//        //监听锁屏状态 lock=1则为锁屏状态
+//        uint64_t locked;
+//        __block int token = 0;
+//        notify_register_dispatch("com.apple.springboard.lockstate",&token,dispatch_get_main_queue(),^(int t){
+//        });
+//        notify_get_state(token, &locked);
+//
+//        //监听屏幕点亮状态 screenLight = 1则为变暗关闭状态
+//        uint64_t screenLight;
+//        __block int lightToken = 0;
+//        notify_register_dispatch("com.apple.springboard.hasBlankedScreen",&lightToken,dispatch_get_main_queue(),^(int t){
+//        });
+//        notify_get_state(lightToken, &screenLight);
+//
+//        BOOL isShowLyricsPoster = NO;
+//        // NSLog(@"screenLight=%llu locked=%llu",screenLight,locked);
+//        if (screenLight == 0 && locked == 1) {
+//            //点亮且锁屏时
+//            isShowLyricsPoster = YES;
+//        }else if(screenLight){
+//            return;
+//        }
+        
+        //展示锁屏歌曲信息，上面监听屏幕锁屏和点亮状态的目的是为了提高效率
+        if(weakSelf.isBackground){
+            [weakSelf showLockScreenTotaltime:totalTime andCurrentTime:currentTime andRate:weakSelf.avPlayer.rate andLyricsPoster:YES];
+        }
+        
+        
+    }];
+}
+
+- (void)addObservers {
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(removePlayerPlayerLayer)
+                   name:UIApplicationDidEnterBackgroundNotification
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(resetPlayerPlayerLayer)
+                   name:UIApplicationWillEnterForegroundNotification
+                 object:nil];
+    
+}
+
+- (void)removePlayerPlayerLayer
+{
+    NSLog(@"进入后台");
+    self.isBackground = YES;
+}
+
+- (void)resetPlayerPlayerLayer
+{
+    NSLog(@"进入前台");
+    self.isBackground = NO;
+}
+
+# pragma mark - 展示锁屏歌曲信息：图片、歌词、进度、演唱者 播放速率
+- (void)showLockScreenTotaltime:(float)totalTime andCurrentTime:(float)currentTime andRate:(NSInteger)rate andLyricsPoster:(BOOL)isShow{
+    
+    NSMutableDictionary * songDict = [[NSMutableDictionary alloc] init];
+    //设置歌曲题目
+    [songDict setObject:self.selectSongName forKey:MPMediaItemPropertyTitle];
+    //设置歌手名
+    //[songDict setObject:@"韩安旭" forKey:MPMediaItemPropertyArtist];
+    //设置专辑名
+    [songDict setObject:@"harmonyYi" forKey:MPMediaItemPropertyAlbumTitle];
+    //设置歌曲时长
+    [songDict setObject:[NSNumber numberWithDouble:totalTime]  forKey:MPMediaItemPropertyPlaybackDuration];
+    //设置已经播放时长
+    [songDict setObject:[NSNumber numberWithDouble:currentTime] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
+    //设置播放速率
+    //注意：MPNowPlayingInfoCenter的rate 与 self.player.rate 是不同步的，也就是说[self.player pause]暂停播放后的速率rate是0，但MPNowPlayingInfoCenter的rate还是1，就会造成 在锁屏界面点击了暂停按钮，这个时候进度条表面看起来停止了走动，但是其实还是在计时，所以再点击播放的时候，锁屏界面进度条的光标会发生位置闪动， 所以我们需要在暂停或播放时保持播放速率一致
+    [songDict setObject:[NSNumber numberWithInteger:rate] forKey:MPNowPlayingInfoPropertyPlaybackRate];
+    
+//    UIImage * lrcImage = [UIImage imageNamed:@"backgroundImage5.jpg"];
+//    //设置显示的海报图片
+//    [songDict setObject:[[MPMediaItemArtwork alloc] initWithImage:lrcImage]
+//                 forKey:MPMediaItemPropertyArtwork];
+    
+    NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
+    NSArray *icons = [infoPlist valueForKeyPath:@"CFBundleIcons.CFBundlePrimaryIcon.CFBundleIconFiles"];
+    [songDict setObject:[[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:[icons lastObject]]]
+                     forKey:MPMediaItemPropertyArtwork];
+    
+    [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:songDict];
+    
+}
+
+
 
 - (void)PaySuccess
 {
@@ -211,7 +359,7 @@
     NSArray *titleArray = @[@"宫", @"商", @"角", @"徵",@"羽"];
     UISegmentedControl *topSegment = [[UISegmentedControl alloc]initWithItems:titleArray];
     topSegment.frame = CGRectMake(0, kNavBarHeight+5, 250, 50);
-    topSegment.tintColor = RGB_AppWhite;
+    topSegment.tintColor = [UIColor whiteColor];
     NSDictionary *selectedDic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:28],
                                   NSForegroundColorAttributeName:[UIColor blackColor]};
     NSDictionary *noSelectedDic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:25],
@@ -246,9 +394,9 @@
     
     //根据个人经络最新一条信息展示
     NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
-
+    
     if (![GlobalCommon stringEqualNull:physicalStr]) {
-        physicalStr = ModuleZW(physicalStr);
+        
         NSArray * segmentedArray = @[
                                      @[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"],
                                      @[@"上商", @"少商", @"钛商", @"右商", @"左商"],
@@ -270,13 +418,12 @@
         }
     }
     if ([GlobalCommon stringEqualNull:physicalStr]){
-        [hysegmentControl changeSegmentedControlWithIndex:0];
         [self requestYueyaoListWithType:@"大宫"];
     }
     
-    [self getPayRequest];
+   // [self getPayRequest];
     
-    
+    self.isOnPay = NO;
 }
 
 
@@ -290,9 +437,9 @@
             [weakSelf createConsumeView];
             weakSelf.isOnPay = YES;
         }else{
-            weakSelf.isOnPay = NO;
+           // weakSelf.isOnPay = NO;
             [weakSelf createConsumeView];
-//            weakSelf.isOnPay = YES;
+            weakSelf.isOnPay = YES;
         }
     } failureBlock:^(NSError *error) {
         weakSelf.isOnPay = NO;
@@ -392,7 +539,7 @@
         BOOL fileExists = [self existFileWithName:model.title];
         if(fileExists){ //如果本地存在 则是可以播放 不存在则显示下载按钮
             [cell downloadSuccess];
-            if([model.title isEqualToString:self.selectSongName] && [self.avPlayer isPlaying]){//正在播放的cell,设置为选中
+            if([model.title isEqualToString:self.selectSongName] && self.isPlaying){//正在播放的cell,设置为选中 [self.avPlayer isPlaying]
                 cell.currentSelect = YES;
                 [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
                 [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
@@ -657,25 +804,40 @@
 # pragma mark - 播放乐药
 - (void)palyActionWithUrlStr:(NSString *)urlStr
 {
-     NSString *aurl = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    // NSString *aurl = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSString *lastStr = [[GlobalCommon Createfilepath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3",self.selectSongName]];
     if(self.avPlayer && [urlStr isEqualToString:lastStr]){
         [self.avPlayer play];
     }else{
-        self.avPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL URLWithString:aurl] error:nil];
-        self.avPlayer.numberOfLoops = -1;
-        [self.avPlayer prepareToPlay];
+//        self.avPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL URLWithString:aurl] error:nil];
+//        self.avPlayer.numberOfLoops = -1;
+//        [self.avPlayer prepareToPlay];
+        self.avPlayer = [[AVPlayer alloc] initWithURL:[NSURL fileURLWithPath:urlStr]];
         [self.avPlayer play];
+        
+        
+        __weak typeof(self) weakSelf = self;
+        
+        [weakSelf playControl];
+
+        [weakSelf createRemoteCommandCenter];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:weakSelf selector:@selector(playbackFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:weakSelf.avPlayer.currentItem];
+        
     }
-//    AVPlayerObject *playerShare = [AVPlayerObject shareOnce];
-//    playerShare.audioURL = [NSURL URLWithString:aurl];
-//    [playerShare.avPlayer play];
+    self.isPlaying = YES;
+
+}
+
+- (void)playbackFinished:(NSNotification *)notification{
+    [self.avPlayer seekToTime:kCMTimeZero];
+    [self.avPlayer play];
 }
 
 - (void)pauseAction
 {
     [self.avPlayer pause];
-    //[[AVPlayerObject shareOnce].avPlayer pause];
+    self.isPlaying = NO;
 }
 
 #pragma mark 下载完成代理回调
@@ -865,21 +1027,11 @@
 
 #pragma -mark 蓝牙初始化界面
 - (void)BluBluetoothView{
-    //ScreenHeight  - kTabBarHeight - 16
-    self.musciView = [[MuisicNoraml alloc]initWithFrame:CGRectMake(0, kScreenSize.height- kTabBarHeight - 80, kScreenSize.width, 100/2*SCREEN_WIDTH_Size + 20)];
-    self.musciView.delegate = self;
-    [self.view addSubview:self.musciView];
     
-    UIButton *blueTBT = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    blueTBT.frame = CGRectMake(40,  self.musciView.top +10 , self.musciView.height - 20, self.musciView.height - 20);
-    [blueTBT setBackgroundImage:[UIImage imageNamed:@"蓝牙未连接"] forState:(UIControlStateNormal)];
-    [[blueTBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请先连接设备") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles: nil];
-        [alert show];
-    }];
-    [self.view addSubview:blueTBT];
-    self.blueTBT = blueTBT;
-    blueTBT.userInteractionEnabled = YES;
+    self.musciView = [[MuisicNoraml alloc]initWithFrame:CGRectMake(0, kScreenSize.height- kNavBarHeight - 75, kScreenSize.width, 150)];
+    self.musciView.delegate = self;
+    
+    [self.view addSubview:self.musciView];
 }
 
 #pragma mark - 主动断开连接
@@ -959,8 +1111,7 @@
     //蓝牙链接失败
     self.isBleLink = NO;
     // [self.centralMgr connectPeripheral:peripheral options:nil];
-    [_blueTBT setBackgroundImage:[UIImage imageNamed:@"蓝牙未连接"] forState:(UIControlStateNormal)];
-    _blueTBT.userInteractionEnabled = YES;
+    self.musciView.bluetoothBg.image = [UIImage imageNamed:@"关蓝牙"];
     
     
 }
@@ -1025,9 +1176,7 @@
              */
             [[NSNotificationCenter defaultCenter] postNotificationName:LeyaoBluetoothON object:nil userInfo:nil];
             
-            [_blueTBT setBackgroundImage:[UIImage imageNamed:@"蓝牙已连接"] forState:(UIControlStateNormal)];
-            _blueTBT.userInteractionEnabled = NO;
-
+            self.musciView.bluetoothBg.image = [UIImage imageNamed:@"开蓝牙"];
             //蓝牙链接成功
             self.isBleLink = YES;
         }
@@ -1088,8 +1237,6 @@
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:LeyaoBluetoothOFF object:nil userInfo:nil];
             NSLog(@"蓝牙已关闭");
-            [_blueTBT setBackgroundImage:[UIImage imageNamed:@"蓝牙未连接"] forState:(UIControlStateNormal)];
-            _blueTBT.userInteractionEnabled = YES;
         }
             break;
         case CBCentralManagerStatePoweredOn:
@@ -1103,8 +1250,6 @@
         default:
         {
             NSLog(@"未知的蓝牙错误");
-            [_blueTBT setBackgroundImage:[UIImage imageNamed:@"蓝牙未连接"] forState:(UIControlStateNormal)];
-            _blueTBT.userInteractionEnabled = YES;
         }
             break;
     }

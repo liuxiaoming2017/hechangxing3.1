@@ -33,6 +33,7 @@
 		032735982105CE0900554516 /* ArchivesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 032735972105CE0900554516 /* ArchivesCell.m */; };
 		0327359B2105CFCE00554516 /* ArchiveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327359A2105CFCE00554516 /* ArchiveModel.m */; };
 		0328F62B2334A6CC00BD25F7 /* ICD10.db in Resources */ = {isa = PBXBuildFile; fileRef = 0328F62A2334A6CB00BD25F7 /* ICD10.db */; };
+		0328F62E2334C5F500BD25F7 /* YueYaoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0328F62D2334C5F400BD25F7 /* YueYaoController.m */; };
 		032A7A0420E9F6EB003D4952 /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A0320E9F6EB003D4952 /* CustomNavigationController.m */; };
 		032A7A0820E9F7E2003D4952 /* CommonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A0720E9F7E2003D4952 /* CommonViewController.m */; };
 		032A7A1320E9F9AE003D4952 /* MallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A1220E9F9AE003D4952 /* MallViewController.m */; };
@@ -58,7 +59,6 @@
 		0338E50F212C059100BBF576 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0338E50C212C059100BBF576 /* MessageCell.xib */; };
 		03430B4521119AF7008EE6C8 /* JingLuoSchemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03430B4421119AF7008EE6C8 /* JingLuoSchemeController.m */; };
 		03439067210AB57F00B57142 /* CCSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 03439066210AB57F00B57142 /* CCSegmentedControl.m */; };
-		03439079210AB6B200B57142 /* YueYaoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03439078210AB6B200B57142 /* YueYaoController.m */; };
 		03439082210AB8BB00B57142 /* HYSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 03439080210AB8BB00B57142 /* HYSegmentedControl.m */; };
 		03439098210AC2A400B57142 /* SongListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03439096210AC2A300B57142 /* SongListCell.m */; };
 		0343909B210AC3AB00B57142 /* DownloadHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0343909A210AC3AB00B57142 /* DownloadHandler.m */; };
@@ -737,6 +737,8 @@
 		032735992105CFCE00554516 /* ArchiveModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArchiveModel.h; sourceTree = "<group>"; };
 		0327359A2105CFCE00554516 /* ArchiveModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArchiveModel.m; sourceTree = "<group>"; };
 		0328F62A2334A6CB00BD25F7 /* ICD10.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = ICD10.db; sourceTree = "<group>"; };
+		0328F62C2334C58100BD25F7 /* payRequsestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = payRequsestHandler.h; sourceTree = "<group>"; };
+		0328F62D2334C5F400BD25F7 /* YueYaoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YueYaoController.m; sourceTree = "<group>"; };
 		032A7A0220E9F6EB003D4952 /* CustomNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationController.h; sourceTree = "<group>"; };
 		032A7A0320E9F6EB003D4952 /* CustomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationController.m; sourceTree = "<group>"; };
 		032A7A0620E9F7E2003D4952 /* CommonViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonViewController.h; sourceTree = "<group>"; };
@@ -789,7 +791,6 @@
 		03439065210AB57F00B57142 /* CCSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSegmentedControl.h; sourceTree = "<group>"; };
 		03439066210AB57F00B57142 /* CCSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSegmentedControl.m; sourceTree = "<group>"; };
 		03439077210AB6B200B57142 /* YueYaoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YueYaoController.h; sourceTree = "<group>"; };
-		03439078210AB6B200B57142 /* YueYaoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YueYaoController.m; sourceTree = "<group>"; };
 		03439080210AB8BB00B57142 /* HYSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYSegmentedControl.m; sourceTree = "<group>"; };
 		03439081210AB8BB00B57142 /* HYSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYSegmentedControl.h; sourceTree = "<group>"; };
 		03439096210AC2A300B57142 /* SongListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongListCell.m; sourceTree = "<group>"; };
@@ -1409,7 +1410,6 @@
 		03D1BF5E2328E9D000F2BDD6 /* CommandButtonView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommandButtonView.m; sourceTree = "<group>"; };
 		03D1E50121D7B0E00089E6CA /* VersionUpdateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionUpdateView.h; sourceTree = "<group>"; };
 		03D1E50221D7B0E00089E6CA /* VersionUpdateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionUpdateView.m; sourceTree = "<group>"; };
-		03D5F84F2322224900B9536F /* payRequsestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = payRequsestHandler.h; sourceTree = "<group>"; };
 		03D99E5821AD2CBD00C766FD /* UMShare.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMShare.framework; sourceTree = "<group>"; };
 		03D99E5A21AD334300C766FD /* libSocialWeChat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSocialWeChat.a; path = "和畅行/友盟分享/SocialLibraries/WeChat/libSocialWeChat.a"; sourceTree = "<group>"; };
 		03D99E5C21AD335100C766FD /* libSocialQQ.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSocialQQ.a; path = "和畅行/友盟分享/SocialLibraries/QQ/libSocialQQ.a"; sourceTree = "<group>"; };
@@ -2200,7 +2200,7 @@
 				03439097210AC2A400B57142 /* SongListCell.h */,
 				03439096210AC2A300B57142 /* SongListCell.m */,
 				03439077210AB6B200B57142 /* YueYaoController.h */,
-				03439078210AB6B200B57142 /* YueYaoController.m */,
+				0328F62D2334C5F400BD25F7 /* YueYaoController.m */,
 				039661E921F1736100754AAA /* ShoppingController.h */,
 				039661EA21F1736100754AAA /* ShoppingController.m */,
 				039661F021F1BF7F00754AAA /* PayMentViewController.h */,
@@ -3071,7 +3071,7 @@
 			children = (
 				038517082186AB9E001DD2B7 /* ApiXml.h */,
 				038517042186AB9E001DD2B7 /* ApiXml.mm */,
-				03D5F84F2322224900B9536F /* payRequsestHandler.h */,
+				0328F62C2334C58100BD25F7 /* payRequsestHandler.h */,
 				038517072186AB9E001DD2B7 /* payRequsestHandler.mm */,
 				038517092186AB9F001DD2B7 /* WXUtil.h */,
 				038517062186AB9E001DD2B7 /* WXUtil.mm */,
@@ -4632,11 +4632,11 @@
 				036E85902186EB4C001B9BB4 /* UIClickLabel.m in Sources */,
 				036FC0E92118281100C1A793 /* SetupController.m in Sources */,
 				036E85982186EB4C001B9BB4 /* ConnectBtn.m in Sources */,
-				03439079210AB6B200B57142 /* YueYaoController.m in Sources */,
 				035F31F4231D0604009A0D94 /* ArmchairHomeVC.m in Sources */,
 				036FC0CC2118176E00C1A793 /* WenYinFileViewController.m in Sources */,
 				C9B76976231FA27B00171DCC /* AllServiceCell.m in Sources */,
 				03F6931720FF2FD400308E38 /* SBJsonWriter.m in Sources */,
+				0328F62E2334C5F500BD25F7 /* YueYaoController.m in Sources */,
 				03051FF522C0997D00385DD0 /* AESCipher.m in Sources */,
 				03513ADB20E9CAD4004E2805 /* main.m in Sources */,
 				038CE87720EDF1BF005E9219 /* RootRequestController.m in Sources */,
