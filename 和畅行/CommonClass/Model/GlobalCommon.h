@@ -77,4 +77,6 @@
 + (NSString *)AESEncodeWithString:(NSString *)str;
 + (NSString *)AESDecodeWithString:(NSString *)str;
 
++ (NSString *)commandFromName:(NSString *)str;
+
 @end

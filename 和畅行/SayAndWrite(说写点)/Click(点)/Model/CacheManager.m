@@ -368,11 +368,10 @@ static CacheManager *__cacheManager = nil;
 {
     NSMutableArray *mutabArr = [NSMutableArray arrayWithCapacity:0];
     FMResultSet *set = [_db executeQuery:@"select * from armchairTable"];
-    
     while ([set next]) {
         ArmChairModel *model = [[ArmChairModel alloc] init];
         model.name = [set stringForColumn:@"name"];
-        model.command = [set stringForColumn:@"command"];
+        model.command = [GlobalCommon commandFromName:model.name];
         [mutabArr addObject:model];
     }
     [set close];

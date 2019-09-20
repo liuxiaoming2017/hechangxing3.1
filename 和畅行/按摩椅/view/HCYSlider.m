@@ -7,13 +7,14 @@
 //
 
 #import "HCYSlider.h"
+#import "UIButton+ExpandScope.h"
 
 @interface HCYSlider()
 
 @property (nonatomic,strong) UIView *leftView;
 @property (nonatomic) CGFloat hyMaxValue;
 @property (nonatomic,strong) UIView *sliderView;
-
+@property (nonatomic,assign) NSInteger myTag;
 @end
 
 @implementation HCYSlider
@@ -24,9 +25,10 @@
     self.sliderView = nil;
 }
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame withTag:(NSInteger )tag{
     self = [super initWithFrame:frame];
     if (self) {
+        self.myTag = tag;
         [self setup];
     }
     return self;
@@ -63,28 +65,31 @@
 - (void)setup{
     
     
+    
+    self.sliderView = [[UIView alloc] initWithFrame:CGRectMake(20+10, 0+8, self.frame.size.width - 40 -20, self.frame.size.height - 16)];
+    self.sliderView.layer.cornerRadius = (self.frame.size.height - 16)/2.0;
+    self.sliderView.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:243/255.0 alpha:1.0];
+    [self addSubview:self.sliderView];
+    
     UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    addBtn.frame = CGRectMake(0, 0, 15, 15);
+    //addBtn.frame = CGRectMake(0, 0, 15, 15);
+    addBtn.frame = CGRectMake(10, 8, 15, 15);
     [addBtn setImage:[UIImage imageNamed:@"按摩_减"] forState:UIControlStateNormal];
     [addBtn addTarget:self action:@selector(reduceBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:addBtn];
     
-    self.sliderView = [[UIView alloc] initWithFrame:CGRectMake(20, 0, self.frame.size.width - 40, self.frame.size.height)];
-    self.sliderView.layer.cornerRadius = self.frame.size.height/2;
-    self.sliderView.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:243/255.0 alpha:1.0];
-    [self addSubview:self.sliderView];
-    
     UIButton *reduceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    reduceBtn.frame = CGRectMake(self.frame.size.width-15, 0, 15, 15);
+    reduceBtn.frame = CGRectMake(self.frame.size.width-15-10, 0+8, 15, 15);
     [reduceBtn setImage:[UIImage imageNamed:@"按摩_加"] forState:UIControlStateNormal];
     [reduceBtn addTarget:self action:@selector(addBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:reduceBtn];
     
-    
+    [addBtn setHitTestEdgeInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+    [reduceBtn setHitTestEdgeInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     
     /** 数值视图*/
     _leftView = [[UIView alloc]init];
-    _leftView.layer.cornerRadius = self.frame.size.height/2;
+    _leftView.layer.cornerRadius = self.sliderView.frame.size.height/2;
     [self addSubview:_leftView];
     
    
@@ -94,24 +99,26 @@
 
 }
 
+
 - (void)addBtnAction:(UIButton *)button
 {
-    if(self.currentSliderValue < 5){
-        self.currentSliderValue += 1;
+//    if(self.currentSliderValue < 5){
+//        self.currentSliderValue += 1;
+//    }
+    if([self.delegate respondsToSelector:@selector(HCYSliderButtonAction:withTag:)]){
+        [self.delegate HCYSliderButtonAction:YES withTag:self.myTag];
     }
-    if([self.delegate respondsToSelector:@selector(HCYSliderButtonAction:)]){
-        [self.delegate HCYSliderButtonAction:@"加"];
-    }
+    
 }
 
 
 - (void)reduceBtnAction:(UIButton *)button
 {
-    if(self.currentSliderValue > 0){
-        self.currentSliderValue -= 1;
-    }
-    if([self.delegate respondsToSelector:@selector(HCYSliderButtonAction:)]){
-        [self.delegate HCYSliderButtonAction:@"减"];
+//    if(self.currentSliderValue > 0){
+//        self.currentSliderValue -= 1;
+//    }
+    if([self.delegate respondsToSelector:@selector(HCYSliderButtonAction:withTag:)]){
+        [self.delegate HCYSliderButtonAction:NO withTag:self.myTag];
     }
 }
 

@@ -125,14 +125,19 @@
                             arr9,@"气压",
                             arr10,@"背部脚底",
                             nil];
-    //NSDictionary *dic = @{@"专属":arr1,@"主题":arr2,@"区域":arr3,@"功效":arr4,@"场景":arr5,@"姿势":arr6,@"气压":arr9,@"背部脚底":arr10};
     NSArray *arr = [allDic objectForKey:str];
-    NSLog(@"arr:%@",arr);
+    //NSLog(@"arr:%@",arr);
     return arr;
 }
 
+
 - (void)messageBtnAction:(UIButton *)btn
 {
+     BOOL isBlueToothPoweredOff = [[OGA530BluetoothManager shareInstance] isBlueToothPoweredOff];
+    if(isBlueToothPoweredOff){
+        [GlobalCommon showMessage2:@"请先打开蓝牙" duration2:1];
+    }
+    
     if (btn.selected == YES) {
         
         __weak typeof(self) weakSelf = self;

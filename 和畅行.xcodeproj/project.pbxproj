@@ -396,6 +396,7 @@
 		03DEBC71210863AB008434BD /* LiveMonitorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DEBC70210863AA008434BD /* LiveMonitorVC.m */; };
 		03DEBC74210863CC008434BD /* LeadPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DEBC72210863CB008434BD /* LeadPlayer.m */; };
 		03DEBC772108641D008434BD /* Helper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03DEBC752108641C008434BD /* Helper.mm */; };
+		03E29ACA2331FDCB0056A258 /* UIButton+ExpandScope.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E29AC92331FDCB0056A258 /* UIButton+ExpandScope.m */; };
 		03E36FE920EDB882000974E1 /* UtilityFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE820EDB882000974E1 /* UtilityFunc.m */; };
 		03EB041921E86B96000AA88B /* ZYAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB041721E86B95000AA88B /* ZYAudioManager.m */; };
 		03EBD1E922EE8B7C001FAD7A /* HWTFCursorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EBD1E222EE8B7A001FAD7A /* HWTFCursorView.m */; };
@@ -1422,6 +1423,8 @@
 		03DEBC73210863CC008434BD /* LeadPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeadPlayer.h; sourceTree = "<group>"; };
 		03DEBC752108641C008434BD /* Helper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Helper.mm; sourceTree = "<group>"; };
 		03DEBC762108641D008434BD /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
+		03E29AC82331FDCB0056A258 /* UIButton+ExpandScope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+ExpandScope.h"; sourceTree = "<group>"; };
+		03E29AC92331FDCB0056A258 /* UIButton+ExpandScope.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ExpandScope.m"; sourceTree = "<group>"; };
 		03E36FE720EDB882000974E1 /* UtilityFunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UtilityFunc.h; sourceTree = "<group>"; };
 		03E36FE820EDB882000974E1 /* UtilityFunc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UtilityFunc.m; sourceTree = "<group>"; };
 		03EB041721E86B95000AA88B /* ZYAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYAudioManager.m; sourceTree = "<group>"; };
@@ -2303,6 +2306,10 @@
 				035F31F5231D06DC009A0D94 /* view */,
 				035260B2230BD59100A716C8 /* MassageArmchairVC.h */,
 				035260B3230BD59100A716C8 /* MassageArmchairVC.m */,
+				03101DDE2330D6AA00C5F35E /* ArmchairAcheTestVC.h */,
+				03101DDF2330D6AA00C5F35E /* ArmchairAcheTestVC.m */,
+				03C5913B2331BB020058EF33 /* ArmchairTestResultVC.h */,
+				03C5913C2331BB030058EF33 /* ArmchairTestResultVC.m */,
 				036C8E102328A27B00729889 /* ArmchairCommonVC.h */,
 				036C8E112328A27B00729889 /* ArmchairCommonVC.m */,
 				035F31F2231D0604009A0D94 /* ArmchairHomeVC.h */,
@@ -2311,10 +2318,6 @@
 				0351C59023278C3B0035A9EA /* ArmchairThemeVC.m */,
 				036C8E0D23289E1400729889 /* ArmchairDetailVC.h */,
 				036C8E0E23289E1400729889 /* ArmchairDetailVC.m */,
-				03101DDE2330D6AA00C5F35E /* ArmchairAcheTestVC.h */,
-				03101DDF2330D6AA00C5F35E /* ArmchairAcheTestVC.m */,
-				03C5913B2331BB020058EF33 /* ArmchairTestResultVC.h */,
-				03C5913C2331BB030058EF33 /* ArmchairTestResultVC.m */,
 				03B4E4D5232636B9003518EA /* armChair.plist */,
 			);
 			path = "按摩椅";
@@ -2432,6 +2435,8 @@
 				0351C59623278DB20035A9EA /* ThemeCollectionViewCell.m */,
 				038F8CE3232F599B0052C4BA /* OGBluetoothListView.h */,
 				038F8CE2232F599B0052C4BA /* OGBluetoothListView.m */,
+				03E29AC82331FDCB0056A258 /* UIButton+ExpandScope.h */,
+				03E29AC92331FDCB0056A258 /* UIButton+ExpandScope.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -4565,6 +4570,7 @@
 				83E23F0021C76CE800B43298 /* HYC_CardsModel.m in Sources */,
 				036E84402186EAD3001B9BB4 /* NSString+Util.m in Sources */,
 				C97308F721BA50FB00060447 /* SGScanningQRCodeVC.m in Sources */,
+				03E29ACA2331FDCB0056A258 /* UIButton+ExpandScope.m in Sources */,
 				03535EF620F7263C00664FA9 /* TipSpeakController.m in Sources */,
 				036E843D2186EAD3001B9BB4 /* KeyBoardManager.m in Sources */,
 				036A66742113ECA70096A006 /* PrivateCheckViewController.m in Sources */,

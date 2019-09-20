@@ -47,7 +47,7 @@
     self.navTitleLabel.font = [UIFont systemFontOfSize:18];
     self.navTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.navTitleLabel.textColor = [UIColor blackColor];
-    [topView addSubview:self.navTitleLabel];;
+    [topView addSubview:self.navTitleLabel];
     
     
     preBtn = [UIButton buttonWithType:UIButtonTypeCustom];

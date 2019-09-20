@@ -25,6 +25,8 @@
 
 @property (nonatomic, strong) UIView *recommendV;
 
+@property (nonatomic, strong) UIButton *bluetoothBtn;
+
 @property (nonatomic, weak) OGBluetoothListView *listView;
 
 @property (nonatomic, strong) OGA530Subscribe *subscribe;
@@ -32,6 +34,7 @@
 @end
 
 @implementation ArmchairHomeVC
+@synthesize bluetoothBtn;
 
 - (void)dealloc
 {
@@ -49,9 +52,7 @@
     
     self.dataArr = [NSMutableArray arrayWithCapacity:0];
     
-//    NSArray *arr = @[@"大师精选",@"轻松自在",@"关节呵护",@"脊柱支柱",@"高级按摩",@"更多按摩"];
-//    self.dataArr = [mutableArr copy];
-    
+
     UIView *view = [[UIView alloc] init];
     view.frame = CGRectMake(14,kNavBarHeight+20,107.5,115);
     
@@ -62,15 +63,15 @@
     [self createRecommendView];
     
     [self createBottomView];
+ 
     
-//    NSString *deviceUUID = [[NSUserDefaults standardUserDefaults] objectForKey:OGADeviceUUID];
-//    NSLog(@"deviceUUID:%@",deviceUUID);
-//    if(deviceUUID){
-//        BOOL status = [[OGA530BluetoothManager shareInstance] autoConnectDevice:deviceUUID];
-//        NSLog(@"status:%d",status);
-//    }else{
-//       [self scanPeripheral];
-//    }
+    bluetoothBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    bluetoothBtn.frame = CGRectMake(self.rightBtn.left-42, 2+kStatusBarHeight, 37, 40);
+    [bluetoothBtn setImage:[UIImage imageNamed:@"按摩椅蓝牙_未"] forState:UIControlStateNormal];
+    [bluetoothBtn setImage:[UIImage imageNamed:@"按摩椅蓝牙_已"] forState:UIControlStateSelected];
+    bluetoothBtn.selected = NO;
+    [bluetoothBtn addTarget:self action:@selector(bluetoothBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.topView addSubview:bluetoothBtn];
     
     [self scanPeripheral];
     
@@ -82,41 +83,77 @@
         [weakSelf didUpdateValueForChair:respond];
     }];
     
+    //UIApplicationWillEnterForegroundNotification UIApplicationWillResignActiveNotification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DidBecomeActive) name:UIApplicationWillEnterForegroundNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+}
+
+- (void)becomeActive
+{
+    NSLog(@"becomeActive");
+}
+- (void)DidBecomeActive
+{
+    NSLog(@"DidBecomeActive");
+    BOOL isBlueToothPoweredOn = [[OGA530BluetoothManager shareInstance] isBlueToothPoweredOff];
+    if(isBlueToothPoweredOn){
+        bluetoothBtn.selected = NO;
+        self.rightBtn.selected = NO;
+    }
 }
 
 - (void)didUpdateValueForChair:(OGA530Respond *)respond {
     
     self.rightBtn.selected = respond.powerOn;
+    NSLog(@"蓝牙开启：%@",[[OGA530BluetoothManager shareInstance] isBlueToothPoweredOn] ? @"YES" : @"NO");
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:YES];
     
+    [self.dataArr removeAllObjects];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    NSArray *arr = [[CacheManager sharedCacheManager] getArmchairModel];
-    
-    if(arr.count>0){
-        self.dataArr = [arr copy];
-    }else{
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"armChair" ofType:@"plist"];
-        NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:filePath];
+    if(self.dataArr.count==0){
+        NSArray *arr = [[CacheManager sharedCacheManager] getArmchairModel];
         
-        self.dataArr = [ArmChairModel mj_objectArrayWithKeyValuesArray:[dic objectForKey:@"专属"]];
-        ArmChairModel *model1 = [[ArmChairModel alloc] init];
-        model1.name = @"高级按摩";
-        model1.command = @"";
-        ArmChairModel *model2 = [[ArmChairModel alloc] init];
-        model2.name = @"更多按摩";
-        model2.command = @"";
-        [self.dataArr addObject:model1];
-        [self.dataArr addObject:model2];
+        if(arr.count>0){
+            [self.dataArr addObjectsFromArray:arr];
+        }
         
-        [[CacheManager sharedCacheManager] addArmchairModelWithArr:self.dataArr];
+        [self addLocalTack];
     }
-    
     [self.collectionV reloadData];
     
+    
+}
+
+- (void)bluetoothBtnAction:(UIButton *)button
+{
+    
+    if(!bluetoothBtn.selected){
+        [self manualScanPeripheral];
+    }
+}
+
+- (void)addLocalTack
+{
+    NSArray *arr = [[self loadDataPlistWithStr:@"专属"] copy];
+    [self.dataArr addObjectsFromArray:arr];
+    NSArray *commandArr = @[k530Command_MassageIntellect,@"",@""];
+    NSArray *nameArr = @[@"酸疼检测",@"高级按摩",@"更多按摩"];
+    for(NSInteger i =0;i<nameArr.count;i++){
+        ArmChairModel *model = [[ArmChairModel alloc] init];
+        model.name = [nameArr objectAtIndex:i];
+        model.command = [commandArr objectAtIndex:i];
+        [self.dataArr addObject:model];
+    }
 }
 
 - (void)initUI
@@ -147,15 +184,22 @@
     [self.recommendV addSubview:recommendLabel];
     
     
-    SublayerView *imageV = [[SublayerView alloc] initWithFrame:CGRectMake(recommendLabel.left, recommendLabel.bottom+10, 108, 115)];
-    //[imageV setImageV:@"大师精选" withTitleLabel:@"大师精选"];
-    [imageV insertSublayerFromeView:self.recommendV];
+    ArmChairModel *model = [[ArmChairModel alloc] init];
+    model.name = @"低头族";
+    model.command = [GlobalCommon commandFromName:model.name];
     
-    [self.recommendV addSubview:imageV];
+    SublayerView *sublayerView = [[SublayerView alloc] initWithFrame:CGRectMake(recommendLabel.left, recommendLabel.bottom+10, 108, 115)];
+    [sublayerView setImageVandTitleLabelwithModel:model];
+    [sublayerView insertSublayerFromeView:self.recommendV];
+    
+    UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
+    [sublayerView addGestureRecognizer:tapGesture];
+    
+    [self.recommendV addSubview:sublayerView];
     
     
     UILabel *label1 = [[UILabel alloc] init];
-    label1.frame = CGRectMake(imageV.right+19,imageV.top,240.5+15,75);
+    label1.frame = CGRectMake(sublayerView.right+19,sublayerView.top,240.5+15,75);
     label1.numberOfLines = 0;
     [self.recommendV addSubview:label1];
     
@@ -163,7 +207,7 @@
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     paragraphStyle.lineSpacing = 5;
     
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"1、鉴于您体质检测为上宫；\n2、鉴于您酸痛检测为100；\n3、我们建议您用这个按摩手法。"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size:13],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"1、鉴于您体质检测为上宫；\n2、鉴于您酸痛检测为轻度；\n3、我们建议您用这个按摩手法。"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size:13],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
     
     label1.attributedText = string;
     label1.textAlignment = NSTextAlignmentLeft;
@@ -208,6 +252,16 @@
     self.bgScrollView.contentSize = CGSizeMake(1, self.collectionV.bottom+10);
 }
 
+# pragma mark - 推荐按摩点击事件
+- (void)tapAction:(UITapGestureRecognizer *)gesture
+{
+    SublayerView *layerView = (SublayerView *)[gesture view];
+    ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:layerView.model.name];
+    vc.armchairModel = layerView.model;
+    [vc commandActionWithModel:layerView.model];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark <UICollectionViewDataSource>
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -230,14 +284,16 @@
         ArmchairThemeVC *vc = [[ArmchairThemeVC alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([model.name isEqualToString:@"高级按摩"]){
-//        ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:YES withTitleStr:model.name];
-//        vc.armchairModel = model;
-//        [self.navigationController pushViewController:vc animated:YES];
-        
-        ArmchairAcheTestVC *vc = [[ArmchairAcheTestVC alloc] init];
+        ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:YES withTitleStr:model.name];
+        vc.armchairModel = model;
         [self.navigationController pushViewController:vc animated:YES];
         
-    }else{
+    }else if ([model.name isEqualToString:@"酸疼检测"]){
+        ArmchairAcheTestVC *vc = [[ArmchairAcheTestVC alloc] init];
+        vc.armchairModel = model;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else{
         ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:model.name];
         vc.armchairModel = model;
         [vc commandActionWithModel:model];
@@ -276,6 +332,7 @@
         //下次进来自动连接
         if(array.count>0){
             NSString *uuidStr = [[NSUserDefaults standardUserDefaults] objectForKey:OGADeviceUUID];
+            
             if(uuidStr){
                 for(CBPeripheral *peripheral in array){
                     NSString *identifier = [NSString stringWithFormat:@"%@",peripheral.identifier];
@@ -284,10 +341,28 @@
                         return ;
                     }
                 }
+            }else{
+                weakSelf.listView.array = array;
             }
+            
         }
-        
+    } timeoutSacn:nil];
+}
+
+# pragma mark - 手动连接
+- (void)manualScanPeripheral
+{
+    __weak typeof(self) weakSelf = self;
+    
+    if([[OGA530BluetoothManager shareInstance] isBlueToothPoweredOff]){
+        [GlobalCommon showMessage2:@"请先打开蓝牙" duration2:1.0];
+        return;
+    }
+    
+    [[OGA530BluetoothManager shareInstance] scanPeripheral:^(NSMutableArray * _Nonnull array)
+     {
         weakSelf.listView.array = array;
+    
     } timeoutSacn:nil];
 }
 
@@ -306,13 +381,16 @@
     }];
     
     [[OGA530BluetoothManager shareInstance] connectPeripheral:peripheral connect:^{
+        
         NSLog(@"uuid:%@",peripheral.identifier);
+        
         NSString *uuidStr = [NSString stringWithFormat:@"%@",peripheral.identifier];
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setObject:uuidStr forKey:OGADeviceUUID];
         [userDefaults synchronize];
         [weakself.listView removeFromSuperview];
         weakself.listView = nil;
+        weakself.bluetoothBtn.selected = YES;
         NSLog(@"连接成功");
         
        // [SVProgressHUD dismiss];
@@ -322,6 +400,53 @@
     }];
 }
 
-
+#pragma mark - 蓝牙的状态
+-(void)centralManagerDidUpdateState:(CBCentralManager *)central{
+    switch (central.state) {
+        case CBCentralManagerStateUnknown:
+        {
+            NSLog(@"无法获取设备的蓝牙状态");
+        }
+            break;
+        case CBCentralManagerStateResetting:
+        {
+            NSLog(@"蓝牙重置");
+            
+        }
+            break;
+        case CBCentralManagerStateUnsupported:
+        {
+            NSLog(@"该设备不支持蓝牙");
+            
+        }
+            break;
+        case CBCentralManagerStateUnauthorized:
+        {
+            NSLog(@"未授权蓝牙权限");
+        }
+            break;
+        case CBCentralManagerStatePoweredOff:
+        {
+            NSLog(@"蓝牙已关闭");
+        }
+            break;
+        case CBCentralManagerStatePoweredOn:
+        {
+            NSLog(@"蓝牙已打开");
+            
+            
+        }
+            break;
+            
+        default:
+        {
+            NSLog(@"未知的蓝牙错误");
+            
+        }
+            break;
+    }
+    //[self getConnectState];
+    
+}
 
 @end
