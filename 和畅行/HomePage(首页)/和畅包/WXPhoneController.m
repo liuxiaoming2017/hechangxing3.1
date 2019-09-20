@@ -140,7 +140,7 @@
                                                             repeats:YES];
             }else{
 
-                NSString *str = [dic objectForKey:@"message"];
+                NSString *str = [response objectForKey:@"message"];
                 [weakSelf showAlertWarmMessage:str];
 
             }
@@ -222,7 +222,7 @@
                 [UserShareOnce shareOnce].username = self->_userNameBox.text;
                 UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"绑定成功") preferredStyle:(UIAlertControllerStyleAlert)];
                 UIAlertAction *sureAction= [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-                    [self.navigationController popViewControllerAnimated:YES];
+                    [self dismissViewControllerAnimated:YES completion:nil];
                 }];
                 [alerVC addAction:sureAction];
                 [self presentViewController:alerVC animated:YES completion:nil];

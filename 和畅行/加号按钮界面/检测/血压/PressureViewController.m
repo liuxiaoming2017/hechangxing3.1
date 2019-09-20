@@ -98,12 +98,12 @@ static int const tick = 80;
     shrink.textColor = [UIColor blackColor];
     [imageView addSubview:shrink];
     
-    _shrinkPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10 , 50, 50, 30) text:@"__" textSize:19];
+    _shrinkPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10 , 50, 60, 30) text:@"__" textSize:19];
     _shrinkPressureLabel.textAlignment = NSTextAlignmentRight;
     _shrinkPressureLabel.textColor = [UIColor blackColor];
     [imageView addSubview:_shrinkPressureLabel];
     
-    UILabel *shrinkUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  + 40, 50, 100, 30) text:@"mmHg" textSize:19];
+    UILabel *shrinkUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  + 50, 50, 100, 30) text:@"mmHg" textSize:19];
     shrinkUnit.textAlignment = NSTextAlignmentLeft;
     shrinkUnit.textColor = [UIColor blackColor];
     [imageView addSubview:shrinkUnit];
@@ -114,12 +114,12 @@ static int const tick = 80;
     diastolic.textColor = [UIColor blackColor];
     [imageView addSubview:diastolic];
     
-    _diastolicPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10, shrinkUnit.bottom + 50, 50, 30) text:@"__" textSize:19];
+    _diastolicPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10, shrinkUnit.bottom + 50, 60, 30) text:@"__" textSize:19];
     _diastolicPressureLabel.textAlignment = NSTextAlignmentRight;
     _diastolicPressureLabel.textColor = [UIColor blackColor];
     [imageView addSubview:_diastolicPressureLabel];
     
-    UILabel *diastolicUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 + 40, shrinkUnit.bottom + 50, 100, 30) text:@"mmHg" textSize:19];
+    UILabel *diastolicUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 + 50, shrinkUnit.bottom + 50, 100, 30) text:@"mmHg" textSize:19];
     diastolicUnit.textAlignment = NSTextAlignmentLeft;
     diastolicUnit.textColor = [UIColor blackColor];
     [imageView addSubview:diastolicUnit];
@@ -130,12 +130,12 @@ static int const tick = 80;
     pulse.textColor = [UIColor blackColor];
     [imageView addSubview:pulse];
     
-    _pulseLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10, diastolicUnit.bottom + 50, 50, 30) text:@"__" textSize:19];
+    _pulseLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10, diastolicUnit.bottom + 50, 60, 30) text:@"__" textSize:19];
     _pulseLabel.textAlignment = NSTextAlignmentRight;
     _pulseLabel.textColor = [UIColor blackColor];
     [imageView addSubview:_pulseLabel];
     
-    UILabel *pulseUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 +40, diastolicUnit.bottom + 50, 50, 30) text:@"BMP" textSize:16];
+    UILabel *pulseUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 +50, diastolicUnit.bottom + 50, 50, 30) text:@"BMP" textSize:16];
     pulseUnit.font = [UIFont systemFontOfSize:16];
     pulseUnit.textAlignment = NSTextAlignmentLeft;
     pulseUnit.textColor = [UIColor blackColor];
@@ -439,8 +439,8 @@ static int const tick = 80;
         [lookBtn addTarget:self action:@selector(lookClickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [view2 addSubview:lookBtn];
         
-        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前脉搏%ld次/分\n  收缩压%ldmmHg\n舒张压 %ldmmhg"),(long)pulseCount,(long)highCount,(long)lowCount] frame:CGRectMake(0, 50, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
-
+        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前脉搏%ld次/分  收缩压%ldmmHg  舒张压 %ldmmhg"),(long)pulseCount,(long)highCount,(long)lowCount] frame:CGRectMake(0, 50, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
+        
         
         UILabel *label0 = [[UILabel alloc] init];
         label0.text = ModuleZW(@"血压、脉搏正常范围参考值：");

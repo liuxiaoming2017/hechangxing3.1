@@ -85,9 +85,9 @@
     [imageV addSubview:_hLabel];
     
     _mLabel = [[UILabel alloc] init];
-    _mLabel.frame = CGRectMake(20,_hLabel.bottom , imageV.width -  40, 30 );
+    _mLabel.frame = CGRectMake(20,_hLabel.bottom , imageV.width -  40, 35 );
     _mLabel.numberOfLines = 2;
-    _mLabel.text = [NSString stringWithFormat:@"%@：%@",ModuleZW(@"卡号"),self.model.card_no];
+    _mLabel.text = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"卡密"),self.model.card_no];
     _mLabel.font = [UIFont systemFontOfSize:16];
     _mLabel.textColor = [UIColor whiteColor];
     [imageV addSubview:_mLabel];
@@ -157,7 +157,7 @@
 
     if(self.dateDic){
         listButton.hidden = YES;
-        _mLabel.text = [NSString stringWithFormat:@"%@：%@",ModuleZW(@"卡号"),self.dateDic[@"data"][@"code"]];
+        _mLabel.text = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"卡密"),self.dateDic[@"data"][@"code"]];
         _yLabel.text = ModuleZW(@"服务内容");
         _hLabel.text = _dateDic[@"data"][@"name"];
         UIButton *addButton =  [UIButton buttonWithType:(UIButtonTypeCustom)];

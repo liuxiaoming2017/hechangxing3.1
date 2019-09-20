@@ -142,7 +142,7 @@
     
     NSArray *imageArray = @[@"左边箭头",@"右边箭头"];
     for (int i = 0; i < 2; i++) {
-        UIImageView *leftImagaView = [[UIImageView alloc]initWithFrame:CGRectMake(40 + (ScreenWidth - 180 - 40)*i, kScreenSize.height- kNavBarHeight - 160, 120, 120)];
+        UIImageView *leftImagaView = [[UIImageView alloc]initWithFrame:CGRectMake(40 + (ScreenWidth - 180 - 40)*i, kScreenSize.height- kNavBarHeight - 180, 120, 120)];
         leftImagaView.image = [UIImage imageNamed:ModuleZW(imageArray[i])];
         [blackView addSubview:leftImagaView];
     }
@@ -211,7 +211,7 @@
     NSArray *titleArray = @[@"宫", @"商", @"角", @"徵",@"羽"];
     UISegmentedControl *topSegment = [[UISegmentedControl alloc]initWithItems:titleArray];
     topSegment.frame = CGRectMake(0, kNavBarHeight+5, 250, 50);
-    topSegment.tintColor = [UIColor whiteColor];
+    topSegment.tintColor = RGB_AppWhite;
     NSDictionary *selectedDic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:28],
                                   NSForegroundColorAttributeName:[UIColor blackColor]};
     NSDictionary *noSelectedDic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:25],

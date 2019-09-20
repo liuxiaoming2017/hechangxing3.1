@@ -271,20 +271,32 @@
             }
             NSMutableArray *memberArr = [NSMutableArray arrayWithCapacity:0];
             
+            NSString *userNameStr = [[[response objectForKey:@"data"] objectForKey:@"member"] objectForKey:@"username"];
+           
             for (NSDictionary *dic in  arrMem) {
                 ChildMemberModel *model = [ChildMemberModel mj_objectWithKeyValues:dic];
                 NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
                 [memberArr addObject:data];
-                if([model.name isEqualToString:[[[response objectForKey:@"data"] objectForKey:@"member"] objectForKey:@"username"]]) {
+
+                if (userNameStr.length == 11) {
+                    if([model.mobile isEqualToString:[[[response objectForKey:@"data"] objectForKey:@"member"] objectForKey:@"username"]]) {
+                        MemberUserShance *memberShance = [MemberUserShance shareOnce];
+                        memberShance = [MemberUserShance mj_objectWithKeyValues:dic];
+                        if(memberArr.count>1){
+                            [memberArr exchangeObjectAtIndex:0 withObjectAtIndex:[memberArr count] - 1];
+                        }
+                    }
+                }else{
                     MemberUserShance *memberShance = [MemberUserShance shareOnce];
                     memberShance = [MemberUserShance mj_objectWithKeyValues:dic];
                     if(memberArr.count>1){
-                         [memberArr exchangeObjectAtIndex:0 withObjectAtIndex:[memberArr count] - 1];
+                        [memberArr exchangeObjectAtIndex:0 withObjectAtIndex:[memberArr count] - 1];
                     }
                 }
                 
             }
             
+
             
             if (check == 2)
             {
@@ -376,7 +388,7 @@
                 ChildMemberModel *model = [ChildMemberModel mj_objectWithKeyValues:dic];
                 NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
                 [memberArr addObject:data];
-                if([model.name isEqualToString:[[[response objectForKey:@"data"] objectForKey:@"member"] objectForKey:@"username"]]) {
+                if([model.mobile isEqualToString:[[[response objectForKey:@"data"] objectForKey:@"member"] objectForKey:@"username"]]) {
                     MemberUserShance *memberShance = [MemberUserShance shareOnce];
                     memberShance = [MemberUserShance mj_objectWithKeyValues:dic];
                     if(memberArr.count>1){

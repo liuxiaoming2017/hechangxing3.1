@@ -84,14 +84,14 @@
                 fontSizeLabel.textColor = RGB_TextGray;
                 [bottomButton addSubview:fontSizeLabel];
                 NSLog(@"%f",[UserShareOnce shareOnce].fontSize);
-                if ([UserShareOnce shareOnce].fontSize > 0.9&&[UserShareOnce shareOnce].fontSize < 1.1) {
+                if ([UserShareOnce shareOnce].fontSize > 0.99&&[UserShareOnce shareOnce].fontSize < 1.01) {
                     fontSizeLabel.text = ModuleZW(@"小");
-                }else  if ([UserShareOnce shareOnce].fontSize >1.0 &&[UserShareOnce shareOnce].fontSize < 1.2) {
+                }else  if ([UserShareOnce shareOnce].fontSize >1.09 &&[UserShareOnce shareOnce].fontSize < 1.11) {
                     fontSizeLabel.text = ModuleZW(@"中");
-                }else  if ([UserShareOnce shareOnce].fontSize >1.1 &&[UserShareOnce shareOnce].fontSize < 1.3) {
+                }else  if ([UserShareOnce shareOnce].fontSize >1.19 &&[UserShareOnce shareOnce].fontSize < 1.21) {
                     fontSizeLabel.text = ModuleZW(@"大");
-                }else  if ([UserShareOnce shareOnce].fontSize >1.2 &&[UserShareOnce shareOnce].fontSize < 1.4) {
-                    fontSizeLabel.text = ModuleZW(@"超大");
+                }else  if ([UserShareOnce shareOnce].fontSize >1.29 &&[UserShareOnce shareOnce].fontSize < 1.31) {
+                    fontSizeLabel.text = ModuleZW(@"特大");
                 }else{
                     fontSizeLabel.text = ModuleZW(@"小");
                 }
@@ -131,7 +131,7 @@
                             fontSize = [fontStr floatValue];
                         }
                         
-                        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:@"" message:ModuleZW(@"设置字体大小") preferredStyle:UIAlertControllerStyleActionSheet];
+                        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:@"" message:ModuleZW(@"字体大小") preferredStyle:UIAlertControllerStyleActionSheet];
                         UIAlertAction *smallAction = [UIAlertAction actionWithTitle:ModuleZW(@"小") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
                             [[NSUserDefaults standardUserDefaults]setValue:@"1.0" forKey:@"YHFont"];
                             [UserShareOnce shareOnce].fontSize = 1.0;
@@ -160,12 +160,12 @@
                                 self.fontSizeLabel .font = [UIFont systemFontOfSize:13];
                             }
                         }];
-                        UIAlertAction *superBigAction = [UIAlertAction actionWithTitle:ModuleZW(@"超大") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                        UIAlertAction *superBigAction = [UIAlertAction actionWithTitle:ModuleZW(@"特大") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
                             [[NSUserDefaults standardUserDefaults]setValue:@"1.3" forKey:@"YHFont"];
                             [UserShareOnce shareOnce].fontSize = 1.3;
                             if(fontSize != 1.3){
                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGESIZE" object:nil];
-                                self.fontSizeLabel.text = ModuleZW(@"超大");
+                                self.fontSizeLabel.text = ModuleZW(@"特大");
                                 self.fontSizeLabel .font = [UIFont systemFontOfSize:13];
                             }
                             

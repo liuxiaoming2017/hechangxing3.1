@@ -72,12 +72,11 @@
         [self.navigationController pushViewController:vc animated:YES];
         return;
     }else if ([strRequest isEqualToString:yundong]){ //进入运动
-        
+         decisionHandler(WKNavigationActionPolicyCancel);
         if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
             [self showAlertWarmMessage:@"您还不是会员"];
             return;
         }
-        decisionHandler(WKNavigationActionPolicyCancel);
         NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
         NSString *yueyaoIndex = [GlobalCommon getSportTypeFrom:physicalStr];
         if(yueyaoIndex == nil){
@@ -111,13 +110,16 @@
 
         }else{
             
-            if([strRequest hasSuffix:@"html"]){
-                strRequest = [strRequest stringByAppendingString:[NSString stringWithFormat:@"?fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
-            }else{
-                strRequest = [strRequest stringByAppendingString:[NSString stringWithFormat:@"&fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
-            }
             
-            NSURL *url = [NSURL URLWithString:strRequest];
+            NSString *urlStr =   [NSString stringWithFormat:@"%@",navigationAction.request.URL];
+            if([urlStr hasSuffix:@"html"]){
+                urlStr = [urlStr stringByAppendingString:[NSString stringWithFormat:@"?fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+            }else{
+                urlStr = [urlStr stringByAppendingString:[NSString stringWithFormat:@"&fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+            }
+            NSLog(@"===========%@",urlStr);
+            
+            NSURL *url = [NSURL URLWithString:urlStr];
             NSMutableURLRequest *request= [NSMutableURLRequest requestWithURL:url];
             NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UserShareOnce shareOnce].token,@"token",[UserShareOnce shareOnce].JSESSIONID,@"JSESSIONID", nil];
             [request addValue:[self readCurrentCookieWith:dic] forHTTPHeaderField:@"Cookie"];
@@ -127,6 +129,9 @@
             [webView loadRequest:request];
             decisionHandler(WKNavigationActionPolicyCancel);
         }
+        
+        
+        
         
     }
     

@@ -74,10 +74,14 @@
     self.sexStr           = [NSString string];
     self.brithdayStr    = [NSString string];
     self.phoneStr       = [NSString string];
+    
     if ([MemberUserShance shareOnce].name.length <  26) {
         self.nameStr = [MemberUserShance shareOnce].name;
     }else{
         self.nameStr = [UserShareOnce shareOnce].wxName;
+    }
+    if(![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].name]&&[UserShareOnce shareOnce].name.length < 26){
+        self.nameStr = [UserShareOnce shareOnce].name;
     }
     if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].gender]) {
         if ([[UserShareOnce shareOnce].gender isEqualToString:@"male"]) {
@@ -186,8 +190,7 @@
                         if ([[UserShareOnce shareOnce].loginType isEqualToString:@"WX"]){
                             if([UserShareOnce shareOnce].username.length != 11){
                                 WXPhoneController *vc = [[WXPhoneController alloc]init];
-                                vc.pushType = 1;
-                                [weakSelf.navigationController pushViewController:vc animated:YES];
+                                [self   presentViewController:vc animated:YES completion:nil];
                             }
                         }
                         break;
