@@ -37,8 +37,8 @@
 #import "SBJson.h"
 #import "ChangeLanguageObject.h"
 
-#import <PgySDK/PgyManager.h>
-#import <PgyUpdate/PgyUpdateManager.h>
+//#import <PgySDK/PgyManager.h>
+//#import <PgyUpdate/PgyUpdateManager.h>
 
 #import <OGABluetooth530/OGABluetooth530.h>
 #import "NSBundle+Language.h"
@@ -74,10 +74,11 @@
     }else{
         [UserShareOnce shareOnce].fontSize = 1;
     }
-    NSError *error = nil;
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&error];
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setActive:YES error:&error];
+    
+//    NSError *error = nil;
+//    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&error];
+//    AVAudioSession *session = [AVAudioSession sharedInstance];
+//    [session setActive:YES error:&error];
     
     [UserShareOnce shareOnce].isOnline = NO;
     [UserShareOnce shareOnce].yueYaoBuyArr = [NSMutableArray arrayWithCapacity:0];
@@ -121,9 +122,9 @@
     
 //    蒲公英SDK
     //启动基本SDK
-    [[PgyManager sharedPgyManager] startManagerWithAppId:@"da15cba9ecb9d085233da45a1422f52c"];
-    //启动更新检查SDK
-    [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"da15cba9ecb9d085233da45a1422f52c"];
+//    [[PgyManager sharedPgyManager] startManagerWithAppId:@"da15cba9ecb9d085233da45a1422f52c"];
+//    //启动更新检查SDK
+//    [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"da15cba9ecb9d085233da45a1422f52c"];
     
     //奥佳华按摩椅
     [[OGA530BluetoothManager shareInstance] setAppkey:OGA530AppKey appSecret:OGA530AppSecret];

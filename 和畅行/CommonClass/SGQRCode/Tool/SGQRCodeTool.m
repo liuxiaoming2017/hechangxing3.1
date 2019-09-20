@@ -201,7 +201,7 @@
     // 5、初始化链接对象（会话对象）
     // 高质量采集率
     //session.sessionPreset = AVCaptureSessionPreset1920x1080; // 如果二维码图片过小、或者模糊请使用这句代码，注释下面那句代码
-        session.sessionPreset = AVCaptureSessionPresetHigh;
+    session.sessionPreset = AVCaptureSessionPresetHigh;
     
     // 5.1 添加会话输入
     [session addInput:input];
