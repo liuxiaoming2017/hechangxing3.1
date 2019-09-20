@@ -507,6 +507,9 @@
         
         [UserShareOnce shareOnce].name=_nameStr;
         [UserShareOnce shareOnce].gender=_sexStr;
+        if (_brithdayStr.length == 0) {
+            _brithdayStr = @"未设置";
+        }
         [UserShareOnce shareOnce].birthday=_brithdayStr;
         [UserShareOnce shareOnce].username=_phoneStr;
         [UserShareOnce shareOnce].memberImage=self.urlHttpImg;
