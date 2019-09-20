@@ -1105,6 +1105,11 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [_wkwebview removeObserver:self forKeyPath:@"estimatedProgress"];
     
 }
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if(self.typeUrlInteger == 13) {
+        [_textView resignFirstResponder];
+    }
+}
 
 
 

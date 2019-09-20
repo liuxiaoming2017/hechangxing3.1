@@ -125,10 +125,17 @@
             break;
         case 5:
         {
-            BloodGuideViewController * vc1 = [[BloodGuideViewController alloc] init];
-            vc1.isBottom = YES;
-            vc1.hidesBottomBarWhenPushed = YES;
-            [[self selectedViewController] pushViewController:vc1 animated:YES];
+            
+            if([[[NSUserDefaults standardUserDefaults] objectForKey:@"bloodNeverCaution"] isEqualToString:@"1"]){
+                PressureViewController *vc = [[PressureViewController alloc] init];
+                [[self selectedViewController] pushViewController:vc animated:YES];
+            }else{
+                BloodGuideViewController * vc1 = [[BloodGuideViewController alloc] init];
+                vc1.isBottom = YES;
+                vc1.hidesBottomBarWhenPushed = YES;
+                [[self selectedViewController] pushViewController:vc1 animated:YES];
+            }
+           
             return;
         }
             
