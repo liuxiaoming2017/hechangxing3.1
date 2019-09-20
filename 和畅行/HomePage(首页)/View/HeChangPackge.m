@@ -60,9 +60,8 @@
     self.titleLabel.text = ModuleZW(@"和畅包");
     [self addSubview:self.titleLabel];
     
-    CGFloat width = 300;
     
-    self.remindLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-width)/2.0, self.titleLabel.bottom, width , 80)];
+    self.remindLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, self.titleLabel.bottom, ScreenWidth - 140 , 80)];
     self.remindLabel.font = [UIFont systemFontOfSize:16];
     self.remindLabel.numberOfLines = 0;
     self.remindLabel.textAlignment = NSTextAlignmentCenter;

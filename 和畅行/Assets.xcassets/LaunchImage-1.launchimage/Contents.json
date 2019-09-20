@@ -132,6 +132,7 @@
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
+      "filename" : "1242-2690.png",
       "extent" : "full-screen",
       "scale" : "2x"
     },
@@ -169,24 +170,28 @@
     {
       "orientation" : "portrait",
       "idiom" : "ipad",
+      "filename" : "1242-2689 2.png",
       "extent" : "to-status-bar",
       "scale" : "2x"
     },
     {
       "orientation" : "portrait",
       "idiom" : "ipad",
+      "filename" : "1242-2689 3.png",
       "extent" : "full-screen",
       "scale" : "2x"
     },
     {
       "orientation" : "landscape",
       "idiom" : "ipad",
+      "filename" : "1242-2689 3-1.png",
       "extent" : "to-status-bar",
       "scale" : "2x"
     },
     {
       "orientation" : "landscape",
       "idiom" : "ipad",
+      "filename" : "1242-2689 4.png",
       "extent" : "full-screen",
       "scale" : "2x"
     }

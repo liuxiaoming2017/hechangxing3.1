@@ -41,7 +41,7 @@
         
         UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         rightBtn.frame = CGRectMake(10+(imageWidth+10)*i, 10, imageWidth, imageHeight);
-        [rightBtn setImage:[UIImage imageNamed:[imageArr objectAtIndex:i]] forState:UIControlStateNormal];
+        [rightBtn setBackgroundImage:[UIImage imageNamed:[imageArr objectAtIndex:i]] forState:UIControlStateNormal];
         rightBtn.tag=100+i;
         [rightBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:rightBtn];
@@ -75,7 +75,7 @@
         rightBtn.frame = CGRectMake(10+(imageWidth+10)*i, 10, imageWidth, imageHeight);
         
         if (model.picurl == nil ||[model.picurl isKindOfClass:[NSNull class]]||model.picurl.length == 0) {
-            [rightBtn setImage:[UIImage imageNamed:[imageArr objectAtIndex:i]] forState:UIControlStateNormal];
+            [rightBtn setBackgroundImage:[UIImage imageNamed:[imageArr objectAtIndex:i]] forState:UIControlStateNormal];
         }else {
             NSString *imageUrl = [NSString stringWithFormat:@"%@%@",URL_PRE,model.picurl];
             NSURL *url = [NSURL URLWithString:imageUrl];

@@ -400,6 +400,7 @@
     NSLog(@"------%@",[UserShareOnce shareOnce].uid);
     NSString *urlStr = @"member/new_ins/current.jhtml";
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
+    NSLog(@"%@",[MemberUserShance shareOnce].idNum);
     if ([MemberUserShance shareOnce].idNum){
         [paramDic setObject:[MemberUserShance shareOnce].idNum forKey:@"memberChildId"];
         [paramDic setObject:@"1" forKey:@"isnew"];

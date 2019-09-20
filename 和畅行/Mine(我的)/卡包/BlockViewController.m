@@ -43,7 +43,7 @@
 - (void)cardNameSuccess
 {
     [self getDatawithpageInteger:self.pageInteger];
-    [self.listTableView reloadData];
+    
     
 }
 
@@ -145,7 +145,6 @@
             if ( dataArray.count == 0 && oneArray.count == 0){
                 self.nullLabel.hidden = NO;
                 self.tableView.hidden = YES;
-                return ;
             }
             
             for (NSDictionary *dic in oneArray ) {
@@ -280,6 +279,8 @@
     }else{
         self.listBackView.hidden = NO;
     }
+    
+    [self.listTableView reloadData];
     
 }
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

@@ -1073,6 +1073,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         self.photoButton.hidden = NO;
         self.backImageView.height = 320 + (self->_backImageView.width-50)/2 + 20;
         self.photoButton.top = self->_backView.bottom +30 +  (self->_backImageView.width-50)/2 +10;
+        self.photoButton.left = _backImageView.width/8-20;
     }else{
         self.photoButton.hidden = YES;
         self.backImageView.height = 320 + (self->_backImageView.width-50)/2 + 20;

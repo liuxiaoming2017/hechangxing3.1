@@ -137,6 +137,9 @@
     }else{
         dispalyName = [UserShareOnce shareOnce].wxName;
     }
+    if(![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].name]&&[UserShareOnce shareOnce].name.length < 26){
+        dispalyName = [UserShareOnce shareOnce].name;
+    }
     UILabel *userName = [Tools creatLabelWithFrame:CGRectMake(40, userIcon.bottom + 20, ScreenWidth - 80, 30) text:dispalyName textSize:22];
     userName.textColor = [UIColor whiteColor];
     userName.textAlignment = NSTextAlignmentCenter;
@@ -330,10 +333,14 @@
     }
     
     if ([MemberUserShance shareOnce].name.length <  26) {
-        self.userNameLabel.text = [MemberUserShance shareOnce].name;
+        self.userNameLabel.text  = [MemberUserShance shareOnce].name;
     }else{
-        self.userNameLabel.text = [UserShareOnce shareOnce].wxName;
+        self.userNameLabel.text  = [UserShareOnce shareOnce].wxName;
     }
+    if(![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].name]&&[UserShareOnce shareOnce].name.length < 26){
+        self.userNameLabel.text  = [UserShareOnce shareOnce].name;
+    }
+    
     
 }
 

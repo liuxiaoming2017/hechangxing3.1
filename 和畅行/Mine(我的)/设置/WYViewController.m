@@ -233,7 +233,7 @@
     
     UIButton *findpsButton=[UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *findImg=[UIImage imageWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"ReplaceSec_BTN" ofType:@"png"]];
-    [findpsButton setTitle:ModuleZW(@"授权并登录") forState:UIControlStateNormal];
+    [findpsButton setTitle:ModuleZW(@"确认修改") forState:UIControlStateNormal];
     [findpsButton setBackgroundColor:UIColorFromHex(0x1e82d2)];
     findpsButton.layer.cornerRadius = 5.0;
     findpsButton.clipsToBounds = YES;

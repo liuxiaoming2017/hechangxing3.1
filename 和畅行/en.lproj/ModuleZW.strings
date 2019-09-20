@@ -224,7 +224,7 @@
 "还没有卡\n快去添加新卡吧~"        ="Not having a card\n add a new card~";
 "您将激活"                                      = "Continue to activate the";
 "   消费记录"                                      ="Order history";
-"卡号"                                             ="Card No.";
+"卡密"                                             ="Card No.";
 "去咨询"                                          ="Consult ";
 "去预约"                                          ="Appointment";
 "未激活卡片信息"                            ="Card info inactivated";
@@ -245,7 +245,7 @@
 //============================= 加号 ==================================
 "音乐"                                                              = "Treatment Music";
 "运动"                                                              = "Exercise";
-"艾灸"                                                              = "Moxibustion";
+
 "电话"                                                              = "Tel";
 "视频"                                                              = "Video";
 "留言"                                                              = "Harmony package";
@@ -1819,7 +1819,7 @@
 "小"  = "Small";
 "中"  = "Medium";
 "大"  = "Large";
-"超大"  = "Extra Large";
+"特大"  = "Extra Large";
 
 "我知道了"  = "我知道了En";
 "左边箭头"  = "左边箭头En";

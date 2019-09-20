@@ -97,36 +97,27 @@
 -(void)customsearchBar{
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, kNavBarHeight, ScreenWidth-20, 56)];
     view.layer.cornerRadius = 10;
-    view.layer.masksToBounds = YES;
     view.backgroundColor = [UIColor whiteColor];
+    view.layer.shadowColor = RGB(200, 200, 200).CGColor;
+    view.layer.shadowOffset = CGSizeMake(0,0);
+    view.layer.shadowOpacity = 0.5;
+    view.layer.shadowRadius = 5;
     self.backView = view;
-    [self insertSublayerWithImageView:view with:self.view];
     [self.view addSubview:view];
     
     _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(10, 10, ScreenWidth-40, 36)];
-    _searchBar.layer.masksToBounds = YES;
-    [_searchBar setBackgroundImage:[UIImage new]];
     _searchBar.layer.cornerRadius = 18;
-    _searchBar.tintColor = [UIColor whiteColor];
     _searchBar.delegate = self;
     _searchBar.tag = 100;
     _searchBar.placeholder = ModuleZW(@"搜索疾病名称");
-    [_searchBar setImage:[UIImage imageNamed:@"搜索 (1)"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
+    _searchBar.backgroundImage = [UIImage new];
+//    [_searchBar setImage:[UIImage imageNamed:@"搜索 (1)"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
     
     UITextField *searchTextField =  [[[_searchBar.subviews firstObject] subviews] lastObject];
-    searchTextField.backgroundColor =RGB_ButtonBlue;
-    searchTextField.layer.cornerRadius = 18;
     searchTextField.layer.masksToBounds = YES;
-    searchTextField.textColor = [UIColor whiteColor];
-    NSString *holderText = ModuleZW(@"搜索疾病名称");
-    NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithString:holderText];
-    [placeholder addAttribute:NSForegroundColorAttributeName
-                        value:[UIColor whiteColor]
-                        range:NSMakeRange(0, holderText.length)];
-    [placeholder addAttribute:NSFontAttributeName
-                        value:[UIFont boldSystemFontOfSize:16]
-                        range:NSMakeRange(0, holderText.length)];
-    searchTextField.attributedPlaceholder = placeholder;
+    searchTextField.layer.cornerRadius = 18;
+    searchTextField.layer.borderWidth = 1.0;
+    searchTextField.layer.borderColor = RGB_ButtonBlue.CGColor;
     
     
     for(UIView *searchBarSubview in [_searchBar subviews]){
@@ -178,10 +169,8 @@
     _dataArr = [marr mutableCopy];
     if(arr.count > 0){
         self.backView.frame = CGRectMake(10, kNavBarHeight, ScreenWidth-20, ScreenHeight - kNavBarHeight  );
-         [self insertSublayerWithImageView:_backView with:self.view];
     }else{
         self.backView.frame = CGRectMake(10, kNavBarHeight, ScreenWidth-20, 56);
-         [self insertSublayerWithImageView:_backView with:self.view];
     }
     [_tableView reloadData];
 }

@@ -68,7 +68,7 @@
     UITextView *contentTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, carTitleLabel.bottom ,imageWidth - 20, 30)];
     
     
-    contentTextView.text  = [NSString stringWithFormat:@"%@：%@",ModuleZW(@"卡号"),_model.card_no];;
+    contentTextView.text  = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"卡密"),_model.card_no];;
     
     contentTextView.font = [UIFont systemFontOfSize:15];
     contentTextView.textAlignment = NSTextAlignmentLeft;
