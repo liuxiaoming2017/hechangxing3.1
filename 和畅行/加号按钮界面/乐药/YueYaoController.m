@@ -211,7 +211,7 @@
     NSArray *titleArray = @[@"宫", @"商", @"角", @"徵",@"羽"];
     UISegmentedControl *topSegment = [[UISegmentedControl alloc]initWithItems:titleArray];
     topSegment.frame = CGRectMake(0, kNavBarHeight+5, 250, 50);
-    topSegment.tintColor = RGB_AppWhite;
+    topSegment.tintColor = [UIColor whiteColor];
     NSDictionary *selectedDic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:28],
                                   NSForegroundColorAttributeName:[UIColor blackColor]};
     NSDictionary *noSelectedDic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:25],
