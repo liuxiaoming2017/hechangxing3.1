@@ -403,7 +403,7 @@
     
     
  
-    
+    URL_PRE
     hysegmentControl = [[HYSegmentedControl alloc] initWithOriginY:topSegment.bottom + 15 Titles:@[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"] delegate:self];
     [self.view addSubview:hysegmentControl];
 
@@ -414,7 +414,7 @@
     self.tableView.dataSource=self;
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor=[UIColor clearColor];
-    self.tableView.bounces = NO;
+    self.tableView.bounces = NO;          
     [self.view addSubview:self.tableView];
     
     if(self.isYueLuoyi){
@@ -450,6 +450,7 @@
     }
     if ([GlobalCommon stringEqualNull:physicalStr]){
         [self requestYueyaoListWithType:@"大宫"];
+        [hysegmentControl changeSegmentedControlWithIndex:0];
     }
     
     [self getPayRequest];

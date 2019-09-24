@@ -22,7 +22,7 @@ extern BOOL isBF;
 #define DATAURL_PRE @"http://47.92.160.74:8086/api/v1/"
 
 //测试环境
-#define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://10.1.71.38:8888/hcy-system/")
+#define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://47.92.73.99:8080/healthlm/")
 //#define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://47.92.73.99:8080/healthlm/")
 
 //预发布 http://47.92.73.99:8080/healthlm/
