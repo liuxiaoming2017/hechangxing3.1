@@ -77,7 +77,6 @@
     codeLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:codeLabel];
     
-     [flickingBtn setTitleEdgeInsets:UIEdgeInsetsMake(flickingBtn.imageView.frame.size.height +30 ,-flickingBtn.imageView.frame.size.width -40, 0.0,0.0)];
     
     
 }

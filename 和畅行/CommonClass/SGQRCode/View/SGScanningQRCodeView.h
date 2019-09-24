@@ -17,8 +17,7 @@
 
 @interface SGScanningQRCodeView : UIView
 
-typedef void (^PopBlock) (SGScanningQRCodeView *);
-@property(nonatomic, copy) PopBlock popBlock;
+@property(nonatomic,strong)UIView  *backView;
 
 - (instancetype)initWithFrame:(CGRect)frame outsideViewLayer:(CALayer *)outsideViewLayer;
 

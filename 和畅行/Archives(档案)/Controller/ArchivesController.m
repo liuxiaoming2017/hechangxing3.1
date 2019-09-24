@@ -416,7 +416,6 @@
             str = [NSString stringWithFormat:
                    @"/member/myreport/view/%@.jhtml?",memberId];
             break;
-            
         case 2:
             
             //阶段报告

@@ -71,7 +71,7 @@
           _hLabel.text = str;
         _mLabel.text = [NSString stringWithFormat:@"%@ : %@元",ModuleZW(@"余额"),model.balance];
         timeStr = [NSString stringWithFormat:@"%@",[model.cashcard valueForKey:@"endDate"]];
-        _yLabel.text  =[NSString stringWithFormat:@"%@%@",[self getDateStringWithTimeStr:timeStr],ModuleZW(@"到期")] ;
+        _yLabel.text  =[NSString stringWithFormat:@"%@%@",[self getDateStringWithTimeStr:timeStr],ModuleZW(@"到期")];
     }else{
         _hLabel.text = model.card_name;
         if (model.cardDescription==nil || [model.cardDescription isKindOfClass:[NSNull class]]||model.cardDescription.length == 0) {

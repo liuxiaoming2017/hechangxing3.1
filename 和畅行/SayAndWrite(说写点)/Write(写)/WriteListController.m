@@ -946,26 +946,15 @@
             [_sectionStatus replaceObjectAtIndex:view.tag-1000 withObject:@YES];
         }
     }
-    
+    _myIndexPath = [NSIndexPath indexPathForRow:0 inSection:view.tag-1000];
    
-//    for (int i = 0; i < _sectionStatus.count;  i++) {
-//        if(i == view.tag-1000){
-//            if(view.isClick == YES){
-//                [_sectionStatus replaceObjectAtIndex:view.tag-1000 withObject:@NO];
-//            }else{
-//                 [_sectionStatus replaceObjectAtIndex:i withObject:@YES];
-//            }
-//        }else{
-//             [_sectionStatus replaceObjectAtIndex:i withObject:@NO];
-//        }
-//    }
+
     [_leftTableView reloadData];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.leftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:view.tag-1000] animated:YES scrollPosition:(UITableViewScrollPositionNone)];
         [self tableView:self.leftTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:view.tag-1000]];
     });
 
-    
 }
 
 #pragma mark-点击删除按钮
