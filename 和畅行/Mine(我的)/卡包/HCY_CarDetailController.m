@@ -40,7 +40,6 @@
 }
 
 -(void)layoutCarDetailView {
-    
     self.navTitleLabel.text = ModuleZW(@"卡详情");
     CGFloat height ;
     NSString *contentStr = [NSString string];

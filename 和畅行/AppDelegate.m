@@ -130,6 +130,16 @@
     [[OGA530BluetoothManager shareInstance] setAppkey:OGA530AppKey appSecret:OGA530AppSecret];
     [[OGA530BluetoothManager shareInstance] setIsLog:YES];
     
+    if(@available(iOS 11.0,*)){
+        
+        UITableView.appearance.estimatedRowHeight = 0;
+        
+        UITableView.appearance.estimatedSectionFooterHeight = 0;
+        
+        UITableView.appearance.estimatedSectionHeaderHeight = 0;
+        
+    }
+    
     return YES;
 }
 

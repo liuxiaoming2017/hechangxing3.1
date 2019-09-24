@@ -201,6 +201,11 @@
 # pragma mark - 后台版本判断
 - (void)requestVersionDataWithType:(NSString *)type
 {
+    if (!isProduct) {
+        [self checkHaveUpdateWithType:type];
+        return;
+    }
+   
     
     NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     

@@ -644,7 +644,6 @@
 		C97308E221BA0E9800060447 /* UIColor+Gradient.m in Sources */ = {isa = PBXBuildFile; fileRef = C97308E121BA0E9800060447 /* UIColor+Gradient.m */; };
 		C97308F621BA50FB00060447 /* SGGenerateQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C97308E521BA50FB00060447 /* SGGenerateQRCodeVC.m */; };
 		C97308F721BA50FB00060447 /* SGScanningQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C97308E921BA50FB00060447 /* SGScanningQRCodeVC.m */; };
-		C97308F821BA50FB00060447 /* ScanSuccessJumpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C97308EA21BA50FB00060447 /* ScanSuccessJumpVC.m */; };
 		C97308F921BA50FB00060447 /* SGScanningQRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = C97308ED21BA50FB00060447 /* SGScanningQRCodeView.m */; };
 		C97308FA21BA50FB00060447 /* SGAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = C97308F021BA50FB00060447 /* SGAlertView.m */; };
 		C97308FB21BA50FB00060447 /* sound.caf in Resources */ = {isa = PBXBuildFile; fileRef = C97308F221BA50FB00060447 /* sound.caf */; };
@@ -1758,10 +1757,8 @@
 		C97308E121BA0E9800060447 /* UIColor+Gradient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Gradient.m"; sourceTree = "<group>"; };
 		C97308E521BA50FB00060447 /* SGGenerateQRCodeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGGenerateQRCodeVC.m; sourceTree = "<group>"; };
 		C97308E621BA50FB00060447 /* SGScanningQRCodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGScanningQRCodeVC.h; sourceTree = "<group>"; };
-		C97308E721BA50FB00060447 /* ScanSuccessJumpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanSuccessJumpVC.h; sourceTree = "<group>"; };
 		C97308E821BA50FB00060447 /* SGGenerateQRCodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGGenerateQRCodeVC.h; sourceTree = "<group>"; };
 		C97308E921BA50FB00060447 /* SGScanningQRCodeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGScanningQRCodeVC.m; sourceTree = "<group>"; };
-		C97308EA21BA50FB00060447 /* ScanSuccessJumpVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanSuccessJumpVC.m; sourceTree = "<group>"; };
 		C97308EC21BA50FB00060447 /* SGScanningQRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGScanningQRCodeView.h; sourceTree = "<group>"; };
 		C97308ED21BA50FB00060447 /* SGScanningQRCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGScanningQRCodeView.m; sourceTree = "<group>"; };
 		C97308EF21BA50FB00060447 /* SGAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGAlertView.h; sourceTree = "<group>"; };
@@ -3925,10 +3922,8 @@
 			children = (
 				C97308E621BA50FB00060447 /* SGScanningQRCodeVC.h */,
 				C97308E521BA50FB00060447 /* SGGenerateQRCodeVC.m */,
-				C97308E721BA50FB00060447 /* ScanSuccessJumpVC.h */,
 				C97308E821BA50FB00060447 /* SGGenerateQRCodeVC.h */,
 				C97308E921BA50FB00060447 /* SGScanningQRCodeVC.m */,
-				C97308EA21BA50FB00060447 /* ScanSuccessJumpVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -4799,7 +4794,6 @@
 				0338E507212C057E00BBF576 /* MessageModel.m in Sources */,
 				03D1BF5F2328E9D000F2BDD6 /* CommandButtonView.m in Sources */,
 				0385167921869EDB001DD2B7 /* IXAttributeTapLabel.m in Sources */,
-				C97308F821BA50FB00060447 /* ScanSuccessJumpVC.m in Sources */,
 				03F692EA20FF2DF000308E38 /* ASIFormDataRequest.m in Sources */,
 				0310F5B021EB7FB60005731F /* MySportController.m in Sources */,
 				038516A82186AB39001DD2B7 /* MD5DataSigner.m in Sources */,
