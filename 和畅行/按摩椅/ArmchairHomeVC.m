@@ -336,7 +336,7 @@
         [GlobalCommon showMessage2:statusStr duration2:1.0];
         return;
     }else{
-        
+    
         if([OGA530BluetoothManager shareInstance].respondModel.powerOn == NO){
             
             [self showProgressHUD:startDevice];
@@ -350,10 +350,7 @@
         }
     }
     
-//    ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:layerView.model.name];
-//    vc.armchairModel = layerView.model;
-//    [vc commandActionWithModel:layerView.model];
-//    [self.navigationController pushViewController:vc animated:YES];
+
     
 }
 
@@ -408,6 +405,9 @@
     if ([model.name isEqualToString:@"高级按摩"] || [model.name isEqualToString:@"肩颈4D"]){
         ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:YES withTitleStr:model.name];
         vc.armchairModel = model;
+        if([model.name isEqualToString:@"肩颈4D"]){
+            [vc commandActionWithModel:model];
+        }
         [self.navigationController pushViewController:vc animated:YES];
         
     }else if ([model.name isEqualToString:@"酸疼检测"]){
@@ -602,6 +602,7 @@
 - (ArmChairModel *)recommendModelWithStr
 {
     NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
+    jlbsName = @"上徽";
     if([jlbsName isEqualToString:@""] || jlbsName==nil){
         ArmChairModel *model = [[ArmChairModel alloc] init];
         model.name = @"大师精选";
@@ -628,10 +629,10 @@
 {
     SayAndWriteController *vc = nil;
     
-//    if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
-//        [self showAlertWarmMessage:@"您还不是会员"];
-//        return;
-//    }
+    if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
+        [self showAlertWarmMessage:@"您还不是会员"];
+        return;
+    }
     self.isHitSpeak = YES;
     if([self isFirestClickThePageWithString:@"speak"]){
         vc = [[MeridianIdentifierViewController alloc] init];
@@ -662,14 +663,16 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-# pragma mark - 解决侧滑返回指定控制器
+//# pragma mark - 解决侧滑返回指定控制器
 - (void)didMoveToParentViewController:(UIViewController*)parent
 {
     
     NSMutableArray *tempArr = self.navigationController.viewControllers.mutableCopy;
     for(UIViewController *vc in self.navigationController.viewControllers){
-        if([vc isKindOfClass:[ResultSpeakController class]] || [vc isKindOfClass:[MeridianIdentifierViewController class]]){
-            [tempArr removeObject:vc];
+        if(!self.isHitSpeak){
+            if([vc isKindOfClass:[ResultSpeakController class]] || [vc isKindOfClass:[MeridianIdentifierViewController class]]){
+                [tempArr removeObject:vc];
+            }
         }
     }
     self.navigationController.viewControllers = tempArr;

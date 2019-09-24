@@ -481,15 +481,15 @@
         if([[response objectForKey:@"status"] integerValue] == 100){
             
             id jlbsData = [[response objectForKey:@"data"] objectForKey:@"jlbs"];
-            if(jlbsData != nil && ![jlbsData isKindOfClass:[NSNull class]]){
-                NSDictionary *jlbsDic = [jlbsData objectForKey:@"subject"];
-                NSString *jlbsName = [jlbsDic objectForKey:@"name"];
-                [[NSUserDefaults standardUserDefaults]setValue: jlbsName forKey:@"Physical"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-            }else{
-                [[NSUserDefaults standardUserDefaults]setValue: @"" forKey:@"Physical"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-            }
+//            if(jlbsData != nil && ![jlbsData isKindOfClass:[NSNull class]]){
+//                NSDictionary *jlbsDic = [jlbsData objectForKey:@"subject"];
+//                NSString *jlbsName = [jlbsDic objectForKey:@"name"];
+//                [[NSUserDefaults standardUserDefaults]setValue: jlbsName forKey:@"Physical"];
+//                [[NSUserDefaults standardUserDefaults] synchronize];
+//            }else{
+//                [[NSUserDefaults standardUserDefaults]setValue: @"" forKey:@"Physical"];
+//                [[NSUserDefaults standardUserDefaults] synchronize];
+//            }
             
             id listData = [[response objectForKey:@"data"] objectForKey:@"todolist"];
             NSMutableArray *mutableArr = [NSMutableArray arrayWithCapacity:0];

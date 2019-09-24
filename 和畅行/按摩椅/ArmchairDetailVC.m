@@ -57,16 +57,17 @@ typedef enum : NSInteger {
 
 @property (nonatomic, copy) NSString *titleStr;
 
-@property (nonatomic, strong) UILabel *acupointLabel; //穴位介绍
+@property (nonatomic, strong) UITextView *acupointLabel; //穴位介绍
 
 @property (nonatomic, strong) OGA530Subscribe *ogaSubscribe;
 
 @property (nonatomic,strong) UILabel *navTimeLabel;
 
+@property (nonatomic,strong) UILabel *nameLabel;
 @end
 
 @implementation ArmchairDetailVC
-@synthesize subLayer;
+@synthesize subLayer,nameLabel;
 
 - (void)dealloc
 {
@@ -207,6 +208,11 @@ typedef enum : NSInteger {
     CommandButtonView *postView506 = (CommandButtonView *)[self.postBottomView viewWithTag:506];
     [postView506 setButtonViewSelect:respond.statusPostLegDown];
     
+    
+    NSDictionary *dic = [self acupointSringWithIndex:respond.statusMovmentYCoor];
+    nameLabel.text = [dic objectForKey:@"name"];
+    self.acupointLabel.text = [dic objectForKey:@"introduce"];
+    
     //穴位
     NSLog(@"斜方-风池:%@,斜方-肩中:%@,斜方-肩井:%@,阔背-心俞:%@,腰背-肾俞:%@,臀大肌-环中:%@,臀大肌-环跳:%@",respond.statusXieFangFengChi ? @"YES":@"NO",respond.statusXieFangJianZhong?@"YES":@"NO",respond.statusXieFangJianJing ? @"YES":@"NO",respond.statusKuoBeiXinShu?@"YES":@"NO",respond.statusYaoBeiShenShu ? @"YES":@"NO",respond.statusTunDaJiHuanZhong?@"YES":@"NO",respond.statusTunDaJiHuanTiao ? @"YES":@"NO");
 }
@@ -279,23 +285,25 @@ typedef enum : NSInteger {
     [self.bgScrollView addSubview:self.upsideView];
     
     
-    InsidelayerView *layerView = [[InsidelayerView alloc] initWithFrame:CGRectMake(25, 34-8, 80+30, 90+40)];
+    InsidelayerView *layerView = [[InsidelayerView alloc] initWithFrame:CGRectMake(25, 34-8-5, 80+30+15, 90+40+18)];
     [layerView insertSublayerFromeView:self.upsideView];
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, layerView.width, 20)];
-    titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14];
-    titleLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
+    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 5+3, layerView.width, 15)];
+    nameLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize > 15.0 ? 15.0 : 14*[UserShareOnce shareOnce].fontSize];
+    nameLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
     //titleLabel.backgroundColor = [UIColor redColor];
-    titleLabel.text = @"肩中俞/肩井";
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    [layerView addSubview:titleLabel];
+    nameLabel.text = @"肩中俞/肩井";
+    nameLabel.textAlignment = NSTextAlignmentCenter;
+    [layerView addSubview:nameLabel];
     
-    self.acupointLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, titleLabel.bottom, layerView.width-16, layerView.height-titleLabel.bottom-5)];
-    self.acupointLabel.font = [UIFont fontWithName:@"PingFang SC" size:12];
+    self.acupointLabel = [[UITextView alloc] initWithFrame:CGRectMake(8, nameLabel.bottom, layerView.width-16, layerView.height-nameLabel.bottom-5)];
+    self.acupointLabel.font = [UIFont fontWithName:@"PingFang SC" size:12*[UserShareOnce shareOnce].fontSize > 14.0 ? 14.0 : 14*[UserShareOnce shareOnce].fontSize];
     self.acupointLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
+    self.acupointLabel.userInteractionEnabled = NO;
     //self.acupointLabel.backgroundColor = [UIColor orangeColor];
     self.acupointLabel.text = @"保健功效：宣肺解表，散风活络、缓解肩部酸痛。调气行血，解郁散结。";
-    self.acupointLabel.numberOfLines = 0;
+    [self.acupointLabel setContentInset:UIEdgeInsetsMake(-5, 0, 0, 0)];
+    //self.acupointLabel.numberOfLines = 0;
     self.acupointLabel.textAlignment = NSTextAlignmentLeft;
     [layerView addSubview:self.acupointLabel];
     
@@ -394,7 +402,7 @@ typedef enum : NSInteger {
     NSArray *commandArr1 = [self loadDataPlistWithStr:@"基础"];
     NSArray *commandArr2 = [self loadDataPlistWithStr:@"特殊"];
     
-    CGFloat btnWidth = 58.0;
+    CGFloat btnWidth = 58.0+10;
     CGFloat btnHeight = 83.0;
     
     CGFloat buttonMargin = (layerView.width-btnWidth*5)/6.0;
@@ -444,13 +452,13 @@ typedef enum : NSInteger {
     InsidelayerView *layerView2 = [[InsidelayerView alloc] initWithFrame:CGRectMake(15, 0, ScreenWidth-30, self.middleView.height)];
     [layerView2 insertSublayerFromeView:self.middleView];
     
-    CGFloat buttonMargin = (ScreenWidth-30-53*2)/3.0;
+    CGFloat buttonMargin = (ScreenWidth-30-73*2)/3.0;
     NSArray *commandArr = @[k530Command_BackWarm,k530Command_FootRoll];
     NSArray *arr = [self loadDataPlistWithStr:@"背部脚底"];
     for(NSUInteger i =0;i<arr.count;i++){
         ArmChairModel *model = [arr objectAtIndex:i];
         model.command = [commandArr objectAtIndex:i];
-        CommandButtonView *commandView = [[CommandButtonView alloc] initWithFrame:CGRectMake(buttonMargin+15+(70+buttonMargin)*i, 15, 70, 83) withModel:model];
+        CommandButtonView *commandView = [[CommandButtonView alloc] initWithFrame:CGRectMake(buttonMargin+15+(70+buttonMargin)*i, 15, 70+20, 83) withModel:model];
         commandView.tag = 300+i;
         commandView.delegate = self;
         [self.middleView addSubview:commandView];
@@ -914,21 +922,33 @@ typedef enum : NSInteger {
     }
 }
 
-- (NSString *)acupointSringWithTitle:(NSString *)title
+- (NSDictionary *)acupointSringWithIndex:(int )index
 {
     
-    NSDictionary *dic = @{
-                          @"风池":@"保健功效：平肝息风，疏风解表，祛风通络，提神醒脑，缓解眼睛疲劳与肩部酸痛",
-                          @"天柱":@"保健功效：平肝息风，疏风解表，祛风通络，提神醒脑，缓解眼睛疲劳与肩部酸痛",
-                          @"肩中":@"保健功效：宣肺解表，散风活络、缓解肩部酸痛。调气行血，解郁散结。",
-                          @"肩井":@"保健功效：宣肺解表，散风活络、缓解肩部酸痛。调气行血，解郁散结。",
-                          @"心俞":@"保健功效：补气养血，滋养心神，清心火，益心气，宁心神",
-                          @"肾俞":@"保健功效：生精化髓，纳气归根，益肾壮阳，腰强利水祛湿",
-                          @"环中":@"",
-                          @"环跳":@"",
-                          };
+   
+    NSNumber *numberIndex = [NSNumber numberWithInt:index];
     
-    return @"";
+    NSDictionary *dic2 = @{
+                           [NSNumber numberWithInteger:0]:@{@"name":@"环中/环跳",@"introduce":@"保健功效："},
+                            [NSNumber numberWithInteger:1]:@{@"name":@"八髎穴",@"introduce":@"保健功效："},
+                           [NSNumber numberWithInteger:2]:@{@"name":@"膀胱俞",@"introduce":@"保健功效：清热利湿，通淋止痛"},
+                           [NSNumber numberWithInteger:3]:@{@"name":@"肾俞",@"introduce":@"保健功效：生精化髓，纳气归根，益肾壮阳，腰强利水祛湿"},
+                           [NSNumber numberWithInteger:4]:@{@"name":@"肾俞",@"introduce":@"保健功效：生精化髓，纳气归根，益肾壮阳，腰强利水祛湿"},
+                           [NSNumber numberWithInteger:5]:@{@"name":@"脾俞",@"introduce":@"保健功效：升清降浊，帮助消化"},
+                           [NSNumber numberWithInteger:6]:@{@"name":@"肝俞",@"introduce":@"保健功效：疏肝解郁，清降肝火"},
+                           [NSNumber numberWithInteger:7]:@{@"name":@"肝俞",@"introduce":@"保健功效：疏肝解郁，清降肝火"},
+                           [NSNumber numberWithInteger:8]:@{@"name":@"心俞",@"introduce":@"保健功效：补气养血，滋养心神，清心火，益心气，宁心神"},
+                           [NSNumber numberWithInteger:9]:@{@"name":@"心俞",@"introduce":@"保健功效：补气养血，滋养心神，清心火，益心气，宁心神"},
+                           [NSNumber numberWithInteger:10]:@{@"name":@"肺俞",@"introduce":@"保健功效：祛风解表，润肺益气"},
+                           [NSNumber numberWithInteger:11]:@{@"name":@"肩井/肩中",@"introduce":@"保健功效：宣肺解表，散风活络、缓解肩部酸痛。调气行血，解郁散结"},
+                           [NSNumber numberWithInteger:12]:@{@"name":@"肩井/肩中",@"introduce":@"保健功效：宣肺解表，散风活络、缓解肩部酸痛。调气行血，解郁散结"},
+                           [NSNumber numberWithInteger:13]:@{@"name":@"风池/天柱",@"introduce":@"保健功效：平肝息风，疏风解表，祛风通络，提神醒脑，缓解眼睛疲劳与肩部酸痛"},
+                           
+                           
+                           };
+    NSDictionary *dic = [dic2 objectForKey:numberIndex];
+    NSLog(@"dic:%@",dic);
+    return dic;
 }
 
 @end

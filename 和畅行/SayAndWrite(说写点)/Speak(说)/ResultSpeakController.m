@@ -58,6 +58,14 @@
     
     if ([strRequest isEqualToString:anmoyi]){
         decisionHandler(WKNavigationActionPolicyCancel);
+        
+        for(UIViewController *vc in self.navigationController.viewControllers){
+            if([vc isKindOfClass:[ArmchairHomeVC class]]){
+                [self.navigationController popToViewController:vc animated:YES];
+                return;
+            }
+        }
+        
         ArmchairHomeVC *vc = [[ArmchairHomeVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
