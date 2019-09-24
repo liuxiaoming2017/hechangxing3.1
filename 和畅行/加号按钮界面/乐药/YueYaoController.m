@@ -148,12 +148,13 @@
     
     UIButton *iKnowBT = [UIButton buttonWithType:(UIButtonTypeCustom)];
     iKnowBT.frame = CGRectMake(ScreenWidth - 150,  kScreenSize.height- kNavBarHeight - 160 - 100, 100, 50);
+    __weak typeof(self) weakSelf = self;
     [iKnowBT setBackgroundImage:[UIImage imageNamed:ModuleZW(@"我知道了")] forState:(UIControlStateNormal)];
     [[iKnowBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
         [[NSUserDefaults standardUserDefaults]setValue:@"1111" forKey:@"YueLuoyi"];
         [blackView removeFromSuperview];
-        self.musciView.userInteractionEnabled = YES;
-        self.blueTBT.userInteractionEnabled = YES;
+        weakSelf.musciView.userInteractionEnabled = YES;
+        weakSelf.blueTBT.userInteractionEnabled = YES;
     }];
     [blackView addSubview:iKnowBT];
     
@@ -171,7 +172,7 @@
 }
 
 - (void)remoteControlReceivedWithEvent:(UIEvent *)event{
-    NSLog(@"%ld",event.type);
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"songRemoteControlNotification" object:self userInfo:@{@"eventSubtype":@(event.subtype)}];
 }
 
@@ -307,7 +308,7 @@
     //设置歌手名
     //[songDict setObject:@"韩安旭" forKey:MPMediaItemPropertyArtist];
     //设置专辑名
-    [songDict setObject:@"harmonyYi" forKey:MPMediaItemPropertyAlbumTitle];
+   // [songDict setObject:@"harmonyYi" forKey:MPMediaItemPropertyAlbumTitle];
     //设置歌曲时长
     [songDict setObject:[NSNumber numberWithDouble:totalTime]  forKey:MPMediaItemPropertyPlaybackDuration];
     //设置已经播放时长
@@ -1082,9 +1083,9 @@
     UIButton *blueTBT = [UIButton buttonWithType:(UIButtonTypeCustom)];
     blueTBT.frame = CGRectMake(40,  self.musciView.top +10 , self.musciView.height - 20, self.musciView.height - 20);
     [blueTBT setBackgroundImage:[UIImage imageNamed:@"蓝牙未连接"] forState:(UIControlStateNormal)];
+    __weak typeof(self) weakSelf = self;
     [[blueTBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请先连接设备") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles: nil];
-        [alert show];
+        [weakSelf showAlertWarmMessage:ModuleZW(@"请先连接设备")];
     }];
     [self.view addSubview:blueTBT];
     self.blueTBT = blueTBT;

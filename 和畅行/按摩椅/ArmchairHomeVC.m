@@ -14,12 +14,18 @@
 #import "OGBluetoothListView.h"
 #import "ArmchairAcheTestVC.h"
 
+#import "MeridianIdentifierViewController.h"
+#import "TipSpeakController.h"
+
+#import "ResultSpeakController.h"
+#import "MeridianIdentifierViewController.h"
+
 #define margin ((ScreenWidth-107*3)/4.0)
 
 #define startDevice @"启动设备"
 #define connectDevice @"连接设备"
 
-@interface ArmchairHomeVC ()<UICollectionViewDataSource,UICollectionViewDelegate,MBProgressHUDDelegate>
+@interface ArmchairHomeVC ()<UICollectionViewDataSource,UICollectionViewDelegate,MBProgressHUDDelegate,UIGestureRecognizerDelegate>
 
 @property (nonatomic,strong) UICollectionView *collectionV;
 @property (nonatomic,strong) UIScrollView *bgScrollView;
@@ -37,6 +43,9 @@
 @property (nonatomic, strong) MBProgressHUD *progressHud;
 
 @property (nonatomic, assign) BOOL isManual;
+
+@property (nonatomic, assign) BOOL isHitSpeak;
+
 @end
 
 @implementation ArmchairHomeVC
@@ -54,7 +63,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-  //  [self initUI];
+    [self initUI];
     
     self.navTitleLabel.text = @"按摩椅";
     
@@ -68,7 +77,7 @@
     view.layer.cornerRadius = 8;
     [self.bgScrollView addSubview:view];
     
-   // [self createRecommendView];
+    [self createRecommendView];
     
     [self createBottomView];
  
@@ -128,6 +137,19 @@
 {
     [super viewWillAppear:animated];
     
+    if(self.isHitSpeak){
+        NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
+        if(![jlbsName isEqualToString:@""] && jlbsName!=nil){
+            UIButton *speakBtn = (UIButton *)[self.recommendV viewWithTag:111];
+            if(speakBtn){
+                speakBtn.hidden = YES;
+            }
+            UILabel *label = (UILabel *)[self.recommendV viewWithTag:222];
+            label.height = 75;
+            label.attributedText = [self attributedStringWithTitle:[NSString stringWithFormat:@"1、鉴于您体质检测为%@；\n2、我们建议您用这个按摩手法。",[[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"]]];
+        }
+    }
+    
     
     if(![[OGA530BluetoothManager shareInstance] isBlueToothPoweredOn]){
         [UserShareOnce shareOnce].ogaConnected = NO;
@@ -152,6 +174,11 @@
 - (void)bluetoothBtnAction:(UIButton *)button
 {
     
+    BOOL isBlueToothPoweredOn = [[OGA530BluetoothManager shareInstance] isBlueToothPoweredOn];
+    if(!isBlueToothPoweredOn){
+        [GlobalCommon showMessage2:@"请先打开蓝牙" duration2:1.0];
+        return ;
+    }
     if(!bluetoothBtn.selected){
         [self manualScanPeripheral];
     }
@@ -195,13 +222,11 @@
     recommendLabel.frame = CGRectMake(margin,0,100,22.5);
     recommendLabel.text = @"推荐按摩";
     recommendLabel.textAlignment = NSTextAlignmentLeft;
-    recommendLabel.font = [UIFont fontWithName:@"PingFang SC" size:16];
+    recommendLabel.font = [UIFont fontWithName:@"PingFang SC" size:16*[UserShareOnce shareOnce].fontSize];
     [self.recommendV addSubview:recommendLabel];
     
     
-    ArmChairModel *model = [[ArmChairModel alloc] init];
-    model.name = @"低头族";
-    model.command = [GlobalCommon commandFromName:model.name];
+    ArmChairModel *model = [self recommendModelWithStr];
     
     SublayerView *sublayerView = [[SublayerView alloc] initWithFrame:CGRectMake(recommendLabel.left, recommendLabel.bottom+10, 108, 115)];
     [sublayerView setImageVandTitleLabelwithModel:model];
@@ -214,21 +239,49 @@
     
     
     UILabel *label1 = [[UILabel alloc] init];
-    label1.frame = CGRectMake(sublayerView.right+19,sublayerView.top,240.5+15,75);
+    label1.frame = CGRectMake(sublayerView.right+19,sublayerView.top+20,240.5+15,75);
     label1.numberOfLines = 0;
+    label1.tag = 222;
     [self.recommendV addSubview:label1];
     
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraphStyle.lineSpacing = 5;
+   
+    NSString *recommandStr = @"";
+    NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
+    if([jlbsName isEqualToString:@""] || jlbsName==nil ){
+        recommandStr = @"1、您尚未进行经络检测；";
+        label1.height = 30;
+        
+        UIButton *speakBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        speakBtn.frame = CGRectMake(label1.left, label1.bottom+15, label1.width, 20);
+        [speakBtn setTitle:@"2、点我立即检测" forState:UIControlStateNormal];
+        [speakBtn setTitleColor:[UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0] forState:UIControlStateNormal];
+        speakBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        speakBtn.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:13*[UserShareOnce shareOnce].fontSize];
+        [speakBtn addTarget:self action:@selector(speakBtnAction) forControlEvents:UIControlEventTouchUpInside];
+        speakBtn.tag = 111;
+        [self.recommendV addSubview:speakBtn];
+        
+    }else{
+        recommandStr = [NSString stringWithFormat:@"1、鉴于您体质检测为%@；\n2、我们建议您用这个按摩手法。",[[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"]];
+    }
     
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"1、鉴于您体质检测为上宫；\n2、鉴于您酸痛检测为轻度；\n3、我们建议您用这个按摩手法。"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size:13],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
     
-    label1.attributedText = string;
+    label1.attributedText = [self attributedStringWithTitle:recommandStr];
     label1.textAlignment = NSTextAlignmentLeft;
     label1.alpha = 1.0;
     
+   
+}
+
+- (NSMutableAttributedString *)attributedStringWithTitle:(NSString *)recommandStr
+{
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.lineSpacing = 15;
     
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:recommandStr attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size:13*[UserShareOnce shareOnce].fontSize],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
+    
+    return string;
 }
 
 - (void)createBottomView
@@ -238,14 +291,14 @@
   //  CGFloat margin = ((ScreenWidth-107*3)/4.0);
     
     UILabel *label = [[UILabel alloc] init];
-    //label.frame = CGRectMake(margin,self.recommendV.bottom+15,120,20);
-    label.frame = CGRectMake(margin,kNavBarHeight+15,120,20);
-    label.font = [UIFont fontWithName:@"PingFang SC" size:16];
+    label.frame = CGRectMake(margin,self.recommendV.bottom+15,120,20);
+    //label.frame = CGRectMake(margin,kNavBarHeight+15,120,20);
+    label.font = [UIFont fontWithName:@"PingFang SC" size:16*[UserShareOnce shareOnce].fontSize];
     label.text = @"按摩手法";
     label.textAlignment = NSTextAlignmentLeft;
     label.alpha = 1.0;
-    //[self.bgScrollView addSubview:label];
-    [self.view addSubview:label];
+    [self.bgScrollView addSubview:label];
+    //[self.view addSubview:label];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake(107+margin, 111+margin);
@@ -255,32 +308,50 @@
     layout.minimumInteritemSpacing = 0;
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
-    //self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom, ScreenWidth-margin, 125*4+50) collectionViewLayout:layout];
-     self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom+8, ScreenWidth-margin, ScreenHeight-label.bottom-8) collectionViewLayout:layout];
+    self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom, ScreenWidth-margin, 125*4+50) collectionViewLayout:layout];
+     //self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom+8, ScreenWidth-margin, ScreenHeight-label.bottom-8) collectionViewLayout:layout];
     self.collectionV.delegate = self;
     self.collectionV.dataSource = self;
     self.collectionV.showsHorizontalScrollIndicator = NO;
     self.collectionV.showsVerticalScrollIndicator = NO;
     self.collectionV.backgroundColor = [UIColor clearColor];
-   // self.collectionV.scrollEnabled = NO;
+    self.collectionV.scrollEnabled = NO;
     
     [self.collectionV registerClass:[ArmchairHomeCell class] forCellWithReuseIdentifier:@"cellId"];
     
-    [self.view addSubview:self.collectionV];
+    //[self.view addSubview:self.collectionV];
     
-//    [self.bgScrollView addSubview:self.collectionV];
-//
-//    self.bgScrollView.contentSize = CGSizeMake(1, self.collectionV.bottom+10);
+    [self.bgScrollView addSubview:self.collectionV];
+
+    self.bgScrollView.contentSize = CGSizeMake(1, self.collectionV.bottom+10);
 }
 
 # pragma mark - 推荐按摩点击事件
 - (void)tapAction:(UITapGestureRecognizer *)gesture
 {
     SublayerView *layerView = (SublayerView *)[gesture view];
-    ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:layerView.model.name];
-    vc.armchairModel = layerView.model;
-    [vc commandActionWithModel:layerView.model];
-    [self.navigationController pushViewController:vc animated:YES];
+    ArmChairModel *model = layerView.model;
+    NSString *statusStr = [self resultStringWithStatus];
+    if(![statusStr isEqualToString:@""]){
+        [GlobalCommon showMessage2:statusStr duration2:1.0];
+        return;
+    }else{
+    
+        if([OGA530BluetoothManager shareInstance].respondModel.powerOn == NO){
+            
+            [self showProgressHUD:startDevice];
+            
+            [[OGA530BluetoothManager shareInstance] sendCommand:k530Command_PowerOn success:^(BOOL success) {
+                NSLog(@"启动设备成功啦");
+            }];
+        }else{
+            NSLog(@"开机了开机了");
+            [self nextVCWithModel:model];
+        }
+    }
+    
+
+    
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -331,9 +402,12 @@
 
 - (void)nextVCWithModel:(ArmChairModel *)model
 {
-    if ([model.name isEqualToString:@"高级按摩"]){
+    if ([model.name isEqualToString:@"高级按摩"] || [model.name isEqualToString:@"肩颈4D"]){
         ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:YES withTitleStr:model.name];
         vc.armchairModel = model;
+        if([model.name isEqualToString:@"肩颈4D"]){
+            [vc commandActionWithModel:model];
+        }
         [self.navigationController pushViewController:vc animated:YES];
         
     }else if ([model.name isEqualToString:@"酸疼检测"]){
@@ -521,6 +595,94 @@
         });
         
     }];
+}
+
+
+# pragma mark - 根据一说结果获取推荐的按摩手法
+- (ArmChairModel *)recommendModelWithStr
+{
+    NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
+    jlbsName = @"上徽";
+    if([jlbsName isEqualToString:@""] || jlbsName==nil){
+        ArmChairModel *model = [[ArmChairModel alloc] init];
+        model.name = @"大师精选";
+        model.command = k530Command_MassageMaster;
+        return model;
+    }else{
+        jlbsName = [jlbsName substringFromIndex:[jlbsName length]-1];
+        NSDictionary *dic = @{
+                @"徽":@{@"name":@"肩颈4D",@"command":k530Command_NeckShoulder4D},
+                @"羽":@{@"name":@"活血循环",@"command":k530Command_MassageBloodCirculation},
+                @"宫":@{@"name":@"美臀塑型",@"command":k530Command_MassageHipsShapping},
+                @"角":@{@"name":@"运动派",@"command":k530Command_Athlete},
+                @"商":@{@"name":@"低头族",@"command":k530Command_TextNeck}
+                };
+        NSDictionary *dic1 = [dic objectForKey:jlbsName];
+        ArmChairModel *model = [ArmChairModel mj_objectWithKeyValues:dic1];
+        return model;
+    }
+   
+}
+
+# pragma mark - 进入一说 经络检测
+- (void)speakBtnAction
+{
+    SayAndWriteController *vc = nil;
+    
+    if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
+        [self showAlertWarmMessage:@"您还不是会员"];
+        return;
+    }
+    self.isHitSpeak = YES;
+    if([self isFirestClickThePageWithString:@"speak"]){
+        vc = [[MeridianIdentifierViewController alloc] init];
+    }else{
+        vc = [[TipSpeakController alloc] init];
+    }
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (BOOL)isFirestClickThePageWithString:(NSString *)string
+{
+    NSString *userName = [UserShareOnce shareOnce].username;
+    NSString *writeKey = [NSString stringWithFormat:@"%@_%@",userName,string];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if([[userDefaults objectForKey:writeKey] isEqualToString:@"1"]){
+        return YES;
+    }else{
+        [userDefaults setObject:@"1" forKey:writeKey];
+        [userDefaults synchronize];
+        return NO;
+    }
+    return NO;
+}
+
+- (void)goBack:(UIButton *)btn
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+//# pragma mark - 解决侧滑返回指定控制器
+- (void)didMoveToParentViewController:(UIViewController*)parent
+{
+    
+    NSMutableArray *tempArr = self.navigationController.viewControllers.mutableCopy;
+    for(UIViewController *vc in self.navigationController.viewControllers){
+        if(!self.isHitSpeak){
+            if([vc isKindOfClass:[ResultSpeakController class]] || [vc isKindOfClass:[MeridianIdentifierViewController class]]){
+                [tempArr removeObject:vc];
+            }
+        }
+    }
+    self.navigationController.viewControllers = tempArr;
+    
+    
+}
+
+
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
+    return YES;
 }
 
 @end

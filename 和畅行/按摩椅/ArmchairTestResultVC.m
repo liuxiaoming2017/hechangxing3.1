@@ -57,18 +57,17 @@
                           [UIColor colorWithRed:254/255.0 green:231/255.0 blue:185/255.0 alpha:1.0],
                           [UIColor colorWithRed:252/255.0 green:198/255.0 blue:184/255.0 alpha:1.0]
                           ];
-//    NSArray *colorArr1 = @[[UIColor colorWithRed:252/255.0 green:198/255.0 blue:184/255.0 alpha:1.0],[UIColor colorWithRed:254/255.0 green:231/255.0 blue:185/255.0 alpha:1.0]];
-    NSArray *titleArr = @[@"重度",@"中度",@"轻度"];
+    NSArray *titleArr = @[@"轻度",@"中度",@"重度"];
     for(NSInteger i=0;i<3;i++){
         UIView *view1 = [[UIView alloc] init];
         view1.frame = CGRectMake(imageV.right+12,imageV.bottom-20-50*i,20,20);
-        UIColor *color = [colorArr objectAtIndex:i];
+        UIColor *color = [colorArr objectAtIndex:2-i];
         view1.layer.backgroundColor = color.CGColor;
         view1.layer.cornerRadius = 10;
         [self.view addSubview:view1];
         
         UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(view1.right+15, view1.top+2, 27.5, 16)];
-        label1.text = [titleArr objectAtIndex:i];
+        label1.text = [titleArr objectAtIndex:2-i];
         label1.font = [UIFont fontWithName:@"PingFang SC" size:12];
         label1.textAlignment = NSTextAlignmentLeft;
         label1.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
@@ -88,8 +87,8 @@
     self.pilaoLabel.textAlignment = NSTextAlignmentLeft;
     self.pilaoLabel.textColor = [UIColor colorWithRed:254/255.0 green:231/255.0 blue:185/255.0 alpha:1.0];
     if(self.acheResult<4){
-        self.pilaoLabel.textColor = [colorArr objectAtIndex:self.acheResult - 1];
-        self.pilaoLabel.text = [titleArr objectAtIndex:self.acheResult - 1];
+        self.pilaoLabel.textColor = [colorArr objectAtIndex:self.fatigueResult - 1];
+        self.pilaoLabel.text = [titleArr objectAtIndex:self.fatigueResult - 1];
     }
     [self.view addSubview:self.pilaoLabel];
     
@@ -119,7 +118,7 @@
     self.suantengLabel.textAlignment = NSTextAlignmentLeft;
     self.suantengLabel.textColor = [UIColor colorWithRed:254/255.0 green:231/255.0 blue:185/255.0 alpha:1.0];
     if(self.fatigueResult<4){
-        self.suantengLabel.textColor = [colorArr objectAtIndex:self.fatigueResult - 1];
+        self.suantengLabel.textColor = [colorArr objectAtIndex:self.acheResult - 1];
         self.suantengLabel.text = [titleArr objectAtIndex:self.acheResult - 1];
     }
     [self.view addSubview:self.suantengLabel];
@@ -136,8 +135,8 @@
         [self.view addSubview:lineV];
     }
     
-    [self setupLineView:pilaoView withCount:self.acheResult];
-    [self setupLineView:suantengView withCount:self.fatigueResult];
+    [self setupLineView:pilaoView withCount:self.fatigueResult];
+    [self setupLineView:suantengView withCount:self.acheResult];
 }
 
 
