@@ -249,6 +249,8 @@
     
     if([[UserShareOnce shareOnce].username isEqualToString:@"13665541112"] || [[UserShareOnce shareOnce].username isEqualToString:@"18163865881"]){
         self.listNamesArr = @[@"意见反馈",@"关于我们",@"字体大小"];
+    }else if(![[NSUserDefaults standardUserDefaults] objectForKey:@"noAppstoreCheck"]){
+        self.listNamesArr = @[@"意见反馈",@"关于我们",@"字体大小"];
     }else{
         self.listNamesArr = @[@"意见反馈",@"关于我们",@"字体大小",@"检查更新"];
     }

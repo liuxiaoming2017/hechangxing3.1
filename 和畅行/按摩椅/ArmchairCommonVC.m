@@ -152,9 +152,10 @@
 
 - (void)messageBtnAction:(UIButton *)btn
 {
-     BOOL isBlueToothPoweredOff = [[OGA530BluetoothManager shareInstance] isBlueToothPoweredOff];
-    if(isBlueToothPoweredOff){
-        [GlobalCommon showMessage2:@"请先打开蓝牙" duration2:1];
+    NSString *statusStr = [self resultStringWithStatus];
+    if(![statusStr isEqualToString:@""]){
+        [GlobalCommon showMessage2:statusStr duration2:1.0];
+        return;
     }
     
     if (btn.selected == YES) {

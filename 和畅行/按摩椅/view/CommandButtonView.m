@@ -64,8 +64,9 @@
     
     UILabel *label = [[UILabel alloc] init];
     label.frame = CGRectMake(0,self.commandButton.bottom+5,self.width,20);
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:title attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 14],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
-    label.attributedText = string;
+    label.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize];
+    label.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
+    label.text = title;
     label.textAlignment = NSTextAlignmentCenter;
     self.titleLabel = label;
     [self addSubview:label];

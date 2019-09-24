@@ -758,7 +758,7 @@
             return ;
         }
         
-        NSString *aUrlle= [NSString stringWithFormat:@"%@/member/service/reshow.jhtml?sn=%@&device=1",URL_PRE,codeStr];
+        NSString *aUrlle= [NSString stringWithFormat:@"%@member/service/reshow.jhtml?sn=%@&device=1&version=1",URL_PRE,codeStr];
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = aUrlle;
         vc.titleStr = ModuleZW(@"经络辨识");

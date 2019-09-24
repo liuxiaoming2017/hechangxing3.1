@@ -35,19 +35,20 @@
    
     [self addSubview:backImageView];
     
-    NSLog(@"#####:%f",armchairCellW);
+    //NSLog(@"#####:%@",NSStringFromCGRect(self.frame));
     
-    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(25, 19, self.frame.size.width-48, self.frame.size.height-19-47)];
+    //self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(25, 19, self.frame.size.width-48, self.frame.size.height-19-47)];
+    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake((self.frame.size.width-60)/2.0, (self.frame.size.height-49-10-20)/2.0, 60, 49)];
     self.imageV.layer.cornerRadius = 8;
     self.imageV.contentMode = UIViewContentModeScaleAspectFit;
     self.imageV.image = [UIImage imageNamed:@"sports01"];
     [self addSubview:self.imageV];
     
     self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.imageV.frame)+10, self.frame.size.width-15*2, 20)];
-    self.titleLabel.font = [UIFont systemFontOfSize:15];
+    self.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.titleLabel.textColor = UIColorFromHex(0x7D7D7D);
-    self.titleLabel.highlightedTextColor = UIColorFromHex(0X1E82D2);
+    self.titleLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
+    //self.titleLabel.highlightedTextColor = UIColorFromHex(0X1E82D2);
     self.titleLabel.text = @"发卡拉";
     self.titleLabel.numberOfLines = 0;
     [self addSubview:self.titleLabel];

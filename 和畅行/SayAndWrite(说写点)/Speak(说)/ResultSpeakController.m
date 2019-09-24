@@ -9,6 +9,9 @@
 #import "ResultSpeakController.h"
 #import "MeridianIdentifierViewController.h"
 #import "TipSpeakController.h"
+#import "ArmchairHomeVC.h"
+
+#define anmoyi [NSString stringWithFormat:@"%@hcy/member/action/yinyue",URL_PRE]
 
 @interface ResultSpeakController ()<UIGestureRecognizerDelegate>
 
@@ -52,6 +55,15 @@
 #pragma mark - WKNavigationDelegate
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     NSString *strRequest = [navigationAction.request.URL.absoluteString stringByRemovingPercentEncoding];
+    
+    if ([strRequest isEqualToString:anmoyi]){
+        decisionHandler(WKNavigationActionPolicyCancel);
+        ArmchairHomeVC *vc = [[ArmchairHomeVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }
+    
     if([navigationAction.request allHTTPHeaderFields][@"Cookie"]){
         decisionHandler(WKNavigationActionPolicyAllow);
     }else{

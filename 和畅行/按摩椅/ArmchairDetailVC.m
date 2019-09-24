@@ -400,15 +400,19 @@ typedef enum : NSInteger {
     CGFloat buttonMargin = (layerView.width-btnWidth*5)/6.0;
     
     UILabel *jichuLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonMargin+15, 5, 81, 30)];
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"按摩手法"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
-    jichuLabel.attributedText = string;
+    //NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"按摩手法"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
+    jichuLabel.text = @"按摩手法";
+    jichuLabel.font = [UIFont fontWithName:@"PingFang SC" size:17];
+    jichuLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
     jichuLabel.textAlignment = NSTextAlignmentLeft;
     [self.advancedView addSubview:jichuLabel];
     
     UILabel *teshuLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonMargin+15, 45+btnHeight, 81, 30)];
-    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc] initWithString:@"特殊"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
-    teshuLabel.attributedText = string2;
+    //NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc] initWithString:@"特殊"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
     teshuLabel.textAlignment = NSTextAlignmentLeft;
+    teshuLabel.text = @"特殊";
+    teshuLabel.font = [UIFont fontWithName:@"PingFang SC" size:17];
+    teshuLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
    // [self.advancedView addSubview:teshuLabel];
     
     for(NSInteger i=0;i<commandArr1.count;i++){
@@ -500,8 +504,11 @@ typedef enum : NSInteger {
     CGFloat buttonMargin = (layerView.width-53*5)/6.0;
     
     UILabel *qiyaLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonMargin+15, 10, 81, 35)];
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"气压"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
-    qiyaLabel.attributedText = string;
+//    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"气压"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
+//    qiyaLabel.attributedText = string;
+    qiyaLabel.text = @"气压";
+    qiyaLabel.font = [UIFont fontWithName:@"PingFang SC" size:17];
+    qiyaLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
     qiyaLabel.textAlignment = NSTextAlignmentLeft;
     [self.qiyaView addSubview:qiyaLabel];
     

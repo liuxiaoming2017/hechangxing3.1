@@ -250,9 +250,7 @@
                     vc1.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc1 animated:YES];
                 }
-                
-                
-               
+         
             };
             cell.righTwoBlock = ^{
            NSString  *urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@&version=2",URL_PRE,[MemberUserShance shareOnce].idNum,@(60)];

@@ -88,7 +88,6 @@
 		0351C59423278C670035A9EA /* GLYPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0351C59323278C670035A9EA /* GLYPageView.m */; };
 		0351C59723278DB20035A9EA /* ThemeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0351C59623278DB20035A9EA /* ThemeCollectionViewCell.m */; };
 		035260B0230BD4B200A716C8 /* OGABluetooth530.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 035260AF230BD4B200A716C8 /* OGABluetooth530.framework */; };
-		035260B4230BD59100A716C8 /* MassageArmchairVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 035260B3230BD59100A716C8 /* MassageArmchairVC.m */; };
 		03535EE720F701DF00664FA9 /* TipWriteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03535EE620F701DF00664FA9 /* TipWriteController.m */; };
 		03535EEA20F703A400664FA9 /* SayAndWriteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03535EE920F703A400664FA9 /* SayAndWriteController.m */; };
 		03535EF320F7262C00664FA9 /* TipClickController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03535EF220F7262C00664FA9 /* TipClickController.m */; };
@@ -844,8 +843,6 @@
 		0351C59523278DB20035A9EA /* ThemeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThemeCollectionViewCell.h; sourceTree = "<group>"; };
 		0351C59623278DB20035A9EA /* ThemeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThemeCollectionViewCell.m; sourceTree = "<group>"; };
 		035260AF230BD4B200A716C8 /* OGABluetooth530.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OGABluetooth530.framework; sourceTree = "<group>"; };
-		035260B2230BD59100A716C8 /* MassageArmchairVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MassageArmchairVC.h; sourceTree = "<group>"; };
-		035260B3230BD59100A716C8 /* MassageArmchairVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MassageArmchairVC.m; sourceTree = "<group>"; };
 		03535EE520F701DF00664FA9 /* TipWriteController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TipWriteController.h; sourceTree = "<group>"; };
 		03535EE620F701DF00664FA9 /* TipWriteController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TipWriteController.m; sourceTree = "<group>"; };
 		03535EE820F703A400664FA9 /* SayAndWriteController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SayAndWriteController.h; sourceTree = "<group>"; };
@@ -2301,8 +2298,6 @@
 			children = (
 				03D1BF562328D32500F2BDD6 /* model */,
 				035F31F5231D06DC009A0D94 /* view */,
-				035260B2230BD59100A716C8 /* MassageArmchairVC.h */,
-				035260B3230BD59100A716C8 /* MassageArmchairVC.m */,
 				03101DDE2330D6AA00C5F35E /* ArmchairAcheTestVC.h */,
 				03101DDF2330D6AA00C5F35E /* ArmchairAcheTestVC.m */,
 				03C5913B2331BB020058EF33 /* ArmchairTestResultVC.h */,
@@ -4756,7 +4751,6 @@
 				032735952105A33400554516 /* ColumnBar.m in Sources */,
 				0325A5EC210995F100275671 /* EEGDetailController.m in Sources */,
 				03F692EB20FF2DF000308E38 /* ASIHTTPRequest.m in Sources */,
-				035260B4230BD59100A716C8 /* MassageArmchairVC.m in Sources */,
 				0370A85821114E4F00447DFB /* HeChangPackgeController.m in Sources */,
 				0351C59423278C670035A9EA /* GLYPageView.m in Sources */,
 				036E85962186EB4C001B9BB4 /* OMGToast.m in Sources */,
@@ -5042,7 +5036,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};
 			name = Debug;
@@ -5107,7 +5101,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};
 			name = Release;

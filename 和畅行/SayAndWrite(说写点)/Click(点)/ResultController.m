@@ -25,12 +25,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navTitleLabel.text = ModuleZW(@"健康档案");
-    NSString *str = [NSString stringWithFormat:@"member/service/reshow.jhtml?sn=%@&device=1",self.TZBSstr];
+    NSString *str = [NSString stringWithFormat:@"member/service/reshow.jhtml?sn=%@&device=1&version=1",self.TZBSstr];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,str];
     
     
     [self customeViewWithStr:urlStr];
 }
+
+
 
 # pragma mark - 解决侧滑返回指定控制器
 - (void)willMoveToParentViewController:(UIViewController*)parent
