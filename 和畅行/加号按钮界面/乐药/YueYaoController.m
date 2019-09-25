@@ -404,7 +404,7 @@
     
     
  
-    URL_PRE
+    
     hysegmentControl = [[HYSegmentedControl alloc] initWithOriginY:topSegment.bottom + 15 Titles:@[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"] delegate:self];
     [self.view addSubview:hysegmentControl];
 
