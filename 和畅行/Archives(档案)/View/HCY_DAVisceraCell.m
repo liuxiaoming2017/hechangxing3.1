@@ -24,7 +24,7 @@
 
 - (void)setupView
 {
-    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 72, 20)];
+    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 200, 20)];
     self.timeLabel.textAlignment=NSTextAlignmentLeft;
     self.timeLabel.font=[UIFont systemFontOfSize:16.0];
     self.timeLabel.textColor=[UIColor blackColor];
@@ -36,7 +36,7 @@
     lineImageV.backgroundColor = UIColorFromHex(0xe2e2e2);
     [self addSubview:lineImageV];
     
-    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(self.timeLabel.right - 20, lineImageV.bottom-15, ScreenWidth-self.timeLabel.right + 10, 79)];
+    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(62, lineImageV.bottom-15, ScreenWidth-72, 79)];
     self.imageV.layer.cornerRadius = 8.0;
     self.imageV.layer.masksToBounds = YES;
     self.imageV.backgroundColor = [UIColor whiteColor];
@@ -211,12 +211,22 @@
 
 
 -(NSString *)getDateStringWithOtherTimeStr:(NSString *)str{
+    
+    NSDate *  senddate=[NSDate date];
+    NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
+    [dateformatter setDateFormat:@"yyyy"];
+    NSString *thisYearString=[dateformatter stringFromDate:senddate];
+    
     NSTimeInterval time=[str doubleValue]/1000;//传入的时间戳str如果是精确到毫秒的记得要/1000
     NSDate *detailDate=[NSDate dateWithTimeIntervalSince1970:time];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; //实例化一个NSDateFormatter对象
     //设定时间格式,这里可以设置成自己需要的格式
-    [dateFormatter setDateFormat:@"MM-dd"];
+    NSString *dateStr = [NSString stringWithFormat:@"yyyy-MM-dd"];
+    [dateFormatter setDateFormat:dateStr];
     NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
+    if ([currentDateStr containsString:thisYearString]) {
+        currentDateStr = [currentDateStr substringFromIndex:5];
+    }
     return currentDateStr;
 }
 

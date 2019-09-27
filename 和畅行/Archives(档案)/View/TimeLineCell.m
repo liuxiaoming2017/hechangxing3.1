@@ -73,7 +73,7 @@
     
     [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView.mas_top).offset(10.0);
-        make.size.mas_equalTo(CGSizeMake(80, 20));
+        make.size.mas_equalTo(CGSizeMake(200, 20));
         make.leading.equalTo(self.contentView.mas_leading).offset(10.0);
     }];
     [lineImageV  mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -183,8 +183,8 @@
         }else{
             self.contentLabel.text = model.name;
         }
-        NSString *timeStr = [model.date stringByReplacingOccurrencesOfString:@"日" withString:@""];
-        timeStr = [timeStr stringByReplacingOccurrencesOfString:@"月" withString:@"-"];
+        NSLog(@"%@",model.createTime);
+        NSString *timeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",model.createTime]];
         self.timeLabel.text = timeStr;
         self.createDateLabel.text = model.time;
     }else  if (typeInteger == 10||typeInteger == 9){
@@ -280,13 +280,22 @@
 }
 
 -(NSString *)getDateStringWithOtherTimeStr:(NSString *)str{
+    
+    NSDate *  senddate=[NSDate date];
+    NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
+    [dateformatter setDateFormat:@"yyyy"];
+    NSString *thisYearString=[dateformatter stringFromDate:senddate];
+    
     NSTimeInterval time=[str doubleValue]/1000;//传入的时间戳str如果是精确到毫秒的记得要/1000
     NSDate *detailDate=[NSDate dateWithTimeIntervalSince1970:time];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; //实例化一个NSDateFormatter对象
     //设定时间格式,这里可以设置成自己需要的格式
-    NSString *dateStr = [NSString stringWithFormat:@"MM-dd"];
+    NSString *dateStr = [NSString stringWithFormat:@"yyyy-MM-dd"];
     [dateFormatter setDateFormat:dateStr];
     NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
+    if ([currentDateStr containsString:thisYearString]) {
+        currentDateStr = [currentDateStr substringFromIndex:5];
+    }
     return currentDateStr;
 }
 
