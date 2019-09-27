@@ -41,8 +41,8 @@
     self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.imageV.right + 10, self.imageV.top, ScreenWidth - self.imageV.right - 20, 60)];
     self.titleLabel.font = [UIFont systemFontOfSize:16];
     self.titleLabel.textAlignment = NSTextAlignmentLeft;
-    
-    self.titleLabel.numberOfLines = 0;
+    self.titleLabel.numberOfLines = 2;
+    [self.titleLabel sizeToFit];
     self.titleLabel.textColor = [UIColor blackColor];
     [self addSubview:self.titleLabel];
     
@@ -65,13 +65,23 @@
     
 }
 
+- (void)layoutSubviews
+{
+    [self.titleLabel sizeToFit];
+}
+
+- (void)drawRect:(CGRect)rect
+{
+    [self.titleLabel sizeToFit];
+}
+
 - (void)setDataWithModel:(ArticleModel *)model
 {
     
     
     NSDictionary *dic = (NSDictionary *)model;
     NSString *title = [dic objectForKey:@"title"];
-    [self.imageV sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"picture"]]];
+    [self.imageV sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"默认4:3"]];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;

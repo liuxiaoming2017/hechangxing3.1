@@ -20,6 +20,8 @@
 #import "ResultSpeakController.h"
 #import "MeridianIdentifierViewController.h"
 
+#import "ArmchairTestResultVC.h"
+
 #define margin ((ScreenWidth-107*3)/4.0)
 
 #define startDevice @"启动设备"
@@ -146,7 +148,7 @@
             }
             UILabel *label = (UILabel *)[self.recommendV viewWithTag:222];
             label.height = 75;
-            label.attributedText = [self attributedStringWithTitle:[NSString stringWithFormat:@"1、鉴于您体质检测为%@；\n2、我们建议您用这个按摩手法。",[[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"]]];
+            label.attributedText = [self attributedStringWithTitle:[NSString stringWithFormat:@"1、鉴于您经络检测为%@\n2、我们建议您用这个按摩手法",[[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"]]];
         }
     }
     
@@ -167,6 +169,14 @@
         
         [self addLocalTack];
     }
+    
+    if(self.dataArr.count>12){
+        int count = (int)ceil(self.dataArr.count/3.0);
+        self.collectionV.height = 125*count+50+20;
+    }else{
+        self.collectionV.height = 125*4+50;
+    }
+    self.bgScrollView.contentSize = CGSizeMake(1, self.collectionV.bottom+10);
     [self.collectionV reloadData];
 
 }
@@ -244,11 +254,10 @@
     label1.tag = 222;
     [self.recommendV addSubview:label1];
     
-   
     NSString *recommandStr = @"";
     NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
     if([jlbsName isEqualToString:@""] || jlbsName==nil ){
-        recommandStr = @"1、您尚未进行经络检测；";
+        recommandStr = @"1、您尚未进行经络检测";
         label1.height = 30;
         
         UIButton *speakBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -262,7 +271,7 @@
         [self.recommendV addSubview:speakBtn];
         
     }else{
-        recommandStr = [NSString stringWithFormat:@"1、鉴于您体质检测为%@；\n2、我们建议您用这个按摩手法。",[[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"]];
+        recommandStr = [NSString stringWithFormat:@"1、鉴于您经络检测为%@\n2、我们建议您用这个按摩手法",[[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"]];
     }
     
     
@@ -371,12 +380,17 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     ArmChairModel *model = [self.dataArr objectAtIndex:indexPath.row];
+    
+//    [self nextVCWithModel:model];
+//    return;
+    
+    
     if([model.name isEqualToString:@"更多按摩"]){
         ArmchairThemeVC *vc = [[ArmchairThemeVC alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }else{
-        
         NSString *statusStr = [self resultStringWithStatus];
         if(![statusStr isEqualToString:@""]){
             [GlobalCommon showMessage2:statusStr duration2:1.0];
@@ -602,7 +616,6 @@
 - (ArmChairModel *)recommendModelWithStr
 {
     NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
-    jlbsName = @"上徽";
     if([jlbsName isEqualToString:@""] || jlbsName==nil){
         ArmChairModel *model = [[ArmChairModel alloc] init];
         model.name = @"大师精选";
@@ -684,5 +697,11 @@
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
     return YES;
 }
+
+//- (void)messageBtnAction:(UIButton *)btn
+//{
+//    ArmchairAcheTestVC *vc = [[ArmchairAcheTestVC alloc] init];
+//    [self.navigationController pushViewController:vc animated:YES];
+//}
 
 @end

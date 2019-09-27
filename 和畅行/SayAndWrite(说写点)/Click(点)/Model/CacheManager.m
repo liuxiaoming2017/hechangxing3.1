@@ -130,7 +130,8 @@ static CacheManager *__cacheManager = nil;
 {
     FMResultSet *set = [_db executeQuery:@"select custid from homeRemindTable where custid = ? and advice = ? and type = ?",custId,model.advice,model.type];
     if(![set next]){
-        [_db executeUpdate:@"insert into homeRemindTable(custid,advice,type,isDone,confId) values (?,?,?,?,?)",custId,model.advice,model.type,[NSNumber numberWithBool:model.isDone],[NSNumber numberWithInteger:model.confId]];
+      BOOL success =  [_db executeUpdate:@"insert into homeRemindTable(custid,advice,type,isDone,confId) values (?,?,?,?,?)",custId,model.advice,model.type,[NSNumber numberWithBool:model.isDone],[NSNumber numberWithInteger:model.confId]];
+        NSLog(@"数据库添加%@",success ? @"成功" : @"失败");
     }
     [set close];
 }

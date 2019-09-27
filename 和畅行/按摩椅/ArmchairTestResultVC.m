@@ -8,6 +8,7 @@
 
 #import "ArmchairTestResultVC.h"
 #import "ArmchairAcheTestVC.h"
+#import "ArmchairDetailVC.h"
 
 @interface ArmchairTestResultVC ()<UIGestureRecognizerDelegate>
 @property (nonatomic,assign) int acheResult;
@@ -47,7 +48,7 @@
     label.attributedText = string;
     label.textAlignment = NSTextAlignmentCenter;
     
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake((ScreenWidth-180)/2.0, label.bottom+66, 180, 251)];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake((ScreenWidth-180)/2.0, label.bottom+40, 180, 251)];
     imageV.image = [UIImage imageNamed:@"酸疼检测结果"];
     [self.view addSubview:imageV];
     
@@ -137,6 +138,66 @@
     
     [self setupLineView:pilaoView withCount:self.fatigueResult];
     [self setupLineView:suantengView withCount:self.acheResult];
+    
+    
+    
+    UIButton *anmoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    CGFloat btnWidth = 200.0;
+    anmoBtn.frame = CGRectMake((ScreenWidth-btnWidth)/2.0, suantengView.bottom+45 > ScreenHeight-50 ? ScreenHeight-60 : suantengView.bottom+45, btnWidth, 45);
+    anmoBtn.layer.cornerRadius = 6.0;
+    anmoBtn.clipsToBounds = YES;
+    anmoBtn.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:17];
+    [anmoBtn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [anmoBtn setTitle:@"智能按摩" forState:UIControlStateNormal];
+    [anmoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    anmoBtn.backgroundColor = [UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0];
+    [self.view addSubview:anmoBtn];
+}
+
+- (void)btnAction:(UIButton *)button
+{
+    ArmChairModel *model = [self modelResultWithsuanten:self.acheResult withpilao:self.fatigueResult];
+    
+    ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:model.name];
+    vc.armchairModel = model;
+    [vc commandActionWithModel:model];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+    return;
+    
+    
+    NSString *statusStr = [self resultStringWithStatus];
+    if(![statusStr isEqualToString:@""]){
+        [GlobalCommon showMessage2:statusStr duration2:1.0];
+        return;
+    }else{
+        
+        if([OGA530BluetoothManager shareInstance].respondModel.powerOn == NO){
+            [self showProgressHud];
+            [[OGA530BluetoothManager shareInstance] sendCommand:k530Command_PowerOn success:^(BOOL success) {
+                
+            }];
+        }else{
+            NSLog(@"开机了开机了");
+            ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:model.name];
+            vc.armchairModel = model;
+            [vc commandActionWithModel:model];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+    
+}
+
+- (void)showProgressHud
+{
+    MBProgressHUD *progressHud = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
+    progressHud.label.text = @"启动设备";
+    progressHud.tag = 102;
+    [[[UIApplication sharedApplication] keyWindow] addSubview:progressHud];
+    [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:progressHud];
+    [progressHud showAnimated:YES];
+    [progressHud hideAnimated:YES afterDelay:6.0];
+    
 }
 
 
@@ -189,7 +250,7 @@
 
 - (void)goBack:(UIButton *)btn
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 # pragma mark - 解决侧滑返回指定控制器
@@ -208,6 +269,53 @@
 
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
     return YES;
+}
+
+- (ArmChairModel *)modelResultWithsuanten:(int)suantenCount withpilao:(int)pilaoCount
+{
+    ArmChairModel *model = [[ArmChairModel alloc] init];
+    NSString *nameStr = @"";
+    switch (suantenCount) {
+        case 1:
+        {
+            if(pilaoCount == 1){
+                nameStr = @"巴黎式";
+            }else if (pilaoCount == 2){
+                nameStr = @"轻松自在";
+            }else{
+                nameStr = @"夜晚助眠";
+            }
+        }
+            break;
+        case 2:
+        {
+            if(pilaoCount == 1){
+                nameStr = @"清晨唤醒";
+            }else if (pilaoCount == 2){
+                nameStr = @"中式";
+            }else{
+                nameStr = @"元气复苏";
+            }
+        }
+            break;
+        case 3:
+        {
+            if(pilaoCount == 1){
+                nameStr = @"运动派";
+            }else if (pilaoCount == 2){
+                nameStr = @"活血循环";
+            }else{
+                nameStr = @"深层按摩";
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
+    model.name = nameStr;
+    model.command = [GlobalCommon commandFromName:model.name];
+    return model;
 }
 
 @end

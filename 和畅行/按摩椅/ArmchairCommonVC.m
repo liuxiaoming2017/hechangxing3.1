@@ -35,7 +35,11 @@
 
 - (void)DidBecomeActive
 {
-    
+    BOOL isBlueToothPoweredOn = [[OGA530BluetoothManager shareInstance] isBlueToothPoweredOn];
+    if(!isBlueToothPoweredOn){
+        self.rightBtn.selected = NO;
+        [UserShareOnce shareOnce].ogaConnected = NO;
+    }
 }
 
 - (NSString *)resultStringWithStatus

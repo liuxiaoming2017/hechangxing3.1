@@ -108,7 +108,7 @@
         photosView.photoWidth =  45;
         photosView.photoHeight = 45 ;
         photosView.photosMaxCol = 4;
-        photosView.placeholderImage = [UIImage imageNamed:@"noMessage"];
+        photosView.placeholderImage = [UIImage imageNamed:@"默认1:1"];
         [rightTextImageView addSubview:photosView];
         rightTextImageView.height = heiget + 80;
         if(array.count == 1){

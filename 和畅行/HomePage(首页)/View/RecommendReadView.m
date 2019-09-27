@@ -60,7 +60,8 @@
     CGFloat width = (ScreenWidth - 23 - 10)/2.5;
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(width, width*0.62+7+40);
+    //layout.itemSize = CGSizeMake(width, width*0.75+7+40);
+    layout.itemSize = CGSizeMake(125, 125*0.6+7+50);
     //layout.itemSize = CGSizeMake(130, 106);
     layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 10);
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
@@ -85,12 +86,7 @@
     
     [self requestHealthHintData];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didBecomeActiveNotification)
-                                                 name:UIApplicationDidBecomeActiveNotification
-                                               object:nil];
-
-    
+   
 }
 
 
@@ -157,7 +153,7 @@
     RecommendCollectCell *cell = (RecommendCollectCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     cell.imageV.hidden = NO;
     cell.titleLabel.font = [UIFont systemFontOfSize:15];
-    [cell.imageV sd_setImageWithURL:[NSURL URLWithString:tipModel.picture]];
+    [cell.imageV sd_setImageWithURL:[NSURL URLWithString:tipModel.picture] placeholderImage:[UIImage imageNamed:@"默认4:3"]];
     cell.titleLabel.text = tipModel.title;
     return cell;
 }
@@ -179,23 +175,6 @@
     UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleCancel handler:NULL];
     [alertVC addAction:alertAct1];
     [[self viewController] presentViewController:alertVC animated:YES completion:NULL];
-}
-
-
-- (void)tapGesture:(UITapGestureRecognizer *)tap
-{
-    
-}
-
-
--(void)didBecomeActiveNotification{
-    [self requestVersionDataWithType:@"back"];
-}
-
--(void)dealloc{
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
 }
 
 # pragma mark - 后台版本判断
@@ -261,7 +240,7 @@
             NSInteger isUpdate = [[dic objectForKey:@"isUpdate"] integerValue];
             if(isUpdate == 1){
                 NSString *downUrl = @"https://itunes.apple.com/cn/app/id1440487968";
-                if([[UserShareOnce shareOnce].username isEqualToString:@"13665541112"] || [[UserShareOnce shareOnce].username isEqualToString:@"18163865881"]){
+                if([[UserShareOnce shareOnce].username isEqualToString:@"13665541112"]){
                     return ;
                 }
                 NSString *ytpeStr = [NSString stringWithFormat:@"%@",dic[@"isEnforcement"]];
@@ -277,10 +256,9 @@
                     NSString *englistStr = @"The latest version comes whether you update?";
                     [weakSelf showUpdateView:downUrl contentStr:englistStr typeStr:@"0"];
                 }else{
-                   [weakSelf showUpdateView:downUrl contentStr:textStr typeStr:ytpeStr];
+                   [weakSelf showUpdateView:downUrl contentStr:textStr typeStr:typeStr];
                 }
-                
-                
+
                 NSLog(@"升级了");
             }
         }

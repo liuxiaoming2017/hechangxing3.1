@@ -12,6 +12,8 @@
 #import "HCYSlider.h"
 #import "UIButton+ExpandScope.h"
 
+#import "ArmchairAcheTestVC.h"
+#import "ArmchairTestResultVC.h"
 typedef enum : NSInteger {
     PointDirectTop,
     PointDirectLevel,
@@ -23,7 +25,7 @@ typedef enum : NSInteger {
     SlideDirectTopToBottom,
 } SlideDirect;
 
-@interface ArmchairDetailVC ()<HCYSliderDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate,CommandButtonDelegate>
+@interface ArmchairDetailVC ()<HCYSliderDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate,CommandButtonDelegate,UIGestureRecognizerDelegate>
 {
     CGPoint startSpanPoint;
     PointDirect pointDirect;
@@ -289,7 +291,7 @@ typedef enum : NSInteger {
     [layerView insertSublayerFromeView:self.upsideView];
     
     nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 5+3, layerView.width, 15)];
-    nameLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize > 15.0 ? 15.0 : 14*[UserShareOnce shareOnce].fontSize];
+    nameLabel.font = [UIFont fontWithName:@"PingFang SC" size:15];
     nameLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
     //titleLabel.backgroundColor = [UIColor redColor];
     nameLabel.text = @"肩中俞/肩井";
@@ -297,7 +299,7 @@ typedef enum : NSInteger {
     [layerView addSubview:nameLabel];
     
     self.acupointLabel = [[UITextView alloc] initWithFrame:CGRectMake(8, nameLabel.bottom, layerView.width-16, layerView.height-nameLabel.bottom-5)];
-    self.acupointLabel.font = [UIFont fontWithName:@"PingFang SC" size:12*[UserShareOnce shareOnce].fontSize > 14.0 ? 14.0 : 14*[UserShareOnce shareOnce].fontSize];
+    self.acupointLabel.font = [UIFont fontWithName:@"PingFang SC" size:14];
     self.acupointLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
     self.acupointLabel.userInteractionEnabled = NO;
     //self.acupointLabel.backgroundColor = [UIColor orangeColor];
@@ -949,6 +951,29 @@ typedef enum : NSInteger {
     NSDictionary *dic = [dic2 objectForKey:numberIndex];
     NSLog(@"dic:%@",dic);
     return dic;
+}
+
+
+//# pragma mark - 解决侧滑返回指定控制器
+- (void)didMoveToParentViewController:(UIViewController*)parent
+{
+    
+    NSMutableArray *tempArr = self.navigationController.viewControllers.mutableCopy;
+    for(UIViewController *vc in self.navigationController.viewControllers){
+        
+        if([vc isKindOfClass:[ArmchairAcheTestVC class]] || [vc isKindOfClass:[ArmchairTestResultVC class]]){
+                [tempArr removeObject:vc];
+            }
+        
+    }
+    self.navigationController.viewControllers = tempArr;
+    
+    
+}
+
+
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
+    return YES;
 }
 
 @end

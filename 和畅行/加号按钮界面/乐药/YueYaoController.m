@@ -405,7 +405,7 @@
     
  
     
-    hysegmentControl = [[HYSegmentedControl alloc] initWithOriginY:topSegment.bottom + 15 Titles:@[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"] delegate:self];
+    hysegmentControl = [[HYSegmentedControl alloc] initWithOriginY:topSegment.bottom + 15 Titles: @[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫",] delegate:self];
     [self.view addSubview:hysegmentControl];
 
 
@@ -430,11 +430,11 @@
     if (![GlobalCommon stringEqualNull:physicalStr]) {
         
         NSArray * segmentedArray = @[
-                                     @[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"],
-                                     @[@"上商", @"少商", @"钛商", @"右商", @"左商"],
-                                     @[@"大角", @"判角", @"上角", @"少角", @"钛角"],
-                                     @[@"判徵", @"上徵", @"少徵", @"右徵", @"质徵"],
-                                     @[@"大羽", @"上羽", @"少羽", @"桎羽", @"众羽"]
+                                     @[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫"],
+                                     @[ @"少商", @"左商",@"上商",@"右商", @"钛商"],
+                                     @[@"少角",@"判角",@"上角", @"钛角",@"大角"],
+                                     @[@"少徵",@"判徵",@"上徵",@"右徵", @"质徵"],
+                                     @[@"少羽", @"桎羽",@"上羽",@"众羽",@"大羽"]
                                      ];
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -449,8 +449,9 @@
             }
         }
     }
-    if ([GlobalCommon stringEqualNull:physicalStr]){
-        [self requestYueyaoListWithType:@"大宫"];
+    if ([GlobalCommon stringEqualNull:physicalStr] || [physicalStr isEqualToString:@""]){
+        [self requestYueyaoListWithType:@"少宫"];
+        [hysegmentControl changeSegmentedControlWithIndex:0];
     }
     
     [self getPayRequest];
@@ -714,6 +715,7 @@
             for(NSDictionary *dic in arr){
                 SongListModel *model = [[SongListModel alloc] init];
                 model.idStr = [dic objectForKey:@"id"];
+                model.productId = [dic objectForKey:@"productId"];
                 if([[dic objectForKey:@"price"] isKindOfClass:[NSNull class]]){
                     model.price = 0;
                 }else{
@@ -913,10 +915,19 @@
 
 - (void)valuesegChanged:(UISegmentedControl *)segment
 {
+    
+    /*
+     @[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫",],
+     @[ @"少商", @"左商",@"上商",@"右商", @"钛商" ],
+     @[@"少角",@"判角",@"上角", @"钛角",@"大角"],
+     @[@"少徵",@"判徵",@"上徵",@"右徵", @"质徵"],
+     @[@"少羽", @"桎羽",@"上羽",@"众羽",@"大羽",]
+     */
+    
     if (segment.selectedSegmentIndex==0)
     {
         SegIndex=0;
-        [hysegmentControl setBtnorline:@[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"]];
+        [hysegmentControl setBtnorline:@[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫"]];
         UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
         [hysegmentControl segmentedControlChange:btn];
         //[self LeMedicinaRequest:@"大宫"];
@@ -924,7 +935,7 @@
     else if (segment.selectedSegmentIndex==1)
     {
         SegIndex=1;
-        [hysegmentControl setBtnorline:@[@"上商", @"少商", @"钛商", @"右商", @"左商"]];
+        [hysegmentControl setBtnorline:@[ @"少商", @"左商",@"上商",@"右商", @"钛商" ]];
         
         UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
         [hysegmentControl segmentedControlChange:btn];
@@ -932,21 +943,21 @@
     else if (segment.selectedSegmentIndex==2)
     {
         SegIndex=2;
-        [hysegmentControl setBtnorline:@[@"大角", @"判角", @"上角", @"少角", @"钛角"]];
+        [hysegmentControl setBtnorline:@[@"少角",@"判角",@"上角", @"钛角",@"大角"]];
         UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
         [hysegmentControl segmentedControlChange:btn];
     }
     else if (segment.selectedSegmentIndex==3)
     {
         SegIndex=3;
-        [hysegmentControl setBtnorline:@[@"判徵", @"上徵", @"少徵", @"右徵", @"质徵"]];
+        [hysegmentControl setBtnorline:@[@"少徵",@"判徵",@"上徵",@"右徵", @"质徵"]];
         UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
         [hysegmentControl segmentedControlChange:btn];
     }
     else
     {
         SegIndex=4;
-        [hysegmentControl setBtnorline:@[@"大羽", @"上羽", @"少羽", @"桎羽", @"众羽"]];
+        [hysegmentControl setBtnorline:@[@"少羽", @"桎羽",@"上羽",@"众羽",@"大羽"]];
         UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
         [hysegmentControl segmentedControlChange:btn];
     }

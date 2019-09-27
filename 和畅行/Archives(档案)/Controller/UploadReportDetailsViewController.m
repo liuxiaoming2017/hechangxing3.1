@@ -117,7 +117,7 @@
 
     PYPhotosView * photosView = [PYPhotosView photosViewWithThumbnailUrls:self.model.pictures originalUrls:self.model.pictures];
     photosView.py_x = 15;
-    photosView.placeholderImage = [UIImage imageNamed:@"noMessage"];
+    photosView.placeholderImage = [UIImage imageNamed:@"默认1:1"];
     photosView.py_y = contentlabel.bottom + 30;
     photosView.photoWidth =  (backImageView.width-50)/4 ;;
     photosView.photoHeight = (backImageView.width-50)/4 ; ;

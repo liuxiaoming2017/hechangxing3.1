@@ -145,6 +145,12 @@
 {
     NSLog(@"modelname:%@,***command:%@",model.name,model.command);
     
+//    ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:model.name];
+//    vc.armchairModel = model;
+//    [vc commandActionWithModel:model];
+//    [self.navigationController pushViewController:vc animated:YES];
+//    return;
+    
     NSString *statusStr = [self resultStringWithStatus];
     if(![statusStr isEqualToString:@""]){
         [GlobalCommon showMessage2:statusStr duration2:1.0];

@@ -69,18 +69,25 @@
                                                            options:NSStringDrawingUsesLineFragmentOrigin
                                                         attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
                                                            context:nil];
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 125 + textRect.size.height + height)];
+    
+    CGRect labelRect = [self.model.card_name boundingRectWithSize:CGSizeMake(ScreenWidth - 20 - 60, MAXFLOAT) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} context:nil];
+    
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 105*[UserShareOnce shareOnce].fontSize + textRect.size.height + height+labelRect.size.height)];
+    
     [imageV.layer addSublayer:[UIColor setGradualChangingColor:imageV fromColor:@"4294E1" toColor:@"D1BDFF"]];
     imageV.layer.cornerRadius = 10;
     imageV.layer.masksToBounds = YES;
     imageV.userInteractionEnabled = YES;
     [self.view addSubview:imageV];
     
+    
+    
     _hLabel = [[UILabel alloc] init];
-    _hLabel.frame = CGRectMake(20, 20, imageV.width - 30, 25);
+    _hLabel.frame = CGRectMake(20, 20, imageV.width - 60, labelRect.size.height);
     _hLabel.textColor = [UIColor whiteColor];
+    _hLabel.numberOfLines = 2;
     _hLabel.text = self.model.card_name;
-    _hLabel.font = [UIFont systemFontOfSize:21];
+    _hLabel.font = [UIFont systemFontOfSize:20];
     [imageV addSubview:_hLabel];
     
     _mLabel = [[UILabel alloc] init];
@@ -104,7 +111,7 @@
     
     
     _yLabel = [[UILabel alloc] init];
-    _yLabel.frame = CGRectMake(_mLabel.left , _contentLabel.bottom , 300, 30);
+    _yLabel.frame = CGRectMake(_mLabel.left , _contentLabel.bottom , 300, 35);
     _yLabel.text = ModuleZW(@"剩余服务");
     _yLabel.font = [UIFont systemFontOfSize:16];
     _yLabel.textColor = [UIColor whiteColor];
@@ -210,13 +217,15 @@
             [UserShareOnce shareOnce].bindCard = [[[dic valueForKey:@"data"] valueForKey:@"member"] valueForKey:@"bindCard"];
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:@"cardNameSuccess" object:nil];
-        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"服务卡添加成功") preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *sureAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]animated:YES];
-            
-        }];
-        [alerVC addAction:sureAction];
-        [self presentViewController:alerVC animated:YES completion:nil];
+//        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"服务卡添加成功") preferredStyle:(UIAlertControllerStyleAlert)];
+//        UIAlertAction *sureAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+//            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]animated:YES];
+//
+//        }];
+//        [alerVC addAction:sureAction];
+//        [self presentViewController:alerVC animated:YES completion:nil];
+        [GlobalCommon showMessage:ModuleZW(@"服务卡添加成功") duration:1];
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]animated:YES];
         
     }
     else if ([status intValue]== 44)

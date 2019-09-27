@@ -20,7 +20,7 @@
 #import "HealthLectureViewController.h"
 #import "InformationCell.h"
 
-@interface InformationViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,ASIProgressDelegate,MBProgressHUDDelegate,HYSegmentedControlDelegate,FSSegmentTitleViewDelegate>
+@interface InformationViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,ASIProgressDelegate,MBProgressHUDDelegate,FSSegmentTitleViewDelegate>
 
 
 {
@@ -44,7 +44,13 @@
 
 @implementation InformationViewController
 - (void)dealloc{
-    
+    self.BaoGaosegment = nil;
+    self.healthTableView = nil;
+    self.BaoGaoScroll = nil;
+    self.BaoGaoview = nil;
+    self.hotArray = nil;
+    self.healthArray = nil;
+    self.idArray = nil;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

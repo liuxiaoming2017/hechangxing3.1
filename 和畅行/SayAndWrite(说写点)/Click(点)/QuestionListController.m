@@ -311,8 +311,7 @@
         tempArr = [cacheManager getQuestionModels];
         
         if(tempArr.count>0){
-//            [self handleQuestionDataWithArr:tempArr];
-            [self requestQuestionListData];
+            [self handleQuestionDataWithArr:tempArr];
         }else{
             [self requestQuestionListData];
         }
