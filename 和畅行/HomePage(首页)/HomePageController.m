@@ -480,6 +480,7 @@
             if(jlbsData != nil && ![jlbsData isKindOfClass:[NSNull class]]){
                 NSDictionary *jlbsDic = [jlbsData objectForKey:@"subject"];
                 NSString *jlbsName = [jlbsDic objectForKey:@"name"];
+               
                 [[NSUserDefaults standardUserDefaults]setValue: jlbsName forKey:@"Physical"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
             }else{

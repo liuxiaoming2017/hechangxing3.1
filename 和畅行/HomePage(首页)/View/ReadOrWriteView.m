@@ -103,8 +103,10 @@
             }
             if([self isFirestClickThePageWithString:@"speak"]){
                 vc = [[MeridianIdentifierViewController alloc] init];
+                vc.haveAnmo = NO;
             }else{
                 vc = [[TipSpeakController alloc] init];
+                vc.haveAnmo = NO;
             }
             vc.hidesBottomBarWhenPushed = YES;
             [self.viewController.navigationController pushViewController:vc animated:YES];

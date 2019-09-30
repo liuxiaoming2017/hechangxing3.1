@@ -71,6 +71,8 @@
 }
 
 
+
+
 - (NSArray *)arrayWithStr:(NSString *)str
 {
     NSArray *arr1 = @[@{@"name":@"大师精选",@"command":k530Command_MassageMaster},

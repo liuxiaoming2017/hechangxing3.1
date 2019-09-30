@@ -365,7 +365,9 @@ typedef enum : NSInteger {
     
     [self createMiddleView];
     
-    [self createQiyaView];
+    if(self.isAdvanced){
+        [self createQiyaView];
+    }
     
     [self createPostBottomView];
     
@@ -557,7 +559,7 @@ typedef enum : NSInteger {
     
     UIView *layerView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-90, ScreenWidth, 20)];
     layerView.backgroundColor = [UIColor orangeColor];
-  //  [self.view addSubview:layerView];
+    [self.view addSubview:layerView];
     
     InsidelayerView *insidelayerView = [[InsidelayerView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 20)];
     [insidelayerView insertSublayerFromeView:layerView];

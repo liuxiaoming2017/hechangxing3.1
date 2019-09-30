@@ -10,4 +10,6 @@
 
 @interface SayAndWriteController : NavBarViewController
 
+@property (nonatomic,assign) BOOL haveAnmo;
+
 @end

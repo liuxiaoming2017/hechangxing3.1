@@ -46,7 +46,7 @@
     self.imageV.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:self.imageV];
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.imageV.frame)+10, self.frame.size.width-15*2, 20)];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(self.imageV.frame)+10, self.frame.size.width-5*2, 20)];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     //self.titleLabel.highlightedTextColor = [UIColor redColor];
     self.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize];
@@ -67,6 +67,23 @@
     }
     self.titleLabel.text = model.name;
 }
+
+- (void)setImageAndTitleWithModel:(ArmChairModel *)model withName:(NSString *)name
+{
+    self.model = model;
+    NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
+    if([jlbsName isEqualToString:@""] || jlbsName==nil){
+        self.titleLabel.text = @"";
+        self.imageV.image = [UIImage imageNamed:@""];
+    }else{
+        self.titleLabel.text = [NSString stringWithFormat:@"%@推拿手法",jlbsName];
+        jlbsName = [jlbsName substringFromIndex:[jlbsName length]-1];
+        self.imageV.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@icon",jlbsName]];
+        
+    }
+    
+}
+
 
 -(void)insertSublayerFromeView:(UIView *)view
 {

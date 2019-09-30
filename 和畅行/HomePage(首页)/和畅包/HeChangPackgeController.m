@@ -100,6 +100,7 @@
         return;
     }
     if([navigationAction.request allHTTPHeaderFields][@"Cookie"]){
+        NSLog(@"cookie:%@",[navigationAction.request allHTTPHeaderFields]);
         decisionHandler(WKNavigationActionPolicyAllow);
     }else{
         if([strRequest hasPrefix:@"tel"]){

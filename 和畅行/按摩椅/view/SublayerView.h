@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setImageVandTitleLabelwithModel:(ArmChairModel *)model;
 
+- (void)setImageAndTitleWithModel:(ArmChairModel *)model withName:(NSString *)name;
+
 @end
 
 NS_ASSUME_NONNULL_END

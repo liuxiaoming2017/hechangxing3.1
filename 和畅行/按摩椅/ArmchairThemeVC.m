@@ -11,7 +11,7 @@
 #import "ThemeCollectionViewCell.h"
 #import "ArmchairDetailVC.h"
 
-@interface ArmchairThemeVC ()<UIScrollViewDelegate,GLYPageViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,ThemeCollectionCellDelegate>
+@interface ArmchairThemeVC ()<UIScrollViewDelegate,GLYPageViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,ThemeCollectionCellDelegate,MBProgressHUDDelegate>
 
 @property (nonatomic, assign) CGFloat      startOffsetX;
 @property (nonatomic ,strong) GLYPageView  *pageView;
@@ -156,6 +156,7 @@
         [GlobalCommon showMessage2:statusStr duration2:1.0];
         return;
     }else{
+        self.armchairModel = model;
         if([OGA530BluetoothManager shareInstance].respondModel.powerOn == NO){
             [self showProgressHud];
             [[OGA530BluetoothManager shareInstance] sendCommand:k530Command_PowerOn success:^(BOOL success) {
@@ -163,14 +164,19 @@
             }];
         }else{
 
-            ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:model.name];
-            vc.armchairModel = model;
-            [vc commandActionWithModel:model];
-            [self.navigationController pushViewController:vc animated:YES];
+            [self nexttoVCwithModel:model];
         }
     }
  
     
+}
+
+- (void)nexttoVCwithModel:(ArmChairModel *)model
+{
+    ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:model.name];
+    vc.armchairModel = model;
+    [vc commandActionWithModel:model];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)showProgressHud
@@ -180,9 +186,21 @@
     progressHud.tag = 102;
     [[[UIApplication sharedApplication] keyWindow] addSubview:progressHud];
     [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:progressHud];
+    progressHud.delegate = self;
     [progressHud showAnimated:YES];
     [progressHud hideAnimated:YES afterDelay:6.0];
     
+}
+
+# pragma mark - 提示框自动消失方法
+- (void)hudWasHidden:(MBProgressHUD *)hud
+{
+    hud = nil;
+    if([OGA530BluetoothManager shareInstance].respondModel.powerOn == YES){
+        
+        [self nexttoVCwithModel:self.armchairModel];
+        
+    }
 }
 
 @end

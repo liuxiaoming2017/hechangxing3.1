@@ -137,7 +137,7 @@
    
     
     UILabel *label2 = [[UILabel alloc] init];
-    label2.frame = CGRectMake(imageV.left,label.bottom+15,245,120);
+    label2.frame = CGRectMake(imageV.left,label.bottom+15,245,150);
     label2.numberOfLines = 0;
     [self.view addSubview:label2];
     
@@ -145,7 +145,7 @@
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     paragraphStyle.lineSpacing = 5;
     
-    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc] initWithString:@"①静坐并背靠在按摩椅上 \n②上肢自然放于两侧，掌心向下 \n③左手握住金属电极 \n④保持安静"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16],NSForegroundColorAttributeName: [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
+    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc] initWithString:@"①静坐并背靠在按摩椅上 \n②右手自然放于体侧，掌心向下 \n③左手握住金属电极 \n④保持安静 \n⑤全程需要4~5分钟左右"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16],NSForegroundColorAttributeName: [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
     
     label2.attributedText = string2;
     label2.textAlignment = NSTextAlignmentLeft;
@@ -215,11 +215,11 @@
     [subLayer2 addAnimation:animation2 forKey:nil];
 }
 
-//- (void)messageBtnAction:(UIButton *)btn
-//{
-//    ArmchairTestResultVC *vc = [[ArmchairTestResultVC alloc] initWithacheResult:2 withfatigueResult:3];
-//    [self.navigationController pushViewController:vc animated:YES];
-//}
+- (void)messageBtnAction:(UIButton *)btn
+{
+    ArmchairTestResultVC *vc = [[ArmchairTestResultVC alloc] initWithacheResult:2 withfatigueResult:3];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 
 @end

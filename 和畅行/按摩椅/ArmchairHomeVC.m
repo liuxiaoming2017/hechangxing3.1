@@ -26,6 +26,8 @@
 
 #define startDevice @"启动设备"
 #define connectDevice @"连接设备"
+#define scanDevice @"搜索中"
+#define noneDevice @"未发现可连接的蓝牙设备"
 
 @interface ArmchairHomeVC ()<UICollectionViewDataSource,UICollectionViewDelegate,MBProgressHUDDelegate,UIGestureRecognizerDelegate>
 
@@ -143,13 +145,18 @@
         NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
         if(![jlbsName isEqualToString:@""] && jlbsName!=nil){
             UIButton *speakBtn = (UIButton *)[self.recommendV viewWithTag:111];
-            if(speakBtn){
-                speakBtn.hidden = YES;
-            }
             UILabel *label = (UILabel *)[self.recommendV viewWithTag:222];
+            SublayerView *layerView = (SublayerView *)[self.recommendV viewWithTag:2008];
+            ArmChairModel *model = [self recommendModelWithStr];
+            [layerView setImageAndTitleWithModel:model withName:@""];
+            label.top = layerView.top;
             label.height = 75;
-            label.attributedText = [self attributedStringWithTitle:[NSString stringWithFormat:@"1、鉴于您经络检测为%@\n2、我们建议您用这个按摩手法",[[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"]]];
+            NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
+            label.attributedText = [self attributedStringWithTitle:[NSString stringWithFormat:@"1、您的经络检测类型为%@\n2、建议您选用%@推拿手法",str,str]];
+            speakBtn.frame = CGRectMake(label.left, label.bottom+10, label.width, 20);
+            [speakBtn setTitle:@"3、点我再次检测" forState:UIControlStateNormal];
         }
+        
     }
     
     
@@ -196,7 +203,7 @@
 
 - (void)addLocalTack
 {
-    NSArray *arr = [[self loadDataPlistWithStr:@"专属"] copy];
+    NSArray *arr = [self loadHomeData];
     [self.dataArr addObjectsFromArray:arr];
     NSArray *commandArr = @[k530Command_MassageIntellect,@"",@""];
     NSArray *nameArr = @[@"酸疼检测",@"高级按摩",@"更多按摩"];
@@ -206,6 +213,20 @@
         model.command = [commandArr objectAtIndex:i];
         [self.dataArr addObject:model];
     }
+}
+
+- (NSArray *)loadHomeData
+{
+    NSArray *arr2 = @[
+                      @{@"name":@"大师精选",@"command":k530Command_MassageMaster},
+                      @{@"name":@"活血循环",@"command":k530Command_MassageBloodCirculation},
+                      @{@"name":@"美臀塑型",@"command":k530Command_MassageHipsShapping},
+                      @{@"name":@"肩颈4D",@"command":k530Command_NeckShoulder4D},
+                      @{@"name":@"运动派",@"command":k530Command_Athlete},
+                      @{@"name":@"低头族",@"command":k530Command_TextNeck},
+                      ];
+    NSArray *arr = [ArmChairModel mj_objectArrayWithKeyValuesArray:arr2];
+    return arr;
 }
 
 - (void)initUI
@@ -229,8 +250,8 @@
     [self.bgScrollView addSubview:self.recommendV];
     
     UILabel *recommendLabel = [[UILabel alloc] init];
-    recommendLabel.frame = CGRectMake(margin,0,100,22.5);
-    recommendLabel.text = @"推荐按摩";
+    recommendLabel.frame = CGRectMake(margin,0,240,22.5);
+    recommendLabel.text = @"推拿处方";
     recommendLabel.textAlignment = NSTextAlignmentLeft;
     recommendLabel.font = [UIFont fontWithName:@"PingFang SC" size:16*[UserShareOnce shareOnce].fontSize];
     [self.recommendV addSubview:recommendLabel];
@@ -239,7 +260,8 @@
     ArmChairModel *model = [self recommendModelWithStr];
     
     SublayerView *sublayerView = [[SublayerView alloc] initWithFrame:CGRectMake(recommendLabel.left, recommendLabel.bottom+10, 108, 115)];
-    [sublayerView setImageVandTitleLabelwithModel:model];
+    sublayerView.tag = 2008;
+    [sublayerView setImageAndTitleWithModel:model withName:@""];
     [sublayerView insertSublayerFromeView:self.recommendV];
     
     UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
@@ -255,29 +277,32 @@
     [self.recommendV addSubview:label1];
     
     NSString *recommandStr = @"";
+    NSString *btnStr = @"";
     NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
     if([jlbsName isEqualToString:@""] || jlbsName==nil ){
         recommandStr = @"1、您尚未进行经络检测";
         label1.height = 30;
-        
-        UIButton *speakBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        speakBtn.frame = CGRectMake(label1.left, label1.bottom+15, label1.width, 20);
-        [speakBtn setTitle:@"2、点我立即检测" forState:UIControlStateNormal];
-        [speakBtn setTitleColor:[UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0] forState:UIControlStateNormal];
-        speakBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        speakBtn.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:13*[UserShareOnce shareOnce].fontSize];
-        [speakBtn addTarget:self action:@selector(speakBtnAction) forControlEvents:UIControlEventTouchUpInside];
-        speakBtn.tag = 111;
-        [self.recommendV addSubview:speakBtn];
-        
+        btnStr = @"2、点我立即检测";
     }else{
-        recommandStr = [NSString stringWithFormat:@"1、鉴于您经络检测为%@\n2、我们建议您用这个按摩手法",[[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"]];
+        label1.top = sublayerView.top;
+        recommandStr = [NSString stringWithFormat:@"1、您的经络检测类型为%@\n2、建议您选用%@推拿手法",[[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"],[[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"]];
+        btnStr = @"3、点我再次检测";
     }
     
     
     label1.attributedText = [self attributedStringWithTitle:recommandStr];
     label1.textAlignment = NSTextAlignmentLeft;
     label1.alpha = 1.0;
+    
+    UIButton *speakBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    speakBtn.frame = CGRectMake(label1.left, label1.bottom+10, label1.width, 20);
+    [speakBtn setTitle:btnStr forState:UIControlStateNormal];
+    [speakBtn setTitleColor:[UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0] forState:UIControlStateNormal];
+    speakBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    speakBtn.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:13*[UserShareOnce shareOnce].fontSize];
+    [speakBtn addTarget:self action:@selector(speakBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    speakBtn.tag = 111;
+    [self.recommendV addSubview:speakBtn];
     
    
 }
@@ -345,7 +370,10 @@
         [GlobalCommon showMessage2:statusStr duration2:1.0];
         return;
     }else{
-    
+        self.armchairModel = model;
+        if([model.name isEqualToString:@"大师精选"]){
+            return;
+        }
         if([OGA530BluetoothManager shareInstance].respondModel.powerOn == NO){
             
             [self showProgressHUD:startDevice];
@@ -396,7 +424,7 @@
             [GlobalCommon showMessage2:statusStr duration2:1.0];
             return;
         }else{
-            
+            self.armchairModel = model;
             if([OGA530BluetoothManager shareInstance].respondModel.powerOn == NO){
                 
                 [self showProgressHUD:startDevice];
@@ -467,6 +495,7 @@
     if([UserShareOnce shareOnce].ogaConnected){
         return;
     }
+    
     [[OGA530BluetoothManager shareInstance] scanPeripheral:^(NSMutableArray * _Nonnull array) {
         
         if(weakSelf.bluetoothBtn.selected){
@@ -492,7 +521,7 @@
             
         }else{
             if(!weakSelf.progressHud){
-                [GlobalCommon showMessage2:@"未搜索到设备" duration2:1.0];
+                [GlobalCommon showMessage2:noneDevice duration2:1.0];
             }
         }
     } timeoutSacn:nil];
@@ -511,11 +540,22 @@
         return;
     }
     
+    [self showProgressHUD:scanDevice];
+    
     [[OGA530BluetoothManager shareInstance] scanPeripheral:^(NSMutableArray * _Nonnull array)
      {
+        [weakSelf.progressHud removeFromSuperview];
+        weakSelf.progressHud = nil;
         weakSelf.listView.array = array;
     
-    } timeoutSacn:nil];
+     } timeoutSacn:^{
+         if(weakSelf.progressHud){
+             [weakSelf.progressHud removeFromSuperview];
+             weakSelf.progressHud = nil;
+             [GlobalCommon showMessage2:noneDevice duration2:1.0];
+         }
+         
+     }];
 }
 
 # pragma mark - 提示框自动消失方法,进入到这个方法代表设备连接失败
@@ -523,18 +563,30 @@
 {
     //self.progressHud = nil;
     
+    if([hud.label.text isEqualToString:scanDevice]){
+        if(self.progressHud == nil){
+            return;
+        }else{
+            [GlobalCommon showMessage2:noneDevice duration2:1.0];
+            return;
+        }
+    }
+    
     if([hud.label.text isEqualToString:startDevice]){
         self.progressHud = nil;
+        if([OGA530BluetoothManager shareInstance].respondModel.powerOn == YES){
+            [self nextVCWithModel:self.armchairModel];
+        }
         return;
     }
     
     NSString *uuidStr = [[NSUserDefaults standardUserDefaults] objectForKey:OGADeviceUUID];
     if(!uuidStr || (isManual && !self.bluetoothBtn.selected)){
-        [GlobalCommon showMessage2:@"连接失败" duration2:1.0];
+        [GlobalCommon showMessage2:@"设备连接失败" duration2:1.0];
         return;
     }
     if(!self.bluetoothBtn.selected){
-        [GlobalCommon showMessage2:@"未搜索到设备" duration2:1.0];
+        [GlobalCommon showMessage2:noneDevice duration2:1.0];
     }
 }
 
@@ -623,13 +675,40 @@
         return model;
     }else{
         jlbsName = [jlbsName substringFromIndex:[jlbsName length]-1];
+//        NSDictionary *dic = @{
+//                @"徵":@{@"name":@"肩颈4D",@"command":k530Command_NeckShoulder4D},
+//                @"羽":@{@"name":@"活血循环",@"command":k530Command_MassageBloodCirculation},
+//                @"宫":@{@"name":@"美臀塑型",@"command":k530Command_MassageHipsShapping},
+//                @"角":@{@"name":@"运动派",@"command":k530Command_Athlete},
+//                @"商":@{@"name":@"低头族",@"command":k530Command_TextNeck}
+//                };
         NSDictionary *dic = @{
-                @"徽":@{@"name":@"肩颈4D",@"command":k530Command_NeckShoulder4D},
-                @"羽":@{@"name":@"活血循环",@"command":k530Command_MassageBloodCirculation},
-                @"宫":@{@"name":@"美臀塑型",@"command":k530Command_MassageHipsShapping},
-                @"角":@{@"name":@"运动派",@"command":k530Command_Athlete},
-                @"商":@{@"name":@"低头族",@"command":k530Command_TextNeck}
-                };
+                              @"少宫":@{@"name":@"少宫",@"command":k530Command_MassageEnergyRecovery},
+                              @"左角宫":@{@"name":@"左角宫",@"command":k530Command_MassageEnergyRecovery},
+                              @"上宫":@{@"name":@"上宫",@"command":k530Command_MassageHipsShapping},
+                              @"加宫":@{@"name":@"加宫",@"command":k530Command_Sedentary},
+                              @"大宫":@{@"name":@"大宫",@"command":k530Command_CosyComfort},
+                              @"少商":@{@"name":@"少商",@"command":k530Command_Balinese},
+                              @"左商":@{@"name":@"左商",@"command":k530Command_MassageBalanceMind},
+                              @"上商":@{@"name":@"上商",@"command":k530Command_NeckShoulder4D},
+                              @"右商":@{@"name":@"右商",@"command":k530Command_MassageRelease},
+                              @"钛商":@{@"name":@"钛商",@"command":k530Command_MassageMaster},
+                              @"少徵":@{@"name":@"少徵",@"command":k530Command_MassageMiddayRest},
+                              @"判徵":@{@"name":@"判徵",@"command":k530Command_MassageDeepTissue},
+                              @"上徵":@{@"name":@"上徵",@"command":k530Command_MassageSweetDreams},
+                              @"右徵":@{@"name":@"右徵",@"command":k530Command_TextNeck},
+                              @"质徵":@{@"name":@"质徵",@"command":k530Command_TextNeck},
+                              @"少羽":@{@"name":@"少羽",@"command":k530Command_Shopping},
+                              @"桎羽":@{@"name":@"桎羽",@"command":k530Command_Shopping},
+                              @"上羽":@{@"name":@"上羽",@"command":k530Command_Athlete},
+                              @"众羽":@{@"name":@"众羽",@"command":k530Command_Traceller},
+                              @"大羽":@{@"name":@"大羽",@"command":k530Command_SpinalReleasePressure},
+                              @"少角":@{@"name":@"少角",@"command":k530Command_MassageAMRoutine},
+                              @"判角":@{@"name":@"判角",@"command":k530Command_MassageThai},
+                              @"上角":@{@"name":@"上角",@"command":k530Command_MassageBloodCirculation},
+                              @"钛角":@{@"name":@"钛角",@"command":k530Command_KneeCare},
+                              @"大角":@{@"name":@"大角",@"command":k530Command_MassageChinese},
+                              };
         NSDictionary *dic1 = [dic objectForKey:jlbsName];
         ArmChairModel *model = [ArmChairModel mj_objectWithKeyValues:dic1];
         return model;
@@ -649,8 +728,10 @@
     self.isHitSpeak = YES;
     if([self isFirestClickThePageWithString:@"speak"]){
         vc = [[MeridianIdentifierViewController alloc] init];
+        vc.haveAnmo = YES;
     }else{
         vc = [[TipSpeakController alloc] init];
+        vc.haveAnmo = YES;
     }
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
@@ -698,10 +779,10 @@
     return YES;
 }
 
-//- (void)messageBtnAction:(UIButton *)btn
-//{
-//    ArmchairAcheTestVC *vc = [[ArmchairAcheTestVC alloc] init];
-//    [self.navigationController pushViewController:vc animated:YES];
-//}
+- (void)messageBtnAction:(UIButton *)btn
+{
+    ArmchairAcheTestVC *vc = [[ArmchairAcheTestVC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 @end

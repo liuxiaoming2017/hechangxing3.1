@@ -143,7 +143,7 @@
     
     UIButton *anmoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     CGFloat btnWidth = 200.0;
-    anmoBtn.frame = CGRectMake((ScreenWidth-btnWidth)/2.0, suantengView.bottom+45 > ScreenHeight-50 ? ScreenHeight-60 : suantengView.bottom+45, btnWidth, 45);
+    anmoBtn.frame = CGRectMake((ScreenWidth-btnWidth)/2.0, suantengView.bottom+45 > ScreenHeight-50 ? ScreenHeight-60 : suantengView.bottom+45, btnWidth, 40);
     anmoBtn.layer.cornerRadius = 6.0;
     anmoBtn.clipsToBounds = YES;
     anmoBtn.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:17];
@@ -156,14 +156,14 @@
 
 - (void)btnAction:(UIButton *)button
 {
-    ArmChairModel *model = [self modelResultWithsuanten:self.acheResult withpilao:self.fatigueResult];
-    
-    ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:model.name];
-    vc.armchairModel = model;
-    [vc commandActionWithModel:model];
-    [self.navigationController pushViewController:vc animated:YES];
-    
-    return;
+//    ArmChairModel *model = [self modelResultWithsuanten:self.acheResult withpilao:self.fatigueResult];
+//
+//    ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:model.name];
+//    vc.armchairModel = model;
+//    [vc commandActionWithModel:model];
+//    [self.navigationController pushViewController:vc animated:YES];
+//
+//    return;
     
     
     NSString *statusStr = [self resultStringWithStatus];
@@ -179,10 +179,12 @@
             }];
         }else{
             NSLog(@"开机了开机了");
+            ArmChairModel *model = [self modelResultWithsuanten:self.acheResult withpilao:self.fatigueResult];
             ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:model.name];
             vc.armchairModel = model;
             [vc commandActionWithModel:model];
             [self.navigationController pushViewController:vc animated:YES];
+        
         }
     }
     

@@ -456,9 +456,9 @@
         NSString *aUrlle =  [NSString string];
         if ([model.type isEqualToString:@"JLBS"]){
             if([GlobalCommon stringEqualNull:model.link]) return;
-            aUrlle= [NSString stringWithFormat:@"%@%@&version=1",URL_PRE,model.link];
+            aUrlle= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
         }else{
-            aUrlle= [NSString stringWithFormat:@"%@member/service/reshow.jhtml?sn=%@&device=1&version=1",URL_PRE,[model.subject valueForKey:@"subject_sn"]];
+            aUrlle= [NSString stringWithFormat:@"%@member/service/reshow.jhtml?sn=%@&device=1",URL_PRE,[model.subject valueForKey:@"subject_sn"]];
         }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = aUrlle;

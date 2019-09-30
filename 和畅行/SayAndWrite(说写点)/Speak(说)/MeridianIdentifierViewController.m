@@ -93,7 +93,12 @@
 - (void)goBack:(UIButton *)btn
 {
     [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    if(self.haveAnmo){
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    
 }
 
 
@@ -262,8 +267,8 @@
     if(lowPassResults > 0.2){
         self.isLound = YES;
     }
-//    double averSound = [RecorderAcc peakPowerForChannel:0];
-//    NSLog(@"*****:%f,########:%f,$$$$$$$$$:%f",self.soundCount,lowPassResults,averSound);
+    double averSound = [RecorderAcc peakPowerForChannel:0];
+    NSLog(@"*****:%f,########:%f,$$$$$$$$$:%f",self.soundCount,lowPassResults,averSound);
     
     //最大50  0
     //图片 小-》大
@@ -442,6 +447,7 @@
             self.RotateImg.hidden=YES;
             [self->bianshiTime setFireDate:[NSDate distantPast]];
             [self->recordButton setImage:[UIImage imageNamed:@"luyinover"] forState:UIControlStateNormal];
+            self->timerACC = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(detectionVoices) userInfo:nil repeats:YES];
         });
         //创建录音文件，准备录音
         if ([RecorderAcc prepareToRecord]) {
@@ -453,8 +459,8 @@
         //        if (self.filePath.length == 0) {
         //            [self audio];
         //        }
-        timerACC = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(detectionVoices) userInfo:nil repeats:YES];
-        
+//        timerACC = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(detectionVoices) userInfo:nil repeats:YES];
+//        [[NSRunLoop currentRunLoop] addTimer:timerACC forMode:NSRunLoopCommonModes];
     }
 
     
@@ -649,7 +655,7 @@
                 [timerACC invalidate];
             }
             
-            if ( self.soundCount < 2.0 || !self.isLound) {
+            if ( self.soundCount < 20.0 || !self.isLound) {
                 [self soundTooLow];
             }else{
                 [self testMp3Upload];
@@ -758,7 +764,10 @@
             return ;
         }
         
-        NSString *aUrlle= [NSString stringWithFormat:@"%@member/service/reshow.jhtml?sn=%@&device=1&version=1",URL_PRE,codeStr];
+        NSString *aUrlle= [NSString stringWithFormat:@"%@member/service/reshow.jhtml?sn=%@&device=1",URL_PRE,codeStr];
+        if(self.haveAnmo){
+            aUrlle= [NSString stringWithFormat:@"%@member/service/reshow.jhtml?sn=%@&device=1&version=1",URL_PRE,codeStr];
+        }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = aUrlle;
         vc.titleStr = ModuleZW(@"经络辨识");
