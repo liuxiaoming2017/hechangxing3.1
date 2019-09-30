@@ -10,7 +10,8 @@
 #import "MySportCell.h"
 #import "MenuTypeView.h"
 #import "ZYAudioManager.h"
-
+#import "SportDemonstratesViewController.h"
+#import "YueYaoController.h"
 @interface MySportController ()<UICollectionViewDataSource,UICollectionViewDelegate,MenuTypeDelegate,AVAudioPlayerDelegate>
 {
     NSInteger _pageIndex;
@@ -433,7 +434,16 @@
 - (void)yueYaoAction:(UIButton *)button
 {
     if(self.yueYaoArray.count==0){
-        [self showAlertWarmMessage:ModuleZW(@"你还没有乐药产品")];
+        
+        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有乐药产品,是否去下载") preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            YueYaoController *sportDemonVC = [[YueYaoController alloc]init];
+            [self.navigationController pushViewController:sportDemonVC animated:YES];
+        }];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:(UIAlertActionStyleCancel) handler:nil];
+        [alerVC addAction:suerAction];
+        [alerVC addAction:cancelAction];
+        [self presentViewController:alerVC animated:YES completion:nil];
         return;
     }
     
@@ -470,7 +480,18 @@
 - (void)shifanyinAction:(UIButton *)sender
 {
     if (self.shifanyinPlayArr.count == 0) {
-        [self showAlertWarmMessage:ModuleZW(@"你还没有音乐示范音产品")];
+        
+        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有音乐示范音产品,是否去下载") preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            SportDemonstratesViewController *sportDemonVC = [[SportDemonstratesViewController alloc]init];
+            [self.navigationController pushViewController:sportDemonVC animated:YES];
+        }];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:(UIAlertActionStyleCancel) handler:nil];
+        [alerVC addAction:suerAction];
+        [alerVC addAction:cancelAction];
+        [self presentViewController:alerVC animated:YES completion:nil];
+        
+        
         return;
     }
      if (sender.selected){

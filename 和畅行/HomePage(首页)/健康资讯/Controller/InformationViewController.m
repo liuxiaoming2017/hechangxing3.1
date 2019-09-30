@@ -90,17 +90,8 @@
             [weakSelf.idArray addObject:@"hot"];
             [weakSelf.idArray addObject:@"10"];
             [daArray addObject:ModuleZW(@"最新资讯")];
-            if(![UserShareOnce shareOnce].languageType){
-                [daArray addObject:ModuleZW(@"健康讲座")];
-                if(array.count >0){
-                    for (NSDictionary *Dic in array) {
-                        [daArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"name"]]];
-                        [weakSelf.idArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"id"]]];
-                    }
-                }
-            }else{
-                if(array.count >0){
-                    NSDictionary *Dic = array[0];
+            if(array.count >0){
+                for (NSDictionary *Dic in array) {
                     [daArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"name"]]];
                     [weakSelf.idArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"id"]]];
                 }
@@ -132,7 +123,7 @@
     _BaoGaosegment.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_BaoGaosegment];
 
-    _healthTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _BaoGaosegment.bottom, ScreenWidth, ScreenHeight-_BaoGaosegment.bottom) style:UITableViewStylePlain];
+    _healthTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _BaoGaosegment.bottom + 10, ScreenWidth, ScreenHeight-_BaoGaosegment.bottom - 10) style:UITableViewStylePlain];
     _healthTableView.tableFooterView = [[UIView alloc]init];
     self.automaticallyAdjustsScrollViewInsets = NO;
     _healthTableView.rowHeight = 85;

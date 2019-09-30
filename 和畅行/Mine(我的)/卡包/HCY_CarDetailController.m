@@ -131,6 +131,13 @@
     listButton.frame = CGRectMake(imageV.width - 40, 20, 25, 27);
     [listButton setBackgroundImage:[UIImage imageNamed:@"消费记录icon"] forState:(UIControlStateNormal)];
     [[listButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        
+        
+        if(self.dataArr.count < 1){
+            [self showAlertWarmMessage:ModuleZW(@"暂无消费记录")];
+            return ;
+        }
+        
         if(!self.listBackView) {
             self.listBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
             self.listBackView.backgroundColor = RGBA(0, 0, 0, 0.55);

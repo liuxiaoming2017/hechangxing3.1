@@ -33,7 +33,6 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(image1.right+5, 2, 200, 40)];
     titleLabel.font = [UIFont systemFontOfSize:18];
     titleLabel.textAlignment = NSTextAlignmentLeft;
-    //titleLabel.textColor = UIColorFromHex(0X1E82D2);
     titleLabel.text = ModuleZW(@"注意事项");
     [topView addSubview:image1];
     [topView addSubview:titleLabel];
@@ -60,7 +59,7 @@
     label3.textAlignment = NSTextAlignmentLeft;
     label3.textColor = UIColorFromHex(0X8E8E93);
     label3.text = ModuleZW(@"既餐后两小时的时候抽血，随后进行测试。");
-    CGRect textRect3 = [label3.text boundingRectWithSize:CGSizeMake(ScreenWidth - image3.right  - 20, MAXFLOAT) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil];
+    CGRect textRect3 = [label3.text boundingRectWithSize:CGSizeMake(topView.width-image2.right-20, MAXFLOAT) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil];
     label3.height = textRect3.size.height;
     [topView addSubview:label3];
     
@@ -72,7 +71,7 @@
     label4.textAlignment = NSTextAlignmentLeft;
     label4.textColor = UIColorFromHex(0X8E8E93);
     label4.text = ModuleZW(@"既餐后两小时的时候抽血，正常11.1以下。");
-    CGRect textRect4 = [label4.text boundingRectWithSize:CGSizeMake(ScreenWidth - image4.right - 20, MAXFLOAT) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil];
+    CGRect textRect4 = [label4.text boundingRectWithSize:CGSizeMake(topView.width-image2.right-20, MAXFLOAT) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil];
     label4.height = textRect4.size.height;
     [topView addSubview:label4];
     

@@ -23,14 +23,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navTitleLabel.text = ModuleZW(@"在线咨询");
+    self.navTitleLabel.text = ModuleZW(@"视频医生");
     
     UILabel *label = [Tools creatLabelWithFrame:CGRectMake(10,kNavBarHeight + 10, ScreenWidth - 10, 40) text:ModuleZW(@"在线咨询") textSize:24];
-    [self.view addSubview:label];
+//    [self.view addSubview:label];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, label.bottom, ScreenWidth, ScreenHeight - label.bottom) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight + 10, ScreenWidth, ScreenHeight - label.bottom) style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
@@ -48,7 +48,7 @@
     if([UserShareOnce shareOnce].languageType){
         return 1;
     }else{
-        return 3;
+        return 2;
     }
 }
 

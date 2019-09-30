@@ -1804,7 +1804,6 @@
 "您还不是会员"    =      "You are not yet a member";
 "请输入说明内容"    =      "Please enter a description";
 "上传报告"    =      "Upload report";
-"报告列表"    =      "Report list";
 "我的上传报告"    =      "My report uploaded";
 "报告详情"    =      "Detail";
 "全部服务"    =      "All services";
@@ -1824,3 +1823,5 @@
 "我知道了"  = "我知道了En";
 "左边箭头"  = "左边箭头En";
 "右边箭头"  = "右边箭头En";
+
+"暂无消费记录" = "No consumption record";
