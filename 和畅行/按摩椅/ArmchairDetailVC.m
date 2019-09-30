@@ -255,7 +255,7 @@ typedef enum : NSInteger {
     }
     
     //高级,专属里面没有收藏按钮
-    NSArray *zhuanshuArr = [self loadDataPlistWithStr:@"专属"];
+    NSArray *zhuanshuArr = [self loadHomeData];
     BOOL isZhuanshu = NO;
     for(ArmChairModel *model in zhuanshuArr){
         if([self.armchairModel.name isEqualToString:model.name]){

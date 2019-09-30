@@ -69,7 +69,7 @@
     
     [self initUI];
     
-    self.navTitleLabel.text = @"按摩椅";
+    self.navTitleLabel.text = @"一推";
     
     self.dataArr = [NSMutableArray arrayWithCapacity:0];
     
@@ -215,19 +215,7 @@
     }
 }
 
-- (NSArray *)loadHomeData
-{
-    NSArray *arr2 = @[
-                      @{@"name":@"大师精选",@"command":k530Command_MassageMaster},
-                      @{@"name":@"活血循环",@"command":k530Command_MassageBloodCirculation},
-                      @{@"name":@"美臀塑型",@"command":k530Command_MassageHipsShapping},
-                      @{@"name":@"肩颈4D",@"command":k530Command_NeckShoulder4D},
-                      @{@"name":@"运动派",@"command":k530Command_Athlete},
-                      @{@"name":@"低头族",@"command":k530Command_TextNeck},
-                      ];
-    NSArray *arr = [ArmChairModel mj_objectArrayWithKeyValuesArray:arr2];
-    return arr;
-}
+
 
 - (void)initUI
 {
@@ -365,6 +353,7 @@
 {
     SublayerView *layerView = (SublayerView *)[gesture view];
     ArmChairModel *model = layerView.model;
+    model.name = [model.name stringByAppendingString:@"推拿手法"];
     NSString *statusStr = [self resultStringWithStatus];
     if(![statusStr isEqualToString:@""]){
         [GlobalCommon showMessage2:statusStr duration2:1.0];
@@ -402,6 +391,9 @@
     ArmchairHomeCell *cell = (ArmchairHomeCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     ArmChairModel *model = [self.dataArr objectAtIndex:indexPath.row];
     cell.imageV.image = [UIImage imageNamed:model.name];
+    if([model.name isEqualToString:@"肩颈4D"]){
+        cell.imageV.image = [UIImage imageNamed:@"肩颈"];
+    }
     cell.titleLabel.text = model.name;
     return cell;
 }
@@ -674,7 +666,7 @@
         model.command = k530Command_MassageMaster;
         return model;
     }else{
-        jlbsName = [jlbsName substringFromIndex:[jlbsName length]-1];
+       // jlbsName = [jlbsName substringFromIndex:[jlbsName length]-1];
 //        NSDictionary *dic = @{
 //                @"徵":@{@"name":@"肩颈4D",@"command":k530Command_NeckShoulder4D},
 //                @"羽":@{@"name":@"活血循环",@"command":k530Command_MassageBloodCirculation},
@@ -711,6 +703,7 @@
                               };
         NSDictionary *dic1 = [dic objectForKey:jlbsName];
         ArmChairModel *model = [ArmChairModel mj_objectWithKeyValues:dic1];
+        
         return model;
     }
    

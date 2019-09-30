@@ -46,10 +46,10 @@
     self.imageV.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:self.imageV];
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(self.imageV.frame)+10, self.frame.size.width-5*2, 20)];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(2, CGRectGetMaxY(self.imageV.frame)+10, self.frame.size.width-5*2, 20)];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     //self.titleLabel.highlightedTextColor = [UIColor redColor];
-    self.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize];
+    self.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize > 16.0 ? 16.0 : 14*[UserShareOnce shareOnce].fontSize];
     self.titleLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
     self.titleLabel.text = @"发卡拉";
     self.titleLabel.numberOfLines = 0;

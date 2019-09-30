@@ -65,14 +65,14 @@
         UIColor *color = [colorArr objectAtIndex:2-i];
         view1.layer.backgroundColor = color.CGColor;
         view1.layer.cornerRadius = 10;
-        [self.view addSubview:view1];
+       // [self.view addSubview:view1];
         
         UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(view1.right+15, view1.top+2, 27.5, 16)];
         label1.text = [titleArr objectAtIndex:2-i];
         label1.font = [UIFont fontWithName:@"PingFang SC" size:12];
         label1.textAlignment = NSTextAlignmentLeft;
         label1.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
-        [self.view addSubview:label1];
+      //  [self.view addSubview:label1];
     }
     
     UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(28, imageV.bottom+56, 53, 16)];
