@@ -219,7 +219,7 @@
             OrganDiseaseModel *model = _dataArr[indexPath.row];
             NSMutableString *contentStr = [[NSMutableString alloc] initWithString:model.content];
             NSArray *contentArr = [contentStr componentsSeparatedByString:@"_"];
-            UILabel *title = [Tools labelWith:contentArr[0] frame:CGRectMake(48, 0, 260, 44) textSize:14 textColor:[Tools colorWithHexString:@"#666"] lines:1 aligment:NSTextAlignmentLeft];
+            UILabel *title = [Tools labelWith:contentArr[0] frame:CGRectMake(48, 0, 260, 44) textSize:14 textColor:[Tools colorWithHexString:@"#666"] lines:0 aligment:NSTextAlignmentLeft];
             [cell.contentView addSubview:title];
             UIImageView *lineView = [Tools creatImageViewWithFrame:CGRectMake(40, 43, ScreenWidth-80, 1) imageName:@"ICD10_leftGrayLine"];
             [cell.contentView addSubview:lineView];

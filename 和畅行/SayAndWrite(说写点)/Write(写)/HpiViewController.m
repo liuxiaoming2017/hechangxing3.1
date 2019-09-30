@@ -56,14 +56,14 @@
         tableView.showsVerticalScrollIndicator = NO;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         if(i == 0){
-            view.frame = CGRectMake(10, kNavBarHeight + 10, ScreenWidth - 20, _topArray.count * 40 + 60);
-            tableView.frame = CGRectMake(0, 50, ScreenWidth - 20, _topArray.count * 40 );
+            view.frame = CGRectMake(10, kNavBarHeight + 10, ScreenWidth - 20, _topArray.count * 46 + 60);
+            tableView.frame = CGRectMake(0, 50, ScreenWidth - 20, _topArray.count * 46 );
             self.top1View = view;
             self.topTableView = tableView;
             
         }else{
-            view.frame = CGRectMake(10, self.top1View.bottom + 10, ScreenWidth - 20, _bottomArray.count * 40 + 60);
-            tableView.frame = CGRectMake(0, 50, ScreenWidth - 20, _bottomArray.count * 40 );
+            view.frame = CGRectMake(10, self.top1View.bottom + 10, ScreenWidth - 20, _bottomArray.count * 46 + 60);
+            tableView.frame = CGRectMake(0, 50, ScreenWidth - 20, _bottomArray.count * 46 );
             UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
             button.frame = CGRectMake(ScreenWidth-60, 10, 30, 30);
             [button setBackgroundImage:[UIImage imageNamed:@"添加icon"] forState:(UIControlStateNormal)];
@@ -138,7 +138,7 @@
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 40;
+    return 46;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

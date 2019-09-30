@@ -439,7 +439,7 @@
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 NSString *str = segmentedArray[i][j];
-                if([physicalStr isEqualToString:str]){
+                if([ModuleZW(physicalStr) isEqualToString:str]){
                     topSegment.selectedSegmentIndex = i;
                     [self valuesegChanged:topSegment];
                     [hysegmentControl changeSegmentedControlWithIndex:j];

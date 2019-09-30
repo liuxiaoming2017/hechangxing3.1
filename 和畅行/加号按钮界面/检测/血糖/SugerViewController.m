@@ -451,7 +451,7 @@
     imageView.userInteractionEnabled = YES;
     imageView.image = [UIImage imageNamed:@"bounceView"];
 
-    UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您今天测量血糖%ld次，正常%ld次，异常%ld次\n您当前检测%@血糖值为%.1fmmol/L"),(long)_totalCount,(long)_nomalCount,(long)_unNomalCount,self.typeLabel.text,self.sugerValue] frame:CGRectMake(0, 80, imageView.bounds.size.width, 20) textSize:12 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
+    UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您今天测量血糖%ld次，正常%ld次，异常%ld次\n您当前检测%@血糖值为%.1fmmol/L"),(long)_totalCount,(long)_nomalCount,(long)_unNomalCount,self.typeLabel.text,self.sugerValue] frame:CGRectMake(20, 80, imageView.bounds.size.width - 40, 20) textSize:12 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
     [imageView addSubview:countLabel];
     CGRect textRect1 = [countLabel.text  boundingRectWithSize:CGSizeMake(imageView.bounds.size.width-40, MAXFLOAT)
                                                       options:NSStringDrawingUsesLineFragmentOrigin
@@ -478,7 +478,7 @@
     CGRect hintRect = [str boundingRectWithSize:CGSizeMake(imageView.width - 40, MAXFLOAT) options:(NSStringDrawingOptions)NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil];
     hintLabel.height = hintRect.size.height;
     
-    imageView.height = countLabel.height + hintLabel.height + 80;
+    imageView.height = countLabel.height + hintLabel.height + 100;
     
     UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [sureBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];

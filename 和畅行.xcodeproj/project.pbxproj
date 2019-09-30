@@ -649,6 +649,7 @@
 		C97308FC21BA50FB00060447 /* SGQRCodeTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C97308F421BA50FB00060447 /* SGQRCodeTool.m */; };
 		C973090221BA6C9100060447 /* HCY_ActivationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C973090121BA6C9100060447 /* HCY_ActivationController.m */; };
 		C973090521BE16B700060447 /* HCY_InformationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C973090421BE16B700060447 /* HCY_InformationController.m */; };
+		C9847E972341A17B00202B70 /* UpdateReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9847E962341A17B00202B70 /* UpdateReportViewController.m */; };
 		C9875CA122F1792C00936A73 /* YHDFBuriedPoint.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9875CA022F1792C00936A73 /* YHDFBuriedPoint.framework */; };
 		C99B717221B903BE00F1FF5F /* HCY_DAVisceraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */; };
 		C9A2D3302331C68B00AC5185 /* NSBundle+Language.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A2D32F2331C68B00AC5185 /* NSBundle+Language.m */; };
@@ -1767,6 +1768,8 @@
 		C973090121BA6C9100060447 /* HCY_ActivationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_ActivationController.m; sourceTree = "<group>"; };
 		C973090321BE16B700060447 /* HCY_InformationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_InformationController.h; sourceTree = "<group>"; };
 		C973090421BE16B700060447 /* HCY_InformationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_InformationController.m; sourceTree = "<group>"; };
+		C9847E952341A17B00202B70 /* UpdateReportViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateReportViewController.h; sourceTree = "<group>"; };
+		C9847E962341A17B00202B70 /* UpdateReportViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateReportViewController.m; sourceTree = "<group>"; };
 		C9875CA022F1792C00936A73 /* YHDFBuriedPoint.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YHDFBuriedPoint.framework; sourceTree = "<group>"; };
 		C99B717021B903BE00F1FF5F /* HCY_DAVisceraCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_DAVisceraCell.h; sourceTree = "<group>"; };
 		C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_DAVisceraCell.m; sourceTree = "<group>"; };
@@ -1988,6 +1991,8 @@
 			children = (
 				03FBDF7D219280BE006116FC /* ArchivesController.h */,
 				03FBDF7C219280BE006116FC /* ArchivesController.m */,
+				C9847E952341A17B00202B70 /* UpdateReportViewController.h */,
+				C9847E962341A17B00202B70 /* UpdateReportViewController.m */,
 				C9B76971231F7FA900171DCC /* UploadReportDetailsViewController.h */,
 				C9B76972231F7FA900171DCC /* UploadReportDetailsViewController.m */,
 			);
@@ -4496,6 +4501,7 @@
 				036C8E122328A27B00729889 /* ArmchairCommonVC.m in Sources */,
 				039661F121F1BF7F00754AAA /* PayMentViewController.m in Sources */,
 				034A4E8A211A9AD900936A46 /* TZProgressView.m in Sources */,
+				C9847E972341A17B00202B70 /* UpdateReportViewController.m in Sources */,
 				03F6931C20FF30B700308E38 /* JSONKit.m in Sources */,
 				03E36FE920EDB882000974E1 /* UtilityFunc.m in Sources */,
 				039B2AFB212564C100D558F5 /* SugerViewController.m in Sources */,
