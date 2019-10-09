@@ -181,7 +181,9 @@
 - (void)requestVersionDataWithType:(NSString *)type
 {
     if (!isProduct) {
-        [self checkHaveUpdateWithType:type];
+        [[NSUserDefaults standardUserDefaults] setObject:@"noAppstoreCheck" forKey:@"noAppstoreCheck"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        //[self checkHaveUpdateWithType:type];
         return;
     }
    
