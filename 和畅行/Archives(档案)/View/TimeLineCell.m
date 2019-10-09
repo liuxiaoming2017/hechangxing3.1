@@ -128,7 +128,7 @@
     NSString *typeStr = [NSString string];
     if (typeInteger == 0) {
         NSString *nameStr= [NSString string];
-        if ([model.typeName isEqualToString:ModuleZW(@"血压")]) {
+        if ([model.type isEqualToString:@"BLOOD"]) {
             NSArray * array= [model.name componentsSeparatedByString:@"-"];
             if (array.count > 1) {
                 if([UserShareOnce shareOnce].languageType){
@@ -139,13 +139,20 @@
             }else{
                 nameStr = model.name;
             }
-        }else {
+        }else if ([model.type isEqualToString:@"memberHealthr"]) {
+            nameStr = model.name;
+            if ([nameStr isEqualToString:@""]) {
+                nameStr = ModuleZW(@"我的上传报告");
+            }
+        } else {
             nameStr = model.name;
         }
+       
         typeStr = model.typeName;
         self.contentLabel.text = nameStr;
+       
         self.timeLabel.text =   [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",model.createTime]];
-        self.createDateLabel.text = model.time;
+        self.createDateLabel.text = [self getDateStringWithTimeStr:[NSString stringWithFormat:@"%@",model.createTime]];
         
     }else if (typeInteger == 1){
         //档案最新
@@ -183,7 +190,6 @@
         }else{
             self.contentLabel.text = model.name;
         }
-        NSLog(@"%@",model.createTime);
         NSString *timeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",model.createTime]];
         self.timeLabel.text = timeStr;
         self.createDateLabel.text = model.time;
@@ -249,6 +255,13 @@
     }else if ([typeStr isEqualToString:ModuleZW(@"脏腑")]) {
         kindStr = @"";
         kindIcon = @"脏腑Icon";
+    }else  if ([typeStr isEqualToString:ModuleZW(@"我的上传报告")]){
+        kindStr = @"";
+        kindIcon = @"报告";
+    }
+    if (model.pictures) {
+        kindStr = @"";
+         kindIcon = @"报告";
     }
     
     NSString *salaryStr1 = [NSString string];
@@ -298,6 +311,11 @@
     }
     return currentDateStr;
 }
+
+
+
+
+
 
 
 - (void)awakeFromNib {

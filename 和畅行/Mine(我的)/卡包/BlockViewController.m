@@ -14,6 +14,7 @@
 #import "HYC_CardsModel.h"
 #import "LoginViewController.h"
 #import "AllServiceCell.h"
+#import "WXPhoneController.h"
 @interface BlockViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,retain) UITableView *tableView;
 @property (nonatomic,retain) NSMutableArray *dataArray;
@@ -194,6 +195,10 @@
     
 }
 - (void)addAction{
+    if ([UserShareOnce shareOnce].username.length != 11) {
+        [self showAlerVC];
+        return;
+    }
     BoundBlockViewController *boundBlockVC = [[BoundBlockViewController alloc]init];
     [self.navigationController pushViewController:boundBlockVC animated:YES];
 }
@@ -287,6 +292,19 @@
     if (self.listBackView&&self.listBackView.hidden == NO) {
         self.listBackView.hidden = YES;
     }
+}
+
+-(void)showAlerVC {
+    UIAlertController *alVC= [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有绑定手机号码,绑定后才能享受服务,是否绑定?") preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        WXPhoneController *vc = [[WXPhoneController alloc]init];
+        vc.pushType = 0;
+        [self presentViewController:vc animated:YES completion:nil];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:(UIAlertActionStyleCancel) handler:nil];
+    [alVC addAction:sureAction];
+    [alVC addAction:cancelAction];
+    [self presentViewController:alVC animated:YES completion:nil];
 }
 
 @end

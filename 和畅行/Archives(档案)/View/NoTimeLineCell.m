@@ -136,16 +136,21 @@
                 }else{
                     nameStr =  [NSString stringWithFormat:@"%@%@ %@%@",ModuleZW(@"收缩压"),array[0],ModuleZW(@"舒张压"),array[1]];
                 }
-                
             }else{
                 nameStr = model.name;
             }
-        }else {
+        }else if ([model.type isEqualToString:@"memberHealthr"]) {
+            nameStr = model.name;
+            if ([nameStr isEqualToString:@""]) {
+                nameStr = ModuleZW(@"我的上传报告");
+            }
+        } else {
             nameStr = model.name;
         }
+        NSLog(@"-------------%@",nameStr);
         typeStr = model.typeName;
         self.contentLabel.text = nameStr;
-        self.createDateLabel.text = model.time;
+        self.createDateLabel.text = [self getDateStringWithTimeStr:[NSString stringWithFormat:@"%@",model.createTime]];
         
     }else if (typeInteger == 1){
         //档案最新
@@ -235,6 +240,13 @@
     }else if ([typeStr isEqualToString:ModuleZW(@"脏腑")]) {
         kindStr = @"";
         kindIcon = @"脏腑Icon";
+    }else  if ([typeStr isEqualToString:ModuleZW(@"我的上传报告")]){
+        kindStr = @"";
+        kindIcon = @"报告";
+    }
+    if (model.pictures) {
+        kindStr = @"";
+        kindIcon = @"报告";
     }
     
     NSString *salaryStr1 = [NSString string];

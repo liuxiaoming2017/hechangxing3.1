@@ -51,6 +51,9 @@
         }else{
             self.serviceArr = @[];
         }
+        self.model = [[HYC_CardsModel alloc]init];
+        self.model.card_name = _dateDic[@"data"][@"name"];
+        NSLog(@"%@",self.model.card_name);
         if(!kDictIsEmpty(self.dateDic[@"data"][@"description"])){
             contentStr = self.dateDic[@"data"][@"description"];
         }else{
@@ -70,9 +73,10 @@
                                                         attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
                                                            context:nil];
     
+     NSLog(@"%@",self.model.card_name);
     CGRect labelRect = [self.model.card_name boundingRectWithSize:CGSizeMake(ScreenWidth - 20 - 60, MAXFLOAT) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} context:nil];
     
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 105*[UserShareOnce shareOnce].fontSize + textRect.size.height + height+labelRect.size.height)];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 105*[UserShareOnce shareOnce].fontSize + textRect.size.height + height+labelRect.size.height - 25)];
     
     [imageV.layer addSublayer:[UIColor setGradualChangingColor:imageV fromColor:@"4294E1" toColor:@"D1BDFF"]];
     imageV.layer.cornerRadius = 10;
@@ -96,12 +100,12 @@
     _mLabel.text = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"卡密"),self.model.card_no];
     _mLabel.font = [UIFont systemFontOfSize:16];
     _mLabel.textColor = [UIColor whiteColor];
-    [imageV addSubview:_mLabel];
+//    [imageV addSubview:_mLabel];
     
    
     
     _contentLabel = [[UILabel alloc] init];
-    _contentLabel.frame = CGRectMake(20,_mLabel.bottom , imageV.width -  40, textRect.size.height );
+    _contentLabel.frame = CGRectMake(20,_hLabel.bottom + 5 , imageV.width -  40, textRect.size.height );
     _contentLabel.numberOfLines = 0;
     _contentLabel.text = contentStr;
     _contentLabel.font = [UIFont systemFontOfSize:14];
@@ -118,7 +122,7 @@
     [imageV addSubview:_yLabel];
     
 
-    self.serviceTableView = [[UITableView alloc]initWithFrame:CGRectMake(_yLabel.left+5, _yLabel.bottom+5, imageV.width-_yLabel.left*2 - 10, _serviceArr.count * 30) style:UITableViewStylePlain];
+    self.serviceTableView = [[UITableView alloc]initWithFrame:CGRectMake(_yLabel.left+5, _yLabel.bottom+5, imageV.width-_yLabel.left*2 - 10, _serviceArr.count * 30*[UserShareOnce shareOnce].fontSize) style:UITableViewStylePlain];
     self.serviceTableView.backgroundColor = [UIColor clearColor];
     self.serviceTableView.separatorStyle = UITableViewCellEditingStyleNone;
     self.serviceTableView.dataSource = self;
@@ -170,9 +174,10 @@
 
     if(self.dateDic){
         listButton.hidden = YES;
-        _mLabel.text = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"卡密"),self.dateDic[@"data"][@"code"]];
+//        _mLabel.text = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"卡密"),self.dateDic[@"data"][@"code"]];
         _yLabel.text = ModuleZW(@"服务内容");
         _hLabel.text = _dateDic[@"data"][@"name"];
+       
         UIButton *addButton =  [UIButton buttonWithType:(UIButtonTypeCustom)];
         addButton.frame = CGRectMake(40, ScreenHeight - kTabBarHeight - 40, ScreenWidth - 80, 36);
         addButton.layer.cornerRadius = 18;
@@ -390,15 +395,10 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if(self.dataArr.count>indexPath.row){
             NSDictionary *dic = [self.dataArr objectAtIndex:indexPath.row];
-            cell.kindLabel.text = [dic objectForKey:@"serviceName"];
-            NSString *timeStr =[NSString stringWithFormat:@"%@", [dic objectForKey:@"createTime"]];
-            if(timeStr != nil && ![timeStr isEqualToString:@""] && ![timeStr isKindOfClass:[NSNull class]]){
-                NSArray *arr = [timeStr componentsSeparatedByString:@" "];
-                NSLog(@"arr:%@",arr);
-                if(arr.count>1){
-                    cell.timeLabel.text = [arr objectAtIndex:0];
-                    cell.hourLabel.text = [arr objectAtIndex:1];
-                }
+            cell.kindLabel.text = [dic objectForKey:@"name"];
+            NSString *timeStr =[NSString stringWithFormat:@"%@", [dic objectForKey:@"createDate"]];
+            if (![GlobalCommon stringEqualNull:timeStr]) {
+                cell.timeLabel.text = [timeStr substringToIndex:10];
             }
         }
         return cell;

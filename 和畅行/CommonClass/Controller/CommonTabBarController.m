@@ -121,6 +121,10 @@
             
             break;
         case 4:
+            if ([UserShareOnce shareOnce].username.length != 11) {
+                [self showAlerVC];
+                return;
+            }
             vc = [[HCY_CallController alloc] init];
             break;
         case 5:
@@ -141,6 +145,7 @@
             
             break;
         case 6:{
+           
             vc = [[AdvisorysViewController alloc] init];
         }
             break;

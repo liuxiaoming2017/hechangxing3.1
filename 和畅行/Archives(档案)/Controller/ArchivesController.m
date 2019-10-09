@@ -137,6 +137,10 @@
     [[ploadRreportBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
         UpdateReportViewController *updateVC = [[UpdateReportViewController alloc]init];
         updateVC.hidesBottomBarWhenPushed = YES;
+        updateVC.returnTextBlock = ^{
+            self.pageInteger = 1;
+            [self requestHealthHintDataWithTipyInteger:self.typeUrlInteger withPageInteger:self.pageInteger];
+        };
         [self.navigationController pushViewController:updateVC animated:YES];
         
     }];

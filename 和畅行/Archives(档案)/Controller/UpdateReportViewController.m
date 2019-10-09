@@ -293,7 +293,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.label.text = ModuleZW(@"加载中...");
+    hud.label.text = ModuleZW(@"上传中...");
     NSString *str = [NSString stringWithFormat:@"%@/login/healthr/upload.jhtml",URL_PRE];
     __weak typeof(self) weakSelf = self;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -317,6 +317,9 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         if ([[jsonDic valueForKey:@"status"] intValue]== 100) {
             UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"上传成功") preferredStyle:(UIAlertControllerStyleAlert)];
             UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                if (self.returnTextBlock != nil) {
+                    self.returnTextBlock();
+                }
                 [self.navigationController popViewControllerAnimated:YES];
             }];
             [alerVC addAction:suerAction];
