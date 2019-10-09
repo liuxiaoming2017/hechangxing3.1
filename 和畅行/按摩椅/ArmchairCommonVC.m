@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    
-    self.navTitleLabel.text = @"按摩椅";
+    self.navTitleLabel.text = @"一推";
     
     self.preBtn.hidden = NO;
     self.leftBtn.hidden = YES;
@@ -68,6 +68,20 @@
     NSArray *arr = [ArmChairModel mj_objectArrayWithKeyValuesArray:[self arrayWithStr:str]];
     return arr;
     
+}
+
+- (NSArray *)loadHomeData
+{
+    NSArray *arr2 = @[
+                      @{@"name":@"大师精选",@"command":k530Command_MassageMaster},
+                      @{@"name":@"活血循环",@"command":k530Command_MassageBloodCirculation},
+                      @{@"name":@"美臀塑型",@"command":k530Command_MassageHipsShapping},
+                      @{@"name":@"肩颈4D",@"command":k530Command_NeckShoulder4D},
+                      @{@"name":@"运动派",@"command":k530Command_Athlete},
+                      @{@"name":@"低头族",@"command":k530Command_TextNeck},
+                      ];
+    NSArray *arr = [ArmChairModel mj_objectArrayWithKeyValuesArray:arr2];
+    return arr;
 }
 
 

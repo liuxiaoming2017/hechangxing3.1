@@ -65,14 +65,14 @@
         UIColor *color = [colorArr objectAtIndex:2-i];
         view1.layer.backgroundColor = color.CGColor;
         view1.layer.cornerRadius = 10;
-        [self.view addSubview:view1];
+       // [self.view addSubview:view1];
         
         UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(view1.right+15, view1.top+2, 27.5, 16)];
         label1.text = [titleArr objectAtIndex:2-i];
         label1.font = [UIFont fontWithName:@"PingFang SC" size:12];
         label1.textAlignment = NSTextAlignmentLeft;
         label1.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
-        [self.view addSubview:label1];
+      //  [self.view addSubview:label1];
     }
     
     UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(28, imageV.bottom+56, 53, 16)];
@@ -143,7 +143,7 @@
     
     UIButton *anmoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     CGFloat btnWidth = 200.0;
-    anmoBtn.frame = CGRectMake((ScreenWidth-btnWidth)/2.0, suantengView.bottom+45 > ScreenHeight-50 ? ScreenHeight-60 : suantengView.bottom+45, btnWidth, 45);
+    anmoBtn.frame = CGRectMake((ScreenWidth-btnWidth)/2.0, suantengView.bottom+45 > ScreenHeight-50 ? ScreenHeight-60 : suantengView.bottom+45, btnWidth, 40);
     anmoBtn.layer.cornerRadius = 6.0;
     anmoBtn.clipsToBounds = YES;
     anmoBtn.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:17];
@@ -156,14 +156,14 @@
 
 - (void)btnAction:(UIButton *)button
 {
-    ArmChairModel *model = [self modelResultWithsuanten:self.acheResult withpilao:self.fatigueResult];
-    
-    ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:model.name];
-    vc.armchairModel = model;
-    [vc commandActionWithModel:model];
-    [self.navigationController pushViewController:vc animated:YES];
-    
-    return;
+//    ArmChairModel *model = [self modelResultWithsuanten:self.acheResult withpilao:self.fatigueResult];
+//
+//    ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:model.name];
+//    vc.armchairModel = model;
+//    [vc commandActionWithModel:model];
+//    [self.navigationController pushViewController:vc animated:YES];
+//
+//    return;
     
     
     NSString *statusStr = [self resultStringWithStatus];
@@ -179,10 +179,12 @@
             }];
         }else{
             NSLog(@"开机了开机了");
+            ArmChairModel *model = [self modelResultWithsuanten:self.acheResult withpilao:self.fatigueResult];
             ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:model.name];
             vc.armchairModel = model;
             [vc commandActionWithModel:model];
             [self.navigationController pushViewController:vc animated:YES];
+        
         }
     }
     
