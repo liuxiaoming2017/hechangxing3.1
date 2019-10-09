@@ -133,7 +133,7 @@
     ploadRreportBT.frame = CGRectMake(ScreenWidth-80-14, 2+kStatusBarHeight, 80, 40);
     [ploadRreportBT setTitle:ModuleZW(@"上传报告") forState:(UIControlStateNormal)];
     [ploadRreportBT.titleLabel setFont:[UIFont systemFontOfSize:15]];
-    [ploadRreportBT setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [ploadRreportBT setTitleColor:RGB_ButtonBlue forState:(UIControlStateNormal)];
     [[ploadRreportBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
         UpdateReportViewController *updateVC = [[UpdateReportViewController alloc]init];
         updateVC.hidesBottomBarWhenPushed = YES;
