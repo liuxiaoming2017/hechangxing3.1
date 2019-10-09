@@ -30,11 +30,15 @@
 @property (nonatomic,copy)NSString *nameStr;
 @property (nonatomic,copy)NSString *brithdayStr;
 @property (nonatomic,copy)NSString *phoneStr;
+@property (nonatomic,copy)NSString *emailStr;
 @property (nonatomic,copy) NSString *pngFilePath;
 @property (nonatomic,strong) UIDatePicker *datePicker;
 @property (nonatomic,strong) UIView *backView;
 @property (nonatomic,copy)  NSString *dateString;
 @property (nonatomic,strong) UIButton *phoneBT;
+
+@property (nonatomic,strong) UIButton *nameBT;
+@property (nonatomic,strong) UIButton *emailBT;
 @end
 
 @implementation PersonalInformationViewController
@@ -74,6 +78,7 @@
     self.sexStr           = [NSString string];
     self.brithdayStr    = [NSString string];
     self.phoneStr       = [NSString string];
+    self.emailStr       = [NSString string];
     
     if ([MemberUserShance shareOnce].name.length <  26) {
         self.nameStr = [MemberUserShance shareOnce].name;
@@ -115,9 +120,15 @@
             }
         }
     }
+    
+    if(![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].email]){
+        self.emailStr  = [UserShareOnce shareOnce].email;
+    }else {
+        self.emailStr  = ModuleZW(@"未绑定");
+    }
    
-    NSArray *titleArray = @[ModuleZW(@"头像"),ModuleZW(@"昵称"),ModuleZW(@"性别"),ModuleZW(@"出生日期"),ModuleZW(@"手机号码")];
-    NSArray *contentArray = @[@"",self.nameStr,self.sexStr,self.brithdayStr ,self.phoneStr ];
+    NSArray *titleArray = @[ModuleZW(@"头像"),ModuleZW(@"昵称"),ModuleZW(@"性别"),ModuleZW(@"出生日期"),ModuleZW(@"手机号码"),ModuleZW(@"邮箱")];
+    NSArray *contentArray = @[@"",self.nameStr,self.sexStr,self.brithdayStr ,self.phoneStr,self.emailStr];
     
     for (int i = 0; i < titleArray.count; i++) {
         UILabel *leftLabel = [[UILabel alloc]init];
@@ -149,7 +160,10 @@
         }else {
             leftLabel.frame = CGRectMake(30, kNavBarHeight + 90 + 45 *(i-1), 150, 45);
             UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            button.frame = CGRectMake(leftLabel.right + 20, leftLabel.top, ScreenWidth - leftLabel.right - 50, 45);
+            button.frame = CGRectMake(leftLabel.right , leftLabel.top, ScreenWidth - leftLabel.right - 30, 45);
+            if (i == 5) {
+                button.frame = CGRectMake(leftLabel.right - 70, leftLabel.top, ScreenWidth - leftLabel.right + 40 , 45);
+            }
             [button setTitle:contentArray[i] forState:(UIControlStateNormal)];
             [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
             [button setTitleColor: [UIColor blackColor] forState:(UIControlStateNormal)];
@@ -164,11 +178,12 @@
                         [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
                             textField.placeholder = ModuleZW(@"设置昵称");
                             [textField addTarget:self action:@selector(textFieldDidChanged:) forControlEvents:UIControlEventEditingChanged];
+                            textField.tag = 1001;
                             
                         }];
                         UIAlertAction *action1 = [UIAlertAction actionWithTitle:ModuleZW(@"确认") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
                             weakSelf.nameStr = [[alertVc textFields] objectAtIndex:0].text;
-                            [button setTitle:weakSelf.nameStr forState:(UIControlStateNormal)];
+                            weakSelf.nameBT = button;
                             [weakSelf commitClick];
                         }];
                         UIAlertAction *action2 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:nil];
@@ -194,6 +209,26 @@
                             }
                         }
                         break;
+                    case 5:{
+                        
+                        UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"" message:nil preferredStyle:
+                                                      UIAlertControllerStyleAlert];
+                        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                            textField.placeholder = ModuleZW(@"绑定邮箱");
+                            [textField addTarget:self action:@selector(textFieldDidChanged:) forControlEvents:UIControlEventEditingChanged];
+                            textField.tag = 1002;
+                        }];
+                        UIAlertAction *action1 = [UIAlertAction actionWithTitle:ModuleZW(@"确认") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                            weakSelf.emailStr = [[alertVc textFields] objectAtIndex:0].text;
+                            weakSelf.emailBT = button;
+                            [weakSelf commitClick];
+                        }];
+                        UIAlertAction *action2 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:nil];
+                        [alertVc addAction:action2];
+                        [alertVc addAction:action1];
+                        [weakSelf presentViewController:alertVc animated:YES completion:nil];
+                        
+                    }
                     default:
                         break;
                 }
@@ -280,6 +315,20 @@
     }else{
         sexStr = @"";
     }
+    if ([_brithdayStr isEqualToString:ModuleZW(@"未设置")]) {
+        _brithdayStr = @"";
+    }
+    if ([_emailStr isEqualToString:ModuleZW(@"未绑定")]) {
+        _emailStr = @"";
+    }else{
+        if (![_emailStr isEqualToString:@""]) {
+            if (![self isValidateEmail:_emailStr]) {
+                [self showAlertWarmMessage:ModuleZW(@"请输入正确的邮箱")];
+                return;
+            }
+        }
+       
+    }
    [GlobalCommon showMBHudWithView:self.view];
     NSString *UrlPre=URL_PRE;
     NSString *aUrl = [NSString stringWithFormat:@"%@/member/update.jhtml",UrlPre];
@@ -294,9 +343,7 @@
     [request setPostValue:sexStr forKey:@"gender"];
     [request setPostValue:self.nameStr forKey:@"name"];
     [request setPostValue:_phoneStr forKey:@"mobile"];
-    if ([_brithdayStr isEqualToString:ModuleZW(@"未设置")]) {
-        _brithdayStr = @"";
-    }
+    [request setPostValue:_emailStr forKey:@"email"];
     [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
     [request setPostValue:_brithdayStr forKey:@"birthday"];
     [request setTimeOutSeconds:20];
@@ -481,6 +528,7 @@
 
 
 - (void)textFieldDidChanged:(UITextField *)textField {
+    if (textField.tag == 1002) return;
     UITextRange *selectedRange = textField.markedTextRange;
     UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
     if (position) {
@@ -508,17 +556,26 @@
         [UserShareOnce shareOnce].name=_nameStr;
         [UserShareOnce shareOnce].gender=_sexStr;
         if (_brithdayStr.length == 0) {
-            _brithdayStr = @"未设置";
+            _brithdayStr = ModuleZW(@"未设置");
         }
+        if (_emailStr.length == 0) {
+            _emailStr = ModuleZW(@"未绑定");
+        }
+        
+      
+         [UserShareOnce shareOnce].email=_emailStr;
         [UserShareOnce shareOnce].birthday=_brithdayStr;
         [UserShareOnce shareOnce].username=_phoneStr;
         [UserShareOnce shareOnce].memberImage=self.urlHttpImg;
+        
+        [_emailBT setTitle:_emailStr forState:(UIControlStateNormal)];
+        [_nameBT setTitle:_nameStr forState:(UIControlStateNormal)];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"personalInfoUpdateSuccess" object:nil];
 
         
     } else {
-        [self showAlertWarmMessage:[dic objectForKey:@"data"]];
+        [self showAlertWarmMessage:[dic objectForKey:@"message"]];
     }
 }
 
@@ -631,6 +688,13 @@
         [_datePicker removeFromSuperview];
     }
     [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+-(BOOL)isValidateEmail:(NSString *)email
+{
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES%@",emailRegex];
+    return [emailTest evaluateWithObject:email];
 }
 
 @end

@@ -90,7 +90,7 @@
             [weakSelf.idArray addObject:@"hot"];
             [weakSelf.idArray addObject:@"10"];
             [daArray addObject:ModuleZW(@"最新资讯")];
-            if(array.count >0){
+            if(array.count >1){
                 for (NSDictionary *Dic in array) {
                     [daArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"name"]]];
                     [weakSelf.idArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"id"]]];
@@ -262,8 +262,16 @@
             [self.healthArray removeAllObjects];
             [self.healthArray addObjectsFromArray:[[response valueForKey:@"data"] valueForKey:@"content"]];
             [self.healthTableView reloadData];
-            NSIndexPath* indexPat = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self.healthTableView scrollToRowAtIndexPath:indexPat atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            if (self.healthArray.count > 0) {
+                self.noView.hidden = YES;
+                NSIndexPath* indexPat = [NSIndexPath indexPathForRow:0 inSection:0];
+                [self.healthTableView scrollToRowAtIndexPath:indexPat atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }else{
+                self.noView.hidden = NO;
+            }
+                
+                
+           
             
         }
     } failureBlock:^(NSError *error) {

@@ -76,7 +76,7 @@
 @property (nonatomic,copy)   NSString *date;
 @property (nonatomic,copy)   NSString *time;
 @property (nonatomic,strong)NSArray *pictures;
-
-
+@property (nonatomic,strong)NSDictionary *medicRecord;
+@property (nonatomic,copy)NSDictionary *memberHealthr;
 
 @end

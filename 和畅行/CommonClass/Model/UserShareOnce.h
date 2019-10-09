@@ -31,6 +31,7 @@
 @property (nonatomic,copy) NSString *modifyDate;
 @property (nonatomic,copy) NSString *createDate;
 @property (nonatomic,copy) NSString *loginDate;
+@property (nonatomic,copy) NSString *email;
 
 @property (nonatomic,copy) NSString *JSESSIONID;
 @property (nonatomic,copy) NSString *token;

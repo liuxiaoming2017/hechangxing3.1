@@ -76,10 +76,10 @@
 
     contentTextView.backgroundColor = [UIColor clearColor];
     contentTextView.textColor = RGB(240, 240, 240);
-    [imageV addSubview:contentTextView];
+//    [imageV addSubview:contentTextView];
     
     
-    UILabel * descriptLabel = [[UILabel alloc] initWithFrame: CGRectMake(contentTextView.left, contentTextView.bottom+5, contentTextView.width, textHeight)];
+    UILabel * descriptLabel = [[UILabel alloc] initWithFrame: CGRectMake(contentTextView.left, carTitleLabel.bottom+5, contentTextView.width, textHeight)];
     descriptLabel.backgroundColor = [UIColor clearColor];
     descriptLabel.textColor = [UIColor whiteColor];
     descriptLabel.textAlignment = NSTextAlignmentLeft;

@@ -9,9 +9,9 @@
 #import "NavBarViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
+typedef void (^ReturnTextBlock)();
 @interface UpdateReportViewController : NavBarViewController
-
+@property (nonatomic, copy) ReturnTextBlock returnTextBlock;
 @end
 
 NS_ASSUME_NONNULL_END

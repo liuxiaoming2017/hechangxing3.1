@@ -134,11 +134,28 @@
     HealthTipsModel *model = _dataArr[indexPath.row];
     
     if (self.typeInteger < 15&&self.typeInteger!=2&&self.typeInteger!=3) {
-        if (![model.type isEqualToString:@"REPORT"]){
-                return UITableViewAutomaticDimension;
+        
+        if ([model.type isEqualToString:@"MedicRecord"]) {
+            if(indexPath.row == 0){
+                return 130;
+            }else{
+                HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
+                NSString *notimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",model.createTime]];
+                NSString *nexttimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",onAmodel.createTime]];
+                if ([notimeStr isEqualToString:nexttimeStr]) {
+                    return 95;
+                }else {
+                    return 130;
+                }
+            }
         }else{
-            return 120;
+            if (![model.type isEqualToString:@"REPORT"]){
+                return UITableViewAutomaticDimension;
+            }else{
+                return 120;
+            }
         }
+       
         
     }if (self.typeInteger == 2) {
         return 120;
@@ -160,20 +177,13 @@
 #pragma mark -- 每个cell显示的内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    TimeLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
-//    if(cell==nil){
-//        cell = [[TimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    }
-//    cell.contentLabel.text= @"121313奥术大师大大大大所大所大奥大所大所大大奥";
-//    return cell;
     
     if (self.typeInteger < 15 &&self.typeInteger !=2 &&self.typeInteger!=3) {
         HealthTipsModel *model = _dataArr[indexPath.row];
         if(![model.type isEqualToString:@"REPORT"]) {
             NSString *timeStr = [NSString string];
             if (self.typeInteger == 0||self.typeInteger == 5) {
-                timeStr = model.date;
+                timeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",model.createTime]];
             }else if (self.typeInteger == 1||self.typeInteger == 14){
                 timeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",model.createDate]];
             }else{
@@ -181,73 +191,24 @@
             }
             
             if(indexPath.row == 0 ){
-                TimeLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
-                if(cell==nil){
-                    cell = [[TimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                }
-                cell.timeLabel.font=[UIFont systemFontOfSize:16.0];
-                cell.createDateLabel.font=[UIFont systemFontOfSize:13.0];
-                cell.contentLabel.font=[UIFont systemFontOfSize:16];
-                if ([model.subjectCategorySn isEqualToString:@"JLBS"]){
-                    [[NSUserDefaults standardUserDefaults]setValue: [model.subject valueForKey:@"name"] forKey:@"Physical"];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                }
-                
-                if (_dataArr.count > 1) {
-                    HealthTipsModel *nextmodel = _dataArr[indexPath.row+1];
-                    NSString *nextTimeStr = [NSString string];
-                    if (self.typeInteger == 0||self.typeInteger == 5) {
-                        nextTimeStr = nextmodel.date;
-                    }else if (self.typeInteger == 1||self.typeInteger == 14){
-                        nextTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",nextmodel.createDate]];
-                    }else{
-                        nextTimeStr = nextmodel.createTime;
-                    }
-                    if (![timeStr isEqualToString:nextTimeStr]) {
-                        cell.lineImageV2.hidden = YES;
-                    }else{
-                        cell.lineImageV2.hidden = NO;
-                    }
-                }else{
-                    cell.lineImageV2.hidden = YES;
-                }
-                
-                [cell assignmentCellWithModel:model withType:self.typeInteger];
-                return cell;
-            }else{
-                
-                HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
-                NSString *onTimeStr = [NSString string];
-                if (self.typeInteger == 0||self.typeInteger == 5) {
-                    onTimeStr = onAmodel.date;
-                }else if (self.typeInteger == 1||self.typeInteger == 14){
-                    onTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",onAmodel.createDate]];
-                }else{
-                    onTimeStr = onAmodel.createTime;
-                }
-                if ([timeStr isEqualToString:onTimeStr]) {
+                if ([model.type isEqualToString:@"MedicRecord"]) {
                     
-                    NoTimeLineCell * cell =[tableView dequeueReusableCellWithIdentifier:@"cell2"];
+                    HCY_DAVisceraCell * cell =[tableView dequeueReusableCellWithIdentifier:@"HCY_DAVisceraCell"];
                     if(cell==nil){
-                        cell = [[NoTimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
+                        cell = [[HCY_DAVisceraCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HCY_DAVisceraCell"];
                         cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     }
-                    
+                    cell.doctorNameLabel.font = [UIFont systemFontOfSize:15];
+                    cell.departmentNameLabel.font = [UIFont systemFontOfSize:15];
+                    cell.CCLabel.font = [UIFont systemFontOfSize:15];
+                    cell.timeLabel.font=[UIFont systemFontOfSize:16.0];
                     cell.createDateLabel.font=[UIFont systemFontOfSize:13.0];
-                    cell.kindLabel.font = [UIFont systemFontOfSize:12];
-                    cell.contentLabel.font=[UIFont systemFontOfSize:16];
+
                     if (indexPath.row < _dataArr.count -1) {
                         HealthTipsModel *nextAmodel = _dataArr[indexPath.row + 1];
-                        NSString *nextTimeStr = [NSString string];
-                        if (self.typeInteger == 0||self.typeInteger == 5) {
-                            nextTimeStr = nextAmodel.date;
-                        }else if (self.typeInteger == 1||self.typeInteger == 14){
-                            nextTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",nextAmodel.createDate]];
-                        }else{
-                            nextTimeStr = nextAmodel.createTime;
-                        }
-                        if (![timeStr isEqualToString:nextTimeStr]) {
+                        NSString *notimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",model.createTime]];
+                        NSString *nexttimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",nextAmodel.createTime]];
+                        if (![notimeStr isEqualToString:nexttimeStr]) {
                             cell.lineImageV2.hidden = YES;
                         }else{
                             cell.lineImageV2.hidden = NO;
@@ -255,11 +216,12 @@
                     }else if (indexPath.row == _dataArr.count -1){
                         cell.lineImageV2.hidden = YES;
                     }
-                    
-                    [cell assignmentNoCellWithModel:model withType:self.typeInteger];
+//
+                    [model yy_modelSetWithJSON:model.medicRecord];
+                    [cell assignmentVisceraWithModel:model];
                     return cell;
-                }else {
-                    
+
+                }else{
                     TimeLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
                     if(cell==nil){
                         cell = [[TimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
@@ -268,28 +230,172 @@
                     cell.timeLabel.font=[UIFont systemFontOfSize:16.0];
                     cell.createDateLabel.font=[UIFont systemFontOfSize:13.0];
                     cell.contentLabel.font=[UIFont systemFontOfSize:16];
+                    if ([model.subjectCategorySn isEqualToString:@"JLBS"]){
+                        [[NSUserDefaults standardUserDefaults]setValue: [model.subject valueForKey:@"name"] forKey:@"Physical"];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+                    }
                     
-                    if (indexPath.row < _dataArr.count -1) {
-                        HealthTipsModel *nextAmodel = _dataArr[indexPath.row + 1];
+                    if (_dataArr.count > 1) {
+                        HealthTipsModel *nextmodel = _dataArr[indexPath.row+1];
                         NSString *nextTimeStr = [NSString string];
                         if (self.typeInteger == 0||self.typeInteger == 5) {
-                            nextTimeStr = nextAmodel.date;
+                            nextTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",nextmodel.createTime]];
                         }else if (self.typeInteger == 1||self.typeInteger == 14){
-                            nextTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",nextAmodel.createDate]];
+                            nextTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",nextmodel.createDate]];
                         }else{
-                            nextTimeStr = nextAmodel.createTime;
+                            nextTimeStr = nextmodel.createTime;
                         }
                         if (![timeStr isEqualToString:nextTimeStr]) {
                             cell.lineImageV2.hidden = YES;
                         }else{
                             cell.lineImageV2.hidden = NO;
                         }
-                    }else if (indexPath.row == _dataArr.count -1){
+                    }else{
                         cell.lineImageV2.hidden = YES;
                     }
                     
                     [cell assignmentCellWithModel:model withType:self.typeInteger];
                     return cell;
+                }
+               
+            }else{
+                
+                HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
+                NSString *onTimeStr = [NSString string];
+                if (self.typeInteger == 0||self.typeInteger == 5) {
+                    onTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",onAmodel.createTime]];
+                }else if (self.typeInteger == 1||self.typeInteger == 14){
+                    onTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",onAmodel.createDate]];
+                }else{
+                    onTimeStr = onAmodel.createTime;
+                }
+                NSLog(@"==========%@",model.createTime);
+                if ([timeStr isEqualToString:onTimeStr]) {
+                    
+                    if ([model.type isEqualToString:@"MedicRecord"]) {
+                        HCY_DAVisceraNoTimeCell * cell =[tableView dequeueReusableCellWithIdentifier:@"HCY_DAVisceraNoTimeCell"];
+                        if(cell==nil){
+                            cell = [[HCY_DAVisceraNoTimeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HCY_DAVisceraNoTimeCell"];
+                            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        }
+                        if (indexPath.row < _dataArr.count -1) {
+                            HealthTipsModel *nextAmodel = _dataArr[indexPath.row + 1];
+                          NSString *notimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",model.createTime]];
+                           NSString *nexttimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",nextAmodel.createTime]];
+                            if (![notimeStr isEqualToString:nexttimeStr]) {
+                                cell.lineImageV2.hidden = YES;
+                            }else{
+                                cell.lineImageV2.hidden = NO;
+                            }
+                        }else if (indexPath.row == _dataArr.count -1){
+                            cell.lineImageV2.hidden = YES;
+                        }
+                        cell.doctorNameLabel.font = [UIFont systemFontOfSize:15];
+                        cell.departmentNameLabel.font = [UIFont systemFontOfSize:15];
+                        cell.CCLabel.font = [UIFont systemFontOfSize:15];
+                        cell.createDateLabel.font=[UIFont systemFontOfSize:13.0];
+                        NSLog(@"%@",model.medicRecord);
+                        [model yy_modelSetWithJSON:model.medicRecord];
+                        [cell assignmentNoVisceraWithModel:model];
+                        return cell;
+                    }else{
+                        NoTimeLineCell * cell =[tableView dequeueReusableCellWithIdentifier:@"cell2"];
+                        if(cell==nil){
+                            cell = [[NoTimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
+                            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        }
+                        
+                        cell.createDateLabel.font=[UIFont systemFontOfSize:13.0];
+                        cell.kindLabel.font = [UIFont systemFontOfSize:12];
+                        cell.contentLabel.font=[UIFont systemFontOfSize:16];
+                        if (indexPath.row < _dataArr.count -1) {
+                            HealthTipsModel *nextAmodel = _dataArr[indexPath.row + 1];
+                            NSString *nextTimeStr = [NSString string];
+                            if (self.typeInteger == 0||self.typeInteger == 5) {
+                                nextTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",nextAmodel.createTime]];
+                            }else if (self.typeInteger == 1||self.typeInteger == 14){
+                                nextTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",nextAmodel.createDate]];
+                            }else{
+                                nextTimeStr = nextAmodel.createTime;
+                            }
+                            if (![timeStr isEqualToString:nextTimeStr]) {
+                                cell.lineImageV2.hidden = YES;
+                            }else{
+                                cell.lineImageV2.hidden = NO;
+                            }
+                        }else if (indexPath.row == _dataArr.count -1){
+                            cell.lineImageV2.hidden = YES;
+                        }
+                        
+                        
+                        [cell assignmentNoCellWithModel:model withType:self.typeInteger];
+                        return cell;
+                    }
+                  
+                }else {
+                    
+                    if ([model.type isEqualToString:@"MedicRecord"]) {
+                        HCY_DAVisceraCell * cell =[tableView dequeueReusableCellWithIdentifier:@"HCY_DAVisceraCell"];
+                        if(cell==nil){
+                            cell = [[HCY_DAVisceraCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HCY_DAVisceraCell"];
+                            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        }
+                        cell.doctorNameLabel.font = [UIFont systemFontOfSize:15];
+                        cell.departmentNameLabel.font = [UIFont systemFontOfSize:15];
+                        cell.CCLabel.font = [UIFont systemFontOfSize:15];
+                        cell.timeLabel.font=[UIFont systemFontOfSize:16.0];
+                        cell.createDateLabel.font=[UIFont systemFontOfSize:13.0];
+                        
+                        if (_dataArr.count > 1) {
+                            HealthTipsModel *nextmodel = _dataArr[indexPath.row+1];
+                            NSString *notimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",model.createTime]];
+                            NSString *nexttimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",nextmodel.createTime]];
+                            if (![notimeStr isEqualToString:nexttimeStr]) {
+                                cell.lineImageV2.hidden = YES;
+                            }else{
+                                cell.lineImageV2.hidden = NO;
+                            }
+                        }else{
+                            cell.lineImageV2.hidden = NO;
+                        }
+                        
+                        [model yy_modelSetWithJSON:model.medicRecord];
+                        [cell assignmentVisceraWithModel:model];
+                        return cell;
+                    }else{
+                        TimeLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
+                        if(cell==nil){
+                            cell = [[TimeLineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
+                            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        }
+                        cell.timeLabel.font=[UIFont systemFontOfSize:16.0];
+                        cell.createDateLabel.font=[UIFont systemFontOfSize:13.0];
+                        cell.contentLabel.font=[UIFont systemFontOfSize:16];
+                        
+                        if (indexPath.row < _dataArr.count -1) {
+                            HealthTipsModel *nextAmodel = _dataArr[indexPath.row + 1];
+                            NSString *nextTimeStr = [NSString string];
+                            if (self.typeInteger == 0||self.typeInteger == 5) {
+                                nextTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",nextAmodel.createTime]];
+                            }else if (self.typeInteger == 1||self.typeInteger == 14){
+                                nextTimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",nextAmodel.createDate]];
+                            }else{
+                                nextTimeStr = nextAmodel.createTime;
+                            }
+                            if (![timeStr isEqualToString:nextTimeStr]) {
+                                cell.lineImageV2.hidden = YES;
+                            }else{
+                                cell.lineImageV2.hidden = NO;
+                            }
+                        }else if (indexPath.row == _dataArr.count -1){
+                            cell.lineImageV2.hidden = YES;
+                        }
+                        
+                        [cell assignmentCellWithModel:model withType:self.typeInteger];
+                        return cell;
+                    }
+                    
+                 
                 }
             }
         }else{
@@ -327,9 +433,6 @@
             cell.doctorNameLabel.font = [UIFont systemFontOfSize:15];
             cell.departmentNameLabel.font = [UIFont systemFontOfSize:15];
             cell.CCLabel.font = [UIFont systemFontOfSize:15];
-            cell.typeLabel.font = [UIFont systemFontOfSize:15];
-            cell.topLabel.font=[UIFont systemFontOfSize:15];
-            cell.lowLabel.font=[UIFont systemFontOfSize:15];
             cell.timeLabel.font=[UIFont systemFontOfSize:16.0];
             cell.createDateLabel.font=[UIFont systemFontOfSize:13.0];
             
@@ -341,7 +444,7 @@
                     cell.lineImageV2.hidden = NO;
                 }
             }else{
-                cell.lineImageV2.hidden = NO;
+                cell.lineImageV2.hidden = YES;
             }
             
             
@@ -379,9 +482,6 @@
                 cell.doctorNameLabel.font = [UIFont systemFontOfSize:15];
                 cell.departmentNameLabel.font = [UIFont systemFontOfSize:15];
                 cell.CCLabel.font = [UIFont systemFontOfSize:15];
-                cell.typeLabel.font = [UIFont systemFontOfSize:15];
-                cell.topLabel.font=[UIFont systemFontOfSize:15];
-                cell.lowLabel.font=[UIFont systemFontOfSize:15];
                 cell.timeLabel.font=[UIFont systemFontOfSize:16.0];
                 cell.createDateLabel.font=[UIFont systemFontOfSize:13.0];
                 
@@ -615,6 +715,8 @@
         [[self viewController].navigationController pushViewController:vc animated:YES];
     }
     
+    
+    
     if ([model.type isEqualToString:@"REPORT"] ) {
         
         if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
@@ -635,14 +737,25 @@
     
     
     //病历列表
-    if (![GlobalCommon stringEqualNull:model.medicRecordId]){
+    if (![GlobalCommon stringEqualNull:model.medicRecordId]||[model.type isEqualToString:@"MedicRecord"]){
 # pragma mark -  病历列表
 
         #if TARGET_IPHONE_SIMULATOR
-        
+
         #else
          if (![GlobalCommon stringEqualNull:model.medicRecordId]){
-            NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:model.userToken medicId:model.medicRecordId];
+             NSString *resultStr = [NSString string];
+             if([model.type isEqualToString:@"MedicRecord"]){
+                 NSString *userTokenStr = [model.medicRecord valueForKey:@"userToken"];
+                 NSString *medicRecordIdStr = [model.medicRecord valueForKey:@"medicRecordId"];
+                 if (![GlobalCommon stringEqualNull:userTokenStr]&&![GlobalCommon stringEqualNull:medicRecordIdStr]) {
+                       resultStr = [[HHMSDK default] getMedicDetailWithUserToken:userTokenStr medicId:medicRecordIdStr];
+                 }else{
+                     return;
+                 }
+             }else{
+                 resultStr = [[HHMSDK default] getMedicDetailWithUserToken:model.userToken medicId:model.medicRecordId];
+             }
              //NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:[UserShareOnce shareOnce].userToken medicId:model.medicRecordId];
             //测试环境
             //NSString *resultStr = [[HHMSDK default] getMedicDetailWithUserToken:@"E97C4CD92C12E6C935CDAA39C1380DC7CCCB578FFE9820E7F43A1807648A85D9" medicId:@"1566359270792"];
@@ -679,9 +792,16 @@
         
     }
     
-    if (model.pictures) {
+    if (model.pictures||[model.type isEqualToString:@"memberHealthr"]) {
         UploadReportDetailsViewController *vc = [[UploadReportDetailsViewController alloc]init];
-        vc.model = _dataArr[indexPath.row];
+        if ([model.type isEqualToString:@"memberHealthr"]) {
+            HealthTipsModel *model1 = _dataArr[indexPath.row];
+            vc.model = [[HealthTipsModel alloc]init];
+            [vc.model yy_modelSetWithJSON:model1.memberHealthr];
+        }else{
+            vc.model = _dataArr[indexPath.row];
+        }
+        
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
     }
@@ -705,7 +825,7 @@
     NSDate *detailDate=[NSDate dateWithTimeIntervalSince1970:time];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; //实例化一个NSDateFormatter对象
     //设定时间格式,这里可以设置成自己需要的格式
-    NSString *dateStr = [NSString stringWithFormat:@"MM%@dd%@",ModuleZW(@"月"),ModuleZW(@"日")];
+    NSString *dateStr = [NSString stringWithFormat:@"yyyy-MM-dd"];
     [dateFormatter setDateFormat:dateStr];
     NSString *currentDateStr = [dateFormatter stringFromDate: detailDate];
     return currentDateStr;

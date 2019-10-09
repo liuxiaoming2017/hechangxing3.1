@@ -218,10 +218,11 @@
 }
 
 -(void)requestCarWithStr:(NSString *)str withtypeInt:(int)typeint{
-    
-    NSString *str1 = [NSString stringWithFormat:@"/member/cashcard/getCard.jhtml?imageCode=%@",str];
+    NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",str];
+    NSString *signatureStr = [GlobalCommon md5:iPoneNumber].uppercaseString;
+    NSString *str1 = [NSString stringWithFormat:@"/member/cashcard/getCard.jhtml?imageCode=%@&signature=%@",str,signatureStr];
     str1 = [str1 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"-----------------------%@",str);
+    NSLog(@"-----------------------%@",str1);
     __weak typeof(self) weakSelf = self;
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:str1 parameters:nil successBlock:^(id response) {
         //             [hud hideAnimated:YES];
