@@ -55,6 +55,7 @@
 
 @property (nonatomic, copy) NSString *yueYaoPlayUrl;
 
+@property (nonatomic, assign) BOOL isNextVC;
 @end
 
 @implementation MySportController
@@ -117,6 +118,14 @@
     [[ZYAudioManager defaultManager] stopMusic:self.cureentPlayUrl];
     [[ZYAudioManager defaultManager] stopMusic:self.yueYaoPlayUrl];
     audioPlay = nil;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if(self.isNextVC){
+        [self dealWithShiFanYinYueYaoData];
+    }
 }
 
 - (void)viewDidLoad {
@@ -378,6 +387,9 @@
 {
     NSString* filepath=[self Createfilepath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
+    if(self.shifanyinPlayArr.count>0){
+        [self.shifanyinPlayArr removeAllObjects];
+    }
     for (NSString *urlpathname in self.imageArr) {
         NSString* urlpath= [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3", urlpathname]];
         BOOL fileExists = [fileManager fileExistsAtPath:urlpath];
@@ -437,6 +449,7 @@
         
         UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有乐药产品,是否去下载") preferredStyle:(UIAlertControllerStyleAlert)];
         UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            self.isNextVC = YES;
             YueYaoController *sportDemonVC = [[YueYaoController alloc]init];
             [self.navigationController pushViewController:sportDemonVC animated:YES];
         }];
@@ -483,6 +496,7 @@
         
         UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有音乐示范音产品,是否去下载") preferredStyle:(UIAlertControllerStyleAlert)];
         UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            self.isNextVC = YES;
             SportDemonstratesViewController *sportDemonVC = [[SportDemonstratesViewController alloc]init];
             [self.navigationController pushViewController:sportDemonVC animated:YES];
         }];
