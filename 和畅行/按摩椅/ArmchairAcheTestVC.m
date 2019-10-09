@@ -215,11 +215,11 @@
     [subLayer2 addAnimation:animation2 forKey:nil];
 }
 
-- (void)messageBtnAction:(UIButton *)btn
-{
-    ArmchairTestResultVC *vc = [[ArmchairTestResultVC alloc] initWithacheResult:2 withfatigueResult:3];
-    [self.navigationController pushViewController:vc animated:YES];
-}
+//- (void)messageBtnAction:(UIButton *)btn
+//{
+//    ArmchairTestResultVC *vc = [[ArmchairTestResultVC alloc] initWithacheResult:2 withfatigueResult:3];
+//    [self.navigationController pushViewController:vc animated:YES];
+//}
 
 
 @end

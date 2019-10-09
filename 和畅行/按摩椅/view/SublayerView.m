@@ -46,7 +46,7 @@
     self.imageV.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:self.imageV];
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(2, CGRectGetMaxY(self.imageV.frame)+10, self.frame.size.width-5*2, 20)];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(2, CGRectGetMaxY(self.imageV.frame)+10, self.frame.size.width-2*2, 20)];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     //self.titleLabel.highlightedTextColor = [UIColor redColor];
     self.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize > 16.0 ? 16.0 : 14*[UserShareOnce shareOnce].fontSize];
@@ -74,12 +74,15 @@
     NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
     if([jlbsName isEqualToString:@""] || jlbsName==nil){
         self.titleLabel.text = @"";
-        self.imageV.image = [UIImage imageNamed:@""];
+        self.imageV.image = [UIImage imageNamed:@"推荐_默认"];
+        self.imageV.frame = CGRectMake((self.frame.size.width-70)/2.0, (self.frame.size.height-70)/2.0, 70, 70);
+        self.titleLabel.frame = CGRectMake(2, CGRectGetMaxY(self.imageV.frame)+10, self.frame.size.width-2*2, 20);
     }else{
         self.titleLabel.text = [NSString stringWithFormat:@"%@推拿手法",jlbsName];
         jlbsName = [jlbsName substringFromIndex:[jlbsName length]-1];
         self.imageV.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@icon",jlbsName]];
-        
+        self.imageV.frame = CGRectMake((self.frame.size.width-55)/2.0, (self.frame.size.height-55-10-20)/2.0, 55, 55);
+        self.titleLabel.frame = CGRectMake(2, CGRectGetMaxY(self.imageV.frame)+10, self.frame.size.width-2*2, 20);
     }
     
 }

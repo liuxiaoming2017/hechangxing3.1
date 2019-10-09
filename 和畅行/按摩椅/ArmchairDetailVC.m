@@ -14,6 +14,7 @@
 
 #import "ArmchairAcheTestVC.h"
 #import "ArmchairTestResultVC.h"
+#import "UIImage+Units.h"
 typedef enum : NSInteger {
     PointDirectTop,
     PointDirectLevel,
@@ -57,6 +58,8 @@ typedef enum : NSInteger {
 
 @property (nonatomic, assign) BOOL isAdvanced; //是否高级按摩
 
+@property (nonatomic, assign) BOOL isRecommend; //是否推荐按摩
+
 @property (nonatomic, copy) NSString *titleStr;
 
 @property (nonatomic, strong) UITextView *acupointLabel; //穴位介绍
@@ -86,6 +89,16 @@ typedef enum : NSInteger {
     return self;
 }
 
+- (id)initWithRecommend:(BOOL )isRecommend withTitleStr:(NSString *)titleStr
+{
+    self = [super init];
+    if(self){
+        self.isRecommend = isRecommend;
+        self.titleStr = titleStr;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -109,6 +122,7 @@ typedef enum : NSInteger {
     }];
     [[OGA530BluetoothManager shareInstance] addSubscribe:self.ogaSubscribe];
 
+    self.view.backgroundColor = [UIColor whiteColor];
     
     // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DidEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
     
@@ -264,7 +278,7 @@ typedef enum : NSInteger {
         }
     }
     
-    if(!self.isAdvanced && !isZhuanshu){
+    if(!self.isAdvanced && !isZhuanshu && !self.isRecommend){
         UIButton *likeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         likeBtn.frame = CGRectMake(self.rightBtn.left-42, 2+kStatusBarHeight, 37, 40);
         [likeBtn setImage:[UIImage imageNamed:@"按摩收藏_未"] forState:UIControlStateNormal];
@@ -560,7 +574,7 @@ typedef enum : NSInteger {
     UIView *layerView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-90, ScreenWidth, 20)];
     layerView.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:layerView];
-    
+
     InsidelayerView *insidelayerView = [[InsidelayerView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 20)];
     [insidelayerView insertSublayerFromeView:layerView];
     [layerView addSubview:insidelayerView];
@@ -578,10 +592,34 @@ typedef enum : NSInteger {
     CAShapeLayer *layer = [self createMaskLayerWithView:self.postBottomView];
     self.postBottomView.layer.mask = layer;
     
-//    self.postBottomView.layer.shadowColor = [UIColor lightGrayColor].CGColor;
-//    self.postBottomView.layer.shadowOffset = CGSizeMake(0,1);
-//    self.postBottomView.layer.shadowOpacity = 0.4;
-//    self.postBottomView.layer.shadowRadius = 4;
+    
+    /*
+    self.postBottomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-100, ScreenWidth, 275-90)];
+    self.postBottomView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:self.postBottomView];
+    
+    
+    
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, ScreenWidth, self.postBottomView.height-10)];
+    bottomView.backgroundColor = [UIColor whiteColor];
+    bottomView.layer.shadowColor = [UIColor lightGrayColor].CGColor;
+    bottomView.layer.shadowOffset = CGSizeMake(0,1);
+    bottomView.layer.shadowOpacity = 0.4;
+    bottomView.layer.shadowRadius = 4;
+    [self.postBottomView addSubview:bottomView];
+    
+    UIImageView *circleV = [[UIImageView alloc] initWithFrame:CGRectMake((ScreenWidth-20)/2.0, 0, 20, 20)];
+    circleV.layer.shadowColor = [UIColor lightGrayColor].CGColor;
+    circleV.layer.shadowOffset = CGSizeMake(0,1);
+    circleV.layer.shadowOpacity = 0.4;
+    circleV.layer.shadowRadius = 4;
+    circleV.backgroundColor = [UIColor whiteColor];
+    circleV.layer.cornerRadius = 10.0;
+    
+    [self.postBottomView addSubview:circleV];
+    */
+    
+
     
     NSArray *nameArr = [self loadDataPlistWithStr:@"姿势"];
     CGFloat buttonMargin = (self.postBottomView.width-56*3)/4.0;
@@ -899,6 +937,7 @@ typedef enum : NSInteger {
 
     CAShapeLayer *layer = [CAShapeLayer layer];
     layer.fillColor = [UIColor redColor].CGColor;
+    layer.strokeColor = [UIColor orangeColor].CGColor;
 //    layer.shadowColor = [UIColor lightGrayColor].CGColor;
 //    layer.shadowOffset = CGSizeMake(0,1);
 //    layer.shadowOpacity = 0.4;

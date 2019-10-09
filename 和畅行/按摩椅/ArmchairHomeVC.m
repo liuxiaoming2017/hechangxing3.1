@@ -353,7 +353,9 @@
 {
     SublayerView *layerView = (SublayerView *)[gesture view];
     ArmChairModel *model = layerView.model;
-    model.name = [model.name stringByAppendingString:@"推拿手法"];
+    if(![model.name containsString:@"推拿手法"]){
+        model.name = [model.name stringByAppendingString:@"推拿手法"];
+    }
     NSString *statusStr = [self resultStringWithStatus];
     if(![statusStr isEqualToString:@""]){
         [GlobalCommon showMessage2:statusStr duration2:1.0];
@@ -373,6 +375,7 @@
         }else{
             NSLog(@"开机了开机了");
             [self nextVCWithModel:model];
+            
         }
     }
     
@@ -429,13 +432,19 @@
                 [self nextVCWithModel:model];
             }
         }
-        
-        
     }
 }
 
 - (void)nextVCWithModel:(ArmChairModel *)model
 {
+    //点击推荐的按摩,不让有收藏按钮
+    if([model.name containsString:@"推拿手法"]){
+        ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithRecommend:YES withTitleStr:model.name];
+        vc.armchairModel = model;
+        [vc commandActionWithModel:model];
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }
     if ([model.name isEqualToString:@"高级按摩"] || [model.name isEqualToString:@"肩颈4D"]){
         ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:YES withTitleStr:model.name];
         vc.armchairModel = model;
@@ -772,10 +781,10 @@
     return YES;
 }
 
-- (void)messageBtnAction:(UIButton *)btn
-{
-    ArmchairAcheTestVC *vc = [[ArmchairAcheTestVC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-}
+//- (void)messageBtnAction:(UIButton *)btn
+//{
+//    ArmchairAcheTestVC *vc = [[ArmchairAcheTestVC alloc] init];
+//    [self.navigationController pushViewController:vc animated:YES];
+//}
 
 @end

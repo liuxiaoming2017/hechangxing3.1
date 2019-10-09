@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id)initWithType:(BOOL )isAdvanced withTitleStr:(NSString *)titleStr;
 
+- (id)initWithRecommend:(BOOL )isRecommend withTitleStr:(NSString *)titleStr;
+
 - (void)commandActionWithModel:(ArmChairModel *)model;
 
 @end
