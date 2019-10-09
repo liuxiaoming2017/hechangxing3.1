@@ -16,7 +16,7 @@ extern BOOL isJY;
 extern BOOL isSF;
 extern BOOL isBF;
 
-#define isProduct YES
+#define isProduct NO
 
 //数据统计测试环境
 #define DATAURL_PRE @"http://47.92.160.74:8086/api/v1/"
