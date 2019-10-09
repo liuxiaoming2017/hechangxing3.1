@@ -90,7 +90,7 @@
             [weakSelf.idArray addObject:@"hot"];
             [weakSelf.idArray addObject:@"10"];
             [daArray addObject:ModuleZW(@"最新资讯")];
-            if(array.count >1){
+            if(array.count >0){
                 for (NSDictionary *Dic in array) {
                     [daArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"name"]]];
                     [weakSelf.idArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"id"]]];
@@ -191,7 +191,7 @@
         self.healthView.hidden = YES;
         self.healthTableView.hidden = NO;
         [self requestHealthHintDataRefreshWithString:nil];
-    }else if(endIndex == 1){
+    }else if(endIndex == 2){
         self.typeInteger = 1;
         HealthLectureViewController *vc = [[HealthLectureViewController alloc]init];
         [self addChildViewController:vc];
