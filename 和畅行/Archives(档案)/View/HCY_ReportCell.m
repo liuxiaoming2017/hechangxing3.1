@@ -80,19 +80,16 @@
         bottomColor = @"D1BDFF";
         quartertitleStr = ModuleZW(@"第二季度阶段报告");
         timeStr =  [NSString stringWithFormat:@"%@.04.01-%@.06.30",yearStr,yearStr];
-        timeStr = @"2018.04.01-2018.06.30";
     }else if ([quarterStr isEqualToString:@"3"]) {
         topColor = @"E2862C";
         bottomColor = @"F3D285";
         quartertitleStr = ModuleZW(@"第三季度阶段报告");
         timeStr =  [NSString stringWithFormat:@"%@.07.01-%@.09.30",yearStr,yearStr];
-        timeStr = @"2018.07.01-2018.09.30";
     }else{
         topColor = @"6673EE";
         bottomColor = @"FCA6D1";
         quartertitleStr = ModuleZW(@"第四季度阶段报告");
         timeStr =  [NSString stringWithFormat:@"%@.10.01-%@.12.31",yearStr,yearStr];
-        timeStr = @"2018.10.01-2018.12.31";
     }
     
     [self.backImageView.layer addSublayer:[UIColor setGradualChangingColor:self.backImageView fromColor:topColor toColor:bottomColor]];

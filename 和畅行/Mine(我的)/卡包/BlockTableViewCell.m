@@ -80,7 +80,7 @@
     }else{
         _mLabel.hidden = YES;
         _yLabel.hidden = YES;
-        _hLabel.frame = CGRectMake(10, 10, self.width - 40, 110);
+        _hLabel.frame = CGRectMake(10, 10, self.width - 20, 110);
         _hLabel.text = model.card_name;
      
         if ([model.status  isEqualToString:@"1"]){
