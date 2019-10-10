@@ -191,24 +191,24 @@
         self.healthView.hidden = YES;
         self.healthTableView.hidden = NO;
         [self requestHealthHintDataRefreshWithString:nil];
-    }else if(endIndex == 2){
-        self.typeInteger = 1;
-        HealthLectureViewController *vc = [[HealthLectureViewController alloc]init];
-        [self addChildViewController:vc];
-        vc.view.frame =  CGRectMake(0, _BaoGaosegment.bottom, ScreenWidth, ScreenHeight-_BaoGaosegment.bottom);
-        [self.view addSubview:vc.view];
-        self.healthView  = vc.view;
-        [vc didMoveToParentViewController:self];
-        if ([UserShareOnce shareOnce].languageType){
-            self.healthView.hidden = YES;
-            self.healthTableView.hidden = NO;
-            _typeStr = [self.idArray objectAtIndex:endIndex];
-            [self requestHealthHintDataRefreshWithString:_typeStr];
-        }else{
-            self.healthView.hidden = NO;
-            self.healthTableView.hidden = YES;
-            self.noView.hidden = YES;
-        }
+//    }else if(endIndex == 2){
+//        self.typeInteger = 1;
+//        HealthLectureViewController *vc = [[HealthLectureViewController alloc]init];
+//        [self addChildViewController:vc];
+//        vc.view.frame =  CGRectMake(0, _BaoGaosegment.bottom, ScreenWidth, ScreenHeight-_BaoGaosegment.bottom);
+//        [self.view addSubview:vc.view];
+//        self.healthView  = vc.view;
+//        [vc didMoveToParentViewController:self];
+//        if ([UserShareOnce shareOnce].languageType){
+//            self.healthView.hidden = YES;
+//            self.healthTableView.hidden = NO;
+//            _typeStr = [self.idArray objectAtIndex:endIndex];
+//            [self requestHealthHintDataRefreshWithString:_typeStr];
+//        }else{
+//            self.healthView.hidden = NO;
+//            self.healthTableView.hidden = YES;
+//            self.noView.hidden = YES;
+//        }
     }else{
         self.typeInteger = 2;
         self.healthView.hidden = YES;
