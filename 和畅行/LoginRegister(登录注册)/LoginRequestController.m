@@ -39,7 +39,7 @@
     UIButton *preBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     preBtn.frame = CGRectMake(10, kStatusBarHeight+2, 65, 40);
     [preBtn setImage:[UIImage imageNamed:@"nav_bar_back"] forState:UIControlStateNormal];
-    [preBtn setTitle:ModuleZW(@"返回") forState:UIControlStateNormal];
+//    [preBtn setTitle:ModuleZW(@"返回") forState:UIControlStateNormal];
     [preBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [preBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [preBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];

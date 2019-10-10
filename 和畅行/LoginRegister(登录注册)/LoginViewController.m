@@ -701,13 +701,13 @@
 -(void)FoggetActive:(id)sender
 {
     
-    if([UserShareOnce shareOnce].languageType){
+//    if([UserShareOnce shareOnce].languageType){
         FindPassWordController *findVc = [[FindPassWordController alloc] init];
         [self.navigationController pushViewController:findVc animated:YES];
-    }else{
-        self.segment.selectedSegmentIndex = 0;
-        [self selected:self.segment];
-    }
+//    }else{
+//        self.segment.selectedSegmentIndex = 0;
+//        [self selected:self.segment];
+//    }
   
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
