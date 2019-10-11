@@ -11,7 +11,7 @@
 extern NSInteger pindex;
 extern NSString* LeYaotype;
 extern NSInteger qiehuanlogin;
-
+    
 extern BOOL isJY;
 extern BOOL isSF;
 extern BOOL isBF;

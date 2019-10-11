@@ -39,6 +39,8 @@
 
 @property (nonatomic,strong) UIButton *nameBT;
 @property (nonatomic,strong) UIButton *emailBT;
+
+@property (nonatomic,strong) NSString *sexupStr;
 @end
 
 @implementation PersonalInformationViewController
@@ -79,7 +81,7 @@
     self.brithdayStr    = [NSString string];
     self.phoneStr       = [NSString string];
     self.emailStr       = [NSString string];
-    
+    self.sexupStr           = [NSString string];
     if ([MemberUserShance shareOnce].name.length <  26) {
         self.nameStr = [MemberUserShance shareOnce].name;
     }else{
@@ -307,13 +309,12 @@
 #pragma mark ------ 提交按钮
 -(void)commitClick {
     
-    NSString *sexStr = [NSString string];
     if([self.sexStr isEqualToString:ModuleZW(@"男")]){
-        sexStr = @"male";
+        self.sexupStr = @"male";
     }else if([self.sexStr isEqualToString:ModuleZW(@"女")]){
-        sexStr = @"female";
+        self.sexupStr = @"female";
     }else{
-        sexStr = @"";
+        self.sexupStr = @"";
     }
     if ([_brithdayStr isEqualToString:ModuleZW(@"未设置")]) {
         _brithdayStr = @"";
@@ -340,7 +341,7 @@
     }
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"id"];
     [request setPostValue:self.urlHttpImg forKey:@"memberImage"];
-    [request setPostValue:sexStr forKey:@"gender"];
+    [request setPostValue:self.sexupStr forKey:@"gender"];
     [request setPostValue:self.nameStr forKey:@"name"];
     [request setPostValue:_phoneStr forKey:@"mobile"];
     [request setPostValue:_emailStr forKey:@"email"];
@@ -562,8 +563,8 @@
             _emailStr = ModuleZW(@"未绑定");
         }
         
-      
-         [UserShareOnce shareOnce].email=_emailStr;
+        [UserShareOnce shareOnce].gender = self.sexupStr;
+        [UserShareOnce shareOnce].email=_emailStr;
         [UserShareOnce shareOnce].birthday=_brithdayStr;
         [UserShareOnce shareOnce].username=_phoneStr;
         [UserShareOnce shareOnce].memberImage=self.urlHttpImg;
