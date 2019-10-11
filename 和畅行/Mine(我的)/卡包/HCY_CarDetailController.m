@@ -72,7 +72,7 @@
      NSLog(@"%@",self.model.card_name);
     CGRect labelRect = [self.model.card_name boundingRectWithSize:CGSizeMake(ScreenWidth - 20 - 60, MAXFLOAT) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} context:nil];
     
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 70 + textRect.size.height + _serviceArr.count * 30*[UserShareOnce shareOnce].fontSize+labelRect.size.height )];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 70 + textRect.size.height + _serviceArr.count * 30*[UserShareOnce shareOnce].fontSize+labelRect.size.height + 20)];
     if (imageV.height > ScreenHeight - imageV.top -  kTabBarHeight) {
         imageV.height = ScreenHeight - imageV.top -  kTabBarHeight - 30;
     }

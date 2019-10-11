@@ -216,6 +216,7 @@ static NSMutableArray *tasks;
 //        }
         
         [manager.requestSerializer setValue:@"ios_hcy-oem-3.1.3" forHTTPHeaderField:@"version"];
+        
         [manager.requestSerializer setValue:[UserShareOnce shareOnce].token forHTTPHeaderField:@"token"];
         [manager.requestSerializer setValue:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
                                              [UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID] forHTTPHeaderField:@"Cookie"];
