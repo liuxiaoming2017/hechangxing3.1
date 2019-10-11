@@ -367,7 +367,7 @@
         return;
     }else{
         self.armchairModel = model;
-        if([model.name isEqualToString:@"大师精选"]){
+        if([model.name isEqualToString:@"大师精选推拿手法"]){
             return;
         }
         if([OGA530BluetoothManager shareInstance].respondModel.powerOn == NO){
