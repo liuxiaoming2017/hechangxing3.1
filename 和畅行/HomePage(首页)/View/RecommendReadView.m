@@ -193,10 +193,10 @@
     
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"noAppstoreCheck"]){
         [self checkHaveUpdateWithType:type];
-        
+        return;
     }
     
-    //__weak typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:[NSString stringWithFormat:@"login/version.jhtml?id=ios"] parameters:nil successBlock:^(id response) {
         if([[response objectForKey:@"status"] intValue] == 100){
@@ -207,7 +207,7 @@
             }else{ //针对之前用户
                 [[NSUserDefaults standardUserDefaults] setObject:@"noAppstoreCheck" forKey:@"noAppstoreCheck"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
-                //[weakSelf checkHaveUpdateWithType:type];
+                [weakSelf checkHaveUpdateWithType:type];
             }
         }
         
