@@ -128,6 +128,12 @@
     }
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self stopTimer];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

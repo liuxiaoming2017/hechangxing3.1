@@ -111,7 +111,6 @@
 
         }else{
             
-            
             NSString *urlStr =   [NSString stringWithFormat:@"%@",navigationAction.request.URL];
             if([urlStr hasSuffix:@"html"]){
                 urlStr = [urlStr stringByAppendingString:[NSString stringWithFormat:@"?fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];

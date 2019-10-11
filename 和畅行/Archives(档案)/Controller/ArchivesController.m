@@ -372,6 +372,9 @@
         self.wkwebview.navigationDelegate = self;
         // 与webview UI交互代理
         self.wkwebview.UIDelegate = self;
+        
+       
+        
         [self.view addSubview:self.wkwebview];
         // 添加KVO监听
         [self.wkwebview addObserver:self
@@ -398,8 +401,43 @@
 //    self.tableView.hidden = YES;
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request addValue:[self getCookieValue] forHTTPHeaderField:@"Cookie"];
+    
     [self.wkwebview loadRequest:request];
     
+}
+
+-(NSString*)readCurrentCookieWith:(NSDictionary*)dic{
+    if (dic == nil) {
+        return nil;
+    }else{
+        NSHTTPCookieStorage*cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+        NSMutableString *cookieString = [[NSMutableString alloc] init];
+        for (NSHTTPCookie*cookie in [cookieJar cookies]) {
+            [cookieString appendFormat:@"%@=%@;",cookie.name,cookie.value];
+        }
+        //删除最后一个“；”
+        [cookieString deleteCharactersInRange:NSMakeRange(cookieString.length - 1, 1)];
+        return cookieString;
+        
+    }
+}
+
+- (NSMutableString*)getCookieValue{
+    // 在此处获取返回的cookie
+    NSMutableDictionary *cookieDic = [NSMutableDictionary dictionary];
+    NSMutableString *cookieValue = [NSMutableString stringWithFormat:@""];
+    NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie *cookie in [cookieJar cookies]) {
+        [cookieDic setObject:cookie.value forKey:cookie.name];
+    }
+    // cookie重复，先放到字典进行去重，再进行拼接
+    for (NSString *key in cookieDic) {
+        NSString *appendString = [NSString stringWithFormat:@"%@=%@;", key, [cookieDic valueForKey:key]];
+        [cookieValue appendString:appendString];
+    }
+    return cookieValue;
 }
 
 # pragma mark - 健康提示数据
