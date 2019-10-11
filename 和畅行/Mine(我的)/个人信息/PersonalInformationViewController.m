@@ -309,6 +309,11 @@
 #pragma mark ------ 提交按钮
 -(void)commitClick {
     
+    
+    if ([GlobalCommon  stringEqualNull:self.nameStr]) {
+        [self showAlertWarmMessage:ModuleZW(@"昵称不能为空")];
+        return;
+    }
     if([self.sexStr isEqualToString:ModuleZW(@"男")]){
         self.sexupStr = @"male";
     }else if([self.sexStr isEqualToString:ModuleZW(@"女")]){
