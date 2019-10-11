@@ -215,7 +215,7 @@
                         [self.navigationController pushViewController:vc animated:YES];
                     }else{
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"确认注销用户") preferredStyle:UIAlertControllerStyleAlert];
+                            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"确认退出当前账号") preferredStyle:UIAlertControllerStyleAlert];
                             UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                                 
                             }];

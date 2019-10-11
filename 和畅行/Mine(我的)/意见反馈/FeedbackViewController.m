@@ -197,7 +197,8 @@
         [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
     }
     // [request addRequestHeader:@"token" value:g_userInfo.token];
-   // [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",g_userInfo.token,g_userInfo.JSESSIONID]];
+    //后面加的10.11
+    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
     [request setDelegate:self];
     [request setRequestMethod:@"GET"];
     [request setDidFailSelector:@selector(requestFeedbackError:)];//requestLoginError

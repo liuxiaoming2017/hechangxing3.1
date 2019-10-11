@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    
-    self.navTitleLabel.text = @"一推";
+    self.navTitleLabel.text = @"推拿";
     
     self.preBtn.hidden = NO;
     self.leftBtn.hidden = YES;
