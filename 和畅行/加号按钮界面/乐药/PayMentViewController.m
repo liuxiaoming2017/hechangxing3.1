@@ -278,6 +278,8 @@
     if([UserShareOnce shareOnce].languageType){
         [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
     }
+    //后面加的10.11
+    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];
@@ -525,6 +527,8 @@
     if([UserShareOnce shareOnce].languageType){
         [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
     }
+    //后面加的10.11
+    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];

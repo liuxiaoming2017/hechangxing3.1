@@ -69,7 +69,7 @@
     
     [self initUI];
     
-    self.navTitleLabel.text = @"一推";
+    self.navTitleLabel.text = @"推拿";
     
     self.dataArr = [NSMutableArray arrayWithCapacity:0];
     
@@ -170,22 +170,26 @@
     if(self.dataArr.count==0){
         NSArray *arr = [[CacheManager sharedCacheManager] getArmchairModel];
         
+        [self addLocalTack];
+        
         if(arr.count>0){
             [self.dataArr addObjectsFromArray:arr];
         }
+        ArmChairModel *model = [[ArmChairModel alloc] init];
+        model.name = @"更多按摩";
+        model.command = @"";
+        [self.dataArr addObject:model];
         
-        [self addLocalTack];
+        if(self.dataArr.count>12){
+            int count = (int)ceil(self.dataArr.count/3.0);
+            self.collectionV.height = 125*count+50+20;
+        }else{
+            self.collectionV.height = 125*4+50;
+        }
+        self.bgScrollView.contentSize = CGSizeMake(1, self.collectionV.bottom+10);
+        [self.collectionV reloadData];
     }
     
-    if(self.dataArr.count>12){
-        int count = (int)ceil(self.dataArr.count/3.0);
-        self.collectionV.height = 125*count+50+20;
-    }else{
-        self.collectionV.height = 125*4+50;
-    }
-    self.bgScrollView.contentSize = CGSizeMake(1, self.collectionV.bottom+10);
-    [self.collectionV reloadData];
-
 }
 
 - (void)bluetoothBtnAction:(UIButton *)button
@@ -206,7 +210,8 @@
     NSArray *arr = [self loadHomeData];
     [self.dataArr addObjectsFromArray:arr];
     NSArray *commandArr = @[k530Command_MassageIntellect,@"",@""];
-    NSArray *nameArr = @[@"酸疼检测",@"高级按摩",@"更多按摩"];
+    //NSArray *nameArr = @[@"酸疼检测",@"高级按摩",@"更多按摩"];
+    NSArray *nameArr = @[@"酸疼检测",@"高级按摩"];
     for(NSInteger i =0;i<nameArr.count;i++){
         ArmChairModel *model = [[ArmChairModel alloc] init];
         model.name = [nameArr objectAtIndex:i];

@@ -92,6 +92,10 @@ static NSMutableArray *tasks;
         [manager.requestSerializer setValue:[UserShareOnce shareOnce].languageType forHTTPHeaderField:@"language"];
     }
     
+//    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+//    NSArray *_tmpArray = [NSArray arrayWithArray:[cookieStorage cookies]];
+//    NSLog(@"%@",_tmpArray);
+    
         /* 设置请求服务器数类型式为 json */
         /*! 根据服务器的设定不同还可以设置 [AFJSONRequestSerializer serializer](常用) */
 
@@ -185,6 +189,7 @@ static NSMutableArray *tasks;
 
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
+            
             if (successBlock)
             {
                 successBlock(responseObject);

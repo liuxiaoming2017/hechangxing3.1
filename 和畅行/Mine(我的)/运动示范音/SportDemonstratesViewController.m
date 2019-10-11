@@ -432,7 +432,7 @@
         UIButton* statusbtn=[UIButton buttonWithType:UIButtonTypeCustom];
         statusbtn.tag=indexPath.row+10000;//[[[self.segmendatatarray objectAtIndex:indexPath.row] objectForKey:@"id"] intValue];
         statusbtn.frame=CGRectMake(ScreenWidth-statusviewImg.size.height/2-24.5, (cell.frame.size.height-statusviewImg.size.height/2)/2, statusviewImg.size.width/2+10  , statusviewImg.size.height/2+10);
-        [statusbtn addTarget:self action:@selector(DownloadButton:) forControlEvents:UIControlEventTouchUpInside];
+        //[statusbtn addTarget:self action:@selector(DownloadButton:) forControlEvents:UIControlEventTouchUpInside];
         
         [statusbtn addSubview:statusviewImgview];
         if (!fileExists) {
