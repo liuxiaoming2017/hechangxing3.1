@@ -19,9 +19,12 @@
 #import "ShoppingController.h"
 
 #import "NoteController.h"
+#import "NoteView.h"
 
 #import <MediaPlayer/MediaPlayer.h>
 #import <notify.h>
+
+
 
 #define SCREEN_WIDTH_Size ([UIScreen mainScreen].bounds.size.width)/375
 
@@ -298,14 +301,15 @@
         [self BluetoothConnection];
     }
    
-     [self getPayRequest];
+    [self getPayRequest];
     
     NSLog(@"url:%@",kPlayer.playUrlStr);
     
     // 设置播放器的代理
     kPlayer.delegate = self;
     kPlayer.noDelegate = NO;
-    if(kPlayer.playUrlStr != nil){
+    if(kPlayer.playUrlStr != nil && kPlayer.playerState == 2){
+        self.isPlaying = YES;
         self.selectSongName = kPlayer.playUrlStr;
         SongListModel *model = [kPlayer.musicArr objectAtIndex:0];
         [self dealHysegmentControlWithStr:model.subjectSn];
@@ -510,7 +514,7 @@
     SongListCell *cell = (SongListCell *)[tableView cellForRowAtIndexPath:indexPath];
     if(cell.PlayOrdownload){ //播放暂停
         
-        if(self.currentIndexPath) { //乐药类型切换时,处理正在播放的状态
+        if(self.currentIndexPath && self.currentIndexPath.row != indexPath.row) { //乐药类型切换时,处理正在播放的状态
             [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:self.currentIndexPath];
             self.currentIndexPath = nil;
         }
@@ -803,7 +807,14 @@
 //
 //    }];
     
-    [self nextMusic];
+    NSString *content = yueYaoNote;
+    
+    NoteView *noteV = [NoteView noteViewInitUIWithContent:content];
+    
+    [[UIApplication sharedApplication].keyWindow addSubview:noteV];
+    
+    
+   // [self nextMusic];
 }
 
 - (void)nextMusic
@@ -884,20 +895,13 @@
         }
             break;
         case GKAudioPlayerStateEnded: {     // 播放结束
-            NSLog(@"播放结束了");
-            if (self.isPlaying) {
-                
-                
-                self.isPlaying = NO;
-                
+            NSLog(@"播放结束了哈哈哈");
+            
                 // 播放结束，自动播放下一首
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self nextMusic];
-                });
-            }else {
-                
-                self.isPlaying = NO;
-            }
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                 [self nextMusic];
+            });
+            
         }
             break;
         case GKAudioPlayerStateError: {     // 播放出错

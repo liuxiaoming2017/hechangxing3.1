@@ -94,6 +94,11 @@
                 return;
             }
         }
+    
+        if(kPlayer.playerState == 2){
+            [kPlayer stop];
+        }
+    
         NSInteger uuid = [[UserShareOnce shareOnce].uuid integerValue];
         if(index.row == 0) {
             if ([UserShareOnce shareOnce].username.length != 11) {

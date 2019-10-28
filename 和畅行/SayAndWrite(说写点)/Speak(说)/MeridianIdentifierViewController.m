@@ -305,6 +305,10 @@
         __weak typeof(self) blockSelf = self;
         [btn setImage:nil forState:UIControlStateNormal];
         
+        if(kPlayer.playerState == 2){
+            [kPlayer stop];
+        }
+        
         [sender ba_countDownCustomWithTimeInterval:3 block:^(NSInteger currentTime) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -328,9 +332,6 @@
 
 - (void)startRecordAudion
 {
-    if(kPlayer.playerState == 2){
-        [kPlayer stop];
-    }
     
     if([self checkPermission]){
         [self recordAudio];
