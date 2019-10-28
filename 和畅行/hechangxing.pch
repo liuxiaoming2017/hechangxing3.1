@@ -39,6 +39,7 @@
 #import "UIImage+Util.h"
 #import <ReactiveObjC/ReactiveObjC.h>
 #import "CacheManager.h"
+#import "GKAudioPlayer.h"
 //和缓
 #if TARGET_IPHONE_SIMULATOR
 

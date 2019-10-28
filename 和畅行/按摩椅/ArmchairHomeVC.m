@@ -133,7 +133,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:YES];
-    
+    [[OGA530BluetoothManager shareInstance] removeSubscribe:self.subscribe];
     [self.dataArr removeAllObjects];
 }
 

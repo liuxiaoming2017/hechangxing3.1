@@ -322,6 +322,8 @@
                 CFShow(CFBridgingRetain(infoDictionary));
                 
                 NSString *versionStr = [infoDictionary objectForKey:@"CFBundleShortVersionString"];//版本
+                
+                
                 NSString *down_timeStr = [GlobalCommon getCurrentTimes];;//下载时间
                 
               

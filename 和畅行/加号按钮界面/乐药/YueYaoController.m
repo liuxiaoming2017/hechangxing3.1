@@ -13,7 +13,6 @@
 #import "DownloadHandler.h"
 #import "SongListModel.h"
 #import "ProgressIndicator.h"
-#import "AVPlayerObject.h"
 #import <AVFoundation/AVFoundation.h>
 #import "MuisicNoraml.h"
 #import <CoreBluetooth/CoreBluetooth.h>
@@ -24,11 +23,12 @@
 
 #define SCREEN_WIDTH_Size ([UIScreen mainScreen].bounds.size.width)/375
 
-@interface YueYaoController ()<UITableViewDelegate,UITableViewDataSource,songListCellDelegate,DownloadHandlerDelegate,CBCentralManagerDelegate,CBPeripheralDelegate,MuscicNoramlDeleaget>
+@interface YueYaoController ()<UITableViewDelegate,UITableViewDataSource,songListCellDelegate,DownloadHandlerDelegate,CBCentralManagerDelegate,CBPeripheralDelegate,MuscicNoramlDeleaget,GKAudioPlayerDelegate>
 
 {
     NSInteger SegIndex;
     id _playerTimeObserver;
+    NSInteger _gouMaiCount;
 }
 
 @property (nonatomic,strong) HYSegmentedControl *hysegmentControl;
@@ -42,11 +42,10 @@
 
 @property (strong, nonatomic) AVPlayer *avPlayer;
 
-@property (assign, nonatomic) BOOL isYueLuoyi;
 
-@property (assign, nonatomic) BOOL isOnPay;
 
-@property (nonatomic,strong) NSMutableArray *goumaiArr;
+@property (assign, nonatomic) BOOL isOnPay; //YES 需要购买
+
 
 @property (nonatomic,strong) UILabel *jinerLabel;
 
@@ -58,6 +57,10 @@
 @property (nonatomic,assign) BOOL isPlaying;
 
 @property (nonatomic,assign) BOOL isBackground;
+
+@property (nonatomic,copy) NSString *currentSubjectSn;
+
+@property (nonatomic,strong) NSIndexPath *currentIndexPath; //拿来做 类型切换 乐药播放时 找到暂停上一首乐药cell
 
 /**
  *  蓝牙连接必要对象
@@ -78,6 +81,7 @@
 @property (nonatomic,strong) UIButton *blueTBT;
 
 
+
 @end
 
 
@@ -92,18 +96,27 @@
     self.avPlayer = nil;
     self.tableView = nil;
     self.hysegmentControl = nil;
-    [self removeObserver];
+   // [self removeObserver];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PayStatues" object:nil];
     [UserShareOnce shareOnce].allYueYaoPrice = 0.0;
     [[UserShareOnce shareOnce].yueYaoBuyArr removeAllObjects];
 }
 
 
-
++ (instancetype)sharePlayerController
+{
+    static YueYaoController *_instance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[self alloc] init];
+    });
+    
+    return _instance;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.isOnPay = NO;
+    self.isOnPay = YES;
     self.isPlaying = NO;
     if(self.isYueLuoyi){
         self.navTitleLabel.text = @"樂絡怡";
@@ -111,22 +124,13 @@
         self.navTitleLabel.text = @"樂藥";
     }
     
-    self.goumaiArr = [NSMutableArray arrayWithCapacity:0];
     
     [self createTopGongView];
     
     allPrice = 0;
     
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(PaySuccess) name:@"PayStatues" object:nil];
-    
-//    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-//    //默认情况下扬声器播放
-//    [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
-//    [audioSession setActive:YES error:nil];
-    
-//    [self playControl];
-//
-//    [self createRemoteCommandCenter];
     
     if(self.isYueLuoyi){
         if(![[[NSUserDefaults standardUserDefaults]valueForKey:@"YueLuoyi"] isEqualToString:@"1111"]){
@@ -134,7 +138,9 @@
         }
     }
     
-    [self addObservers];
+//    [self addObservers];
+    
+    
     
 }
 
@@ -176,163 +182,9 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"songRemoteControlNotification" object:self userInfo:@{@"eventSubtype":@(event.subtype)}];
 }
 
-# pragma mark -  锁屏界面开启和监控远程控制事件
-- (void)createRemoteCommandCenter{
-   
-    MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
-    
-    //   MPFeedbackCommand对象反映了当前App所播放的反馈状态. MPRemoteCommandCenter对象提供feedback对象用于对媒体文件进行喜欢, 不喜欢, 标记的操作. 效果类似于网易云音乐锁屏时的效果
-    
-    //    commandCenter.togglePlayPauseCommand 耳机线控的暂停/播放
-    __weak typeof(self) weakSelf = self;
-    [commandCenter.pauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-        [weakSelf.avPlayer pause];
-        return MPRemoteCommandHandlerStatusSuccess;
-    }];
-    [commandCenter.playCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-        [weakSelf.avPlayer play];
-        return MPRemoteCommandHandlerStatusSuccess;
-    }];
-
-    //在控制台拖动进度条调节进度（仿QQ音乐的效果）
-    [commandCenter.changePlaybackPositionCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-        CMTime totlaTime = weakSelf.avPlayer.currentItem.duration;
-        MPChangePlaybackPositionCommandEvent * playbackPositionEvent = (MPChangePlaybackPositionCommandEvent *)event;
-        [weakSelf.avPlayer seekToTime:CMTimeMake(totlaTime.value*playbackPositionEvent.positionTime/CMTimeGetSeconds(totlaTime), totlaTime.timescale) completionHandler:^(BOOL finished) {
-        }];
-        return MPRemoteCommandHandlerStatusSuccess;
-    }];
-    
-   
-
-    
-}
-
-# pragma mark -  移除观察者
-- (void)removeObserver{
-    
-    [self.avPlayer removeTimeObserver:_playerTimeObserver];
-    _playerTimeObserver = nil;
-    
-    MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
-    [commandCenter.likeCommand removeTarget:self];
-    [commandCenter.dislikeCommand removeTarget:self];
-    [commandCenter.bookmarkCommand removeTarget:self];
-    [commandCenter.nextTrackCommand removeTarget:self];
-    [commandCenter.skipForwardCommand removeTarget:self];
-    [commandCenter.changePlaybackPositionCommand removeTarget:self];
-    commandCenter = nil;
-}
-
-# pragma mark - 播放控制和监测
-- (void)playControl{
-    
-    //后台播放音频设置,需要在Capabilities->Background Modes中勾选Audio,Airplay,and Picture in Picture
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setActive:YES error:nil];
-    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
-    
-    
-    __weak YueYaoController * weakSelf = self;
-    _playerTimeObserver = [weakSelf.avPlayer addPeriodicTimeObserverForInterval:CMTimeMake(0.1*30, 30) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
-        
-        CGFloat currentTime = CMTimeGetSeconds(time);
-        
-        CMTime total = weakSelf.avPlayer.currentItem.duration;
-        CGFloat totalTime = CMTimeGetSeconds(total);
-        
-//        //监听锁屏状态 lock=1则为锁屏状态
-//        uint64_t locked;
-//        __block int token = 0;
-//        notify_register_dispatch("com.apple.springboard.lockstate",&token,dispatch_get_main_queue(),^(int t){
-//        });
-//        notify_get_state(token, &locked);
-//
-//        //监听屏幕点亮状态 screenLight = 1则为变暗关闭状态
-//        uint64_t screenLight;
-//        __block int lightToken = 0;
-//        notify_register_dispatch("com.apple.springboard.hasBlankedScreen",&lightToken,dispatch_get_main_queue(),^(int t){
-//        });
-//        notify_get_state(lightToken, &screenLight);
-//
-//        BOOL isShowLyricsPoster = NO;
-//        // NSLog(@"screenLight=%llu locked=%llu",screenLight,locked);
-//        if (screenLight == 0 && locked == 1) {
-//            //点亮且锁屏时
-//            isShowLyricsPoster = YES;
-//        }else if(screenLight){
-//            return;
-//        }
-        
-        //展示锁屏歌曲信息，上面监听屏幕锁屏和点亮状态的目的是为了提高效率
-        if(weakSelf.isBackground){
-            [weakSelf showLockScreenTotaltime:totalTime andCurrentTime:currentTime andRate:weakSelf.avPlayer.rate andLyricsPoster:YES];
-        }
-        
-        
-    }];
-}
-
-- (void)addObservers {
-    
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self
-               selector:@selector(removePlayerPlayerLayer)
-                   name:UIApplicationDidEnterBackgroundNotification
-                 object:nil];
-    [center addObserver:self
-               selector:@selector(resetPlayerPlayerLayer)
-                   name:UIApplicationWillEnterForegroundNotification
-                 object:nil];
-    
-}
-
-- (void)removePlayerPlayerLayer
-{
-    NSLog(@"进入后台");
-    self.isBackground = YES;
-}
-
-- (void)resetPlayerPlayerLayer
-{
-    NSLog(@"进入前台");
-    self.isBackground = NO;
-}
-
-# pragma mark - 展示锁屏歌曲信息：图片、歌词、进度、演唱者 播放速率
-- (void)showLockScreenTotaltime:(float)totalTime andCurrentTime:(float)currentTime andRate:(NSInteger)rate andLyricsPoster:(BOOL)isShow{
-    
-    NSMutableDictionary * songDict = [[NSMutableDictionary alloc] init];
-    //设置歌曲题目
-    [songDict setObject:self.selectSongName forKey:MPMediaItemPropertyTitle];
-    //设置歌手名
-    //[songDict setObject:@"韩安旭" forKey:MPMediaItemPropertyArtist];
-    //设置专辑名
-   // [songDict setObject:@"harmonyYi" forKey:MPMediaItemPropertyAlbumTitle];
-    //设置歌曲时长
-    [songDict setObject:[NSNumber numberWithDouble:totalTime]  forKey:MPMediaItemPropertyPlaybackDuration];
-    //设置已经播放时长
-    [songDict setObject:[NSNumber numberWithDouble:currentTime] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
-    //设置播放速率
-    //注意：MPNowPlayingInfoCenter的rate 与 self.player.rate 是不同步的，也就是说[self.player pause]暂停播放后的速率rate是0，但MPNowPlayingInfoCenter的rate还是1，就会造成 在锁屏界面点击了暂停按钮，这个时候进度条表面看起来停止了走动，但是其实还是在计时，所以再点击播放的时候，锁屏界面进度条的光标会发生位置闪动， 所以我们需要在暂停或播放时保持播放速率一致
-    [songDict setObject:[NSNumber numberWithInteger:rate] forKey:MPNowPlayingInfoPropertyPlaybackRate];
-    
-//    UIImage * lrcImage = [UIImage imageNamed:@"backgroundImage5.jpg"];
-//    //设置显示的海报图片
-//    [songDict setObject:[[MPMediaItemArtwork alloc] initWithImage:lrcImage]
-//                 forKey:MPMediaItemPropertyArtwork];
-    
-    NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
-    NSArray *icons = [infoPlist valueForKeyPath:@"CFBundleIcons.CFBundlePrimaryIcon.CFBundleIconFiles"];
-    [songDict setObject:[[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:[icons lastObject]]]
-                     forKey:MPMediaItemPropertyArtwork];
-    
-    [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:songDict];
-    
-}
 
 
-
+# pragma mark - 乐药购买成功回调
 - (void)PaySuccess
 {
     [self requestYueyaoListWithType:self.typeStr];
@@ -372,8 +224,18 @@
     }
     
     self->jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
+    
+    if(_gouMaiCount != [UserShareOnce shareOnce].yueYaoBuyArr.count){
+        _gouMaiCount = [UserShareOnce shareOnce].yueYaoBuyArr.count;
+        [self.tableView reloadData];
+    }
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    kPlayer.noDelegate = YES;
+}
 
 - (id)initWithType:(BOOL )isYueLuoyi
 {
@@ -400,7 +262,15 @@
     [topSegment setTitleTextAttributes:noSelectedDic forState:(UIControlStateNormal)];
     topSegment.selectedSegmentIndex = 0;
     [topSegment addTarget:self action:@selector(valuesegChanged:) forControlEvents:(UIControlEventValueChanged)];
+    topSegment.tag = 1024;
     [self.view addSubview:topSegment];
+    
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightBtn.frame = CGRectMake(topSegment.right, topSegment.top, 37, 40);
+    [rightBtn setImage:[UIImage imageNamed:@"message"] forState:UIControlStateNormal];
+    [rightBtn addTarget:self action:@selector(nextMusic) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:rightBtn];
+    
     
     
  
@@ -422,74 +292,69 @@
         [self BluBluetoothView];
         [self BluetoothConnection];
     }
-   // [self requestYueyaoListWithType:@"大宫"];
+   
+     [self getPayRequest];
+    
+    // 设置播放器的代理
+    kPlayer.delegate = self;
+    if([kPlayer.playUrlStr isKindOfClass:[NSNull class]]){
+        kPlayer.playUrlStr = nil;
+    }
+    if(kPlayer.playUrlStr != nil){
+        self.selectSongName = kPlayer.playUrlStr;
+        SongListModel *model = [kPlayer.musicArr objectAtIndex:0];
+        [self dealHysegmentControlWithStr:model.subjectSn];
+        return;
+    }
     
     //根据个人经络最新一条信息展示
     NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
     
     if (![GlobalCommon stringEqualNull:physicalStr]) {
         
-        NSArray * segmentedArray = @[
-                                     @[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫"],
-                                     @[ @"少商", @"左商",@"上商",@"右商", @"钛商"],
-                                     @[@"少角",@"判角",@"上角", @"钛角",@"大角"],
-                                     @[@"少徵",@"判徵",@"上徵",@"右徵", @"质徵"],
-                                     @[@"少羽", @"桎羽",@"上羽",@"众羽",@"大羽"]
-                                     ];
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                NSString *str = segmentedArray[i][j];
-                if([ModuleZW(physicalStr) isEqualToString:str]){
-                    topSegment.selectedSegmentIndex = i;
-                    [self valuesegChanged:topSegment];
-                    [hysegmentControl changeSegmentedControlWithIndex:j];
-                    [self requestYueyaoListWithType:physicalStr];
-                    self.typeStr = physicalStr; //用于支付成功刷新
-                }
-            }
-        }
+        [self dealHysegmentControlWithStr:physicalStr];
     }
     if ([GlobalCommon stringEqualNull:physicalStr] || [physicalStr isEqualToString:@""]){
-        [self requestYueyaoListWithType:@"少宫"];
         [hysegmentControl changeSegmentedControlWithIndex:0];
     }
     
-    [self getPayRequest];
+}
+
+- (void)dealHysegmentControlWithStr:(NSString *)nameStr
+{
+    UISegmentedControl *topSegment = (UISegmentedControl *)[self.view viewWithTag:1024];
     
-    
+    NSArray * segmentedArray = @[
+                                 @[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫"],
+                                 @[ @"少商", @"左商",@"上商",@"右商", @"钛商"],
+                                 @[@"少角",@"判角",@"上角", @"钛角",@"大角"],
+                                 @[@"少徵",@"判徵",@"上徵",@"右徵", @"质徵"],
+                                 @[@"少羽", @"桎羽",@"上羽",@"众羽",@"大羽"]
+                                 ];
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            NSString *str = segmentedArray[i][j];
+            if([ModuleZW(nameStr) isEqualToString:str]){
+                topSegment.selectedSegmentIndex = i;
+                [self hysegmentInitBtnorline:topSegment];
+                [hysegmentControl changeSegmentedControlWithIndex:j];
+                self.typeStr = nameStr; //用于支付成功刷新
+            }
+        }
+    }
 }
 
 
 -(void)getPayRequest {
     
-    /*
-    NSString *urlStr = @"/resources/isfree.jhtml";
-    __weak typeof(self) weakSelf = self;
-    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
-        id status=[response objectForKey:@"status"];
-        if([status intValue] == 200){
-            [weakSelf createConsumeView];
-            weakSelf.isOnPay = YES;
-            [weakSelf.tableView reloadData];
-        }else{
-           // weakSelf.isOnPay = NO;
-            [weakSelf createConsumeView];
-            weakSelf.isOnPay = YES;
-            [weakSelf.tableView reloadData];
-        }
-    } failureBlock:^(NSError *error) {
-        weakSelf.isOnPay = NO;
-        [weakSelf.tableView reloadData];
-    }];
-    */
-    
+
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"noAppstoreCheck"]){
         [self createConsumeView];
         self.isOnPay = YES;
-        [self.tableView reloadData];
+        //[self.tableView reloadData];
     }else{
         self.isOnPay = NO;
-        [self.tableView reloadData];
+      //  [self.tableView reloadData];
     }
     
 }
@@ -576,58 +441,39 @@
             [salaryStr endEditing];
             cell.titleLabel.attributedText = salaryStr;
           
-            
         }else{
             cell.titleLabel.text = model.title;
         }
       
         cell.delegate = self;
         cell.currentSelect = NO;
-        BOOL fileExists = [self existFileWithName:model.title];
-        if(fileExists){ //如果本地存在 则是可以播放 不存在则显示下载按钮
-            [cell downloadSuccess];
-            if([model.title isEqualToString:self.selectSongName] && self.isPlaying){//正在播放的cell,设置为选中 [self.avPlayer isPlaying]
-                cell.currentSelect = YES;
-                [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
-                [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-            }
+        NSString *imageStr = @"";
+        
+        NSLog(@"url:%@,***:%lu",kPlayer.playUrlStr,kPlayer.playerState);
+        
+        if(![kPlayer.playUrlStr isKindOfClass:[NSNull class]] && [model.source isEqualToString:kPlayer.playUrlStr] && kPlayer.playerState == 2){
+            cell.currentSelect = YES;
+            [cell downloadFailWithImageStr:@"乐药暂停icon"];
+            //cell.selected = YES;
         }else{
-            NSString *imageStr = @"";
-            if (model.price == 0){
-                imageStr = @"乐药下载icon";
-            }else if([model.status isKindOfClass:[NSNull class]] || [model.status isEqualToString:@"unpaid"]){  //需要付费leyaoweigoumai
+            if (model.price == 0 || [model.status isEqualToString:@"paid"]){
+                imageStr = @"乐药播放icon";
+            }else{  //需要付费leyaoweigoumai
                 if (self.isOnPay == YES){
                     imageStr = @"乐药未购买icon";
+                    if([self containGouMaiModel:model]){
+                        imageStr = @"已加入购物车";
+                    }
                 }else{
-                    imageStr = @"乐药下载icon";
+                    imageStr = @"乐药播放icon";
                 }
-            }else{
-                imageStr = @"乐药下载icon";
             }
             [cell downloadFailWithImageStr:imageStr];
         }
-        //判断当前cell是否处在下载中
-        UIButton *btn = cell.downloadBtn;
-        if([[downhander.downloadingDic objectForKey:model.title] length] > 0){//正在下载
-            NSLog(@"正在下载");
-            [cell.downloadBtn setImage:nil forState:UIControlStateNormal];
-            SongListModel *model = [self.dataArr objectAtIndex:indexPath.row];
-            [cell.downloadBtn addSubview:[downhander.progressDic objectForKey:model.title]];
-            [downhander setButton:btn];
-            
-        }else{
-            
-            for (int i=0; i<[btn subviews].count; i++)
-            {
-                
-                UIView *view = (UIView *)[[btn subviews] objectAtIndex:i];
-                if([view isKindOfClass:[ProgressIndicator class]]){
-                    [view removeFromSuperview];
-                }
-                
-            }
-        }
         
+        
+    }
+    
         switch (SegIndex) {
             case 0:
                 [cell setIconImageWith:@"宫icon"];
@@ -648,43 +494,78 @@
                 break;
         }
         
-    }
+  
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
     SongListCell *cell = (SongListCell *)[tableView cellForRowAtIndexPath:indexPath];
-    if(cell.PlayOrdownload){//播放暂停
+    if(cell.PlayOrdownload){ //播放暂停
+        
+        if(self.currentIndexPath) { //乐药类型切换时,处理正在播放的状态
+            [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:self.currentIndexPath];
+            self.currentIndexPath = nil;
+        }
+        
         cell.currentSelect = !cell.currentSelect;
         SongListModel *model = [self.dataArr objectAtIndex:indexPath.row];
+        
         if(cell.currentSelect){
             [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
-            NSString *musicStr = [[GlobalCommon Createfilepath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3",model.title]];
-            [self palyActionWithUrlStr:musicStr];
-            self.selectSongName = cell.titleLabel.text;
+            if(![model.subjectSn isEqualToString:self.currentSubjectSn]){ //切换乐药播放列表
+                self.currentSubjectSn = model.subjectSn;
+                [self currentPlayYueYaoList];
+            }
+            
+            self.currentIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+            
+            [self playActionWithUrlStr:model.source];
+            
+            self.selectSongName = model.source; //播放链接
         }else{
             [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药播放icon"] forState:UIControlStateNormal];
           //  self.selectSongName = @"";
-            [self pauseAction];
+            [self pauseMusic];
         }
         
-    }else{ //下载
+    }else{ //购买
         [self downloadWithIndex:indexPath.row withBtn:cell.downloadBtn];
     }
 }
 
+
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
    
-     SongListCell *cell = (SongListCell *)[tableView cellForRowAtIndexPath:indexPath];
-     NSLog(@"haha:%@",cell.reuseIdentifier);
+    SongListCell *cell = (SongListCell *)[tableView cellForRowAtIndexPath:indexPath];
     if(cell.PlayOrdownload){
         [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药播放icon"] forState:UIControlStateNormal];
         cell.currentSelect = NO;
         self.selectSongName = @"";
-        [self pauseAction];
+        [self stopMusic];
     }
+    
+}
+
+# pragma mark - 乐药播放 只在当前选中的经络类型 循环
+- (void)currentPlayYueYaoList
+{
+    
+    NSMutableArray *playList = [NSMutableArray arrayWithCapacity:0];
+    
+    for(SongListModel *model in self.dataArr){
+        if (model.price == 0 || [model.status isEqualToString:@"paid"]){
+            [playList addObject:model];
+        }else {   //需要付费leyaoweigoumai
+            if (self.isOnPay == NO){
+                [playList addObject:model];
+            }
+        }
+    }
+    
+    kPlayer.musicArr = [playList copy];
     
 }
 
@@ -712,10 +593,17 @@
         if([status intValue] == 100){
             NSArray *arr = [response objectForKey:@"data"];
             NSMutableArray *arr2 = [NSMutableArray arrayWithCapacity:0];
-            for(NSDictionary *dic in arr){
+            
+            BOOL isSelectRow = NO;
+            NSInteger rowIndex = 0;
+            
+            
+            
+            for(NSInteger i =0;i<arr.count;i++){
+                NSDictionary *dic = [arr objectAtIndex:i];
                 SongListModel *model = [[SongListModel alloc] init];
-                model.idStr = [dic objectForKey:@"id"];
-                model.productId = [dic objectForKey:@"productId"];
+                model.idStr = [NSString stringWithFormat:@"%@",[dic objectForKey:@"id"]];
+                model.productId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productId"]];
                 if([[dic objectForKey:@"price"] isKindOfClass:[NSNull class]]){
                     model.price = 0;
                 }else{
@@ -724,10 +612,30 @@
                 model.status = [dic objectForKey:@"status"];
                 model.title = [dic objectForKey:@"name"];
                 model.source = [[[dic objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"source"];
+                model.subjectSn = typeStr;
                 [arr2 addObject:model];
+                
+                if(kPlayer.playerState == 2 && kPlayer.playUrlStr){
+                    if([model.source isEqualToString:kPlayer.playUrlStr]){
+                        isSelectRow = YES;
+                        rowIndex = i;
+                    }
                 }
+            }
             weakSelf.dataArr = arr2;
             [weakSelf.tableView reloadData];
+            
+            if(isSelectRow){
+                
+                weakSelf.currentIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+//                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+//                if(indexPath){
+//                    [weakSelf.tableView.delegate tableView:weakSelf.tableView didSelectRowAtIndexPath:indexPath];
+//                }
+            }else{
+                weakSelf.currentIndexPath = nil;
+            }
+            
         }else if ([status intValue] == 44)
         {
             [weakSelf showAlertWarmMessage:ModuleZW(@"登录超时，请重新登录")];
@@ -743,15 +651,63 @@
     }];
 }
 
-#pragma mark - 下载按钮的代理事件
+# pragma mark - 已购买乐药列表(暂时不需要)
+-(void)gouMaiMusicResourceslist
+{
+    NSString *aUrlle= [NSString stringWithFormat:@"member/resources/list/%@.jhtml",[UserShareOnce shareOnce].uid];
+    [GlobalCommon showMBHudWithView:self.view];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:2 urlString:aUrlle parameters:nil successBlock:^(id response) {
+        [GlobalCommon hideMBHudWithView:weakSelf.view];
+        id status=[response objectForKey:@"status"];
+        if([status intValue] == 100){
+            NSArray *dicArray=[response objectForKey:@"data"];
+            NSMutableArray *arr2 = [NSMutableArray arrayWithCapacity:0];
+            for(NSDictionary *dic in dicArray){
+                SongListModel *model = [[SongListModel alloc] init];
+                model.idStr = [NSString stringWithFormat:@"%@",[dic objectForKey:@"id"]];
+                model.productId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productId"]];
+                if([[dic objectForKey:@"price"] isKindOfClass:[NSNull class]]){
+                    model.price = 0;
+                }else{
+                    model.price = [[dic objectForKey:@"price"] floatValue];
+                }
+                model.status = [dic objectForKey:@"status"];
+                model.title = [dic objectForKey:@"name"];
+                model.source = [[[dic objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"source"];
+                [arr2 addObject:model];
+            }
+            
+            kPlayer.musicArr = [arr2 copy];
+                
+        }else if ([status intValue] == 44)
+        {
+            [weakSelf showAlertWarmMessage:ModuleZW(@"登录超时，请重新登录")];
+            return;
+        }else{
+            NSString *str = [response objectForKey:@"data"];
+            [weakSelf showAlertWarmMessage:str];
+            return;
+        }
+    } failureBlock:^(NSError *error) {
+        [GlobalCommon hideMBHudWithView:weakSelf.view];
+        [weakSelf showAlertWarmMessage:requestErrorMessage];
+    }];
+}
+
+
+#pragma mark - 乐药购买事件
 - (void)downloadWithIndex:(NSInteger)index withBtn:(UIButton *)btn
 {
-    if(btn.height == 20){ //未购买
+   
+    NSLog(@"haha:%@",[UserShareOnce shareOnce].yueYaoBuyArr);
+    
         if(![UserShareOnce shareOnce].yueYaoBuyArr){
+            _gouMaiCount = 0;
             [UserShareOnce shareOnce].yueYaoBuyArr = [NSMutableArray arrayWithCapacity:0];
         }
         SongListModel *model = [self.dataArr objectAtIndex:index];
-        if([[UserShareOnce shareOnce].yueYaoBuyArr containsObject:model]){
+        if([self containGouMaiModel:model]){
            [GlobalCommon showMessage:ModuleZW(@"乐药已加入购物车") duration:2.0];
         }else{
             UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"确定购买曲目吗？") message:[NSString stringWithFormat:@"¥%.2f",model.price] preferredStyle:UIAlertControllerStyleAlert];
@@ -761,8 +717,10 @@
                 [UserShareOnce shareOnce].allYueYaoPrice = [UserShareOnce shareOnce].allYueYaoPrice + model.price;
                 //self->allPrice = self->allPrice + model.price;
                 self->jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
+                SongListCell *cell = (SongListCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+                cell.downloadBtn.backgroundColor = RGB_TextAppGray;
                  [GlobalCommon showMessage:ModuleZW(@"乐药已加入购物车") duration:2.0];
-                
+                self->_gouMaiCount += 1;
                 if(self->_backView.top == ScreenHeight){
                     [UIView animateWithDuration:0.3 animations:^{
                         self->_backView.top  = ScreenHeight - kTabBarHeight - 16;
@@ -776,197 +734,249 @@
                 [self presentViewController:alertVC animated:YES completion:nil];
             });
         }
-        return;
-    }
-    
-    SongListModel *model = [self.dataArr objectAtIndex:index];
-    NSString* NewFileName=model.source; //leyaoPath
-    
-    NSString *urlPathName = model.title;
-    btn.frame = CGRectMake(ScreenWidth - 80, 25, 30, 30);
-    btn.backgroundColor = [UIColor clearColor];
-    [btn setTitle:@"" forState:(UIControlStateNormal)];
-    downhander = [DownloadHandler sharedInstance];
-    [downhander.downloadingDic setValue:@"downloading" forKey: [NSString stringWithFormat:@"%@",urlPathName]];
-    NSString *aurl = [NewFileName stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    ProgressIndicator *progress = [[ProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    downhander.name = [NSString stringWithFormat:@"%@",urlPathName];
-    [btn setImage:nil forState:UIControlStateNormal];
-    
-    btn.tag = 100 + index;
-    progress.frame=btn.bounds;
-    [btn addSubview:progress];
-    downhander.url = aurl;
-    [downhander setButton:btn];
-    downhander.downdelegate = self;
-    downhander.fileType =@"mp3";
-    downhander.savePath = [GlobalCommon Createfilepath];
-    
-    [downhander setProgress:progress] ;
-    [downhander start];
 }
 
-
-- (void)downLoadButton:(UIButton *)btn withDownload:(BOOL)isplay;
+# pragma mark - 判断该乐药是否已经加入到购买列表里
+- (BOOL)containGouMaiModel:(SongListModel *)songListModel
 {
-    
-    CGPoint point = btn.center;
-    point = [self.tableView convertPoint:point fromView:btn.superview];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
-    
-    SongListModel *model = [self.dataArr objectAtIndex:indexPath.row];
-    NSString* NewFileName=model.source; //leyaoPath
-    
-    NSString *urlPathName = model.title;
-    
-    if(isplay){ //播放
-        btn.selected = !btn.selected;
-        NSString *musicStr = [[GlobalCommon Createfilepath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3",urlPathName]];
-        if(btn.selected){
-            [self palyActionWithUrlStr:musicStr];
-        }else{
-            [self pauseAction];
-        }
-        return;
+    if([[UserShareOnce shareOnce].yueYaoBuyArr count] == 0){
+        return NO;
     }
-    
-    DownloadHandler *downhander = [DownloadHandler sharedInstance];
-    [downhander.downloadingDic setValue:@"downloading" forKey: [NSString stringWithFormat:@"%@",urlPathName]];
-    NSString *aurl = [NewFileName stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    ProgressIndicator *progress = [[ProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    downhander.name = [NSString stringWithFormat:@"%@",urlPathName];
-    [btn setImage:nil forState:UIControlStateNormal];
-    
-    btn.tag = 100 + indexPath.row;
-    progress.frame=btn.bounds;
-    [btn addSubview:progress];
-    downhander.url = aurl;
-    [downhander setButton:btn];
-    downhander.downdelegate = self;
-    downhander.fileType =@"mp3";
-    downhander.savePath = [GlobalCommon Createfilepath];
-    [downhander setProgress:progress] ;
-    [downhander start];
+    for(SongListModel *model in [UserShareOnce shareOnce].yueYaoBuyArr){
+        if([model.idStr isEqualToString:songListModel.idStr]){
+            return YES;
+        }
+    }
+    return NO;
 }
+
+
+//- (void)downLoadButton:(UIButton *)btn withDownload:(BOOL)isplay;
+//{
+//
+//    CGPoint point = btn.center;
+//    point = [self.tableView convertPoint:point fromView:btn.superview];
+//    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+//
+//    SongListModel *model = [self.dataArr objectAtIndex:indexPath.row];
+//    NSString* NewFileName=model.source; //leyaoPath
+//
+//    NSString *urlPathName = model.title;
+//
+//    if(isplay){ //播放
+//        btn.selected = !btn.selected;
+//        NSString *musicStr = [[GlobalCommon Createfilepath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3",urlPathName]];
+//        if(btn.selected){
+//            [self playActionWithUrlStr:musicStr];
+//        }else{
+//            [self pauseMusic];
+//        }
+//        return;
+//    }
+//
+//    DownloadHandler *downhander = [DownloadHandler sharedInstance];
+//    [downhander.downloadingDic setValue:@"downloading" forKey: [NSString stringWithFormat:@"%@",urlPathName]];
+//    NSString *aurl = [NewFileName stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    ProgressIndicator *progress = [[ProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+//    downhander.name = [NSString stringWithFormat:@"%@",urlPathName];
+//    [btn setImage:nil forState:UIControlStateNormal];
+//
+//    btn.tag = 100 + indexPath.row;
+//    progress.frame=btn.bounds;
+//    [btn addSubview:progress];
+//    downhander.url = aurl;
+//    [downhander setButton:btn];
+//    downhander.downdelegate = self;
+//    downhander.fileType =@"mp3";
+//    downhander.savePath = [GlobalCommon Createfilepath];
+//    [downhander setProgress:progress] ;
+//    [downhander start];
+//}
 
 # pragma mark - 播放乐药
-- (void)palyActionWithUrlStr:(NSString *)urlStr
+- (void)playActionWithUrlStr:(NSString *)urlStr
 {
-    // NSString *aurl = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSString *lastStr = [[GlobalCommon Createfilepath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3",self.selectSongName]];
-    if(self.avPlayer && [urlStr isEqualToString:lastStr]){
-        [self.avPlayer play];
-    }else{
-//        self.avPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL URLWithString:aurl] error:nil];
-//        self.avPlayer.numberOfLoops = -1;
-//        [self.avPlayer prepareToPlay];
-        self.avPlayer = [[AVPlayer alloc] initWithURL:[NSURL fileURLWithPath:urlStr]];
-        [self.avPlayer play];
-        
-        
-        __weak typeof(self) weakSelf = self;
-        
-        [weakSelf playControl];
-
-        [weakSelf createRemoteCommandCenter];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:weakSelf selector:@selector(playbackFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:weakSelf.avPlayer.currentItem];
-        
+    if(self.selectSongName != nil || ![self.selectSongName isEqualToString:@""]){
+        if([urlStr isEqualToString:self.selectSongName]){
+            [kPlayer resume];
+            return;
+        }else{
+            if(kPlayer.playerState == 2){
+                [self stopMusic];
+            }
+        }
     }
-    self.isPlaying = YES;
-
-}
-
-- (void)playbackFinished:(NSNotification *)notification{
-    [self.avPlayer seekToTime:kCMTimeZero];
-    [self.avPlayer play];
-}
-
-- (void)pauseAction
-{
-    [self.avPlayer pause];
-    self.isPlaying = NO;
-}
-
-#pragma mark 下载完成代理回调
-- (void)DownloadHandlerSelectAtIndex:(NSInteger)index
-{
-    NSLog(@"index:%ld",(long)index);
-    SongListModel *model = [self.dataArr objectAtIndex:index];
-    [GlobalCommon showMessage:[NSString stringWithFormat:ModuleZW(@"%@下载完成"),model.title] duration:2];
-    SongListCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-    [cell downloadSuccess];
     
-    //[cell.downloadBtn setImage:[UIImage imageNamed:@"New_yy_zt_zt"] forState:UIControlStateNormal];
+    kPlayer.playUrlStr = urlStr;
+    [kPlayer play];
+
 }
 
-#pragma mark 下载失败代理回调
-- (void)DoenloadHandlerFailWithIndex:(NSInteger)index
+
+- (void)pauseMusic
 {
     
-    SongListModel *model = [self.dataArr objectAtIndex:index];
-    [GlobalCommon showMessage:[NSString stringWithFormat:ModuleZW(@"%@下载失败"),model.title] duration:2];
-    SongListCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-    [cell downloadFailWithImageStr:@"乐药下载icon"];
+    [kPlayer pause];
     
 }
+
+- (void)stopMusic {
+    [kPlayer stop];
+}
+
+- (void)nextMusic
+{
+    if(kPlayer.playUrlStr){
+        self.selectSongName = nil;
+        [self stopMusic];
+    }
+    
+    if(kPlayer.musicArr.count == 1){ //只购买了一首乐药,循环播放
+        [self playActionWithUrlStr:kPlayer.playUrlStr];
+        return;
+    }
+    
+    int index = arc4random() % kPlayer.musicArr.count;
+
+    NSLog(@"yyyy:%@",kPlayer.musicArr);
+    
+    SongListModel *model = [kPlayer.musicArr objectAtIndex:index];
+    [self playActionWithUrlStr:model.source];
+
+    //播放完一首歌后,切换cell按钮的状态
+    NSInteger row = [self.dataArr indexOfObject:model];
+    if(self.currentIndexPath.row != row){
+        [self.tableView.delegate tableView:self.tableView didDeselectRowAtIndexPath:self.currentIndexPath];
+        [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
+        self.currentIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    }
+    
+    
+}
+
+#pragma mark - GKPlayerDelegate
+// 播放状态改变
+- (void)gkPlayer:(GKAudioPlayer *)player statusChanged:(GKAudioPlayerState)status
+{
+    switch (status) {
+        case GKAudioPlayerStateLoading:{    // 加载中
+           
+            self.isPlaying = NO;
+        }
+            break;
+        case GKAudioPlayerStateBuffering: { // 缓冲中
+           
+            self.isPlaying = YES;
+        }
+            break;
+        case GKAudioPlayerStatePlaying: {   // 播放中
+            
+            
+            self.isPlaying = YES;
+        }
+            break;
+        case GKAudioPlayerStatePaused:{     // 暂停
+            
+            self.isPlaying = NO;
+        }
+            break;
+        case GKAudioPlayerStateStoppedBy:{  // 主动停止
+            
+            self.isPlaying = NO;
+        }
+            break;
+        case GKAudioPlayerStateStopped:{    // 打断停止
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self pauseMusic];
+            });
+            self.isPlaying = NO;
+        }
+            break;
+        case GKAudioPlayerStateEnded: {     // 播放结束
+            NSLog(@"播放结束了");
+            if (self.isPlaying) {
+                
+                
+                self.isPlaying = NO;
+                
+                // 播放结束，自动播放下一首
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self nextMusic];
+                });
+            }else {
+                
+                self.isPlaying = NO;
+            }
+        }
+            break;
+        case GKAudioPlayerStateError: {     // 播放出错
+            NSLog(@"播放出错了");
+            
+            self.isPlaying = NO;
+        }
+            break;
+        default:
+            break;
+    }
+    
+   
+}
+
+
 
 # pragma mark - 宫商角选择事件
 
 - (void)valuesegChanged:(UISegmentedControl *)segment
 {
     
-    /*
-     @[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫",],
-     @[ @"少商", @"左商",@"上商",@"右商", @"钛商" ],
-     @[@"少角",@"判角",@"上角", @"钛角",@"大角"],
-     @[@"少徵",@"判徵",@"上徵",@"右徵", @"质徵"],
-     @[@"少羽", @"桎羽",@"上羽",@"众羽",@"大羽",]
-     */
+    [self hysegmentInitBtnorline:segment];
+    UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
+    [hysegmentControl segmentedControlChange:btn];
     
+}
+
+- (void)hysegmentInitBtnorline:(UISegmentedControl *)segment
+{
     if (segment.selectedSegmentIndex==0)
     {
         SegIndex=0;
         [hysegmentControl setBtnorline:@[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫"]];
-        UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
-        [hysegmentControl segmentedControlChange:btn];
-        //[self LeMedicinaRequest:@"大宫"];
+        
+        
     }
     else if (segment.selectedSegmentIndex==1)
     {
         SegIndex=1;
         [hysegmentControl setBtnorline:@[ @"少商", @"左商",@"上商",@"右商", @"钛商" ]];
         
-        UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
-        [hysegmentControl segmentedControlChange:btn];
+        
     }
     else if (segment.selectedSegmentIndex==2)
     {
         SegIndex=2;
         [hysegmentControl setBtnorline:@[@"少角",@"判角",@"上角", @"钛角",@"大角"]];
-        UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
-        [hysegmentControl segmentedControlChange:btn];
+        
     }
     else if (segment.selectedSegmentIndex==3)
     {
         SegIndex=3;
         [hysegmentControl setBtnorline:@[@"少徵",@"判徵",@"上徵",@"右徵", @"质徵"]];
-        UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
-        [hysegmentControl segmentedControlChange:btn];
+        
     }
     else
     {
         SegIndex=4;
         [hysegmentControl setBtnorline:@[@"少羽", @"桎羽",@"上羽",@"众羽",@"大羽"]];
-        UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
-        [hysegmentControl segmentedControlChange:btn];
+        
     }
 }
 
+# pragma mark - hySegmentedControl代理
 - (void)hySegmentedControlSelectAtIndex:(NSInteger)index
 {
     UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:index];
     self.typeStr = btn.titleLabel.text;
+    //NSLog(@"haha：%@",btn.titleLabel.text);
     [self requestYueyaoListWithType:btn.titleLabel.text];
 }
 
@@ -1054,31 +1064,6 @@
     }
 }
 
--(NSString*)createYueYaoZhiFufilepath
-{
-    NSString *path = [ NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-    NSString *folderPath = [path stringByAppendingPathComponent:@"yueyaozhifuTemp"];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    BOOL fileExists = [fileManager fileExistsAtPath:folderPath];
-    if(!fileExists)
-    {
-        [fileManager createDirectoryAtPath:folderPath withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    [self addSkipBackupAttributeToItemAtPath:folderPath];
-    return folderPath;
-}
-
-- (BOOL)addSkipBackupAttributeToItemAtPath:(NSString *) filePathString
-{
-    NSURL* URL= [NSURL fileURLWithPath: filePathString];
-    NSError *error = nil;
-    BOOL success = [URL setResourceValue: [NSNumber numberWithBool: YES]
-                                  forKey: NSURLIsExcludedFromBackupKey error: &error];
-    if(!success){
-        NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
-    }
-    return success;
-}
 
 # pragma mark - ----------------蓝牙相关--------------------
 

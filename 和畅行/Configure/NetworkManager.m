@@ -220,11 +220,12 @@ static NSMutableArray *tasks;
 //            [manager.requestSerializer setValue:[headers objectForKey:key] forHTTPHeaderField:key];
 //        }
         
-        [manager.requestSerializer setValue:@"ios_hcy-oem-3.1.3" forHTTPHeaderField:@"version"];
+        [manager.requestSerializer setValue:@"ios_jlsl-yh-3" forHTTPHeaderField:@"version"];
         
-        [manager.requestSerializer setValue:[UserShareOnce shareOnce].token forHTTPHeaderField:@"token"];
-        [manager.requestSerializer setValue:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
-                                             [UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID] forHTTPHeaderField:@"Cookie"];
+//        [manager.requestSerializer setValue:[UserShareOnce shareOnce].token forHTTPHeaderField:@"token"];
+//        [manager.requestSerializer setValue:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
+//                                             [UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID] forHTTPHeaderField:@"Cookie"];
+        
         sessionTask = [manager GET:URLString parameters:parameters  progress:^(NSProgress * _Nonnull downloadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

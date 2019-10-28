@@ -12,7 +12,9 @@
 #import "ZYAudioManager.h"
 #import "SportDemonstratesViewController.h"
 #import "YueYaoController.h"
-@interface MySportController ()<UICollectionViewDataSource,UICollectionViewDelegate,MenuTypeDelegate,AVAudioPlayerDelegate>
+#import "SongListModel.h"
+
+@interface MySportController ()<UICollectionViewDataSource,UICollectionViewDelegate,MenuTypeDelegate,AVAudioPlayerDelegate,GKAudioPlayerDelegate>
 {
     NSInteger _pageIndex;
     BOOL _isScrol;
@@ -20,7 +22,6 @@
     NSInteger yueyaoCount;
 }
 
-@property (nonatomic,strong) UIScrollView *scrollView;
 @property (nonatomic,strong) NSArray *imageArr;
 @property (nonatomic,strong) NSArray *titleArr;
 @property (nonatomic,strong) UILabel *titleLabel;
@@ -33,13 +34,10 @@
 @property (nonatomic ,strong) UIButton *yueYaoButton; //乐药按钮
 @property (nonatomic ,strong) UIButton *shifanyinButton; //示范音按钮
 
-@property (nonatomic ,strong) AVAudioPlayer *audioPlay; //音频播放
+
 
 @property (nonatomic ,strong) NSArray *yueYaoArray; //乐药数据
 
-@property (nonatomic ,strong) NSArray *titleShiFanYinArr;
-
-@property (nonatomic ,strong) NSMutableArray *shifanTitlesArray; //示范音数据
 
 @property (nonatomic, strong) NSMutableArray *shifanyinPlayArr; //运动示范音地址
 
@@ -56,11 +54,14 @@
 @property (nonatomic, copy) NSString *yueYaoPlayUrl;
 
 @property (nonatomic, assign) BOOL isNextVC;
+
+@property (nonatomic,assign) BOOL isPlaying;
+
 @end
 
 @implementation MySportController
 
-@synthesize collectionV,voiceButton,yueYaoButton,shifanyinButton,timer,audioPlay,shifanyinCount;
+@synthesize collectionV,voiceButton,yueYaoButton,shifanyinButton,timer,shifanyinCount;
 
 - (id)initWithSportType:(NSInteger)index
 {
@@ -115,16 +116,27 @@
 - (void)dealloc
 {
     [self stopTimer];
-    [[ZYAudioManager defaultManager] stopMusic:self.cureentPlayUrl];
-    [[ZYAudioManager defaultManager] stopMusic:self.yueYaoPlayUrl];
-    audioPlay = nil;
+    [self stopMusic];
+    
+    kPlayer.delegate = nil;
+    
+    self.titleArr = nil;
+    self.imageArr = nil;
+    self.collectionV = nil;
+    self.yueYaoArray = nil;
+    self.shifanyinPlayArr = nil;
+    
+    
+//    [[ZYAudioManager defaultManager] stopMusic:self.cureentPlayUrl];
+//    [[ZYAudioManager defaultManager] stopMusic:self.yueYaoPlayUrl];
+//    audioPlay = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     if(self.isNextVC){
-        [self dealWithShiFanYinYueYaoData];
+        [self GetMusicResourceslist];
     }
 }
 
@@ -135,6 +147,7 @@
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
     [self createUI];
@@ -142,7 +155,15 @@
     shifanyinCount = 0;
     
     self.shifanyinPlayArr = [NSMutableArray arrayWithCapacity:0];
-    [self dealWithShiFanYinYueYaoData];
+    
+   // [self dealWithShiFanYinYueYaoData];
+    
+    [self GetMusicResourceslist];
+    
+    // 设置播放器的代理
+    kPlayer.delegate = self;
+    
+    yueyaoCount = 0;
 }
 
 - (void)createUI
@@ -268,8 +289,8 @@
     
 }
 
-# pragma mark - 乐药列表下载
--(void)GetResourceslist
+# pragma mark - 已购买乐药列表
+-(void)GetMusicResourceslist
 {
     [GlobalCommon showMBHudWithView:self.view];
     NSString *UrlPre=URL_PRE;
@@ -307,20 +328,22 @@
     if ([status intValue]==100)
     {
         NSArray *dicArray=[dic objectForKey:@"data"];
-        //UIImage* statusviewImg = nil;
-        NSString* filepath=[self Createfilepath];
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        for (NSDictionary *dic in dicArray) {
-            NSString* NewFileName=[[[dic objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"source"];
-            NSArray*Urlarray=[NewFileName componentsSeparatedByString:@"/"];
-            NSString* urlpathname= [Urlarray objectAtIndex:Urlarray.count-1];
-            NSString* urlpath= [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", urlpathname]];
-            BOOL fileExists = [fileManager fileExistsAtPath:urlpath];
-            if (fileExists) {
-               // [self.yueYaoArray addObject:urlpath];
+        NSMutableArray *arr2 = [NSMutableArray arrayWithCapacity:0];
+        for(NSDictionary *dic in dicArray){
+            SongListModel *model = [[SongListModel alloc] init];
+            model.idStr = [NSString stringWithFormat:@"%@",[dic objectForKey:@"id"]];
+            model.productId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productId"]];
+            if([[dic objectForKey:@"price"] isKindOfClass:[NSNull class]]){
+                model.price = 0;
+            }else{
+                model.price = [[dic objectForKey:@"price"] floatValue];
             }
+            model.status = [dic objectForKey:@"status"];
+            model.title = [dic objectForKey:@"name"];
+            model.source = [[[dic objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"source"];
+            [arr2 addObject:model];
         }
-        
+        self.yueYaoArray = arr2;
     }
     else if ([status intValue]==44)
     {
@@ -333,7 +356,7 @@
     
 }
 
-# pragma mark - 请求示范音
+# pragma mark - 示范音列表
 - (void)shifanyinSourceList{
     
     [GlobalCommon showMBHudWithView:self.view];
@@ -370,16 +393,17 @@
     if ([status intValue]==100)
     {
         NSArray *shifanyinDicArr = [[dic objectForKey:@"data"] objectForKey:@"content"];
-        NSString* filepath=[self Createfilepath];
-        NSFileManager *fileManager = [NSFileManager defaultManager];
         for (NSDictionary *dic in shifanyinDicArr) {
-           
-            NSString* urlpathname= [[[dic objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"title"];
-            NSString* urlpath= [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3", urlpathname]];
-            BOOL fileExists = [fileManager fileExistsAtPath:urlpath];
-            if(fileExists){
-                [self.shifanyinPlayArr addObject:urlpath];
-            }
+            SongListModel *model = [[SongListModel alloc] init];
+            NSString* urlpathname= [[[dic objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"source"];
+            model.title = [[[dic objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"title"];
+            model.source = urlpathname;
+            model.productId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productId"]];
+            model.idStr = [NSString stringWithFormat:@"%@",[dic objectForKey:@"id"]];
+            model.status = @"";
+            model.price = 0;
+            [self.shifanyinPlayArr addObject:model];
+            
         }
         
     }else{
@@ -388,41 +412,7 @@
     }
 }
 
-# pragma mark - 处理示范音数据
-- (void)dealWithShiFanYinYueYaoData
-{
-    NSString* filepath=[self Createfilepath];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if(self.shifanyinPlayArr.count>0){
-        [self.shifanyinPlayArr removeAllObjects];
-    }
-    for (NSString *urlpathname in self.imageArr) {
-        NSString* urlpath= [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3", urlpathname]];
-        BOOL fileExists = [fileManager fileExistsAtPath:urlpath];
-        if(fileExists){
-            [self.shifanyinPlayArr addObject:urlpath];
-        }
-    }
-    
-    /*******乐药数据*********/
-    NSString *yueyaoFilePath = [GlobalCommon Createfilepath];
-    self.yueYaoArray = [fileManager subpathsAtPath: yueyaoFilePath];
-    yueyaoCount = 0;
-   
-}
 
--(NSString*) Createfilepath
-{
-    NSString *path = [ NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-    NSString *folderPath = [path stringByAppendingPathComponent:@"temp"];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    BOOL fileExists = [fileManager fileExistsAtPath:folderPath];
-    if(!fileExists)
-    {
-        [fileManager createDirectoryAtPath:folderPath withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    return folderPath;
-}
 
 # pragma mark - 轮播暂停
 - (void)voiceAction:(UIButton *)sender
@@ -453,7 +443,7 @@
 {
     if(self.yueYaoArray.count==0){
         
-        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有乐药产品,是否去下载") preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有乐药产品,是否去购买") preferredStyle:(UIAlertControllerStyleAlert)];
         UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
             self.isNextVC = YES;
             YueYaoController *sportDemonVC = [[YueYaoController alloc]init];
@@ -467,15 +457,18 @@
     }
     
     if(button.selected){
+        
         self.isPlayYueYao = NO;
         button.selected = NO;
-        [[ZYAudioManager defaultManager] pauseMusic:self.cureentPlayUrl];
+        
+        [self stopMusic];
+        
     }else{
         //示范音点击了 关闭示范音
         if(shifanyinButton.selected){
             shifanyinButton.selected = NO;
             collectionV.userInteractionEnabled = YES;
-            [[ZYAudioManager defaultManager] stopMusic:self.cureentPlayUrl];
+            [self stopMusic];
         }
         voiceButton.selected = NO;
         button.selected = YES;
@@ -484,18 +477,16 @@
         
         self.isPlayYueYao = YES;
     
-        if(self.yueYaoPlayUrl){
-            [self refreshAudioPlayWithName:self.yueYaoPlayUrl];
-        }else{
-            NSString *yueyaoUrlStr = [[GlobalCommon Createfilepath] stringByAppendingPathComponent:[self.yueYaoArray objectAtIndex:0]];
-            self.yueYaoPlayUrl = yueyaoUrlStr;
-            [self refreshAudioPlayWithName:yueyaoUrlStr];
-        }
+        SongListModel *model = [self.yueYaoArray objectAtIndex:yueyaoCount];
+        self.yueYaoPlayUrl = model.source;
+        
+        [self playMusicWithUrlStr:model.source];
+        
     }
     
 }
 
-# pragma mark - 示范音播放
+# pragma mark - 示范音按钮点击事件
 - (void)shifanyinAction:(UIButton *)sender
 {
     if (self.shifanyinPlayArr.count == 0) {
@@ -519,7 +510,8 @@
          sender.selected = NO;
          self.isPlayShiFanYin = NO;
          
-         [self refreshAudioPlayWithName:nil];
+         [self stopMusic];
+         
          collectionV.userInteractionEnabled = YES;
 //         回到第一页
          shifanyinCount = 0;
@@ -541,13 +533,14 @@
          if(yueYaoButton.selected){
              yueYaoButton.selected = NO;
              self.isPlayYueYao = NO;
-             [[ZYAudioManager defaultManager] pauseMusic:self.yueYaoPlayUrl];
+             [self stopMusic];
          }
          voiceButton.selected = NO;
          [self playShifanyinAction];
      }
 }
 
+# pragma mark - 示范音播放
 - (void)playShifanyinAction
 {
     //示范音数据
@@ -556,70 +549,167 @@
     }
     NSString *shifanStr = [self.imageArr objectAtIndex:_pageIndex];
     
-    //示范音本地路径
-    NSString *shifanYinStr = [self stringMP3WithFileName:shifanStr];
+    NSString *shifanyin = [self shifanYinUrlWithStr:shifanStr];
     
-    //判断本地是否存在该示范音
-    BOOL isHaveShiFan = [self.shifanyinPlayArr containsObject:shifanYinStr];
-    if(isHaveShiFan){
-        [self stopTimer];
-        [self refreshAudioPlayWithName:shifanYinStr];
-    }else{
-        //_pageIndex+=1;
-        [self startTimer];
-    }
+    [self playMusicWithUrlStr:shifanyin];
+    
+    [self stopTimer];
+    
 }
 
-- (NSString *)stringMP3WithFileName:(NSString *)nameStr
+#pragma mark - GKPlayerDelegate
+// 播放状态改变
+- (void)gkPlayer:(GKAudioPlayer *)player statusChanged:(GKAudioPlayerState)status
 {
-    NSString *filepath = [self Createfilepath];
-    NSString *str = [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3",nameStr]];
-    return str;
-}
-
-
-- (void)refreshAudioPlayWithName:(NSString *)fileName
-{
-    
-    if(fileName){
-        self.cureentPlayUrl = fileName;
-        //开发播放音乐
-        //[[ZYAudioManager defaultManager] playingMusic:fileName];
-        audioPlay = [[ZYAudioManager defaultManager] playingMusic:fileName];
-        audioPlay.delegate = self;
-    }else{
-        [[ZYAudioManager defaultManager] stopMusic:self.cureentPlayUrl];
-        audioPlay = nil;
-    }
-   
-    /*
-    if(audioPlay.playing){
-        [audioPlay pause];
-        self.audioPlay = nil;
-    }else{
-        if(fileName){
-            if(!audioPlay){
-                audioPlay = nil;
-            }else{
-                //audioPlay.url = 
+    switch (status) {
+        case GKAudioPlayerStateLoading:{    // 加载中
+            
+            self.isPlaying = NO;
+        }
+            break;
+        case GKAudioPlayerStateBuffering: { // 缓冲中
+            
+            self.isPlaying = YES;
+        }
+            break;
+        case GKAudioPlayerStatePlaying: {   // 播放中
+            
+            
+            self.isPlaying = YES;
+        }
+            break;
+        case GKAudioPlayerStatePaused:{     // 暂停
+            
+            self.isPlaying = NO;
+        }
+            break;
+        case GKAudioPlayerStateStoppedBy:{  // 主动停止
+            
+            self.isPlaying = NO;
+        }
+            break;
+        case GKAudioPlayerStateStopped:{    // 打断停止
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self pauseMusic];
+            });
+            self.isPlaying = NO;
+        }
+            break;
+        case GKAudioPlayerStateEnded: {     // 播放结束
+            NSLog(@"播放结束了");
+            if (self.isPlaying) {
+                
+                
+                self.isPlaying = NO;
+                
+                // 播放结束，自动播放下一首
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self playNextMusic];
+                });
+            }else {
+                
+                self.isPlaying = NO;
             }
-            audioPlay = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL URLWithString:fileName] error:nil];
-            audioPlay.volume = 5;
-            audioPlay.delegate = self;
-            [audioPlay play];
-        }else{
+        }
+            break;
+        case GKAudioPlayerStateError: {     // 播放出错
+            NSLog(@"播放出错了");
+            
+            self.isPlaying = NO;
+        }
+            break;
+        default:
+            break;
+    }
+    
+    
+}
+
+# pragma mark - 播放乐药
+- (void)playMusicWithUrlStr:(NSString *)urlStr
+{
+    if(urlStr == nil || [urlStr isEqualToString:@""]){
+        return;
+    }
+    kPlayer.playUrlStr = urlStr;
+    [kPlayer play];
+}
+
+- (void)pauseMusic
+{
+    [kPlayer pause];
+    self.isPlaying = NO;
+}
+
+- (void)stopMusic {
+    [kPlayer stop];
+    self.isPlaying = NO;
+}
+
+# pragma mark - 下一首
+- (void)playNextMusic
+{
+    if(self.isPlayShiFanYin){ //示范音播放
+        shifanyinCount ++;
+        _pageIndex+=1;
+        if (_pageIndex == self.imageArr.count || self.shifanyinCount > self.shifanyinPlayArr.count-1) {
+            shifanyinCount = 0;
+            shifanyinButton.selected = NO;
+            self.isPlayShiFanYin = NO;
+            //停止播放器
+            [self stopMusic];
             return;
         }
+        
+        //上一个播放完的 删除
+        [self stopMusic];
+        
+        //示范音数据
+        NSString *shifanStr = [self.imageArr objectAtIndex:_pageIndex];
+        
+        //示范音url地址
+        NSString *shifanYinStr = [self shifanYinUrlWithStr:shifanStr];
+        
+        [self playMusicWithUrlStr:shifanYinStr];
+        
+        //scrollview下一页
+        [self timerRefreshedWithAnimated:YES];
+        
     }
-     */
+    /******乐药播放*******/
+    else{
+        //上一个播放完的 删除
+        [self stopMusic];
+        yueyaoCount ++ ;
+        if(yueyaoCount == self.yueYaoArray.count){
+            yueyaoCount=0;
+        }
+        
+        SongListModel *model = [self.yueYaoArray objectAtIndex:yueyaoCount];
+        
+        NSString *yueyaoStr = model.source;
+        self.yueYaoPlayUrl = yueyaoStr;
+        [self playMusicWithUrlStr:yueyaoStr];
+    }
 }
 
-- (void)startPlayingMusic:(NSString *)fileName
+- (NSString *)shifanYinUrlWithStr:(NSString *)str
 {
-    self.audioPlay = [[ZYAudioManager defaultManager] playingMusic:fileName];
-    self.audioPlay.delegate = self;
+    //示范音url地址
+    __block NSString *shifanYinStr = @"";
     
+    [self.shifanyinPlayArr enumerateObjectsUsingBlock:^(SongListModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
+        if([model.title isEqualToString:str]){
+            shifanYinStr = model.source;
+            *stop = YES;
+        }
+        
+    }];
+    
+    return shifanYinStr;
 }
+
+
 
 
 - (void)refreshCountImgV
@@ -731,21 +821,30 @@
         self.titleArr = [fileArr2 objectAtIndex:index - 1];
     }
     _pageIndex = 0;
-    [self stopTimer];
+    
     [self countImgV2WithIndex:index];
     [self.collectionV reloadData];
     [self.collectionV setContentOffset:CGPointMake(0, 1)];
     
-    [self dealWithShiFanYinYueYaoData];
+    //[self dealWithShiFanYinYueYaoData];
+    
+    if(voiceButton.selected){
+        voiceButton.selected = NO;
+    }
     
     //正在播放示范音
     if(self.isPlayShiFanYin){
+        
+        [self stopTimer];
+        
         //上一个播放完的 删除
-        if(self.cureentPlayUrl){
-            [[ZYAudioManager defaultManager] stopMusic:self.cureentPlayUrl];
+        if(self.isPlaying){
+            [self stopMusic];
         }
         shifanyinCount = 0;
         [self playShifanyinAction];
+    }else{
+        [self startTimer];
     }
     
 }
@@ -781,7 +880,7 @@
 
 - (void)startTimer {
     [self stopTimer];
-    self.timer = [NSTimer timerWithTimeInterval:6.0
+    self.timer = [NSTimer timerWithTimeInterval:1.0
                                                    target:self
                                                  selector:@selector(timerRefreshed)
                                                  userInfo:nil
@@ -825,6 +924,7 @@
     }
 }
 
+# pragma mark - 切换collectionV下一页
 - (void)timerRefreshedWithAnimated:(BOOL)animate{
     if (_pageIndex == [self.imageArr count]) {
         [self stopTimer];
@@ -861,28 +961,27 @@
         [self.collectionV scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
         _isScrol = NO;
     }
-    NSLog(@"index*******:%ld",(long)_pageIndex);
-    if(self.isPlayShiFanYin){
-        
-        if(!self.isHaveShiFan){
-            //示范音数据
-            NSString *shifanStr = [self.imageArr objectAtIndex:_pageIndex];
-            
-            //示范音本地路径
-            NSString *shifanYinStr = [self stringMP3WithFileName:shifanStr];
-            
-            //判断本地是否存在该示范音
-            BOOL isHaveShiFan = [self.shifanyinPlayArr containsObject:shifanYinStr];
-            
-            if(isHaveShiFan){
-                [self stopTimer];
-                [self refreshAudioPlayWithName:shifanYinStr];
-            }
-        }
-        
-    }else{
-        
-    }
+    NSLog(@"DidEndScrolling_index*******:%ld",(long)_pageIndex);
+//    if(self.isPlayShiFanYin){
+//
+//        if(!self.isHaveShiFan){
+//            //示范音数据
+//            NSString *shifanStr = [self.imageArr objectAtIndex:_pageIndex];
+//
+//            //示范音本地路径
+//            NSString *shifanYinStr = [self stringMP3WithFileName:shifanStr];
+//
+//            //判断本地是否存在该示范音
+//            BOOL isHaveShiFan = [self.shifanyinPlayArr containsObject:shifanYinStr];
+//
+//            if(isHaveShiFan){
+//                [self stopTimer];
+//                [self refreshAudioPlayWithName:shifanYinStr];
+//            }
+//        }
+//
+//    }
+    
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -896,66 +995,14 @@
     
     if(self.isPlayShiFanYin && !isCurrent){
         //上一个播放完的 删除
-        if(self.cureentPlayUrl){
-            [[ZYAudioManager defaultManager] stopMusic:self.cureentPlayUrl];
+        if(self.isPlaying){
+            [self stopMusic];
         }
         [self playShifanyinAction];
     }
     NSLog(@"hahaha:%ld",currentPage);
 }
 
-# pragma mark - 音频每次播放结束后触发
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
-{
-    
-    
-    if(self.isPlayShiFanYin){ //示范音播放
-        //上一个播放完的 删除
-        [[ZYAudioManager defaultManager] stopMusic:self.cureentPlayUrl];
-        shifanyinCount ++;
-        _pageIndex+=1;
-        if (_pageIndex == self.imageArr.count || self.shifanyinCount > self.shifanyinPlayArr.count-1) {
-            shifanyinCount = 0;
-            shifanyinButton.selected = NO;
-            self.isPlayShiFanYin = NO;
-            //停止播放器
-            [self refreshAudioPlayWithName:nil];
-            return;
-        }
-        //示范音数据
-        NSString *shifanStr = [self.imageArr objectAtIndex:_pageIndex];
-        
-        //示范音本地路径
-        NSString *shifanYinStr = [self stringMP3WithFileName:shifanStr];
-        
-        //判断本地是否存在该示范音
-        BOOL isHaveShiFan = [self.shifanyinPlayArr containsObject:shifanYinStr];
-        if(isHaveShiFan){
-            self.isHaveShiFan = YES;
-            [self timerRefreshedWithAnimated:YES];
-            [self refreshAudioPlayWithName:shifanYinStr];
-        }else{
-            self.isHaveShiFan = NO;
-            [self timerRefreshedWithAnimated:YES];
-            [self startTimer];
-        }
-        
-    }
-    /******乐药播放*******/
-    else{
-        //上一个播放完的 删除
-        [[ZYAudioManager defaultManager] stopMusic:self.yueYaoPlayUrl];
-        yueyaoCount ++ ;
-        if(yueyaoCount == self.yueYaoArray.count){
-            yueyaoCount=0;
-        }
-        
-        NSString *yueyaoStr = [[GlobalCommon Createfilepath] stringByAppendingPathComponent:[self.yueYaoArray objectAtIndex:yueyaoCount]];
-        self.yueYaoPlayUrl = yueyaoStr;
-        [self refreshAudioPlayWithName:yueyaoStr];
-    }
-    
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

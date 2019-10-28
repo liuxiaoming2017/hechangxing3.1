@@ -57,6 +57,7 @@
 		0338E507212C057E00BBF576 /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0338E506212C057D00BBF576 /* MessageModel.m */; };
 		0338E50E212C059100BBF576 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0338E50B212C059100BBF576 /* MessageCell.m */; };
 		0338E50F212C059100BBF576 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0338E50C212C059100BBF576 /* MessageCell.xib */; };
+		034243CC235ED366001231E7 /* GKTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 034243CB235ED366001231E7 /* GKTimer.m */; };
 		03430B4521119AF7008EE6C8 /* JingLuoSchemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03430B4421119AF7008EE6C8 /* JingLuoSchemeController.m */; };
 		03439067210AB57F00B57142 /* CCSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 03439066210AB57F00B57142 /* CCSegmentedControl.m */; };
 		03439082210AB8BB00B57142 /* HYSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 03439080210AB8BB00B57142 /* HYSegmentedControl.m */; };
@@ -292,6 +293,7 @@
 		03799C1620F84860004024D1 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 03799C1520F84860004024D1 /* libsqlite3.0.tbd */; };
 		03799C1920F899AD004024D1 /* AnwerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03799C1820F899AD004024D1 /* AnwerModel.m */; };
 		037B5A4021097BC00076D3AA /* HeartLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B5A3E21097BBF0076D3AA /* HeartLive.m */; };
+		0381CA2A235EA05B00AE7F4A /* GKAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0381CA29235EA05B00AE7F4A /* GKAudioPlayer.m */; };
 		0385167921869EDB001DD2B7 /* IXAttributeTapLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0385167721869EDB001DD2B7 /* IXAttributeTapLabel.m */; };
 		038516822186AAB3001DD2B7 /* AppPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0385167E2186AAB2001DD2B7 /* AppPayViewController.m */; };
 		038516832186AAB3001DD2B7 /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 038516812186AAB3001DD2B7 /* PayViewController.m */; };
@@ -784,6 +786,13 @@
 		0338E509212C059000BBF576 /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
 		0338E50B212C059100BBF576 /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCell.m; sourceTree = "<group>"; };
 		0338E50C212C059100BBF576 /* MessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
+		034243C0235EA31B001231E7 /* Pods_和畅行.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_和畅行.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		034243C2235EA4F3001231E7 /* Pods_和畅行.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_和畅行.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		034243C4235EA54D001231E7 /* Pods_和畅行.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_和畅行.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		034243C6235EA574001231E7 /* FreeStreamer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FreeStreamer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		034243C8235EA57F001231E7 /* Reachability.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Reachability.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		034243CA235ED365001231E7 /* GKTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKTimer.h; sourceTree = "<group>"; };
+		034243CB235ED366001231E7 /* GKTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKTimer.m; sourceTree = "<group>"; };
 		03430B4321119AF7008EE6C8 /* JingLuoSchemeController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JingLuoSchemeController.h; sourceTree = "<group>"; };
 		03430B4421119AF7008EE6C8 /* JingLuoSchemeController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JingLuoSchemeController.m; sourceTree = "<group>"; };
 		03439065210AB57F00B57142 /* CCSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSegmentedControl.h; sourceTree = "<group>"; };
@@ -1141,6 +1150,8 @@
 		03799C1820F899AD004024D1 /* AnwerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnwerModel.m; sourceTree = "<group>"; };
 		037B5A3E21097BBF0076D3AA /* HeartLive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartLive.m; sourceTree = "<group>"; };
 		037B5A3F21097BC00076D3AA /* HeartLive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartLive.h; sourceTree = "<group>"; };
+		0381CA28235EA05A00AE7F4A /* GKAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKAudioPlayer.h; sourceTree = "<group>"; };
+		0381CA29235EA05B00AE7F4A /* GKAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKAudioPlayer.m; sourceTree = "<group>"; };
 		0385167721869EDB001DD2B7 /* IXAttributeTapLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IXAttributeTapLabel.m; sourceTree = "<group>"; };
 		0385167821869EDB001DD2B7 /* IXAttributeTapLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IXAttributeTapLabel.h; sourceTree = "<group>"; };
 		0385167E2186AAB2001DD2B7 /* AppPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppPayViewController.m; sourceTree = "<group>"; };
@@ -2189,6 +2200,10 @@
 			children = (
 				039C23CA212413F000F9AFA3 /* MuisicNoraml.h */,
 				039C23CB212413F100F9AFA3 /* MuisicNoraml.m */,
+				034243CA235ED365001231E7 /* GKTimer.h */,
+				034243CB235ED366001231E7 /* GKTimer.m */,
+				0381CA28235EA05A00AE7F4A /* GKAudioPlayer.h */,
+				0381CA29235EA05B00AE7F4A /* GKAudioPlayer.m */,
 				03439065210AB57F00B57142 /* CCSegmentedControl.h */,
 				03439066210AB57F00B57142 /* CCSegmentedControl.m */,
 				03439081210AB8BB00B57142 /* HYSegmentedControl.h */,
@@ -3145,6 +3160,11 @@
 		0390CF7B20ECB5CF000ECA53 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				034243C8235EA57F001231E7 /* Reachability.framework */,
+				034243C6235EA574001231E7 /* FreeStreamer.framework */,
+				034243C4235EA54D001231E7 /* Pods_和畅行.framework */,
+				034243C2235EA4F3001231E7 /* Pods_和畅行.framework */,
+				034243C0235EA31B001231E7 /* Pods_和畅行.framework */,
 				0328F6302334CA6400BD25F7 /* CoreBluetooth.framework */,
 				036C8E0B23289B4800729889 /* Pods_和畅行.framework */,
 				035260AF230BD4B200A716C8 /* OGABluetooth530.framework */,
@@ -4382,6 +4402,7 @@
 				"${BUILT_PRODUCTS_DIR}/DACircularProgress/DACircularProgress.framework",
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
+				"${BUILT_PRODUCTS_DIR}/FreeStreamer/FreeStreamer.framework",
 				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/HHDoctorSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
@@ -4392,6 +4413,7 @@
 				"${PODS_ROOT}/NIMSDK/NIMAVChat/NMC.framework",
 				"${PODS_ROOT}/NIMSDK/NIMAVChat/NMCBasicModuleFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/PYPhotoBrowser/PYPhotoBrowser.framework",
+				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveObjC/ReactiveObjC.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/YYModel/YYModel.framework",
@@ -4402,6 +4424,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DACircularProgress.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FreeStreamer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HHDoctorSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
@@ -4412,6 +4435,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NMC.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NMCBasicModuleFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PYPhotoBrowser.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveObjC.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYModel.framework",
@@ -4517,6 +4541,7 @@
 				C9B3069123050772008D6D38 /* PaymentInfoViewController.m in Sources */,
 				C9FDB92B21BE3D4900E726F3 /* HCY_ConsumptionListCell.m in Sources */,
 				036E85AC2186EB6E001B9BB4 /* TYWaveProgressView.m in Sources */,
+				034243CC235ED366001231E7 /* GKTimer.m in Sources */,
 				035BBC6021ABDF2300AB537D /* GovSectionView.m in Sources */,
 				03F6931520FF2FD400308E38 /* SBJsonStreamWriterAccumulator.m in Sources */,
 				032ED6C621E72A2F0020275E /* NIDropDown.m in Sources */,
@@ -4579,6 +4604,7 @@
 				03DEBC6E2108637C008434BD /* ElecDetailViewController.m in Sources */,
 				036FC0D521181AF400C1A793 /* MyAdvisoryDetailsViewController.m in Sources */,
 				0338E500212BFF3D00BBF576 /* BreathStandardController.m in Sources */,
+				0381CA2A235EA05B00AE7F4A /* GKAudioPlayer.m in Sources */,
 				036E859F2186EB5A001B9BB4 /* ASValuePopUpView.m in Sources */,
 				0385170B2186AB9F001DD2B7 /* WXUtil.mm in Sources */,
 				C9B30694230507C5008D6D38 /* CardModel.m in Sources */,
@@ -5036,7 +5062,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};
 			name = Debug;
@@ -5101,7 +5127,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};
 			name = Release;

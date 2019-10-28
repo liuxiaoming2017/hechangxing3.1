@@ -73,20 +73,29 @@
 
 - (void)downloadFailWithImageStr:(NSString *)nameStr
 {
-    if([nameStr isEqualToString:@"乐药未购买icon"]){
+    if([nameStr isEqualToString:@"乐药未购买icon"] || [nameStr isEqualToString:@"已加入购物车"]){
         self.downloadBtn.frame = CGRectMake(ScreenWidth - 110 , 30, 80, 20);
         self.downloadBtn.backgroundColor = RGB(253, 134, 40);
+        
+        if([nameStr isEqualToString:@"已加入购物车"]){
+            self.downloadBtn.backgroundColor = RGB_TextAppGray;
+            
+        }
         self.downloadBtn.layer.cornerRadius = 10;
         self.downloadBtn.layer.masksToBounds = YES;
         [self.downloadBtn setTitle:ModuleZW(@"加入购物车") forState:(UIControlStateNormal)];
         [self.downloadBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+        self.PlayOrdownload = NO;
     }else{
         self.downloadBtn.frame = CGRectMake(ScreenWidth - 80, 25, 30, 30);
          self.downloadBtn.backgroundColor = [UIColor clearColor];
+        
          [self.downloadBtn setTitle:@"" forState:(UIControlStateNormal)];
+        self.PlayOrdownload = YES;
+        
     }
     [self.downloadBtn setImage:[UIImage imageNamed:nameStr] forState:UIControlStateNormal];
-    self.PlayOrdownload = NO;
+    
 }
 
 - (void)setSelected:(BOOL)selected
@@ -148,15 +157,7 @@
 
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-//    if(self.PlayOrdownload){
-//        if(selected){
-//            [self.downloadBtn setImage:[UIImage imageNamed:@"New_yy_zt_bf"] forState:UIControlStateNormal];
-//        }else{
-//             [self.downloadBtn setImage:[UIImage imageNamed:@"New_yy_zt_zt"] forState:UIControlStateNormal];
-//        }
-//    }
-    
+    [super setSelected:selected animated:animated];    
 }
 
 @end

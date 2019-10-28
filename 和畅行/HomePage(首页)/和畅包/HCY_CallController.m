@@ -61,7 +61,13 @@
     
     __weak typeof(self) weakSelf = self;
     cell.comeToNextBlock = ^(HCY_CallCell * cell) {
-        [weakSelf comeToNextBlockCellwithIndex:indexPath];
+        static NSTimeInterval time = 0.0;
+        NSTimeInterval currentTime = [NSDate date].timeIntervalSince1970;
+        if (currentTime - time > 2) {
+            [weakSelf comeToNextBlockCellwithIndex:indexPath];
+        }
+        time = currentTime;
+        
     };
     
     return cell;

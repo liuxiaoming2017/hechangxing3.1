@@ -180,12 +180,15 @@ static DownLoadHandlers *sharedDownloadhandler = nil;
 //    unzip = nil;
 //}
 -(void)dealloc{
+    
+     [super dealloc];
+    
     [_queue release];
     _queue = nil;
     [_progress release];
     _progress = nil;
     [_label release];
     _label = nil;
-    [super dealloc];
+   
 }
 @end

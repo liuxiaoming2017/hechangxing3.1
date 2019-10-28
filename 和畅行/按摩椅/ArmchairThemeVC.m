@@ -31,6 +31,14 @@
     self.pageView = nil;
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:YES];
+    
+    [[OGA530BluetoothManager shareInstance] removeSubscribe:self.subscribe];
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

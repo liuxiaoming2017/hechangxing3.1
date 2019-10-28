@@ -9,5 +9,11 @@
 #import "SayAndWriteController.h"
 
 @interface YueYaoController : SayAndWriteController
+
+@property (assign, nonatomic) BOOL isYueLuoyi;
+
 - (id)initWithType:(BOOL )isYueLuoyi;
+
++ (instancetype)sharePlayerController;
+
 @end
