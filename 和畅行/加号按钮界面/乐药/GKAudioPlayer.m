@@ -8,7 +8,7 @@
 
 #import "GKAudioPlayer.h"
 #import "GKTimer.h"
-#import "SongListModel.h"
+
 #import <MediaPlayer/MediaPlayer.h>
 
 @interface GKAudioPlayer()
@@ -19,6 +19,10 @@
 @property (nonatomic, strong) NSTimer       *bufferTimer;
 
 @property (nonatomic,assign) BOOL isBackground;
+
+@property (nonatomic,assign) NSTimeInterval totalTime;
+
+@property (nonatomic,assign) NSTimeInterval currentTime;
 
 @end
 
@@ -49,6 +53,10 @@
       //  [self removeCache];
         
         _playUrlStr = playUrlStr;
+        
+        if(!playUrlStr){
+            return;
+        }
         
         if ([playUrlStr hasPrefix:@"http"]) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -92,7 +100,7 @@
         [self.audioStream play];
     });
     
-  //  [self startTimer];
+    [self startTimer];
     
     // 如果缓冲未完成
     if (self.bufferState != GKAudioBufferStateFinished) {
@@ -109,7 +117,7 @@
         [self.audioStream playFromOffset:offset];
     });
     
-   // [self startTimer];
+    [self startTimer];
     
     // 如果缓冲未完成
     if (self.bufferState != GKAudioBufferStateFinished) {
@@ -122,6 +130,7 @@
     if (self.playerState == GKAudioPlayerStatePaused) return;
     
     self.playerState = GKAudioPlayerStatePaused;
+    
     [self setupPlayerState:self.playerState];
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -139,7 +148,7 @@
         [self.audioStream pause];
     });
     
-   // [self startTimer];
+    [self startTimer];
 }
 
 - (void)stop {
@@ -180,25 +189,29 @@
 }
 
 - (void)timerAction:(id)sender {
-    /*
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         FSStreamPosition cur = self.audioStream.currentTimePlayed;
         
-        NSTimeInterval currentTime = cur.playbackTimeInSeconds * 1000;
+       self.currentTime = cur.playbackTimeInSeconds * 1000;
         
-        NSTimeInterval totalTime = self.audioStream.duration.playbackTimeInSeconds * 1000;
+       self.totalTime = self.audioStream.duration.playbackTimeInSeconds * 1000;
         
-        NSTimeInterval progress = cur.position;
+       // NSTimeInterval progress = cur.position;
         
-        if ([self.delegate respondsToSelector:@selector(gkPlayer:currentTime:totalTime:progress:)]) {
-            [self.delegate gkPlayer:self currentTime:currentTime totalTime:totalTime progress:progress];
-        }
-
-        if ([self.delegate respondsToSelector:@selector(gkPlayer:totalTime:)]) {
-            [self.delegate gkPlayer:self totalTime:totalTime];
-        }
+        //NSLog(@"total:%f,currentTime:%f",(float)self.totalTime / 1000,(float)self.currentTime / 1000);
+        
+        [self setupLockScreenMediaInfo];
+        
+//        if ([self.delegate respondsToSelector:@selector(gkPlayer:currentTime:totalTime:progress:)]) {
+//            [self.delegate gkPlayer:self currentTime:currentTime totalTime:totalTime progress:progress];
+//        }
+//
+//        if ([self.delegate respondsToSelector:@selector(gkPlayer:totalTime:)]) {
+//            [self.delegate gkPlayer:self totalTime:totalTime];
+//        }
     });
-     */
+    
 }
 
 - (void)bufferTimerAction:(id)sender {
@@ -363,6 +376,7 @@
     return _audioStream;
 }
 
+# pragma mark - 下一首
 - (void)playNextMusic
 {
     if(self.playUrlStr){
@@ -376,6 +390,7 @@
         indexNum = 0;
     }
     SongListModel *model = [self.musicArr objectAtIndex:index];
+    self.model = model;
     self.playUrlStr = model.source;
     [self play];
     
@@ -450,24 +465,31 @@
     MPNowPlayingInfoCenter *playingCenter = [MPNowPlayingInfoCenter defaultCenter];
     
     NSMutableDictionary *playingInfo = [NSMutableDictionary new];
-    playingInfo[MPMediaItemPropertyAlbumTitle] = @"刘德华";
-    playingInfo[MPMediaItemPropertyTitle]      = @"刘德华";
-    playingInfo[MPMediaItemPropertyArtist]     = @"爱你一万年";
+    NSString *iconStr = @"和畅依";
+    if(self.model.subjectSn){
+      NSString  *titleStr = [self.model.subjectSn substringFromIndex:self.model.subjectSn.length-1];
+        iconStr = [NSString stringWithFormat:@"%@icon",titleStr];
+    }
+    playingInfo[MPMediaItemPropertyAlbumTitle] = [UIImage imageNamed:iconStr];
+    playingInfo[MPMediaItemPropertyTitle]      = self.model.title;
+    //playingInfo[MPMediaItemPropertyArtist]     = @"爱你一万年";
     
 //    MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithImage:self.bgImageView.image];
 //    playingInfo[MPMediaItemPropertyArtwork] = artwork;
     
+    //NSLog(@"total:%f,currentTime:%f",(float)self.totalTime / 1000,(float)self.currentTime / 1000);
+    
     // 当前播放的时间
-//    playingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = [NSNumber numberWithFloat:(self.duration * self.controlView.progress) / 1000];
-//    // 进度的速度
-//    playingInfo[MPNowPlayingInfoPropertyPlaybackRate] = [NSNumber numberWithFloat:1.0];
-//    // 总时间
-//    playingInfo[MPMediaItemPropertyPlaybackDuration] = [NSNumber numberWithFloat:self.duration / 1000];
-//    if (@available(iOS 10.0, *)) {
-//        playingInfo[MPNowPlayingInfoPropertyPlaybackProgress] = [NSNumber numberWithFloat:self.controlView.progress];
-//    } else {
-//        // Fallback on earlier versions
-//    }
+    playingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = [NSNumber numberWithFloat:(float)self.currentTime / 1000];
+    // 进度的速度
+    playingInfo[MPNowPlayingInfoPropertyPlaybackRate] = [NSNumber numberWithFloat:1.0];
+    // 总时间
+    playingInfo[MPMediaItemPropertyPlaybackDuration] = [NSNumber numberWithFloat:(float)self.totalTime / 1000];
+    if (@available(iOS 10.0, *)) {
+        playingInfo[MPNowPlayingInfoPropertyPlaybackProgress] = [NSNumber numberWithFloat:(float)self.currentTime / 1000];
+    } else {
+        // Fallback on earlier versions
+    }
     playingCenter.nowPlayingInfo = playingInfo;
 }
 

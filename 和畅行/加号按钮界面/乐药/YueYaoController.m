@@ -18,6 +18,8 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "ShoppingController.h"
 
+#import "NoteController.h"
+
 #import <MediaPlayer/MediaPlayer.h>
 #import <notify.h>
 
@@ -96,6 +98,9 @@
     self.avPlayer = nil;
     self.tableView = nil;
     self.hysegmentControl = nil;
+    
+    kPlayer.noDelegate = YES;
+    
    // [self removeObserver];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PayStatues" object:nil];
     [UserShareOnce shareOnce].allYueYaoPrice = 0.0;
@@ -234,7 +239,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    kPlayer.noDelegate = YES;
+    
 }
 
 - (id)initWithType:(BOOL )isYueLuoyi
@@ -268,7 +273,7 @@
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     rightBtn.frame = CGRectMake(topSegment.right, topSegment.top, 37, 40);
     [rightBtn setImage:[UIImage imageNamed:@"message"] forState:UIControlStateNormal];
-    [rightBtn addTarget:self action:@selector(nextMusic) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn addTarget:self action:@selector(noteVC) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:rightBtn];
     
     
@@ -295,11 +300,11 @@
    
      [self getPayRequest];
     
+    NSLog(@"url:%@",kPlayer.playUrlStr);
+    
     // 设置播放器的代理
     kPlayer.delegate = self;
-    if([kPlayer.playUrlStr isKindOfClass:[NSNull class]]){
-        kPlayer.playUrlStr = nil;
-    }
+    kPlayer.noDelegate = NO;
     if(kPlayer.playUrlStr != nil){
         self.selectSongName = kPlayer.playUrlStr;
         SongListModel *model = [kPlayer.musicArr objectAtIndex:0];
@@ -451,21 +456,24 @@
         
         NSLog(@"url:%@,***:%lu",kPlayer.playUrlStr,kPlayer.playerState);
         
-        if(![kPlayer.playUrlStr isKindOfClass:[NSNull class]] && [model.source isEqualToString:kPlayer.playUrlStr] && kPlayer.playerState == 2){
+        if(kPlayer.playUrlStr && [model.source isEqualToString:kPlayer.playUrlStr] && kPlayer.playerState == 2){
             cell.currentSelect = YES;
             [cell downloadFailWithImageStr:@"乐药暂停icon"];
             //cell.selected = YES;
         }else{
-            if (model.price == 0 || [model.status isEqualToString:@"paid"]){
-                imageStr = @"乐药播放icon";
-            }else{  //需要付费leyaoweigoumai
-                if (self.isOnPay == YES){
+            
+            if(self.isOnPay == NO){ //不需要付费leyaoweigoumai
+               imageStr = @"乐药播放icon";
+            }else{
+                if([model.status isKindOfClass:[NSNull class]]){
+                    imageStr = @"乐药未购买icon";
+                }else if (model.price == 0 || [model.status isEqualToString:@"paid"]){
+                    imageStr = @"乐药播放icon";
+                }else{
                     imageStr = @"乐药未购买icon";
                     if([self containGouMaiModel:model]){
-                        imageStr = @"已加入购物车";
+                            imageStr = @"已加入购物车";
                     }
-                }else{
-                    imageStr = @"乐药播放icon";
                 }
             }
             [cell downloadFailWithImageStr:imageStr];
@@ -521,7 +529,7 @@
             
             self.currentIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
             
-            [self playActionWithUrlStr:model.source];
+            [self playActionWithModel:model];
             
             self.selectSongName = model.source; //播放链接
         }else{
@@ -556,13 +564,14 @@
     NSMutableArray *playList = [NSMutableArray arrayWithCapacity:0];
     
     for(SongListModel *model in self.dataArr){
-        if (model.price == 0 || [model.status isEqualToString:@"paid"]){
+        if (self.isOnPay == NO){ //不需要付费leyaoweigoumai
             [playList addObject:model];
-        }else {   //需要付费leyaoweigoumai
-            if (self.isOnPay == NO){
+        }else{
+            if (![model.status isKindOfClass:[NSNull class]] && (model.price == 0 || [model.status isEqualToString:@"paid"])){
                 [playList addObject:model];
             }
         }
+        
     }
     
     kPlayer.musicArr = [playList copy];
@@ -751,51 +760,11 @@
 }
 
 
-//- (void)downLoadButton:(UIButton *)btn withDownload:(BOOL)isplay;
-//{
-//
-//    CGPoint point = btn.center;
-//    point = [self.tableView convertPoint:point fromView:btn.superview];
-//    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
-//
-//    SongListModel *model = [self.dataArr objectAtIndex:indexPath.row];
-//    NSString* NewFileName=model.source; //leyaoPath
-//
-//    NSString *urlPathName = model.title;
-//
-//    if(isplay){ //播放
-//        btn.selected = !btn.selected;
-//        NSString *musicStr = [[GlobalCommon Createfilepath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3",urlPathName]];
-//        if(btn.selected){
-//            [self playActionWithUrlStr:musicStr];
-//        }else{
-//            [self pauseMusic];
-//        }
-//        return;
-//    }
-//
-//    DownloadHandler *downhander = [DownloadHandler sharedInstance];
-//    [downhander.downloadingDic setValue:@"downloading" forKey: [NSString stringWithFormat:@"%@",urlPathName]];
-//    NSString *aurl = [NewFileName stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-//    ProgressIndicator *progress = [[ProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-//    downhander.name = [NSString stringWithFormat:@"%@",urlPathName];
-//    [btn setImage:nil forState:UIControlStateNormal];
-//
-//    btn.tag = 100 + indexPath.row;
-//    progress.frame=btn.bounds;
-//    [btn addSubview:progress];
-//    downhander.url = aurl;
-//    [downhander setButton:btn];
-//    downhander.downdelegate = self;
-//    downhander.fileType =@"mp3";
-//    downhander.savePath = [GlobalCommon Createfilepath];
-//    [downhander setProgress:progress] ;
-//    [downhander start];
-//}
-
 # pragma mark - 播放乐药
-- (void)playActionWithUrlStr:(NSString *)urlStr
+- (void)playActionWithModel:(SongListModel *)model
 {
+    NSString *urlStr = model.source;
+    
     if(self.selectSongName != nil || ![self.selectSongName isEqualToString:@""]){
         if([urlStr isEqualToString:self.selectSongName]){
             [kPlayer resume];
@@ -806,7 +775,7 @@
             }
         }
     }
-    
+    kPlayer.model = model;
     kPlayer.playUrlStr = urlStr;
     [kPlayer play];
 
@@ -824,6 +793,19 @@
     [kPlayer stop];
 }
 
+- (void)noteVC
+{
+    self.definesPresentationContext = YES;
+    
+    NoteController *vc = [[NoteController alloc] init];
+    vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    
+    vc.view.superview.frame = CGRectMake(15, 30, 300, 300);
+    [self presentViewController:vc animated:YES completion:^{
+        
+    }];
+}
+
 - (void)nextMusic
 {
     if(kPlayer.playUrlStr){
@@ -832,7 +814,7 @@
     }
     
     if(kPlayer.musicArr.count == 1){ //只购买了一首乐药,循环播放
-        [self playActionWithUrlStr:kPlayer.playUrlStr];
+        [self playActionWithModel:kPlayer.model];
         return;
     }
     
@@ -841,7 +823,7 @@
     NSLog(@"yyyy:%@",kPlayer.musicArr);
     
     SongListModel *model = [kPlayer.musicArr objectAtIndex:index];
-    [self playActionWithUrlStr:model.source];
+    [self playActionWithModel:model];
 
     //播放完一首歌后,切换cell按钮的状态
     NSInteger row = [self.dataArr indexOfObject:model];

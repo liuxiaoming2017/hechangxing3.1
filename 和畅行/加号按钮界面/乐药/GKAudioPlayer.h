@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <FreeStreamer/FSAudioStream.h>
+#import "SongListModel.h"
 
 // 播放器播放状态
 typedef NS_ENUM(NSUInteger, GKAudioPlayerState) {
@@ -70,6 +71,8 @@ typedef NS_ENUM(NSUInteger, GKAudioBufferState) {
 @property (nonatomic,assign) BOOL noDelegate;
 
 @property (nonatomic, copy) NSString *subjectType;
+
+@property (nonatomic,strong) SongListModel *model;
 
 /**
  播放状态

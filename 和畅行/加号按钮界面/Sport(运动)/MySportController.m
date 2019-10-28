@@ -116,9 +116,13 @@
 - (void)dealloc
 {
     [self stopTimer];
+    
     [self stopMusic];
     
+    //全局播放器初始化
     kPlayer.delegate = nil;
+    kPlayer.musicArr = nil;
+    kPlayer.playUrlStr = nil;
     
     self.titleArr = nil;
     self.imageArr = nil;
@@ -158,12 +162,16 @@
     
    // [self dealWithShiFanYinYueYaoData];
     
-    [self GetMusicResourceslist];
+    yueyaoCount = 0;
     
     // 设置播放器的代理
     kPlayer.delegate = self;
-    
-    yueyaoCount = 0;
+    kPlayer.noDelegate = NO;
+    if(kPlayer.playUrlStr != nil && kPlayer.playerState == 2){
+        yueYaoButton.selected = YES;
+        self.yueYaoArray = kPlayer.musicArr;
+    }
+    [self shifanyinSourceList];
 }
 
 - (void)createUI
@@ -314,13 +322,13 @@
 
 - (void)requestResourceslistErrorw:(ASIHTTPRequest *)request
 {
-    [self shifanyinSourceList];
+    //[self shifanyinSourceList];
     [GlobalCommon hideMBHudWithView:self.view];
     [self showAlertWarmMessage:requestErrorMessage];
 }
 - (void)requestResourceslistCompletedw:(ASIHTTPRequest *)request
 {
-    [self shifanyinSourceList];
+    //[self shifanyinSourceList];
    [GlobalCommon hideMBHudWithView:self.view];
     NSString* reqstr=[request responseString];
     NSDictionary * dic=[reqstr JSONValue];
@@ -380,12 +388,22 @@
 
 - (void)requestshifanyinSourceError:(ASIHTTPRequest *)request
 {
+    if(kPlayer.playUrlStr != nil && kPlayer.playerState == 2){
+        
+    }else{
+        [self GetMusicResourceslist];
+    }
     [GlobalCommon hideMBHudWithView:self.view];
     [self showAlertWarmMessage:requestErrorMessage];
 }
 
 - (void)requestResourcesshifanyinCompletedw:(ASIHTTPRequest *)request
 {
+    if(kPlayer.playUrlStr != nil && kPlayer.playerState == 2){
+        
+    }else{
+        [self GetMusicResourceslist];
+    }
     [GlobalCommon hideMBHudWithView:self.view];
     NSString* reqstr=[request responseString];
     NSDictionary * dic=[reqstr JSONValue];

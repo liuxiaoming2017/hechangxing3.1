@@ -21,7 +21,6 @@
 		030F51362101B2A2003C918F /* ResultWriteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 030F51352101B2A2003C918F /* ResultWriteController.m */; };
 		030F51392101C206003C918F /* MeridianIdentifierViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 030F51372101C206003C918F /* MeridianIdentifierViewController.m */; };
 		03101DE02330D6AA00C5F35E /* ArmchairAcheTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 03101DDF2330D6AA00C5F35E /* ArmchairAcheTestVC.m */; };
-		0310F5B021EB7FB60005731F /* MySportController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310F5AF21EB7FB60005731F /* MySportController.m */; };
 		03140CF9227FD9BC00BC79D9 /* QuestionTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03140CF8227FD9BC00BC79D9 /* QuestionTableCell.xib */; };
 		0325A5EC210995F100275671 /* EEGDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0325A5EB210995F100275671 /* EEGDetailController.m */; };
 		0325A5F92109C29900275671 /* MySportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0325A5F42109C29900275671 /* MySportCell.m */; };
@@ -32,7 +31,6 @@
 		032735982105CE0900554516 /* ArchivesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 032735972105CE0900554516 /* ArchivesCell.m */; };
 		0327359B2105CFCE00554516 /* ArchiveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327359A2105CFCE00554516 /* ArchiveModel.m */; };
 		0328F62B2334A6CC00BD25F7 /* ICD10.db in Resources */ = {isa = PBXBuildFile; fileRef = 0328F62A2334A6CB00BD25F7 /* ICD10.db */; };
-		0328F62E2334C5F500BD25F7 /* YueYaoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0328F62D2334C5F400BD25F7 /* YueYaoController.m */; };
 		0328F6312334CA6400BD25F7 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0328F6302334CA6400BD25F7 /* CoreBluetooth.framework */; };
 		032A7A0420E9F6EB003D4952 /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A0320E9F6EB003D4952 /* CustomNavigationController.m */; };
 		032A7A0820E9F7E2003D4952 /* CommonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A0720E9F7E2003D4952 /* CommonViewController.m */; };
@@ -293,7 +291,6 @@
 		03799C1620F84860004024D1 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 03799C1520F84860004024D1 /* libsqlite3.0.tbd */; };
 		03799C1920F899AD004024D1 /* AnwerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03799C1820F899AD004024D1 /* AnwerModel.m */; };
 		037B5A4021097BC00076D3AA /* HeartLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B5A3E21097BBF0076D3AA /* HeartLive.m */; };
-		0381CA2A235EA05B00AE7F4A /* GKAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0381CA29235EA05B00AE7F4A /* GKAudioPlayer.m */; };
 		0385167921869EDB001DD2B7 /* IXAttributeTapLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0385167721869EDB001DD2B7 /* IXAttributeTapLabel.m */; };
 		038516822186AAB3001DD2B7 /* AppPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0385167E2186AAB2001DD2B7 /* AppPayViewController.m */; };
 		038516832186AAB3001DD2B7 /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 038516812186AAB3001DD2B7 /* PayViewController.m */; };
@@ -404,6 +401,11 @@
 		03EBD1EA22EE8B7C001FAD7A /* EnPassWordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EBD1E422EE8B7B001FAD7A /* EnPassWordController.m */; };
 		03EBD1EB22EE8B7C001FAD7A /* EnRegistrController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EBD1E722EE8B7B001FAD7A /* EnRegistrController.m */; };
 		03EBD1EC22EE8B7C001FAD7A /* EnCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EBD1E822EE8B7C001FAD7A /* EnCodeController.m */; };
+		03EE39A62366D40300369B34 /* MySportController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EE39A42366D40300369B34 /* MySportController.m */; };
+		03EE39A92366D41900369B34 /* GKAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EE39A82366D41900369B34 /* GKAudioPlayer.m */; };
+		03EE39AC2366D42400369B34 /* YueYaoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EE39AB2366D42300369B34 /* YueYaoController.m */; };
+		03EE39AF2366D43700369B34 /* NoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EE39AE2366D43700369B34 /* NoteView.m */; };
+		03EE39B22366D49900369B34 /* NoteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EE39B12366D49900369B34 /* NoteController.m */; };
 		03EE3C3D21D3982B00647E53 /* WenYinFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EE3C3C21D3982B00647E53 /* WenYinFileCell.m */; };
 		03F692D020FEEE9500308E38 /* ResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F692CF20FEEE9500308E38 /* ResultController.m */; };
 		03F692E920FF2DF000308E38 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F692D720FF2DED00308E38 /* ASIDownloadCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -718,11 +720,9 @@
 		030F51382101C206003C918F /* MeridianIdentifierViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeridianIdentifierViewController.h; sourceTree = "<group>"; };
 		03101DDE2330D6AA00C5F35E /* ArmchairAcheTestVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArmchairAcheTestVC.h; sourceTree = "<group>"; };
 		03101DDF2330D6AA00C5F35E /* ArmchairAcheTestVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArmchairAcheTestVC.m; sourceTree = "<group>"; };
-		0310F5AF21EB7FB60005731F /* MySportController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySportController.m; sourceTree = "<group>"; };
 		03140CF8227FD9BC00BC79D9 /* QuestionTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuestionTableCell.xib; sourceTree = "<group>"; };
 		0325A5EA210995F100275671 /* EEGDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EEGDetailController.h; sourceTree = "<group>"; };
 		0325A5EB210995F100275671 /* EEGDetailController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EEGDetailController.m; sourceTree = "<group>"; };
-		0325A5F22109C29800275671 /* MySportController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySportController.h; sourceTree = "<group>"; };
 		0325A5F42109C29900275671 /* MySportCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySportCell.m; sourceTree = "<group>"; };
 		0325A5F52109C29900275671 /* MySportCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySportCell.h; sourceTree = "<group>"; };
 		0325A5F62109C29900275671 /* MenuTypeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTypeView.h; sourceTree = "<group>"; };
@@ -736,8 +736,6 @@
 		032735992105CFCE00554516 /* ArchiveModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArchiveModel.h; sourceTree = "<group>"; };
 		0327359A2105CFCE00554516 /* ArchiveModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArchiveModel.m; sourceTree = "<group>"; };
 		0328F62A2334A6CB00BD25F7 /* ICD10.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = ICD10.db; sourceTree = "<group>"; };
-		0328F62D2334C5F400BD25F7 /* YueYaoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YueYaoController.m; sourceTree = "<group>"; };
-		0328F62F2334C7EE00BD25F7 /* payRequsestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = payRequsestHandler.h; sourceTree = "<group>"; };
 		0328F6302334CA6400BD25F7 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		032A7A0220E9F6EB003D4952 /* CustomNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationController.h; sourceTree = "<group>"; };
 		032A7A0320E9F6EB003D4952 /* CustomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationController.m; sourceTree = "<group>"; };
@@ -797,7 +795,6 @@
 		03430B4421119AF7008EE6C8 /* JingLuoSchemeController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JingLuoSchemeController.m; sourceTree = "<group>"; };
 		03439065210AB57F00B57142 /* CCSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSegmentedControl.h; sourceTree = "<group>"; };
 		03439066210AB57F00B57142 /* CCSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSegmentedControl.m; sourceTree = "<group>"; };
-		03439077210AB6B200B57142 /* YueYaoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YueYaoController.h; sourceTree = "<group>"; };
 		03439080210AB8BB00B57142 /* HYSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYSegmentedControl.m; sourceTree = "<group>"; };
 		03439081210AB8BB00B57142 /* HYSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYSegmentedControl.h; sourceTree = "<group>"; };
 		03439096210AC2A300B57142 /* SongListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongListCell.m; sourceTree = "<group>"; };
@@ -1150,8 +1147,6 @@
 		03799C1820F899AD004024D1 /* AnwerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnwerModel.m; sourceTree = "<group>"; };
 		037B5A3E21097BBF0076D3AA /* HeartLive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartLive.m; sourceTree = "<group>"; };
 		037B5A3F21097BC00076D3AA /* HeartLive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartLive.h; sourceTree = "<group>"; };
-		0381CA28235EA05A00AE7F4A /* GKAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKAudioPlayer.h; sourceTree = "<group>"; };
-		0381CA29235EA05B00AE7F4A /* GKAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKAudioPlayer.m; sourceTree = "<group>"; };
 		0385167721869EDB001DD2B7 /* IXAttributeTapLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IXAttributeTapLabel.m; sourceTree = "<group>"; };
 		0385167821869EDB001DD2B7 /* IXAttributeTapLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IXAttributeTapLabel.h; sourceTree = "<group>"; };
 		0385167E2186AAB2001DD2B7 /* AppPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppPayViewController.m; sourceTree = "<group>"; };
@@ -1444,6 +1439,17 @@
 		03EBD1E622EE8B7B001FAD7A /* EnPassWordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnPassWordController.h; sourceTree = "<group>"; };
 		03EBD1E722EE8B7B001FAD7A /* EnRegistrController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnRegistrController.m; sourceTree = "<group>"; };
 		03EBD1E822EE8B7C001FAD7A /* EnCodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnCodeController.m; sourceTree = "<group>"; };
+		03EE39A32366D38100369B34 /* payRequsestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = payRequsestHandler.h; sourceTree = "<group>"; };
+		03EE39A42366D40300369B34 /* MySportController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySportController.m; sourceTree = "<group>"; };
+		03EE39A52366D40300369B34 /* MySportController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySportController.h; sourceTree = "<group>"; };
+		03EE39A72366D41900369B34 /* GKAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKAudioPlayer.h; sourceTree = "<group>"; };
+		03EE39A82366D41900369B34 /* GKAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKAudioPlayer.m; sourceTree = "<group>"; };
+		03EE39AA2366D42300369B34 /* YueYaoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YueYaoController.h; sourceTree = "<group>"; };
+		03EE39AB2366D42300369B34 /* YueYaoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YueYaoController.m; sourceTree = "<group>"; };
+		03EE39AD2366D43700369B34 /* NoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteView.h; sourceTree = "<group>"; };
+		03EE39AE2366D43700369B34 /* NoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteView.m; sourceTree = "<group>"; };
+		03EE39B02366D49900369B34 /* NoteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteController.h; sourceTree = "<group>"; };
+		03EE39B12366D49900369B34 /* NoteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteController.m; sourceTree = "<group>"; };
 		03EE3C3B21D3982B00647E53 /* WenYinFileCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WenYinFileCell.h; sourceTree = "<group>"; };
 		03EE3C3C21D3982B00647E53 /* WenYinFileCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WenYinFileCell.m; sourceTree = "<group>"; };
 		03F692CE20FEEE9500308E38 /* ResultController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResultController.h; sourceTree = "<group>"; };
@@ -1951,8 +1957,8 @@
 				0325A5F72109C29900275671 /* MenuTypeView.m */,
 				0325A5F52109C29900275671 /* MySportCell.h */,
 				0325A5F42109C29900275671 /* MySportCell.m */,
-				0325A5F22109C29800275671 /* MySportController.h */,
-				0310F5AF21EB7FB60005731F /* MySportController.m */,
+				03EE39A52366D40300369B34 /* MySportController.h */,
+				03EE39A42366D40300369B34 /* MySportController.m */,
 				03EB041821E86B96000AA88B /* ZYAudioManager.h */,
 				03EB041721E86B95000AA88B /* ZYAudioManager.m */,
 			);
@@ -2202,16 +2208,20 @@
 				039C23CB212413F100F9AFA3 /* MuisicNoraml.m */,
 				034243CA235ED365001231E7 /* GKTimer.h */,
 				034243CB235ED366001231E7 /* GKTimer.m */,
-				0381CA28235EA05A00AE7F4A /* GKAudioPlayer.h */,
-				0381CA29235EA05B00AE7F4A /* GKAudioPlayer.m */,
+				03EE39A72366D41900369B34 /* GKAudioPlayer.h */,
+				03EE39A82366D41900369B34 /* GKAudioPlayer.m */,
 				03439065210AB57F00B57142 /* CCSegmentedControl.h */,
 				03439066210AB57F00B57142 /* CCSegmentedControl.m */,
 				03439081210AB8BB00B57142 /* HYSegmentedControl.h */,
 				03439080210AB8BB00B57142 /* HYSegmentedControl.m */,
 				03439097210AC2A400B57142 /* SongListCell.h */,
 				03439096210AC2A300B57142 /* SongListCell.m */,
-				03439077210AB6B200B57142 /* YueYaoController.h */,
-				0328F62D2334C5F400BD25F7 /* YueYaoController.m */,
+				03EE39AA2366D42300369B34 /* YueYaoController.h */,
+				03EE39AB2366D42300369B34 /* YueYaoController.m */,
+				03EE39AD2366D43700369B34 /* NoteView.h */,
+				03EE39AE2366D43700369B34 /* NoteView.m */,
+				03EE39B02366D49900369B34 /* NoteController.h */,
+				03EE39B12366D49900369B34 /* NoteController.m */,
 				039661E921F1736100754AAA /* ShoppingController.h */,
 				039661EA21F1736100754AAA /* ShoppingController.m */,
 				039661F021F1BF7F00754AAA /* PayMentViewController.h */,
@@ -3080,7 +3090,7 @@
 			children = (
 				038517082186AB9E001DD2B7 /* ApiXml.h */,
 				038517042186AB9E001DD2B7 /* ApiXml.mm */,
-				0328F62F2334C7EE00BD25F7 /* payRequsestHandler.h */,
+				03EE39A32366D38100369B34 /* payRequsestHandler.h */,
 				038517072186AB9E001DD2B7 /* payRequsestHandler.mm */,
 				038517092186AB9F001DD2B7 /* WXUtil.h */,
 				038517062186AB9E001DD2B7 /* WXUtil.mm */,
@@ -4520,6 +4530,7 @@
 				030F51392101C206003C918F /* MeridianIdentifierViewController.m in Sources */,
 				034A4E8C211A9AD900936A46 /* TZGifPhotoPreviewController.m in Sources */,
 				03EBD1E922EE8B7C001FAD7A /* HWTFCursorView.m in Sources */,
+				03EE39AF2366D43700369B34 /* NoteView.m in Sources */,
 				036E85972186EB4C001B9BB4 /* i9_blelistViewCell.m in Sources */,
 				832ED75C2278286A00BFEEFC /* HpiViewController.m in Sources */,
 				036C8E122328A27B00729889 /* ArmchairCommonVC.m in Sources */,
@@ -4541,6 +4552,7 @@
 				C9B3069123050772008D6D38 /* PaymentInfoViewController.m in Sources */,
 				C9FDB92B21BE3D4900E726F3 /* HCY_ConsumptionListCell.m in Sources */,
 				036E85AC2186EB6E001B9BB4 /* TYWaveProgressView.m in Sources */,
+				03EE39A62366D40300369B34 /* MySportController.m in Sources */,
 				034243CC235ED366001231E7 /* GKTimer.m in Sources */,
 				035BBC6021ABDF2300AB537D /* GovSectionView.m in Sources */,
 				03F6931520FF2FD400308E38 /* SBJsonStreamWriterAccumulator.m in Sources */,
@@ -4587,6 +4599,7 @@
 				83E23F0021C76CE800B43298 /* HYC_CardsModel.m in Sources */,
 				036E84402186EAD3001B9BB4 /* NSString+Util.m in Sources */,
 				C97308F721BA50FB00060447 /* SGScanningQRCodeVC.m in Sources */,
+				03EE39AC2366D42400369B34 /* YueYaoController.m in Sources */,
 				03E29ACA2331FDCB0056A258 /* UIButton+ExpandScope.m in Sources */,
 				03535EF620F7263C00664FA9 /* TipSpeakController.m in Sources */,
 				036E843D2186EAD3001B9BB4 /* KeyBoardManager.m in Sources */,
@@ -4602,9 +4615,9 @@
 				036E843B2186EAD3001B9BB4 /* UINavigationController+MHDismissModalView.m in Sources */,
 				03535EFF20F7462900664FA9 /* QuestionView.m in Sources */,
 				03DEBC6E2108637C008434BD /* ElecDetailViewController.m in Sources */,
+				03EE39A92366D41900369B34 /* GKAudioPlayer.m in Sources */,
 				036FC0D521181AF400C1A793 /* MyAdvisoryDetailsViewController.m in Sources */,
 				0338E500212BFF3D00BBF576 /* BreathStandardController.m in Sources */,
-				0381CA2A235EA05B00AE7F4A /* GKAudioPlayer.m in Sources */,
 				036E859F2186EB5A001B9BB4 /* ASValuePopUpView.m in Sources */,
 				0385170B2186AB9F001DD2B7 /* WXUtil.mm in Sources */,
 				C9B30694230507C5008D6D38 /* CardModel.m in Sources */,
@@ -4654,7 +4667,6 @@
 				036FC0CC2118176E00C1A793 /* WenYinFileViewController.m in Sources */,
 				C9B76976231FA27B00171DCC /* AllServiceCell.m in Sources */,
 				03F6931720FF2FD400308E38 /* SBJsonWriter.m in Sources */,
-				0328F62E2334C5F500BD25F7 /* YueYaoController.m in Sources */,
 				03051FF522C0997D00385DD0 /* AESCipher.m in Sources */,
 				03513ADB20E9CAD4004E2805 /* main.m in Sources */,
 				038CE87720EDF1BF005E9219 /* RootRequestController.m in Sources */,
@@ -4722,6 +4734,7 @@
 				03C4D1F220F44DF800D7BF02 /* NSString+Utility.m in Sources */,
 				032ED6C021E729D80020275E /* SportViewController.m in Sources */,
 				03B1A1862119687D00B23339 /* WYViewController.m in Sources */,
+				03EE39B22366D49900369B34 /* NoteController.m in Sources */,
 				037B5A4021097BC00076D3AA /* HeartLive.m in Sources */,
 				03535EF320F7262C00664FA9 /* TipClickController.m in Sources */,
 				036E84352186EAD3001B9BB4 /* PlanAlasnNameItem.m in Sources */,
@@ -4821,7 +4834,6 @@
 				03D1BF5F2328E9D000F2BDD6 /* CommandButtonView.m in Sources */,
 				0385167921869EDB001DD2B7 /* IXAttributeTapLabel.m in Sources */,
 				03F692EA20FF2DF000308E38 /* ASIFormDataRequest.m in Sources */,
-				0310F5B021EB7FB60005731F /* MySportController.m in Sources */,
 				038516A82186AB39001DD2B7 /* MD5DataSigner.m in Sources */,
 				038516822186AAB3001DD2B7 /* AppPayViewController.m in Sources */,
 				03C1F50720F491B700A341A8 /* RemindModel.m in Sources */,
