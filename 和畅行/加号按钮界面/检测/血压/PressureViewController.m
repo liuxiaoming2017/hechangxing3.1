@@ -260,6 +260,10 @@ static int const tick = 80;
 //血压检测
 - (void)bloodTest{
     
+    if(kPlayer.playerState == 2){
+        [kPlayer stop];
+    }
+    
     self.manager = [[HHBlueToothManager alloc] init];
     
     

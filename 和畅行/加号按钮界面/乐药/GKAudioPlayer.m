@@ -153,7 +153,7 @@
 
 - (void)stop {
     if (self.playerState == GKAudioPlayerStateStoppedBy) return;
-    
+    self.playUrlStr = nil;
     self.playerState = GKAudioPlayerStateStoppedBy;
     [self setupPlayerState:self.playerState];
     
@@ -401,16 +401,41 @@
     
     MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
     
-    //   MPFeedbackCommand对象反映了当前App所播放的反馈状态. MPRemoteCommandCenter对象提供feedback对象用于对媒体文件进行喜欢, 不喜欢, 标记的操作. 效果类似于网易云音乐锁屏时的效果
-    
-    //    commandCenter.togglePlayPauseCommand 耳机线控的暂停/播放
-    __weak typeof(self) weakSelf = self;
-    [commandCenter.pauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-        [weakSelf pause];
+    // 锁屏播放
+    [commandCenter.playCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+        NSLog(@"锁屏暂停后点击播放");
+        if(self.playerState == GKAudioPlayerStatePlaying){
+            [self play];
+        }
         return MPRemoteCommandHandlerStatusSuccess;
     }];
-    [commandCenter.playCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-        [weakSelf play];
+    // 锁屏暂停
+    [commandCenter.pauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+        NSLog(@"锁屏正在播放点击后暂停");
+        
+        if(self.playerState == GKAudioPlayerStatePlaying) {
+            [self pause];
+        }
+        return MPRemoteCommandHandlerStatusSuccess;
+    }];
+    
+    [commandCenter.stopCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+        [self pause];
+        
+        return MPRemoteCommandHandlerStatusSuccess;
+    }];
+    
+    // 播放和暂停按钮（耳机控制）
+    MPRemoteCommand *playPauseCommand = commandCenter.togglePlayPauseCommand;
+    playPauseCommand.enabled = YES;
+    [playPauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+        
+        if (self.playerState == GKAudioPlayerStatePlaying) {
+            [self pause];
+        }else {
+            [self play];
+        }
+        
         return MPRemoteCommandHandlerStatusSuccess;
     }];
     
@@ -470,12 +495,12 @@
       NSString  *titleStr = [self.model.subjectSn substringFromIndex:self.model.subjectSn.length-1];
         iconStr = [NSString stringWithFormat:@"%@icon",titleStr];
     }
-    playingInfo[MPMediaItemPropertyAlbumTitle] = [UIImage imageNamed:iconStr];
+   // playingInfo[MPMediaItemPropertyAlbumTitle] = iconStr;
     playingInfo[MPMediaItemPropertyTitle]      = self.model.title;
     //playingInfo[MPMediaItemPropertyArtist]     = @"爱你一万年";
     
-//    MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithImage:self.bgImageView.image];
-//    playingInfo[MPMediaItemPropertyArtwork] = artwork;
+    MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:iconStr]];
+    playingInfo[MPMediaItemPropertyArtwork] = artwork;
     
     //NSLog(@"total:%f,currentTime:%f",(float)self.totalTime / 1000,(float)self.currentTime / 1000);
     

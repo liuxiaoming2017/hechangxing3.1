@@ -130,10 +130,6 @@
     self.yueYaoArray = nil;
     self.shifanyinPlayArr = nil;
     
-    
-//    [[ZYAudioManager defaultManager] stopMusic:self.cureentPlayUrl];
-//    [[ZYAudioManager defaultManager] stopMusic:self.yueYaoPlayUrl];
-//    audioPlay = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -898,7 +894,7 @@
 
 - (void)startTimer {
     [self stopTimer];
-    self.timer = [NSTimer timerWithTimeInterval:1.0
+    self.timer = [NSTimer timerWithTimeInterval:6.0
                                                    target:self
                                                  selector:@selector(timerRefreshed)
                                                  userInfo:nil

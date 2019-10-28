@@ -63,6 +63,11 @@
         _searchAlert = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"正在努力搜索灸大夫隔物灸仪...") delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
         [_searchAlert show];
     }
+    
+    if(kPlayer.playerState == 2){
+        [kPlayer stop];
+    }
+    
     // Do any additional setup after loading the view.
 }
 

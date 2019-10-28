@@ -328,6 +328,10 @@
 
 - (void)startRecordAudion
 {
+    if(kPlayer.playerState == 2){
+        [kPlayer stop];
+    }
+    
     if([self checkPermission]){
         [self recordAudio];
     }else{

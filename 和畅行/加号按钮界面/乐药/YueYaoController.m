@@ -25,7 +25,7 @@
 
 #define SCREEN_WIDTH_Size ([UIScreen mainScreen].bounds.size.width)/375
 
-@interface YueYaoController ()<UITableViewDelegate,UITableViewDataSource,songListCellDelegate,DownloadHandlerDelegate,CBCentralManagerDelegate,CBPeripheralDelegate,MuscicNoramlDeleaget,GKAudioPlayerDelegate>
+@interface YueYaoController ()<UITableViewDelegate,UITableViewDataSource,songListCellDelegate,CBCentralManagerDelegate,CBPeripheralDelegate,MuscicNoramlDeleaget,GKAudioPlayerDelegate>
 
 {
     NSInteger SegIndex;
@@ -449,8 +449,6 @@
         }else{
             cell.titleLabel.text = model.title;
         }
-      
-        cell.delegate = self;
         cell.currentSelect = NO;
         NSString *imageStr = @"";
         
@@ -795,15 +793,17 @@
 
 - (void)noteVC
 {
-    self.definesPresentationContext = YES;
+//    self.definesPresentationContext = YES;
+//
+//    NoteController *vc = [[NoteController alloc] init];
+//    vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+//
+//    vc.view.superview.frame = CGRectMake(15, 30, 300, 300);
+//    [self presentViewController:vc animated:YES completion:^{
+//
+//    }];
     
-    NoteController *vc = [[NoteController alloc] init];
-    vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    
-    vc.view.superview.frame = CGRectMake(15, 30, 300, 300);
-    [self presentViewController:vc animated:YES completion:^{
-        
-    }];
+    [self nextMusic];
 }
 
 - (void)nextMusic
@@ -820,13 +820,22 @@
     
     int index = arc4random() % kPlayer.musicArr.count;
 
-    NSLog(@"yyyy:%@",kPlayer.musicArr);
+    //NSLog(@"yyyy:%@",kPlayer.musicArr);
     
     SongListModel *model = [kPlayer.musicArr objectAtIndex:index];
     [self playActionWithModel:model];
-
+    
     //播放完一首歌后,切换cell按钮的状态
-    NSInteger row = [self.dataArr indexOfObject:model];
+    
+    __block NSInteger row = 0;
+    
+    [self.dataArr enumerateObjectsUsingBlock:^(SongListModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if([obj.idStr isEqualToString:model.idStr]){
+            row = idx;
+            *stop = YES;
+        }
+    }];
+    
     if(self.currentIndexPath.row != row){
         [self.tableView.delegate tableView:self.tableView didDeselectRowAtIndexPath:self.currentIndexPath];
         [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
