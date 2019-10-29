@@ -1,0 +1,6 @@
+framework module OGABluetooth530 {
+  umbrella header "OGABluetooth530.h"
+
+  export *
+  module * { export * }
+}
