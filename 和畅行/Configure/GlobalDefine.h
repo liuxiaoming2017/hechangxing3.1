@@ -135,11 +135,11 @@
 
 #define IS_IPHONE_Xs_Max ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2688), [[UIScreen mainScreen] currentMode].size) : NO)
 
-#define iPhoneX (IS_IPHONE_X || IS_IPHONE_Xr || IS_IPHONE_Xs_Max)
-#define kTabBarHeight (iPhoneX ? 83 : 44)
-#define kNavBarHeight (iPhoneX ? 88 : 64)
+#define iPhoneX111 (IS_IPHONE_X || IS_IPHONE_Xr || IS_IPHONE_Xs_Max)
+#define kTabBarHeight (iPhoneX111 ? 83 : 44)
+#define kNavBarHeight (iPhoneX111 ? 88 : 64)
 #define kNavHeight 44
-#define kStatusBarHeight (iPhoneX ? 44 : 20)
+#define kStatusBarHeight (iPhoneX111 ? 44 : 20)
 
 #define leYaoStatus @"leYaoStatus"
 
@@ -178,7 +178,6 @@
 #define kUUID_CHARACTER_RECEIVE @"FFE1"
 #define kUUID_CHARACTER_CONFIG  @"FFE2"
 #define kUUID_CHARACTER_SEND    @"2AF1"
-
 
 #define blood_kPERIPHERAL_NAME        @"BPM-188"
 #define blood_KUUID_SERVICE           @"18F0"
@@ -219,6 +218,17 @@
 #define kOXYGEN_DATA @"BLEOxygenData"//血氧数据
 
 #define exchangeMemberChildNotify @"exchangeMemberChildNotify"
+
+// com.ky3h.test
+//#define OGA530AppKey @"sdk_530w_yhdf4"
+//#define OGA530AppSecret @"MIIBUwIBADANBgkqhkiG9w0BAQEFAASCAT0wggE5AgEAAkEAk/iaz03xc3uNn9E1TcOeQ2NInQnN0+YiZnAGGuEkfYqBqp1Cl4mi/f0AvKagck3ShCQrSZgeS/9eVtPpKQMpmQIDAQABAkBwsCWFtsAoyHFEwtirTkya2WOVZMABngOYq7uagNd/Wu28zVo54Pmm5b9qbM2W6jL4QqS7oX8RLpGHLkYLiniZAiEA5HuQF5ElWs8Z1tNqKDXRMfMwOeHwyh3u11Z0w5flWPsCIQClysJTySm9Q3/r9ZYWabpNO/6I7mhb2YwD3mgq+/nrewIgSh57Y+nGAGtmqnXy3hB3SIjngB93iVmkfV6iikDgObkCIGs4hhTJtETCsqhXW4mDNwlcE3FbPgKo3vRhkdy6uRahAiBfeGnlyvdBI5dg+WCzzovuKVkxmdYR8F2p8WN1p7zxGw=="
+
+
+// com.ky3h.hechangxing
+#define OGA530AppKey @"sdk_530w_yhdf3"
+#define OGA530AppSecret @"MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEAjLb+eiyJlXGpXDFY5mgH/aXHrJnv+eGUE+/TRTrswe9pnQ/w+JjcEOnLHH9KIr/f3ibqTGOto0m/hWXQZ2G/swIDAQABAkA2VarpzizKMftth/iF74G2Zb82XLKXUI13LVHtF5W4RH1J8d/M39c+MOChorsAnC9fu/YsgBHRLIeg6xxPj6JhAiEA8M6SoBpzvrb9+cFU6myVOzTryj4kY5wHgrwksKusKBkCIQCVl8T7QdAtk8jT5nOWm8/hioE2BfhACo2YSE5dHIWPqwIgSjQtpJ5iGlvDSYoUw6QwHC2Dly+tAPDcs6GMYNCV3UkCIQCB3xZ70GJs/02ucfdN/Q3YUIfnH/2rk73kRHoMKlPmKwIhAMehTMwoJdAVcNrRZziv6IlpSCE2cupYMeuh7+qWB2fi"
+
+#define OGADeviceUUID @"OGADeviceUUID"
 
 //档案cell的类型
 typedef enum {

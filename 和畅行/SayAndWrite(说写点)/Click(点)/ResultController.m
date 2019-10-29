@@ -32,6 +32,8 @@
     [self customeViewWithStr:urlStr];
 }
 
+
+
 # pragma mark - 解决侧滑返回指定控制器
 - (void)willMoveToParentViewController:(UIViewController*)parent
 {

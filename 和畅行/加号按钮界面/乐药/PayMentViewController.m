@@ -56,7 +56,7 @@
     
     self.navTitleLabel.text =  ModuleZW(@"结算信息");
     
-    self.dataArray = [[NSMutableArray alloc]init];
+    self.dataArray = [NSMutableArray arrayWithCapacity:0];
     
     scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height - kNavBarHeight - kTabBarHeight-65)];
     scrollView.backgroundColor = [UIColor whiteColor];
@@ -235,6 +235,8 @@
     [view addSubview:zongjiLabel];
      */
 }
+
+# pragma mark - 去结算按钮
 - (void)zhifuqujiesuanButton{
     float price = [UserShareOnce shareOnce].allYueYaoPrice;
     
@@ -276,6 +278,8 @@
     if([UserShareOnce shareOnce].languageType){
         [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
     }
+    //后面加的10.11
+    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];
@@ -290,6 +294,7 @@
     [self showAlertWarmMessage:requestErrorMessage];
     
 }
+# pragma mark - 成功请求回调
 -(void)requestpayfangshiCompleted:(ASIHTTPRequest *)request
 {
     [GlobalCommon hideMBHudWithView:self.view];
@@ -424,6 +429,8 @@
         return;
     }
 }
+
+# pragma mark - 消费卡支付接口请求
 - (void)xianjinkazhifushengchengdingdan:(NSString *)cardFees balance:(NSString *)balance{
     [GlobalCommon showMBHudWithView:self.view];
     self.priceYuer = [balance floatValue];
@@ -460,6 +467,7 @@
     
     [self showAlertWarmMessage:requestErrorMessage];
 }
+# pragma mark - 消费卡请求成功回调
 -(void)requestIsxianjinkaReaderCompleted:(ASIHTTPRequest *)request
 {
     [GlobalCommon hideMBHudWithView:self.view];
@@ -498,18 +506,29 @@
     }
 }
 
-
+# pragma mark - 请求会员卡接口
 - (void)payMentWithBlock{
     
     [GlobalCommon showMBHudWithView:self.view];
+    
+    NSString *productIdStr = @"";
+    for(SongListModel *model in [UserShareOnce shareOnce].yueYaoBuyArr){
+        productIdStr = [productIdStr stringByAppendingString:[NSString stringWithFormat:@"%@,",model.productId]];
+    }
+    
+    productIdStr =  [productIdStr substringToIndex:[productIdStr length]-1];
+    
     NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/cashcard/list/%@.jhtml",UrlPre,[UserShareOnce shareOnce].uid];
+    //NSString *aUrlle= [NSString stringWithFormat:@"%@/member/cashcard/list/%@.jhtml",UrlPre,[UserShareOnce shareOnce].uid];
+    NSString *aUrlle= [NSString stringWithFormat:@"%@member/cashcard/getcards.jhtml?productids=%@&memberId=%@",UrlPre,productIdStr,[UserShareOnce shareOnce].uid];
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:aUrlle];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     if([UserShareOnce shareOnce].languageType){
         [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
     }
+    //后面加的10.11
+    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
     [request setRequestMethod:@"GET"];
     [request setTimeOutSeconds:20];
     [request setDelegate:self];
@@ -525,7 +544,7 @@
     [self showAlertWarmMessage:requestErrorMessage];
     
 }
-# pragma mark - 现金卡
+# pragma mark - 获取会员卡接口成功回调
 -(void)requestpayMentCompleted:(ASIHTTPRequest *)request
 {
     [GlobalCommon hideMBHudWithView:self.view];
@@ -538,7 +557,8 @@
     {
         if ([status intValue]==100)
         {
-            self.dataArray = [dic objectForKey:@"data"];
+            //self.dataArray = [[dic valueForKey:@"data"] valueForKey:@"data"];
+            self.dataArray = [dic valueForKey:@"data"];
             if (self.dataArray.count == 0) {
                 self.cardBackImg.hidden = NO;
                 self.no_CardImage.hidden = NO;
@@ -567,16 +587,17 @@
     
     
 }
+# pragma mark - 创建会员卡页面
 - (void)payWithBlockDetails{
     for (int i = 0; i < self.dataArray.count; i++) {
         UIView *diView = [[UIView alloc]initWithFrame:CGRectMake(0,_tableView.bottom+65+(139 / 2 +10)*i, self.view.frame.size.width, 139 / 2 +10)];
         [scrollView addSubview:diView];
         
-        NSDate *datas = [[NSDate alloc]initWithTimeIntervalSince1970:[[self.dataArray[i] objectForKey:@"bindDate"] doubleValue]/1000.00];
+        NSDate *datas = [[NSDate alloc]initWithTimeIntervalSince1970:[[[self.dataArray[i]objectForKey:@"cashcard"]objectForKey:@"endDate"] doubleValue]/1000.00];
         NSDateFormatter *formatters = [[NSDateFormatter alloc] init];
         [formatters setDateStyle:NSDateFormatterMediumStyle];
         [formatters setTimeStyle:NSDateFormatterShortStyle];
-        [formatters setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        [formatters setDateFormat:@"yyyy-MM-dd"];
         [formatters setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_CN"]];//location设置为中国
         
         NSString *confromTimespStrs = [formatters stringFromDate:datas];
@@ -600,7 +621,8 @@
         _hLabel = [[UILabel alloc] init];
         _hLabel.frame = CGRectMake(115, 15, 60, 15);
         _hLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
-        _hLabel.text = ModuleZW(@"会员卡：");
+        //_hLabel.text = ModuleZW(@"会员卡：");
+        _hLabel.text = [[self.dataArray[i]objectForKey:@"cashcard"]objectForKey:@"name"];
         _hLabel.font = [UIFont systemFontOfSize:10];
         [_hLabel sizeToFit];
     
@@ -613,7 +635,7 @@
         _yLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
         [diView addSubview:_yLabel];
         _wLabel = [[UILabel alloc]init];
-        _wLabel.text = [NSString stringWithFormat:@"%@",[[self.dataArray[i]objectForKey:@"cashcard"]objectForKey:@"amount"]];
+        _wLabel.text = [NSString stringWithFormat:@"总额：%@元",[[self.dataArray[i]objectForKey:@"cashcard"]objectForKey:@"amount"]];
         _wLabel.textColor = [UtilityFunc colorWithHexString:@"#575e64"];
         _wLabel.font= [UIFont systemFontOfSize:10];
         [diView addSubview:_wLabel];
@@ -625,7 +647,7 @@
         _backImage.frame = CGRectMake(10, 0, self.view.frame.size.width-20, 139 / 2);
         _imageV.frame  =CGRectMake(10, 0, 101, 139 / 2);
         _mLabel.frame = CGRectMake(10, 0, 101, 139 /2 );
-        _wLabel.frame = CGRectMake(_hLabel.right + 10, _hLabel.top, 80, _hLabel.height);
+        _wLabel.frame = CGRectMake(_hLabel.right + 10, _hLabel.top, 100, _hLabel.height);
         _tLabel.frame = CGRectMake(_yLabel.right, _yLabel.top, 200, _yLabel.height);
         UIButton *zhifuButton = [UIButton buttonWithType:UIButtonTypeCustom];
         zhifuButton.frame = CGRectMake(self.view.frame.size.width- 50, 25, 20, 20);
@@ -643,6 +665,7 @@
         
     }
 }
+# pragma mark - 消费卡点击事件
 - (void)dianjiButton:(UIButton *)sender{
     
     if (self.priceCountt == 0) {
@@ -756,6 +779,8 @@
     
     return nil;
 }
+
+# pragma mark - 去结算按钮点击事件
 - (void)zhifuButton:(UIButton *)sender{
     if (self.priceCountt == 0) {
         [self showAlertWarmMessage:ModuleZW(@"请添加商品再选择现金卡")];

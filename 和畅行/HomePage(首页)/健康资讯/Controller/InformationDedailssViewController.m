@@ -49,10 +49,17 @@
 
 - (void)setupWebview
 {
+    NSString *urlString = [NSString string];
+    if([_dataStr hasSuffix:@"html"]){
+        urlString = [_dataStr stringByAppendingString:[NSString stringWithFormat:@"?fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+    }else{
+        urlString = [_dataStr stringByAppendingString:[NSString stringWithFormat:@"&fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+    }
+    
     UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height - kNavBarHeight)];
     webView.backgroundColor = [UIColor clearColor];
     NSString *url = URL_PRE;
-    NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",url,_dataStr]]];
+    NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",url,urlString]]];
     [webView setScalesPageToFit:YES];
     webView.delegate = self;
     [self.view addSubview: webView];

@@ -35,7 +35,7 @@
 @property (nonatomic,strong) UIButton *collectBT;
 @property (nonatomic,strong) UIButton *cardBT;
 @property (nonatomic,strong) UIButton *integralsBT;
-
+@property (nonatomic,strong) NSMutableArray *buttonArray;
 
 @end
 
@@ -44,15 +44,17 @@
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"personalInfoUpdateSuccess" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = RGB(253, 253, 253);
     self.topView.hidden = YES;
+    self.buttonArray = [NSMutableArray array];
     [self createUI];
     [self changUserInfo];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSize:) name:@"CHANGESIZE" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changUserInfo) name:@"personalInfoUpdateSuccess" object:nil];
 }
 
@@ -135,6 +137,9 @@
     }else{
         dispalyName = [UserShareOnce shareOnce].wxName;
     }
+    if(![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].name]&&[UserShareOnce shareOnce].name.length < 26){
+        dispalyName = [UserShareOnce shareOnce].name;
+    }
     UILabel *userName = [Tools creatLabelWithFrame:CGRectMake(40, userIcon.bottom + 20, ScreenWidth - 80, 30) text:dispalyName textSize:22];
     userName.textColor = [UIColor whiteColor];
     userName.textAlignment = NSTextAlignmentCenter;
@@ -185,6 +190,7 @@
             }else{
                 self.integralsBT = numberButton;
             }
+            [self.self.buttonArray addObject:numberButton];
             [[numberButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
                 if(x.tag == 111){
                     NSString *urlStr =  [NSString stringWithFormat:@"%@member/mobile/focus_ware/list.jhtml",URL_PRE];
@@ -216,10 +222,11 @@
             [button setImage:[UIImage imageNamed:imageArr[i]] forState:(UIControlStateNormal)];
             [button.titleLabel setTextAlignment:(NSTextAlignmentCenter)];
             [button.titleLabel setNumberOfLines:2];
-            [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+            [button.titleLabel setFont:[UIFont systemFontOfSize:15/[UserShareOnce shareOnce].fontSize]];
             [button setTitleColor:UIColorFromHex(0X7f7f7f) forState:(UIControlStateNormal)];
             [button setImageEdgeInsets:UIEdgeInsetsMake(-23,0,0, -button.titleLabel.intrinsicContentSize.width)];
             [button setTitleEdgeInsets:UIEdgeInsetsMake(25, -button.currentImage.size.width,0,0)];
+            [self.self.buttonArray addObject:button];
             [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
                 
                 NSString *urlStr =  @"";
@@ -233,23 +240,9 @@
                         titleStr = ModuleZW( @"待评价");
                         urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=completed",URL_PRE];
                         break;
-                    case 2:{
-                        HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-                        vc.noWebviewBack = YES;
-                        vc.progressType = progress2;
-                        vc.titleStr = ModuleZW(@"退款记录");
-                        vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/returns/list_refunds.jhtml",URL_PRE];
-                        vc.hidesBottomBarWhenPushed = YES;
-                        [self.navigationController pushViewController:vc animated:YES];
-                        return ;
-                        //                    HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-                        //                    vc.noWebviewBack = YES;
-                        //                    vc.progressType = progress2;
-                        //                    vc.titleStr = ModuleZW(@"退货记录");
-                        //                    vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/returns/list_returns.jhtml",URL_PRE];
-                        //                    vc.hidesBottomBarWhenPushed = YES;
-                        //                    [self.navigationController pushViewController:vc animated:YES];
-                    }
+                    case 2:
+                        titleStr = ModuleZW( @"退款记录");
+                        urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=refund&",URL_PRE];
                         break;
                     case 3:
                         titleStr = ModuleZW(@"全部订单");
@@ -281,7 +274,7 @@
         [bottomButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
         [bottomButton setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,0)];
         [bottomButton setImageEdgeInsets:UIEdgeInsetsMake(0, buttonBackImageView.width - 40 , 0, -buttonBackImageView.width + 40)];
-
+        [self.buttonArray addObject:bottomButton];
         [[bottomButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             switch (i) {
 //                case 0: {
@@ -325,6 +318,9 @@
         }];
         [buttonBackImageView addSubview:bottomButton];
     }
+    
+    NSLog(@"%@",backScrollView.subviews);
+    
 }
 
 
@@ -337,10 +333,14 @@
     }
     
     if ([MemberUserShance shareOnce].name.length <  26) {
-        self.userNameLabel.text = [MemberUserShance shareOnce].name;
+        self.userNameLabel.text  = [MemberUserShance shareOnce].name;
     }else{
-        self.userNameLabel.text = [UserShareOnce shareOnce].wxName;
+        self.userNameLabel.text  = [UserShareOnce shareOnce].wxName;
     }
+    if(![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].name]&&[UserShareOnce shareOnce].name.length < 26){
+        self.userNameLabel.text  = [UserShareOnce shareOnce].name;
+    }
+    
     
 }
 
@@ -367,6 +367,13 @@
     [self.backScrollView.layer insertSublayer:subLayer below:imageV.layer];
   
     
+}
+
+-(void)changeSize:(NSNotification *)notifi {
+    self.userNameLabel.font = [UIFont systemFontOfSize:22];
+    for (UIButton *button in self.buttonArray) {
+         [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    }
 }
 
 

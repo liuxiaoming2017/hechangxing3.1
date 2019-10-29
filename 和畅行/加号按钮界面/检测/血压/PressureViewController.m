@@ -68,6 +68,7 @@ static int const tick = 80;
     [super viewDidLoad];
     
     self.navTitleLabel.text =  ModuleZW(@"血压心率检测");
+    self.navTitleLabel.font = [UIFont systemFontOfSize:18/[UserShareOnce shareOnce].fontSize];
     [self initWithController];
     
     self.isHidden = NO;
@@ -97,12 +98,12 @@ static int const tick = 80;
     shrink.textColor = [UIColor blackColor];
     [imageView addSubview:shrink];
     
-    _shrinkPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10 , 50, 50, 30) text:@"__" textSize:19];
+    _shrinkPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10 , 50, 60, 30) text:@"__" textSize:19];
     _shrinkPressureLabel.textAlignment = NSTextAlignmentRight;
     _shrinkPressureLabel.textColor = [UIColor blackColor];
     [imageView addSubview:_shrinkPressureLabel];
     
-    UILabel *shrinkUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  + 40, 50, 60, 30) text:@"mmHg" textSize:19];
+    UILabel *shrinkUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  + 50, 50, 100, 30) text:@"mmHg" textSize:19];
     shrinkUnit.textAlignment = NSTextAlignmentLeft;
     shrinkUnit.textColor = [UIColor blackColor];
     [imageView addSubview:shrinkUnit];
@@ -113,28 +114,28 @@ static int const tick = 80;
     diastolic.textColor = [UIColor blackColor];
     [imageView addSubview:diastolic];
     
-    _diastolicPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10, shrinkUnit.bottom + 50, 50, 30) text:@"__" textSize:19];
+    _diastolicPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10, shrinkUnit.bottom + 50, 60, 30) text:@"__" textSize:19];
     _diastolicPressureLabel.textAlignment = NSTextAlignmentRight;
     _diastolicPressureLabel.textColor = [UIColor blackColor];
     [imageView addSubview:_diastolicPressureLabel];
     
-    UILabel *diastolicUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 + 40, shrinkUnit.bottom + 50, 60, 30) text:@"mmHg" textSize:19];
+    UILabel *diastolicUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 + 50, shrinkUnit.bottom + 50, 100, 30) text:@"mmHg" textSize:19];
     diastolicUnit.textAlignment = NSTextAlignmentLeft;
     diastolicUnit.textColor = [UIColor blackColor];
     [imageView addSubview:diastolicUnit];
     
     //脉搏
-    UILabel *pulse = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  - 100, diastolicUnit.bottom + 50, 70, 30) text:ModuleZW(@"心率") textSize:14];
+    UILabel *pulse = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  - 130, diastolicUnit.bottom + 50, 100, 30) text:ModuleZW(@"心率") textSize:14];
     pulse.textAlignment = NSTextAlignmentRight;
     pulse.textColor = [UIColor blackColor];
     [imageView addSubview:pulse];
     
-    _pulseLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10, diastolicUnit.bottom + 50, 50, 30) text:@"__" textSize:19];
+    _pulseLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10, diastolicUnit.bottom + 50, 60, 30) text:@"__" textSize:19];
     _pulseLabel.textAlignment = NSTextAlignmentRight;
     _pulseLabel.textColor = [UIColor blackColor];
     [imageView addSubview:_pulseLabel];
     
-    UILabel *pulseUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 +40, diastolicUnit.bottom + 50, 50, 30) text:@"BMP" textSize:16];
+    UILabel *pulseUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 +50, diastolicUnit.bottom + 50, 50, 30) text:@"BMP" textSize:16];
     pulseUnit.font = [UIFont systemFontOfSize:16];
     pulseUnit.textAlignment = NSTextAlignmentLeft;
     pulseUnit.textColor = [UIColor blackColor];
@@ -148,9 +149,9 @@ static int const tick = 80;
 
 -(void)createButton{
     UIButton *startCheckBt = [UIButton  buttonWithType:(UIButtonTypeCustom)];
-    startCheckBt.frame = CGRectMake(ScreenWidth/2 - 55,420, 110, 26);
+    startCheckBt.frame = CGRectMake(ScreenWidth/2 - 70,420, 140, 30);
     startCheckBt.backgroundColor = RGB_ButtonBlue;
-    startCheckBt.layer.cornerRadius = 13;
+    startCheckBt.layer.cornerRadius = 15;
     [startCheckBt setTitle:ModuleZW(@"开始检测") forState:(UIControlStateNormal)];
     startCheckBt.layer.masksToBounds = YES;
     [startCheckBt.titleLabel setFont:[UIFont systemFontOfSize:14]];
@@ -179,9 +180,9 @@ static int const tick = 80;
     
     
     UIButton *nonDeviceCheckBt = [UIButton  buttonWithType:(UIButtonTypeCustom)];
-    nonDeviceCheckBt.frame = CGRectMake(ScreenWidth/2 - 55,_startCheck.bottom+40, 110, 26);
+    nonDeviceCheckBt.frame = CGRectMake(ScreenWidth/2 - 70,_startCheck.bottom+40, 140, 30);
     nonDeviceCheckBt.backgroundColor = RGB_ButtonBlue;
-    nonDeviceCheckBt.layer.cornerRadius = 13;
+    nonDeviceCheckBt.layer.cornerRadius = 15;
     [nonDeviceCheckBt setTitle:ModuleZW(@"手动录入") forState:(UIControlStateNormal)];
     nonDeviceCheckBt.layer.masksToBounds = YES;
     [nonDeviceCheckBt.titleLabel setFont:[UIFont systemFontOfSize:14]];
@@ -258,6 +259,10 @@ static int const tick = 80;
 
 //血压检测
 - (void)bloodTest{
+    
+    if(kPlayer.playerState == 2){
+        [kPlayer stop];
+    }
     
     self.manager = [[HHBlueToothManager alloc] init];
     
@@ -438,8 +443,8 @@ static int const tick = 80;
         [lookBtn addTarget:self action:@selector(lookClickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [view2 addSubview:lookBtn];
         
-        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前脉搏%ld次/分\n  收缩压%ldmmHg\n舒张压 %ldmmhg"),(long)pulseCount,(long)highCount,(long)lowCount] frame:CGRectMake(0, 50, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
-
+        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前脉搏%ld次/分  收缩压%ldmmHg  舒张压 %ldmmhg"),(long)pulseCount,(long)highCount,(long)lowCount] frame:CGRectMake(0, 50, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
+        
         
         UILabel *label0 = [[UILabel alloc] init];
         label0.text = ModuleZW(@"血压、脉搏正常范围参考值：");

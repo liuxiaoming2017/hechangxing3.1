@@ -150,7 +150,7 @@
     NSURL *url = [NSURL URLWithString:aUrlle];
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
+    [request addRequestHeader:@"version" value:@"ios_hcy"];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
     if([UserShareOnce shareOnce].languageType){
         [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
@@ -382,10 +382,11 @@
     
     //lbname.frame.origin.x+lbname.frame.size.width+5+30
     UILabel* lbBuy_Date=[[UILabel alloc] init];
-    lbBuy_Date.frame=CGRectMake((ScreenWidth-130)/2.0, (cell.frame.size.height-23)/2, 130, 23);
+    lbBuy_Date.frame=CGRectMake(lbname.right , (cell.frame.size.height-23)/2, ScreenWidth -lbname.right - 50 , 23);
     lbBuy_Date.backgroundColor=[UIColor clearColor];
     lbBuy_Date.textColor=[UtilityFunc colorWithHexString:@"#666666"];
     lbBuy_Date.font=[UIFont systemFontOfSize:11];
+    lbBuy_Date.textAlignment = NSTextAlignmentCenter;
     lbBuy_Date.text=confromTimespStr;
     [cell addSubview:lbBuy_Date];
    
@@ -431,7 +432,7 @@
         UIButton* statusbtn=[UIButton buttonWithType:UIButtonTypeCustom];
         statusbtn.tag=indexPath.row+10000;//[[[self.segmendatatarray objectAtIndex:indexPath.row] objectForKey:@"id"] intValue];
         statusbtn.frame=CGRectMake(ScreenWidth-statusviewImg.size.height/2-24.5, (cell.frame.size.height-statusviewImg.size.height/2)/2, statusviewImg.size.width/2+10  , statusviewImg.size.height/2+10);
-        [statusbtn addTarget:self action:@selector(DownloadButton:) forControlEvents:UIControlEventTouchUpInside];
+        //[statusbtn addTarget:self action:@selector(DownloadButton:) forControlEvents:UIControlEventTouchUpInside];
         
         [statusbtn addSubview:statusviewImgview];
         if (!fileExists) {

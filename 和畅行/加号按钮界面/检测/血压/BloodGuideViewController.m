@@ -23,6 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navTitleLabel.text =  ModuleZW(@"血压心率检测");
+    self.navTitleLabel.font = [UIFont systemFontOfSize:18/[UserShareOnce shareOnce].fontSize];
     
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight)];
     scrollView.showsVerticalScrollIndicator = NO;

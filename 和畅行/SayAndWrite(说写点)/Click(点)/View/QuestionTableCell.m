@@ -131,7 +131,7 @@
 
 - (CGFloat)setCellHeight:(NSString *)str
 {
-    CGSize strSize = [self.contentLabel.text boundingRectWithSize:CGSizeMake(self.contentLabel.width, 1200) options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont fontWithName:[[UIFont systemFontOfSize:1] fontName] size:16]} context:nil].size;
+    CGSize strSize = [self.contentLabel.text boundingRectWithSize:CGSizeMake(self.contentLabel.width, 1200) options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} context:nil].size;
     CGFloat hh = MAX(60+20, strSize.height+18+20);
     
     return hh;

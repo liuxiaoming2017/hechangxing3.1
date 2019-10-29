@@ -18,8 +18,8 @@
 #define ICON_WITHD_SMALL 32
 #define ICON_WITHD_BIG   35
 
-@interface MoxaSettingViewController ()
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@interface MoxaSettingViewController ()<UITableViewDelegate,UITableViewDataSource>
+@property (strong, nonatomic)  UITableView *tableView;
 @property (retain, nonatomic) NSArray *iconArray;
 @property (retain, nonatomic) NSArray *titleArray;
 @property (assign, nonatomic) BOOL  isVoiceEn;
@@ -51,11 +51,11 @@
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;
     self.navTitleLabel.text = ModuleZW(@"设置");
-    
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight - kNavBarHeight) style:(UITableViewStylePlain)];
     _isVoiceEn = [BlueToothCommon getMoxaVoiceEn];
     _tableView.dataSource = self;
     _tableView.delegate = self;
-    _tableView.frame = CGRectMake(0, self.topView.bottom, ScreenWidth, 56*_iconArray.count);
+    [self.view addSubview:_tableView];
     
 }
 

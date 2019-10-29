@@ -78,6 +78,7 @@ typedef void(^EDLoadRequestAction)(void);
     [self.view addSubview:self.webview];
     [self.webview addSubview:self.indicatorView];
     [self startToLoadRequest];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSize:) name:@"CHANGESIZE" object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -87,7 +88,13 @@ typedef void(^EDLoadRequestAction)(void);
 
 - (void)startToLoadRequest {
     [self.indicatorView startAnimating];
-    NSURL *url = [NSURL URLWithString:self.rootUrl];
+    NSString *urlStr = [NSString string];
+    if([self.rootUrl hasSuffix:@"html"]){
+        urlStr= [self.rootUrl stringByAppendingString:[NSString stringWithFormat:@"?fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+    }else{
+        urlStr= [self.rootUrl stringByAppendingString:[NSString stringWithFormat:@"&fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+    }
+    NSURL *url = [NSURL URLWithString:urlStr];
     __weak typeof(self) weakSelf = self;
     self.loadAction = ^{
         __strong typeof(self) strongSelf = weakSelf;
@@ -114,6 +121,8 @@ typedef void(^EDLoadRequestAction)(void);
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    
+
     if (webView == self.cookieWebview) {
         //cookieWebview加载成功后开始加载真正的url
         if (self.loadAction) {
@@ -220,5 +229,10 @@ typedef void(^EDLoadRequestAction)(void);
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+//改变字体大小
+-(void)changeSize:(NSNotification *)notifi {
+    [self startToLoadRequest];
+}
+
 
 @end

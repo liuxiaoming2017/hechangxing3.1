@@ -77,12 +77,12 @@
     self.bluetoothBg = [[UIImageView alloc] initWithFrame:CGRectMake(115/2 *SCREEN_WIDTH_Size, 34/2*SCREEN_HEIGHT_Size, 45*SCREEN_WIDTH_Size, 45*SCREEN_HEIGHT_Size)];
     self.bluetoothBg.image = [UIImage imageNamed:@"关蓝牙"];
     
-    //[self addSubview:self.bluetoothBg];
+//    [self addSubview:self.bluetoothBg];
     
     self.strengthBg = [UIImageView new];
     self.strengthBg.image = [UIImage imageNamed:@"按钮背景"];
     CGFloat width = CGRectGetMaxX(self.bluetoothBg.frame)+ 50*SCREEN_WIDTH_Size ;
-    self.strengthBg.frame = CGRectMake(width, 24/2*SCREEN_HEIGHT_Size, 180*SCREEN_WIDTH_Size, 100/2*SCREEN_WIDTH_Size);
+    self.strengthBg.frame = CGRectMake(self.width - 240, 24/2*SCREEN_HEIGHT_Size, 210, 100/2*SCREEN_WIDTH_Size);
     self.strengthBg.userInteractionEnabled = YES;
     [self addSubview:self.strengthBg];
     
@@ -96,14 +96,14 @@
     [self.addbutton setTitle:ModuleZW(@"强") forState:(UIControlStateNormal)];
     self.addbutton.titleLabel.textColor = [UIColor whiteColor];
     //self.addbutton.frame = CGRectMake(0, 0, 100/2*SCREEN_WIDTH_Size, 100/2*SCREEN_HEIGHT_Size);
-    self.addbutton.frame =CGRectMake(125*SCREEN_WIDTH_Size,0 , 55*SCREEN_WIDTH_Size, 100/2*SCREEN_HEIGHT_Size);
+    self.addbutton.frame =CGRectMake(140,0 , 70, 100/2*SCREEN_HEIGHT_Size);
     [self.strengthBg addSubview:_addbutton];
     
     _accordLabel = [[UILabel alloc]init];
     _accordLabel.text = @"00";
     _accordLabel.textAlignment = NSTextAlignmentCenter;
     _accordLabel.textColor = [UIColor whiteColor];
-    _accordLabel.frame = CGRectMake(75*SCREEN_WIDTH_Size,0, 30*SCREEN_WIDTH_Size, 100/2*SCREEN_HEIGHT_Size);
+    _accordLabel.frame = CGRectMake(70,0, 70, 100/2*SCREEN_HEIGHT_Size);
     [self.strengthBg addSubview:_accordLabel];
 
     
@@ -116,7 +116,7 @@
     [self.downButton setTitle:ModuleZW(@"弱") forState:(UIControlStateNormal)];
     self.downButton.titleLabel.textColor = [ UIColor whiteColor];
    // self.downButton.frame = CGRectMake(100*SCREEN_WIDTH_Size,0 , 100/2*SCREEN_WIDTH_Size, 100/2*SCREEN_HEIGHT_Size);
-    self.downButton.frame = CGRectMake(0, 0, 75*SCREEN_WIDTH_Size, 110/2*SCREEN_HEIGHT_Size);
+    self.downButton.frame = CGRectMake(0, 0, 70, 110/2*SCREEN_HEIGHT_Size);
 
     [self.strengthBg addSubview:self.downButton];
     self.addbutton.tag = 101;

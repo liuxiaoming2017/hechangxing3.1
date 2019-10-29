@@ -39,6 +39,9 @@
 + (void)showMBHudTitleWithView:(UIView *)view;
 + (void)hideMBHudTitleWithView:(UIView *)view;
 
++ (void)showMBHudWithTitle:(NSString *)title;
++ (void)hideMBHud;
+
 +(UIImage *)columnBarImage;
 
 + (BOOL)isManyMember;
@@ -74,5 +77,7 @@
 
 + (NSString *)AESEncodeWithString:(NSString *)str;
 + (NSString *)AESDecodeWithString:(NSString *)str;
+
++ (NSString *)commandFromName:(NSString *)str;
 
 @end

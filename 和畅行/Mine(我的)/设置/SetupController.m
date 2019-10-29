@@ -22,7 +22,8 @@
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSArray *listNamesArr;
 @property (nonatomic,strong) NSArray *listImagesArr;
-
+@property (nonatomic,strong) NSMutableArray *buttonArray;
+@property (nonatomic,strong) UILabel *fontSizeLabel;
 @end
 
 @implementation SetupController
@@ -45,13 +46,10 @@
     
     self.navTitleLabel.text = ModuleZW(@"设置");
     self.view.backgroundColor = RGB_AppWhite;
-    
+    self.buttonArray = [NSMutableArray array];
     [self getPayRequest];
     
-
-  
-   
-   
+   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSize:) name:@"CHANGESIZE" object:nil];
 }
     
 -(void)layoutView{
@@ -67,7 +65,7 @@
             [self.view addSubview:backImageView];
             
             UIButton *bottomButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            bottomButton.frame = CGRectMake(0, 0,backImageView.width, 55);
+            bottomButton.frame = CGRectMake(0, 0,backImageView.width, 50);
             [bottomButton setTitle:ModuleZW(listNamesArr[i]) forState:(UIControlStateNormal)];
             [bottomButton setImage:[UIImage imageNamed:@"1我的_09"] forState:(UIControlStateNormal)];
             [bottomButton.titleLabel setTextAlignment:(NSTextAlignmentCenter)];
@@ -78,7 +76,29 @@
             [bottomButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
             [bottomButton setTitleEdgeInsets:UIEdgeInsetsMake(0,10,0,0)];
             [bottomButton setImageEdgeInsets:UIEdgeInsetsMake(0, backImageView.width - 20 , 0, -backImageView.width + 40)];
-            
+            [self.buttonArray addObject:bottomButton];
+            if (i == 2) {
+                UILabel *fontSizeLabel = [[UILabel alloc]initWithFrame:CGRectMake(bottomButton.width - 240, 0, 210, 50)];
+                fontSizeLabel.textAlignment = NSTextAlignmentRight;
+                fontSizeLabel.font = [UIFont systemFontOfSize:13];
+                fontSizeLabel.textColor = RGB_TextGray;
+                [bottomButton addSubview:fontSizeLabel];
+                NSLog(@"%f",[UserShareOnce shareOnce].fontSize);
+                if ([UserShareOnce shareOnce].fontSize > 0.99&&[UserShareOnce shareOnce].fontSize < 1.01) {
+                    fontSizeLabel.text = ModuleZW(@"小");
+                }else  if ([UserShareOnce shareOnce].fontSize >1.09 &&[UserShareOnce shareOnce].fontSize < 1.11) {
+                    fontSizeLabel.text = ModuleZW(@"中");
+                }else  if ([UserShareOnce shareOnce].fontSize >1.19 &&[UserShareOnce shareOnce].fontSize < 1.21) {
+                    fontSizeLabel.text = ModuleZW(@"大");
+                }else  if ([UserShareOnce shareOnce].fontSize >1.29 &&[UserShareOnce shareOnce].fontSize < 1.31) {
+                    fontSizeLabel.text = ModuleZW(@"特大");
+                }else{
+                    fontSizeLabel.text = ModuleZW(@"小");
+                }
+                self.fontSizeLabel = fontSizeLabel;
+                
+                
+            }
             [[bottomButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
                 switch (i) {
                     case 0:
@@ -105,6 +125,67 @@
                         break;
                     case 2:
                     {
+                        NSString *fontStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"YHFont"];
+                        CGFloat fontSize = 1.0;
+                        if(![GlobalCommon stringEqualNull:fontStr]){
+                            fontSize = [fontStr floatValue];
+                        }
+                        
+                        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:@"" message:ModuleZW(@"字体大小") preferredStyle:UIAlertControllerStyleActionSheet];
+                        UIAlertAction *smallAction = [UIAlertAction actionWithTitle:ModuleZW(@"小") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                            [[NSUserDefaults standardUserDefaults]setValue:@"1.0" forKey:@"YHFont"];
+                            [UserShareOnce shareOnce].fontSize = 1.0;
+                            if(fontSize != 1.0){
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGESIZE" object:nil];
+                                 self.fontSizeLabel.text = ModuleZW(@"小");
+                                 self.fontSizeLabel .font = [UIFont systemFontOfSize:13];
+                            }
+                        }];
+                        
+                        UIAlertAction *middleAction = [UIAlertAction actionWithTitle:ModuleZW(@"中") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                            [[NSUserDefaults standardUserDefaults]setValue:@"1.1" forKey:@"YHFont"];
+                            [UserShareOnce shareOnce].fontSize = 1.1;
+                            if(fontSize != 1.1){
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGESIZE" object:nil];
+                                self.fontSizeLabel.text = ModuleZW(@"中");
+                                self.fontSizeLabel .font = [UIFont systemFontOfSize:13];
+                            }
+                        }];
+                        UIAlertAction *bigAction = [UIAlertAction actionWithTitle:ModuleZW(@"大") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                            [[NSUserDefaults standardUserDefaults]setValue:@"1.2" forKey:@"YHFont"];
+                            [UserShareOnce shareOnce].fontSize = 1.2;
+                            if(fontSize != 1.2){
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGESIZE" object:nil];
+                                self.fontSizeLabel.text = ModuleZW(@"大");
+                                self.fontSizeLabel .font = [UIFont systemFontOfSize:13];
+                            }
+                        }];
+                        UIAlertAction *superBigAction = [UIAlertAction actionWithTitle:ModuleZW(@"特大") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                            [[NSUserDefaults standardUserDefaults]setValue:@"1.3" forKey:@"YHFont"];
+                            [UserShareOnce shareOnce].fontSize = 1.3;
+                            if(fontSize != 1.3){
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGESIZE" object:nil];
+                                self.fontSizeLabel.text = ModuleZW(@"特大");
+                                self.fontSizeLabel .font = [UIFont systemFontOfSize:13];
+                            }
+                            
+                        }];
+                        
+                        UIAlertAction *cencelAction = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:nil];
+                        
+                        [alerVC addAction:smallAction];
+                        [alerVC addAction:middleAction];
+                        [alerVC addAction:bigAction];
+                        [alerVC addAction:superBigAction];
+                        [alerVC addAction:cencelAction];
+                        
+                        
+                        [self presentViewController:alerVC animated:YES completion:nil];
+                    }
+                        break;
+                        
+                    case 3:
+                    {
                         [self checkHaveUpdatewihType:1];
                     }
                         break;
@@ -119,7 +200,10 @@
                 UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
                 button.frame = CGRectMake(30, backImageView.bottom + 220 + 10*i, ScreenWidth - 60, 44);
                 [button setTitle:changeArray[i] forState:(UIControlStateNormal)];
+                [button.titleLabel setFont:[UIFont systemFontOfSize:18]];
                 button.layer.cornerRadius = 22;
+                button.tag = 1000 + i;
+                [self.buttonArray addObject:button];
                 if(i == 0){
                     [button setBackgroundColor:UIColorFromHex(0X1e82d2)];
                 }else{
@@ -131,7 +215,7 @@
                         [self.navigationController pushViewController:vc animated:YES];
                     }else{
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"确认注销用户") preferredStyle:UIAlertControllerStyleAlert];
+                            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"确认退出当前账号") preferredStyle:UIAlertControllerStyleAlert];
                             UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                                 
                             }];
@@ -159,26 +243,21 @@
                 [self.view addSubview:button];
             }
         }
-        
-    
 }
     
 -(void)getPayRequest {
     
-    NSString *urlStr = @"/resources/isfree.jhtml";
-    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
-        id status=[response objectForKey:@"status"];
-        if([status intValue] == 200){
-            //self->listNamesArr = @[@"意见反馈",@"关于我们",@"检查更新"];
-            self->listNamesArr = @[@"意见反馈",@"关于我们"];
-        }else{
-            self->listNamesArr = @[@"意见反馈",@"关于我们"];
-        }
-         [self layoutView];
-    } failureBlock:^(NSError *error) {
-        self->listNamesArr = @[@"意见反馈",@"关于我们"];
-         [self layoutView];
-    }];
+    if([[UserShareOnce shareOnce].username isEqualToString:@"13665541112"] || [[UserShareOnce shareOnce].username isEqualToString:@"18163865881"]){
+        self.listNamesArr = @[@"意见反馈",@"关于我们",@"字体大小"];
+    }else if(![[NSUserDefaults standardUserDefaults] objectForKey:@"noAppstoreCheck"]){
+        self.listNamesArr = @[@"意见反馈",@"关于我们",@"字体大小"];
+    }else{
+        self.listNamesArr = @[@"意见反馈",@"关于我们",@"字体大小"];
+        //self.listNamesArr = @[@"意见反馈",@"关于我们",@"字体大小",@"检查更新"];
+    }
+    
+    [self layoutView];
+    
 }
 
 
@@ -244,6 +323,8 @@
                 CFShow(CFBridgingRetain(infoDictionary));
                 
                 NSString *versionStr = [infoDictionary objectForKey:@"CFBundleShortVersionString"];//版本
+                
+                
                 NSString *down_timeStr = [GlobalCommon getCurrentTimes];;//下载时间
                 
               
@@ -292,5 +373,18 @@
     
     
 }
+
+-(void)changeSize:(NSNotification *)notifi {
+    for (UIButton *button in self.buttonArray ) {
+        if(button.tag==1000||button.tag == 1001){
+            [button.titleLabel setFont:[UIFont systemFontOfSize:18]];
+        }else{
+            [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        }
+    }
+}
+
+
+
 
 @end

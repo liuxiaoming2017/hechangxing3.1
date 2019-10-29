@@ -31,6 +31,7 @@
 @property (nonatomic,copy) NSString *modifyDate;
 @property (nonatomic,copy) NSString *createDate;
 @property (nonatomic,copy) NSString *loginDate;
+@property (nonatomic,copy) NSString *email;
 
 @property (nonatomic,copy) NSString *JSESSIONID;
 @property (nonatomic,copy) NSString *token;
@@ -62,8 +63,12 @@
 @property (nonatomic,copy) NSString * loginType;
 
 @property (copy, nonatomic) NSString  *startTime;
+//字体大小设置倍数
+@property (assign, nonatomic) CGFloat  fontSize;
+//
+@property (copy, nonatomic) NSString  *bindCard;
 
-
+@property (nonatomic,assign) BOOL ogaConnected;
 
 + (UserShareOnce *)shareOnce;
 +(void)attemptDealloc;

@@ -30,19 +30,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+
     if(self.dateDic){
         [self layoutCarDetailView];
     }else{
         [self requestPurchaseHistory];
     }
-
    
 }
 
 -(void)layoutCarDetailView {
-    
     self.navTitleLabel.text = ModuleZW(@"卡详情");
     CGFloat height ;
     NSString *contentStr = [NSString string];
@@ -54,6 +51,9 @@
         }else{
             self.serviceArr = @[];
         }
+        self.model = [[HYC_CardsModel alloc]init];
+        self.model.card_name = _dateDic[@"data"][@"name"];
+        NSLog(@"%@",self.model.card_name);
         if(!kDictIsEmpty(self.dateDic[@"data"][@"description"])){
             contentStr = self.dateDic[@"data"][@"description"];
         }else{
@@ -62,42 +62,48 @@
     }else{
         contentStr = _model.cardDescription;
     }
-    if (_serviceArr.count > 7){
-        height = 220;
-    }else{
-        height = _serviceArr.count * 30;
-    }
+
 
     CGRect textRect = [contentStr boundingRectWithSize:CGSizeMake(ScreenWidth - 60, MAXFLOAT)
                                                            options:NSStringDrawingUsesLineFragmentOrigin
                                                         attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
                                                            context:nil];
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 105 + textRect.size.height + height)];
+    
+     NSLog(@"%@",self.model.card_name);
+    CGRect labelRect = [self.model.card_name boundingRectWithSize:CGSizeMake(ScreenWidth - 20 - 60, MAXFLOAT) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} context:nil];
+    
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 70 + textRect.size.height + _serviceArr.count * 30*[UserShareOnce shareOnce].fontSize+labelRect.size.height + 20)];
+    if (imageV.height > ScreenHeight - imageV.top -  kTabBarHeight) {
+        imageV.height = ScreenHeight - imageV.top -  kTabBarHeight - 30;
+    }
     [imageV.layer addSublayer:[UIColor setGradualChangingColor:imageV fromColor:@"4294E1" toColor:@"D1BDFF"]];
     imageV.layer.cornerRadius = 10;
     imageV.layer.masksToBounds = YES;
     imageV.userInteractionEnabled = YES;
     [self.view addSubview:imageV];
     
+    
+    
     _hLabel = [[UILabel alloc] init];
-    _hLabel.frame = CGRectMake(20, 20, imageV.width - 30, 25);
+    _hLabel.frame = CGRectMake(20, 20, imageV.width - 60, labelRect.size.height);
     _hLabel.textColor = [UIColor whiteColor];
+    _hLabel.numberOfLines = 2;
     _hLabel.text = self.model.card_name;
-    _hLabel.font = [UIFont systemFontOfSize:21];
+    _hLabel.font = [UIFont systemFontOfSize:20];
     [imageV addSubview:_hLabel];
     
     _mLabel = [[UILabel alloc] init];
-    _mLabel.frame = CGRectMake(20,_hLabel.bottom , imageV.width -  40, 30 );
+    _mLabel.frame = CGRectMake(20,_hLabel.bottom , imageV.width -  40, 35 );
     _mLabel.numberOfLines = 2;
-    _mLabel.text = [NSString stringWithFormat:@"%@：%@",ModuleZW(@"卡号"),self.model.card_no];
+    _mLabel.text = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"卡密"),self.model.card_no];
     _mLabel.font = [UIFont systemFontOfSize:16];
     _mLabel.textColor = [UIColor whiteColor];
-    [imageV addSubview:_mLabel];
+//    [imageV addSubview:_mLabel];
     
    
     
     _contentLabel = [[UILabel alloc] init];
-    _contentLabel.frame = CGRectMake(20,_mLabel.bottom , imageV.width -  40, textRect.size.height );
+    _contentLabel.frame = CGRectMake(20,_hLabel.bottom + 5 , imageV.width -  40, textRect.size.height );
     _contentLabel.numberOfLines = 0;
     _contentLabel.text = contentStr;
     _contentLabel.font = [UIFont systemFontOfSize:14];
@@ -107,19 +113,19 @@
     
     
     _yLabel = [[UILabel alloc] init];
-    _yLabel.frame = CGRectMake(_mLabel.left , _contentLabel.bottom , 160, 30);
+    _yLabel.frame = CGRectMake(_mLabel.left , _contentLabel.bottom , 300, 35);
     _yLabel.text = ModuleZW(@"剩余服务");
     _yLabel.font = [UIFont systemFontOfSize:16];
     _yLabel.textColor = [UIColor whiteColor];
     [imageV addSubview:_yLabel];
     
 
-    self.serviceTableView = [[UITableView alloc]initWithFrame:CGRectMake(_yLabel.left+5, _yLabel.bottom+5, imageV.width-_yLabel.left*2 - 10, _serviceArr.count * 30) style:UITableViewStylePlain];
+    self.serviceTableView = [[UITableView alloc]initWithFrame:CGRectMake(_yLabel.left+5, _yLabel.bottom+5, imageV.width-_yLabel.left*2 - 10, _serviceArr.count * 30*[UserShareOnce shareOnce].fontSize) style:UITableViewStylePlain];
     self.serviceTableView.backgroundColor = [UIColor clearColor];
     self.serviceTableView.separatorStyle = UITableViewCellEditingStyleNone;
     self.serviceTableView.dataSource = self;
     self.serviceTableView.delegate = self;
-    self.serviceTableView.rowHeight = 30;
+    self.serviceTableView.estimatedRowHeight = 100;
     [imageV addSubview:self.serviceTableView];
     
     
@@ -127,6 +133,13 @@
     listButton.frame = CGRectMake(imageV.width - 40, 20, 25, 27);
     [listButton setBackgroundImage:[UIImage imageNamed:@"消费记录icon"] forState:(UIControlStateNormal)];
     [[listButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        
+        
+        if(self.dataArr.count < 1){
+            [self showAlertWarmMessage:ModuleZW(@"暂无消费记录")];
+            return ;
+        }
+        
         if(!self.listBackView) {
             self.listBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
             self.listBackView.backgroundColor = RGBA(0, 0, 0, 0.55);
@@ -159,9 +172,10 @@
 
     if(self.dateDic){
         listButton.hidden = YES;
-        _mLabel.text = [NSString stringWithFormat:@"%@：%@",ModuleZW(@"卡号"),self.dateDic[@"data"][@"code"]];
+//        _mLabel.text = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"卡密"),self.dateDic[@"data"][@"code"]];
         _yLabel.text = ModuleZW(@"服务内容");
         _hLabel.text = _dateDic[@"data"][@"name"];
+       
         UIButton *addButton =  [UIButton buttonWithType:(UIButtonTypeCustom)];
         addButton.frame = CGRectMake(40, ScreenHeight - kTabBarHeight - 40, ScreenWidth - 80, 36);
         addButton.layer.cornerRadius = 18;
@@ -206,15 +220,22 @@
     NSString* reqstr=[request responseString];
     NSDictionary * dic=[reqstr JSONValue];
     id status=[dic objectForKey:@"status"];
+    NSLog(@"%@",dic);
     if ([status intValue]== 100) {
-
-        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:[dic objectForKey:@"message"] preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *sureAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]animated:YES];
-            
-        }];
-        [alerVC addAction:sureAction];
-        [self presentViewController:alerVC animated:YES completion:nil];
+        
+        if([[[dic valueForKey:@"data"] valueForKey:@"member"] valueForKey:@"bindCard"]){
+            [UserShareOnce shareOnce].bindCard = [[[dic valueForKey:@"data"] valueForKey:@"member"] valueForKey:@"bindCard"];
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"cardNameSuccess" object:nil];
+//        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"服务卡添加成功") preferredStyle:(UIAlertControllerStyleAlert)];
+//        UIAlertAction *sureAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+//            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]animated:YES];
+//
+//        }];
+//        [alerVC addAction:sureAction];
+//        [self presentViewController:alerVC animated:YES completion:nil];
+        [GlobalCommon showMessage:ModuleZW(@"服务卡添加成功") duration:1];
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]animated:YES];
         
     }
     else if ([status intValue]== 44)
@@ -223,8 +244,17 @@
         av.tag  = 100008;
         [av show];
     } else  {
-        NSString *str = [dic objectForKey:@"data"];
-        [self showAlertViewController:str];
+        
+        NSString *str = [[dic valueForKey:@"data"] valueForKey:@"data"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"cardNameSuccess" object:nil];
+        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:str preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *sureAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1]animated:YES];
+            
+        }];
+        [alerVC addAction:sureAction];
+        [self presentViewController:alerVC animated:YES completion:nil];
+        
     }
 }
 
@@ -274,6 +304,7 @@
 
 - (void)requesstuserinfoError:(ASIHTTPRequest *)request
 {
+    [self layoutCarDetailView];
     [GlobalCommon hideMBHudWithView:self.view];
     [self showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
 }
@@ -300,8 +331,8 @@
         [self layoutCarDetailView];
 
     }else{
+        [self layoutCarDetailView];
         [self showAlertWarmMessage:[dic objectForKey:@"message"]];
-
     }
     
 }
@@ -362,15 +393,10 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if(self.dataArr.count>indexPath.row){
             NSDictionary *dic = [self.dataArr objectAtIndex:indexPath.row];
-            cell.kindLabel.text = [dic objectForKey:@"serviceName"];
-            NSString *timeStr =[NSString stringWithFormat:@"%@", [dic objectForKey:@"createTime"]];
-            if(timeStr != nil && ![timeStr isEqualToString:@""] && ![timeStr isKindOfClass:[NSNull class]]){
-                NSArray *arr = [timeStr componentsSeparatedByString:@" "];
-                NSLog(@"arr:%@",arr);
-                if(arr.count>1){
-                    cell.timeLabel.text = [arr objectAtIndex:0];
-                    cell.hourLabel.text = [arr objectAtIndex:1];
-                }
+            cell.kindLabel.text = [dic objectForKey:@"name"];
+            NSString *timeStr =[NSString stringWithFormat:@"%@", [dic objectForKey:@"createDate"]];
+            if (![GlobalCommon stringEqualNull:timeStr]) {
+                cell.timeLabel.text = [timeStr substringToIndex:10];
             }
         }
         return cell;

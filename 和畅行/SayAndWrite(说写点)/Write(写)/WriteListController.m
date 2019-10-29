@@ -148,18 +148,19 @@
     symptomLabel.backgroundColor = [UIColor clearColor];
     [_rightView addSubview:symptomLabel];
     [self createDataSource];
-    _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, 90, _leftView.bounds.size.height-61-41) style:UITableViewStylePlain];
+    _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, 110, _leftView.bounds.size.height-61-41) style:UITableViewStylePlain];
     _leftTableView.backgroundColor = RGB_AppWhite;
     _leftTableView.delegate = self;
     _leftTableView.dataSource = self;
     _leftTableView.showsVerticalScrollIndicator = NO;
     _leftTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _leftTableView.estimatedRowHeight = 100;
     _leftTableView.tableFooterView = [[UIView alloc] init];
     [_rightView addSubview:_leftTableView];
     
     UIButton *backButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     backButton.backgroundColor = UIColorFromHex(0X737373);
-    backButton.frame = CGRectMake(40, ScreenHeight-kTabBarHeight - 6, ScreenWidth - 80, 40);
+    backButton.frame = CGRectMake(20, ScreenHeight-kTabBarHeight - 6, ScreenWidth - 40, 40);
     backButton.layer.cornerRadius = 20;
     backButton.layer.masksToBounds = YES;
     backButton.hidden = YES;
@@ -189,7 +190,7 @@
     UIImageView *leftImageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 5, 30, 30)];
     leftImageView.image = [UIImage imageNamed:@"renyuandingwei"];
     [backButton addSubview:leftImageView];
-    UILabel *choseLabel = [[UILabel alloc]initWithFrame:CGRectMake(60, 0, backButton.width/2, 40)];
+    UILabel *choseLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 0, ScreenWidth - 140, 40)];
     choseLabel.text = ModuleZW(@"已选症状0/5");
     choseLabel.textColor = UIColorFromHex(0Xf9a943);
     choseLabel.font = [UIFont systemFontOfSize:14];
@@ -289,12 +290,13 @@
 -(void)createRightTableView{
     
 
-    _rightTableView = [[UITableView alloc] initWithFrame:CGRectMake(100, 46, ScreenWidth - 110 , _leftView.bounds.size.height-61-41) style:UITableViewStylePlain];
+    _rightTableView = [[UITableView alloc] initWithFrame:CGRectMake(120, 46, ScreenWidth - 110 , _leftView.bounds.size.height-61-41) style:UITableViewStylePlain];
     _rightTableView.delegate = self;
     _rightTableView.dataSource = self;
     _rightTableView.backgroundColor = [UIColor whiteColor];
     _rightTableView.showsVerticalScrollIndicator = NO;
     _rightTableView.tableFooterView = [[UIView alloc] init];
+    _rightTableView.estimatedRowHeight = 100;
     [self insertSublayerWithImageView:_rightTableView with:_rightView];
     _rightTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_rightView addSubview:_rightTableView];
@@ -323,18 +325,11 @@
     _rightButton.userInteractionEnabled = YES;
     _backButton.hidden = YES;
     [self reloadLeftView];
-    //将症状列表里面的section状态还原
-    for (int i=0; i<_sectionStatus.count; i++) {
-        [_sectionStatus replaceObjectAtIndex:i withObject:@NO];
-    }
+  
 }
 #pragma mark-点击症状列表按钮
 -(void)rightBtnClick:(UIButton *)button{
-    
-//    _leftButton = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - ScreenWidth/4, kNavBarHeight+10, ScreenWidth/2, 34) target:self sel:@selector(leftBtnClick:) tag:11 image:nil title:ModuleZW(@"人体图解")];
-//
-//    _rightButton = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth - ScreenWidth/6 - 40, kNavBarHeight+10, ScreenWidth/6,34) target:self sel:@selector(rightBtnClick:) tag:12 image:nil title:ModuleZW(@"症状列表")];
-    
+
     if (_rightButton.width == ScreenWidth/6){
         [UIView animateWithDuration:0.3 animations:^{
             self->_rightButton.left = ScreenWidth/2 - ScreenWidth/4;
@@ -355,35 +350,28 @@
     
     //判断是不是点击身体的某部位而跳转过来的
     if (_isBodyTouched) {
-        _isBodyTouched = NO;
         for (int i=0; i<_sectionDataArr.count; i++) {
             if ([_sectionDataArr[i] isEqualToString:_touchedPart]) {
                 [_sectionStatus replaceObjectAtIndex:i withObject:@YES];
-                _touchedPart = nil;
-                _leftTableView.contentOffset = CGPointMake(0, 60*i);
-                [_leftTableView reloadData];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.leftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i] animated:YES scrollPosition:(UITableViewScrollPositionNone)];
-                    [self tableView:self.leftTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]];
-                });
-            
-                break;
+                _myIndexPath = [NSIndexPath indexPathForRow:0 inSection:i];
+            }else{
+                [_sectionStatus replaceObjectAtIndex:i withObject:@NO];
             }
         }
-        
+        [_leftTableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.leftTableView selectRowAtIndexPath:self->_myIndexPath animated:YES scrollPosition:(UITableViewScrollPositionNone)];
+            [self tableView:self.leftTableView didSelectRowAtIndexPath:self->_myIndexPath];
+        });
     }else{
-        
-        
+        _myIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         [_sectionStatus replaceObjectAtIndex:0 withObject:@YES];
         [_leftTableView reloadData];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.leftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:(UITableViewScrollPositionNone)];
             [self tableView:self.leftTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
         });
-        
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self.leftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:(UITableViewScrollPositionNone)];
-//        });
+
     }
 }
 
@@ -559,9 +547,9 @@
 //                                                    attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
 //                                                     context:nil];
 //        return textRect.size.height + 20;
-        return 55;
+        return UITableViewAutomaticDimension;
     }else if (tableView == _rightTableView){
-        return 50;
+        return UITableViewAutomaticDimension;
     }else{
         return popCellHeight;
     }
@@ -569,19 +557,19 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (tableView == _leftTableView) {
-        return 60;
+        return 65;
     }
     return 0;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (tableView == _leftTableView) {
-        MyView *view = [[MyView alloc] initWithFrame:CGRectMake(10, 5, 70, 50)];
+        MyView *view = [[MyView alloc] initWithFrame:CGRectMake(2.5, 2.5, 105, 60)];
         view.backgroundColor = [UIColor whiteColor];
         [view addTarget:self action:@selector(sectionClick:)];
         [self insertSublayerWithImageView:view with:view];
         view.tag = 1000+section;
         BOOL ret = [_sectionStatus[section] boolValue];
-        UILabel *title = [Tools labelWith:_sectionDataArr[section] frame:CGRectMake(15, 10, 60, 40) textSize:14 textColor:RGB_TextGray lines:2 aligment:NSTextAlignmentCenter];
+        UILabel *title = [Tools labelWith:_sectionDataArr[section] frame:CGRectMake(5, 5, 95, 50) textSize:14 textColor:RGB_TextGray lines:2 aligment:NSTextAlignmentCenter];
         
         if(ret == NO){
             title.backgroundColor = [UIColor whiteColor];
@@ -649,10 +637,23 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UIImageView *lineView = [Tools creatImageViewWithFrame:CGRectMake(0, 49, ScreenWidth - 100, 1) imageName:@"ICD10_leftGrayLine"];
         [cell.contentView addSubview:lineView];
+        [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(cell.contentView.mas_bottom).offset(1);
+            make.height.mas_equalTo(1);
+            make.leading.equalTo(cell.contentView.mas_leading);
+            make.trailing.equalTo(cell.contentView.mas_trailing);
+        }];
+        
         SymptomModel *model = _rightDataArr[indexPath.row];
-        UILabel *title = [Tools labelWith:ModuleZW(model.symptom) frame:CGRectMake(20, 0, ScreenWidth/2-20, 50) textSize:15 textColor:[Tools colorWithHexString:@"#8f9292"] lines:1 aligment:NSTextAlignmentLeft];
+        UILabel *title = [Tools labelWith:ModuleZW(model.symptom) frame:CGRectMake(20, 0, ScreenWidth/2-20, 50) textSize:15 textColor:[Tools colorWithHexString:@"#8f9292"] lines:0 aligment:NSTextAlignmentLeft];
         [cell.contentView addSubview:title];
-        title.numberOfLines = 2;
+        [title mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(cell.contentView.mas_top).offset(3);
+            make.bottom.equalTo(cell.contentView.mas_bottom).offset(-3);
+            make.leading.equalTo(cell.contentView.mas_leading).offset(10);
+            make.trailing.equalTo(cell.contentView.mas_trailing).offset(-40);
+            make.height.greaterThanOrEqualTo(@(45));
+        }];
         if (model.fPrivate.boolValue == YES) {
             //显示 “对勾”
             [self addCheckWith:cell];
@@ -919,6 +920,11 @@
     UIImageView *check = [[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width-14-20.5, 14.75, 20.5, 20.5)];
     check.image = [UIImage imageNamed:@"空心圆icon"];
     [cell.contentView addSubview:check];
+    [check mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(cell.contentView.mas_top).offset(14.75);
+        make.trailing.equalTo(cell.contentView.mas_trailing).offset(-30);
+        make.size.mas_equalTo(CGSizeMake(20.5, 20.5));
+    }];
 }
 -(void)removeCheckWith:(UITableViewCell *)cell{
     for (UIImageView *view in cell.contentView.subviews) {
@@ -940,26 +946,15 @@
             [_sectionStatus replaceObjectAtIndex:view.tag-1000 withObject:@YES];
         }
     }
-    
+    _myIndexPath = [NSIndexPath indexPathForRow:0 inSection:view.tag-1000];
    
-//    for (int i = 0; i < _sectionStatus.count;  i++) {
-//        if(i == view.tag-1000){
-//            if(view.isClick == YES){
-//                [_sectionStatus replaceObjectAtIndex:view.tag-1000 withObject:@NO];
-//            }else{
-//                 [_sectionStatus replaceObjectAtIndex:i withObject:@YES];
-//            }
-//        }else{
-//             [_sectionStatus replaceObjectAtIndex:i withObject:@NO];
-//        }
-//    }
+
     [_leftTableView reloadData];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.leftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:view.tag-1000] animated:YES scrollPosition:(UITableViewScrollPositionNone)];
         [self tableView:self.leftTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:view.tag-1000]];
     });
 
-    
 }
 
 #pragma mark-点击删除按钮

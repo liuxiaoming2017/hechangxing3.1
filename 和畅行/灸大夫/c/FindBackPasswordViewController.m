@@ -45,6 +45,7 @@
     [self.mBtnGetPwd setTitle:ModuleZW(@"找回密码") forState:(UIControlStateNormal)];
     [self.mBtnGetPwd.titleLabel setNumberOfLines:2];
     [self.mConnectServicer setTitle:ModuleZW(@"联系客服 ") forState:(UIControlStateNormal)];
+    [self.mConnectServicer.titleLabel setFont:[UIFont systemFontOfSize:19/[UserShareOnce shareOnce].fontSize]];
     //self.topView.hidden = YES;
     
     [self initData];

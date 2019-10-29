@@ -37,6 +37,7 @@
 @property (nonatomic,copy)  NSString * heartRate;
 
 
+
 //季度报告model
 
 //年份
@@ -64,7 +65,7 @@
 @property (nonatomic,copy)   NSString *mainSuit;
 @property (nonatomic,copy)   NSString *doctorDept;
 @property (nonatomic,copy)   NSString *doctorName;
-
+@property (nonatomic,copy)   NSString *userToken;;
 
 //档案全量
 @property (nonatomic,copy)   NSString *name;
@@ -74,6 +75,8 @@
 @property (nonatomic,copy)   NSString *sn;
 @property (nonatomic,copy)   NSString *date;
 @property (nonatomic,copy)   NSString *time;
-
+@property (nonatomic,strong)NSArray *pictures;
+@property (nonatomic,strong)NSDictionary *medicRecord;
+@property (nonatomic,copy)NSDictionary *memberHealthr;
 
 @end

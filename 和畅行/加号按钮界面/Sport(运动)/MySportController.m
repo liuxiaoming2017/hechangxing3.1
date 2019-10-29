@@ -10,7 +10,8 @@
 #import "MySportCell.h"
 #import "MenuTypeView.h"
 #import "ZYAudioManager.h"
-
+#import "SportDemonstratesViewController.h"
+#import "YueYaoController.h"
 @interface MySportController ()<UICollectionViewDataSource,UICollectionViewDelegate,MenuTypeDelegate,AVAudioPlayerDelegate>
 {
     NSInteger _pageIndex;
@@ -54,6 +55,7 @@
 
 @property (nonatomic, copy) NSString *yueYaoPlayUrl;
 
+@property (nonatomic, assign) BOOL isNextVC;
 @end
 
 @implementation MySportController
@@ -116,6 +118,20 @@
     [[ZYAudioManager defaultManager] stopMusic:self.cureentPlayUrl];
     [[ZYAudioManager defaultManager] stopMusic:self.yueYaoPlayUrl];
     audioPlay = nil;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if(self.isNextVC){
+        [self dealWithShiFanYinYueYaoData];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self stopTimer];
 }
 
 - (void)viewDidLoad {
@@ -377,6 +393,9 @@
 {
     NSString* filepath=[self Createfilepath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
+    if(self.shifanyinPlayArr.count>0){
+        [self.shifanyinPlayArr removeAllObjects];
+    }
     for (NSString *urlpathname in self.imageArr) {
         NSString* urlpath= [filepath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3", urlpathname]];
         BOOL fileExists = [fileManager fileExistsAtPath:urlpath];
@@ -433,7 +452,17 @@
 - (void)yueYaoAction:(UIButton *)button
 {
     if(self.yueYaoArray.count==0){
-        [self showAlertWarmMessage:ModuleZW(@"你还没有乐药产品")];
+        
+        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有乐药产品,是否去下载") preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            self.isNextVC = YES;
+            YueYaoController *sportDemonVC = [[YueYaoController alloc]init];
+            [self.navigationController pushViewController:sportDemonVC animated:YES];
+        }];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:(UIAlertActionStyleCancel) handler:nil];
+        [alerVC addAction:suerAction];
+        [alerVC addAction:cancelAction];
+        [self presentViewController:alerVC animated:YES completion:nil];
         return;
     }
     
@@ -470,7 +499,19 @@
 - (void)shifanyinAction:(UIButton *)sender
 {
     if (self.shifanyinPlayArr.count == 0) {
-        [self showAlertWarmMessage:ModuleZW(@"你还没有音乐示范音产品")];
+        
+        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有音乐示范音产品,是否去下载") preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            self.isNextVC = YES;
+            SportDemonstratesViewController *sportDemonVC = [[SportDemonstratesViewController alloc]init];
+            [self.navigationController pushViewController:sportDemonVC animated:YES];
+        }];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:(UIAlertActionStyleCancel) handler:nil];
+        [alerVC addAction:suerAction];
+        [alerVC addAction:cancelAction];
+        [self presentViewController:alerVC animated:YES completion:nil];
+        
+        
         return;
     }
      if (sender.selected){
@@ -495,7 +536,7 @@
          shifanyinCount = 0;
          _pageIndex = 0;
          [self timerRefreshedWithAnimated:NO];
-         collectionV.userInteractionEnabled = NO;
+        // collectionV.userInteractionEnabled = NO;
          //有乐药播放，乐药暂停
          if(yueYaoButton.selected){
              yueYaoButton.selected = NO;
@@ -503,23 +544,30 @@
              [[ZYAudioManager defaultManager] pauseMusic:self.yueYaoPlayUrl];
          }
          voiceButton.selected = NO;
-         
-         //示范音数据
-         NSString *shifanStr = [self.imageArr objectAtIndex:_pageIndex];
-         
-         //示范音本地路径
-         NSString *shifanYinStr = [self stringMP3WithFileName:shifanStr];
-         
-         //判断本地是否存在该示范音
-         BOOL isHaveShiFan = [self.shifanyinPlayArr containsObject:shifanYinStr];
-         if(isHaveShiFan){
-             [self stopTimer];
-             [self refreshAudioPlayWithName:shifanYinStr];
-         }else{
-             //_pageIndex+=1;
-             [self startTimer];
-         }
+         [self playShifanyinAction];
      }
+}
+
+- (void)playShifanyinAction
+{
+    //示范音数据
+    if(_pageIndex>=self.imageArr.count){
+        _pageIndex = self.imageArr.count - 1;
+    }
+    NSString *shifanStr = [self.imageArr objectAtIndex:_pageIndex];
+    
+    //示范音本地路径
+    NSString *shifanYinStr = [self stringMP3WithFileName:shifanStr];
+    
+    //判断本地是否存在该示范音
+    BOOL isHaveShiFan = [self.shifanyinPlayArr containsObject:shifanYinStr];
+    if(isHaveShiFan){
+        [self stopTimer];
+        [self refreshAudioPlayWithName:shifanYinStr];
+    }else{
+        //_pageIndex+=1;
+        [self startTimer];
+    }
 }
 
 - (NSString *)stringMP3WithFileName:(NSString *)nameStr
@@ -610,9 +658,9 @@
 
 - (void)tapAction:(UIGestureRecognizer *)tap
 {
-    if(shifanyinButton.selected){
-        return;
-    }
+//    if(shifanyinButton.selected){
+//        return;
+//    }
     NSArray *arr = [NSArray arrayWithObjects:ModuleZW(@"全部   "),ModuleZW(@"预备   "),ModuleZW( @"第一式   起式"), ModuleZW(@"第二式   剑指后仰式"), ModuleZW(@"第三式   俯身下探式"), ModuleZW(@"第四式   左右扭转式"), ModuleZW(@"第五式   体侧弯腰式"), ModuleZW(@"第六式   俯身下探加强式"), ModuleZW(@"第七式   婴儿环抱式"), ModuleZW(@"第八式   收式"), nil];
     MenuTypeView *menuView = [[MenuTypeView alloc] initWithFrame:CGRectMake(10, kNavBarHeight, 220, 320)];
     menuView.menuArr = arr;
@@ -641,9 +689,9 @@
 # pragma mark - 运动样式的选择
 - (void)selectMenuTypeWithIndex:(NSInteger)index
 {
-    if(shifanyinButton.selected){
-        return;
-    }
+//    if(shifanyinButton.selected){
+//        return;
+//    }
     
     MenuTypeView *menuView = (MenuTypeView *)[[UIApplication sharedApplication].keyWindow viewWithTag:1002];
     [menuView removeFromSuperview];
@@ -689,6 +737,17 @@
     [self.collectionV setContentOffset:CGPointMake(0, 1)];
     
     [self dealWithShiFanYinYueYaoData];
+    
+    //正在播放示范音
+    if(self.isPlayShiFanYin){
+        //上一个播放完的 删除
+        if(self.cureentPlayUrl){
+            [[ZYAudioManager defaultManager] stopMusic:self.cureentPlayUrl];
+        }
+        shifanyinCount = 0;
+        [self playShifanyinAction];
+    }
+    
 }
 
 
@@ -830,9 +889,19 @@
 {
     NSInteger currentPage = scrollView.contentOffset.x / scrollView.bounds.size.width;
     currentPage = currentPage % self.imageArr.count;
+    BOOL isCurrent = currentPage == _pageIndex ? YES : NO;
     _pageIndex = currentPage;
     [self refreshCountImgV];
     [self.collectionV scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:currentPage inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    
+    if(self.isPlayShiFanYin && !isCurrent){
+        //上一个播放完的 删除
+        if(self.cureentPlayUrl){
+            [[ZYAudioManager defaultManager] stopMusic:self.cureentPlayUrl];
+        }
+        [self playShifanyinAction];
+    }
+    NSLog(@"hahaha:%ld",currentPage);
 }
 
 # pragma mark - 音频每次播放结束后触发
@@ -845,9 +914,10 @@
         [[ZYAudioManager defaultManager] stopMusic:self.cureentPlayUrl];
         shifanyinCount ++;
         _pageIndex+=1;
-        if (self.shifanyinCount > self.shifanyinPlayArr.count-1) {
+        if (_pageIndex == self.imageArr.count || self.shifanyinCount > self.shifanyinPlayArr.count-1) {
             shifanyinCount = 0;
             shifanyinButton.selected = NO;
+            self.isPlayShiFanYin = NO;
             //停止播放器
             [self refreshAudioPlayWithName:nil];
             return;

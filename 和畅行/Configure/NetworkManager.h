@@ -24,7 +24,8 @@ typedef NS_ENUM(NSUInteger, BAHttpRequestType)
     /*! delete请求 */
     BAHttpRequestTypeDelete
 };
-
+/*! formDataBlock */
+typedef void( ^ BAResponseForm)(id request);
 
 /*! 定义请求成功的 block */
 typedef void( ^ BAResponseSuccess)(id response);
@@ -54,6 +55,13 @@ typedef NSURLSessionTask BAURLSessionTask;
              parameters:(NSDictionary *)parameters
            successBlock:(BAResponseSuccess)successBlock
            failureBlock:(BAResponseFail)failureBlock;
+
+- (void)requestWithformDataWithurlString:(NSString *)urlString
+                              parameters:(NSDictionary *)parameters
+                            successBlock:(BAResponseSuccess)successBlock
+                            failureBlock:(BAResponseFail)failureBlock;
+
+
 -(void)submitWithUrl:(NSString *)url token:(NSString *)token dic:(NSDictionary *)dic;
 
 -(void)mainThreadRequestWithUrl:(NSString *)myUrl token:(NSString *)token dic:(NSDictionary *)dic;

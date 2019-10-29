@@ -13,18 +13,21 @@
 #import "NSObject+SBJson.h"
 #import "SBJson.h"
 #import "MBProgressHUD.h"
-
+#import "FSSegmentTitleView.h"
 #import "LoginViewController.h"
 #import "UIImageView+WebCache.h"
 #import "HeChangPackgeController.h"
+#import "HealthLectureViewController.h"
+#import "InformationCell.h"
 
-@interface InformationViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,ASIProgressDelegate,MBProgressHUDDelegate,HYSegmentedControlDelegate>
+@interface InformationViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,ASIProgressDelegate,MBProgressHUDDelegate,FSSegmentTitleViewDelegate>
+
+
 {
     MBProgressHUD* progress_;
     
 }
-@property (nonatomic,strong)  HYSegmentedControl *BaoGaosegment;
-@property (nonatomic ,strong) UITableView *hotTableView;
+@property (nonatomic,strong)  FSSegmentTitleView *BaoGaosegment;
 @property (nonatomic ,strong) UITableView *healthTableView;
 @property (nonatomic,strong) UIScrollView* BaoGaoScroll;
 @property (nonatomic,strong) UIView * BaoGaoview;
@@ -33,64 +36,45 @@
 @property (nonatomic ,strong) NSMutableArray *idArray;
 @property (nonatomic,strong)UIView *noView;
 @property (nonatomic ,strong) UIView *healthView;
+@property (nonatomic,assign) NSInteger pageInteger;
+@property (nonatomic,assign) NSInteger typeInteger;
+@property (nonatomic,copy) NSString * typeStr;;
 
 @end
 
 @implementation InformationViewController
 - (void)dealloc{
-    
+    self.BaoGaosegment = nil;
+    self.healthTableView = nil;
+    self.BaoGaoScroll = nil;
+    self.BaoGaoview = nil;
+    self.hotArray = nil;
+    self.healthArray = nil;
+    self.idArray = nil;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    _pageInteger = 0;
+    _typeInteger = 0;
+    _typeStr = nil;
     _idArray = [[NSMutableArray alloc]init];
     self.navTitleLabel.text = ModuleZW(@"健康资讯");
     self.hotArray = [[NSMutableArray alloc]init];
-    self.healthArray = [[NSMutableArray alloc]init];
+    self.healthArray = [NSMutableArray array];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.noView = [NoMessageView createImageWith:150.0f];
     [self.view addSubview:self.noView ];
-    //10
-//    NSArray *titleArr = @[@"最新资讯",@"健康讲座"];
-//    _idArray = [NSMutableArray arrayWithObjects:@"hot",@"10", nil];
-//    [self huoquwenzhang:titleArr];
     
     [self huoquwenzhangCanshu];
 
+
 }
 
--(void)initWithController{
-    if(!self.healthView){
-        self.healthView = [[UIView alloc] initWithFrame:CGRectMake(0, _BaoGaosegment.bottom, ScreenWidth, ScreenHeight-_BaoGaosegment.bottom)];
-        [self.view addSubview:self.healthView];
-        UIImageView *lineView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, 10)];
-        lineView.image = [UIImage imageNamed:@"healthLec"];
-        [self.healthView addSubview:lineView];
-        
-        
-        UILabel *titleLabel = [Tools labelWith:ModuleZW(@"讲座说明：") frame:CGRectMake(5, lineView.bottom+10, 150, 10) textSize:11 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentLeft];
-        [self.healthView addSubview:titleLabel];
-        
-        UILabel *contentLabel = [Tools labelWith:ModuleZW(@"在线预约养生类、慢病类、职业防护类、两性保健类、亲子健康类等健康主题的讲座或沙龙服务。") frame:CGRectMake(15, titleLabel.bottom, kScreenSize.width-25, 30) textSize:11 textColor:[Tools colorWithHexString:@"#333"] lines:0 aligment:NSTextAlignmentLeft];
-        [self.healthView addSubview:contentLabel];
-        
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, contentLabel.bottom+20, kScreenSize.width, 30)];
-        imageView.backgroundColor = [Tools colorWithHexString:@"#616161"];
-        [self.healthView addSubview:imageView];
-        
-        NSArray *categoryLabel = @[ModuleZW(@"主讲人"),ModuleZW(@"讲座地址"),ModuleZW(@"讲座课题"),ModuleZW(@"开讲日期"),ModuleZW(@"时间"),ModuleZW(@"价格")];
-        CGFloat width = kScreenSize.width/6.0f;
-        for (int i=0; i<6; i++) {
-            UILabel *label = [Tools labelWith:categoryLabel[i] frame:CGRectMake(width*i, 0, width, 30) textSize:11 textColor:[Tools colorWithHexString:@"#abafaf"] lines:2 aligment:NSTextAlignmentCenter];
-            [imageView addSubview:label];
-        }
-        self.healthView.hidden = YES;
-    }
-    
-    
-}
+
+
+
 
 - (void)huoquwenzhangCanshu{
     NSString *headYUrl = @"/article/healthCategoryList.jhtml";
@@ -106,25 +90,12 @@
             [weakSelf.idArray addObject:@"hot"];
             [weakSelf.idArray addObject:@"10"];
             [daArray addObject:ModuleZW(@"最新资讯")];
-            if(![UserShareOnce shareOnce].languageType){
-                [daArray addObject:ModuleZW(@"健康讲座")];
-                if(array.count >0){
-                    for (NSDictionary *Dic in array) {
-                        [daArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"name"]]];
-                        [weakSelf.idArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"id"]]];
-                    }
-                }
-            }else{
-                if(array.count >0){
-                    NSDictionary *Dic = array[0];
+            if(array.count >0){
+                for (NSDictionary *Dic in array) {
                     [daArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"name"]]];
                     [weakSelf.idArray addObject:[NSString stringWithFormat:@"%@",[Dic objectForKey:@"id"]]];
                 }
-              
-              
             }
-           
-            
             
             [self huoquwenzhang:daArray];
         }
@@ -146,59 +117,115 @@
     UILabel* lb=[[UILabel alloc] init];
     lb.frame=CGRectMake(0, kNavBarHeight, ScreenWidth, 1);
     [self.view addSubview:lb];
+
     
-    _BaoGaosegment = [[HYSegmentedControl alloc] initWithOriginY:lb.frame.origin.y Titles:array delegate:self];
+    _BaoGaosegment = [[FSSegmentTitleView alloc]initWithFrame:CGRectMake(0, self.topView.bottom, CGRectGetWidth(self.view.bounds), 30) titles:array delegate:self indicatorType:FSIndicatorTypeEqualTitle];
+    _BaoGaosegment.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_BaoGaosegment];
-    _BaoGaosegment.delegate = self;
-    [_BaoGaosegment setBtnorline:array];
-    
-//    _BaoGaoScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, _BaoGaosegment.bottom, self.view.frame.size.width, self.view.frame.size.height - _BaoGaosegment.bottom)];
-//    _BaoGaoScroll.pagingEnabled = YES;
-//    _BaoGaoScroll.delegate = self;
-//
-//    [self.view addSubview:_BaoGaoScroll];
-//    self.automaticallyAdjustsScrollViewInsets = YES;
-//    _BaoGaoScroll.contentSize = CGSizeMake(self.view.frame.size.width, 1);
-   // _healthTableView = [[UITableView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*_BaoGaosegment.frame.origin.x/(self.view.frame.size.width/self.idArray.count), 0, self.view.frame.size.width, self.view.frame.size.height - _BaoGaosegment.bottom) style:UITableViewStylePlain];
-    _healthTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _BaoGaosegment.bottom, ScreenWidth, ScreenHeight-_BaoGaosegment.bottom) style:UITableViewStylePlain];
+
+    _healthTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _BaoGaosegment.bottom + 10, ScreenWidth, ScreenHeight-_BaoGaosegment.bottom - 10) style:UITableViewStylePlain];
     _healthTableView.tableFooterView = [[UIView alloc]init];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    _healthTableView.rowHeight = 84;
+    _healthTableView.rowHeight = 85;
+    _healthTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _healthTableView.backgroundView = nil;
+    _healthTableView.backgroundColor = [UIColor clearColor];
     _healthTableView.delegate = self;
     _healthTableView.dataSource = self;
     [self.view addSubview:_healthTableView];
 
-    [self hySegmentedControlSelectAtIndex:0];
+    [self FSSegmentTitleView:self.BaoGaosegment startIndex:0 endIndex:0];
     
-    [self initWithController];
+    //下拉刷新
+    MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    [header setTitle:ModuleZW(@"下拉刷新") forState:MJRefreshStateIdle];
+    [header setTitle:ModuleZW(@"努力加载中...") forState:MJRefreshStateRefreshing];
+    [header setTitle:ModuleZW(@"松开即可刷新...") forState:MJRefreshStatePulling];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    header.stateLabel.font = [UIFont systemFontOfSize:14];
+    header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:14];
+    header.stateLabel.textColor = RGB_TextAppBlue;
+    header.lastUpdatedTimeLabel.textColor = RGB_TextAppBlue;
+    self.healthTableView.mj_header = header;
+    
+    //上拉加载
+    MJRefreshBackGifFooter *footer = [MJRefreshBackGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreDataOther)];
+    [footer setTitle:ModuleZW(@"上拉加载")   forState:MJRefreshStateIdle];
+    [footer setTitle:ModuleZW(@"加载中...")  forState:MJRefreshStateRefreshing];
+    [footer setTitle:ModuleZW(@"没有更多了")  forState:MJRefreshStateNoMoreData];
+    [footer setTitle:ModuleZW(@"松开即可加载...")  forState:MJRefreshStatePulling];
+    footer.stateLabel.font = [UIFont systemFontOfSize:14];
+    footer.stateLabel.textColor = RGB_TextAppBlue;
+    self.healthTableView.mj_footer = footer;
+    
+    
 }
-- (void)hySegmentedControlSelectAtIndex:(NSInteger)index
-{
-   // _healthTableView.frame = CGRectMake(self.view.frame.size.width * index, 0, self.view.frame.size.width, self.view.frame.size.height - 98);
-   // _BaoGaoScroll.contentOffset = CGPointMake(self.view.frame.size.width*index, 0);
-    NSString *idStr = [self.idArray objectAtIndex:index];
-    if (index == 0) {
-        self.healthView.hidden = YES;
-        self.healthTableView.hidden = NO;
-        [self hotArrayWithView];
-    }else if(index == 1){
-        
-        if ([UserShareOnce shareOnce].languageType){
-            self.healthView.hidden = YES;
-            self.healthTableView.hidden = NO;
-            [self healthArrayWithView:idStr];
-        }else{
-            self.healthView.hidden = NO;
-            self.healthTableView.hidden = YES;
-            self.noView.hidden = YES;
-        }
-    }else{
-        self.healthView.hidden = YES;
-        self.healthTableView.hidden = NO;
-        [self healthArrayWithView:idStr];
-    }
 
+# pragma mark ----- 下拉加载
+-(void)loadNewData {
     
+    self.pageInteger = 1;
+    if(self.typeInteger == 0){
+        _typeStr = nil;
+    }
+    [self requestHealthHintDataRefreshWithString:_typeStr];
+}
+
+# pragma mark ----- 上拉加载
+-(void)loadMoreDataOther {
+    self.pageInteger ++;
+    if(self.typeInteger == 0){
+        _typeStr = nil;
+    }
+    [self requestHealthHintDataLoadingWithString:_typeStr];
+    
+}
+
+- (void)FSSegmentTitleView:(FSSegmentTitleView *)titleView startIndex:(NSInteger)startIndex endIndex:(NSInteger)endIndex
+{
+    self.pageInteger = 1;
+//   [self.healthTableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+   
+    if (endIndex == 0) {
+        self.typeInteger = 0;
+        self.healthView.hidden = YES;
+        self.healthTableView.hidden = NO;
+        [self requestHealthHintDataRefreshWithString:nil];
+//    }else if(endIndex == 2){
+//        self.typeInteger = 1;
+//        HealthLectureViewController *vc = [[HealthLectureViewController alloc]init];
+//        [self addChildViewController:vc];
+//        vc.view.frame =  CGRectMake(0, _BaoGaosegment.bottom, ScreenWidth, ScreenHeight-_BaoGaosegment.bottom);
+//        [self.view addSubview:vc.view];
+//        self.healthView  = vc.view;
+//        [vc didMoveToParentViewController:self];
+//        if ([UserShareOnce shareOnce].languageType){
+//            self.healthView.hidden = YES;
+//            self.healthTableView.hidden = NO;
+//            _typeStr = [self.idArray objectAtIndex:endIndex];
+//            [self requestHealthHintDataRefreshWithString:_typeStr];
+//        }else{
+//            self.healthView.hidden = NO;
+//            self.healthTableView.hidden = YES;
+//            self.noView.hidden = YES;
+//        }
+    }else{
+        self.typeInteger = 2;
+        self.healthView.hidden = YES;
+        self.healthTableView.hidden = NO;
+        _typeStr = [self.idArray objectAtIndex:endIndex];
+        [self requestHealthHintDataRefreshWithString:_typeStr];
+    }
+    
+    
+}
+
+-(void)addChildVc:(UIViewController*)vc view:(UIView *)view {
+    BOOL needAddToParent = !vc.parentViewController;
+    if (needAddToParent) [self addChildViewController:vc];
+    vc.view.frame = view.bounds;
+    [view addSubview:vc.view];
+    if (needAddToParent) [vc didMoveToParentViewController:self];
 }
 
 
@@ -214,157 +241,176 @@
     
 }
 # pragma mark - 最新资讯
-- (void)hotArrayWithView{
+ - (void)requestHealthHintDataRefreshWithString:(NSString *)string{
     [self showHUD];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/article/healthArticleList.jhtml",UrlPre];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:aUrlle];
-    
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }    //[request healthArticleList.jhtml:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",g_userInfo.token,g_userInfo.JSESSIONID]];
-    //[request setValue:@"50" forKey:@"count"];
-    [request setRequestMethod:@"GET"];
-    [request setTimeOutSeconds:20];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestResourceslisttssError:)];
-    [request setDidFinishSelector:@selector(requestResourceslisttssCompleted:)];
-    [request startAsynchronous];
-}
-- (void)requestResourceslisttssError:(ASIHTTPRequest *)request
-{
-    [self hudWasHidden];
-    //[SSWaitViewEx removeWaitViewFrom:self.view];
-    
-    [self showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
-    
-}
+     NSString *aUrlle = [NSString string];
+     if ([GlobalCommon stringEqualNull:string]) {
+         aUrlle = [NSString stringWithFormat:@"/article/healthArticleList.jhtml?pageNumber=%ld",(long)self.pageInteger];
+     }else{
+         //
+         aUrlle= [NSString stringWithFormat:@"/article/healthListByCategory/%@.jhtml?pageNumber=%ld",string,(long)self.pageInteger];
+         aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 
-- (void)requestResourceslisttssCompleted:(ASIHTTPRequest *)request
-{
-    [self hudWasHidden];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    id status=[dic objectForKey:@"status"];
-    NSLog(@"%@",status);
-    if ([status intValue] == 100)
-    {
-        [self.healthArray removeAllObjects];
+     }
+    
+    [[NetworkManager sharedNetworkManager] requestWithType:BAHttpRequestTypeHeadGet urlString:aUrlle parameters:nil successBlock:^(id response) {
         
-        self.healthArray = [dic objectForKey:@"data"];
-        NSLog(@"%@",[dic objectForKey:@"data"]);
-        [self.healthTableView reloadData];
-    }
-    else
-    {
-        NSString *str = [dic objectForKey:@"data"];
-        [self showAlertWarmMessage:str];
-        
-    }
-}
--(void) showHUD
-{
-    progress_ = [[MBProgressHUD alloc] initWithView:self.view];
-    [self.view addSubview:progress_];
-    [self.view bringSubviewToFront:progress_];
-    progress_.delegate = self;
-    progress_.label.text = ModuleZW(@"加载中...");
-    [progress_ showAnimated:YES];
-}
-
-- (void)hudWasHidden
-{
-    
-    // Remove HUD from screen when the HUD was hidded
-    [progress_ removeFromSuperview];
-    
-    progress_ = nil;
-    
-}
-# pragma mark - 养生之道
-- (void)healthArrayWithView:(NSString*)string{
-    [self showHUD];
-    NSString *UrlPre=URL_PRE;
-    
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/article/healthListByCategory/%@.jhtml",UrlPre,string];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:aUrlle];
-    
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    //[request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",g_userInfo.token,g_userInfo.JSESSIONID]];
-    [request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }    [request setRequestMethod:@"GET"];
-    [request setTimeOutSeconds:20];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestResourceslisttssErrorsss:)];
-    [request setDidFinishSelector:@selector(requestResourceslisttssCompletedsss:)];
-    [request startAsynchronous];
-}
-- (void)requestResourceslisttssErrorsss:(ASIHTTPRequest *)request
-{
-    [self hudWasHidden];
-    //[SSWaitViewEx removeWaitViewFrom:self.view];
-    
-    [self showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
-    
-}
-
-- (void)requestResourceslisttssCompletedsss:(ASIHTTPRequest *)request
-{
-    [self hudWasHidden];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    id status=[dic objectForKey:@"status"];
-    if ([status intValue] == 100)
-    {
-        [self.healthArray removeAllObjects];
-        self.healthArray = [dic objectForKey:@"data"];
-       // NSLog(@"%@",[dic objectForKey:@"data"]);
-        CGSize size;
-        size.width=self.healthTableView.frame.size.width;
-        size.height=(self.idArray.count)*84;
-        [self.healthTableView setContentSize:size];
-        [self.healthTableView reloadData];
-        
-        if (self.healthArray.count < 1){
-            self.noView.hidden = NO;
-            self.healthTableView.hidden = YES;
-        }else {
-            self.noView.hidden = YES;
-            self.healthTableView.hidden = NO;
+        [self hudWasHidden];
+        NSLog(@"%@",response);
+        if ([response[@"status"] integerValue] == 100){
+           
+            [self.healthArray removeAllObjects];
+            [self.healthArray addObjectsFromArray:[[response valueForKey:@"data"] valueForKey:@"content"]];
+            [self.healthTableView reloadData];
+            if (self.healthArray.count > 0) {
+                self.noView.hidden = YES;
+                NSIndexPath* indexPat = [NSIndexPath indexPathForRow:0 inSection:0];
+                [self.healthTableView scrollToRowAtIndexPath:indexPat atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }else{
+                self.noView.hidden = NO;
+            }
+                
+                
+           
+            
         }
-        
-    }
-    else if ([status intValue]==44)
-    {
-        
-        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时,请重新登录") preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            LoginViewController *vc = [[LoginViewController alloc] init];
-            [self.navigationController pushViewController:vc animated:YES];
-        }];
-        [alertVC addAction:alertAct1];
-        [self presentViewController:alertVC animated:YES completion:NULL];
-        
-    }else{
-        NSString *str = [dic objectForKey:@"data"];
-        [self showAlertWarmMessage:str];
-        
-    }
+    } failureBlock:^(NSError *error) {
+        [self hudWasHidden];
+        [self showAlertWarmMessage:requestErrorMessage];
+    }];
+    [self.healthTableView.mj_header endRefreshing];
 
 }
+
+- (void)requestHealthHintDataLoadingWithString:(NSString *)string{
+    [self showHUD];
+    NSString *aUrlle = [NSString string];
+    if ([GlobalCommon stringEqualNull:string]) {
+        aUrlle = [NSString stringWithFormat:@"/article/healthArticleList.jhtml?pageNumber=%ld",(long)self.pageInteger];
+    }else{
+        aUrlle= [NSString stringWithFormat:@"/article/healthListByCategory/%@.jhtml?pageNumber=%ld",string,(long)self.pageInteger];
+        aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+
+    }
+    
+    
+    
+    [[NetworkManager sharedNetworkManager] requestWithType:BAHttpRequestTypeHeadGet urlString:aUrlle parameters:nil successBlock:^(id response) {
+        
+        [self hudWasHidden];
+        NSLog(@"%@",response);
+        if ([response[@"status"] integerValue] == 100){
+            
+             [self.healthArray addObjectsFromArray:[[response valueForKey:@"data"] valueForKey:@"content"]];
+//            for (NSDictionary *dic  in [[response valueForKey:@"data"] valueForKey:@"content"]) {
+//                [self.healthArray addObject:dic];
+//            }
+            
+            [self.healthTableView reloadData];
+            
+        }
+    } failureBlock:^(NSError *error) {
+        [self hudWasHidden];
+        [self showAlertWarmMessage:requestErrorMessage];
+    }];
+    [self.healthTableView.mj_footer endRefreshing];
+    
+}
+
+
+
+//# pragma mark - 养生之道
+//- (void)healthArrayWithView:(NSString*)string{
+//    [self showHUD];
+//    NSString *UrlPre=URL_PRE;
+//
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@/article/healthListByCategory/%@.jhtml",UrlPre,string];
+//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    NSURL *url = [NSURL URLWithString:aUrlle];
+//
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    //[request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",g_userInfo.token,g_userInfo.JSESSIONID]];
+//    [request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }    [request setRequestMethod:@"GET"];
+//    [request setTimeOutSeconds:20];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestResourceslisttssErrorsss:)];
+//    [request setDidFinishSelector:@selector(requestResourceslisttssCompletedsss:)];
+//    [request startAsynchronous];
+//}
+//- (void)requestResourceslisttssErrorsss:(ASIHTTPRequest *)request
+//{
+//    [self hudWasHidden];
+//    //[SSWaitViewEx removeWaitViewFrom:self.view];
+//
+//    [self showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
+//
+//}
+//
+//- (void)requestResourceslisttssCompletedsss:(ASIHTTPRequest *)request
+//{
+//    [self hudWasHidden];
+//    NSString* reqstr=[request responseString];
+//    NSDictionary * dic=[reqstr JSONValue];
+//    id status=[dic objectForKey:@"status"];
+//    if ([status intValue] == 100)
+//    {
+//        [self.healthArray removeAllObjects];
+//        self.healthArray = [dic objectForKey:@"data"];
+//       // NSLog(@"%@",[dic objectForKey:@"data"]);
+//        CGSize size;
+//        size.width=self.healthTableView.frame.size.width;
+//        size.height=(self.idArray.count)*84;
+//        [self.healthTableView setContentSize:size];
+//        [self.healthTableView reloadData];
+//
+//        if (self.healthArray.count < 1){
+//            self.noView.hidden = NO;
+//            self.healthTableView.hidden = YES;
+//        }else {
+//            self.noView.hidden = YES;
+//            self.healthTableView.hidden = NO;
+//        }
+//
+//    }
+//    else if ([status intValue]==44)
+//    {
+//
+//        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时,请重新登录") preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//            LoginViewController *vc = [[LoginViewController alloc] init];
+//            [self.navigationController pushViewController:vc animated:YES];
+//        }];
+//        [alertVC addAction:alertAct1];
+//        [self presentViewController:alertVC animated:YES completion:NULL];
+//
+//    }else{
+//        NSString *str = [dic objectForKey:@"data"];
+//        [self showAlertWarmMessage:str];
+//
+//    }
+//
+//}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
     return self.healthArray.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *CellIdentifier = @"LeMedicineCell";
     
+    InformationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InformationCell"];
+    if(cell == nil){
+        cell = [[InformationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"InformationCell"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    if(self.healthArray.count > indexPath.row){
+        ArticleModel *model = [self.healthArray objectAtIndex:indexPath.row];
+        [cell setDataWithModel:model];
+    }
+    
+    /*
+    static NSString *CellIdentifier = @"LeMedicineCell";
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         if (cell == nil)
         {
@@ -411,14 +457,14 @@
         NSString *confromTimespStr = [formatter stringFromDate:data];
         
         
-        UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 117, 60, 100, 15)];
-        timeLabel.textAlignment = NSTextAlignmentCenter;
+        UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 217, 60, 200, 15)];
+        timeLabel.textAlignment = NSTextAlignmentRight;
         timeLabel.textColor = [UtilityFunc colorWithHexString:@"#666666"];
         timeLabel.font = [UIFont systemFontOfSize:9];
         timeLabel.text = confromTimespStr;
         [cell addSubview:timeLabel];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
+        */
         
         
         return cell;
@@ -428,19 +474,31 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-    vc.titleStr = ModuleZW(@"健康文化");
+    vc.titleStr = ModuleZW(@"健康资讯");
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,[self.healthArray[indexPath.row] objectForKey:@"path"]];
     vc.urlStr = urlStr;
     [self.navigationController pushViewController:vc animated:YES];
     
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void) showHUD
+{
+    progress_ = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:progress_];
+    [self.view bringSubviewToFront:progress_];
+    progress_.delegate = self;
+    progress_.label.text = ModuleZW(@"加载中...");
+    [progress_ showAnimated:YES];
 }
 
+- (void)hudWasHidden
+{
+    
+    [progress_ removeFromSuperview];
+    
+    progress_ = nil;
+    
+}
 
 
 @end

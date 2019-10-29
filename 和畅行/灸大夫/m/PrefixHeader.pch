@@ -116,7 +116,7 @@ typedef NS_ENUM(NSUInteger, MOXSearchType) {
 
 // QQ，微信
 #define WXID_KEY            @"wx677818e0150f79b2"
-#define WXAPP_SECRET_KEY    @""
+#define WXAPP_SECRET_KEY    @"e60106b1068cd51b1f68e4bb871cde90"
 #define WX_PAY_CHANNEL      @"3"
 
 //商户号，填写商户对应参数

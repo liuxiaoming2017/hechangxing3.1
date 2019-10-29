@@ -48,6 +48,7 @@ static CGFloat const timer_animation_Duration = 0.05;
         UIView  *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, kNavBarHeight)];
         backView.backgroundColor = [UIColor whiteColor];
         [self addSubview:backView];
+        self.backView = backView;
         
         UILabel *titleLable = [[UILabel alloc]initWithFrame:CGRectMake(0, backView.bottom - 44, ScreenWidth, 44)];
         titleLable.text = ModuleZW(@"二维码");
@@ -166,14 +167,15 @@ static CGFloat const timer_animation_Duration = 0.05;
     [self addSubview:light_button];
     
     
-    UIButton *manualBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - 13 ,light_button.bottom + 30, 50, 50) target:self sel:@selector(manualClick) tag:31 image:nil title:@"手动输入"];
+    UIButton *manualBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - 15 ,light_button.bottom + 30, 30, 30) target:self sel:@selector(rightBarButtonItenAction) tag:31 image:@"手" title:nil];
     [manualBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-//    [manualBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-    [manualBtn setImage:[UIImage imageNamed:@"手"] forState:(UIControlStateNormal)];
     [self addSubview:manualBtn];
     
-    
-    [manualBtn setTitleEdgeInsets:UIEdgeInsetsMake(manualBtn.imageView.frame.size.height +30 ,-manualBtn.imageView.frame.size.width -10, 0.0,0.0)];
+    UILabel *codeLabel = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/2 - 100, manualBtn.bottom+ 5, 200, 25)];
+    codeLabel.text = ModuleZW(@"手动输入");
+    codeLabel.textColor = [UIColor whiteColor];
+    codeLabel.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:codeLabel];
     
     
     
@@ -233,10 +235,7 @@ static CGFloat const timer_animation_Duration = 0.05;
 ////手动输入
 
 -(void)rightBarButtonItenAction {
-    
-    if (self.popBlock) {
-        self.popBlock(self);
-    }
+    [[self viewController].navigationController popViewControllerAnimated:YES];
     
 }
 
@@ -269,13 +268,14 @@ static CGFloat const timer_animation_Duration = 0.05;
     __block CGRect frame = _animation_line.frame;
     
     static BOOL flag = YES;
-    
+    __weak typeof(self) weakSelf = self;
     if (flag) {
         frame.origin.y = scanContent_Y;
         flag = NO;
+        
         [UIView animateWithDuration:timer_animation_Duration animations:^{
             frame.origin.y += 5;
-            self->_animation_line.frame = frame;
+            weakSelf.animation_line.frame = frame;
         } completion:nil];
     } else {
         if (_animation_line.frame.origin.y >= scanContent_Y) {
@@ -287,7 +287,7 @@ static CGFloat const timer_animation_Duration = 0.05;
             } else {
                 [UIView animateWithDuration:timer_animation_Duration animations:^{
                     frame.origin.y += 5;
-                    _animation_line.frame = frame;
+                    weakSelf.animation_line.frame = frame;
                 } completion:nil];
             }
         } else {
@@ -299,11 +299,15 @@ static CGFloat const timer_animation_Duration = 0.05;
 #pragma mark - - - 移除定时器
 - (void)removeTimer {
     [self.timer invalidate];
+    self.timer = nil;
     [self.animation_line removeFromSuperview];
     self.animation_line = nil;
 }
 
-
+-(void)dealloc{
+    
+    
+}
 
 @end
 

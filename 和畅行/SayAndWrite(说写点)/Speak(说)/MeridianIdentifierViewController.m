@@ -93,7 +93,12 @@
 - (void)goBack:(UIButton *)btn
 {
     [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    if(self.haveAnmo){
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    
 }
 
 
@@ -152,7 +157,7 @@
     for (int i = 0; i < titleArr.count; i++) {
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(wenX * i + marin, 10, 60, 60)];
         titleLabel.text = [titleArr objectAtIndex:i];
-        titleLabel.font = [UIFont systemFontOfSize:50.0];
+        titleLabel.font = [UIFont systemFontOfSize:50.0/[UserShareOnce shareOnce].fontSize];
         titleLabel.textColor = UIColorFromHex(0xFFFFFF);
         titleLabel.tag = 2018+i;
         titleLabel.alpha = 0.44;
@@ -262,8 +267,8 @@
     if(lowPassResults > 0.2){
         self.isLound = YES;
     }
-//    double averSound = [RecorderAcc peakPowerForChannel:0];
-//    NSLog(@"*****:%f,########:%f,$$$$$$$$$:%f",self.soundCount,lowPassResults,averSound);
+    double averSound = [RecorderAcc peakPowerForChannel:0];
+    NSLog(@"*****:%f,########:%f,$$$$$$$$$:%f",self.soundCount,lowPassResults,averSound);
     
     //最大50  0
     //图片 小-》大
@@ -300,11 +305,15 @@
         __weak typeof(self) blockSelf = self;
         [btn setImage:nil forState:UIControlStateNormal];
         
+        if(kPlayer.playerState == 2){
+            [kPlayer stop];
+        }
+        
         [sender ba_countDownCustomWithTimeInterval:3 block:^(NSInteger currentTime) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [btn setTitle:[NSString stringWithFormat:@"%ld",(long)currentTime] forState:UIControlStateNormal];
-                btn.titleLabel.font = [UIFont systemFontOfSize:90];
+                btn.titleLabel.font = [UIFont systemFontOfSize:90/[UserShareOnce shareOnce].fontSize];
                 
             });
         }];
@@ -323,6 +332,7 @@
 
 - (void)startRecordAudion
 {
+    
     if([self checkPermission]){
         [self recordAudio];
     }else{
@@ -442,6 +452,7 @@
             self.RotateImg.hidden=YES;
             [self->bianshiTime setFireDate:[NSDate distantPast]];
             [self->recordButton setImage:[UIImage imageNamed:@"luyinover"] forState:UIControlStateNormal];
+            self->timerACC = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(detectionVoices) userInfo:nil repeats:YES];
         });
         //创建录音文件，准备录音
         if ([RecorderAcc prepareToRecord]) {
@@ -453,8 +464,8 @@
         //        if (self.filePath.length == 0) {
         //            [self audio];
         //        }
-        timerACC = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(detectionVoices) userInfo:nil repeats:YES];
-        
+//        timerACC = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(detectionVoices) userInfo:nil repeats:YES];
+//        [[NSRunLoop currentRunLoop] addTimer:timerACC forMode:NSRunLoopCommonModes];
     }
 
     
@@ -649,7 +660,7 @@
                 [timerACC invalidate];
             }
             
-            if ( self.soundCount < 2.0 || !self.isLound) {
+            if ( self.soundCount < 20.0 || !self.isLound) {
                 [self soundTooLow];
             }else{
                 [self testMp3Upload];
@@ -758,7 +769,10 @@
             return ;
         }
         
-        NSString *aUrlle= [NSString stringWithFormat:@"%@/member/service/reshow.jhtml?sn=%@&device=1",URL_PRE,codeStr];
+        NSString *aUrlle= [NSString stringWithFormat:@"%@member/service/reshow.jhtml?sn=%@&device=1",URL_PRE,codeStr];
+        if(self.haveAnmo){
+            aUrlle= [NSString stringWithFormat:@"%@member/service/reshow.jhtml?sn=%@&device=1&version=1",URL_PRE,codeStr];
+        }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = aUrlle;
         vc.titleStr = ModuleZW(@"经络辨识");

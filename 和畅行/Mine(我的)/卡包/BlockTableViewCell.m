@@ -32,7 +32,8 @@
     
     
     _hLabel = [[UILabel alloc] init];
-    _hLabel.frame = CGRectMake(10, 10, 200, 30);
+    _hLabel.frame = CGRectMake(10, 10, self.width - 40, 30);
+    _hLabel.numberOfLines = 0;
     _hLabel.textColor = [UIColor whiteColor];
     _hLabel.text = @"视频问诊半年卡";
     _hLabel.font = [UIFont systemFontOfSize:21];
@@ -67,35 +68,25 @@
 -(void)setCarListDataWithModel:(HYC_CardsModel *)model {
     NSString *timeStr = [NSString string];
     if ([model.kindStr isEqualToString:ModuleZW(@"现金卡")]){
+        _imageV.hidden = YES;
+        _mLabel.hidden = NO;
+        _yLabel.hidden = NO;
+        _hLabel.frame = CGRectMake(10, 10, self.width - 40, 30);
         NSString *str = [model.cashcard valueForKey:@"name"];
           _hLabel.text = str;
         _mLabel.text = [NSString stringWithFormat:@"%@ : %@元",ModuleZW(@"余额"),model.balance];
         timeStr = [NSString stringWithFormat:@"%@",[model.cashcard valueForKey:@"endDate"]];
-        _yLabel.text  =[NSString stringWithFormat:@"%@%@",[self getDateStringWithTimeStr:timeStr],ModuleZW(@"到期")] ;
+        _yLabel.text  =[NSString stringWithFormat:@"%@%@",[self getDateStringWithTimeStr:timeStr],ModuleZW(@"到期")];
     }else{
+        _mLabel.hidden = YES;
+        _yLabel.hidden = YES;
+        _hLabel.frame = CGRectMake(10, 10, self.width - 20, 110);
         _hLabel.text = model.card_name;
-        if (model.cardDescription==nil || [model.cardDescription isKindOfClass:[NSNull class]]||model.cardDescription.length == 0) {
-            _mLabel.text = ModuleZW(@"暂无");
+     
+        if ([model.status  isEqualToString:@"1"]){
+            _imageV.hidden = NO;
         }else{
-            _mLabel.text = model.cardDescription;
-        }
-        if([model.kindStr isEqualToString:ModuleZW(@"现金卡")]){
             _imageV.hidden = YES;
-        }else{
-            
-            if ([model.status  isEqualToString:@"1"]){
-                _imageV.hidden = NO;
-            }else{
-                 _imageV.hidden = YES;
-            }
-        }
-        
-        timeStr = model.exprise_time;
-        if(![GlobalCommon stringEqualNull:timeStr]){
-            NSString *endTimeStr =  [NSString stringWithFormat:@"%@%@",timeStr,ModuleZW(@"到期")];
-            _yLabel.text = endTimeStr;
-        }else{
-             _yLabel.text = ModuleZW(@"永久有效");
         }
     }
    

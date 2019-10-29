@@ -92,6 +92,10 @@ static NSMutableArray *tasks;
         [manager.requestSerializer setValue:[UserShareOnce shareOnce].languageType forHTTPHeaderField:@"language"];
     }
     
+//    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+//    NSArray *_tmpArray = [NSArray arrayWithArray:[cookieStorage cookies]];
+//    NSLog(@"%@",_tmpArray);
+    
         /* 设置请求服务器数类型式为 json */
         /*! 根据服务器的设定不同还可以设置 [AFJSONRequestSerializer serializer](常用) */
 
@@ -185,6 +189,7 @@ static NSMutableArray *tasks;
 
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
+            
             if (successBlock)
             {
                 successBlock(responseObject);
@@ -215,11 +220,12 @@ static NSMutableArray *tasks;
 //            [manager.requestSerializer setValue:[headers objectForKey:key] forHTTPHeaderField:key];
 //        }
         
-        [manager.requestSerializer setValue:@"ios_hcy-oem-3.1.3" forHTTPHeaderField:@"version"];
+        [manager.requestSerializer setValue:@"ios_jlsl-yh-3" forHTTPHeaderField:@"version"];
         
-        [manager.requestSerializer setValue:[UserShareOnce shareOnce].token forHTTPHeaderField:@"token"];
-        [manager.requestSerializer setValue:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
-                                             [UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID] forHTTPHeaderField:@"Cookie"];
+//        [manager.requestSerializer setValue:[UserShareOnce shareOnce].token forHTTPHeaderField:@"token"];
+//        [manager.requestSerializer setValue:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
+//                                             [UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID] forHTTPHeaderField:@"Cookie"];
+        
         sessionTask = [manager GET:URLString parameters:parameters  progress:^(NSProgress * _Nonnull downloadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -269,6 +275,46 @@ static NSMutableArray *tasks;
         }];
     }
    
+    
+}
+
+
+- (void)requestWithformDataWithurlString:(NSString *)urlString
+             parameters:(NSDictionary *)parameters
+              formDataBlock:(BAResponseForm)formDataBlock
+           successBlock:(BAResponseSuccess)successBlock
+           failureBlock:(BAResponseFail)failureBlock
+{
+    BAURLSessionTask *sessionTask = nil;
+    AFHTTPSessionManager *manager = [self sharedAFManager];
+    
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,urlString];
+    /*! 检查地址中是否有中文 */
+    NSString *URLString = [NSURL URLWithString:urlStr] ? urlStr : [self strUTF8Encoding:urlStr];
+    
+    sessionTask = [manager POST:URLString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+//        if (formDataBlock)
+//        {
+//            formDataBlock(formData);
+//        }
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        if (successBlock)
+        {
+            successBlock(responseObject);
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (failureBlock)
+        {
+            failureBlock(error);
+            NSLog(@"错误信息：%@",error);
+        }
+    }];
     
 }
 

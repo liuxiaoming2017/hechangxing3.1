@@ -28,6 +28,8 @@
     [[UserShareOnce shareOnce].yueYaoBuyArr removeAllObjects];
 
     self.navTitleLabel.text = ModuleZW(@"支付信息");
+    self.preBtn.hidden = NO;
+    self.leftBtn.hidden = YES;
     
     UIImageView *beijingImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, 300)];
     beijingImage.image = [UIImage imageNamed:@"zhifubeijingtupian"];

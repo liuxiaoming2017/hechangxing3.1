@@ -65,7 +65,7 @@
     
     self.cellH = @{}.mutableCopy;
     self.navTitleLabel.text = ModuleZW(@"体质辨识");
-    
+    self.navTitleLabel.font = [UIFont systemFontOfSize:18/[UserShareOnce shareOnce].fontSize];
     self.anwerArr = [NSArray arrayWithObjects:ModuleZW(@"没有"),ModuleZW(@"很少"),ModuleZW(@"有时"),ModuleZW(@"经常"),ModuleZW(@"总是"), nil];
 
     self.headTitleArr = [NSArray arrayWithObjects:@"第一部分  五官面部及皮肤自查",@"第二部分  冷热感应状况",@"第三部分  精神状况",@"第四部分  身体及代谢症状", nil];
@@ -132,12 +132,14 @@
     bottomV.layer.shadowRadius=8;
     bottomV.layer.shadowOpacity = YES;
 
+    CGFloat btnWidth = 60;
+    
     for (NSInteger i=0;i<5;i++) {
         UIButton *selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         if(i<3){
-           selectBtn.frame = CGRectMake((ScreenWidth-54*3-60)/2.0+(54+30)*i, titleLabel.bottom+15, 54, 54);
+           selectBtn.frame = CGRectMake((ScreenWidth-btnWidth*3-60)/2.0+(btnWidth+30)*i, titleLabel.bottom+15, btnWidth, btnWidth);
         }else{
-            selectBtn.frame = CGRectMake((ScreenWidth-54*2-30)/2.0+(54+30)*(i-3), titleLabel.bottom+10+54+22, 54, 54);
+            selectBtn.frame = CGRectMake((ScreenWidth-btnWidth*2-30)/2.0+(btnWidth+30)*(i-3), titleLabel.bottom+10+btnWidth+22, btnWidth, btnWidth);
         }
         selectBtn.tag = 2019+i;
         
@@ -153,7 +155,11 @@
         [selectBtn.layer addSublayer:gradientLayer];
         
         NSString *str = [self.anwerArr objectAtIndex:i];
+//        if([str isEqualToString:@"Sometimes"]){
+//            str = @"Someti-mes";
+//        }
         [selectBtn setTitle:str forState:UIControlStateNormal];
+        [selectBtn.titleLabel setFont:[UIFont systemFontOfSize:16/[UserShareOnce shareOnce].fontSize]];
         [selectBtn.titleLabel setNumberOfLines:2];
         [selectBtn.titleLabel setTextAlignment:NSTextAlignmentCenter];
         [selectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -167,6 +173,9 @@
 # pragma mark - 答题按钮
 - (void)selectBtnBtnAction:(UIButton *)btn
 {
+//    if([btn.titleLabel.text isEqualToString:@"Someti-mes"]){
+//        btn.titleLabel.text = @"Sometimes";
+//    }
     if(self.isSelect && self.selectIndexPath.row!=_rowNum-1){
         QuestionTableCell *cell = (QuestionTableCell *)[self.tableView cellForRowAtIndexPath:self.selectIndexPath];
         NSArray *arr1 = [self.questionArr objectAtIndex:self.selectIndexPath.section];
@@ -550,14 +559,14 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 60.0;
+    return 65.0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 60)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 65)];
     view.backgroundColor = UIColorFromHex(0Xf1f1f1);
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, ScreenWidth - 40, 50)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 2.5, ScreenWidth - 40, 60)];
     titleLabel.font = [UIFont systemFontOfSize:17];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.numberOfLines = 2;
@@ -582,6 +591,7 @@
 
     //CGFloat h = [cell setCellHeight:model.name];
     cell.contentLabel.text = model.name;
+    cell.contentLabel.font = [UIFont systemFontOfSize:16];
     if(model.selectAnswer){
        [cell setanswerLabelContent:model.selectAnswer];
     }else{
@@ -613,7 +623,7 @@
         cell.indexLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row+1+section0Count+section1Count+section2Count];
     }
     
-    
+    cell.answerLabel.font = [UIFont systemFontOfSize:14];
    // [self.cellH setObject:@(h) forKey:[NSString stringWithFormat:@"%ld",indexPath.row]];
     return cell;
 }

@@ -42,7 +42,7 @@
     self.scaleCount = 30;
     self.scaleAverage = 1;
     self.scaleSpacing = 5;
-    self.scaleValueFont = [UIFont systemFontOfSize:10];
+    self.scaleValueFont = [UIFont systemFontOfSize:10/[UserShareOnce shareOnce].fontSize];
     self.scaleValueColor = [UIColor blackColor];
     self.lineWidth = 1;
     self.scaleDividingLineColor = [UIColor lightGrayColor];

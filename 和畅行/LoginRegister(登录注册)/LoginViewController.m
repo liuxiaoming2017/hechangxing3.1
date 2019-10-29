@@ -25,6 +25,7 @@
 #define margin 40
 #define leftOrigin 40
 
+
 @interface LoginViewController ()
 @property (nonatomic, strong) UIView *blueView;
 @property (nonatomic, strong) UILabel *addNumberLabel;
@@ -89,17 +90,17 @@
  
     
     userNameBox=[[UITextField alloc] init];
-    userNameBox.frame=CGRectMake(segment.left, segment.bottom+40, ScreenWidth - 100 ,30 );
+    userNameBox.frame=CGRectMake(segment.left, segment.bottom+40, ScreenWidth - 140 ,30 );
     userNameBox.borderStyle=UITextBorderStyleNone;
     userNameBox.returnKeyType=UIReturnKeyNext;
-    userNameBox.keyboardType=UIKeyboardTypeEmailAddress;
+    userNameBox.keyboardType=UIKeyboardTypeDefault;
     userNameBox.clearButtonMode=UITextFieldViewModeWhileEditing;
     userNameBox.delegate=self;
     userNameBox.font=[UIFont systemFontOfSize:15.0];
     userNameBox.placeholder=ModuleZW(@"  请输入手机号");
     [self.view addSubview:userNameBox];
     
-    UILabel *addNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(userNameBox.width, 0, 35, 30)];
+    UILabel *addNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(userNameBox.width, 0, 50, 30)];
     addNumberLabel.text = @"+86";
     addNumberLabel.textColor = RGB_TextMidLightGray;
     [userNameBox addSubview:addNumberLabel];
@@ -146,7 +147,7 @@
     [self.view addSubview:imageV3];
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightBtn.frame = CGRectMake(imageV3.right-120, passWordBox.top, 120, passWordBox.height);
+    rightBtn.frame = CGRectMake(imageV3.right-140, passWordBox.top, 140, passWordBox.height);
     rightBtn.tag = 2018;
     [rightBtn setTitle:ModuleZW(@"获取验证码") forState:UIControlStateNormal];
     
@@ -227,7 +228,7 @@
     loginBtn.layer.cornerRadius = loginBtn.height/2;
     loginBtn.layer.masksToBounds = YES;
     
-    UILabel *otherLoginLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-100)/2.0, promptLabel.bottom+30, 100, 30)];
+    UILabel *otherLoginLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-120)/2.0, promptLabel.bottom+30, 120, 30)];
     otherLoginLabel.font = [UIFont systemFontOfSize:14];
     otherLoginLabel.textAlignment = NSTextAlignmentCenter;
     otherLoginLabel.textColor = UIColorFromHex(0xcecece);
@@ -272,13 +273,15 @@
     if ([strcheck isEqualToString:@"1"])
     {
         isCheck=YES;
-        userNameBox.text=[dicTmp objectForKey:@"USERNAME"];
-        passWordBox.text=[dicTmp objectForKey:@"PASSWORDAES"];
+        userNameBox.text=[GlobalCommon AESDecodeWithString:[dicTmp objectForKey:@"USERNAME"]];
+        passWordBox.text=[GlobalCommon AESDecodeWithString:[dicTmp objectForKey:@"PASSWORDAES"]];
         if(userNameBox.text.length>0&&passWordBox.text.length>0)
         {
             _loginBtn.backgroundColor = UIColorFromHex(0x1e82d2);
             _loginBtn.enabled = YES;
         }
+        self.segment.selectedSegmentIndex = 1;
+        [self selected:self.segment];
     }
     else
     {
@@ -399,6 +402,7 @@
     }
     
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:APP_ID appSecret:APP_SECRET redirectURL:nil];
+    NSLog(@"haha:%@,%@",APP_ID,APP_SECRET);
     [self loginByWeiXin];
     
 }
@@ -697,13 +701,13 @@
 -(void)FoggetActive:(id)sender
 {
     
-    if([UserShareOnce shareOnce].languageType){
+//    if([UserShareOnce shareOnce].languageType){
         FindPassWordController *findVc = [[FindPassWordController alloc] init];
         [self.navigationController pushViewController:findVc animated:YES];
-    }else{
-        self.segment.selectedSegmentIndex = 0;
-        [self selected:self.segment];
-    }
+//    }else{
+//        self.segment.selectedSegmentIndex = 0;
+//        [self selected:self.segment];
+//    }
   
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

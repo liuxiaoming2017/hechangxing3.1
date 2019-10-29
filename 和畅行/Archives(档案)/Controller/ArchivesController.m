@@ -19,9 +19,17 @@
 #import "SidebarViewController.h"
 #import "TimeLineView.h"
 #import "SBJson.h"
+//上传报告相关
+#import "CPTextViewPlaceholder.h"
+#import "PYPhotoBrowser.h"
+#import "TZImagePickerController.h"
+#import "UpdateReportViewController.h"
+#import "AFHTTPSessionManager.h"
+///弱引用/强引用
+#define CCWeakSelf __weak typeof(self) weakSelf = self;
+#define WIDTHS (self.view.frame.size.width -64)/4
 
-
-@interface ArchivesController ()<WKUIDelegate,WKNavigationDelegate,SidebarViewDelegate>
+@interface ArchivesController ()<WKUIDelegate,WKNavigationDelegate,SidebarViewDelegate,UIActionSheetDelegate,UIPickerViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,MBProgressHUDDelegate,UIScrollViewDelegate,UITextViewDelegate,TZImagePickerControllerDelegate,PYPhotosViewDelegate>
 
 {
     UIView *tipsView;
@@ -44,6 +52,22 @@
 
 @property (nonatomic,strong)UIView *noView;
 @property (nonatomic,strong)UIButton *firstButton;
+
+@property (nonatomic,copy)NSString *urlStr;
+@property (nonatomic,strong)UIView *uploadReportView;
+
+//上传报告相关
+@property (nonatomic ,strong) UITextView *textView;
+@property (nonatomic ,strong) UITextView *textViews;
+@property (nonatomic,strong)UIButton *finishButton;
+@property (nonatomic,strong)UIButton *choseButton;
+@property (nonatomic, weak) PYPhotosView *publishPhotosView;//属性 保存选择的图片
+@property (nonatomic ,strong) UILabel *numberLabel;
+@property (nonatomic,strong)UIButton *photoButton;
+@property(nonatomic,assign)int repeatClickInt;
+@property(nonatomic,strong)NSMutableArray * photos;//放图片的数组
+@property(nonatomic,strong)UIImageView *backImageView;
+@property(nonatomic,strong)UIView *backView;
 
 @end
 
@@ -69,7 +93,19 @@
         [UserShareOnce shareOnce].wherePop = @"";
     }
     self.leftBtn.hidden = YES;
+    
+
 }
+
+-(void)changeSize:(NSNotification *)notifi {
+    self.navTitleLabel.font = [UIFont systemFontOfSize:18];
+    [self.timeLinvView.tableView reloadData];
+    if(self.urlStr.length > 0 ){
+        [self createWKWebviewWithUrlStr:self.urlStr];
+    }
+    
+}
+
 
 
 - (void)viewDidLoad {
@@ -79,7 +115,7 @@
     self.dataListArray  = [NSMutableArray array];
     self.typeUrlInteger = 0;
     self.pageInteger    = 1;
-    
+    self.urlStr = @"";
     if(!memberId){
         memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
     }
@@ -92,6 +128,24 @@
     
     self.noView = [NoMessageView createImageWith:100.0f];
     [self.view addSubview:self.noView ];
+    
+    UIButton *ploadRreportBT = [UIButton buttonWithType:UIButtonTypeCustom];
+    ploadRreportBT.frame = CGRectMake(ScreenWidth-80-14-30, 2+kStatusBarHeight, 110, 40);
+    [ploadRreportBT setTitle:ModuleZW(@"上传报告") forState:(UIControlStateNormal)];
+    [ploadRreportBT.titleLabel setFont:[UIFont fontWithName:@"PingFang SC" size:15.0]];
+    [ploadRreportBT setTitleColor:RGB_ButtonBlue forState:(UIControlStateNormal)];
+    [ploadRreportBT setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+    [[ploadRreportBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        UpdateReportViewController *updateVC = [[UpdateReportViewController alloc]init];
+        updateVC.hidesBottomBarWhenPushed = YES;
+        updateVC.returnTextBlock = ^{
+            self.pageInteger = 1;
+            [self requestHealthHintDataWithTipyInteger:self.typeUrlInteger withPageInteger:self.pageInteger];
+        };
+        [self.navigationController pushViewController:updateVC animated:YES];
+        
+    }];
+    [self.topView addSubview:ploadRreportBT];
     
     //下拉刷新
     MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
@@ -148,6 +202,7 @@
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exchangeMemberChild:) name:exchangeMemberChildNotify object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSize:) name:@"CHANGESIZE" object:nil];
     
 }
 
@@ -201,7 +256,7 @@
 # pragma mark ----- 上拉刷新
 -(void)loadMoreDataOther {
     //档案最新
-    if (_typeUrlInteger == 2||_typeUrlInteger == 1){
+    if (_typeUrlInteger == 2||_typeUrlInteger == 1||_typeUrlInteger == 14){
         [self.timeLinvView.tableView.mj_footer endRefreshing];
         return;
     };
@@ -232,7 +287,7 @@
         [self requestHealthHintDataWithTipyInteger:0  withPageInteger:1];
         return;
     }
-    for(NSInteger i=0;i<13;i++){
+    for(NSInteger i=0;i<15;i++){
         UIButton *btn = (UIButton *)[self.sidebarVC.contentView viewWithTag:100+i];
         if(button.tag != 100+i){
             [btn.layer setBorderColor:UIColorFromHex(0XEEEEEE).CGColor];
@@ -254,20 +309,38 @@
     else if([str isEqualToString:ModuleZW(@"心率")])    self.typeUrlInteger = 10;
     else if([str isEqualToString:ModuleZW(@"呼吸")])    self.typeUrlInteger = 11;
     else if([str isEqualToString:ModuleZW(@"体温")])    self.typeUrlInteger = 12;
+//    else if([str isEqualToString:ModuleZW(@"上传报告")])    self.typeUrlInteger = 13;
+    else if([str isEqualToString:ModuleZW(@"体检报告")])    self.typeUrlInteger = 14;
     NSLog(@"%@",str);
     self.pageInteger = 1;
+   
     [_dataListArray removeAllObjects];
     [self.timeLinvView.tableView reloadData];
     
-    if(self.typeUrlInteger < 7 || self.typeUrlInteger == 10) {
+    
+    if(self.typeUrlInteger < 7 || self.typeUrlInteger == 10||self.typeUrlInteger == 14) {
         if (self.wkwebview) {
             self.wkwebview.hidden = YES;
         }
+        if (self.uploadReportView) {
+            self.uploadReportView.hidden = YES;
+        }
         self.timeLinvView.hidden = NO;
+        self.urlStr = @"";
         [self requestHealthHintDataWithTipyInteger:self.typeUrlInteger withPageInteger:self.pageInteger];
-    }else {
+    }else if (self.typeUrlInteger == 13){
+//        [self layoutUploadReport];
+        if (self.wkwebview) {
+            self.wkwebview.hidden = YES;
+        }
+        self.timeLinvView.hidden = YES;
+
+    } else {
         if (self.wkwebview) {
             self.wkwebview.hidden = NO;
+        }
+        if (self.uploadReportView) {
+            self.uploadReportView.hidden = YES;
         }
         self.timeLinvView.hidden = YES;
         [self requestNetworkWithIndex:self.typeUrlInteger];
@@ -276,7 +349,11 @@
 }
 # pragma mark - wkwebview的设置
 - (void)createWKWebviewWithUrlStr:(NSString *)urlStr {
-    
+    if([urlStr hasSuffix:@"html"]){
+        urlStr = [urlStr stringByAppendingString:[NSString stringWithFormat:@"?fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+    }else{
+        urlStr = [urlStr stringByAppendingString:[NSString stringWithFormat:@"&fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+    }
     if(!self.wkwebview){
         WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
         // 设置偏好设置
@@ -290,12 +367,15 @@
         // 通过JS与webview内容交互
         config.userContentController = [[WKUserContentController alloc] init];
         
-        self.wkwebview = [[WKWebView alloc] initWithFrame:CGRectMake(0, kNavBarHeight + 10, ScreenWidth, ScreenHeight- kNavHeight + 54)
+        self.wkwebview = [[WKWebView alloc] initWithFrame:CGRectMake(0, kNavBarHeight + 10, ScreenWidth, ScreenHeight- kNavBarHeight - kTabBarHeight - 10)
                                             configuration:config];
         // 导航代理
         self.wkwebview.navigationDelegate = self;
         // 与webview UI交互代理
         self.wkwebview.UIDelegate = self;
+        
+       
+        
         [self.view addSubview:self.wkwebview];
         // 添加KVO监听
         [self.wkwebview addObserver:self
@@ -312,11 +392,53 @@
     }else{
         self.wkwebview.hidden = NO;
     }
+    
+    NSString *urlString = [NSString string];
+    if([urlStr hasSuffix:@"html"]){
+        urlString = [urlStr stringByAppendingString:[NSString stringWithFormat:@"?fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+    }else{
+        urlString = [urlStr stringByAppendingString:[NSString stringWithFormat:@"&fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+    }
 //    self.tableView.hidden = YES;
-    NSURL *url = [NSURL URLWithString:urlStr];
+    NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request addValue:[self getCookieValue] forHTTPHeaderField:@"Cookie"];
+    
     [self.wkwebview loadRequest:request];
     
+}
+
+-(NSString*)readCurrentCookieWith:(NSDictionary*)dic{
+    if (dic == nil) {
+        return nil;
+    }else{
+        NSHTTPCookieStorage*cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+        NSMutableString *cookieString = [[NSMutableString alloc] init];
+        for (NSHTTPCookie*cookie in [cookieJar cookies]) {
+            [cookieString appendFormat:@"%@=%@;",cookie.name,cookie.value];
+        }
+        //删除最后一个“；”
+        [cookieString deleteCharactersInRange:NSMakeRange(cookieString.length - 1, 1)];
+        return cookieString;
+        
+    }
+}
+
+- (NSMutableString*)getCookieValue{
+    // 在此处获取返回的cookie
+    NSMutableDictionary *cookieDic = [NSMutableDictionary dictionary];
+    NSMutableString *cookieValue = [NSMutableString stringWithFormat:@""];
+    NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie *cookie in [cookieJar cookies]) {
+        [cookieDic setObject:cookie.value forKey:cookie.name];
+    }
+    // cookie重复，先放到字典进行去重，再进行拼接
+    for (NSString *key in cookieDic) {
+        NSString *appendString = [NSString stringWithFormat:@"%@=%@;", key, [cookieDic valueForKey:key]];
+        [cookieValue appendString:appendString];
+    }
+    return cookieValue;
 }
 
 # pragma mark - 健康提示数据
@@ -334,6 +456,7 @@
     脏腑           5;
     体质           6;
     心率          10;
+     报告列表          14;
      */
     NSString *str = [NSString new];
     NSString *pageIntegerstr = [NSString stringWithFormat:@"%ld",(long)pageInteger];
@@ -349,7 +472,6 @@
             str = [NSString stringWithFormat:
                    @"/member/myreport/view/%@.jhtml?",memberId];
             break;
-            
         case 2:
             
             //阶段报告
@@ -385,6 +507,11 @@
             str = [NSString stringWithFormat:
                    @"/member/myreport/getEcgList/%@.jhtml?pageNumber=%@",memberId,pageIntegerstr];
             break;
+        case 14:
+            //心率
+            str = [NSString stringWithFormat:
+                   @"/login/healthr/list.jhtml?memberId=%@",[UserShareOnce shareOnce].uid];
+            break;
             
         default:
             break;
@@ -408,7 +535,6 @@
 
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.label.text = ModuleZW(@"加载中...");
-    
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:str parameters:nil successBlock:^(id response) {
         
         [hud hideAnimated:YES];
@@ -504,35 +630,35 @@
      呼吸          11;
      体温         12;
      */
-    NSString *urlStr = @"";
+    self.urlStr = @"";
     
     if(index > 4){
        
         switch (index) {
             case 7:
                 //血压
-                urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(30)];
+                self.urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(30)];
                 break;
             case 8:
                 //血氧
-                urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(20)];
+                self.urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(20)];
                 break;
             case 9:
                 //血糖
-                urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@&version=2",URL_PRE,memberId,@(60)];
+                self.urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@&version=2",URL_PRE,memberId,@(60)];
                 break;
             case 11:
                 //体温
-                urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(50)];
+                self.urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(50)];
                 break;
             case 12:
                 //呼吸
-                urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(40)];
+                self.urlStr = [NSString stringWithFormat:@"%@subject_report/getreport.jhtml?mcId=%@&datatype=%@",URL_PRE,memberId,@(40)];
                 break;
             default:
                 break;
         }
-        [self createWKWebviewWithUrlStr:urlStr];
+        [self createWKWebviewWithUrlStr:self.urlStr];
         [self.view addSubview:self.filterBtn];
         return;
     }
@@ -682,18 +808,6 @@
     if (self.timeLinvView.hud){
         [self.timeLinvView.hud hideAnimated:YES];
     }
-}
-
-- (void)dealloc
-{
-    self.titleArr = nil;
-    self.archiveArr = nil;
-    self.progressView = nil;
-    self.wkwebview = nil;
-    self.healthTipsData = nil;
-    
-    [_wkwebview removeObserver:self forKeyPath:@"estimatedProgress"];
-    
 }
 
 

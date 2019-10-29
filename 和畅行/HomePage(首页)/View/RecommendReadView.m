@@ -18,9 +18,11 @@
 #import "HCY_ConsultingModel.h"
 #import "VersionUpdateView.h"
 
+//#import <PgyUpdate/PgyUpdateManager.h>
+
 @interface RecommendReadView()<UICollectionViewDataSource,UICollectionViewDelegate>
 
-@property (nonatomic,strong) UICollectionView *collectionV;
+
 
 @end
 
@@ -40,6 +42,7 @@
 
 - (void)setupUI
 {
+    
     self.backgroundColor = UIColorFromHex(0xFFFFFF);
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(23, 15, 200, 25)];
     //titleLabel.textColor = UIColorFromHex(0x7D7D7D);
@@ -57,7 +60,8 @@
     CGFloat width = (ScreenWidth - 23 - 10)/2.5;
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(width, width*0.62+7+40);
+    //layout.itemSize = CGSizeMake(width, width*0.75+7+40);
+    layout.itemSize = CGSizeMake(125, 125*0.6+7+50);
     //layout.itemSize = CGSizeMake(130, 106);
     layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 10);
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
@@ -82,12 +86,7 @@
     
     [self requestHealthHintData];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didBecomeActiveNotification)
-                                                 name:UIApplicationDidBecomeActiveNotification
-                                               object:nil];
-
-    
+   
 }
 
 
@@ -105,9 +104,12 @@
         NSLog(@"%@",response);
         if ([response[@"status"] integerValue] == 100){
             
+            [weakSelf.recommendArr removeAllObjects];
+            
             for (NSDictionary *dic in [[response valueForKey:@"data"] valueForKey:@"content"]) {
                 HCY_ConsultingModel *tipModel = [[HCY_ConsultingModel alloc] init];
                 [tipModel yy_modelSetWithJSON:dic];
+                tipModel.numID = [weakSelf.recommendArr count];
                 [weakSelf.recommendArr addObject:tipModel];
             }
             
@@ -116,19 +118,14 @@
             
             [weakSelf.collectionV reloadData];
             
-//            for (NSDictionary *dic in [response valueForKey:@"data"] ) {
-//                HCY_ConsultingModel *tipModel = [[HCY_ConsultingModel alloc] init];
-//                [tipModel yy_modelSetWithJSON:dic];
-//                [weakSelf.recommendArr addObject:tipModel];
-//            }
-//            [weakSelf.collectionV reloadData];
-        
         }
-       // [weakSelf checkHaveUpdateWithType:@"on"];
+        [weakSelf requestVersionDataWithType:@"on"];
+        
+        
 
     } failureBlock:^(NSError *error) {
         NSLog(@"%@",error);
-       // [weakSelf checkHaveUpdateWithType:@"on"];
+        [weakSelf requestVersionDataWithType:@"on"];
         [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
     
@@ -155,7 +152,8 @@
     HCY_ConsultingModel *tipModel = self.recommendArr[indexPath.row];
     RecommendCollectCell *cell = (RecommendCollectCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     cell.imageV.hidden = NO;
-    [cell.imageV sd_setImageWithURL:[NSURL URLWithString:tipModel.picture]];
+    cell.titleLabel.font = [UIFont systemFontOfSize:15];
+    [cell.imageV sd_setImageWithURL:[NSURL URLWithString:tipModel.picture] placeholderImage:[UIImage imageNamed:@"默认4:3"]];
     cell.titleLabel.text = tipModel.title;
     return cell;
 }
@@ -179,32 +177,61 @@
     [[self viewController] presentViewController:alertVC animated:YES completion:NULL];
 }
 
-
-- (void)tapGesture:(UITapGestureRecognizer *)tap
+# pragma mark - 后台版本判断
+- (void)requestVersionDataWithType:(NSString *)type
 {
+    if (!isProduct) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"noAppstoreCheck" forKey:@"noAppstoreCheck"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        //[self checkHaveUpdateWithType:type];
+        return;
+    }
+   
     
-}
-
-
--(void)didBecomeActiveNotification{
-   // [self checkHaveUpdateWithType:@"back"];
-}
-
--(void)dealloc{
+    NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"noAppstoreCheck"]){
+        [self checkHaveUpdateWithType:type];
+        return;
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:[NSString stringWithFormat:@"login/version.jhtml?id=ios"] parameters:nil successBlock:^(id response) {
+        if([[response objectForKey:@"status"] intValue] == 100){
+            NSDictionary *dic = [response objectForKey:@"data"];
+            NSString *Resultstr = [dic objectForKey:@"version"];
+            if([Resultstr isEqualToString:nowVersion]){ //需要审核
+                [UserShareOnce shareOnce].bindCard = @"1";
+            }else{ //针对之前用户
+                [[NSUserDefaults standardUserDefaults] setObject:@"noAppstoreCheck" forKey:@"noAppstoreCheck"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [weakSelf checkHaveUpdateWithType:type];
+            }
+        }
+        
+    } failureBlock:^(NSError *error) {
+       
+    }];
 }
 
 # pragma mark - 检查更新
 - (void)checkHaveUpdateWithType:(NSString *)typeStr
 {
+    
+//    if(!isProduct){
+//        [[PgyUpdateManager sharedPgyManager] checkUpdate];
+//        return;
+//    }
+    
     //ios_hcy-oem-1.0 hcy_android_oem-oem-1.0
     NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     NSString *headStr = [NSString stringWithFormat:@"ios_hcy-oem-%@",nowVersion];
     //headStr = @"hcy_android_oem-oem-1.0";
     //为网络请求添加请求头
     NSDictionary *headDic = @{@"version":headStr,@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+    
     
     __weak typeof(self) weakSelf = self;
     
@@ -216,7 +243,7 @@
             NSInteger isUpdate = [[dic objectForKey:@"isUpdate"] integerValue];
             if(isUpdate == 1){
                 NSString *downUrl = @"https://itunes.apple.com/cn/app/id1440487968";
-                if([[UserShareOnce shareOnce].username isEqualToString:@"13665541112"] || [[UserShareOnce shareOnce].username isEqualToString:@"18163865881"]){
+                if([[UserShareOnce shareOnce].username isEqualToString:@"13665541112"]){
                     return ;
                 }
                 NSString *ytpeStr = [NSString stringWithFormat:@"%@",dic[@"isEnforcement"]];
@@ -232,10 +259,9 @@
                     NSString *englistStr = @"The latest version comes whether you update?";
                     [weakSelf showUpdateView:downUrl contentStr:englistStr typeStr:@"0"];
                 }else{
-                   [weakSelf showUpdateView:downUrl contentStr:textStr typeStr:ytpeStr];
+                   [weakSelf showUpdateView:downUrl contentStr:textStr typeStr:typeStr];
                 }
-                
-                
+
                 NSLog(@"升级了");
             }
         }

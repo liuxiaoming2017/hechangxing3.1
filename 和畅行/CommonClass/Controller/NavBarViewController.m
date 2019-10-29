@@ -10,6 +10,8 @@
 #import "MessageViewController.h"
 #import "UIButton+WebCache.h"
 #import "PersonalInformationViewController.h"
+#import "UIButton+ExpandScope.h"
+
 #define kLOGIN_CHECK @"/login/logincheck.jhtml"
 
 @interface NavBarViewController ()
@@ -20,17 +22,16 @@
 
 @synthesize topView,preBtn,rightBtn,leftBtn;
 
-- (void)dealloc
-{
-    
-}
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupNav];
     
-   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadImageSuccess) name:@"uploadImageSuccess" object:nil];
+    
 }
+
 
 -(void)setupNav
 {
@@ -48,7 +49,7 @@
     self.navTitleLabel.font = [UIFont systemFontOfSize:18];
     self.navTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.navTitleLabel.textColor = [UIColor blackColor];
-    [topView addSubview:self.navTitleLabel];;
+    [topView addSubview:self.navTitleLabel];
     
     
     preBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -62,6 +63,7 @@
     preBtn.titleEdgeInsets = UIEdgeInsetsMake(1, -5, 0, 0);
     preBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     preBtn.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
+    //[preBtn setHitTestEdgeInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [preBtn addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:preBtn];
     preBtn.hidden = YES;
@@ -70,7 +72,8 @@
     rightBtn.frame = CGRectMake(ScreenWidth-37-14, 2+kStatusBarHeight, 37, 40);
     [rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(messageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-//    [topView addSubview:rightBtn];
+    rightBtn.hidden = YES;
+    [topView addSubview:rightBtn];
     
     leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     leftBtn.frame = CGRectMake(15, 2+kStatusBarHeight+2.5, 32, 32);
@@ -213,4 +216,8 @@
     self.popBT = popBT;
     
 }
+
+
+
+
 @end

@@ -11,28 +11,40 @@
 extern NSInteger pindex;
 extern NSString* LeYaotype;
 extern NSInteger qiehuanlogin;
-
+    
 extern BOOL isJY;
 extern BOOL isSF;
 extern BOOL isBF;
 
+#define isProduct YES
 
 //数据统计测试环境
 #define DATAURL_PRE @"http://47.92.160.74:8086/api/v1/"
 
 //测试环境
-//#define URL_PRE @"http://47.92.73.99:8080/healthlm/"
+//#define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://10.1.71.38:8888/hcy-system/")
+//#define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://47.92.73.99:8080/healthlm/")
+#define URL_PRE @"http://204.9.61.24/healthlm/"    //英文环境
+
+
+//预发布 http://47.92.73.99:8080/healthlm/
+
+//测试  http://10.1.71.181:8080/healthlm/
 
 //生产环境
-#define URL_PRE @"http://eky3h.com/healthlm/"
+//#define URL_PRE @"http://eky3h.com/healthlm/"
 
-//#define URL_PRE @"http://10.1.71.14:8080/hcy-system/"
-
-
+//#define URL_PRE @"http://192.168.1.115:8080/hcy-system/"
+//#define URL_PRE @"http://10.1.71.181:8080/healthlm/"
+//http://10.1.71.181:8080/healthlm/
+//#define URL_PRE @"http://10.1.71.113:8888/hcy-system/"
+//http://10.1.71.113:8888/hcy-system
 
 #define testUUId 100002514
 #define testToken  @"ECEEDCCD74B7D54BCF6690B7E26262B73F0D04F68EA2608F6783B874E4F50EEF"
 #define testMedicId @"1541041785333"
+
+
 
 //问卷类别sn
 #define kBody @"TZBS"
@@ -187,13 +199,17 @@ extern BOOL isBF;
 #define RegistrationInstruction @"	如何获取注册码？\n	注册码标注在“和畅依”《产品手册》封底。"
 
 #define MianZeInstruction @"	炎黄东方（北京）健康科技有限公司拥有对“和畅依”个体人经络状态调理系统及其所有相关印刷品、音像制品的全部知识产权。本产品受中华人民共和国相关法律保护，每台产品拥有一个唯一注册码，该注册码只允许注册最多3个手机客户端应用软件，用于进行知己KY3H闻音辨识、获取个性化《辨识报告》和《调理建议》、下载并收听情志调理“乐药”、自助管理经络调理运动行为等。";
+#define yueYaoNote @"   《礼记•乐礼》：“乐者乐也，琴瑟乐心；感物后动，审乐修德；乐以治心，血气以平。”音乐可以深入人心，在中医心理学中，音乐可以感染、调理情绪，进而影响身体。在聆听中让曲调、情志、脏气共鸣互动，达到动荡血脉、通畅精神和心脉的作用。生理学上，当音乐振动与人体内的生理振动(心率、心律、呼吸、血压、脉搏等)相吻合时，就会产生生理共振、共鸣。这就是“五音疗疾”的身心基础。\n   中医认为“五音入五脏”。\n   “宫动脾”，宫音和平雄厚、庄重宽宏、悠悠谐和，能够助脾健运、旺盛食欲；\n   “商动肺”，商音慷壮哀爵、惨怃健捷、铿铿肃劲，能够善制躁怒、使人安宁；\n   “角动肝”角音圆长通澈、廉直温恭、条畅平和，能够善消忧郁、助人入眠；\n   “徵动心”徵音婉愉流利、雅丽柔顺、抑扬咏越，能够通调血脉、抖擞精神；\n   “羽动肾”羽音高洁澄净、淡荡清邈、柔和透彻，能够发人深思，启迪心灵。\n   乐药就是运用中医理论，辨证论治，以使用不同的配器、节奏、力度、和声等出具对症的音乐处方，调理脏腑，达到养肝、舒心、健脾、润肺、补肾的目的。"
+
+#define tuiNaNote @"   “经脉者，所以行气血，而营阴阳，濡筋骨，利关节者也。”经络贯穿全身内外，它是运行气血、联系脏腑和体表及全身各部的通道，是人体功能的调控系统。不仅能够滋养身体，还可诊疗百病、调和虚实，保持经脉的畅通是非常必要的。\n    推拿是现代常用的保健手法。运用推拿，按摩肌肉、关节等能够帮助身体机能运动，促进经脉气血运行。推拿能消除肌肉紧张，促进损伤组织修复。通过对压痛点的治疗，可消除肌肉紧张的病理基础，为恢复肢体的正常功能创造良好的条件。可舒筋通络使紧张痉挛的肌肉放松，气血得以畅通。运用得当的推拿手法还可对损伤的软组织拈捺忖度，理筋整复，促进组织的恢复。推拿还能够促进肢体组织的活动，对肢体肌肉关节达到一定运动锻炼作用。\n     推拿有疏通经络的作用，通过刺激末梢神经，促进血液、淋巴循环及组织间的代谢过程，使机能的新陈代谢水平有所提高；有调和气血的作用，通过经络的传导来调节全身，借以调和营卫气血，增强机体健康。有提高机体免疫能力作用，经推拿的儿童，发病率下降，身高、体重、食欲等皆显著提高，具有抗炎、退热、提高免疫力的作用，可增强人体的抗病能力。"
+
+#define hintYueYao @"hintYueYao"
+#define hintTuiNa @"hintTuiNa"
+
 #define kVerRounterUrl @"http://123.125.97.241:8083" //测试环境   生产环境打包时请把这一行注释掉
 #define IOS7 ([[[UIDevice currentDevice] systemVersion] floatValue]>=7.0 ? YES : NO)
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 
 
-//#define hhh
-
 #define  ModuleZW(zwString)          NSLocalizedStringFromTable(zwString, @"ModuleZW", nil)
-//#define  ModuleZW(zwString)        [[NSJSONSerialization JSONObjectWithData:[[NSData alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"test" ofType:@"json"]] options:kNilOptions error:nil] objectForKey:zwString]
 #define kDictIsEmpty(dic) ([dic isKindOfClass:[NSNull class]])

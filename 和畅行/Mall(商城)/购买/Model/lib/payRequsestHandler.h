@@ -40,10 +40,12 @@
 
 // 账号帐户资料
 //更改商户把相关参数后可测试
-//wx2101d2fcba50b476  wx674b879fc693ceb9
-#define APP_ID          @"wx2101d2fcba50b476"               //APPID
-#define APP_SECRET      @"18fc112061353466c4d1be4b1d6b53f5" //appsecret
+//wx2101d2fcba50b476  wx674b879fc693ceb9 wx690147712c2a80af
+#define APP_ID          @"wx7b212cf255078b08"     //APPID
+#define APP_SECRET      @"8eb27046bd2d1c9fd2221e8b00ae6937"   //appsecret
 
+//#define APP_ID          @"wx690147712c2a80af"       //APPID
+//#define APP_SECRET      @"e0acdd5c23eeb2477605ccecc3f3fd27" //appsecret
 
 //商户号，填写商户对应参数
 #define MCH_ID          @"1274470401"

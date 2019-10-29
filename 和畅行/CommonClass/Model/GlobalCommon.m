@@ -15,6 +15,8 @@
 #import "AESCipher.h"
 #import <sys/utsname.h>
 
+#import <OGABluetooth530/OGABluetooth530.h>
+
 @interface GlobalCommon()
 
 @property (nonatomic,strong) MBProgressHUD *MBHud;
@@ -447,6 +449,26 @@
     
 }
 
++ (void)showMBHudWithTitle:(NSString *)title
+{
+    
+    
+    
+    MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
+    progress.label.text = title;
+    progress.tag = 102;
+    [[[UIApplication sharedApplication] keyWindow] addSubview:progress];
+    [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:progress];
+    [progress showAnimated:YES];
+}
+
++ (void)hideMBHud
+{
+    MBProgressHUD *progress = (MBProgressHUD *)[[[UIApplication sharedApplication] keyWindow] viewWithTag:102];
+    [progress removeFromSuperview];
+    progress = nil;
+}
+
 + (void)hideMBHudTitleWithView:(UIView *)view
 {
     MBProgressHUD *progress = (MBProgressHUD *)[view viewWithTag:101];
@@ -749,6 +771,43 @@
     
     return AESDecodeString;
 }
+
++ (NSString *)commandFromName:(NSString *)str
+{
+    NSDictionary *dic = @{
+                          @"大师精选":k530Command_MassageMaster,
+                          @"轻松自在":k530Command_MassageRelease,
+                          @"关节呵护":k530Command_KneeCare,
+                          @"脊柱支柱":k530Command_SpinalReleasePressure,
+                          @"驾车族":k530Command_Traceller,
+                          @"低头族":k530Command_TextNeck,
+                          @"御宅派":k530Command_CosyComfort,
+                          @"运动派":k530Command_Athlete,
+                          @"爱购派":k530Command_Shopping,
+                          @"巴黎式":k530Command_Balinese,
+                          @"中式":k530Command_MassageChinese,
+                          @"泰式":k530Command_MassageThai,
+                          @"深层按摩":k530Command_MassageDeepTissue,
+                          @"美臀塑型":k530Command_MassageHipsShapping,
+                          @"活血循环":k530Command_MassageBloodCirculation,
+                          @"元气复苏":k530Command_MassageEnergyRecovery,
+                          @"活力唤醒":k530Command_MassageMotionRecovery,
+                          @"绽放魅力":k530Command_MassageBalanceMind,
+                          @"清晨唤醒":k530Command_MassageAMRoutine,
+                          @"瞬间补眠":k530Command_MassageMiddayRest,
+                          @"夜晚助眠":k530Command_MassageSweetDreams,
+                          @"酸疼检测":k530Command_MassageIntellect
+                          };
+    if(str){
+        NSString *resultStr = [dic objectForKey:str];
+        if(resultStr){
+           return resultStr;
+        }
+        return @"";
+    }
+    return @"";
+}
+
 
 
 @end

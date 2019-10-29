@@ -10,4 +10,6 @@
 
 @interface RecommendReadView : UIView
 @property (nonatomic,strong) NSMutableArray*recommendArr;
+@property (nonatomic,strong) UILabel *titleLabel;
+@property (nonatomic,strong) UICollectionView *collectionV;
 @end

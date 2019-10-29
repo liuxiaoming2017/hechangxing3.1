@@ -42,6 +42,7 @@
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     
     NSString *strRequest = [navigationAction.request.URL.absoluteString stringByRemovingPercentEncoding];
+
     //NSString *ganyuStr = [NSString stringWithFormat:@"%@hcy/member/action/ganyufangan",URL_PRE];
     NSString *ganyuStr = [NSString stringWithFormat:@"%@member/action/ganyufangan",URL_PRE];
     NSLog(@"%@",strRequest);
@@ -71,7 +72,11 @@
         [self.navigationController pushViewController:vc animated:YES];
         return;
     }else if ([strRequest isEqualToString:yundong]){ //进入运动
-        decisionHandler(WKNavigationActionPolicyCancel);
+         decisionHandler(WKNavigationActionPolicyCancel);
+        if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
+            [self showAlertWarmMessage:@"您还不是会员"];
+            return;
+        }
         NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
         NSString *yueyaoIndex = [GlobalCommon getSportTypeFrom:physicalStr];
         if(yueyaoIndex == nil){
@@ -95,6 +100,7 @@
         return;
     }
     if([navigationAction.request allHTTPHeaderFields][@"Cookie"]){
+        NSLog(@"cookie:%@",[navigationAction.request allHTTPHeaderFields]);
         decisionHandler(WKNavigationActionPolicyAllow);
     }else{
         if([strRequest hasPrefix:@"tel"]){
@@ -104,7 +110,17 @@
             decisionHandler(WKNavigationActionPolicyCancel);
 
         }else{
-            NSMutableURLRequest *request= [NSMutableURLRequest requestWithURL:navigationAction.request.URL];
+            
+            NSString *urlStr =   [NSString stringWithFormat:@"%@",navigationAction.request.URL];
+            if([urlStr hasSuffix:@"html"]){
+                urlStr = [urlStr stringByAppendingString:[NSString stringWithFormat:@"?fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+            }else{
+                urlStr = [urlStr stringByAppendingString:[NSString stringWithFormat:@"&fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+            }
+            NSLog(@"===========%@",urlStr);
+            
+            NSURL *url = [NSURL URLWithString:urlStr];
+            NSMutableURLRequest *request= [NSMutableURLRequest requestWithURL:url];
             NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UserShareOnce shareOnce].token,@"token",[UserShareOnce shareOnce].JSESSIONID,@"JSESSIONID", nil];
             [request addValue:[self readCurrentCookieWith:dic] forHTTPHeaderField:@"Cookie"];
             if([UserShareOnce shareOnce].languageType){
@@ -113,6 +129,9 @@
             [webView loadRequest:request];
             decisionHandler(WKNavigationActionPolicyCancel);
         }
+        
+        
+        
         
     }
     

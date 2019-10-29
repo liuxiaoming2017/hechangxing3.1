@@ -108,6 +108,7 @@
         photosView.photoWidth =  45;
         photosView.photoHeight = 45 ;
         photosView.photosMaxCol = 4;
+        photosView.placeholderImage = [UIImage imageNamed:@"默认1:1"];
         [rightTextImageView addSubview:photosView];
         rightTextImageView.height = heiget + 80;
         if(array.count == 1){
@@ -122,7 +123,7 @@
     scrollViews.contentSize = CGSizeMake(82*array.count+10, 0) ;
     heiget+=100;
     if ([[self.dataDic objectForKey:@"replyUserConsultations"] isEqual:[NSNull null]]) {
-        
+        scrollView.contentSize = CGSizeMake(ScreenWidth, rightTextImageView.height + 60 );
     }else{
         
         UILabel *timeLabs = [[UILabel alloc]initWithFrame:CGRectMake(0, rightTextImageView.bottom + 20, ScreenWidth, 20)];
@@ -169,6 +170,7 @@
         
         [self insertSublayerWithImageView:leftTextImageView with:scrollView];
 
+        scrollView.contentSize = CGSizeMake(ScreenWidth, rightTextImageView.height + 120 + leftTextImageView.height);
     }
 }
 

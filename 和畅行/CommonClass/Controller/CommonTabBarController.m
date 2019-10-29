@@ -18,6 +18,7 @@
 #import "i9_MoxaMainViewController.h"
 #import "HCY_CallController.h"
 #import "WXPhoneController.h"
+#import "ArmchairHomeVC.h"
 
 @interface CommonTabBarController ()<HSTabBarDelegate,ZKIndexViewDelegate>
 
@@ -51,26 +52,35 @@
 {
     [zkView removeFromSuperview];
     
-    //    [self test2];
-    //    return;
+//    [self test2];
+//    return;
     
     UIViewController *vc = nil;
     
     NSInteger index = tag - 100;
     switch (index) {
         case 0:
+        {
             vc = [[YueYaoController alloc] initWithType:NO];
+            //vc = [YueYaoController sharePlayerController];
+            
+        }
             
             break;
         case 1:
         {
-            NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
-            NSString *yueyaoIndex = [GlobalCommon getSportTypeFrom:physicalStr];
-            if(yueyaoIndex == nil){
-                vc = [[MySportController alloc] initWithAllSport];
-                
+            if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
+                UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:@"您还不是会员" delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
+                [av show];
             }else{
-                vc = [[MySportController alloc] initWithSportType:[yueyaoIndex integerValue]];
+                NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
+                NSString *yueyaoIndex = [GlobalCommon getSportTypeFrom:physicalStr];
+                if(yueyaoIndex == nil){
+                    vc = [[MySportController alloc] initWithAllSport];
+                    
+                }else{
+                    vc = [[MySportController alloc] initWithSportType:[yueyaoIndex integerValue]];
+                }
             }
         }
             
@@ -83,8 +93,8 @@
             [[self selectedViewController] pushViewController:vc1 animated:YES];
             return ;
         }
-            
-            
+           
+           
             break;
         case 3:
         {
@@ -96,42 +106,66 @@
                 }
             }
             
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
-            
-            if([UserShareOnce shareOnce].isOnline){
-                i9_MoxaMainViewController * vc1 = [[i9_MoxaMainViewController alloc] init];
-                vc1.hidesBottomBarWhenPushed = YES;
-                [[self selectedViewController] pushViewController:vc1 animated:YES];
-                return;
-            }else{
-                if([[[NSUserDefaults standardUserDefaults] objectForKey:@"bloodNeverCaution"] isEqualToString:@"1"]){
-                    vc = [[PressureViewController alloc] init];
-                }else{
-                    
-                }
-            }
-            
+             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
+
         }
             
             break;
         case 4:
-            vc = [[HCY_CallController alloc] init];
+        {
+            if(![UserShareOnce shareOnce].languageType){
+                if ([UserShareOnce shareOnce].username.length != 11) {
+                    [self showAlerVC];
+                    return;
+                }
+                vc = [[HCY_CallController alloc] init];
+            }else{
+                if([[[NSUserDefaults standardUserDefaults] objectForKey:@"bloodNeverCaution"] isEqualToString:@"1"]){
+                    PressureViewController *vc = [[PressureViewController alloc] init];
+                    [[self selectedViewController] pushViewController:vc animated:YES];
+                }else{
+                    BloodGuideViewController * vc1 = [[BloodGuideViewController alloc] init];
+                    vc1.isBottom = YES;
+                    vc1.hidesBottomBarWhenPushed = YES;
+                    [[self selectedViewController] pushViewController:vc1 animated:YES];
+                }
+            }
+        }
+            
             break;
         case 5:
         {
-            BloodGuideViewController * vc1 = [[BloodGuideViewController alloc] init];
-            vc1.isBottom = YES;
-            vc1.hidesBottomBarWhenPushed = YES;
-            [[self selectedViewController] pushViewController:vc1 animated:YES];
-            return;
+            if(![UserShareOnce shareOnce].languageType){
+                if([[[NSUserDefaults standardUserDefaults] objectForKey:@"bloodNeverCaution"] isEqualToString:@"1"]){
+                    PressureViewController *vc = [[PressureViewController alloc] init];
+                    [[self selectedViewController] pushViewController:vc animated:YES];
+                }else{
+                    BloodGuideViewController * vc1 = [[BloodGuideViewController alloc] init];
+                    vc1.isBottom = YES;
+                    vc1.hidesBottomBarWhenPushed = YES;
+                    [[self selectedViewController] pushViewController:vc1 animated:YES];
+                }
+                return;
+            }
+            
+           vc = [[AdvisorysViewController alloc] init];
+            
         }
             
             break;
         case 6:{
-            vc = [[AdvisorysViewController alloc] init];
+           if(![UserShareOnce shareOnce].languageType){
+               vc = [[AdvisorysViewController alloc] init];
+           }else{
+               vc = [[YueYaoController alloc] initWithType:YES];
+           }
+            
         }
             break;
         case 7:
+            vc = [[ArmchairHomeVC alloc] init];
+            break;
+        case 8:
             vc = [[YueYaoController alloc] initWithType:YES];
             break;
         default:
@@ -180,7 +214,8 @@
     UIAlertController *alVC= [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有绑定手机号码,绑定后才能享受服务,是否绑定?") preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *sureAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         WXPhoneController *vc = [[WXPhoneController alloc]init];
-        [self.navigationController pushViewController:vc animated:YES];
+        vc.pushType = 0;
+        [self presentViewController:vc animated:YES completion:nil];
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:(UIAlertActionStyleCancel) handler:nil];
     [alVC addAction:sureAction];
@@ -195,13 +230,13 @@
 }
 
 /*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

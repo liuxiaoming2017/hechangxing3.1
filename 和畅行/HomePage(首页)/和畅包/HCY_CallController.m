@@ -23,14 +23,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navTitleLabel.text = ModuleZW(@"在线咨询");
+    self.navTitleLabel.text = ModuleZW(@"视频医生");
     
     UILabel *label = [Tools creatLabelWithFrame:CGRectMake(10,kNavBarHeight + 10, ScreenWidth - 10, 40) text:ModuleZW(@"在线咨询") textSize:24];
-    [self.view addSubview:label];
+//    [self.view addSubview:label];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, label.bottom, ScreenWidth, ScreenHeight - label.bottom) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight + 10, ScreenWidth, ScreenHeight - label.bottom) style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
@@ -48,7 +48,7 @@
     if([UserShareOnce shareOnce].languageType){
         return 1;
     }else{
-        return 3;
+        return 2;
     }
 }
 
@@ -61,7 +61,13 @@
     
     __weak typeof(self) weakSelf = self;
     cell.comeToNextBlock = ^(HCY_CallCell * cell) {
-        [weakSelf comeToNextBlockCellwithIndex:indexPath];
+        static NSTimeInterval time = 0.0;
+        NSTimeInterval currentTime = [NSDate date].timeIntervalSince1970;
+        if (currentTime - time > 2) {
+            [weakSelf comeToNextBlockCellwithIndex:indexPath];
+        }
+        time = currentTime;
+        
     };
     
     return cell;
@@ -71,61 +77,73 @@
 
 -(void)comeToNextBlockCellwithIndex:(NSIndexPath *)index {
     
-//    if ([UserShareOnce shareOnce].languageType){
-//        AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
-//        [self.navigationController pushViewController:adVC animated:YES];
-//        return;
-//    }
-//
-//     HHMSDK *hhmSdk = [[HHMSDK alloc] init];
-//    __weak typeof(self) weakSelf = self;
-//    if(index.row==0||index.row==1){
-//        if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].uuid]){
-//            [self messageHintView];
-//            return;
-//        }
-//    }
-//    NSInteger uuid = [[UserShareOnce shareOnce].uuid integerValue];
-//    
-//    if(index.row == 0) {
-//        if ([UserShareOnce shareOnce].username.length != 11) {
-//            [self showAlerVC];
-//            return;
-//        }
-//        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
-//            if(error){
-//                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
-//            }else{
-//                [hhmSdk startCall:HHCallTypeChild];
-//            }
-//        }];
-//
-//    }else if (index.row == 1) {
-//        if ([UserShareOnce shareOnce].username.length != 11) {
-//            [self showAlerVC];
-//             return;
-//        }
-//        [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
-//            if(error){
-//                [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
-//            }else{
-//                [hhmSdk startCall:HHCallTypeAdult];
-//            }
-//        }];
-//
-//    }else {
-//
-//        AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
-//        [self.navigationController pushViewController:adVC animated:YES];
-//
-//    }
-// 
+    if ([UserShareOnce shareOnce].languageType){
+        AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
+        [self.navigationController pushViewController:adVC animated:YES];
+        return;
+    }
+
+    #if TARGET_IPHONE_SIMULATOR
+    
+    #else
+        HHMSDK *hhmSdk = [[HHMSDK alloc] init];
+        __weak typeof(self) weakSelf = self;
+        if(index.row==0||index.row==1){
+            if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].uuid]){
+                [self messageHintView];
+                return;
+            }
+        }
+    
+        if(kPlayer.playerState == 2){
+            [kPlayer stop];
+        }
+    
+        NSInteger uuid = [[UserShareOnce shareOnce].uuid integerValue];
+        if(index.row == 0) {
+            if ([UserShareOnce shareOnce].username.length != 11) {
+                [self showAlerVC];
+                return;
+            }
+            [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
+                if(error){
+                    [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
+                }else{
+                    [hhmSdk startCall:HHCallTypeChild];
+                }
+            }];
+            
+            
+        }else if (index.row == 1) {
+            if ([UserShareOnce shareOnce].username.length != 11) {
+                [self showAlerVC];
+                return;
+            }
+            [hhmSdk loginWithUuid:uuid completion:^(NSError * _Nullable error) {
+                if(error){
+                    [weakSelf showAlertWarmMessage:@"进入失败,重新登录"];
+                }else{
+                    [hhmSdk startCall:HHCallTypeAdult];
+                }
+            }];
+            
+        }else {
+            
+            AdvisorysViewController *adVC = [[AdvisorysViewController alloc]init];
+            [self.navigationController pushViewController:adVC animated:YES];
+            
+        }
+    #endif
+    
+    
+ 
     
 }
 -(void)showAlerVC {
     UIAlertController *alVC= [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有绑定手机号码,绑定后才能享受服务,是否绑定?") preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *sureAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         WXPhoneController *vc = [[WXPhoneController alloc]init];
+        vc.pushType = 1;
         [self.navigationController pushViewController:vc animated:YES];
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:(UIAlertActionStyleCancel) handler:nil];

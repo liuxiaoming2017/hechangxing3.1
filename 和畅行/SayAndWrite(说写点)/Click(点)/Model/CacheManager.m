@@ -15,6 +15,7 @@
 #import "RemindModel.h"
 
 #import "HealthTipsModel.h"
+#import "ArmChairModel.h"
 
 @interface CacheManager()
 
@@ -97,20 +98,24 @@ static CacheManager *__cacheManager = nil;
     //4.数据库中创建表（可创建多张）
     NSString *questionSql = @"create table if not exists questionTable ('question_id' integer,'order_num' integer, 'createDate' text,'modifyDate' text,'name' text,'reverse' bool,'typeName' text,'allIDStr' text,'classifyId' text)";
     //首页提醒
-    NSString *remindSql = @"create table if not exists homeRemindTable ('custid' integer,'advice' text,'action' text, 'isDone' bool,'confId' integer)";
+    NSString *remindSql = @"create table if not exists homeRemindTable ('custid' integer,'advice' text,'type' text, 'isDone' bool,'confId' integer)";
     //首页新闻
     NSString *healthArticleSql = @"create table if not exists healthArticleTable ('picture' text,'title' text,'path' text,'createDate' text)";
     
     //健康档案
    // NSString *archiveSql = @"create table if not exists archiveTable ('custid' integer,'sn' text,'link' text,'date' text,'name' text,'typeName' text,'type' text,'year' text,'time' text,'createTime' text)";
     
+    //按摩椅收藏
+    NSString *armchairStr = @"create table if not exists armchairTable ('name' text,'command' text)";
+    
     //5.执行更新操作 此处database直接操作，不考虑多线程问题，多线程问题，用FMDatabaseQueue 每次数据库操作之后都会返回bool数值，YES，表示success，NO，表示fail,可以通过 @see lastError @see lastErrorCode @see lastErrorMessage
     BOOL result = [_db executeUpdate:questionSql];
     result  &= [_db executeUpdate:remindSql];
     result  &= [_db executeUpdate:healthArticleSql];
-   // result  &= [_db executeUpdate:archiveSql];
+    result  &= [_db executeUpdate:armchairStr];
     return result;
 }
+
 # pragma mark - 往表中插入数据
 - (void)insertQuestionModel:(QuestionModel *)model
 {
@@ -123,9 +128,10 @@ static CacheManager *__cacheManager = nil;
 
 - (void)updateOrinsertRemindModel:(RemindModel *)model withCustId:(NSNumber *)custId
 {
-    FMResultSet *set = [_db executeQuery:@"select custid from homeRemindTable where custid = ? and advice = ? and action = ?",custId,model.advice,model.action];
+    FMResultSet *set = [_db executeQuery:@"select custid from homeRemindTable where custid = ? and advice = ? and type = ?",custId,model.advice,model.type];
     if(![set next]){
-        [_db executeUpdate:@"insert into homeRemindTable(custid,advice,action,isDone,confId) values (?,?,?,?,?)",custId,model.advice,model.action,[NSNumber numberWithBool:model.isDone],[NSNumber numberWithInteger:model.confId]];
+      BOOL success =  [_db executeUpdate:@"insert into homeRemindTable(custid,advice,type,isDone,confId) values (?,?,?,?,?)",custId,model.advice,model.type,[NSNumber numberWithBool:model.isDone],[NSNumber numberWithInteger:model.confId]];
+        NSLog(@"数据库添加%@",success ? @"成功" : @"失败");
     }
     [set close];
 }
@@ -148,6 +154,7 @@ static CacheManager *__cacheManager = nil;
     }
 }
 
+
 - (void)updateOrinsertRemindModels:(NSArray *)arr withCustId:(NSNumber *)custId
 {
     FMResultSet *set = [_db executeQuery:@"select custid from homeRemindTable where custid = ?",custId];
@@ -161,6 +168,10 @@ static CacheManager *__cacheManager = nil;
 
 - (void)inserthealthArticleModels:(NSArray *)arr
 {
+    FMResultSet *set = [_db executeQuery:@"select * from healthArticleTable"];
+    if([set next]){
+        [_db executeUpdate:@"delete from healthArticleTable"];
+    }
     for(HCY_ConsultingModel *model in arr){
         [self inserthealthArticleModel:model];
     }
@@ -199,7 +210,7 @@ static CacheManager *__cacheManager = nil;
     
     FMResultSet *set = [_db executeQuery:@"select custid from homeRemindTable where custid = ? and confId = ?",[NSNumber numberWithInteger:model.custid],[NSNumber numberWithInteger:model.confId]];
     if([set next]){
-        [_db executeUpdate:@"update homeRemindTable set custid = ?,advice = ?,action = ?,isDone = ?,confId = ?",[NSNumber numberWithInteger:model.custid],model.advice,model.action,[NSNumber numberWithBool:model.isDone],[NSNumber numberWithInteger:model.confId]];
+        [_db executeUpdate:@"update homeRemindTable set custid = ?,advice = ?,type = ?,isDone = ?,confId = ?",[NSNumber numberWithInteger:model.custid],model.advice,model.type,[NSNumber numberWithBool:model.isDone],[NSNumber numberWithInteger:model.confId]];
     }
     [set close];
 }
@@ -259,7 +270,7 @@ static CacheManager *__cacheManager = nil;
         RemindModel *model = [[RemindModel alloc] init];
         model.custid = [set intForColumn:@"custid"];
         model.advice = [set stringForColumn:@"advice"];
-        model.action = [set stringForColumn:@"action"];
+        model.type = [set stringForColumn:@"type"];
         model.isDone = [set boolForColumn:@"isDone"];
         model.confId = [set intForColumn:@"confId"];
         [mutabArr addObject:model];
@@ -312,6 +323,57 @@ static CacheManager *__cacheManager = nil;
         [mutabArr addObject:model];
         
         
+    }
+    [set close];
+    
+    return mutabArr;
+}
+
+# pragma mark - 按摩椅添加收藏
+- (void)addArmchairModelWithArr:(NSArray *)arr
+{
+    for(ArmChairModel *model in arr){
+        [self insertArmchairModel:model];
+    }
+}
+
+- (void)insertArmchairModel:(ArmChairModel *)model
+{
+    FMResultSet *set = [_db executeQuery:@"select name from armchairTable where name = ?",model.name];
+    if(![set next]){
+        [_db executeUpdate:@"insert into armchairTable(name,command) values (?,?)",model.name,model.command];
+    }
+    [set close];
+}
+
+
+- (void)deleteArmchairModel:(ArmChairModel *)model
+{
+    FMResultSet *set = [_db executeQuery:@"select name from armchairTable where name = ?",model.name];
+    if([set next]){
+        [_db executeUpdate:@"delete from armchairTable where name = ?",model.name];
+    }
+    [set close];
+}
+
+- (BOOL)selectArmchairModel:(ArmChairModel *)model
+{
+    FMResultSet *set = [_db executeQuery:@"select name from armchairTable where name = ?",model.name];
+    if([set next]){
+        return YES;
+    }
+    return NO;
+}
+
+- (NSMutableArray *)getArmchairModel
+{
+    NSMutableArray *mutabArr = [NSMutableArray arrayWithCapacity:0];
+    FMResultSet *set = [_db executeQuery:@"select * from armchairTable"];
+    while ([set next]) {
+        ArmChairModel *model = [[ArmChairModel alloc] init];
+        model.name = [set stringForColumn:@"name"];
+        model.command = [GlobalCommon commandFromName:model.name];
+        [mutabArr addObject:model];
     }
     [set close];
     

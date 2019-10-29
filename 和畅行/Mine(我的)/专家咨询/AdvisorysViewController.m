@@ -93,39 +93,43 @@
     [self insertSublayerWithImageView:backImageView with:self.view];
     [self.view addSubview:backImageView];
     
-    _textView = [[CPTextViewPlaceholder alloc]initWithFrame:CGRectMake(15, 15, backImageView.width - 30, 210)];
+    
+    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(10, 10, backImageView.width - 20, 210)];
+    backView.backgroundColor = [UIColor whiteColor];
+    backView.layer.borderColor = RGB(221, 221, 221).CGColor;
+    backView.layer.borderWidth =0.5;
+    [backImageView addSubview:backView];
+    
+    _textView = [[CPTextViewPlaceholder alloc]initWithFrame:CGRectMake(5, 5, backView.width - 10, 190)];
     _textView.delegate = self;
-    _textView.layer.borderColor = RGB(221, 221, 221).CGColor;
     _textView.textContainerInset = UIEdgeInsetsMake(10, 0, 20, 10);
-    _textView.layer.borderWidth =0.5;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChangess) name:UITextViewTextDidChangeNotification object:self.textView];
     
     _textView.font = [UIFont systemFontOfSize:15];
     _textView.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     
-    _textViews = [[UITextView alloc]initWithFrame:CGRectMake(15,15, backImageView.width - 30, 100)];
+    _textViews = [[UITextView alloc]initWithFrame:CGRectMake(10,5, backView.width - 30, 100)];
     _textView.keyboardType = UIKeyboardTypeDefault;
     _textView.returnKeyType = UIReturnKeyDone;
     _textViews.text = ModuleZW(@"请输入您想咨询的内容");
     _textViews.font = [UIFont systemFontOfSize:15];
     _textViews.textColor =RGB(162, 162, 162);
-    [backImageView addSubview:_textViews];
+    [backView addSubview:_textViews];
     _textView.backgroundColor = [UIColor clearColor];
-//    _textViews.backgroundColor = [UIColor redColor];
-    [backImageView addSubview:_textView];
+    [backView addSubview:_textView];
     
-    UILabel *numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(_textView.width - 100, _textView.height - 30, 90, 20)];
+    UILabel *numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(backView.width - 100, backView.height - 20, 90, 20)];
     numberLabel.text = @"0/200";
     numberLabel.textColor =RGB(162, 162, 162);
     numberLabel.textAlignment = NSTextAlignmentRight;
-    [_textView addSubview:numberLabel];
+    [backView addSubview:numberLabel];
     _numberLabel = numberLabel;
     
     // 1. 常见一个发布图片时的photosView
     PYPhotosView *publishPhotosView = [PYPhotosView photosView];
     publishPhotosView.py_x = 15;
-    publishPhotosView.py_y = _textView.bottom + 10;
+    publishPhotosView.py_y = backView.bottom + 10;
     publishPhotosView.photoWidth = (backImageView.width-50)/4 ;
     publishPhotosView.photoHeight = (backImageView.width-50)/4 ;
     // 2.1 设置本地图片
@@ -142,7 +146,7 @@
     
 
     UIButton *photoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    photoButton.frame = CGRectMake(backImageView.width/8-20, _textView.bottom - 10 +  (backImageView.width-50)/8 , 40, 40) ;
+    photoButton.frame = CGRectMake(backImageView.width/8-20, backView.bottom - 10 +  (backImageView.width-50)/8 , 40, 40) ;
     [photoButton setBackgroundImage:[UIImage imageNamed:@"专家咨询添加图片"] forState:UIControlStateNormal];
     [photoButton addTarget:self action:@selector(photoAction) forControlEvents:UIControlEventTouchUpInside];
     [backImageView addSubview:photoButton];
@@ -398,9 +402,14 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     [self.photos addObject:image];
     [self.publishPhotosView reloadDataWithImages:self.photos];
-    
+    if (self.photos.count < 4 ) {
+        self.photoButton.hidden = NO;
+        self.photoButton.left = (ScreenWidth - 20)/8-20 + (((ScreenWidth - 20)-50)/4 + 10)*self.photos.count;
+    }else{
+        self.photoButton.hidden = YES;
+    }
     bottomView.top = self.publishPhotosView.bottom+20;
-    
+
 }
 
 //该方法弃用
@@ -598,6 +607,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     //得到子账户的id
     self.subId = subId;
 }
+
+
 
 
 - (void)requestResourceslistFinish:(ASIHTTPRequest *)request

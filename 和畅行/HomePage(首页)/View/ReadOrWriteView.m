@@ -41,7 +41,7 @@
         
         UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         rightBtn.frame = CGRectMake(10+(imageWidth+10)*i, 10, imageWidth, imageHeight);
-        [rightBtn setImage:[UIImage imageNamed:[imageArr objectAtIndex:i]] forState:UIControlStateNormal];
+        [rightBtn setBackgroundImage:[UIImage imageNamed:[imageArr objectAtIndex:i]] forState:UIControlStateNormal];
         rightBtn.tag=100+i;
         [rightBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:rightBtn];
@@ -75,7 +75,7 @@
         rightBtn.frame = CGRectMake(10+(imageWidth+10)*i, 10, imageWidth, imageHeight);
         
         if (model.picurl == nil ||[model.picurl isKindOfClass:[NSNull class]]||model.picurl.length == 0) {
-            [rightBtn setImage:[UIImage imageNamed:[imageArr objectAtIndex:i]] forState:UIControlStateNormal];
+            [rightBtn setBackgroundImage:[UIImage imageNamed:[imageArr objectAtIndex:i]] forState:UIControlStateNormal];
         }else {
             NSString *imageUrl = [NSString stringWithFormat:@"%@%@",URL_PRE,model.picurl];
             NSURL *url = [NSURL URLWithString:imageUrl];
@@ -96,14 +96,21 @@
     switch (btn.tag) {
         case 100:
         {
+            if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
+                UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还不是会员" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+                [av show];
+                return;
+            }
             if([self isFirestClickThePageWithString:@"speak"]){
                 vc = [[MeridianIdentifierViewController alloc] init];
+                vc.haveAnmo = NO;
             }else{
                 vc = [[TipSpeakController alloc] init];
+                vc.haveAnmo = NO;
             }
-            
             vc.hidesBottomBarWhenPushed = YES;
             [self.viewController.navigationController pushViewController:vc animated:YES];
+            
         }
             break;
            case 101:
@@ -114,8 +121,14 @@
                 vc = [[TipWriteController alloc] init];
             }
             
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.viewController.navigationController pushViewController:vc animated:YES];
+            if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
+                UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还不是会员" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+                [av show];
+            }else{
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.viewController.navigationController pushViewController:vc animated:YES];
+            }
+           
         }
             break;
             case 102:
@@ -185,5 +198,6 @@
     }
     return NO;
 }
+
 
 @end

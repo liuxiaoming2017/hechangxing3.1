@@ -37,7 +37,12 @@
 #import "SBJson.h"
 #import "ChangeLanguageObject.h"
 
+//#import <PgySDK/PgyManager.h>
+//#import <PgyUpdate/PgyUpdateManager.h>
 
+#import <OGABluetooth530/OGABluetooth530.h>
+#import "NSBundle+Language.h"
+//#import "ArmchairHomeVC.h"
 
 @interface AppDelegate ()<WXApiDelegate>
 @property (nonatomic, strong) NSURLSession * session;
@@ -51,22 +56,25 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
    // self.window.rootViewController = [self tabBar];
+
+    //强制英文
+    [[NSUserDefaults standardUserDefaults] setObject:@"en" forKey:@"Language"];
+    [NSBundle setLanguage:@"en"];
+     [UserShareOnce shareOnce].languageType  = @"us-en";
     
-    NSArray *languages = [[NSUserDefaults standardUserDefaults] valueForKey:@"AppleLanguages"];
-    NSMutableArray *larray = [NSMutableArray arrayWithArray:languages];
-    [larray replaceObjectAtIndex:0 withObject:@"en-US"];
-    [[NSUserDefaults standardUserDefaults] setValue:larray forKey:@"AppleLanguages"];
+    //强制中文
+//    [[NSUserDefaults standardUserDefaults] setObject:@"zh-Hans" forKey:@"Language"];
+//    [NSBundle setLanguage:@"zh-Hans"];
+//    [UserShareOnce shareOnce].languageType  = nil;
     
-    
-    NSLog(@"%@",languages);
-    if ([languages.firstObject isEqualToString:@"en-US"]||[languages.firstObject isEqualToString:@"ja-US"]||[languages.firstObject isEqualToString:@"en-CN"]||[languages.firstObject isEqualToString:@"en"]){
-        [UserShareOnce shareOnce].languageType = @"us-en";
-        //        [UserShareOnce shareOnce].languageType  = nil;
+     [[UIButton appearance] setExclusiveTouch:YES];
+    NSString *fontStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"YHFont"];
+    if(![GlobalCommon stringEqualNull:fontStr]){
+        [UserShareOnce shareOnce].fontSize = [fontStr floatValue];
     }else{
-        [UserShareOnce shareOnce].languageType  = @"us-en";
+        [UserShareOnce shareOnce].fontSize = 1;
     }
     
-    NSLog(@"#######:%@",[UserShareOnce shareOnce].languageType);
 //    NSError *error = nil;
 //    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&error];
 //    AVAudioSession *session = [AVAudioSession sharedInstance];
@@ -79,12 +87,17 @@
     [[UITabBar appearance] setTranslucent:NO];
     
     //和缓医疗SDK注册,是和缓分配给的productId ffff
-//    HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:HHSDK_id isDebug:NO isDevelop:NO];
-//    hhSdk.cerName = @"2cDevTest";
-//    [[HHMSDK alloc] startWithOption:hhSdk];
+//    #if TARGET_IPHONE_SIMULATOR
+//
+//    #else
+//        HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:HHSDK_id isDebug:NO isDevelop:NO];
+//        hhSdk.cerName = @"2cDevTest";
+//        [[HHMSDK alloc] startWithOption:hhSdk];
+//    #endif
+   
 
     [UMCommonLogManager setUpUMCommonLogManager];
-    [UMConfigure setLogEnabled:YES];
+    [UMConfigure setLogEnabled:NO];
     [UMConfigure initWithAppkey:Youmeng_id channel:@"App Store"];
     
     [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
@@ -98,13 +111,33 @@
     //埋点注册
     [[BuredPoint sharedYHBuriedPoint]setTheSignatureWithSignStr:BuBuredPointKey  withOpenStr:@"1"];
     
-//    URL_PRE
-
     //创建本地数据库
     [[CacheManager sharedCacheManager] createDataBase];
     
     for (int i = 0; i < 20; ++i) {
         NSLog(@"%d",i);
+    }
+    
+    NSLog(@"%@,%@,%@",APP_ID,APP_SECRET,URL_PRE);
+    
+//    蒲公英SDK
+    //启动基本SDK
+//    [[PgyManager sharedPgyManager] startManagerWithAppId:@"da15cba9ecb9d085233da45a1422f52c"];
+//    //启动更新检查SDK
+//    [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"da15cba9ecb9d085233da45a1422f52c"];
+    
+    //奥佳华按摩椅
+//    [[OGA530BluetoothManager shareInstance] setAppkey:OGA530AppKey appSecret:OGA530AppSecret];
+//    [[OGA530BluetoothManager shareInstance] setIsLog:YES];
+    
+    if(@available(iOS 11.0,*)){
+        
+        UITableView.appearance.estimatedRowHeight = 0;
+        
+        UITableView.appearance.estimatedSectionFooterHeight = 0;
+        
+        UITableView.appearance.estimatedSectionHeaderHeight = 0;
+        
     }
     
     return YES;
@@ -123,6 +156,8 @@
 
 -(void)returnMainPage2{
     RootRequestController *homeVc = [[RootRequestController alloc] init];
+//    ArmchairHomeVC *homeVc = [[ArmchairHomeVC alloc] init];
+
     self.window.rootViewController = homeVc;
     
 }
@@ -135,12 +170,13 @@
 }
 
 
+
 - (UITabBarController *)tabBar
 {
     HomePageController *homeVC = [[HomePageController alloc] init];
     CustomNavigationController *homeNav = [[CustomNavigationController alloc] initWithRootViewController:homeVC];
     
-     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} forState:UIControlStateNormal];
+     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14/[UserShareOnce shareOnce].fontSize]} forState:UIControlStateNormal];
     
     UIEdgeInsets edgeInset = UIEdgeInsetsMake(-1, 0, 1, 0);
     UIOffset offSet = UIOffsetMake(0, 1);
@@ -184,7 +220,6 @@
     
 }
 
-/*
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     //开启后台处理多媒体事件
@@ -214,7 +249,6 @@
     }
     return newTaskId;
 }
-*/
 
 -(void) onResp:(BaseResp*)resp
 {

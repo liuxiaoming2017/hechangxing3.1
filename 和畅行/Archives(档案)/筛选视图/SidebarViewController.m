@@ -55,7 +55,8 @@
                          ModuleZW(@"血糖"),
                          ModuleZW(@"心率"),
                          ModuleZW(@"呼吸"),
-                         ModuleZW(@"体温"), nil];
+                         ModuleZW(@"体温"),
+                         ModuleZW(@"体检报告"), nil];
     }else{
         self.titleArr = [NSArray arrayWithObjects:
                          ModuleZW(@"全部"),
@@ -70,13 +71,15 @@
                          ModuleZW(@"血糖"),
                          ModuleZW(@"心率"),
                          ModuleZW(@"呼吸"),
-                         ModuleZW(@"体温"), nil];
+                         ModuleZW(@"体温"),
+                         @"体检报告",
+                         nil];
     }
    
 
     for(NSInteger i=0;i<self.titleArr.count;i++){
         UIButton *selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        selectBtn.frame = CGRectMake(titleLabel.left+(90+17)*(i%2), titleLabel.bottom+26+(42+23)*(i/2), 90, 42);
+        selectBtn.frame = CGRectMake(titleLabel.left+(90+17)*(i%2), titleLabel.bottom+26+(42+23)*(i/2), 95, 45);
         selectBtn.tag = i+100;
         selectBtn.layer.cornerRadius = 15;
         selectBtn.titleLabel.numberOfLines = 2;
@@ -87,7 +90,7 @@
         [selectBtn.layer setBorderWidth:1.0];
         [selectBtn setTitle:[self.titleArr objectAtIndex:i] forState:UIControlStateNormal];
         [selectBtn setBackgroundColor:UIColorFromHex(0XEEEEEE)];
-        selectBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        selectBtn.titleLabel.font = [UIFont systemFontOfSize:16/[UserShareOnce shareOnce].fontSize];
         [selectBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [selectBtn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
         [selectBtn addTarget:self action:@selector(selectBtnAction:) forControlEvents:UIControlEventTouchUpInside];

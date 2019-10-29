@@ -30,11 +30,17 @@
 @property (nonatomic,copy)NSString *nameStr;
 @property (nonatomic,copy)NSString *brithdayStr;
 @property (nonatomic,copy)NSString *phoneStr;
+@property (nonatomic,copy)NSString *emailStr;
 @property (nonatomic,copy) NSString *pngFilePath;
 @property (nonatomic,strong) UIDatePicker *datePicker;
 @property (nonatomic,strong) UIView *backView;
 @property (nonatomic,copy)  NSString *dateString;
+@property (nonatomic,strong) UIButton *phoneBT;
 
+@property (nonatomic,strong) UIButton *nameBT;
+@property (nonatomic,strong) UIButton *emailBT;
+
+@property (nonatomic,strong) NSString *sexupStr;
 @end
 
 @implementation PersonalInformationViewController
@@ -44,7 +50,29 @@
     [self layoutMineView];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    if ([[UserShareOnce shareOnce].loginType isEqualToString:@"WX"]){
+        if([self deptNumInputShouldNumber:[UserShareOnce shareOnce].username]){
+            self.phoneStr  = [UserShareOnce shareOnce].username;
+        }else{
+            self.phoneStr = ModuleZW(@"未绑定");
+        }
+    }else{
+        if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].username]) {
+            if([self deptNumInputShouldNumber:[UserShareOnce shareOnce].username]){
+                self.phoneStr  = [UserShareOnce shareOnce].username;
+            }else{
+                self.phoneStr = @"";
+            }
+        }
+    }
+    [self.phoneBT setTitle:self.phoneStr forState:(UIControlStateNormal)];
+}
+-(void)dealloc{
 
+}
 
 -(void)layoutMineView{
     
@@ -52,10 +80,15 @@
     self.sexStr           = [NSString string];
     self.brithdayStr    = [NSString string];
     self.phoneStr       = [NSString string];
+    self.emailStr       = [NSString string];
+    self.sexupStr           = [NSString string];
     if ([MemberUserShance shareOnce].name.length <  26) {
         self.nameStr = [MemberUserShance shareOnce].name;
     }else{
         self.nameStr = [UserShareOnce shareOnce].wxName;
+    }
+    if(![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].name]&&[UserShareOnce shareOnce].name.length < 26){
+        self.nameStr = [UserShareOnce shareOnce].name;
     }
     if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].gender]) {
         if ([[UserShareOnce shareOnce].gender isEqualToString:@"male"]) {
@@ -89,9 +122,15 @@
             }
         }
     }
+    
+    if(![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].email]){
+        self.emailStr  = [UserShareOnce shareOnce].email;
+    }else {
+        self.emailStr  = ModuleZW(@"未绑定");
+    }
    
-    NSArray *titleArray = @[ModuleZW(@"头像"),ModuleZW(@"昵称"),ModuleZW(@"性别"),ModuleZW(@"出生日期"),ModuleZW(@"手机号码")];
-    NSArray *contentArray = @[@"",self.nameStr,self.sexStr,self.brithdayStr ,self.phoneStr ];
+    NSArray *titleArray = @[ModuleZW(@"头像"),ModuleZW(@"昵称"),ModuleZW(@"性别"),ModuleZW(@"出生日期"),ModuleZW(@"手机号码"),ModuleZW(@"邮箱")];
+    NSArray *contentArray = @[@"",self.nameStr,self.sexStr,self.brithdayStr ,self.phoneStr,self.emailStr];
     
     for (int i = 0; i < titleArray.count; i++) {
         UILabel *leftLabel = [[UILabel alloc]init];
@@ -121,14 +160,18 @@
             self.photoButton = photoButton;
             
         }else {
-            leftLabel.frame = CGRectMake(30, kNavBarHeight + 90 + 45 *(i-1), 110, 45);
+            leftLabel.frame = CGRectMake(30, kNavBarHeight + 90 + 45 *(i-1), 150, 45);
             UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            button.frame = CGRectMake(leftLabel.right + 20, leftLabel.top, ScreenWidth - leftLabel.right - 50, 45);
+            button.frame = CGRectMake(leftLabel.right , leftLabel.top, ScreenWidth - leftLabel.right - 30, 45);
+            if (i == 5) {
+                button.frame = CGRectMake(leftLabel.right - 70, leftLabel.top, ScreenWidth - leftLabel.right + 40 , 45);
+            }
             [button setTitle:contentArray[i] forState:(UIControlStateNormal)];
             [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
             [button setTitleColor: [UIColor blackColor] forState:(UIControlStateNormal)];
             [button.titleLabel setFrame:button.bounds];
             [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+            __weak typeof(self) weakSelf = self;
             [[button rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
                 switch (i) {
                     case 1: {
@@ -137,24 +180,25 @@
                         [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
                             textField.placeholder = ModuleZW(@"设置昵称");
                             [textField addTarget:self action:@selector(textFieldDidChanged:) forControlEvents:UIControlEventEditingChanged];
+                            textField.tag = 1001;
                             
                         }];
                         UIAlertAction *action1 = [UIAlertAction actionWithTitle:ModuleZW(@"确认") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-                            self.nameStr = [[alertVc textFields] objectAtIndex:0].text;
-                            [button setTitle:self.nameStr forState:(UIControlStateNormal)];
-                            [self commitClick];
+                            weakSelf.nameStr = [[alertVc textFields] objectAtIndex:0].text;
+                            weakSelf.nameBT = button;
+                            [weakSelf commitClick];
                         }];
                         UIAlertAction *action2 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:nil];
                         [alertVc addAction:action2];
                         [alertVc addAction:action1];
-                        [self presentViewController:alertVc animated:YES completion:nil];
+                        [weakSelf presentViewController:alertVc animated:YES completion:nil];
                     }
                         break;
                     case 2:
-                        [self sexClick:x];
+                        [weakSelf sexClick:x];
                         break;
                     case 3:
-                        [self birthDayActive];
+                        [weakSelf birthDayActive];
                         break;
                     case 4:
                         if([UserShareOnce shareOnce].languageType) {
@@ -163,16 +207,39 @@
                         if ([[UserShareOnce shareOnce].loginType isEqualToString:@"WX"]){
                             if([UserShareOnce shareOnce].username.length != 11){
                                 WXPhoneController *vc = [[WXPhoneController alloc]init];
-                                [self.navigationController pushViewController:vc animated:YES];
+                                [self   presentViewController:vc animated:YES completion:nil];
                             }
                         }
                         break;
+                    case 5:{
+                        
+                        UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"" message:nil preferredStyle:
+                                                      UIAlertControllerStyleAlert];
+                        [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                            textField.placeholder = ModuleZW(@"请输入邮箱");
+                            [textField addTarget:self action:@selector(textFieldDidChanged:) forControlEvents:UIControlEventEditingChanged];
+                            textField.tag = 1002;
+                        }];
+                        UIAlertAction *action1 = [UIAlertAction actionWithTitle:ModuleZW(@"确认") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                            weakSelf.emailStr = [[alertVc textFields] objectAtIndex:0].text;
+                            weakSelf.emailBT = button;
+                            [weakSelf commitClick];
+                        }];
+                        UIAlertAction *action2 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:nil];
+                        [alertVc addAction:action2];
+                        [alertVc addAction:action1];
+                        [weakSelf presentViewController:alertVc animated:YES completion:nil];
+                        
+                    }
                     default:
                         break;
                 }
             }];
             if(i == 3){
-                _brithdayButton = button;
+                weakSelf.brithdayButton = button;
+            }
+            if(i == 4){
+                weakSelf.phoneBT = button;
             }
             UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(button.width + 10, 15 , 12, 15)];
             iconImageView.image = [UIImage imageNamed:@"1我的_09"];
@@ -211,19 +278,20 @@
         [btn setTitle:arr[i] forState:(UIControlStateNormal)];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         btn.titleLabel.font = [UIFont systemFontOfSize:14];
+         __weak typeof(self) weakSelf = self;
         [[btn rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
             [blackView removeFromSuperview];
             switch (i) {
                 case 0:
                     [button setTitle:ModuleZW(@"男") forState:(UIControlStateNormal)];
-                    self.sexStr = ModuleZW(@"男");
-                    [self commitClick];
+                    weakSelf.sexStr = ModuleZW(@"男");
+                    [weakSelf commitClick];
                     break;
                     
                 case 1:
                     [button setTitle:ModuleZW(@"女") forState:(UIControlStateNormal)];
-                    self.sexStr = ModuleZW(@"女");
-                    [self commitClick];
+                    weakSelf.sexStr = ModuleZW(@"女");
+                    [weakSelf commitClick];
                     break;
                     
                 default:
@@ -241,13 +309,31 @@
 #pragma mark ------ 提交按钮
 -(void)commitClick {
     
-    NSString *sexStr = [NSString string];
+    
+    if ([GlobalCommon  stringEqualNull:self.nameStr]) {
+        [self showAlertWarmMessage:ModuleZW(@"昵称不能为空")];
+        return;
+    }
     if([self.sexStr isEqualToString:ModuleZW(@"男")]){
-        sexStr = @"male";
+        self.sexupStr = @"male";
     }else if([self.sexStr isEqualToString:ModuleZW(@"女")]){
-        sexStr = @"female";
+        self.sexupStr = @"female";
     }else{
-        sexStr = @"";
+        self.sexupStr = @"";
+    }
+    if ([_brithdayStr isEqualToString:ModuleZW(@"未设置")]) {
+        _brithdayStr = @"";
+    }
+    if ([_emailStr isEqualToString:ModuleZW(@"未绑定")]) {
+        _emailStr = @"";
+    }else{
+        if (![_emailStr isEqualToString:@""]) {
+            if (![self isValidateEmail:_emailStr]) {
+                [self showAlertWarmMessage:ModuleZW(@"请输入正确的邮箱")];
+                return;
+            }
+        }
+       
     }
    [GlobalCommon showMBHudWithView:self.view];
     NSString *UrlPre=URL_PRE;
@@ -260,12 +346,10 @@
     }
     [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"id"];
     [request setPostValue:self.urlHttpImg forKey:@"memberImage"];
-    [request setPostValue:sexStr forKey:@"gender"];
+    [request setPostValue:self.sexupStr forKey:@"gender"];
     [request setPostValue:self.nameStr forKey:@"name"];
     [request setPostValue:_phoneStr forKey:@"mobile"];
-    if ([_brithdayStr isEqualToString:ModuleZW(@"未设置")]) {
-        _brithdayStr = @"";
-    }
+    [request setPostValue:_emailStr forKey:@"email"];
     [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
     [request setPostValue:_brithdayStr forKey:@"birthday"];
     [request setTimeOutSeconds:20];
@@ -450,6 +534,7 @@
 
 
 - (void)textFieldDidChanged:(UITextField *)textField {
+    if (textField.tag == 1002) return;
     UITextRange *selectedRange = textField.markedTextRange;
     UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
     if (position) {
@@ -476,15 +561,27 @@
         
         [UserShareOnce shareOnce].name=_nameStr;
         [UserShareOnce shareOnce].gender=_sexStr;
+        if (_brithdayStr.length == 0) {
+            _brithdayStr = ModuleZW(@"未设置");
+        }
+        if (_emailStr.length == 0) {
+            _emailStr = ModuleZW(@"未绑定");
+        }
+        
+        [UserShareOnce shareOnce].gender = self.sexupStr;
+        [UserShareOnce shareOnce].email=_emailStr;
         [UserShareOnce shareOnce].birthday=_brithdayStr;
         [UserShareOnce shareOnce].username=_phoneStr;
         [UserShareOnce shareOnce].memberImage=self.urlHttpImg;
+        
+        [_emailBT setTitle:_emailStr forState:(UIControlStateNormal)];
+        [_nameBT setTitle:_nameStr forState:(UIControlStateNormal)];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"personalInfoUpdateSuccess" object:nil];
 
         
     } else {
-        [self showAlertWarmMessage:[dic objectForKey:@"data"]];
+        [self showAlertWarmMessage:[dic objectForKey:@"message"]];
     }
 }
 
@@ -550,11 +647,12 @@
             [button setTitle:buttonTitleArray[i] forState:(UIControlStateNormal)];
             [button setTitleColor:UIColorFromHex(0Xffa200) forState:(UIControlStateNormal)];
             [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
+            __weak typeof(self) weakSelf = self;
             [[button rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
                 if(i == 1){
-                    self.brithdayStr = self.dateString;
-                    [self->_brithdayButton setTitle:self->_brithdayStr forState:(UIControlStateNormal)];
-                     [self commitClick];
+                    weakSelf.brithdayStr = self.dateString;
+                    [weakSelf.brithdayButton setTitle:self->_brithdayStr forState:(UIControlStateNormal)];
+                     [weakSelf commitClick];
                 }
                 backView.hidden = YES;
             }];
@@ -596,6 +694,13 @@
         [_datePicker removeFromSuperview];
     }
     [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+-(BOOL)isValidateEmail:(NSString *)email
+{
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES%@",emailRegex];
+    return [emailTest evaluateWithObject:email];
 }
 
 @end

@@ -5,8 +5,9 @@
   Created by 出神入化 on 2019/2/13.
   Copyright © 2019 刘晓明. All rights reserved.
 */
-CFBundleDisplayName = "Harmony Yi";
-NSCameraUsageDescription = "Allow this APP to access your camera to take photos so as to modify avatar?";
-NSMicrophoneUsageDescription  = "Allow this APP to access  your microphone to get your voice so as to evaluate your meridian function?";
-NSPhotoLibraryUsageDescription = "Allow this APP to access your album to add images?";
-NSBluetoothPeripheralUsageDescription = "Allow this APP to use your Bluetooth to connect an external device?";
+
+//CFBundleDisplayName = "Harmony Yi";
+//NSCameraUsageDescription = "Allow this APP to access your camera to take photos so as to modify avatar?";
+//NSMicrophoneUsageDescription  = "Allow this APP to access  your microphone to get your voice so as to evaluate your meridian function?";
+//NSPhotoLibraryUsageDescription = "Allow this APP to access your album to add images?";
+//NSBluetoothPeripheralUsageDescription = "Allow this APP to use your Bluetooth to connect an external device?";

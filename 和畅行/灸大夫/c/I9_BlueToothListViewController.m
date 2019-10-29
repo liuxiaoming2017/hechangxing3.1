@@ -43,7 +43,7 @@
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;
     self.navTitleLabel.text = ModuleZW(@"灸大夫隔物灸仪列表");
-    
+    self.navTitleLabel.font = [UIFont systemFontOfSize:17/[UserShareOnce shareOnce].fontSize];
     if(_deviceNetName != nil){
         _mCurrentConnect.text = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"现连接灸头网络名称"),_deviceNetName];
     }else{
@@ -63,6 +63,11 @@
         _searchAlert = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"正在努力搜索灸大夫隔物灸仪...") delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
         [_searchAlert show];
     }
+    
+    if(kPlayer.playerState == 2){
+        [kPlayer stop];
+    }
+    
     // Do any additional setup after loading the view.
 }
 

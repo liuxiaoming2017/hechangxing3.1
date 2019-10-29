@@ -23,6 +23,7 @@
 @interface HeChangRemind()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong) CALayer *subLayer;
+@property(nonatomic,assign)CGFloat tableViewHigh;
 
 @end
 
@@ -43,7 +44,7 @@
 
 - (void)createupUI
 {
-    
+    self.tableViewHigh = 0;
     UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
     imageV.tag = 200;
     imageV.layer.cornerRadius = 8.0;
@@ -85,18 +86,16 @@
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 30;
     self.tableView.scrollEnabled = NO;
-    
     [self addSubview:self.tableView];
     
 }
 
 
 #pragma mark - tableview代理方法
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 45+14;
-}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(self.dataArr.count>0){
@@ -116,9 +115,9 @@
     if(self.dataArr.count>indexPath.row){
         RemindModel *model = [self.dataArr objectAtIndex:indexPath.row];
         cell.typeLabel.text =ModuleZW(model.type);
-        [cell.typeLabel sizeToFit];
-        cell.contentLabel.left = cell.typeLabel.right + 10;
-        
+        NSLog(@"####%@,&&&%@",model.type,model.advice);
+        cell.typeLabel.font=[UIFont systemFontOfSize:13.0];
+        cell.contentLabel.font=[UIFont systemFontOfSize:13.0];
         if([model.type isEqualToString:ModuleZW(@"一说")]){
             cell.lineImageV.backgroundColor = UIColorFromHex(0X66A8E9);
         }else if ([model.type isEqualToString:ModuleZW(@"一写")]){
@@ -133,9 +132,17 @@
             cell.circleImageV.hidden = NO;
         }
     }
-    
+ 
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(RemindCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == self.dataArr.count -1) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGETABLESIZE" object:nil];
+    }
+    
+}
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -149,6 +156,11 @@
     
     if([cell.typeLabel.text isEqualToString:ModuleZW(@"一说")]){
         
+        if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
+            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还不是会员" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+            [av show];
+            return;
+        }
         if([self isFirestClickThePageWithString:@"speak"]){
             vc = [[MeridianIdentifierViewController alloc] init];
         }else{
@@ -158,7 +170,11 @@
         [self.viewController.navigationController pushViewController:vc animated:YES];
         
     }else if ([cell.typeLabel.text isEqualToString:ModuleZW(@"一写")]){
-        
+        if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
+            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还不是会员" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+            [av show];
+            return;
+        }
         if([self isFirestClickThePageWithString:@"write"]){
             vc = [[WriteListController alloc] init];
         }else{
@@ -280,5 +296,7 @@
     }
     return NO;
 }
+
+
 
 @end

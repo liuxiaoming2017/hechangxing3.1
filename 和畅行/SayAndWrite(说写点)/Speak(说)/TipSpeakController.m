@@ -42,7 +42,11 @@
 
 - (void)nextBtnAction
 {
+    
     MeridianIdentifierViewController *vc = [[MeridianIdentifierViewController alloc] init];
+   
+    vc.haveAnmo = self.haveAnmo;
+    
     [self.navigationController pushViewController:vc animated:YES];
 }
 

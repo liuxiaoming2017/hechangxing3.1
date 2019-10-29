@@ -12,7 +12,7 @@
 #import "BloodPressureNonDeviceViewController.h"
 #import "SugerViewController.h"
 #import "SGScanningQRCodeVC.h"
-
+#import "ArmchairThemeVC.h"
 
 @interface CustomNavigationController ()<UIGestureRecognizerDelegate>
 
@@ -55,11 +55,11 @@
         }
         if([vc isKindOfClass:[ResultSpeakController class]]){
             ResultSpeakController *vcc = ( ResultSpeakController *)vc;
-            if([vcc.titleStr isEqualToString:ModuleZW(@"季度报告详情")]||[vcc.titleStr isEqualToString:ModuleZW(@"血糖监测")]||[vcc.titleStr isEqualToString:ModuleZW(@"血压监测")]||[vcc.titleStr isEqualToString:ModuleZW(@"血压详情")]){
+            if([vcc.titleStr isEqualToString:ModuleZW(@"季度报告详情")]||[vcc.titleStr isEqualToString:ModuleZW(@"血糖监测")]||[vcc.titleStr isEqualToString:ModuleZW(@"血压监测")]||[vcc.titleStr isEqualToString:ModuleZW(@"血压详情")]||[vcc.titleStr isEqualToString:ModuleZW(@"血糖详情")]){
                 return NO;
             }
         }
-        if([vc isKindOfClass:[BloodPressureNonDeviceViewController class]]||[vc isKindOfClass:[SugerViewController class]]||[vc isKindOfClass:[SGScanningQRCodeVC class]]){
+        if([vc isKindOfClass:[BloodPressureNonDeviceViewController class]]||[vc isKindOfClass:[SugerViewController class]]||[vc isKindOfClass:[SGScanningQRCodeVC class]]||[vc isKindOfClass:[ArmchairThemeVC class]]){
             return NO;
         }
         

@@ -16,7 +16,6 @@
 #import "SGScanningQRCodeVC.h"
 #import <AVFoundation/AVFoundation.h>
 #import "SGScanningQRCodeView.h"
-#import "ScanSuccessJumpVC.h"
 #import "SGQRCodeTool.h"
 #import <Photos/Photos.h>
 #import "SGAlertView.h"
@@ -29,8 +28,9 @@
 /** 图层类 */
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;
 @property (nonatomic, strong) SGScanningQRCodeView *scanningView;
+@property (nonatomic, strong) UIButton *button;
 @property (nonatomic, strong) UIButton *right_Button;
-@property (nonatomic, assign) BOOL first_push;
+@property (nonatomic, assign) int typeInt;
 @property (nonatomic, assign) BOOL isNetValid;
 
 @end
@@ -39,29 +39,95 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    // 创建扫描边框
     
     
     self.scanningView = [[SGScanningQRCodeView alloc] initWithFrame:self.view.frame outsideViewLayer:self.view.layer];
     self.scanningView.userInteractionEnabled = YES;
     [self.view addSubview:self.scanningView];
-
+    [self.scanningView.backView addSubview:_button];
+    
+    [self.session startRunning];
   
-    // 二维码扫描
-    [self setupScanningQRCode];
+   
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"扫一扫";
-    self.first_push = YES;
+    self.typeInt = 1;
     self.isNetValid = YES;
     
-
+    UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    [button setTitle:@"相册" forState:(UIControlStateNormal)];
+    [button  setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    button.frame =CGRectMake(ScreenWidth - 60  , kNavBarHeight -44, 60, 44);
+    [button addTarget:self action:@selector(photoAlbum) forControlEvents:(UIControlEventTouchUpInside)];
+    _button = button;
+    
+  
+   [self setupScanningQRCode];
+    
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground)name:UIApplicationWillEnterForegroundNotification object:nil];
     
 }
 
+- (void)applicationWillEnterForeground{
+    
+    [self.session startRunning];
+}
+-(void)photoAlbum{
+    self.typeInt = 2;
+    [self readImageFromAlbum];
+}
+#pragma mark - - - 从相册中读取照片
+- (void)readImageFromAlbum {
+    // 1、 获取摄像设备
+    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    if (device) {
+        // 判断授权状态
+        PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+        if (status == PHAuthorizationStatusNotDetermined) { // 用户还没有做出选择
+            // 弹框请求用户授权
+            [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+                if (status == PHAuthorizationStatusAuthorized) { // 用户点击了好
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init]; // 创建对象
+                        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary; //（选择类型）表示仅仅从相册中选取照片
+                        imagePicker.delegate = self; // 指定代理，因此我们要实现UIImagePickerControllerDelegate,  UINavigationControllerDelegate协议
+                        [self presentViewController:imagePicker animated:YES completion:nil]; // 显示相册
+                        NSLog(@"主线程 - - %@", [NSThread currentThread]);
+                    });
+                    NSLog(@"当前线程 - - %@", [NSThread currentThread]);
+                    
+                    // 用户第一次同意了访问相册权限
+                    NSLog(@"用户第一次同意了访问相册权限");
+                } else {
+                    // 用户第一次拒绝了访问相机权限
+                    NSLog(@"用户第一次拒绝了访问相册");
+                }
+            }];
+            
+        } else if (status == PHAuthorizationStatusAuthorized) { // 用户允许当前应用访问相册
+            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init]; // 创建对象
+            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary; //（选择类型）表示仅仅从相册中选取照片
+            imagePicker.delegate = self; // 指定代理，因此我们要实现UIImagePickerControllerDelegate,  UINavigationControllerDelegate协议
+            [self presentViewController:imagePicker animated:YES completion:nil]; // 显示相册
+            
+        } else if (status == PHAuthorizationStatusDenied) { // 用户拒绝当前应用访问相册
+            SGAlertView *alertView = [SGAlertView alertViewWithTitle:@"⚠️ 警告" delegate:nil contentTitle:@"请去-> [设置 - 隐私 - 照片 - SGQRCodeExample] 打开访问开关" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne)];
+            [alertView show];
+            
+        } else if (status == PHAuthorizationStatusRestricted) {
+            NSLog(@"因为系统原因, 无法访问相册");
+        }
+        
+    } else {
+        SGAlertView *alertView = [SGAlertView alertViewWithTitle:@"⚠️ 警告" delegate:nil contentTitle:@"未检测到您的摄像头, 请在真机上测试" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne)];
+        [alertView show];
+    }
+}
 -(void)popview{
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -73,20 +139,11 @@
 - (void)rightBarButtonItenAction {
     [self.navigationController popViewControllerAnimated:YES];
 }
-#pragma mark - - - UIImagePickerControllerDelegate
-/*
-// 此方法，已过期
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo {
 
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self scanQRCodeFromPhotosInTheAlbum:image];
-    }];
-}
-*/
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     
     [self dismissViewControllerAnimated:YES completion:^{
-//        [self scanQRCodeFromPhotosInTheAlbum:[info objectForKey:@"UIImagePickerControllerOriginalImage"]];
+        [self scanQRCodeFromPhotosInTheAlbum:[info objectForKey:@"UIImagePickerControllerOriginalImage"]];
     }];
 }
 #pragma mark - - - 从相册中识别二维码, 并进行界面跳转
@@ -97,24 +154,32 @@
     
     // 取得识别结果
     NSArray *features = [detector featuresInImage:[CIImage imageWithCGImage:image.CGImage]];
-    
-    CIQRCodeFeature *feature = [features objectAtIndex:0];
-    NSString *scannedResult = feature.messageString;
-    
-    ScanSuccessJumpVC *jumpVC = [[ScanSuccessJumpVC alloc] init];
-    jumpVC.jump_URL = scannedResult;
-    [self.navigationController pushViewController:jumpVC animated:YES];
-
-    
-    for (int index = 0; index < [features count]; index ++) {
-        CIQRCodeFeature *feature = [features objectAtIndex:index];
+    if (features.count > 0) {
+        CIQRCodeFeature *feature = [features objectAtIndex:0];
         NSString *scannedResult = feature.messageString;
         
-        if (self.first_push) {
-            
-            self.first_push = NO;
-        }
+        [self playSoundEffect:@"sound.caf"];
+        
+
+        // 1、如果扫描完成，停止会话
+        [self.session stopRunning];
+        
+        
+        [self requestCarWithStr:scannedResult withtypeInt:2];
+    }else{
+        [self playSoundEffect:@"sound.caf"];
+        // 2、删除预览图层
+        // 1、如果扫描完成，停止会话
+        [self.session stopRunning];
+        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"未检测到二维码") preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+             [self.session startRunning];
+        }];
+        [alerVC addAction:suerAction];
+        [self presentViewController:alerVC animated:YES completion:nil];
     }
+    
+
 }
 
 #pragma mark - - - 二维码扫描
@@ -124,24 +189,14 @@
     // 实例化预览图层, 传递_session是为了告诉图层将来显示什么内容
     self.previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:_session];
     [SGQRCodeTool SG_scanningQRCodeOutsideVC:self session:_session previewLayer:_previewLayer];
-    
-    __weak typeof(self) weakSelf = self;
-    weakSelf.scanningView.popBlock =  ^(SGScanningQRCodeView *code) {
-        [weakSelf popview];
-    };
+
 }
 
 #pragma mark - - - 二维码扫描代理方法
 // 调用代理方法，会频繁的扫描
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
     
-    // 0、扫描成功之后的提示音
-    [self playSoundEffect:@"sound.caf"];
-    
-    // 2、删除预览图层
-    [self.previewLayer removeFromSuperlayer];
-    // 1、如果扫描完成，停止会话
-    [self.session stopRunning];
+  
 
     
     // 3、设置界面显示扫描结果
@@ -150,43 +205,62 @@
         
         NSString *str = [NSString stringWithFormat:@"%@",obj.stringValue];
         
+        // 0、扫描成功之后的提示音
+        [self playSoundEffect:@"sound.caf"];
+
+        // 1、如果扫描完成，停止会话
+        [self.session stopRunning];
         // [self setupScanningQRCode];
-
-         NSString *str1 = [NSString stringWithFormat:@"/member/cashcard/getCard.jhtml?imageCode=%@",str];
-
-        [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:str1 parameters:nil successBlock:^(id response) {
-            //             [hud hideAnimated:YES];
-            if ([response[@"status"] integerValue] == 100){
-                HCY_CarDetailController *vc = [[HCY_CarDetailController alloc]init];
-                vc.dateDic = response;
-                [self.navigationController pushViewController:vc animated:YES];
-            } else if ([response[@"status"] intValue]== 44) {
-                
-                UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") preferredStyle:(UIAlertControllerStyleAlert)];
-                UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-                    LoginViewController *loginVC = [[LoginViewController alloc]init];
-                    [self.navigationController pushViewController:loginVC animated:YES];
-                }];
-                [alerVC addAction:suerAction];
-                [self presentViewController:alerVC animated:YES completion:nil];
-            } else  {
-                NSString *str = [response objectForKey:@"data"];
-                UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:str preferredStyle:(UIAlertControllerStyleAlert)];
-                UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-                    [self setupScanningQRCode];
-                }];
-                [alerVC addAction:suerAction];
-                [self presentViewController:alerVC animated:YES completion:nil];
-                
-            }
-        } failureBlock:^(NSError *error) {
-            
-        }];
-            
+        [self requestCarWithStr:str withtypeInt:1];
+        
         }
 
 }
 
+-(void)requestCarWithStr:(NSString *)str withtypeInt:(int)typeint{
+    NSString *iPoneNumber = [NSString stringWithFormat:@"%@ky3h.com",str];
+    NSString *signatureStr = [GlobalCommon md5:iPoneNumber].uppercaseString;
+    NSString *str1 = [NSString stringWithFormat:@"/member/cashcard/getCard.jhtml?imageCode=%@&signature=%@",str,signatureStr];
+    str1 = [str1 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"-----------------------%@",str1);
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:str1 parameters:nil successBlock:^(id response) {
+        //             [hud hideAnimated:YES];
+        NSLog(@"-----------------------%@",response);
+        if ([response[@"status"] integerValue] == 100){
+            HCY_CarDetailController *vc = [[HCY_CarDetailController alloc]init];
+            vc.dateDic = response;
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        } else if ([response[@"status"] intValue]== 44) {
+            
+            UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") preferredStyle:(UIAlertControllerStyleAlert)];
+            UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                LoginViewController *loginVC = [[LoginViewController alloc]init];
+                [weakSelf.navigationController pushViewController:loginVC animated:YES];
+            }];
+            [alerVC addAction:suerAction];
+            [weakSelf presentViewController:alerVC animated:YES completion:nil];
+        } else  {
+            
+             NSString *messageStr = [response objectForKey:@"message"];
+            if ([GlobalCommon stringEqualNull:messageStr]) {
+                messageStr = [response objectForKey:@"data"];
+            }
+            
+            UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:messageStr preferredStyle:(UIAlertControllerStyleAlert)];
+            UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+//                     [self setupScanningQRCode];
+                [self.session startRunning];
+            }];
+            [alerVC addAction:suerAction];
+            [self presentViewController:alerVC animated:YES completion:nil];
+            
+        }
+    } failureBlock:^(NSError *error) {
+        
+    }];
+    
+}
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
@@ -232,7 +306,10 @@ void soundCompleteCallback(SystemSoundID soundID, void *clientData){
 }
 
 
-
+-(void)dealloc{
+    
+    NSLog(@"---------------00000----------------------");
+}
 
 
 @end

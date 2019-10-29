@@ -26,7 +26,7 @@
     
     self.navTitleLabel.text = ModuleZW(@"购物车");
     
-    listTable = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height - kNavBarHeight ) style:UITableViewStylePlain];
+    listTable = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height - kNavBarHeight -  44) style:UITableViewStylePlain];
     listTable.delegate = self;
     listTable.dataSource = self;
     listTable.rowHeight = 55;

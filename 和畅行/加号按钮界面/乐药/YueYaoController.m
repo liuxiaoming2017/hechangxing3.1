@@ -22,6 +22,8 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <notify.h>
 
+#define SCREEN_WIDTH_Size ([UIScreen mainScreen].bounds.size.width)/375
+
 @interface YueYaoController ()<UITableViewDelegate,UITableViewDataSource,songListCellDelegate,DownloadHandlerDelegate,CBCentralManagerDelegate,CBPeripheralDelegate,MuscicNoramlDeleaget>
 
 {
@@ -57,6 +59,8 @@
 
 @property (nonatomic,assign) BOOL isBackground;
 
+@property (nonatomic,copy) NSString *currentPlayStr;
+
 /**
  *  蓝牙连接必要对象
  */
@@ -73,6 +77,7 @@
  判读蓝牙设备连接状态
  */
 @property (nonatomic,assign) BOOL isBleLink;
+@property (nonatomic,strong) UIButton *blueTBT;
 
 
 @end
@@ -121,16 +126,55 @@
 //    [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
 //    [audioSession setActive:YES error:nil];
     
-    [self playControl];
+//    [self playControl];
+//
+//    [self createRemoteCommandCenter];
     
-    [self createRemoteCommandCenter];
+    if(self.isYueLuoyi){
+        if(![[[NSUserDefaults standardUserDefaults]valueForKey:@"YueLuoyi"] isEqualToString:@"1111"]){
+            [self layoutPromptView];
+        }
+    }
     
     [self addObservers];
     
 }
 
+-(void)layoutPromptView{
+    
+    UIView *blackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+    blackView.backgroundColor = [UIColor blackColor];
+    blackView.alpha = 0.8;
+    [self.view addSubview:blackView];
+    
+    
+    UIButton *iKnowBT = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    iKnowBT.frame = CGRectMake(ScreenWidth - 150,  kScreenSize.height- kNavBarHeight - 160 - 100, 100, 50);
+    __weak typeof(self) weakSelf = self;
+    [iKnowBT setBackgroundImage:[UIImage imageNamed:ModuleZW(@"我知道了")] forState:(UIControlStateNormal)];
+    [[iKnowBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [[NSUserDefaults standardUserDefaults]setValue:@"1111" forKey:@"YueLuoyi"];
+        [blackView removeFromSuperview];
+        weakSelf.musciView.userInteractionEnabled = YES;
+        weakSelf.blueTBT.userInteractionEnabled = YES;
+    }];
+    [blackView addSubview:iKnowBT];
+    
+    NSArray *imageArray = @[@"左边箭头",@"右边箭头"];
+    for (int i = 0; i < 2; i++) {
+        UIImageView *leftImagaView = [[UIImageView alloc]initWithFrame:CGRectMake(40 + (ScreenWidth - 180 - 40)*i, kScreenSize.height- kNavBarHeight - 180, 120, 120)];
+        leftImagaView.image = [UIImage imageNamed:ModuleZW(imageArray[i])];
+        [blackView addSubview:leftImagaView];
+    }
+    
+    self.musciView.userInteractionEnabled = NO;
+    self.blueTBT.userInteractionEnabled = NO;
+    [self.view addSubview:self.musciView];
+    [self.view addSubview:self.blueTBT];
+}
+
 - (void)remoteControlReceivedWithEvent:(UIEvent *)event{
-    NSLog(@"%ld",event.type);
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"songRemoteControlNotification" object:self userInfo:@{@"eventSubtype":@(event.subtype)}];
 }
 
@@ -151,16 +195,6 @@
         [weakSelf.avPlayer play];
         return MPRemoteCommandHandlerStatusSuccess;
     }];
-//        [commandCenter.previousTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-//            NSLog(@"上一首");
-//            return MPRemoteCommandHandlerStatusSuccess;
-//        }];
-//    
-//    [commandCenter.nextTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-//        NSLog(@"下一首");
-//        return MPRemoteCommandHandlerStatusSuccess;
-//    }];
-    
 
     //在控制台拖动进度条调节进度（仿QQ音乐的效果）
     [commandCenter.changePlaybackPositionCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
@@ -276,7 +310,7 @@
     //设置歌手名
     //[songDict setObject:@"韩安旭" forKey:MPMediaItemPropertyArtist];
     //设置专辑名
-    [songDict setObject:@"harmonyYi" forKey:MPMediaItemPropertyAlbumTitle];
+   // [songDict setObject:@"harmonyYi" forKey:MPMediaItemPropertyAlbumTitle];
     //设置歌曲时长
     [songDict setObject:[NSNumber numberWithDouble:totalTime]  forKey:MPMediaItemPropertyPlaybackDuration];
     //设置已经播放时长
@@ -373,7 +407,7 @@
     
  
     
-    hysegmentControl = [[HYSegmentedControl alloc] initWithOriginY:topSegment.bottom + 15 Titles:@[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"] delegate:self];
+    hysegmentControl = [[HYSegmentedControl alloc] initWithOriginY:topSegment.bottom + 15 Titles: @[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫",] delegate:self];
     [self.view addSubview:hysegmentControl];
 
 
@@ -398,52 +432,51 @@
     if (![GlobalCommon stringEqualNull:physicalStr]) {
         
         NSArray * segmentedArray = @[
-                                     @[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"],
-                                     @[@"上商", @"少商", @"钛商", @"右商", @"左商"],
-                                     @[@"大角", @"判角", @"上角", @"少角", @"钛角"],
-                                     @[@"判徵", @"上徵", @"少徵", @"右徵", @"质徵"],
-                                     @[@"大羽", @"上羽", @"少羽", @"桎羽", @"众羽"]
+                                     @[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫"],
+                                     @[ @"少商", @"左商",@"上商",@"右商", @"钛商"],
+                                     @[@"少角",@"判角",@"上角", @"钛角",@"大角"],
+                                     @[@"少徵",@"判徵",@"上徵",@"右徵", @"质徵"],
+                                     @[@"少羽", @"桎羽",@"上羽",@"众羽",@"大羽"]
                                      ];
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 NSString *str = segmentedArray[i][j];
-                if([physicalStr isEqualToString:str]){
+                if([ModuleZW(physicalStr) isEqualToString:str]){
                     topSegment.selectedSegmentIndex = i;
-                    [self valuesegChanged:topSegment];
+                    [self hysegmentInitBtnorline:topSegment];
                     [hysegmentControl changeSegmentedControlWithIndex:j];
-                    [self requestYueyaoListWithType:physicalStr];
+                    //[self requestYueyaoListWithType:physicalStr];
                     self.typeStr = physicalStr; //用于支付成功刷新
                 }
             }
         }
     }
-    if ([GlobalCommon stringEqualNull:physicalStr]){
-        [self requestYueyaoListWithType:@"大宫"];
+    if ([GlobalCommon stringEqualNull:physicalStr] || [physicalStr isEqualToString:@""]){
+        //[self requestYueyaoListWithType:@"少宫"];
+        [hysegmentControl changeSegmentedControlWithIndex:0];
     }
     
-   // [self getPayRequest];
+    [self getPayRequest];
     
-    self.isOnPay = NO;
+    
 }
 
 
 -(void)getPayRequest {
     
-    NSString *urlStr = @"/resources/isfree.jhtml";
-    __weak typeof(self) weakSelf = self;
-    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
-        id status=[response objectForKey:@"status"];
-        if([status intValue] == 200){
-            [weakSelf createConsumeView];
-            weakSelf.isOnPay = YES;
-        }else{
-           // weakSelf.isOnPay = NO;
-            [weakSelf createConsumeView];
-            weakSelf.isOnPay = YES;
-        }
-    } failureBlock:^(NSError *error) {
-        weakSelf.isOnPay = NO;
-    }];
+    if([UserShareOnce shareOnce].languageType){
+        self.isOnPay = NO;
+        return;
+    }
+    
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"noAppstoreCheck"]){
+        [self createConsumeView];
+        self.isOnPay = YES;
+        //[self.tableView reloadData];
+    }else{
+        self.isOnPay = NO;
+        //[self.tableView reloadData];
+    }
     
 }
 # pragma mark - 下方金额视图
@@ -615,7 +648,12 @@
             [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
             NSString *musicStr = [[GlobalCommon Createfilepath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3",model.title]];
             [self palyActionWithUrlStr:musicStr];
-            self.selectSongName = cell.titleLabel.text;
+            NSArray *arr = [cell.titleLabel.text componentsSeparatedByString:@"\n"];
+            if(arr.count>0){
+                self.selectSongName = [arr objectAtIndex:0];
+            }else{
+                self.selectSongName = cell.titleLabel.text;
+            }
         }else{
             [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药播放icon"] forState:UIControlStateNormal];
           //  self.selectSongName = @"";
@@ -668,6 +706,7 @@
             for(NSDictionary *dic in arr){
                 SongListModel *model = [[SongListModel alloc] init];
                 model.idStr = [dic objectForKey:@"id"];
+                model.productId = [dic objectForKey:@"productId"];
                 if([[dic objectForKey:@"price"] isKindOfClass:[NSNull class]]){
                     model.price = 0;
                 }else{
@@ -865,46 +904,51 @@
 
 # pragma mark - 宫商角选择事件
 
-- (void)valuesegChanged:(UISegmentedControl *)segment
+-(void)valuesegChanged:(UISegmentedControl *)segment
+{
+    
+    [self hysegmentInitBtnorline:segment];
+    UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
+    [hysegmentControl segmentedControlChange:btn];
+    
+}
+
+- (void)hysegmentInitBtnorline:(UISegmentedControl *)segment
 {
     if (segment.selectedSegmentIndex==0)
     {
         SegIndex=0;
-        [hysegmentControl setBtnorline:@[@"大宫", @"加宫", @"上宫", @"少宫", @"左角宫"]];
-        UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
-        [hysegmentControl segmentedControlChange:btn];
-        //[self LeMedicinaRequest:@"大宫"];
+        [hysegmentControl setBtnorline:@[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫"]];
+        
+        
     }
     else if (segment.selectedSegmentIndex==1)
     {
         SegIndex=1;
-        [hysegmentControl setBtnorline:@[@"上商", @"少商", @"钛商", @"右商", @"左商"]];
+        [hysegmentControl setBtnorline:@[ @"少商", @"左商",@"上商",@"右商", @"钛商" ]];
         
-        UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
-        [hysegmentControl segmentedControlChange:btn];
+        
     }
     else if (segment.selectedSegmentIndex==2)
     {
         SegIndex=2;
-        [hysegmentControl setBtnorline:@[@"大角", @"判角", @"上角", @"少角", @"钛角"]];
-        UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
-        [hysegmentControl segmentedControlChange:btn];
+        [hysegmentControl setBtnorline:@[@"少角",@"判角",@"上角", @"钛角",@"大角"]];
+        
     }
     else if (segment.selectedSegmentIndex==3)
     {
         SegIndex=3;
-        [hysegmentControl setBtnorline:@[@"判徵", @"上徵", @"少徵", @"右徵", @"质徵"]];
-        UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
-        [hysegmentControl segmentedControlChange:btn];
+        [hysegmentControl setBtnorline:@[@"少徵",@"判徵",@"上徵",@"右徵", @"质徵"]];
+        
     }
     else
     {
         SegIndex=4;
-        [hysegmentControl setBtnorline:@[@"大羽", @"上羽", @"少羽", @"桎羽", @"众羽"]];
-        UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:0];
-        [hysegmentControl segmentedControlChange:btn];
+        [hysegmentControl setBtnorline:@[@"少羽", @"桎羽",@"上羽",@"众羽",@"大羽"]];
+        
     }
 }
+
 
 - (void)hySegmentedControlSelectAtIndex:(NSInteger)index
 {
@@ -1025,13 +1069,24 @@
 
 # pragma mark - ----------------蓝牙相关--------------------
 
+
 #pragma -mark 蓝牙初始化界面
 - (void)BluBluetoothView{
-    
-    self.musciView = [[MuisicNoraml alloc]initWithFrame:CGRectMake(0, kScreenSize.height- kNavBarHeight - 75, kScreenSize.width, 150)];
+    //ScreenHeight  - kTabBarHeight - 16
+    self.musciView = [[MuisicNoraml alloc]initWithFrame:CGRectMake(0, kScreenSize.height- kTabBarHeight - 80, kScreenSize.width, 100/2*SCREEN_WIDTH_Size + 20)];
     self.musciView.delegate = self;
-    
     [self.view addSubview:self.musciView];
+    
+    UIButton *blueTBT = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    blueTBT.frame = CGRectMake(40,  self.musciView.top +10 , self.musciView.height - 20, self.musciView.height - 20);
+    [blueTBT setBackgroundImage:[UIImage imageNamed:@"蓝牙未连接"] forState:(UIControlStateNormal)];
+    __weak typeof(self) weakSelf = self;
+    [[blueTBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [weakSelf showAlertWarmMessage:ModuleZW(@"请先连接设备")];
+    }];
+    [self.view addSubview:blueTBT];
+    self.blueTBT = blueTBT;
+    blueTBT.userInteractionEnabled = YES;
 }
 
 #pragma mark - 主动断开连接
@@ -1112,6 +1167,8 @@
     self.isBleLink = NO;
     // [self.centralMgr connectPeripheral:peripheral options:nil];
     self.musciView.bluetoothBg.image = [UIImage imageNamed:@"关蓝牙"];
+    [_blueTBT setBackgroundImage:[UIImage imageNamed:@"蓝牙未连接"] forState:(UIControlStateNormal)];
+    _blueTBT.userInteractionEnabled = YES;
     
     
 }
@@ -1177,6 +1234,8 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:LeyaoBluetoothON object:nil userInfo:nil];
             
             self.musciView.bluetoothBg.image = [UIImage imageNamed:@"开蓝牙"];
+            [_blueTBT setBackgroundImage:[UIImage imageNamed:@"蓝牙已连接"] forState:(UIControlStateNormal)];
+            _blueTBT.userInteractionEnabled = NO;
             //蓝牙链接成功
             self.isBleLink = YES;
         }
@@ -1237,6 +1296,8 @@
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:LeyaoBluetoothOFF object:nil userInfo:nil];
             NSLog(@"蓝牙已关闭");
+            [_blueTBT setBackgroundImage:[UIImage imageNamed:@"蓝牙未连接"] forState:(UIControlStateNormal)];
+            _blueTBT.userInteractionEnabled = YES;
         }
             break;
         case CBCentralManagerStatePoweredOn:
@@ -1250,6 +1311,8 @@
         default:
         {
             NSLog(@"未知的蓝牙错误");
+            [_blueTBT setBackgroundImage:[UIImage imageNamed:@"蓝牙未连接"] forState:(UIControlStateNormal)];
+            _blueTBT.userInteractionEnabled = YES;
         }
             break;
     }

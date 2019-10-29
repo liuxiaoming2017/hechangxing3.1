@@ -111,7 +111,8 @@
 "轮播暂停"                           =  "Pause";
 "播放乐药"                           =   "Play";
 "动作示范音"                       =  "Audio";
-"全部"                                  =  "All    ";
+"全部"                                  =  "All";
+"全部  >"                                  =  "All >";
 "全部   "                               =  "  All          ";
 "预备   "                               =   "Prepare  ";
 "第一式   起式"                    =  "Exercise One: Warm-up";
@@ -145,7 +146,7 @@
 "血糖"                        =  "Blood Sugar";
 "体温"                        =  "Body Temp";
 "呼吸"                        =  "Respiration";
-"阶段报告"                 =  "Report";
+"阶段报告"                 =  "Periodic Report";
 "病历"                         =  "Record";
 "收缩压"                     = "SBP";
 "舒张压"                     ="DBP";
@@ -191,7 +192,7 @@
 "手机号码:"                     =   "Email/Phone No.";
 "请输入原密码"               = "Original password";
 "授权并登录"                   =  "Submit And Login";
-"确认注销用户"               ="Sure to logout";
+"确认退出当前账号"               ="Sure to logout";
 "注销"                              = "Logout";
 "手机号码"                       =  "Phone Number ";
 "手机号码："                   =  "Phone Number: ";
@@ -223,7 +224,7 @@
 "还没有卡\n快去添加新卡吧~"        ="Not having a card\n add a new card~";
 "您将激活"                                      = "Continue to activate the";
 "   消费记录"                                      ="Order history";
-"卡号"                                             ="Card No.";
+"卡密"                                             ="Card No.";
 "去咨询"                                          ="Consult ";
 "去预约"                                          ="Appointment";
 "未激活卡片信息"                            ="Card info inactivated";
@@ -244,7 +245,7 @@
 //============================= 加号 ==================================
 "音乐"                                                              = "Treatment Music";
 "运动"                                                              = "Exercise";
-"艾灸"                                                              = "Moxibustion";
+
 "电话"                                                              = "Tel";
 "视频"                                                              = "Video";
 "留言"                                                              = "Harmony package";
@@ -287,6 +288,7 @@
 "膳食处方"                                                            = "Dietary Prescription";
 "砭石处方"                                                             = "Bian-stone therapy";
 "艾灸处方"                                                             = "ONE Moxibustion";
+"艾灸" = "Moxibustion";
 "推拿处方"                                                             = "Massage Prescription";
 "刮痧处方"                                                             = "Scrapping Prescription";
 "体质调理方案"                                                      = "Constitution Regulation Solution";
@@ -530,26 +532,7 @@
 "和畅经络运动"        ="Harmony meridian exercise";
 "请去个人中心->我的->运动示范音中下载示范音，不然您将无法收听到语音播放"        ="Please go to Personal Center->Me->Exercise Demo Recording to download the demo record. Otherwise you will not be able to listen to the voice playback. ";
 "请去下载乐药"        ="Download treatment music";
-"上商"        ="Shang Shang";
-"少商"        ="Shao Shang ";
-"钛商"        ="Tai Shang ";
-"右商"        ="You Shang";
-"左商n"        ="Zuo Shang";
-"大角"        ="Da Jue";
-"判角"        ="Pan Jue";
-"上角"        ="Shang Jue";
-"少角"        ="Shao Jue";
-"钛角"        ="Tai Jue";
-"判徵"        ="Pan Zhi";
-"上徵"        ="Shang Zhi";
-"少徵"        ="Shao Zhi";
-"右徵"        ="You Zhi";
-"质徵"        ="Zhi Zhi";
-"大羽"        ="Da Yu";
-"上羽"        ="Shang Yu";
-"少羽"        ="Shao Yu";
-"桎羽"        ="Zhi Yu";
-"众羽"        ="Zhong Yu";
+
 "计时结束"        ="Timing over";
 "打开"        ="Open";
 "关闭"        ="Close";
@@ -624,11 +607,6 @@
 "高山流水"        ="Lateral Bending";
 "俯身探海"        ="Strengthened Bend Over";
 "俯身抱月"        ="Baby Cradle";
-"宫"        ="Gong";
-"商"        ="Shang ";
-"角"        ="Jue ";
-"徵"        ="Zhi ";
-"羽"        ="Yu ";
 "结算"        ="CHECKOUT";
 "强"        ="Strong ";
 "弱"        ="Weak ";
@@ -657,8 +635,10 @@
 "视频咨询"        ="Video consultation";
 "将二维码/条码放入框内即可自动扫描"        ="Scan QR code/ barcode ";
 "手动输入"        ="Input manually";
-"请在输入框输入服务卡号"        ="Input card number";
+"请在输入框输入服务卡密码"        ="Input card number";
 "请输入卡号"        ="Input card number";
+"请在输入框输入服务密码"        ="Input card number";
+"请输入服务密码"        ="Input card number";
 "添加至卡包"        ="Add to card pack";
 "添加"        ="Add";
 "病历存档详情"        ="Record details";
@@ -713,7 +693,7 @@
 "心率过缓"        ="Heart rate is too slow ";
 "心率过速"        ="Heart rate is too fast ";
 "心率正常"        ="Heart rate is normal ";
-"数据上传成功"        ="Data uploaded successfully ";
+"上传成功"        ="Uploaded successfully ";
 "有"        ="Have";
 "无"        ="Haven’t";
 "欢迎："        ="Welcome:";
@@ -1426,7 +1406,7 @@
 "是否要关闭所有灸头"     =   "  Are you sure to close all the devices?";
 "声音 "     =   " Sound";
 "设置 "     =   " Settings";
-"声音已经打开 "     =   " Sound on";
+"声音已经打开"     =   " Sound on";
 "声音已经关闭"     =   "  Sound off";
 "当前没有在线的灸头 "     =   " No device on line";
 "找回密码"     =   " Retrieve password";
@@ -1776,3 +1756,88 @@
 "发送成功" = "Sent successfully";
 "密码修改成功" = "Password has been changed";
 "资讯详情" = "Health Culture";
+
+
+"Shao Gong" = "少宫";
+"Zuojue Gong" = "左角宫";
+"Shang Gong" = "上宫";
+"Jia Gong" = "加宫";
+"Da Gong" = "大宫";
+
+"Shao Jue" = "少角";
+"Pan Jue" = "判角";
+"Shang Jue" = "上角";
+"Tai Jue" = "鈦角";
+"Da Jue" = "大角";
+
+
+"Shao Shang" = "少商";
+"Zuo Shang" = "左商";
+"Shang Shang" = "上商";
+"You Shang" = "右商";
+"Tai Shang" = "鈦商";
+
+"Shao Yu" = "少羽";
+"Zhi Yu" = "桎羽";
+"Shang Yu" = "上羽";
+"Zhong Yu" = "众羽";
+"Da Yu" = "大羽";
+
+
+"Shao Zhi" = "少徵";
+"Pan Zhi" = "判徵";
+"You Zhi" = "右徵";
+"Zhi Zhi" = "质徵";
+"Shang Zhi" = "上徵";
+
+
+"您设置的温度已进入高温区"    =      "The temperature you set is high";
+"有可能导致灸疗部位起水泡！"    =      "May cause blisters on treated area!";
+"您设置的温度比较高"    =      "The temperature you set is high";
+"很有可能导致灸疗部位起水泡哦!"    =      "May easily cause blisters on treated area!";
+"您设置的温度已经很高了"    =      "he temperature you set is high";
+"很容易导致灸疗部位起水泡哦!"    =      "May easily cause blisters on treated area!";
+"您设置的温度已经到顶了"    =      "The temperature you set has reached the maximum";
+"灸疗部位很容易起水泡哦!"    =      "May easily cause blisters on treated area!";
+"重新设置"    =      "Reset";
+"温馨提示"    =      "Tips";
+
+"您还不是会员"    =      "You are not yet a member";
+"请输入说明内容"    =      "Please enter a description";
+"上传报告"    =      "Upload report";
+"我的上传报告"    =      "My report uploaded";
+"报告详情"    =      "Detail";
+"全部服务"    =      "All services";
+"我的上传报告"    =      "My report uploaded";
+"字体大小"    =      "Font size";
+
+
+"请输入服务卡密码"  = "Enter service card password";
+"请在输入框内输入服务卡密码"  = "Service card password";
+"服务卡密码不能为空"  = "Service card password cannot be empty.";
+
+"小"  = "Small";
+"中"  = "Medium";
+"大"  = "Large";
+"特大"  = "Extra Large";
+
+"我知道了"  = "我知道了En";
+"左边箭头"  = "左边箭头En";
+"右边箭头"  = "右边箭头En";
+
+"暂无消费记录" = "No consumption record";
+
+"邮箱" = "Email";
+"请输入邮箱"  =  "Input Email address";
+"卡密"  =    "Password";
+"确认修改"  =   "Confirm";
+"未检测到二维码"  =     "No QR Code detected";
+"视频医生"  =     "Doctor Video";
+"体检报告"  =     "Test Report";
+"图文"  =     "Graphic";
+"请输入报告说明内容"  =     "Input description of image of the report";
+"您还没有音乐示范音产品,是否去下载"  =     "You have no audio demonstration product. Go to download?";
+"邮箱地址"  =     "Email address";
+"请输入正确的邮箱"  =     "Please input correct Email address";
+"上传中…"  =     "Uploading …";
+"您还没有音乐示范音产品,是否去下载" = "You have no treatment music. Go to download?";

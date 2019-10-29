@@ -21,6 +21,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navTitleLabel.text = ModuleZW(@"支付信息");
+    self.preBtn.hidden = NO;
+    self.leftBtn.hidden = YES;
     
     self.view.backgroundColor = [UIColor whiteColor];
     UIImageView *beijingImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, 300)];
