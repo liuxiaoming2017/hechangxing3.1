@@ -34,9 +34,13 @@
                                                             ModuleZW(@"艾灸"),ModuleZW(@"电话"),
                                                             ModuleZW(@"视频"),ModuleZW(@"血压"),
                                                             ModuleZW(@"图文"),@"推拿",ModuleZW(@"耳穴")];
-        if([UserShareOnce shareOnce].isOnline){
-
+        if([UserShareOnce shareOnce].languageType){
+            imagesNameData = @[ModuleZW(@"音乐"),ModuleZW(@"运动"),
+                               ModuleZW(@"艾灸"),ModuleZW(@"电话"),
+                               ModuleZW(@"视频"),ModuleZW(@"血压"),
+                               ModuleZW(@"图文"),ModuleZW(@"耳穴")];
         }
+       
         NSInteger lieshu = imagesData.count/3+imagesData.count%3;
         //NSInteger lieshu = imagesData.count%3;
         for(int i=0;i<imagesData.count;i++){

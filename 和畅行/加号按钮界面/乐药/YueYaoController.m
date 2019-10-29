@@ -146,10 +146,22 @@
         }
     }
     
-//    [self addObservers];
     
+    NSString *yueyaoHint = [[NSUserDefaults standardUserDefaults] objectForKey:hintYueYao];
+    if([GlobalCommon stringEqualNull:yueyaoHint]){
+        __weak typeof(self) weakSelf = self;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf addNoteView];
+        });
+        
+    }
     
-    
+}
+
+- (void)addNoteView
+{
+    NoteView *noteV = [NoteView noteViewInitUIWithContent:yueYaoNote withTypeStr:hintYueYao];
+    [[UIApplication sharedApplication].keyWindow addSubview:noteV];
 }
 
 -(void)layoutPromptView{
@@ -279,9 +291,6 @@
     [rightBtn addTarget:self action:@selector(noteVC) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:rightBtn];
     
-    
-    
- 
     
     hysegmentControl = [[HYSegmentedControl alloc] initWithOriginY:topSegment.bottom + 15 Titles: @[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫",] delegate:self];
     [self.view addSubview:hysegmentControl];
@@ -467,14 +476,15 @@
             if(self.isOnPay == NO){ //不需要付费leyaoweigoumai
                imageStr = @"乐药播放icon";
             }else{
-                if([model.status isKindOfClass:[NSNull class]]){
-                    imageStr = @"乐药未购买icon";
-                }else if (model.price == 0 || [model.status isEqualToString:@"paid"]){
-                    imageStr = @"乐药播放icon";
+                if([self containGouMaiModel:model]){
+                    imageStr = @"已加入购物车";
                 }else{
-                    imageStr = @"乐药未购买icon";
-                    if([self containGouMaiModel:model]){
-                            imageStr = @"已加入购物车";
+                    if([model.status isKindOfClass:[NSNull class]]){
+                        imageStr = @"乐药未购买icon";
+                    }else if (model.price == 0 || [model.status isEqualToString:@"paid"]){
+                        imageStr = @"乐药播放icon";
+                    }else{
+                        imageStr = @"乐药未购买icon";
                     }
                 }
             }
@@ -807,19 +817,20 @@
 //
 //    }];
     
-    NSString *content = yueYaoNote;
+//    NSString *content = yueYaoNote;
+//
+//    NoteView *noteV = [NoteView noteViewInitUIWithContent:content withTypeStr:hintYueYao];
+//    [[UIApplication sharedApplication].keyWindow addSubview:noteV];
     
-    NoteView *noteV = [NoteView noteViewInitUIWithContent:content];
     
-    [[UIApplication sharedApplication].keyWindow addSubview:noteV];
-    
-    
-   // [self nextMusic];
+    [self nextMusic];
 }
 
 - (void)nextMusic
 {
+    NSString *currentUrl = @"";
     if(kPlayer.playUrlStr){
+        currentUrl = kPlayer.playUrlStr;
         self.selectSongName = nil;
         [self stopMusic];
     }
@@ -834,6 +845,16 @@
     //NSLog(@"yyyy:%@",kPlayer.musicArr);
     
     SongListModel *model = [kPlayer.musicArr objectAtIndex:index];
+    
+    if([model.source isEqualToString:currentUrl]){
+        if(index == kPlayer.musicArr.count -1){
+            index = index - 1;
+        }else{
+            index = index + 1;
+        }
+        model = [kPlayer.musicArr objectAtIndex:index];
+    }
+    
     [self playActionWithModel:model];
     
     //播放完一首歌后,切换cell按钮的状态

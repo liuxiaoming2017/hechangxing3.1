@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NoteView : UIView
 
-+ (instancetype)noteViewInitUIWithContent:(NSString *)content;
++ (instancetype)noteViewInitUIWithContent:(NSString *)content withTypeStr:(NSString *)str;
 
 @end
 

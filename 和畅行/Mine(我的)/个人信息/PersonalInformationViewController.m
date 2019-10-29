@@ -216,7 +216,7 @@
                         UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"" message:nil preferredStyle:
                                                       UIAlertControllerStyleAlert];
                         [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-                            textField.placeholder = ModuleZW(@"绑定邮箱");
+                            textField.placeholder = ModuleZW(@"请输入邮箱");
                             [textField addTarget:self action:@selector(textFieldDidChanged:) forControlEvents:UIControlEventEditingChanged];
                             textField.tag = 1002;
                         }];

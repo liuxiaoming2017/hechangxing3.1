@@ -1825,3 +1825,17 @@
 "右边箭头"  = "右边箭头En";
 
 "暂无消费记录" = "No consumption record";
+
+"邮箱" = "Email";
+"请输入邮箱"  =  "Input Email address";
+"卡密"  =    "Password";
+"确认修改"  =   "Confirm";
+"未检测到二维码"  =     "No QR Code detected";
+"视频医生"  =     "Doctor Video";
+"体检报告"  =     "Report";
+"图文"  =     "Graphic";
+"请输入报告说明内容"  =     "Input description of image of the report";
+"您还没有音乐示范音产品,是否去下载"  =     "You have no audio demonstration product. Go to download?";
+"邮箱地址"  =     "Email address";
+"请输入正确的邮箱"  =     "Please input correct Email address";
+"上传中…"  =     "Uploading …";

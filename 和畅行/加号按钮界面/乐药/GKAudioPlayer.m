@@ -379,17 +379,30 @@
 # pragma mark - 下一首
 - (void)playNextMusic
 {
+    NSString *currentUrl = @"";
+    
     if(self.playUrlStr){
+        currentUrl = self.playUrlStr;
         [self stop];
     }
-    indexNum+=1;
     
-    int index = arc4random() % self.musicArr.count;
+    SongListModel *model = [[SongListModel alloc] init];
     
-    if(indexNum > self.musicArr.count - 1){
-        indexNum = 0;
+    if(self.musicArr.count == 1){
+        model = [self.musicArr objectAtIndex:0];
+    }else{
+        int index = arc4random() % self.musicArr.count;
+        model = [self.musicArr objectAtIndex:index];
+        if([model.source isEqualToString:currentUrl]){
+            if(index == self.musicArr.count -1){
+                index = index - 1;
+            }else{
+                index = index + 1;
+            }
+            model = [self.musicArr objectAtIndex:index];
+        }
     }
-    SongListModel *model = [self.musicArr objectAtIndex:index];
+    
     self.model = model;
     self.playUrlStr = model.source;
     [self play];
@@ -404,7 +417,9 @@
     // 锁屏播放
     [commandCenter.playCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
         NSLog(@"锁屏暂停后点击播放");
-        if(self.playerState == GKAudioPlayerStatePlaying){
+        if(self.playerState == GKAudioPlayerStatePaused){
+            [self resume];
+        }else{
             [self play];
         }
         return MPRemoteCommandHandlerStatusSuccess;
@@ -440,26 +455,26 @@
     }];
     
     // 上一曲
-    MPRemoteCommand *previousCommand = commandCenter.previousTrackCommand;
-    [previousCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-        
-        [self playNextMusic];
-        
-        return MPRemoteCommandHandlerStatusSuccess;
-    }];
-    
-    // 下一曲
-    MPRemoteCommand *nextCommand = commandCenter.nextTrackCommand;
-    nextCommand.enabled = YES;
-    [nextCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
-            [self playNextMusic];
-        });
-        
-        return MPRemoteCommandHandlerStatusSuccess;
-    }];
+//    MPRemoteCommand *previousCommand = commandCenter.previousTrackCommand;
+//    [previousCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+//
+//        [self playNextMusic];
+//
+//        return MPRemoteCommandHandlerStatusSuccess;
+//    }];
+//
+//    // 下一曲
+//    MPRemoteCommand *nextCommand = commandCenter.nextTrackCommand;
+//    nextCommand.enabled = YES;
+//    [nextCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+//
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//
+//            [self playNextMusic];
+//        });
+//
+//        return MPRemoteCommandHandlerStatusSuccess;
+//    }];
     
     //在控制台拖动进度条调节进度（仿QQ音乐的效果）
 //    [commandCenter.changePlaybackPositionCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
