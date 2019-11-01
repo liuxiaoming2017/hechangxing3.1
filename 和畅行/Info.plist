@@ -29,7 +29,7 @@
 			<string>weixin</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wx690147712c2a80af</string>
+				<string>wx2101d2fcba50b476</string>
 			</array>
 		</dict>
 		<dict>
@@ -42,7 +42,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.3</string>
+	<string>1.4</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>safepay</string>
