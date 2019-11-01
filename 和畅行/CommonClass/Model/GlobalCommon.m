@@ -808,6 +808,33 @@
     return @"";
 }
 
++ (void)removeCache:(NSString *)path {
+    NSArray *arr = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+    for (NSString *filePath in arr) {
+     NSString *fileName = [NSString stringWithFormat:@"%@/%@", path, filePath];
+     [[NSFileManager defaultManager] removeItemAtPath:fileName error:nil];
+        
+    }
+}
 
++ (float)sizeAtPath:(NSString *)path {
+    NSFileManager *fm = [NSFileManager defaultManager];
+    BOOL isDir = YES;
+    if (![fm fileExistsAtPath:path isDirectory:&isDir]) {
+        return 0;
+    };
+    unsigned long long fileSize = 0;
+    // directory
+    if (isDir) {
+        NSDirectoryEnumerator *enumerator = [fm enumeratorAtPath:path];
+        while (enumerator.nextObject) {
+            fileSize += enumerator.fileAttributes.fileSize;
+        }
+    } else {
+        // file
+        fileSize = [fm attributesOfItemAtPath:path error:nil].fileSize;
+    }
+    return fileSize/(1024.0*1024.0);
+}
 
 @end

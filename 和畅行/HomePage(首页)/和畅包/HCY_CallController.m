@@ -60,7 +60,7 @@
     [cell cellsetAttributewithIndexPath:indexPath];
     
     __weak typeof(self) weakSelf = self;
-    cell.comeToNextBlock = ^(HCY_CallCell * cell) {
+    cell.comeToNextBlock = ^(HCY_CallCell * cell) { //多次点击，重复触发
         static NSTimeInterval time = 0.0;
         NSTimeInterval currentTime = [NSDate date].timeIntervalSince1970;
         if (currentTime - time > 2) {

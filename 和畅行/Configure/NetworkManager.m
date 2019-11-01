@@ -220,7 +220,12 @@ static NSMutableArray *tasks;
 //            [manager.requestSerializer setValue:[headers objectForKey:key] forHTTPHeaderField:key];
 //        }
         
-        [manager.requestSerializer setValue:@"ios_jlsl-yh-3" forHTTPHeaderField:@"version"];
+        //[manager.requestSerializer setValue:@"ios_jlsl-yh-3" forHTTPHeaderField:@"version"];
+        
+        [manager.requestSerializer setValue:@"ios_hcy-oem-3.1.3" forHTTPHeaderField:@"version"];
+        NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+        NSString *headStr = [NSString stringWithFormat:@"ios_hcy-oem-%@",nowVersion];
+        [manager.requestSerializer setValue:headStr forHTTPHeaderField:@"version"];
         
 //        [manager.requestSerializer setValue:[UserShareOnce shareOnce].token forHTTPHeaderField:@"token"];
 //        [manager.requestSerializer setValue:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",

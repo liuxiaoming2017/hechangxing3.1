@@ -70,6 +70,11 @@
 
 @property (nonatomic,assign) BOOL ogaConnected;
 
+@property (nonatomic,assign) BOOL wwanPlay;
+
+@property (copy, nonatomic) NSString  *networkState;
+
+
 + (UserShareOnce *)shareOnce;
 +(void)attemptDealloc;
 @end

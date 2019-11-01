@@ -36,4 +36,6 @@
 -(void)insertSublayerWithImageView:(UIImageView *)imageV with:(UIView *)view;
 
 -(void)addEnPopButton;
+
+- (void)showAlertMessage:(NSString *)message withSure:(void(^)(NSString * blockParam))sureBlock withCancel:(void(^)(NSString * blockParam))cancelBlock;
 @end

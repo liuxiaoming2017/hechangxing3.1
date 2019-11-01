@@ -177,6 +177,8 @@
     [[self viewController] presentViewController:alertVC animated:YES completion:NULL];
 }
 
+
+
 # pragma mark - 后台版本判断
 - (void)requestVersionDataWithType:(NSString *)type
 {

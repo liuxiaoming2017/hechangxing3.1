@@ -89,14 +89,14 @@
     self.topView.backgroundColor = [UIColor clearColor];
     self.isRefresh = YES;
     self.homeImageArray = [NSMutableArray array];
-  //  [self createTopView];
+    
+    [self showHomePackageView];
    
     [self requestUI];
-   // [self handleNetworkGroup];
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exchangeMemberChild:) name:exchangeMemberChildNotify object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSize:) name:@"CHANGESIZE" object:nil];
-//    [UIApplication sharedApplication].windows
     
     [UserShareOnce shareOnce].startTime = [GlobalCommon getCurrentTimes];
     
@@ -119,6 +119,23 @@
 }
 
 
+- (void)showHomePackageView
+{
+    [self createTopViewWithStatus:YES];
+    [self addGradientLayer];
+    if(self->_isActivity){
+        if (self.isRefresh == YES){
+            [self.readWriteView setButtonImageWithArray:self.homeImageArray];
+            self.isRefresh = NO;
+        }
+    }else{
+        if (self.isRefresh == YES){
+            [self.readWriteView initWithUI];
+            self.isRefresh = NO;
+        }
+        
+    }
+}
 
 - (void)addGradientLayer
 {
@@ -190,6 +207,9 @@
         if(str){
             NSString *str1 = [[str componentsSeparatedByString:@"&&"] objectAtIndex:0];
             NSString *str2 = [[str componentsSeparatedByString:@"&&"] objectAtIndex:1];
+            if([str1 integerValue]>=0 && [str1 integerValue]<=11){
+                _havePackage = YES;
+            }
             if(_havePackage){
                 [self.packgeView changePackgeTypeWithStatus:[str1 integerValue] withXingStr:str2];
             }
@@ -239,9 +259,7 @@
     
     self.readWriteView.frame = CGRectMake(self.readWriteView.left, _havePackage?self.packgeView.bottom-65:5, self.readWriteView.width, self.readWriteView.height);
 
-    if(_isActivity){
-        self.activityImage.frame = CGRectMake(self.activityImage.left, self.readWriteView.bottom+10, self.activityImage.width, self.activityImage.height);
-    }
+    
     
     if(!self.testActivityIndicator){
         self.testActivityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -279,6 +297,12 @@
         
     }
     
+    if(_isActivity){
+        self.activityImage.frame = CGRectMake(self.activityImage.left, self.readWriteView.bottom+10, self.activityImage.width, self.activityImage.height);
+        self.remindView.frame = CGRectMake(self.packgeView.left,   self.activityImage?self.activityImage.bottom+10:self.readWriteView.bottom+10, self.readWriteView.width, self.readWriteView.height);
+        self.recommendView.frame = CGRectMake(0, CGRectGetMaxY(self.remindView.frame)+10, ScreenWidth,self.recommendView.height);
+    }
+    
     [self.bgScrollView setContentSize:CGSizeMake(1, self.recommendView.bottom+20)];
     
 }
@@ -286,6 +310,9 @@
 - (void)updateViewFrame
 {
     self.readWriteView.frame = CGRectMake(self.readWriteView.left, _havePackage?self.packgeView.bottom-65:5, self.readWriteView.width, self.readWriteView.height);
+    if(self.activityImage){
+        self.activityImage.frame = CGRectMake(self.activityImage.left, self.readWriteView.bottom+10, self.activityImage.width, self.activityImage.height);
+    }
     self.remindView.frame = CGRectMake(self.remindView.left, self.activityImage?self.activityImage.bottom+10:self.readWriteView.bottom+10, self.remindView.width, self.remindView.height);
     self.recommendView.frame = CGRectMake(self.recommendView.left,CGRectGetMaxY(self.remindView.frame)+10 , self.recommendView.width, self.recommendView.height);
     [self.bgScrollView setContentSize:CGSizeMake(1, self.recommendView.bottom+20)];
@@ -321,19 +348,6 @@
 }
 
 
-- (void)showHomePackageView
-{
-    [self createTopViewWithStatus:YES];
-    [self addGradientLayer];
-    if(self->_isActivity){
-        if (self.isRefresh == YES){
-            [self.readWriteView setButtonImageWithArray:self.homeImageArray];
-            self.isRefresh = NO;
-        }
-    }else{
-        [self.readWriteView initWithUI];
-    }
-}
 
 # pragma mark - 活动数据的请求
 -(void)requestUI {

@@ -24,7 +24,7 @@
 #import "EDWKWebViewController.h"
 #import "SportDemonstratesViewController.h"
 
-@interface MineViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface MineViewController ()<UITableViewDelegate>
 
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSArray *listNamesArr;
@@ -67,6 +67,12 @@
     }else{
         [self.userIcon sd_setImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage] placeholderImage:[UIImage imageNamed:@"1我的_03"]];
     }
+    
+//    NSString *path = [ NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+//    NSString *folderPath = [path stringByAppendingPathComponent:@"musicCache"];
+//    NSLog(@"%fM",[GlobalCommon sizeAtPath:folderPath]);
+    
+    
 }
 
 -(void)requestData{
@@ -100,8 +106,16 @@
     }];
     
 }
+
 - (void)createUI
 {
+    
+    NSArray *numberArray = @[@"0\n收藏",@"0\n卡包",@"0\n积分"];
+    NSArray *titleArr           = @[@"待付款",@"待评价",
+                                    @"退款/售后",@"全部订单"];
+    NSArray *imageArr        = @[@"我的待付款",@"我的待评价",@"我的退款售后",@"我的全部订单"];
+    //listNamesArr                  = @[@"咨询记录",@"地址管理",@"运动示范音",@"设置"];
+    listNamesArr                  = @[@"咨询记录",@"地址管理",@"设置"];
     
     UIScrollView *backScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake( 0,-kStatusBarHeight, ScreenWidth, ScreenHeight+kStatusBarHeight - kTabBarHeight )];
     backScrollView.backgroundColor = [UIColor clearColor];
@@ -155,7 +169,7 @@
     [backScrollView addSubview:imageV];
     [self insertSublayerWithImageView:imageV];
     
-    UIImageView *buttonBackImageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, backImageView.bottom+ 60, ScreenWidth - 30, 290-58)];
+    UIImageView *buttonBackImageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, backImageView.bottom+ 60, ScreenWidth - 30, listNamesArr.count*58)];
     buttonBackImageView.backgroundColor = [UIColor whiteColor];
     buttonBackImageView.userInteractionEnabled = YES;
     buttonBackImageView.layer.cornerRadius = 10;
@@ -165,103 +179,97 @@
     
     backScrollView.contentSize = CGSizeMake(0, buttonBackImageView.bottom + 20);
     
-    NSArray *numberArray = @[@"0\n收藏",@"0\n卡包",@"0\n积分"];
-    NSArray *titleArr           = @[@"待付款",@"待评价",
-                                                 @"退款/售后",@"全部订单"];
-    NSArray *imageArr        = @[@"我的待付款",@"我的待评价",@"我的退款售后",@"我的全部订单"];
-    listNamesArr                  = @[@"咨询记录",
-                                                  @"地址管理",@"运动示范音",
-                                                  @"设置"];
-    for (int i=0; i<listNamesArr.count; i++) {
-        
-        if (i < numberArray.count){
-            UIButton *numberButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            numberButton.frame = CGRectMake(15 + (ScreenWidth - 30)*i/3, userName.bottom + 10, (ScreenWidth - 30)/3, 50);
-            [numberButton setTitle:numberArray[i] forState:(UIControlStateNormal)];
-            [numberButton setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
-            [numberButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
-            [numberButton.titleLabel setTextAlignment:(NSTextAlignmentCenter)];
-            [numberButton.titleLabel setNumberOfLines:2];
-            numberButton.tag = 111 + i;
-            if(i== 0){
-                self.collectBT = numberButton;
-            }else if(i == 1) {
-                self.cardBT = numberButton;
-            }else{
-                self.integralsBT = numberButton;
-            }
-            [self.self.buttonArray addObject:numberButton];
-            [[numberButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-                if(x.tag == 111){
-                    NSString *urlStr =  [NSString stringWithFormat:@"%@member/mobile/focus_ware/list.jhtml",URL_PRE];
-                    EDWKWebViewController *vc = [[EDWKWebViewController alloc] initWithUrlString:urlStr];
-                    vc.isCollect = YES;
-                    vc.titleStr =ModuleZW( @"收藏");
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
-                }else  if(x.tag == 112){
-                    BlockViewController *vc = [[BlockViewController alloc] init];
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
-                }else{
-                    HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-                    vc.noWebviewBack = YES;
-                    vc.progressType = progress2;
-                    vc.titleStr = ModuleZW(@"我的积分");
-                    vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/order/pointList.jhtml",URL_PRE];
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
-            }];
-            [backImageView addSubview:numberButton];
+    
+    for(int i=0;i<numberArray.count;i++){
+        UIButton *numberButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        numberButton.frame = CGRectMake(15 + (ScreenWidth - 30)*i/3, userName.bottom + 10, (ScreenWidth - 30)/3, 50);
+        [numberButton setTitle:numberArray[i] forState:(UIControlStateNormal)];
+        [numberButton setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
+        [numberButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [numberButton.titleLabel setTextAlignment:(NSTextAlignmentCenter)];
+        [numberButton.titleLabel setNumberOfLines:2];
+        numberButton.tag = 111 + i;
+        if(i== 0){
+            self.collectBT = numberButton;
+        }else if(i == 1) {
+            self.cardBT = numberButton;
+        }else{
+            self.integralsBT = numberButton;
         }
-        if(i < titleArr.count){
-            UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            button.frame = CGRectMake(0 + imageV.width*i/titleArr.count , 0, imageV.width/titleArr.count, imageV.height);
-            [button setTitle: ModuleZW(titleArr[i])forState:(UIControlStateNormal)];
-            [button setImage:[UIImage imageNamed:imageArr[i]] forState:(UIControlStateNormal)];
-            [button.titleLabel setTextAlignment:(NSTextAlignmentCenter)];
-            [button.titleLabel setNumberOfLines:2];
-            [button.titleLabel setFont:[UIFont systemFontOfSize:15/[UserShareOnce shareOnce].fontSize]];
-            [button setTitleColor:UIColorFromHex(0X7f7f7f) forState:(UIControlStateNormal)];
-            [button setImageEdgeInsets:UIEdgeInsetsMake(-23,0,0, -button.titleLabel.intrinsicContentSize.width)];
-            [button setTitleEdgeInsets:UIEdgeInsetsMake(25, -button.currentImage.size.width,0,0)];
-            [self.self.buttonArray addObject:button];
-            [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-                
-                NSString *urlStr =  @"";
-                NSString *titleStr = @"";
-                switch (i) {
-                    case 0:
-                        titleStr = ModuleZW(@"待付款");
-                        urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=unpaid",URL_PRE];
-                        break;
-                    case 1:
-                        titleStr = ModuleZW( @"待评价");
-                        urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=completed",URL_PRE];
-                        break;
-                    case 2:
-                        titleStr = ModuleZW( @"退款记录");
-                        urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=refund&",URL_PRE];
-                        break;
-                    case 3:
-                        titleStr = ModuleZW(@"全部订单");
-                        urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=all",URL_PRE];
-                        break;
-                    default:
-                        break;
-                }
+        [self.self.buttonArray addObject:numberButton];
+        [[numberButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            if(x.tag == 111){
+                NSString *urlStr =  [NSString stringWithFormat:@"%@member/mobile/focus_ware/list.jhtml",URL_PRE];
                 EDWKWebViewController *vc = [[EDWKWebViewController alloc] initWithUrlString:urlStr];
                 vc.isCollect = YES;
-                vc.titleStr = titleStr;
+                vc.titleStr =ModuleZW( @"收藏");
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
-                
-            }];
+            }else  if(x.tag == 112){
+                BlockViewController *vc = [[BlockViewController alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else{
+                HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
+                vc.noWebviewBack = YES;
+                vc.progressType = progress2;
+                vc.titleStr = ModuleZW(@"我的积分");
+                vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/order/pointList.jhtml",URL_PRE];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }];
+        [backImageView addSubview:numberButton];
+    }
+    
+    for(int i=0;i<titleArr.count;i++){
+        UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        button.frame = CGRectMake(0 + imageV.width*i/titleArr.count , 0, imageV.width/titleArr.count, imageV.height);
+        [button setTitle: ModuleZW(titleArr[i])forState:(UIControlStateNormal)];
+        [button setImage:[UIImage imageNamed:imageArr[i]] forState:(UIControlStateNormal)];
+        [button.titleLabel setTextAlignment:(NSTextAlignmentCenter)];
+        [button.titleLabel setNumberOfLines:2];
+        [button.titleLabel setFont:[UIFont systemFontOfSize:15/[UserShareOnce shareOnce].fontSize]];
+        [button setTitleColor:UIColorFromHex(0X7f7f7f) forState:(UIControlStateNormal)];
+        [button setImageEdgeInsets:UIEdgeInsetsMake(-23,0,0, -button.titleLabel.intrinsicContentSize.width)];
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(25, -button.currentImage.size.width,0,0)];
+        [self.self.buttonArray addObject:button];
+        [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             
-            [imageV addSubview:button];
+            NSString *urlStr =  @"";
+            NSString *titleStr = @"";
+            switch (i) {
+                case 0:
+                    titleStr = ModuleZW(@"待付款");
+                    urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=unpaid",URL_PRE];
+                    break;
+                case 1:
+                    titleStr = ModuleZW( @"待评价");
+                    urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=completed",URL_PRE];
+                    break;
+                case 2:
+                    titleStr = ModuleZW( @"退款记录");
+                    urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=refund&",URL_PRE];
+                    break;
+                case 3:
+                    titleStr = ModuleZW(@"全部订单");
+                    urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=all",URL_PRE];
+                    break;
+                default:
+                    break;
+            }
+            EDWKWebViewController *vc = [[EDWKWebViewController alloc] initWithUrlString:urlStr];
+            vc.isCollect = YES;
+            vc.titleStr = titleStr;
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
             
-        }
+        }];
+        
+        [imageV addSubview:button];
+    }
+    
+    for (int i=0; i<listNamesArr.count; i++) {
         
         UIButton *bottomButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
         bottomButton.frame = CGRectMake(20, 58*i,ScreenWidth - 40, 58);
@@ -298,13 +306,22 @@
                     
                 }
                     break;
-                case 2:  {
-                    SportDemonstratesViewController *vc = [[SportDemonstratesViewController alloc] init];
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
+                case 3:  {
+                    
+                    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                    //__weak typeof(self) weakSelf = self;
+                    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+                        [self removeCacheBlock:^(NSString *blockParam) {
+                            
+                        }];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                            [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        });
+                    });
+                
                 }
                     break;
-                case 3: {
+                case 2: {
                     SetupController *vc = [[SetupController alloc] init];
                     CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:vc];
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -321,6 +338,23 @@
     
     NSLog(@"%@",backScrollView.subviews);
     
+}
+
+- (void)removeCacheBlock:(void(^)(NSString * blockParam))callBack{
+    
+    NSString *path = [ NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *folderPath = [path stringByAppendingPathComponent:@"musicCache"];
+    NSArray *arr = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:nil];
+    for (NSString *filePath in arr) {
+        NSString *fileName = [NSString stringWithFormat:@"%@/%@", folderPath, filePath];
+        [[NSFileManager defaultManager] removeItemAtPath:fileName error:nil];
+    }
+//    long ff = 0;
+//    for(long i=0;i<3000;i++){
+//        ff = ff + i;
+//        NSLog(@"ff:%ld",ff);
+//    }
+    callBack(@"在方法中 调用了block");
 }
 
 

@@ -26,6 +26,7 @@
 
 
 
+
 #define SCREEN_WIDTH_Size ([UIScreen mainScreen].bounds.size.width)/375
 
 @interface YueYaoController ()<UITableViewDelegate,UITableViewDataSource,songListCellDelegate,CBCentralManagerDelegate,CBPeripheralDelegate,MuscicNoramlDeleaget,GKAudioPlayerDelegate>
@@ -84,8 +85,6 @@
  */
 @property (nonatomic,assign) BOOL isBleLink;
 @property (nonatomic,strong) UIButton *blueTBT;
-
-
 
 @end
 
@@ -157,6 +156,8 @@
     }
     
 }
+
+
 
 - (void)addNoteView
 {
@@ -285,11 +286,11 @@
     topSegment.tag = 1024;
     [self.view addSubview:topSegment];
     
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightBtn.frame = CGRectMake(topSegment.right, topSegment.top, 37, 40);
-    [rightBtn setImage:[UIImage imageNamed:@"message"] forState:UIControlStateNormal];
-    [rightBtn addTarget:self action:@selector(noteVC) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:rightBtn];
+//    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    rightBtn.frame = CGRectMake(topSegment.right, topSegment.top, 37, 40);
+//    [rightBtn setImage:[UIImage imageNamed:@"message"] forState:UIControlStateNormal];
+//    [rightBtn addTarget:self action:@selector(noteVC) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:rightBtn];
     
     
     hysegmentControl = [[HYSegmentedControl alloc] initWithOriginY:topSegment.bottom + 15 Titles: @[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫",] delegate:self];
@@ -533,6 +534,32 @@
         SongListModel *model = [self.dataArr objectAtIndex:indexPath.row];
         
         if(cell.currentSelect){
+            
+            /***********流量播放弹框********/
+            if(![UserShareOnce shareOnce].wwanPlay){
+                if([[UserShareOnce shareOnce].networkState isEqualToString:@"wwan"]){
+                    __weak typeof(self) weakSelf = self;
+                    [self showAlertMessage:@"当前正在使用流量，是否继续？" withSure:^(NSString *blockParam) {
+                        [UserShareOnce shareOnce].wwanPlay = YES;
+                        [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
+                        if(![model.subjectSn isEqualToString:weakSelf.currentSubjectSn]){ //切换乐药播放列表
+                            weakSelf.currentSubjectSn = model.subjectSn;
+                            [weakSelf currentPlayYueYaoList];
+                        }
+                        
+                        weakSelf.currentIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+                        
+                        [weakSelf playActionWithModel:model];
+                        
+                        weakSelf.selectSongName = model.source; //播放链接
+                    } withCancel:^(NSString *blockParam) {
+                        NSLog(@"取消");
+                    }];
+                    return;
+                }
+            }
+            /*********END**********/
+            
             [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
             if(![model.subjectSn isEqualToString:self.currentSubjectSn]){ //切换乐药播放列表
                 self.currentSubjectSn = model.subjectSn;
@@ -775,6 +802,7 @@
 # pragma mark - 播放乐药
 - (void)playActionWithModel:(SongListModel *)model
 {
+
     NSString *urlStr = model.source;
     
     if(self.selectSongName != nil || ![self.selectSongName isEqualToString:@""]){
@@ -790,7 +818,6 @@
     kPlayer.model = model;
     kPlayer.playUrlStr = urlStr;
     [kPlayer play];
-
 }
 
 
@@ -807,22 +834,7 @@
 
 - (void)noteVC
 {
-//    self.definesPresentationContext = YES;
-//
-//    NoteController *vc = [[NoteController alloc] init];
-//    vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-//
-//    vc.view.superview.frame = CGRectMake(15, 30, 300, 300);
-//    [self presentViewController:vc animated:YES completion:^{
-//
-//    }];
-    
-//    NSString *content = yueYaoNote;
-//
-//    NoteView *noteV = [NoteView noteViewInitUIWithContent:content withTypeStr:hintYueYao];
-//    [[UIApplication sharedApplication].keyWindow addSubview:noteV];
-    
-    
+
     [self nextMusic];
 }
 

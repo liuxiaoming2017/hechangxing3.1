@@ -303,7 +303,10 @@
     NSURL *url = [NSURL URLWithString:aUrlle];
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
+    NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString *headStr = [NSString stringWithFormat:@"ios_hcy-oem-%@",nowVersion];
+    //[request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"]; //ios_hcy-oem-3.1.3
+    [request addRequestHeader:@"version" value:headStr];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
     if([UserShareOnce shareOnce].languageType){
         [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
@@ -369,7 +372,10 @@
     aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrlle]];
-    [request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
+    //[request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
+    NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString *headStr = [NSString stringWithFormat:@"ios_hcy-oem-%@",nowVersion];
+    [request addRequestHeader:@"version" value:headStr];
     [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
     if([UserShareOnce shareOnce].languageType){
         [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
@@ -485,6 +491,32 @@
             [self stopMusic];
         }
         voiceButton.selected = NO;
+        
+        /***********流量播放弹框********/
+        if(![UserShareOnce shareOnce].wwanPlay){
+            if([[UserShareOnce shareOnce].networkState isEqualToString:@"wwan"]){
+                __weak typeof(self) weakSelf = self;
+                [self showAlertMessage:@"当前正在使用流量，是否继续？" withSure:^(NSString *blockParam) {
+                    [UserShareOnce shareOnce].wwanPlay = YES;
+                    
+                    button.selected = YES;
+                    weakSelf.isPlayShiFanYin = NO;
+                    [weakSelf startTimer];
+                    
+                    weakSelf.isPlayYueYao = YES;
+                    
+                    SongListModel *model = [weakSelf.yueYaoArray objectAtIndex:self->yueyaoCount];
+                    weakSelf.yueYaoPlayUrl = model.source;
+                    [weakSelf playMusicWithUrlStr:model.source];
+                    
+                } withCancel:^(NSString *blockParam) {
+                    
+                }];
+                return;
+            }
+        }
+        /**********END*********/
+        
         button.selected = YES;
         self.isPlayShiFanYin = NO;
         [self startTimer];
@@ -505,17 +537,7 @@
 {
     if (self.shifanyinPlayArr.count == 0) {
         
-        UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"您还没有音乐示范音产品,是否去下载") preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *suerAction = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-            self.isNextVC = YES;
-            SportDemonstratesViewController *sportDemonVC = [[SportDemonstratesViewController alloc]init];
-            [self.navigationController pushViewController:sportDemonVC animated:YES];
-        }];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:(UIAlertActionStyleCancel) handler:nil];
-        [alerVC addAction:suerAction];
-        [alerVC addAction:cancelAction];
-        [self presentViewController:alerVC animated:YES completion:nil];
-        
+        [GlobalCommon showMessage2:@"您还没有示范音产品" duration2:1.0];
         
         return;
     }
@@ -536,13 +558,7 @@
          
          
      }else{ //按钮没被选中
-         sender.selected = YES;
-         self.isPlayShiFanYin = YES;
          
-         shifanyinCount = 0;
-         _pageIndex = 0;
-         [self timerRefreshedWithAnimated:NO];
-        // collectionV.userInteractionEnabled = NO;
          //有乐药播放，乐药暂停
          if(yueYaoButton.selected){
              yueYaoButton.selected = NO;
@@ -550,6 +566,38 @@
              [self stopMusic];
          }
          voiceButton.selected = NO;
+         
+         /***********流量播放弹框********/
+         if(![UserShareOnce shareOnce].wwanPlay){
+             if([[UserShareOnce shareOnce].networkState isEqualToString:@"wwan"]){
+                 __weak typeof(self) weakSelf = self;
+                 [self showAlertMessage:@"当前正在使用流量，是否继续？" withSure:^(NSString *blockParam) {
+                     [UserShareOnce shareOnce].wwanPlay = YES;
+                     
+                     sender.selected = YES;
+                     weakSelf.isPlayShiFanYin = YES;
+                     
+                     self->shifanyinCount = 0;
+                     self->_pageIndex = 0;
+                     [weakSelf timerRefreshedWithAnimated:NO];
+                     
+                     [weakSelf playShifanyinAction];
+                     
+                 } withCancel:^(NSString *blockParam) {
+                     
+                 }];
+                 return;
+             }
+         }
+         /*********END**********/
+         
+         sender.selected = YES;
+         self.isPlayShiFanYin = YES;
+         
+         shifanyinCount = 0;
+         _pageIndex = 0;
+         [self timerRefreshedWithAnimated:NO];
+         
          [self playShifanyinAction];
      }
 }

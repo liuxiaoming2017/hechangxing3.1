@@ -41,7 +41,7 @@
 - (instancetype)init {
     if (self = [super init]) {
         self.playerState = GKAudioPlayerStateStopped;
-        [self setupLockScreenControlInfo];
+        //[self setupLockScreenControlInfo];
     }
     return self;
 }
@@ -93,7 +93,7 @@
 
 - (void)play {
     if (self.playerState == GKAudioPlayerStatePlaying) return;
-    [self setupLockScreenMediaInfo];
+    //[self setupLockScreenMediaInfo];
     NSAssert(self.playUrlStr, @"url不能为空");
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -201,7 +201,7 @@
         
         //NSLog(@"total:%f,currentTime:%f",(float)self.totalTime / 1000,(float)self.currentTime / 1000);
         
-        [self setupLockScreenMediaInfo];
+       // [self setupLockScreenMediaInfo];
         
 //        if ([self.delegate respondsToSelector:@selector(gkPlayer:currentTime:totalTime:progress:)]) {
 //            [self.delegate gkPlayer:self currentTime:currentTime totalTime:totalTime progress:progress];

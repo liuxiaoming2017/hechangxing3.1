@@ -80,4 +80,7 @@
 
 + (NSString *)commandFromName:(NSString *)str;
 
++ (void)removeCache:(NSString *)path;
++ (float)sizeAtPath:(NSString *)path;
+
 @end

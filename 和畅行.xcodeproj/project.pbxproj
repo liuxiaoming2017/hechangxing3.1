@@ -291,6 +291,8 @@
 		03799C1620F84860004024D1 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 03799C1520F84860004024D1 /* libsqlite3.0.tbd */; };
 		03799C1920F899AD004024D1 /* AnwerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03799C1820F899AD004024D1 /* AnwerModel.m */; };
 		037B5A4021097BC00076D3AA /* HeartLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B5A3E21097BBF0076D3AA /* HeartLive.m */; };
+		03843693236AB4F300392D79 /* HCY_CarDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03843692236AB4F300392D79 /* HCY_CarDetailController.m */; };
+		03843696236AB51000392D79 /* ConsumptionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03843695236AB51000392D79 /* ConsumptionController.m */; };
 		0385167921869EDB001DD2B7 /* IXAttributeTapLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0385167721869EDB001DD2B7 /* IXAttributeTapLabel.m */; };
 		038516822186AAB3001DD2B7 /* AppPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0385167E2186AAB2001DD2B7 /* AppPayViewController.m */; };
 		038516832186AAB3001DD2B7 /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 038516812186AAB3001DD2B7 /* PayViewController.m */; };
@@ -687,7 +689,6 @@
 		C9B3069823054C54008D6D38 /* FSSegmentTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B3069623054C54008D6D38 /* FSSegmentTitleView.m */; };
 		C9B76973231F7FA900171DCC /* UploadReportDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B76972231F7FA900171DCC /* UploadReportDetailsViewController.m */; };
 		C9B76976231FA27B00171DCC /* AllServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B76975231FA27B00171DCC /* AllServiceCell.m */; };
-		C9E2E23921BE306800F45021 /* HCY_CarDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E2E23821BE306800F45021 /* HCY_CarDetailController.m */; };
 		C9FDB92721BE35AC00E726F3 /* HCY_UnderlineButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FDB92621BE35AC00E726F3 /* HCY_UnderlineButton.m */; };
 		C9FDB92B21BE3D4900E726F3 /* HCY_ConsumptionListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FDB92921BE3D4900E726F3 /* HCY_ConsumptionListCell.m */; };
 		C9FDB92C21BE3D4900E726F3 /* HCY_ConsumptionListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9FDB92A21BE3D4900E726F3 /* HCY_ConsumptionListCell.xib */; };
@@ -793,6 +794,7 @@
 		034243CB235ED366001231E7 /* GKTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKTimer.m; sourceTree = "<group>"; };
 		03430B4321119AF7008EE6C8 /* JingLuoSchemeController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JingLuoSchemeController.h; sourceTree = "<group>"; };
 		03430B4421119AF7008EE6C8 /* JingLuoSchemeController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JingLuoSchemeController.m; sourceTree = "<group>"; };
+		03434D0D236926E40036A039 /* payRequsestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = payRequsestHandler.h; sourceTree = "<group>"; };
 		03439065210AB57F00B57142 /* CCSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSegmentedControl.h; sourceTree = "<group>"; };
 		03439066210AB57F00B57142 /* CCSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSegmentedControl.m; sourceTree = "<group>"; };
 		03439080210AB8BB00B57142 /* HYSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYSegmentedControl.m; sourceTree = "<group>"; };
@@ -1147,6 +1149,10 @@
 		03799C1820F899AD004024D1 /* AnwerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnwerModel.m; sourceTree = "<group>"; };
 		037B5A3E21097BBF0076D3AA /* HeartLive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartLive.m; sourceTree = "<group>"; };
 		037B5A3F21097BC00076D3AA /* HeartLive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartLive.h; sourceTree = "<group>"; };
+		03843691236AB4F200392D79 /* HCY_CarDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCY_CarDetailController.h; sourceTree = "<group>"; };
+		03843692236AB4F300392D79 /* HCY_CarDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCY_CarDetailController.m; sourceTree = "<group>"; };
+		03843694236AB50F00392D79 /* ConsumptionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsumptionController.h; sourceTree = "<group>"; };
+		03843695236AB51000392D79 /* ConsumptionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsumptionController.m; sourceTree = "<group>"; };
 		0385167721869EDB001DD2B7 /* IXAttributeTapLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IXAttributeTapLabel.m; sourceTree = "<group>"; };
 		0385167821869EDB001DD2B7 /* IXAttributeTapLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IXAttributeTapLabel.h; sourceTree = "<group>"; };
 		0385167E2186AAB2001DD2B7 /* AppPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppPayViewController.m; sourceTree = "<group>"; };
@@ -1439,7 +1445,6 @@
 		03EBD1E622EE8B7B001FAD7A /* EnPassWordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnPassWordController.h; sourceTree = "<group>"; };
 		03EBD1E722EE8B7B001FAD7A /* EnRegistrController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnRegistrController.m; sourceTree = "<group>"; };
 		03EBD1E822EE8B7C001FAD7A /* EnCodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnCodeController.m; sourceTree = "<group>"; };
-		03EE39A32366D38100369B34 /* payRequsestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = payRequsestHandler.h; sourceTree = "<group>"; };
 		03EE39A42366D40300369B34 /* MySportController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySportController.m; sourceTree = "<group>"; };
 		03EE39A52366D40300369B34 /* MySportController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySportController.h; sourceTree = "<group>"; };
 		03EE39A72366D41900369B34 /* GKAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKAudioPlayer.h; sourceTree = "<group>"; };
@@ -1832,8 +1837,6 @@
 		C9B76975231FA27B00171DCC /* AllServiceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AllServiceCell.m; sourceTree = "<group>"; };
 		C9B769772320B18300171DCC /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Language.strings"; sourceTree = "<group>"; };
 		C9B769782320B19800171DCC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Language.strings; sourceTree = "<group>"; };
-		C9E2E23721BE306800F45021 /* HCY_CarDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_CarDetailController.h; sourceTree = "<group>"; };
-		C9E2E23821BE306800F45021 /* HCY_CarDetailController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_CarDetailController.m; sourceTree = "<group>"; };
 		C9FDB92521BE35AC00E726F3 /* HCY_UnderlineButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_UnderlineButton.h; sourceTree = "<group>"; };
 		C9FDB92621BE35AC00E726F3 /* HCY_UnderlineButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_UnderlineButton.m; sourceTree = "<group>"; };
 		C9FDB92821BE3D4900E726F3 /* HCY_ConsumptionListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_ConsumptionListCell.h; sourceTree = "<group>"; };
@@ -2502,8 +2505,10 @@
 				C973090121BA6C9100060447 /* HCY_ActivationController.m */,
 				C973090321BE16B700060447 /* HCY_InformationController.h */,
 				C973090421BE16B700060447 /* HCY_InformationController.m */,
-				C9E2E23721BE306800F45021 /* HCY_CarDetailController.h */,
-				C9E2E23821BE306800F45021 /* HCY_CarDetailController.m */,
+				03843691236AB4F200392D79 /* HCY_CarDetailController.h */,
+				03843692236AB4F300392D79 /* HCY_CarDetailController.m */,
+				03843694236AB50F00392D79 /* ConsumptionController.h */,
+				03843695236AB51000392D79 /* ConsumptionController.m */,
 				C9FDB92521BE35AC00E726F3 /* HCY_UnderlineButton.h */,
 				C9FDB92621BE35AC00E726F3 /* HCY_UnderlineButton.m */,
 				83E23EFE21C76CE800B43298 /* HYC_CardsModel.h */,
@@ -3090,7 +3095,7 @@
 			children = (
 				038517082186AB9E001DD2B7 /* ApiXml.h */,
 				038517042186AB9E001DD2B7 /* ApiXml.mm */,
-				03EE39A32366D38100369B34 /* payRequsestHandler.h */,
+				03434D0D236926E40036A039 /* payRequsestHandler.h */,
 				038517072186AB9E001DD2B7 /* payRequsestHandler.mm */,
 				038517092186AB9F001DD2B7 /* WXUtil.h */,
 				038517062186AB9E001DD2B7 /* WXUtil.mm */,
@@ -4511,7 +4516,6 @@
 				036C8E0F23289E1400729889 /* ArmchairDetailVC.m in Sources */,
 				03535EFB20F7425100664FA9 /* QuestionListController.m in Sources */,
 				034A4E8D211A9AD900936A46 /* TZImageCropManager.m in Sources */,
-				C9E2E23921BE306800F45021 /* HCY_CarDetailController.m in Sources */,
 				032A7A1A20EA17A5003D4952 /* HSTabBar.m in Sources */,
 				030F51332101B0E1003C918F /* WKWebviewController.m in Sources */,
 				83E23EED21C0AD2D00B43298 /* HCY_CallCell.m in Sources */,
@@ -4598,6 +4602,7 @@
 				C9B306562304FC73008D6D38 /* LectureDetailViewController.m in Sources */,
 				83E23F0021C76CE800B43298 /* HYC_CardsModel.m in Sources */,
 				036E84402186EAD3001B9BB4 /* NSString+Util.m in Sources */,
+				03843696236AB51000392D79 /* ConsumptionController.m in Sources */,
 				C97308F721BA50FB00060447 /* SGScanningQRCodeVC.m in Sources */,
 				03EE39AC2366D42400369B34 /* YueYaoController.m in Sources */,
 				03E29ACA2331FDCB0056A258 /* UIButton+ExpandScope.m in Sources */,
@@ -4790,6 +4795,7 @@
 				03FBDF9D2192B0B3006116FC /* TimeLineCell.m in Sources */,
 				032735952105A33400554516 /* ColumnBar.m in Sources */,
 				0325A5EC210995F100275671 /* EEGDetailController.m in Sources */,
+				03843693236AB4F300392D79 /* HCY_CarDetailController.m in Sources */,
 				03F692EB20FF2DF000308E38 /* ASIHTTPRequest.m in Sources */,
 				0370A85821114E4F00447DFB /* HeChangPackgeController.m in Sources */,
 				0351C59423278C670035A9EA /* GLYPageView.m in Sources */,

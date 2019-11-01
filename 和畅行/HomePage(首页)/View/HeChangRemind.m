@@ -56,17 +56,21 @@
     
     //self.backgroundColor = [UIColor whiteColor];
     
+    NSLog(@"size:%f",[UserShareOnce shareOnce].fontSize);
+    
+    //CGFloat fontSize = 18*[UserShareOnce shareOnce].fontSize;
+    
     NSString *titleStr = [self getCurrentTime];
     CGSize strSize = [titleStr boundingRectWithSize:CGSizeMake(1190, 2500) options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont fontWithName:[[UIFont systemFontOfSize:1] fontName] size:18]} context:nil].size;
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 15, strSize.width, strSize.height)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 15, strSize.width+8, strSize.height)];
     titleLabel.font = [UIFont systemFontOfSize:18];
     titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.text = ModuleZW( @"和畅提醒");
     [self addSubview:titleLabel];
     
-    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.right+6, titleLabel.top, 200, strSize.height)];
+    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.right, titleLabel.top, 200, strSize.height)];
     timeLabel.font = [UIFont systemFontOfSize:13];
     timeLabel.textAlignment = NSTextAlignmentLeft;
     timeLabel.textColor = UIColorFromHex(0X8E8E93);
