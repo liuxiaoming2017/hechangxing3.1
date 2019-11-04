@@ -299,7 +299,7 @@
     
     if(_isActivity){
         self.activityImage.frame = CGRectMake(self.activityImage.left, self.readWriteView.bottom+10, self.activityImage.width, self.activityImage.height);
-        self.remindView.frame = CGRectMake(self.packgeView.left,   self.activityImage?self.activityImage.bottom+10:self.readWriteView.bottom+10, self.readWriteView.width, self.readWriteView.height);
+        self.remindView.frame = CGRectMake(self.packgeView.left,   self.activityImage?self.activityImage.bottom+10:self.readWriteView.bottom+10, self.readWriteView.width, self.remindView.height);
         self.recommendView.frame = CGRectMake(0, CGRectGetMaxY(self.remindView.frame)+10, ScreenWidth,self.recommendView.height);
     }
     
@@ -387,7 +387,7 @@
         }
         
         //先判断本地有没有和畅包缓存,有则直接展示页面没有则等和畅包接口请求完后再展示
-        if([self getLocalPackageContent]){
+        if([self getLocalPackageContent] && self->_isActivity == YES){
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf showHomePackageView];
             });
@@ -400,11 +400,11 @@
         
         [weakSelf requestPackgeNetWork];
         
-        if([self getLocalPackageContent]){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf showHomePackageView];
-            });
-        }
+//        if([self getLocalPackageContent]){
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [weakSelf showHomePackageView];
+//            });
+//        }
     }];
 }
 
@@ -451,7 +451,7 @@
                 }
                 
                 //保存和畅包状态,以便下次打开应用直接读取缓存
-                NSString *packageStr = [NSString stringWithFormat:@"%ld&&%@",status,[[response objectForKey:@"data"] objectForKey:@"name"]];
+                NSString *packageStr = [NSString stringWithFormat:@"%ld&&%@",(long)status,[[response objectForKey:@"data"] objectForKey:@"name"]];
                 [[NSUserDefaults standardUserDefaults]setValue: packageStr forKey:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
