@@ -46,7 +46,7 @@
 #import "AFNetworking.h"
 
 @interface AppDelegate ()<WXApiDelegate>
-@property (nonatomic, strong) NSURLSession * session;
+
 @property (nonatomic, strong) NSURLSessionDataTask * dataTask;
 @end
 
@@ -98,12 +98,14 @@
     [UMConfigure initWithAppkey:Youmeng_id channel:@"App Store"];
     
     [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
-     [self returnMainPage2];
-     [self.window makeKeyAndVisible];
     
-    [ChangeLanguageObject initUserLanguage];
+    //网络状态监测
+    [self networkStateCheck];
     
-     self.session = [NSURLSession sharedSession];
+    [self returnMainPage2];
+    
+    [self.window makeKeyAndVisible];
+    
    
     //埋点注册
     [[BuredPoint sharedYHBuriedPoint]setTheSignatureWithSignStr:BuBuredPointKey  withOpenStr:@"1"];
@@ -122,9 +124,6 @@
     [[OGA530BluetoothManager shareInstance] setAppkey:OGA530AppKey appSecret:OGA530AppSecret];
     [[OGA530BluetoothManager shareInstance] setIsLog:YES];
     
-    //网络状态监测
-    [self networkStateCheck];
-    
     if(@available(iOS 11.0,*)){
         
         UITableView.appearance.estimatedRowHeight = 0;
@@ -140,16 +139,24 @@
 
 
 - (void)networkStateCheck {
+    
     AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
+    
     [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         switch (status) {
             case AFNetworkReachabilityStatusReachableViaWWAN:
                 [UserShareOnce shareOnce].networkState = @"wwan";
+                if([UserShareOnce shareOnce].uid && ![[UserShareOnce shareOnce].uid isEqualToString:@""]){
+                    [GlobalCommon networkStatusChange];
+                }
                 NSLog(@"4G");
                 break;
             case AFNetworkReachabilityStatusReachableViaWiFi:
                 [UserShareOnce shareOnce].networkState = @"wifi";
-                NSLog(@"wifi");
+                if([UserShareOnce shareOnce].uid && ![[UserShareOnce shareOnce].uid isEqualToString:@""]){
+                    [GlobalCommon networkStatusChange];
+                }
+                NSLog(@"wifi:%@",[UserShareOnce shareOnce].uid);
                 break;
             case AFNetworkReachabilityStatusNotReachable:
                 [UserShareOnce shareOnce].networkState = @"none";
@@ -164,7 +171,12 @@
                 break;
         }
     }];
+    
     [manager startMonitoring];
+    
+//    if([[UserShareOnce shareOnce].networkState isEqualToString:@"wwan"] || [[UserShareOnce shareOnce].networkState isEqualToString:@"wifi"]){
+  //  }
+    
 }
 
 -(void)returnMainPage{

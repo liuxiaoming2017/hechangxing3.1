@@ -83,4 +83,5 @@
 + (void)removeCache:(NSString *)path;
 + (float)sizeAtPath:(NSString *)path;
 
++ (void)networkStatusChange;
 @end

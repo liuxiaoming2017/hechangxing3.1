@@ -17,6 +17,9 @@
 
 #import <OGABluetooth530/OGABluetooth530.h>
 
+#import "LoginViewController.h"
+#import "CustomNavigationController.h"
+
 @interface GlobalCommon()
 
 @property (nonatomic,strong) MBProgressHUD *MBHud;
@@ -836,5 +839,128 @@
     }
     return fileSize/(1024.0*1024.0);
 }
+
++ (void)networkStatusChange
+{
+    NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
+    NSString *strcheck=[dicTmp objectForKey:@"ischeck"];
+    if([GlobalCommon stringEqualNull:strcheck] || [strcheck isEqualToString:@"0"]){
+        return;
+    }
+    if([strcheck isEqualToString:@"1"]){
+        
+        
+        CGRect rect = [[UIScreen mainScreen] bounds];
+        CGSize size = rect.size;
+        CGFloat width = size.width;
+        CGFloat height = size.height;
+        NSString* widthheight=[NSString stringWithFormat:@"%d*%d",(int)width,(int)height ];
+        NSDate *datenow = [NSDate date];
+        NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+        [dic setObject:@"beta1.4" forKey:@"softver"];
+        [dic setObject:[[UIDevice currentDevice] systemVersion] forKey:@"osver"];
+        [dic setObject:widthheight forKey:@"resolution"];
+        [dic setObject:timeSp forKey:@"time"];
+        NSString *usernameStr = [GlobalCommon AESDecodeWithString:[dicTmp objectForKey:@"USERNAME"]];
+        NSString *passwordStr = [GlobalCommon AESDecodeWithString:[dicTmp objectForKey:@"PASSWORDAES"]];
+        if([usernameStr isEqualToString:@""] || usernameStr == nil || usernameStr.length == 0 ){
+            usernameStr = [dicTmp objectForKey:@"USERNAME"];
+            passwordStr = [dicTmp objectForKey:@"PASSWORDAES"];
+        }
+        [dic setObject:usernameStr forKey:@"username"];
+        [dic setObject:passwordStr forKey:@"password"];
+        [dic setObject:@"" forKey:@"brand"];
+        [dic setObject:@"" forKey:@"devmodel"];
+        //[self userLoginWithParams:dic withisCheck:YES];
+        NSString *aUrl = @"login/commit.jhtml";
+        
+        [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:dic successBlock:^(id response) {
+            if([[response objectForKey:@"status"] intValue] == 100){
+                
+                UserShareOnce *userShare = [UserShareOnce shareOnce];
+                
+                userShare.JSESSIONID = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"JSESSIONID"];
+                userShare.token = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"token"];
+                
+            }
+            
+        } failureBlock:^(NSError *error) {
+            [GlobalCommon returnLoginController];
+        }];
+        
+    }else if ([strcheck isEqualToString:@"2"]){
+        
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+        NSString *unionidStr = [GlobalCommon AESDecodeWithString:[dicTmp valueForKey:@"UNIONID"]];
+        if([unionidStr isEqualToString:@""] || unionidStr == nil || unionidStr.length == 0 ){
+            unionidStr = [dicTmp valueForKey:@"UNIONID"];
+        }
+        [dic setObject:unionidStr forKey:@"unionid"];
+        [dic setObject:[dicTmp valueForKey:@"SCREENNAME"] forKey:@"screen_name"];
+        [dic setObject:[dicTmp valueForKey:@"GENDER"] forKey:@"gender"];
+        [dic setObject:[dicTmp valueForKey:@"PROFILEIMAGEURL"] forKey:@"profile_image_url"];
+        
+        // [self userLoginWithWeiXParams:dic withCheck:2];
+        
+        NSString *aUrl = @"/weiq/weiq/weix/authlogin.jhtml";
+        
+        [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:dic successBlock:^(id response) {
+            if([[response objectForKey:@"status"] intValue] == 100){
+                
+                UserShareOnce *userShare = [UserShareOnce shareOnce];
+                
+                userShare.JSESSIONID = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"JSESSIONID"];
+                userShare.token = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"token"];
+                
+            }
+        } failureBlock:^(NSError *error) {
+            [GlobalCommon returnLoginController];
+        }];
+        
+    }else if ([strcheck isEqualToString:@"3"]){
+        NSString *phoneStr = [GlobalCommon AESDecodeWithString:[dicTmp valueForKey:@"PhoneShortMessage"]];
+        if([phoneStr isEqualToString:@""] || phoneStr == nil || phoneStr.length == 0 ){
+            phoneStr = [dicTmp valueForKey:@"PhoneShortMessage"];
+        }
+        NSString *aUrl = @"weiq/sms/relogin.jhtml";
+        NSString *hhhh = [GlobalCommon getNowTimeTimestamp];
+        NSString *iPoneNumber = [NSString stringWithFormat:@"%@%@ky3h.com",phoneStr,hhhh];
+        NSString *iPoneNumberMD5 = [GlobalCommon md5:iPoneNumber].uppercaseString;
+        NSDictionary *paraDic = @{@"phone":phoneStr,@"token":iPoneNumberMD5,@"timestamp":hhhh};
+        
+        [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:paraDic successBlock:^(id response) {
+            
+            if([[response objectForKey:@"status"] intValue] == 100){
+                
+                UserShareOnce *userShare = [UserShareOnce shareOnce];
+                
+                userShare.JSESSIONID = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"JSESSIONID"];
+                userShare.token = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"token"];
+                
+            }
+            
+        } failureBlock:^(NSError *error) {
+            [GlobalCommon returnLoginController];
+        }];
+    }
+}
+
++ (void)returnLoginController
+{
+    LoginViewController *loginview=[[LoginViewController alloc]init];
+    NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
+    if (dicTmp) {
+        [dicTmp setObject:@"" forKey:@"USERNAME"];
+        [dicTmp setObject:@"" forKey:@"PASSWORDAES"];
+        [dicTmp setValue:@"0" forKey:@"ischeck"];
+    }
+    [UtilityFunc updateAppConfigWithMutableDictionary:dicTmp];
+    CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:loginview];
+    [UIApplication sharedApplication].keyWindow.rootViewController = nav;
+}
+
 
 @end

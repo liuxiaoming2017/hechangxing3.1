@@ -23,12 +23,9 @@
 @synthesize topView,preBtn,rightBtn,leftBtn;
 
 
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupNav];
-    
     
 }
 
