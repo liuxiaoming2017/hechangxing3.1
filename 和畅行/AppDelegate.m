@@ -147,14 +147,16 @@
             case AFNetworkReachabilityStatusReachableViaWWAN:
                 [UserShareOnce shareOnce].networkState = @"wwan";
                 if([UserShareOnce shareOnce].uid && ![[UserShareOnce shareOnce].uid isEqualToString:@""]){
-                    [GlobalCommon networkStatusChange];
+                    //[GlobalCommon networkStatusChange];
+                    [[NetworkManager sharedNetworkManager] loginAgainWithTwo:YES withBlock:nil];
                 }
                 NSLog(@"4G");
                 break;
             case AFNetworkReachabilityStatusReachableViaWiFi:
                 [UserShareOnce shareOnce].networkState = @"wifi";
                 if([UserShareOnce shareOnce].uid && ![[UserShareOnce shareOnce].uid isEqualToString:@""]){
-                    [GlobalCommon networkStatusChange];
+                    //[GlobalCommon networkStatusChange];
+                    [[NetworkManager sharedNetworkManager] loginAgainWithTwo:YES withBlock:nil];
                 }
                 NSLog(@"wifi:%@",[UserShareOnce shareOnce].uid);
                 break;

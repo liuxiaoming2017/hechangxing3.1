@@ -24,6 +24,8 @@
 
 @property (nonatomic,strong) MBProgressHUD *MBHud;
 
+@property (nonatomic,assign) BOOL isAgain;
+
 @end
 @implementation GlobalCommon
 @synthesize MBHud;
@@ -905,7 +907,7 @@
         
         // [self userLoginWithWeiXParams:dic withCheck:2];
         
-        NSString *aUrl = @"/weiq/weiq/weix/authlogin.jhtml";
+        NSString *aUrl = @"weiq/weiq/weix/authlogin.jhtml";
         
         [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:dic successBlock:^(id response) {
             if([[response objectForKey:@"status"] intValue] == 100){
@@ -950,6 +952,8 @@
 
 + (void)returnLoginController
 {
+    
+    
     LoginViewController *loginview=[[LoginViewController alloc]init];
     NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
     if (dicTmp) {
@@ -960,6 +964,8 @@
     [UtilityFunc updateAppConfigWithMutableDictionary:dicTmp];
     CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:loginview];
     [UIApplication sharedApplication].keyWindow.rootViewController = nav;
+    
+    [GlobalCommon showMessage2:@"登录失败,请重新登录" duration2:2.0];
 }
 
 

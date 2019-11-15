@@ -221,9 +221,9 @@
     NSString *aUrl = [NSString string];
 
     if (check == 2) {
-        aUrl = @"/weiq/weiq/weix/authlogin.jhtml";
+        aUrl = @"weiq/weiq/weix/authlogin.jhtml";
     }else if (check == 3) {
-        aUrl = @"/weiq/sms/login.jhtml";
+        aUrl = @"weiq/sms/login.jhtml";
     }
     
     __weak typeof(self) weakself = self;

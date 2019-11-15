@@ -10,7 +10,7 @@
 #import "MySportCell.h"
 #import "MenuTypeView.h"
 #import "ZYAudioManager.h"
-#import "SportDemonstratesViewController.h"
+
 #import "YueYaoController.h"
 #import "SongListModel.h"
 
@@ -296,41 +296,44 @@
 # pragma mark - 已购买乐药列表
 -(void)GetMusicResourceslist
 {
-    [GlobalCommon showMBHudWithView:self.view];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/resources/list/%@.jhtml",UrlPre,[UserShareOnce shareOnce].uid];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:aUrlle];
+//    [GlobalCommon showMBHudWithView:self.view];
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/resources/list/%@.jhtml",UrlPre,[UserShareOnce shareOnce].uid];
+//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    NSURL *url = [NSURL URLWithString:aUrlle];
+//
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+//    NSString *headStr = [NSString stringWithFormat:@"ios_hcy-oem-%@",nowVersion];
+//    //[request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"]; //ios_hcy-oem-3.1.3
+//    [request addRequestHeader:@"version" value:headStr];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setRequestMethod:@"GET"];
+//    [request setTimeOutSeconds:20];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestResourceslistErrorw:)];
+//    [request setDidFinishSelector:@selector(requestResourceslistCompletedw:)];
+//    [request startAsynchronous];
     
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    NSString *headStr = [NSString stringWithFormat:@"ios_hcy-oem-%@",nowVersion];
-    //[request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"]; //ios_hcy-oem-3.1.3
-    [request addRequestHeader:@"version" value:headStr];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setRequestMethod:@"GET"];
-    [request setTimeOutSeconds:20];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestResourceslistErrorw:)];
-    [request setDidFinishSelector:@selector(requestResourceslistCompletedw:)];
-    [request startAsynchronous];
+    [GlobalCommon showMBHudWithView:self.view];
+    NSString *urlStr= [NSString stringWithFormat:@"member/resources/list/%@.jhtml",[UserShareOnce shareOnce].uid];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:2 urlString:urlStr parameters:nil successBlock:^(id dic) {
+        [weakSelf requestResourceslistCompletedw:dic];
+    } failureBlock:^(NSError *error) {
+        [GlobalCommon hideMBHudWithView:weakSelf.view];
+        [weakSelf showAlertWarmMessage:requestErrorMessage];
+    }];
 }
 
-- (void)requestResourceslistErrorw:(ASIHTTPRequest *)request
-{
-    //[self shifanyinSourceList];
-    [GlobalCommon hideMBHudWithView:self.view];
-    [self showAlertWarmMessage:requestErrorMessage];
-}
-- (void)requestResourceslistCompletedw:(ASIHTTPRequest *)request
+
+- (void)requestResourceslistCompletedw:(NSDictionary *)dic
 {
     //[self shifanyinSourceList];
    [GlobalCommon hideMBHudWithView:self.view];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
     id status=[dic objectForKey:@"status"];
     if ([status intValue]==100)
     {
@@ -366,29 +369,38 @@
 # pragma mark - 示范音列表
 - (void)shifanyinSourceList{
     
-    [GlobalCommon showMBHudWithView:self.view];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/resources/list.jhtml?sn=%@",UrlPre,@"ZY-YDSFY"];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    [GlobalCommon showMBHudWithView:self.view];
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@/resources/list.jhtml?sn=%@",UrlPre,@"ZY-YDSFY"];
+//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrlle]];
+//    //[request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
+//    NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+//    NSString *headStr = [NSString stringWithFormat:@"ios_hcy-oem-%@",nowVersion];
+//    [request addRequestHeader:@"version" value:headStr];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setRequestMethod:@"GET"];
+//    [request setTimeOutSeconds:20];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestshifanyinSourceError:)];
+//    [request setDidFinishSelector:@selector(requestResourcesshifanyinCompletedw:)];
+//    [request startAsynchronous];
     
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrlle]];
-    //[request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
-    NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    NSString *headStr = [NSString stringWithFormat:@"ios_hcy-oem-%@",nowVersion];
-    [request addRequestHeader:@"version" value:headStr];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setRequestMethod:@"GET"];
-    [request setTimeOutSeconds:20];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestshifanyinSourceError:)];
-    [request setDidFinishSelector:@selector(requestResourcesshifanyinCompletedw:)];
-    [request startAsynchronous];
+    [GlobalCommon showMBHudWithView:self.view];
+    NSString *urlStr= [NSString stringWithFormat:@"resources/list.jhtml?sn=%@",@"ZY-YDSFY"];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:2 urlString:urlStr parameters:nil successBlock:^(id dic) {
+        [weakSelf requestResourcesshifanyinCompletedw:dic];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestshifanyinSourceError];
+    }];
 }
 
-- (void)requestshifanyinSourceError:(ASIHTTPRequest *)request
+- (void)requestshifanyinSourceError
 {
     if(kPlayer.playUrlStr != nil && kPlayer.playerState == 2){
         
@@ -399,7 +411,7 @@
     [self showAlertWarmMessage:requestErrorMessage];
 }
 
-- (void)requestResourcesshifanyinCompletedw:(ASIHTTPRequest *)request
+- (void)requestResourcesshifanyinCompletedw:(NSDictionary *)dic
 {
     if(kPlayer.playUrlStr != nil && kPlayer.playerState == 2){
         
@@ -407,8 +419,7 @@
         [self GetMusicResourceslist];
     }
     [GlobalCommon hideMBHudWithView:self.view];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
+    
     id status=[dic objectForKey:@"status"];
     if ([status intValue]==100)
     {

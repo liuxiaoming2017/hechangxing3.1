@@ -8,8 +8,7 @@
 
 #import "PersonalInformationViewController.h"
 #import "Global.h"
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
+
 #import "SBJson.h"
 #import <sys/utsname.h>
 #import "ZHPickView.h"
@@ -336,29 +335,46 @@
        
     }
    [GlobalCommon showMBHudWithView:self.view];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrl = [NSString stringWithFormat:@"%@/member/update.jhtml",UrlPre];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"id"];
-    [request setPostValue:self.urlHttpImg forKey:@"memberImage"];
-    [request setPostValue:self.sexupStr forKey:@"gender"];
-    [request setPostValue:self.nameStr forKey:@"name"];
-    [request setPostValue:_phoneStr forKey:@"mobile"];
-    [request setPostValue:_emailStr forKey:@"email"];
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setPostValue:_brithdayStr forKey:@"birthday"];
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestuserinfoError:)];
-    [request setDidFinishSelector:@selector(requestuserinfoCompleted:)];
-    [request startAsynchronous];
     
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrl = [NSString stringWithFormat:@"%@/member/update.jhtml",UrlPre];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"id"];
+//    [request setPostValue:self.urlHttpImg forKey:@"memberImage"];
+//    [request setPostValue:self.sexupStr forKey:@"gender"];
+//    [request setPostValue:self.nameStr forKey:@"name"];
+//    [request setPostValue:_phoneStr forKey:@"mobile"];
+//    [request setPostValue:_emailStr forKey:@"email"];
+//    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+//    [request setPostValue:_brithdayStr forKey:@"birthday"];
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestuserinfoError:)];
+//    [request setDidFinishSelector:@selector(requestuserinfoCompleted:)];
+//    [request startAsynchronous];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:[UserShareOnce shareOnce].uid forKey:@"id"];
+    [dic setObject:self.urlHttpImg forKey:@"memberImage"];
+    [dic setObject:self.sexupStr forKey:@"gender"];
+    [dic setObject:self.nameStr forKey:@"name"];
+    [dic setObject:_phoneStr forKey:@"mobile"];
+    [dic setObject:_emailStr forKey:@"email"];
+    [dic setObject:[UserShareOnce shareOnce].token forKey:@"token"];
+    [dic setObject:_brithdayStr forKey:@"birthday"];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:@"member/update.jhtml" headParameters:nil parameters:dic successBlock:^(id response) {
+        [weakSelf requestuserinfoCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestuserinfoError];
+    }];
 }
 
 
@@ -487,32 +503,42 @@
 -(void) UpLoadImgHttp
 {
     
+    
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/fileUpload/upload.jhtml",UrlPre];
+//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    NSURL *url1 = [NSURL URLWithString:aUrlle];
+//    ASIFormDataRequest *request=[[ASIFormDataRequest alloc]initWithURL:url1];
+//    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setDelegate:self];
+//    [request setRequestMethod:@"POST"];
+//    [request addPostValue:@"image" forKey:@"fileType"];
+//    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+//    [request setFile:self.pngFilePath forKey:@"file"];//可以上传图片
+//    [request setDidFailSelector:@selector(requestUpLoadError:)];//requestLoginError
+//    [request setDidFinishSelector:@selector(requestUpLoadCompleted:)];
+//    [request startAsynchronous];
+    
     [GlobalCommon showMBHudWithView:self.view];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/fileUpload/upload.jhtml",UrlPre];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url1 = [NSURL URLWithString:aUrlle];
-    ASIFormDataRequest *request=[[ASIFormDataRequest alloc]initWithURL:url1];
-    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setDelegate:self];
-    [request setRequestMethod:@"POST"];
-    [request addPostValue:@"image" forKey:@"fileType"];
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setFile:self.pngFilePath forKey:@"file"];//可以上传图片
-    [request setDidFailSelector:@selector(requestUpLoadError:)];//requestLoginError
-    [request setDidFinishSelector:@selector(requestUpLoadCompleted:)];
-    [request startAsynchronous];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:@"image" forKey:@"fileType"];
+    [dic setObject:[UserShareOnce shareOnce].token forKey:@"token"];
+    [dic setObject:self.pngFilePath forKey:@"file"];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:4 urlString:@"member/fileUpload/upload.jhtml" headParameters:nil parameters:dic successBlock:^(id response) {
+        [weakSelf requestUpLoadCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [GlobalCommon hideMBHudWithView:weakSelf.view];
+    }];
    
 }
-- (void)requestUpLoadCompleted:(ASIHTTPRequest *)request
+- (void)requestUpLoadCompleted:(NSDictionary *)dic
 {
     [GlobalCommon hideMBHudWithView:self.view];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
     id status=[dic objectForKey:@"status"];
     if ([status intValue]==100)
     {
@@ -521,10 +547,8 @@
         [self commitClick];
     }
 }
-- (void)requestUpLoadError:(ASIHTTPRequest *)request
-{
-    NSLog(@"上传头像失败 --》 %@",request.error);
-}
+
+
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowTabbar" object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"6",@"index",nil]];
@@ -550,11 +574,11 @@
     [self layoutDataView];
     
 }
-- (void)requestuserinfoCompleted:(ASIHTTPRequest *)request
+- (void)requestuserinfoCompleted:(NSDictionary *)dic
 {
     [GlobalCommon hideMBHudWithView:self.view];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
+//    NSString* reqstr=[request responseString];
+//    NSDictionary * dic=[reqstr JSONValue];
     NSLog(@"dic==%@",dic);
     id status=[dic objectForKey:@"status"];
     if ([status intValue]==100) {
@@ -585,7 +609,7 @@
     }
 }
 
-- (void)requestuserinfoError:(ASIHTTPRequest *)request
+- (void)requestuserinfoError
 {
     [GlobalCommon hideMBHudWithView:self.view];
 }

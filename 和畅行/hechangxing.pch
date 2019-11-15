@@ -22,7 +22,6 @@
 #import "Tools.h"
 #import "MBProgressHUD.h"
 #import "UIView+ViewController.h"
-#import "ZYGASINetworking.h"
 #import "NSString+Extesion.h"
 #import "UIViewExt.h"
 #import "MJRefresh.h"
@@ -40,6 +39,7 @@
 #import <ReactiveObjC/ReactiveObjC.h>
 #import "CacheManager.h"
 #import "GKAudioPlayer.h"
+
 //和缓
 #if TARGET_IPHONE_SIMULATOR
 

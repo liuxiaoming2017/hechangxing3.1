@@ -8,8 +8,6 @@
 
 #import "MyAvdisorysViewController.h"
 
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
 #import "NSObject+SBJson.h"
 #import "SBJson.h"
 #import "MBProgressHUD.h"
@@ -18,7 +16,7 @@
 #import "LoginViewController.h"
 #import "NoMessageView.h"
 
-@interface MyAvdisorysViewController ()<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,ASIProgressDelegate,MBProgressHUDDelegate>
+@interface MyAvdisorysViewController ()<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate>
 {
     MBProgressHUD* progress_;
     UIView       *noView;
@@ -60,27 +58,35 @@
 {
     [self showHUD];
     
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@member/user_consultation/list.jhtml?memberChildId=%@",UrlPre,[MemberUserShance shareOnce].idNum];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:aUrlle];
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@member/user_consultation/list.jhtml?memberChildId=%@",UrlPre,[MemberUserShance shareOnce].idNum];
+//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    NSURL *url = [NSURL URLWithString:aUrlle];
+//
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//   // [request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
+//    NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+//    NSString *headStr = [NSString stringWithFormat:@"ios_hcy-oem-%@",nowVersion];
+//    [request addRequestHeader:@"version" value:headStr];
+//
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setRequestMethod:@"GET"];
+//    [request setTimeOutSeconds:20];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestResourceslistErrorr:)];
+//    [request setDidFinishSelector:@selector(requestResourceslistCompleteds:)];
+//    [request startAsynchronous];
     
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-   // [request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"];
-    NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    NSString *headStr = [NSString stringWithFormat:@"ios_hcy-oem-%@",nowVersion];
-    [request addRequestHeader:@"version" value:headStr];
-    
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setRequestMethod:@"GET"];
-    [request setTimeOutSeconds:20];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestResourceslistErrorr:)];
-    [request setDidFinishSelector:@selector(requestResourceslistCompleteds:)];
-    [request startAsynchronous];
+    NSString *aUrlle= [NSString stringWithFormat:@"member/user_consultation/list.jhtml?memberChildId=%@",[MemberUserShance shareOnce].idNum];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:2 urlString:aUrlle parameters:nil successBlock:^(id response) {
+        [weakSelf requestResourceslistCompleteds:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestResourceslistErrorr];
+    }];
 }
 -(void) showHUD
 {
@@ -102,7 +108,7 @@
     
 }
 
-- (void)requestResourceslistErrorr:(ASIHTTPRequest *)request
+- (void)requestResourceslistErrorr
 {
     [self hudWasHidden];
     //[SSWaitViewEx removeWaitViewFrom:self.view];
@@ -110,11 +116,11 @@
     [self showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
    
 }
-- (void)requestResourceslistCompleteds:(ASIHTTPRequest *)request
+- (void)requestResourceslistCompleteds:(NSDictionary *)dic
 {
     [self hudWasHidden];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
+//    NSString* reqstr=[request responseString];
+//    NSDictionary * dic=[reqstr JSONValue];
     id status=[dic objectForKey:@"status"];
     NSLog(@"%@",dic);
     if ([status intValue]==100)
@@ -164,7 +170,6 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (self.dataArray.count) {
         NSDictionary *memberDic = self.dataArray[indexPath.row];
-
         
         if ([[self.dataArray[indexPath.row] objectForKey:@"replyUserConsultations"] isEqual:[NSNull null]]) {
             cell.answerLabel.text = ModuleZW(@"未回复");

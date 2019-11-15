@@ -15,7 +15,7 @@
 
 #define NUMBERS @"0123456789.n"
 
-@interface BreathCheckViewController ()<UITextFieldDelegate,MBProgressHUDDelegate,ASIHTTPRequestDelegate>
+@interface BreathCheckViewController ()<UITextFieldDelegate,MBProgressHUDDelegate>
 {
     UITextField *_breathCountTF;
     UILabel *_timeLabel;
@@ -282,33 +282,52 @@
 
 - (void)requestNetworkData:(NSString *)subId
 {
+//    [self showPreogressView];
+//    NSInteger nums = [self->_breathCountTF.text integerValue];
+//    //提交数据
+//    NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+//    [request addPostValue:subId forKey:@"memberChildId"];
+//    [request addPostValue:@(50) forKey:@"datatype"];
+//    [request addPostValue:@(nums*2) forKey:@"nums"];
+//    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestError:)];
+//    [request setDidFinishSelector:@selector(requestCompleted:)];
+//    [request startAsynchronous];
+    
+    
     [self showPreogressView];
     NSInteger nums = [self->_breathCountTF.text integerValue];
-    //提交数据
-    NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    [request addPostValue:subId forKey:@"memberChildId"];
-    [request addPostValue:@(50) forKey:@"datatype"];
-    [request addPostValue:@(nums*2) forKey:@"nums"];
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestError:)];
-    [request setDidFinishSelector:@selector(requestCompleted:)];
-    [request startAsynchronous];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+    [dic setObject:subId forKey:@"memberChildId"];
+    [dic setObject:@(50) forKey:@"datatype"];
+    [dic setObject:@(nums*2) forKey:@"nums"];
+    [dic setObject:[UserShareOnce shareOnce].token forKey:@"token"];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:@"member/uploadData.jhtml" headParameters:nil parameters:dic successBlock:^(id dic) {
+        
+        [weakSelf requestCompleted:dic];
+        
+    } failureBlock:^(NSError *error) {
+        [weakSelf hidePreogressView];
+        [weakSelf showAlertWarmMessage:ModuleZW(@"提交数据失败")];
+    }];
 }
 
--(void)requestCompleted:(ASIHTTPRequest *)request{
+-(void)requestCompleted:(NSDictionary *)dic{
     [self hidePreogressView];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    
+
     NSNumber *state = dic[@"status"];
     if (state.integerValue == 100) {
         NSLog(@"数据提交成功");
@@ -376,7 +395,7 @@
     //[self customeView];
 }
 
--(void)requestError:(ASIHTTPRequest *)request{
+-(void)requestError{
     [self hidePreogressView];
     [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
 }

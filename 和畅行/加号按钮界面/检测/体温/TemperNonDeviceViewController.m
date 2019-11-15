@@ -16,7 +16,7 @@
 #define kHigh @"体温值偏高。若排除外界影响因素如情绪激动、精神紧张、进食、运动、怀孕（特指适龄女性）等情况外，伴有头痛、乏力等不适症状发生，请及时到医院就诊。"
 #define kLow @"体温值偏低。需要注意保暖，少运动，多饮热水，进食温热食物，必要时请到医院就诊，及时得到专业救诊。"
 
-@interface TemperNonDeviceViewController ()<UITextFieldDelegate,MBProgressHUDDelegate,ASIHTTPRequestDelegate>
+@interface TemperNonDeviceViewController ()<UITextFieldDelegate,MBProgressHUDDelegate>
 {
     
     UITextField *_textField;
@@ -150,22 +150,6 @@
         [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
 
         
-//        if([GlobalCommon isManyMember]){
-//            __weak typeof(self) weakSelf = self;
-//            SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
-//            [subMember receiveSubIdWith:^(NSString *subId) {
-//                NSLog(@"%@",subId);
-//                if ([subId isEqualToString:@"user is out of date"]) {
-//                    //登录超时
-//
-//                }else{
-//                    [weakSelf requestNetworkData:subId];
-//                }
-//                [subMember hideHintView];
-//            }];
-//        }else{
-//            [self requestNetworkData:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
-//        }
         
        
     }
@@ -175,118 +159,122 @@
 
 - (void)requestNetworkData:(NSString *)subId
 {
+//    [self showPreogressView];
+//    float tempNums = [self->_textField.text floatValue];
+//    //提交数据
+//    NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+//    [request addPostValue:subId forKey:@"memberChildId"];
+//    [request addPostValue:@(40) forKey:@"datatype"];
+//    [request addPostValue:@(tempNums) forKey:@"temperature"];
+//    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestError:)];
+//    [request setDidFinishSelector:@selector(requestCompleted:)];
+//    [request startAsynchronous];
+    
     [self showPreogressView];
     float tempNums = [self->_textField.text floatValue];
-    //提交数据
-    NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    [request addPostValue:subId forKey:@"memberChildId"];
-    [request addPostValue:@(40) forKey:@"datatype"];
-    [request addPostValue:@(tempNums) forKey:@"temperature"];
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestError:)];
-    [request setDidFinishSelector:@selector(requestCompleted:)];
-    [request startAsynchronous];
-}
-
-
-
--(void)requestCompleted:(ASIHTTPRequest *)request{
-    [self hidePreogressView];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+    [dic setObject:@(40) forKey:@"datatype"];
+    [dic setObject:subId forKey:@"memberChildId"];
+    [dic setObject:@(tempNums) forKey:@"temperature"];
+    [dic setObject:[UserShareOnce shareOnce].token forKey:@"token"];
     
-    NSNumber *state = dic[@"status"];
-    if (state.integerValue == 100) {
-        NSLog(@"数据提交成功");
-        //弹出视图，展现结果
-        float tempNum = [_textField.text floatValue];//呼吸次数
-        NSString *resultStr = [[NSString alloc] init];
-        //成人，正常值16~20次/分
-        if(tempNum >=36 && tempNum <37.3){
-            resultStr = ModuleZW(@"正常");
-        }else if (tempNum <38){
-            resultStr = ModuleZW(@"低热");
-        }else if (tempNum <39){
-            resultStr = ModuleZW(@"中度发热");
-        }else if (tempNum <41){
-            resultStr = ModuleZW(@"高热");
-        }else{
-            resultStr = ModuleZW(@"超高热");
-        }
-
-        UIView *view = [[UIView alloc] initWithFrame:self.view.frame];
-        view.tag = 31;
-        view.backgroundColor = [UIColor blackColor];
-        view.alpha = 0.3;
-        UIView *view2 = [[UIView alloc] initWithFrame:self.view.frame];
-        view2.tag = 32;
-        self.view.userInteractionEnabled = YES;
-        view.userInteractionEnabled = YES;
-        view2.userInteractionEnabled = YES;
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 303*1.1, 195*1.1)];
-        imageView.center = self.view.center;
-        imageView.userInteractionEnabled = YES;
-        imageView.image = [UIImage imageNamed:@"bounceView"];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:@"member/uploadData.jhtml" headParameters:nil parameters:dic successBlock:^(id dic) {
         
-        UIButton *confirmBtn = [Tools creatButtonWithFrame:CGRectMake(imageView.left, imageView.bottom, imageView.width, 40*1.1) target:self sel:@selector(confirmBtnClick2:) tag:21 image:ModuleZW(@"sureButton") title:nil];
+        [weakSelf hidePreogressView];
         
-        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前体温%.1f℃"),tempNum] frame:CGRectMake(0, 60, imageView.bounds.size.width, 20) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:1 aligment:NSTextAlignmentCenter];
-    
-        if ([resultStr isEqualToString:ModuleZW(@"正常")]) {
-            UILabel *resultLabel1 = [Tools labelWith:ModuleZW(@"当前体温值") frame:CGRectMake(imageView.bounds.size.width/2-90, 110, 110, 20) textSize:12 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentRight];
-            UILabel *resultLabel2 = [Tools labelWith:resultStr frame:CGRectMake(imageView.bounds.size.width/2+20, 110, 50, 20) textSize:12 textColor:[Tools colorWithHexString:@"#68c900"] lines:1 aligment:NSTextAlignmentLeft];
-            [imageView addSubview:resultLabel1];
-            [imageView addSubview:resultLabel2];
-        }else{
-            UILabel *hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 100, imageView.bounds.size.width-40, 80)];
-            hintLabel.numberOfLines = 0;
-            hintLabel.font = [UIFont systemFontOfSize:12];
-            NSMutableAttributedString *hintString = nil;
-            NSRange range;
-            if (tempNum >=37.3) {
-                hintString = [[NSMutableAttributedString alloc] initWithString:ModuleZW(kHigh)];
-                range = [[hintString string] rangeOfString:ModuleZW(@"偏高")];
+        NSNumber *state = dic[@"status"];
+        if (state.integerValue == 100) {
+            NSLog(@"数据提交成功");
+            //弹出视图，展现结果
+            float tempNum = [self->_textField.text floatValue];//呼吸次数
+            NSString *resultStr = [[NSString alloc] init];
+            //成人，正常值16~20次/分
+            if(tempNum >=36 && tempNum <37.3){
+                resultStr = ModuleZW(@"正常");
+            }else if (tempNum <38){
+                resultStr = ModuleZW(@"低热");
+            }else if (tempNum <39){
+                resultStr = ModuleZW(@"中度发热");
+            }else if (tempNum <41){
+                resultStr = ModuleZW(@"高热");
             }else{
-                hintString = [[NSMutableAttributedString alloc] initWithString:ModuleZW(kLow)];
-                range = [[hintString string] rangeOfString:ModuleZW(@"偏低")];
+                resultStr = ModuleZW(@"超高热");
             }
-            [hintString addAttribute:NSForegroundColorAttributeName value:[Tools colorWithHexString:@"f60a0c"] range:range];
-            hintLabel.attributedText = hintString;
-            [imageView addSubview:hintLabel];
+            
+            UIView *view = [[UIView alloc] initWithFrame:self.view.frame];
+            view.tag = 31;
+            view.backgroundColor = [UIColor blackColor];
+            view.alpha = 0.3;
+            UIView *view2 = [[UIView alloc] initWithFrame:self.view.frame];
+            view2.tag = 32;
+            self.view.userInteractionEnabled = YES;
+            view.userInteractionEnabled = YES;
+            view2.userInteractionEnabled = YES;
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 303*1.1, 195*1.1)];
+            imageView.center = self.view.center;
+            imageView.userInteractionEnabled = YES;
+            imageView.image = [UIImage imageNamed:@"bounceView"];
+            
+            UIButton *confirmBtn = [Tools creatButtonWithFrame:CGRectMake(imageView.left, imageView.bottom, imageView.width, 40*1.1) target:self sel:@selector(confirmBtnClick2:) tag:21 image:ModuleZW(@"sureButton") title:nil];
+            
+            UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前体温%.1f℃"),tempNum] frame:CGRectMake(0, 60, imageView.bounds.size.width, 20) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:1 aligment:NSTextAlignmentCenter];
+            
+            if ([resultStr isEqualToString:ModuleZW(@"正常")]) {
+                UILabel *resultLabel1 = [Tools labelWith:ModuleZW(@"当前体温值") frame:CGRectMake(imageView.bounds.size.width/2-90, 110, 110, 20) textSize:12 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentRight];
+                UILabel *resultLabel2 = [Tools labelWith:resultStr frame:CGRectMake(imageView.bounds.size.width/2+20, 110, 50, 20) textSize:12 textColor:[Tools colorWithHexString:@"#68c900"] lines:1 aligment:NSTextAlignmentLeft];
+                [imageView addSubview:resultLabel1];
+                [imageView addSubview:resultLabel2];
+            }else{
+                UILabel *hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 100, imageView.bounds.size.width-40, 80)];
+                hintLabel.numberOfLines = 0;
+                hintLabel.font = [UIFont systemFontOfSize:12];
+                NSMutableAttributedString *hintString = nil;
+                NSRange range;
+                if (tempNum >=37.3) {
+                    hintString = [[NSMutableAttributedString alloc] initWithString:ModuleZW(kHigh)];
+                    range = [[hintString string] rangeOfString:ModuleZW(@"偏高")];
+                }else{
+                    hintString = [[NSMutableAttributedString alloc] initWithString:ModuleZW(kLow)];
+                    range = [[hintString string] rangeOfString:ModuleZW(@"偏低")];
+                }
+                [hintString addAttribute:NSForegroundColorAttributeName value:[Tools colorWithHexString:@"f60a0c"] range:range];
+                hintLabel.attributedText = hintString;
+                [imageView addSubview:hintLabel];
+                
+            }
+            
+            [imageView addSubview:countLabel];
+            [view2 addSubview:imageView];
+            [weakSelf.view addSubview:view];
+            [weakSelf.view addSubview:view2];
+            [view2 addSubview:confirmBtn];
+            
+            
+            
+        }else{
+            
+            [weakSelf showAlertWarmMessage:ModuleZW(@"提交数据失败")];
             
         }
-        
-        [imageView addSubview:countLabel];
-        [view2 addSubview:imageView];
-        [self.view addSubview:view];
-        [self.view addSubview:view2];
-        [view2 addSubview:confirmBtn];
-        
-       
-    
-    }else{
-        
-        [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
-        
-    }
-    
-    
-    //[self customeView];
+    } failureBlock:^(NSError *error) {
+        [weakSelf hidePreogressView];
+        [weakSelf showAlertWarmMessage:ModuleZW(@"提交数据失败")];
+    }];
 }
 
--(void)requestError:(ASIHTTPRequest *)request{
-    [self hidePreogressView];
-    [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
-}
+
 
 
 //点击确定

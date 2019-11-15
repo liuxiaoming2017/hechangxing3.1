@@ -10,8 +10,6 @@
 #import "SonAccount.h"
 #import "Global.h"
 
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
 #import "SBJson.h"
 #import <sys/utsname.h>
 #import "ZHPickView.h"
@@ -19,7 +17,7 @@
 
 #define currentMonth [currentMonthString integerValue]
 SonAccount *sonAccount;
-@interface AlterViewController ()<ZHPickViewDelegate,ASIHTTPRequestDelegate,ASIProgressDelegate,UITextFieldDelegate>
+@interface AlterViewController ()<ZHPickViewDelegate,UITextFieldDelegate>
 @property(nonatomic,retain)ZHPickView *pickview;
 @property(nonatomic,retain)NSIndexPath *indexPath;
 @property (nonatomic ,retain) NSMutableArray *imagesArray;//图片数组
@@ -120,54 +118,78 @@ SonAccount *sonAccount;
     [self restoreView];
     [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
     
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrl = nil;
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrl = nil;
+//
+//    if ([self.category isEqualToString:@"addMember"]) {
+//        aUrl = [NSString stringWithFormat:@"%@/member/memberModifi/save.jhtml",UrlPre];
+//    }else{
+//        aUrl = [NSString stringWithFormat:@"%@/member/memberModifi/update.jhtml",UrlPre];
+//    }
+//
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    NSLog(@"---- >  %@",Certificates_Number_Tf.text);
+//    [request setPostValue:self.model.familyID forKey:@"Id"];
+//    [request setPostValue:Yh_TF.text forKey:@"name"];
+//    [request setPostValue:Certificates_Number_Tf.text forKey:@"IDCard"];
+//    [request setPostValue:IsYiBao forKey:@"isMedicare"];
+//    [request setPostValue:SexStr forKey:@"gender"];
+//    [request setPostValue:BirthDay_btn.titleLabel.text forKey:@"birthday"];
+//    [request setPostValue:TelephoneLb_Tf.text forKey:@"mobile"];
+//    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+//
+//    //
+//    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestuserinfossErrorsss:)];
+//    [request setDidFinishSelector:@selector(requestuserinfossCompleteds:)];
+//    [request startAsynchronous];
     
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+    [dic setObject:self.model.familyID forKey:@"Id"];
+    [dic setObject:Yh_TF.text forKey:@"name"];
+    [dic setObject:Certificates_Number_Tf.text forKey:@"IDCard"];
+    [dic setObject:IsYiBao forKey:@"isMedicare"];
+    [dic setObject:SexStr forKey:@"gender"];
+    [dic setObject:BirthDay_btn.titleLabel.text  forKey:@"birthday"];
+    [dic setObject:TelephoneLb_Tf.text forKey:@"mobile"];
+    [dic setObject:[UserShareOnce shareOnce].token forKey:@"token"];
+    
+    NSString *aUrl = @"";
     if ([self.category isEqualToString:@"addMember"]) {
-        aUrl = [NSString stringWithFormat:@"%@/member/memberModifi/save.jhtml",UrlPre];
+        aUrl = @"member/memberModifi/save.jhtml";
     }else{
-        aUrl = [NSString stringWithFormat:@"%@/member/memberModifi/update.jhtml",UrlPre];
+        aUrl = @"member/memberModifi/update.jhtml";
     }
-
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    NSLog(@"---- >  %@",Certificates_Number_Tf.text);
-    [request setPostValue:self.model.familyID forKey:@"Id"];
-    [request setPostValue:Yh_TF.text forKey:@"name"];
-    [request setPostValue:Certificates_Number_Tf.text forKey:@"IDCard"];
-    [request setPostValue:IsYiBao forKey:@"isMedicare"];
-    [request setPostValue:SexStr forKey:@"gender"];
-    [request setPostValue:BirthDay_btn.titleLabel.text forKey:@"birthday"];
-    [request setPostValue:TelephoneLb_Tf.text forKey:@"mobile"];
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    
-    //
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestuserinfossErrorsss:)];
-    [request setDidFinishSelector:@selector(requestuserinfossCompleteds:)];
-    [request startAsynchronous];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:aUrl headParameters:nil parameters:dic successBlock:^(id response) {
+        [weakSelf requestuserinfossCompleteds:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestuserinfossErrorsss];
+    }];
     
 }
-- (void)requestuserinfossErrorsss:(ASIHTTPRequest *)request
+- (void)requestuserinfossErrorsss
 {
     [self hudWasHidden];
     
     [self showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
 }
-- (void)requestuserinfossCompleteds:(ASIHTTPRequest *)request
+- (void)requestuserinfossCompleteds:(NSDictionary *)dic
 {
     [self hudWasHidden];
-    NSString* reqstr=[request responseString];
-    NSLog(@"dic==%@",reqstr);
-    NSDictionary * dic=[reqstr JSONValue];
-    NSLog(@"dic==%@",dic);
+//    NSString* reqstr=[request responseString];
+//    NSLog(@"dic==%@",reqstr);
+//    NSDictionary * dic=[reqstr JSONValue];
+//    NSLog(@"dic==%@",dic);
     id status=[dic objectForKey:@"status"];
     NSLog(@"%@",[dic objectForKey:@"status"]);
     if ([status intValue]==100) {

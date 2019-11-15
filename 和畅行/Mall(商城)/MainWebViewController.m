@@ -1,39 +1,43 @@
 //
-//  WKWebviewController.m
+//  MainWebViewController.m
 //  和畅行
 //
-//  Created by 刘晓明 on 2018/7/20.
-//  Copyright © 2018年 刘晓明. All rights reserved.
+//  Created by 刘晓明 on 2019/11/13.
+//  Copyright © 2019 刘晓明. All rights reserved.
 //
 
-#import "WKWebviewController.h"
+#import "MainWebViewController.h"
 #import "ShareProcessPoll.h"
-#import <WebKit/WebKit.h>
-#import "ArmchairHomeVC.h"
 
-@interface WKWebviewController ()<WKUIDelegate,WKNavigationDelegate>
+@interface MainWebViewController ()<WKUIDelegate,WKNavigationDelegate>
+
 @property (nonatomic,strong) UIProgressView *progressView;
+
 @end
 
-@implementation WKWebviewController
+@implementation MainWebViewController
+
 
 - (void)dealloc
 {
-    if(self.progressType == progress2)
-    {
-        [self.wkwebview removeObserver:self forKeyPath:@"estimatedProgress"];
-    }
-    self.wkwebview = nil;
+//    if(self.progressType == progress2)
+//    {
+//        [self.wkwebview removeObserver:self forKeyPath:@"estimatedProgress"];
+//    }
+    //self.wkwebview = nil;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.preBtn.hidden = NO;
     //[self.leftBtn setImage:[UIImage imageNamed:@"user_01"] forState:UIControlStateNormal];
-    self.leftBtn.hidden = YES;
+    self.leftBtn.hidden = NO;
     [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     
+    
 }
+
+
 
 - (void)customeViewWithStr:(NSString *)urlStr
 {
@@ -56,21 +60,33 @@
     //config.processPool = [[WKProcessPool alloc] init];
     
     WKUserContentController *userContentController = WKUserContentController.new;
+    
+    
+//    if (@available(iOS 11.0, *)) {
+//        WKHTTPCookieStore *cookieStroe = config.websiteDataStore.httpCookieStore;
+//
+//        NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+//        NSArray *tmpArray = [NSArray arrayWithArray:[cookieStorage cookies]];
+//
+//        for(NSHTTPCookie *cookie in tmpArray){
+//            [cookieStroe setCookie:cookie completionHandler:^{
+//                NSLog(@"***Name:%@,value:%@",cookie.name,cookie.value);
+//            }];
+//        }
+//    }
+    
     NSString *cookieStr = [NSString stringWithFormat:@"document.cookie = '%@=%@';document.cookie = '%@=%@';",@"token",[UserShareOnce shareOnce].token,@"JSESSIONID",[UserShareOnce shareOnce].JSESSIONID];
     
-    WKUserScript *cookieScript = [[WKUserScript alloc] initWithSource:cookieStr injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
-    
+    WKUserScript *cookieScript = [[WKUserScript alloc] initWithSource:cookieStr injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:YES];
     
     [userContentController addUserScript:cookieScript];
     
+    // 通过JS与webview内容交互
+    //config.userContentController = [[WKUserContentController alloc] init];
     config.userContentController = userContentController;
     
-    // 通过JS与webview内容交互
-    config.userContentController = [[WKUserContentController alloc] init];
-    //config.userContentController = userContentController;
-    
     self.wkwebview = [[WKWebView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight)
-                                              configuration:config];
+                                        configuration:config];
     // 导航代理
     self.wkwebview.navigationDelegate = self;
     // 与webview UI交互代理
@@ -78,7 +94,7 @@
     NSURL *url = [NSURL URLWithString:urlStr];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
-    [request addValue:[self getCookieValue] forHTTPHeaderField:@"Cookie"];
+     //[request addValue:[self getCookieValue] forHTTPHeaderField:@"Cookie"];
     
     if([UserShareOnce shareOnce].languageType){
         [request addValue:[UserShareOnce shareOnce].languageType forHTTPHeaderField:@"language"];
@@ -87,23 +103,23 @@
     [self.wkwebview loadRequest:request];
     [self.view addSubview:self.wkwebview];
     
-    if(self.progressType == progress2){
-        // 添加KVO监听
-        [self.wkwebview addObserver:self
-                         forKeyPath:@"estimatedProgress"
-                            options:NSKeyValueObservingOptionNew
-                            context:nil];
-        self.progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-        self.progressView.frame = CGRectMake(0, 0, self.wkwebview.frame.size.width, 2);
-        self.progressView.trackTintColor = [UIColor clearColor]; // 设置进度条的色彩
-        self.progressView.progressTintColor = UIColorFromHex(0x1e82d2);
-        // 设置初始的进度
-        [self.progressView setProgress:0.05 animated:YES];
-        [self.wkwebview addSubview:self.progressView];
-       
-    }else{
+//    if(self.progressType == progress2){
+//        // 添加KVO监听
+//        [self.wkwebview addObserver:self
+//                         forKeyPath:@"estimatedProgress"
+//                            options:NSKeyValueObservingOptionNew
+//                            context:nil];
+//        self.progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+//        self.progressView.frame = CGRectMake(0, 0, self.wkwebview.frame.size.width, 2);
+//        self.progressView.trackTintColor = [UIColor clearColor]; // 设置进度条的色彩
+//        self.progressView.progressTintColor = UIColorFromHex(0x1e82d2);
+//        // 设置初始的进度
+//        [self.progressView setProgress:0.05 animated:YES];
+//        [self.wkwebview addSubview:self.progressView];
+//
+//    }else{
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    }
+   // }
     
     // [GlobalCommon showMBHudWithView:self.view];
 }
@@ -142,11 +158,11 @@
 
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation {
-    if(self.progressType == progress2){
-        
-    }else{
+//    if(self.progressType == progress2){
+//
+//    }else{
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-    }
+   // }
     
     NSLog(@"加载成功");
 }
@@ -154,30 +170,24 @@
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
     NSLog(@"加载失败");
-    if(self.progressType == progress2){
-        
-    }else{
+//    if(self.progressType == progress2){
+//
+//    }else{
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-    }
-    [GlobalCommon showMessage:requestErrorMessage duration:2];
+   // }
+ //   [GlobalCommon showMessage:requestErrorMessage duration:2];
     //[self addFailView];
 }
 
 - (void)goBack:(UIButton *)btn
 {
     
-    for (UIViewController *controller in self.navigationController.viewControllers) {
-        if ([controller isKindOfClass:[ArmchairHomeVC class]]) {
-            [self.navigationController popToViewController:controller animated:YES];
-            return;
-        }
-    }
     
     if (self.popInt == 111) {
         [self.navigationController popViewControllerAnimated:YES];
     }else{
         [self.navigationController popToRootViewControllerAnimated:YES];
-
+        
     }
     
 }
@@ -207,20 +217,5 @@
         }
     }
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

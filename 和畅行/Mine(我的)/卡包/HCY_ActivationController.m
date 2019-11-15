@@ -147,40 +147,43 @@
     if (button.tag == 1001) {
         
         NSString *memberId = [NSString stringWithFormat:@"%@",[UserShareOnce shareOnce].uid];
-//        NSString *urlStr   = @"weiq/service_card/active.jhtml";
-//        NSDictionary *dic = @{@"memberId":memberId,
-//                              @"card_no":self.model.card_no,
-//                              @"token":[UserShareOnce shareOnce].token
-//                              };
+
 
         [GlobalCommon showMBHudWithView:self.view];
-        NSString *UrlPre=URL_PRE;
-        NSString *aUrl = [NSString stringWithFormat:@"%@/md/service_card/active.jhtml",UrlPre];
-        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-        [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-        [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-        if([UserShareOnce shareOnce].languageType){
-            [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-        }
-        [request setPostValue:memberId forKey:@"memberId"];
-        [request setPostValue:self.model.card_no forKey:@"card_no"];
-        [request setPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-        [request setTimeOutSeconds:20];
-        [request setRequestMethod:@"POST"];
-        [request setDelegate:self];
-        [request setDidFailSelector:@selector(requesstuserinfoError:)];
-        [request setDidFinishSelector:@selector(requesstCardCompleted:)];
-        [request startAsynchronous];
         
-//        [ZYGASINetworking POST_Path:urlStr params:dic completed:^(id JSON, NSString *stringData) {
-//            if([[JSON objectForKey:@"code"] integerValue] == 100){
-//                [weakSelf requestMemberInfo];
-//            }else{
-//                [weakSelf showAlertWarmMessage:[JSON objectForKey:@"message"]];
-//            }
-//        } failed:^(NSError *error) {
-//            [weakSelf showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
-//        }];
+        
+//        NSString *UrlPre=URL_PRE;
+//        NSString *aUrl = [NSString stringWithFormat:@"%@/md/service_card/active.jhtml",UrlPre];
+//        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//        [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+//        [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//        if([UserShareOnce shareOnce].languageType){
+//            [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//        }
+//        [request setPostValue:memberId forKey:@"memberId"];
+//        [request setPostValue:self.model.card_no forKey:@"card_no"];
+//        [request setPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+//        [request setTimeOutSeconds:20];
+//        [request setRequestMethod:@"POST"];
+//        [request setDelegate:self];
+//        [request setDidFailSelector:@selector(requesstuserinfoError:)];
+//        [request setDidFinishSelector:@selector(requesstCardCompleted:)];
+//        [request startAsynchronous];
+        
+
+        NSString *urlStr   = @"md/service_card/active.jhtml";
+        NSDictionary *dic2 = @{@"memberId":memberId,
+                            @"card_no":self.model.card_no,
+                            @"token":[UserShareOnce shareOnce].token
+                            };
+        NSMutableDictionary *dic = [dic2 copy];
+        __weak typeof(self) weakSelf = self;
+        [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:urlStr headParameters:nil parameters:dic successBlock:^(id response) {
+            [weakSelf requesstCardCompleted:response];
+        } failureBlock:^(NSError *error) {
+            [weakSelf requesstuserinfoError];
+        }];
+        
     }
     
     
@@ -191,51 +194,51 @@
 # pragma mark - 激活成功后 查询用户信息
 - (void)requestMemberInfo
 {
+    
 //    NSString *urlStr   = @"weiq/getMemberInfo.jhtml";
 //    NSDictionary *dic = @{@"memberId":[UserShareOnce shareOnce].uid};    
     
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrl = [NSString stringWithFormat:@"%@/md/getMemberInfo.jhtml",UrlPre];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-     
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requesstuserinfoError:)];
-    [request setDidFinishSelector:@selector(requesstuserinfoCompleted:)];
-    [request startAsynchronous];
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrl = [NSString stringWithFormat:@"%@/md/getMemberInfo.jhtml",UrlPre];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+//
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requesstuserinfoError:)];
+//    [request setDidFinishSelector:@selector(requesstuserinfoCompleted:)];
+//    [request startAsynchronous];
     
-//    __weak typeof(self) weakSelf = self;
-//    [ZYGASINetworking POST_Path:urlStr params:dic completed:^(id JSON, NSString *stringData) {
-//        if([[JSON objectForKey:@"code"] integerValue] == 100){
-//            [weakSelf.navigationController popViewControllerAnimated:YES];
-//        }else{
-//            [weakSelf showAlertWarmMessage:[JSON objectForKey:@"message"]];
-//        }
-//    } failed:^(NSError *error) {
-//        [weakSelf showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
-//    }];
+    NSString *urlStr   = @"md/getMemberInfo.jhtml";
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithObject:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:urlStr headParameters:nil parameters:dic successBlock:^(id response) {
+        [weakSelf requesstuserinfoCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requesstuserinfoError];
+    }];
+    
+
 }
 
-- (void)requesstuserinfoError:(ASIHTTPRequest *)request
+- (void)requesstuserinfoError
 {
     
     [GlobalCommon hideMBHudWithView:self.view];
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:requestErrorMessage delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-    [av show];
+    [self showAlertWarmMessage:requestErrorMessage];
 }
 
-- (void)requesstCardCompleted:(ASIHTTPRequest *)request
+- (void)requesstCardCompleted:(NSDictionary *)dic
 {
-    NSString* reqstr=[request responseString];
-    //NSLog(@"dic==%@",reqstr);
-    NSDictionary * dic=[reqstr JSONValue];
+//    NSString* reqstr=[request responseString];
+//    //NSLog(@"dic==%@",reqstr);
+//    NSDictionary * dic=[reqstr JSONValue];
     NSLog(@"dic==%@",dic);
     id status=[dic objectForKey:@"status"];
     
@@ -248,12 +251,12 @@
     }
 }
 
-- (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
+- (void)requesstuserinfoCompleted:(NSDictionary *)dic
 {
     [GlobalCommon hideMBHudWithView:self.view];
-    NSString* reqstr=[request responseString];
-    //NSLog(@"dic==%@",reqstr);
-    NSDictionary * dic=[reqstr JSONValue];
+//    NSString* reqstr=[request responseString];
+//    //NSLog(@"dic==%@",reqstr);
+//    NSDictionary * dic=[reqstr JSONValue];
     NSLog(@"dic==%@",dic);
     id status=[dic objectForKey:@"status"];
     //NSLog(@"234214324%@",status);

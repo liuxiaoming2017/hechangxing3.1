@@ -8,8 +8,7 @@
 
 #import "ResultController.h"
 #import <WebKit/WebKit.h>
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
+
 #import "SBJson.h"
 #import "JSONKit.h"
 

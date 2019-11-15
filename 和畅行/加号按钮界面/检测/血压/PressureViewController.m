@@ -17,7 +17,7 @@
 #import "ArchivesController.h"
 static int const tick = 80;
 
-@interface PressureViewController ()<MBProgressHUDDelegate,ASIHTTPRequestDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface PressureViewController ()<MBProgressHUDDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic,strong)UILabel *pulseLabel;
 @property (nonatomic,strong)UILabel *shrinkPressureLabel;
@@ -210,34 +210,56 @@ static int const tick = 80;
     self.subId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
     
     
+//    [self showPreogressView];
+//    NSInteger highCount = [self.boodArray[3] integerValue];
+//    NSInteger lowCount = [self.boodArray[4] integerValue];
+//    NSInteger pulseCount = [self.boodArray[5] integerValue];
+//
+//    //提交数据
+//    NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//
+//
+//
+//    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+//    [request addPostValue:self.subId forKey:@"memberChildId"];
+//    [request addPostValue:@(30) forKey:@"datatype"];
+//    [request addPostValue:@(highCount) forKey:@"highPressure"];
+//    [request addPostValue:@(lowCount) forKey:@"lowPressure"];
+//    [request addPostValue:@(pulseCount) forKey:@"pulse"];
+//    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestError:)];
+//    [request setDidFinishSelector:@selector(requestCompleted:)];
+//    [request startAsynchronous];
+    
     [self showPreogressView];
     NSInteger highCount = [self.boodArray[3] integerValue];
     NSInteger lowCount = [self.boodArray[4] integerValue];
     NSInteger pulseCount = [self.boodArray[5] integerValue];
     
-    //提交数据
-    NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+    [dic setObject:self.subId forKey:@"memberChildId"];
+    [dic setObject:@(30) forKey:@"datatype"];
+    [dic setObject:@(highCount) forKey:@"highPressure"];
+    [dic setObject:@(lowCount) forKey:@"lowPressure"];
+    [dic setObject:@(pulseCount) forKey:@"pulse"];
+    [dic setObject:[UserShareOnce shareOnce].token forKey:@"token"];
     
-    
-    
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    [request addPostValue:self.subId forKey:@"memberChildId"];
-    [request addPostValue:@(30) forKey:@"datatype"];
-    [request addPostValue:@(highCount) forKey:@"highPressure"];
-    [request addPostValue:@(lowCount) forKey:@"lowPressure"];
-    [request addPostValue:@(pulseCount) forKey:@"pulse"];
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestError:)];
-    [request setDidFinishSelector:@selector(requestCompleted:)];
-    [request startAsynchronous];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:@"member/uploadData.jhtml" headParameters:nil parameters:dic successBlock:^(id response) {
+        [weakSelf requestCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf hidePreogressView];
+        [weakSelf showAlertWarmMessage:ModuleZW(@"提交数据失败")];
+    }];
     
 }
 
@@ -396,10 +418,10 @@ static int const tick = 80;
     [_personView setHidden:YES];
 }
 
--(void)requestCompleted:(ASIHTTPRequest *)request{
+-(void)requestCompleted:(NSDictionary *)dic{
     [self hidePreogressView];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
+//    NSString* reqstr=[request responseString];
+//    NSDictionary * dic=[reqstr JSONValue];
     //NSDictionary *dataDic = dic[@"data"];
     NSNumber *state = dic[@"status"];
     if (state.integerValue == 100) {
@@ -490,11 +512,6 @@ static int const tick = 80;
     //[self customeView];
 }
 
--(void)requestError:(ASIHTTPRequest *)request{
-    [self hidePreogressView];
-    [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
-    
-}
 
 //查看档案
 - (void)lookClickBtn:(UIButton *)btn{

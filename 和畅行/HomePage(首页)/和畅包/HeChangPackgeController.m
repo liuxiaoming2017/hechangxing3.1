@@ -126,7 +126,7 @@
             if([UserShareOnce shareOnce].languageType){
                 [request addValue:[UserShareOnce shareOnce].languageType forHTTPHeaderField:@"language"];
             }
-            [webView loadRequest:request];
+            [self.wkwebview loadRequest:request];
             decisionHandler(WKNavigationActionPolicyCancel);
         }
         

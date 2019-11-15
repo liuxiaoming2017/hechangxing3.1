@@ -19,7 +19,6 @@
     UILabel *_orderMoneyLabel;
     NSInteger _buyCount;
     float _totalMoney;
-    ASIHTTPRequest *_request;
     MBProgressHUD *_progress;
 }
 @end
@@ -110,15 +109,15 @@
 -(void)orderClick:(MyView *)imageView{
     NSLog(@"点击立即预约");
     //调用预约接口
-    NSString *str = [[NSString alloc] initWithFormat:@"%@/member/lecture/reserve.jhtml",URL_PRE];
-    NSString *parameter = [[NSString alloc] initWithFormat:@"?lectureId=%@&memberId=%@&reserveNums=%ld&totalFee=%f",self.model.id,[UserShareOnce shareOnce].uid,(long)_buyCount,_totalMoney];
-    NSString *url = [[NSString alloc] initWithFormat:@"%@%@",str,parameter];
-    _request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:url]];
-    [_request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
-    _request.timeOutSeconds = 20;
-    _request.requestMethod = @"GET";
-    _request.delegate = self;
-    [_request startAsynchronous];
+//    NSString *str = [[NSString alloc] initWithFormat:@"%@/member/lecture/reserve.jhtml",URL_PRE];
+//    NSString *parameter = [[NSString alloc] initWithFormat:@"?lectureId=%@&memberId=%@&reserveNums=%ld&totalFee=%f",self.model.id,[UserShareOnce shareOnce].uid,(long)_buyCount,_totalMoney];
+//    NSString *url = [[NSString alloc] initWithFormat:@"%@%@",str,parameter];
+//    _request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:url]];
+//    [_request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
+//    _request.timeOutSeconds = 20;
+//    _request.requestMethod = @"GET";
+//    _request.delegate = self;
+//    [_request startAsynchronous];
 
     
     _progress = [[MBProgressHUD alloc] initWithView:self.view];
@@ -127,6 +126,15 @@
     _progress.delegate = self;
     _progress.labelText = @"加载中...";
     [_progress show:YES];
+    
+    NSString *parameter = [[NSString alloc] initWithFormat:@"?lectureId=%@&memberId=%@&reserveNums=%ld&totalFee=%f",self.model.id,[UserShareOnce shareOnce].uid,(long)_buyCount,_totalMoney];
+    NSString *urlStr = [[NSString alloc] initWithFormat:@"member/lecture/reserve.jhtml%@",parameter];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:2 urlString:urlStr parameters:nil successBlock:^(id response) {
+        [weakSelf requestComfinish:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestFail];
+    }];
 }
 
 -(void)hudWasHidden:(MBProgressHUD *)hud{
@@ -134,10 +142,10 @@
     _progress = nil;
 }
 
--(void)requestFinished:(ASIHTTPRequest *)request{
+-(void)requestComfinish:(NSDictionary *)dic{
     [self hudWasHidden:nil];
-    NSString *requestStr = [request responseString];
-    NSDictionary *dic = [requestStr JSONValue];
+//    NSString *requestStr = [request responseString];
+//    NSDictionary *dic = [requestStr JSONValue];
     NSDictionary *dataDic = dic[@"data"];
     
     if ([dic[@"status"] integerValue]==43) {
@@ -178,9 +186,8 @@
     }
     
 }
--(void)requestFailed:(ASIHTTPRequest *)request{
+-(void)requestFail{
     [self hudWasHidden:nil];
-    NSLog(@"%@",request.error);
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.removeFromSuperViewOnHide =YES;
     hud.mode = MBProgressHUDModeText;

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HealthLectureViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,MBProgressHUDDelegate>
+@interface HealthLectureViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate>
 
 @property (nonatomic,retain) UITableView *tableView;
 @property (nonatomic,retain) NSMutableArray *dataArr;

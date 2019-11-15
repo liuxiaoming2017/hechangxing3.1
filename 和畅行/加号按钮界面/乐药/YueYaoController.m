@@ -10,7 +10,7 @@
 #import "CCSegmentedControl.h"
 #import "HYSegmentedControl.h"
 #import "SongListCell.h"
-#import "DownloadHandler.h"
+
 #import "SongListModel.h"
 #import "ProgressIndicator.h"
 #import <AVFoundation/AVFoundation.h>
@@ -38,7 +38,7 @@
 }
 
 @property (nonatomic,strong) HYSegmentedControl *hysegmentControl;
-@property (nonatomic,strong) DownloadHandler *downhander;
+
 @property (nonatomic,strong) NSArray *dataArr;
 @property (nonatomic,strong) UITableView *tableView;
 
@@ -90,12 +90,12 @@
 
 
 @implementation YueYaoController
-@synthesize hysegmentControl,downhander,jinerLabel,allPrice;
+@synthesize hysegmentControl,jinerLabel,allPrice;
 
 - (void)dealloc
 {
 
-    downhander = nil;
+    
     self.dataArr = nil;
     self.avPlayer = nil;
     self.tableView = nil;

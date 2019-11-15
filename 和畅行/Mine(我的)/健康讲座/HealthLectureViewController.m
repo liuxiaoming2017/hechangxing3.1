@@ -13,7 +13,7 @@
 
 @interface HealthLectureViewController ()
 {
-    ASIHTTPRequest *_request;
+    
     MBProgressHUD *_progress;
 }
 @end
@@ -53,20 +53,31 @@
 
 #pragma mark -------- 请求数据
 -(void)downloadDatas{
-    NSString *str = [[NSString alloc] initWithFormat:@"%@/lecture/list.jhtml",URL_PRE];
-    _request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:str]];
-    [_request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
-    _request.timeOutSeconds = 20;
-    _request.requestMethod = @"GET";
-    _request.delegate = self;
-    [_request startAsynchronous];
     
+//    NSString *str = [[NSString alloc] initWithFormat:@"%@/lecture/list.jhtml",URL_PRE];
+//    _request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:str]];
+//    [_request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
+//    _request.timeOutSeconds = 20;
+//    _request.requestMethod = @"GET";
+//    _request.delegate = self;
+//    [_request startAsynchronous];
+    
+   
     _progress = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:_progress];
     [self.view bringSubviewToFront:_progress];
     _progress.delegate = self;
     _progress.labelText = @"加载中...";
     [_progress show:YES];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:2 urlString:@"lecture/list.jhtml" parameters:nil successBlock:^(id response) {
+        [weakSelf requestComfinish:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestFail];
+    }];
+    
+    
 }
 
 -(void)hudWasHidden:(MBProgressHUD *)hud{
@@ -74,10 +85,10 @@
     _progress = nil;
 }
 
--(void)requestFinished:(ASIHTTPRequest *)request{
+-(void)requestComfinish:(NSDictionary *)dic{
     [self hudWasHidden:nil];
-    NSString *requestStr = [request responseString];
-    NSDictionary *dic = [requestStr JSONValue];
+//    NSString *requestStr = [request responseString];
+//    NSDictionary *dic = [requestStr JSONValue];
     NSArray *data = dic[@"data"];
     _dataArr = [[NSMutableArray alloc] init];
     for (NSDictionary *dataDic in data) {
@@ -90,9 +101,8 @@
     //请求成功，创建tableView
     [self createTableView];
 }
--(void)requestFailed:(ASIHTTPRequest *)request{
+-(void)requestFail{
     [self hudWasHidden:nil];
-    NSLog(@"%@",request.error);
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.removeFromSuperViewOnHide =YES;
     hud.mode = MBProgressHUDModeText;

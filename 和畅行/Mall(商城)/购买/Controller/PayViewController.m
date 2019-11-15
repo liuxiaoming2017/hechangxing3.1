@@ -9,8 +9,7 @@
 #import "PayViewController.h"
 #import "AlipayHeader.h"
 #import "MBProgressHUD.h"
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
+
 #import "SBJson.h"
 #import "LoginViewController.h"
 
@@ -193,54 +192,74 @@
 - (void)dingdanhaozhifu:(NSString *)zhifufangshi{
     [self showHUD];
     self.paymentPluginId = zhifufangshi;
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/order/create_pay.jhtml",UrlPre];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:aUrlle];
     
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    //ios_hcy-yh-1.0//andriod_phone_hcy-yh-33
-    [request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
-    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setRequestMethod:@"POST"];
-    //[request setPostValue:idStr forKey:@"id"];
-    //[request setPostValue:isreader forKey:@"isRead"];
-    [request setPostValue:@"50" forKey:@"reserveType"];
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    [request setPostValue:self.idStr forKey:@"orderId"];
-    [request setPostValue:@"payment" forKey:@"type"];
-    [request setPostValue:zhifufangshi forKey:@"paymentPluginId"];
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/order/create_pay.jhtml",UrlPre];
+//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    NSURL *url = [NSURL URLWithString:aUrlle];
+//
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    //ios_hcy-yh-1.0//andriod_phone_hcy-yh-33
+//    [request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
+//    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setRequestMethod:@"POST"];
+//    //[request setPostValue:idStr forKey:@"id"];
+//    //[request setPostValue:isreader forKey:@"isRead"];
+//    [request setPostValue:@"50" forKey:@"reserveType"];
+//    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+//    [request setPostValue:self.idStr forKey:@"orderId"];
+//    [request setPostValue:@"payment" forKey:@"type"];
+//    [request setPostValue:zhifufangshi forKey:@"paymentPluginId"];
+//    if ([_priceStr isEqualToString:@"0"]) {
+//
+//    }else{
+//        [request setPostValue:_priceStr forKey:@"cardFees"];
+//    }
+//    [request addPostValue:_priceAPPStr forKey:@"balance"];
+//   // [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+//    [request setTimeOutSeconds:20];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestIsAPPpayReaderError:)];
+//
+//    [request setDidFinishSelector:@selector(requestIsAPPpayReaderCompleted:)];
+//    [request startAsynchronous];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+    [dic setObject:@"50" forKey:@"reserveType"];
+    [dic setObject:self.idStr forKey:@"orderId"];
+    [dic setObject:@"payment" forKey:@"type"];
     if ([_priceStr isEqualToString:@"0"]) {
         
     }else{
-        [request setPostValue:_priceStr forKey:@"cardFees"];
+       [dic setObject:_priceStr forKey:@"cardFees"];
     }
-    [request addPostValue:_priceAPPStr forKey:@"balance"];
-   // [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setTimeOutSeconds:20];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestIsAPPpayReaderError:)];
+    [dic setObject:zhifufangshi forKey:@"paymentPluginId"];
+    [dic setObject:@"0" forKey:@"balance"];
     
-    [request setDidFinishSelector:@selector(requestIsAPPpayReaderCompleted:)];
-    [request startAsynchronous];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:@"member/order/create_pay.jhtml" headParameters:@{@"version":@"ios_hcy-yh-1.0"} parameters:dic successBlock:^(id response) {
+        [weakSelf requestIsAPPpayReaderCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestIsAPPpayReaderError];
+    }];
 }
 
--(void)requestIsAPPpayReaderError:(ASIHTTPRequest *)request
+-(void)requestIsAPPpayReaderError
 {
     [self hudWasHidden];
     
     [self showAlertWarmMessage:requestErrorMessage];
     
 }
--(void)requestIsAPPpayReaderCompleted:(ASIHTTPRequest *)request
+-(void)requestIsAPPpayReaderCompleted:(NSDictionary *)dic
 {
     [self hudWasHidden];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
     NSLog(@"%@",dic);
     id status=[dic objectForKey:@"status"];
     if ([status intValue]==100)
@@ -328,23 +347,32 @@
 # pragma mark - 微信支付
 - (void)WXPayButton{
     [self showHUD];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/mobile/order/payment/submit.jhtml?sn=%@&paymentPluginId=%@&token=%@&JESSONID=%@",UrlPre,_dingdanStr,@"weixinPayHcyPhonePlugin",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:aUrlle];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setRequestMethod:@"GET"];
-    [request setTimeOutSeconds:20];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestWXPayOverError:)];
-    [request setDidFinishSelector:@selector(requestWXPayOverCompleted:)];
-    [request startAsynchronous];
+    
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/mobile/order/payment/submit.jhtml?sn=%@&paymentPluginId=%@&token=%@&JESSONID=%@",UrlPre,_dingdanStr,@"weixinPayHcyPhonePlugin",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID];
+//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    NSURL *url = [NSURL URLWithString:aUrlle];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setRequestMethod:@"GET"];
+//    [request setTimeOutSeconds:20];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestWXPayOverError:)];
+//    [request setDidFinishSelector:@selector(requestWXPayOverCompleted:)];
+//    [request startAsynchronous];
+    
+     NSString *urlStr= [NSString stringWithFormat:@"member/mobile/order/payment/submit.jhtml?sn=%@&paymentPluginId=%@&token=%@&JESSONID=%@",_dingdanStr,@"weixinPayHcyPhonePlugin",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
+        [weakSelf requestWXPayOverCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestWXPayOverError];
+    }];
     
 }
--(void)requestWXPayOverError:(ASIHTTPRequest *)request
+-(void)requestWXPayOverError
 {
     [self hudWasHidden];
     //[SSWaitViewEx removeWaitViewFrom:self.view];
@@ -353,11 +381,10 @@
    
     
 }
--(void)requestWXPayOverCompleted:(ASIHTTPRequest *)request
+-(void)requestWXPayOverCompleted:(NSDictionary *)dic
 {
     [self hudWasHidden];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
+    
     
     id status=[dic objectForKey:@"status"];
     if (status!=nil)
@@ -451,20 +478,29 @@
 
 - (void)generatePayOrders{
     [self showHUD];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/mobile/order/getOrderInfo.jhtml?sn=%@&token=%@&JESSONID=%@",UrlPre,_dingdanStr,[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:aUrlle];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setRequestMethod:@"GET"];
-    [request setTimeOutSeconds:20];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestMayError:)];
-    [request setDidFinishSelector:@selector(requestMayCompleted:)];
-    [request startAsynchronous];
+    
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/mobile/order/getOrderInfo.jhtml?sn=%@&token=%@&JESSONID=%@",UrlPre,_dingdanStr,[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID];
+//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    NSURL *url = [NSURL URLWithString:aUrlle];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setRequestMethod:@"GET"];
+//    [request setTimeOutSeconds:20];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestMayError:)];
+//    [request setDidFinishSelector:@selector(requestMayCompleted:)];
+//    [request startAsynchronous];
+    
+    NSString *urlStr= [NSString stringWithFormat:@"member/mobile/order/getOrderInfo.jhtml?sn=%@&token=%@&JESSONID=%@",_dingdanStr,[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
+        [weakSelf requestMayCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestMayError];
+    }];
 }
 -(void) showHUD
 {
@@ -487,23 +523,17 @@
     
 }
 
--(void)requestMayError:(ASIHTTPRequest *)request
+-(void)requestMayError
 {
     [self hudWasHidden];
-    //[SSWaitViewEx removeWaitViewFrom:self.view];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    NSLog(@"dic==%@",dic);
     [self showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
     
     
 }
--(void)requestMayCompleted:(ASIHTTPRequest *)request
+-(void)requestMayCompleted:(NSDictionary *)dic
 {
     [self hudWasHidden];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    
+   
     id status=[dic objectForKey:@"status"];
     if (status!=nil)
     {
@@ -548,39 +578,42 @@
 # pragma mark - 支付宝支付
 - (void)buttonWithPay{
     [self showHUD];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/mobile/order/payment/submit.jhtml?sn=%@&paymentPluginId=%@&token=%@&JESSONID=%@",UrlPre,_dingdanStr,@"alipayNativeAppPlugin",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:aUrlle];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setRequestMethod:@"GET"];
-    [request setTimeOutSeconds:20];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestMayOverError:)];
-    [request setDidFinishSelector:@selector(requestMayOverCompleted:)];
-    [request startAsynchronous];
+    
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/mobile/order/payment/submit.jhtml?sn=%@&paymentPluginId=%@&token=%@&JESSONID=%@",UrlPre,_dingdanStr,@"alipayNativeAppPlugin",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID];
+//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    NSURL *url = [NSURL URLWithString:aUrlle];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setRequestMethod:@"GET"];
+//    [request setTimeOutSeconds:20];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestMayOverError:)];
+//    [request setDidFinishSelector:@selector(requestMayOverCompleted:)];
+//    [request startAsynchronous];
+    
+    NSString *urlStr= [NSString stringWithFormat:@"member/mobile/order/payment/submit.jhtml?sn=%@&paymentPluginId=%@&token=%@&JESSONID=%@",_dingdanStr,@"alipayNativeAppPlugin",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
+        [weakSelf requestMayOverCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestMayOverError];
+    }];
     
 }
--(void)requestMayOverError:(ASIHTTPRequest *)request
+-(void)requestMayOverError
 {
     [self hudWasHidden];
-    //[SSWaitViewEx removeWaitViewFrom:self.view];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    NSLog(@"dic==%@",dic);
     
     [self showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
     
     
 }
--(void)requestMayOverCompleted:(ASIHTTPRequest *)request
+-(void)requestMayOverCompleted:(NSDictionary *)dic
 {
     [self hudWasHidden];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
     
     id status=[dic objectForKey:@"status"];
     if (status!=nil)
@@ -601,8 +634,6 @@
         } else{
             NSString *str = [dic objectForKey:@"data"];
             [self showAlertWarmMessage:str];
-           
-            
         }
     }
     

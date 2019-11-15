@@ -272,7 +272,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:@"versions_update/updateVersion.jhtml" headParameters:headDic parameters:nil successBlock:^(id response2) {
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:0 urlString:@"versions_update/updateVersion.jhtml" headParameters:headDic parameters:nil successBlock:^(id response2) {
         NSError *error = NULL;
         id response = [NSJSONSerialization JSONObjectWithData:response2 options:0 error:&error];
         if([[response objectForKey:@"status"] intValue] == 100){

@@ -12,17 +12,16 @@
 #import "MyView.h"
 #import "UIImageView+WebCache.h"
 #import "PersonalInformationViewController.h"
-#import "PrivateServiceViewController.h"
 #import "BlockViewController.h"
 #import "FamilyViewController.h"
 #import "HealthLectureOrderViewController.h"
 #import "CustomNavigationController.h"
-#import "LeMedicineViewController.h"
-#import "WenYinFileViewController.h"
+
+
 #import "MyAvdisorysViewController.h"
 #import "SetupController.h"
 #import "EDWKWebViewController.h"
-#import "SportDemonstratesViewController.h"
+
 
 @interface MineViewController ()<UITableViewDelegate>
 

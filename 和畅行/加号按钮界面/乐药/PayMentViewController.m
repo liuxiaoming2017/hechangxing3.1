@@ -9,8 +9,7 @@
 #import "PayMentViewController.h"
 #import "BlockTableViewCell.h"
 #import "MBProgressHUD.h"
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
+
 #import "SBJson.h"
 #import "PaySuccessViewController.h"
 #import "PayAbnormalViewController.h"
@@ -271,36 +270,43 @@
             }
         }
     }
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/resources/reserve.jhtml?memberId=%@&ids=%@",UrlPre,[UserShareOnce shareOnce].uid,idStr];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:aUrlle];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    //后面加的10.11
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    [request setRequestMethod:@"GET"];
-    [request setTimeOutSeconds:20];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestpayfangshiError:)];
-    [request setDidFinishSelector:@selector(requestpayfangshiCompleted:)];
-    [request startAsynchronous];
     
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/resources/reserve.jhtml?memberId=%@&ids=%@",UrlPre,[UserShareOnce shareOnce].uid,idStr];
+//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    NSURL *url = [NSURL URLWithString:aUrlle];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    //后面加的10.11
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    [request setRequestMethod:@"GET"];
+//    [request setTimeOutSeconds:20];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestpayfangshiError:)];
+//    [request setDidFinishSelector:@selector(requestpayfangshiCompleted:)];
+//    [request startAsynchronous];
+    
+    
+    NSString *urlStr= [NSString stringWithFormat:@"member/resources/reserve.jhtml?memberId=%@&ids=%@",[UserShareOnce shareOnce].uid,idStr];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
+        [weakSelf requestpayfangshiCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestpayfangshiError];
+    }];
 }
--(void)requestpayfangshiError:(ASIHTTPRequest *)request
+-(void)requestpayfangshiError
 {
     [GlobalCommon hideMBHudWithView:self.view];
     [self showAlertWarmMessage:requestErrorMessage];
     
 }
 # pragma mark - 成功请求回调
--(void)requestpayfangshiCompleted:(ASIHTTPRequest *)request
+-(void)requestpayfangshiCompleted:(NSDictionary *)dic
 {
     [GlobalCommon hideMBHudWithView:self.view];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    
+   
     id status=[dic objectForKey:@"status"];
     NSLog(@"==%@",status);
     if (status!=nil)
@@ -434,45 +440,61 @@
 - (void)xianjinkazhifushengchengdingdan:(NSString *)cardFees balance:(NSString *)balance{
     [GlobalCommon showMBHudWithView:self.view];
     self.priceYuer = [balance floatValue];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/order/create_pay.jhtml",UrlPre];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:aUrlle];
     
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setPostValue:@"50" forKey:@"reserveType"];
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    [request setPostValue:self.idString forKey:@"orderId"];
-    [request setPostValue:@"payment" forKey:@"type"];
-    [request setPostValue:cardFees forKey:@"cardFees"];
-    [request setPostValue:@"0" forKey:@"balance"];
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestIsxianjinkaReaderError:)];
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/order/create_pay.jhtml",UrlPre];
+//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    NSURL *url = [NSURL URLWithString:aUrlle];
+//
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setPostValue:@"50" forKey:@"reserveType"];
+//    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+//    [request setPostValue:self.idString forKey:@"orderId"];
+//    [request setPostValue:@"payment" forKey:@"type"];
+//    [request setPostValue:cardFees forKey:@"cardFees"];
+//    [request setPostValue:@"0" forKey:@"balance"];
+//    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestIsxianjinkaReaderError:)];
+//
+//    [request setDidFinishSelector:@selector(requestIsxianjinkaReaderCompleted:)];
+//    [request startAsynchronous];
     
-    [request setDidFinishSelector:@selector(requestIsxianjinkaReaderCompleted:)];
-    [request startAsynchronous];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+    [dic setObject:@"50" forKey:@"reserveType"];
+    [dic setObject:self.idString forKey:@"orderId"];
+    [dic setObject:@"payment" forKey:@"type"];
+    [dic setObject:@"0" forKey:@"balance"];
+    [dic setObject:cardFees forKey:@"cardFees"];
+    [dic setObject:[UserShareOnce shareOnce].token forKey:@"token"];
+    
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:@"member/order/create_pay.jhtml" headParameters:@{@"version":@"ios_hcy-yh-1.0"} parameters:dic successBlock:^(id response) {
+        [weakSelf requestIsxianjinkaReaderCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestIsxianjinkaReaderError];
+    }];
     
 }
--(void)requestIsxianjinkaReaderError:(ASIHTTPRequest *)request
+-(void)requestIsxianjinkaReaderError
 {
     [GlobalCommon hideMBHudWithView:self.view];
     
     [self showAlertWarmMessage:requestErrorMessage];
 }
 # pragma mark - 消费卡请求成功回调
--(void)requestIsxianjinkaReaderCompleted:(ASIHTTPRequest *)request
+-(void)requestIsxianjinkaReaderCompleted:(NSDictionary *)dic
 {
     [GlobalCommon hideMBHudWithView:self.view];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
     id status=[dic objectForKey:@"status"];
     NSLog(@"%@",status);
     if ([status intValue]==100)
@@ -518,26 +540,34 @@
     
     productIdStr =  [productIdStr substringToIndex:[productIdStr length]-1];
     
-    NSString *UrlPre=URL_PRE;
-    //NSString *aUrlle= [NSString stringWithFormat:@"%@/member/cashcard/list/%@.jhtml",UrlPre,[UserShareOnce shareOnce].uid];
-    NSString *aUrlle= [NSString stringWithFormat:@"%@member/cashcard/getcards.jhtml?productids=%@&memberId=%@",UrlPre,productIdStr,[UserShareOnce shareOnce].uid];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:aUrlle];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    //后面加的10.11
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    [request setRequestMethod:@"GET"];
-    [request setTimeOutSeconds:20];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestpayMentError:)];
-    [request setDidFinishSelector:@selector(requestpayMentCompleted:)];
-    [request startAsynchronous];
+//    NSString *UrlPre=URL_PRE;
+//    //NSString *aUrlle= [NSString stringWithFormat:@"%@/member/cashcard/list/%@.jhtml",UrlPre,[UserShareOnce shareOnce].uid];
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@member/cashcard/getcards.jhtml?productids=%@&memberId=%@",UrlPre,productIdStr,[UserShareOnce shareOnce].uid];
+//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    NSURL *url = [NSURL URLWithString:aUrlle];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    //后面加的10.11
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    [request setRequestMethod:@"GET"];
+//    [request setTimeOutSeconds:20];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestpayMentError:)];
+//    [request setDidFinishSelector:@selector(requestpayMentCompleted:)];
+//    [request startAsynchronous];
+    
+    NSString *urlStr= [NSString stringWithFormat:@"member/cashcard/getcards.jhtml?productids=%@&memberId=%@",productIdStr,[UserShareOnce shareOnce].uid];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
+        [weakSelf requestpayMentCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestpayMentError];
+    }];
 }
 
--(void)requestpayMentError:(ASIHTTPRequest *)request
+-(void)requestpayMentError
 {
     
     [GlobalCommon hideMBHudWithView:self.view];
@@ -545,12 +575,9 @@
     
 }
 # pragma mark - 获取会员卡接口成功回调
--(void)requestpayMentCompleted:(ASIHTTPRequest *)request
+-(void)requestpayMentCompleted:(NSDictionary *)dic
 {
     [GlobalCommon hideMBHudWithView:self.view];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    
     id status=[dic objectForKey:@"status"];
     NSLog(@"%@",dic);
     if (status!=nil)

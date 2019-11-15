@@ -672,42 +672,73 @@
 
 -(void)getCasesList {
     
-     [self.timeLinvView.tableView.mj_footer endRefreshing];
+    [self.timeLinvView.tableView.mj_footer endRefreshing];
     [self.timeLinvView.tableView.mj_header endRefreshing];
    
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrl = [NSString stringWithFormat:@"%@md/diseaList.jhtml",UrlPre];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrl = [NSString stringWithFormat:@"%@md/diseaList.jhtml",UrlPre];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+//
+//
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requesstuserinfoError:)];
+//    [request setDidFinishSelector:@selector(requesstuserinfoCompleted11:)];
+//    [request startAsynchronous];
     
-    
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requesstuserinfoError:)];
-    [request setDidFinishSelector:@selector(requesstuserinfoCompleted11:)];
-    [request startAsynchronous];
-    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:@"md/diseaList.jhtml" headParameters:nil parameters:dic successBlock:^(id dica) {
+        id status=[dica objectForKey:@"status"];
+        if ([status intValue]== 100) {
+            
+            [self.dataListArray removeAllObjects];
+            for (NSDictionary *dic in [dica valueForKey:@"data"]) {
+                HealthTipsModel *tipModel = [[HealthTipsModel alloc] init];
+                [tipModel yy_modelSetWithJSON:dic];
+                [weakSelf.dataListArray addObject:tipModel];
+            }
+            
+            if(weakSelf.dataListArray.count==0){
+                weakSelf.noView.hidden = NO;
+                weakSelf.timeLinvView.tableView.hidden = YES;
+                return;
+            }else{
+                weakSelf.noView.hidden = YES;
+                weakSelf.timeLinvView.tableView.hidden = NO;
+            }
+            
+            [weakSelf.timeLinvView relodTableViewWitDataArray:weakSelf.dataListArray withType:weakSelf.typeUrlInteger withMemberID:self->memberId];
+            
+        }
+        else if ([status intValue]== 44)
+        {
+            UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时，请重新登录") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
+            av.tag  = 100008;
+            [av show];
+        }
+        else  {
+            NSString *str = [dica objectForKey:@"data"];
+            [weakSelf showAlertWarmMessage:str];
+        }
+    } failureBlock:^(NSError *error) {
+        [weakSelf showAlertWarmMessage:requestErrorMessage];
+    }];
     
 }
 
 
-- (void)requesstuserinfoError:(ASIHTTPRequest *)request
+
+- (void)requesstuserinfoCompleted11:(NSDictionary *)dica
 {
-    //[SSWaitViewEx removeWaitViewFrom:self.view];
-    
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉，请检查您的网络是否畅通") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-    [av show];
-}
-- (void)requesstuserinfoCompleted11:(ASIHTTPRequest *)request
-{
-    NSString* reqstr=[request responseString];
-    NSDictionary * dica=[reqstr JSONValue];
     id status=[dica objectForKey:@"status"];
     if ([status intValue]== 100) {
         

@@ -27,7 +27,7 @@
 #import "LoginViewController.h"
 
 #import <sys/utsname.h>
-
+#import <objc/runtime.h>
 
 @interface HomePageController ()<UIScrollViewDelegate>
 
@@ -100,8 +100,80 @@
     
     [UserShareOnce shareOnce].startTime = [GlobalCommon getCurrentTimes];
     
+    self.rightBtn.hidden = NO;
+     [self.rightBtn addTarget:self action:@selector(messageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void)messageBtnAction:(UIButton *)btn
+{
+    BOOL isLogin = [self isLogin];
+    NSString *resultStr = isLogin ? @"成功" : @"失败";
+    NSLog(@"**:%@",resultStr);
+}
+
+- (BOOL)isLogin
+{
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    
+    dispatch_queue_t queue = dispatch_queue_create("AkSemaphore", NULL);
+    
+    // 创建队列组，可以使两个网络请求异步执行，执行完之后再进行操作
+    dispatch_group_t group = dispatch_group_create();
+    
+    __block BOOL isLogin = NO;
+    
+    
+   // dispatch_async(queue, ^{
+    
+    dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    
+        //dispatch_semaphore_signal(semaphore);
+        
+        //NSString *urlStr = [NSString stringWithFormat:@"login/logincheck.jhtml?memberId=%@",[UserShareOnce shareOnce].uid];
+        NSString *urlStr = [NSString stringWithFormat:@"%@login/logincheck.jhtml?memberId=%@",URL_PRE,[UserShareOnce shareOnce].uid];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.responseSerializer = [AFJSONResponseSerializer serializer]; // 设置接收数据为 JSON 数据
+        
+        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        manager.responseSerializer = [AFJSONResponseSerializer serializer];// 请求返回的格式为json
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+        manager.responseSerializer =[AFJSONResponseSerializer serializerWithReadingOptions: NSJSONReadingAllowFragments];
+        [manager GET:urlStr parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+            if([[responseObject objectForKey:@"status"] integerValue] == 100){
+                if([[responseObject objectForKey:@"data"] boolValue] == YES){
+                    isLogin = YES;
+                }else{
+                    isLogin = NO;
+                }
+            }
+            
+           
+            dispatch_semaphore_signal(semaphore);
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+            //接口请求失败 代表不是cookie问题
+            isLogin = YES;
+            
+            dispatch_semaphore_signal(semaphore);
+        }];
+        
+        NSLog(@"hahaha");
+        
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        
+    });
+    
+    dispatch_group_notify(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+    });
+    //dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    return isLogin;
+   
+}
 
 
 - (void)exchangeMemberChild:(NSNotification *)notify

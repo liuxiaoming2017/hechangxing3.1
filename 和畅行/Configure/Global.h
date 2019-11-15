@@ -33,7 +33,8 @@ extern BOOL isBF;
 //生产环境
 //#define URL_PRE @"http://eky3h.com/healthlm/"
 
-//#define URL_PRE @"http://192.168.1.115:8080/hcy-system/"
+//#define URL_PRE @"http://10.1.71.121:8080/hcy-system/"
+
 //#define URL_PRE @"http://10.1.71.181:8080/healthlm/"
 //http://10.1.71.181:8080/healthlm/
 //#define URL_PRE @"http://10.1.71.113:8888/hcy-system/"
