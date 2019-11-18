@@ -232,6 +232,7 @@
 - (void)testCookie
 {
     if (@available(iOS 11.0, *)) {
+        
         WKHTTPCookieStore *cookieStroe = self.wkwebview.configuration.websiteDataStore.httpCookieStore;
 
         NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
@@ -248,25 +249,40 @@
                 cookieJSESSIONID = cookie;
             }
         }
-
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+        dic[NSHTTPCookieName] = @"liuxiaoming";
+        dic[NSHTTPCookieValue] = @"aini";
+        
+        NSHTTPCookie *cookie1 = [NSHTTPCookie cookieWithProperties:[dic copy]];
+        
+        NSLog(@"cokie1:%@",cookie1);
+        
+        [cookieStroe setCookie:cookie1 completionHandler:^{
+            
+        }];
+        
         //get cookies
         [cookieStroe getAllCookies:^(NSArray<NSHTTPCookie *> * _Nonnull cookies) {
             NSLog(@"count:%ld",cookies.count);
             for(NSHTTPCookie *cookie in cookies){
                 if([cookie.name isEqualToString:@"token"]){
-                    [cookieStroe setCookie:cookieToken completionHandler:^{
-                        NSLog(@"success1");
+                    [cookieStroe deleteCookie:cookie completionHandler:^{
+                        [cookieStroe setCookie:cookieToken completionHandler:^{
+                            NSLog(@"success1");
+                        }];
                     }];
+                    
                 }
                 if([cookie.name isEqualToString:@"JSESSIONID"]){
-                    [cookieStroe setCookie:cookieJSESSIONID completionHandler:^{
-                        NSLog(@"success2");
+                    [cookieStroe deleteCookie:cookie completionHandler:^{
+                        [cookieStroe setCookie:cookieJSESSIONID completionHandler:^{
+                            NSLog(@"success1");
+                        }];
                     }];
                 NSLog(@"原来的Name:%@,value:%@",cookie.name,cookie.value);
                 }
-                [cookieStroe deleteCookie:cookie completionHandler:^{
-                    
-                }];
+                
             }
         }];
         

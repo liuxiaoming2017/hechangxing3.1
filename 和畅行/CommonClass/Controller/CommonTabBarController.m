@@ -20,6 +20,7 @@
 #import "WXPhoneController.h"
 #import "ArmchairHomeVC.h"
 
+
 @interface CommonTabBarController ()<HSTabBarDelegate,ZKIndexViewDelegate>
 
 @property (nonatomic,strong) ZKIndxView *zkView;
