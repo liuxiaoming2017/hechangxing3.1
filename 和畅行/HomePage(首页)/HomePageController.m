@@ -27,7 +27,7 @@
 #import "LoginViewController.h"
 #import "NetworkManager.h"
 #import <sys/utsname.h>
-
+#import <objc/runtime.h>
 
 @interface HomePageController ()<UIScrollViewDelegate>
 
@@ -91,18 +91,93 @@
     self.homeImageArray = [NSMutableArray array];
   //  [self createTopView];
    self.startTimeStr = [GlobalCommon getCurrentTimes];
+    
+    [self showHomePackageView];
+   
     [self requestUI];
-   // [self handleNetworkGroup];
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exchangeMemberChild:) name:exchangeMemberChildNotify object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSize:) name:@"CHANGESIZE" object:nil];
-//    [UIApplication sharedApplication].windows
     
     [UserShareOnce shareOnce].startTime = [GlobalCommon getCurrentTimes];
     //埋点数据上传
     [self buriedDataPoints];
+    
+    self.rightBtn.hidden = NO;
+     [self.rightBtn addTarget:self action:@selector(messageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void)messageBtnAction:(UIButton *)btn
+{
+    BOOL isLogin = [self isLogin];
+    NSString *resultStr = isLogin ? @"成功" : @"失败";
+    NSLog(@"**:%@",resultStr);
+}
+
+- (BOOL)isLogin
+{
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    
+    dispatch_queue_t queue = dispatch_queue_create("AkSemaphore", NULL);
+    
+    // 创建队列组，可以使两个网络请求异步执行，执行完之后再进行操作
+    dispatch_group_t group = dispatch_group_create();
+    
+    __block BOOL isLogin = NO;
+    
+    
+   // dispatch_async(queue, ^{
+    
+    dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    
+        //dispatch_semaphore_signal(semaphore);
+        
+        //NSString *urlStr = [NSString stringWithFormat:@"login/logincheck.jhtml?memberId=%@",[UserShareOnce shareOnce].uid];
+        NSString *urlStr = [NSString stringWithFormat:@"%@login/logincheck.jhtml?memberId=%@",URL_PRE,[UserShareOnce shareOnce].uid];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.responseSerializer = [AFJSONResponseSerializer serializer]; // 设置接收数据为 JSON 数据
+        
+        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        manager.responseSerializer = [AFJSONResponseSerializer serializer];// 请求返回的格式为json
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+        manager.responseSerializer =[AFJSONResponseSerializer serializerWithReadingOptions: NSJSONReadingAllowFragments];
+        [manager GET:urlStr parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+            if([[responseObject objectForKey:@"status"] integerValue] == 100){
+                if([[responseObject objectForKey:@"data"] boolValue] == YES){
+                    isLogin = YES;
+                }else{
+                    isLogin = NO;
+                }
+            }
+            
+           
+            dispatch_semaphore_signal(semaphore);
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+            //接口请求失败 代表不是cookie问题
+            isLogin = YES;
+            
+            dispatch_semaphore_signal(semaphore);
+        }];
+        
+        NSLog(@"hahaha");
+        
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        
+    });
+    
+    dispatch_group_notify(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+    });
+    //dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    return isLogin;
+   
+}
 
 
 - (void)exchangeMemberChild:(NSNotification *)notify
@@ -120,6 +195,23 @@
 }
 
 
+- (void)showHomePackageView
+{
+    [self createTopViewWithStatus:YES];
+    [self addGradientLayer];
+    if(self->_isActivity){
+        if (self.isRefresh == YES){
+            [self.readWriteView setButtonImageWithArray:self.homeImageArray];
+            self.isRefresh = NO;
+        }
+    }else{
+        if (self.isRefresh == YES){
+            [self.readWriteView initWithUI];
+            self.isRefresh = NO;
+        }
+        
+    }
+}
 
 - (void)addGradientLayer
 {
@@ -191,6 +283,9 @@
         if(str){
             NSString *str1 = [[str componentsSeparatedByString:@"&&"] objectAtIndex:0];
             NSString *str2 = [[str componentsSeparatedByString:@"&&"] objectAtIndex:1];
+            if([str1 integerValue]>=0 && [str1 integerValue]<=11){
+                _havePackage = YES;
+            }
             if(_havePackage){
                 [self.packgeView changePackgeTypeWithStatus:[str1 integerValue] withXingStr:str2];
             }
@@ -281,12 +376,22 @@
     }
     
     [self.bgScrollView setContentSize:CGSizeMake(1, self.recommendView.bottom+Adapter(20))];
+    if(_isActivity){
+        self.activityImage.frame = CGRectMake(self.activityImage.left, self.readWriteView.bottom+10, self.activityImage.width, self.activityImage.height);
+        self.remindView.frame = CGRectMake(self.packgeView.left,   self.activityImage?self.activityImage.bottom+10:self.readWriteView.bottom+10, self.readWriteView.width, self.remindView.height);
+        self.recommendView.frame = CGRectMake(0, CGRectGetMaxY(self.remindView.frame)+10, ScreenWidth,self.recommendView.height);
+    }
+    
+    [self.bgScrollView setContentSize:CGSizeMake(1, self.recommendView.bottom+20)];
     
 }
 
 - (void)updateViewFrame
 {
     self.readWriteView.frame = CGRectMake(self.readWriteView.left, _havePackage?self.packgeView.bottom-Adapter(65):Adapter(5), self.readWriteView.width, self.readWriteView.height);
+    if(self.activityImage){
+        self.activityImage.frame = CGRectMake(self.activityImage.left, self.readWriteView.bottom+Adapter(10), self.activityImage.width, self.activityImage.height);
+    }
     self.remindView.frame = CGRectMake(self.remindView.left, self.activityImage?self.activityImage.bottom+Adapter(10):self.readWriteView.bottom+Adapter(10), self.remindView.width, self.remindView.height);
     self.recommendView.frame = CGRectMake(self.recommendView.left,CGRectGetMaxY(self.remindView.frame)+Adapter(10) , self.recommendView.width, self.recommendView.height);
     [self.bgScrollView setContentSize:CGSizeMake(1, self.recommendView.bottom+Adapter(20))];
@@ -322,19 +427,6 @@
 }
 
 
-- (void)showHomePackageView
-{
-    [self createTopViewWithStatus:YES];
-    [self addGradientLayer];
-    if(self->_isActivity){
-        if (self.isRefresh == YES){
-            [self.readWriteView setButtonImageWithArray:self.homeImageArray];
-            self.isRefresh = NO;
-        }
-    }else{
-        [self.readWriteView initWithUI];
-    }
-}
 
 # pragma mark - 活动数据的请求
 -(void)requestUI {
@@ -374,7 +466,7 @@
         }
         
         //先判断本地有没有和畅包缓存,有则直接展示页面没有则等和畅包接口请求完后再展示
-        if([self getLocalPackageContent]){
+        if([self getLocalPackageContent] && self->_isActivity == YES){
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf showHomePackageView];
             });
@@ -387,11 +479,11 @@
         
         [weakSelf requestPackgeNetWork];
         
-        if([self getLocalPackageContent]){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf showHomePackageView];
-            });
-        }
+//        if([self getLocalPackageContent]){
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [weakSelf showHomePackageView];
+//            });
+//        }
     }];
 }
 
@@ -438,7 +530,7 @@
                 }
                 
                 //保存和畅包状态,以便下次打开应用直接读取缓存
-                NSString *packageStr = [NSString stringWithFormat:@"%ld&&%@",status,[[response objectForKey:@"data"] objectForKey:@"name"]];
+                NSString *packageStr = [NSString stringWithFormat:@"%ld&&%@",(long)status,[[response objectForKey:@"data"] objectForKey:@"name"]];
                 [[NSUserDefaults standardUserDefaults]setValue: packageStr forKey:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
@@ -621,11 +713,11 @@
                                        @"remark":@""}
                                };
     
-    [[BuredPoint sharedYHBuriedPoint] submitLocationWithUrl:urlStr Dic:infodic successBlock:^(id  _Nonnull response) {
-        NSLog(@"%@",response);
-    } failureBlock:^(NSError * _Nonnull error) {
-        
-    }];
+//    [[BuredPoint sharedYHBuriedPoint] submitLocationWithUrl:urlStr Dic:infodic successBlock:^(id  _Nonnull response) {
+//        NSLog(@"%@",response);
+//    } failureBlock:^(NSError * _Nonnull error) {
+//        
+//    }];
     
     
  

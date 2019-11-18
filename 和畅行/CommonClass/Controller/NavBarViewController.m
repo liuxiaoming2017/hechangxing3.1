@@ -23,12 +23,9 @@
 @synthesize topView,preBtn,rightBtn,leftBtn;
 
 
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupNav];
-    
     
 }
 
@@ -152,6 +149,20 @@
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:message preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleCancel handler:NULL];
     [alertVC addAction:alertAct1];
+    [self presentViewController:alertVC animated:YES completion:NULL];
+}
+
+- (void)showAlertMessage:(NSString *)message withSure:(void(^)(NSString * blockParam))sureBlock withCancel:(void(^)(NSString * blockParam))cancelBlock
+{
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        cancelBlock(@"");
+    }];
+    UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        sureBlock(@"");
+    }];
+    [alertVC addAction:alertAct1];
+    [alertVC addAction:alertAct12];
     [self presentViewController:alertVC animated:YES completion:NULL];
 }
 

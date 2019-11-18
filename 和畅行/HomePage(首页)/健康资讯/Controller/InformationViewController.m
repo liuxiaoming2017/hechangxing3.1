@@ -8,8 +8,7 @@
 
 #import "InformationViewController.h"
 #import "HYSegmentedControl.h"
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
+
 #import "NSObject+SBJson.h"
 #import "SBJson.h"
 #import "MBProgressHUD.h"
@@ -20,7 +19,7 @@
 #import "HealthLectureViewController.h"
 #import "InformationCell.h"
 
-@interface InformationViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,ASIProgressDelegate,MBProgressHUDDelegate,FSSegmentTitleViewDelegate>
+@interface InformationViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,FSSegmentTitleViewDelegate>
 
 
 {
@@ -323,81 +322,6 @@
 }
 
 
-
-//# pragma mark - 养生之道
-//- (void)healthArrayWithView:(NSString*)string{
-//    [self showHUD];
-//    NSString *UrlPre=URL_PRE;
-//
-//    NSString *aUrlle= [NSString stringWithFormat:@"%@/article/healthListByCategory/%@.jhtml",UrlPre,string];
-//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-//    NSURL *url = [NSURL URLWithString:aUrlle];
-//
-//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-//    //[request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",g_userInfo.token,g_userInfo.JSESSIONID]];
-//    [request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
-//    if([UserShareOnce shareOnce].languageType){
-//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-//    }    [request setRequestMethod:@"GET"];
-//    [request setTimeOutSeconds:20];
-//    [request setDelegate:self];
-//    [request setDidFailSelector:@selector(requestResourceslisttssErrorsss:)];
-//    [request setDidFinishSelector:@selector(requestResourceslisttssCompletedsss:)];
-//    [request startAsynchronous];
-//}
-//- (void)requestResourceslisttssErrorsss:(ASIHTTPRequest *)request
-//{
-//    [self hudWasHidden];
-//    //[SSWaitViewEx removeWaitViewFrom:self.view];
-//
-//    [self showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
-//
-//}
-//
-//- (void)requestResourceslisttssCompletedsss:(ASIHTTPRequest *)request
-//{
-//    [self hudWasHidden];
-//    NSString* reqstr=[request responseString];
-//    NSDictionary * dic=[reqstr JSONValue];
-//    id status=[dic objectForKey:@"status"];
-//    if ([status intValue] == 100)
-//    {
-//        [self.healthArray removeAllObjects];
-//        self.healthArray = [dic objectForKey:@"data"];
-//       // NSLog(@"%@",[dic objectForKey:@"data"]);
-//        CGSize size;
-//        size.width=self.healthTableView.frame.size.width;
-//        size.height=(self.idArray.count)*84;
-//        [self.healthTableView setContentSize:size];
-//        [self.healthTableView reloadData];
-//
-//        if (self.healthArray.count < 1){
-//            self.noView.hidden = NO;
-//            self.healthTableView.hidden = YES;
-//        }else {
-//            self.noView.hidden = YES;
-//            self.healthTableView.hidden = NO;
-//        }
-//
-//    }
-//    else if ([status intValue]==44)
-//    {
-//
-//        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"提示") message:ModuleZW(@"登录超时,请重新登录") preferredStyle:UIAlertControllerStyleAlert];
-//        UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-//            LoginViewController *vc = [[LoginViewController alloc] init];
-//            [self.navigationController pushViewController:vc animated:YES];
-//        }];
-//        [alertVC addAction:alertAct1];
-//        [self presentViewController:alertVC animated:YES completion:NULL];
-//
-//    }else{
-//        NSString *str = [dic objectForKey:@"data"];
-//        [self showAlertWarmMessage:str];
-//
-//    }
-//
-//}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
     return self.healthArray.count;

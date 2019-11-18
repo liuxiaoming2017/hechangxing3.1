@@ -65,7 +65,7 @@
     
     __weak typeof(self) bself = self;
     
-    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:aUrlle headParameters:headDic parameters:nil successBlock:^(id result) {
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:0 urlString:aUrlle headParameters:headDic parameters:nil successBlock:^(id result) {
         id status=[result objectForKey:@"status"];
         
         if ([status intValue] == 100)

@@ -17,10 +17,10 @@
 #import "PayAbnormalViewController.h"
 #import "MyView.h"
 
-@interface PaymentInfoViewController ()<UIScrollViewDelegate,ASIHTTPRequestDelegate,MBProgressHUDDelegate>
+@interface PaymentInfoViewController ()<UIScrollViewDelegate,MBProgressHUDDelegate>
 {
     UIScrollView *_scrollView;
-    ASIHTTPRequest *_request;
+    
     MBProgressHUD *_progress;
     MBProgressHUD* progress_;
     NSMutableArray *_dataArr;
@@ -125,29 +125,35 @@
     UILabel *titleLable = [Tools labelWith:@"现金卡支付" frame:CGRectMake(33, 145, 120, 20) textSize:14 textColor:[Tools colorWithHexString:@"#666666"] lines:1 aligment:NSTextAlignmentLeft];
     [_scrollView addSubview:titleLable];
     
-    NSString *str = [[NSString alloc] initWithFormat:@"%@/member/cashcard/list/%@.jhtml",URL_PRE,[UserShareOnce shareOnce].uid];
-    _request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:str]];
-    _request.timeOutSeconds = 20;
-    _request.requestMethod = @"GET";
-    _request.delegate = self;
-    [_request startAsynchronous];
+//    NSString *str = [[NSString alloc] initWithFormat:@"%@/member/cashcard/list/%@.jhtml",URL_PRE,[UserShareOnce shareOnce].uid];
+//    _request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:str]];
+//    _request.timeOutSeconds = 20;
+//    _request.requestMethod = @"GET";
+//    _request.delegate = self;
+//    [_request startAsynchronous];
     
     _progress = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:_progress];
     [self.view bringSubviewToFront:_progress];
     _progress.delegate = self;
-    _progress.labelText = @"加载中...";
-    [_progress show:YES];
+    _progress.label.text = @"加载中...";
+    [_progress showAnimated:YES];
+    
+    NSString *str = [[NSString alloc] initWithFormat:@"member/cashcard/list/%@.jhtml",[UserShareOnce shareOnce].uid];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:str parameters:nil successBlock:^(id response) {
+        [weakSelf requestComplete:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestFail];
+    }];
 }
--(void)hudWasHidden:(MBProgressHUD *)hud{
+-(void)hudWasHidden{
     [_progress removeFromSuperview];
     _progress = nil;
 }
 
--(void)requestFinished:(ASIHTTPRequest *)request{
-    [self hudWasHidden:nil];
-    NSString *requestStr = [request responseString];
-    NSDictionary *dic = [requestStr JSONValue];
+-(void)requestComplete:(NSDictionary *)dic{
+    [self hudWasHidden];
     NSArray *data = dic[@"data"];
     if (data.count == 0) {
         //还没有绑定现金卡
@@ -240,8 +246,8 @@
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, 175+(139 / 2 +10)*_dataArr.count+10, kScreenSize.width-20, (139 / 2 +10))];
     view.tag = 130;
-    NSArray *titles = [[NSArray alloc] initWithArray:@[@"消费金额",@"现金卡支付",@"总计"]];
-    NSArray *contents = [[NSArray alloc] initWithArray:@[[NSString stringWithFormat:@"￥ %.2f",self.price],@"-￥ 0.00",[NSString stringWithFormat:@"= ￥%.2f",self.price]]];
+    NSArray *titles = @[@"消费金额",@"现金卡支付",@"总计"];
+    NSArray *contents = @[[NSString stringWithFormat:@"￥ %.2f",self.price],@"-￥ 0.00",[NSString stringWithFormat:@"= ￥%.2f",self.price]];
     for (int i=0; i<titles.count; i++) {
         UILabel *lable = [Tools labelWith:titles[i] frame:CGRectMake(0, 10+20*i, 100, 10) textSize:12 textColor:[Tools colorWithHexString:@"#333"] lines:1 aligment:NSTextAlignmentLeft];
         [view addSubview:lable];
@@ -313,15 +319,14 @@
      
 }
 
--(void)requestFailed:(ASIHTTPRequest *)request{
-    [self hudWasHidden:nil];
-    NSLog(@"%@",request.error);
+-(void)requestFail{
+    [self hudWasHidden];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.removeFromSuperViewOnHide =YES;
     hud.mode = MBProgressHUDModeText;
-    hud.labelText = @"数据请求失败";
+    hud.label.text = @"数据请求失败";
     hud.minSize = CGSizeMake(132.f, 108.0f);
-    [hud hide:YES afterDelay:2];
+    [hud hideAnimated:YES afterDelay:2];
 }
 
 - (void)zhifuButton:(UIButton *)sender{
@@ -388,8 +393,8 @@
     [self.view addSubview:progress_];
     [self.view bringSubviewToFront:progress_];
     progress_.delegate = self;
-    progress_.labelText = @"加载中...";
-    [progress_ show:YES];
+    progress_.label.text = @"加载中...";
+    [progress_ showAnimated:YES];
 }
 
 - (void)zhifufangshidequeding{
@@ -502,43 +507,60 @@
 - (void)xianjinkazhifushengchengdingdan:(NSString *)cardFees balance:(NSString *)balance{
     [self showHUD];
     self.priceYuer = [balance floatValue];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/order/create_pay.jhtml",UrlPre];
-    aUrlle = [aUrlle stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSURL *url = [NSURL URLWithString:aUrlle];
     
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
     
-    [request setPostValue:@"10" forKey:@"reserveType"];
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    [request setPostValue:self.idString forKey:@"orderId"];
-    [request setPostValue:@"payment" forKey:@"type"];
-    [request setPostValue:cardFees forKey:@"cardFees"];
-    [request setPostValue:@"0" forKey:@"balance"];
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestIsxianjinkaReaderError:)];
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/order/create_pay.jhtml",UrlPre];
+//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    NSURL *url = [NSURL URLWithString:aUrlle];
+//
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//
+//    [request setPostValue:@"10" forKey:@"reserveType"];
+//    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+//    [request setPostValue:self.idString forKey:@"orderId"];
+//    [request setPostValue:@"payment" forKey:@"type"];
+//    [request setPostValue:cardFees forKey:@"cardFees"];
+//    [request setPostValue:@"0" forKey:@"balance"];
+//    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestIsxianjinkaReaderError:)];
+//
+//    [request setDidFinishSelector:@selector(requestIsxianjinkaReaderCompleted:)];
+//    [request startAsynchronous];
     
-    [request setDidFinishSelector:@selector(requestIsxianjinkaReaderCompleted:)];
-    [request startAsynchronous];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+    [dic setObject:@"10" forKey:@"reserveType"];
+    [dic setObject:self.idString forKey:@"orderId"];
+    [dic setObject:@"payment" forKey:@"type"];
+    [dic setObject:[UserShareOnce shareOnce].token forKey:@"token"];
+    [dic setObject:cardFees forKey:@"cardFees"];
+    [dic setObject:@"0" forKey:@"balance"];
+   
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:@"member/order/create_pay.jhtml" headParameters:nil parameters:dic successBlock:^(id response) {
+        [weakSelf requestIsxianjinkaReaderCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestIsxianjinkaReaderError];
+    }];
     
 }
--(void)requestIsxianjinkaReaderError:(ASIHTTPRequest *)request
+-(void)requestIsxianjinkaReaderError
 {
-    [self hudWasHidden:nil];
+    [self hudWasHidden];
     
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络连接错误" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
     [av show];
 }
--(void)requestIsxianjinkaReaderCompleted:(ASIHTTPRequest *)request
+-(void)requestIsxianjinkaReaderCompleted:(NSDictionary *)dic
 {
-    [self hudWasHidden:nil];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
+    [self hudWasHidden];
     id status=[dic objectForKey:@"status"];
     NSLog(@"%@",status);
     if ([status intValue]==100)

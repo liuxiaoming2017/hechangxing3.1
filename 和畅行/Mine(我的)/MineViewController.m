@@ -12,19 +12,18 @@
 #import "MyView.h"
 #import "UIImageView+WebCache.h"
 #import "PersonalInformationViewController.h"
-#import "PrivateServiceViewController.h"
 #import "BlockViewController.h"
 #import "FamilyViewController.h"
 #import "HealthLectureOrderViewController.h"
 #import "CustomNavigationController.h"
-#import "LeMedicineViewController.h"
-#import "WenYinFileViewController.h"
+
+
 #import "MyAvdisorysViewController.h"
 #import "SetupController.h"
 #import "EDWKWebViewController.h"
-#import "SportDemonstratesViewController.h"
 
-@interface MineViewController ()<UITableViewDelegate,UITableViewDataSource>
+
+@interface MineViewController ()<UITableViewDelegate>
 
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSArray *listNamesArr;
@@ -68,6 +67,12 @@
     }else{
         [self.userIcon sd_setImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage] placeholderImage:[UIImage imageNamed:@"1我的_03"]];
     }
+    
+//    NSString *path = [ NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+//    NSString *folderPath = [path stringByAppendingPathComponent:@"musicCache"];
+//    NSLog(@"%fM",[GlobalCommon sizeAtPath:folderPath]);
+    
+    
 }
 
 -(void)requestData{
@@ -101,8 +106,16 @@
     }];
     
 }
+
 - (void)createUI
 {
+    
+    NSArray *numberArray = @[@"0\n收藏",@"0\n卡包",@"0\n积分"];
+    NSArray *titleArr           = @[@"待付款",@"待评价",
+                                    @"退款/售后",@"全部订单"];
+    NSArray *imageArr        = @[@"我的待付款",@"我的待评价",@"我的退款售后",@"我的全部订单"];
+    //listNamesArr                  = @[@"咨询记录",@"地址管理",@"运动示范音",@"设置"];
+    listNamesArr                  = @[@"咨询记录",@"地址管理",@"设置"];
     
     UIScrollView *backScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake( 0,-kStatusBarHeight, ScreenWidth, ScreenHeight+kStatusBarHeight - kTabBarHeight )];
     backScrollView.backgroundColor = [UIColor clearColor];
@@ -157,6 +170,7 @@
     [self insertSublayerWithImageView:imageV];
     
     UIImageView *buttonBackImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(15), backImageView.bottom+ imageV.height/2 + Adapter(20), ScreenWidth - Adapter(30), Adapter(232))];
+//    UIImageView *buttonBackImageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, backImageView.bottom+ 60, ScreenWidth - 30, listNamesArr.count*58)];
     buttonBackImageView.backgroundColor = [UIColor whiteColor];
     buttonBackImageView.userInteractionEnabled = YES;
     buttonBackImageView.layer.cornerRadius = Adapter(10);
@@ -166,13 +180,7 @@
     
     backScrollView.contentSize = CGSizeMake(0, buttonBackImageView.bottom + Adapter(20));
     
-    NSArray *numberArray = @[@"0\n收藏",@"0\n卡包",@"0\n积分"];
-    NSArray *titleArr           = @[@"待付款",@"待评价",
-                                                 @"退款/售后",@"全部订单"];
-    NSArray *imageArr        = @[@"我的待付款",@"我的待评价",@"我的退款售后",@"我的全部订单"];
-    listNamesArr                  = @[@"咨询记录",
-                                                  @"地址管理",@"运动示范音",
-                                                  @"设置"];
+
     for (int i=0; i<listNamesArr.count; i++) {
         
         if (i < numberArray.count){
@@ -265,18 +273,11 @@
                     default:
                         break;
                 }
-                EDWKWebViewController *vc = [[EDWKWebViewController alloc] initWithUrlString:urlStr];
-                vc.pageIDStr = pageIDStr;
-                vc.isCollect = YES;
-                vc.titleStr = titleStr;
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-                
             }];
-            
-            [imageV addSubview:button];
-            
         }
+    }
+    
+    for (int i=0; i<listNamesArr.count; i++) {
         
         UIButton *bottomButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
         bottomButton.frame = CGRectMake(Adapter(20), buttonBackImageView.height/4*i,ScreenWidth - Adapter(40), buttonBackImageView.height/4);
@@ -314,13 +315,22 @@
                     
                 }
                     break;
-                case 2:  {
-                    SportDemonstratesViewController *vc = [[SportDemonstratesViewController alloc] init];
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
+                case 3:  {
+                    
+                    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                    //__weak typeof(self) weakSelf = self;
+                    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+//                        [self removeCacheBlock:^(NSString *blockParam) {
+//
+//                        }];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                            [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        });
+                    });
+                
                 }
                     break;
-                case 3: {
+                case 2: {
                     SetupController *vc = [[SetupController alloc] init];
                     CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:vc];
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -337,6 +347,23 @@
     
     NSLog(@"%@",backScrollView.subviews);
     
+}
+
+- (void)removeCacheBlock:(void(^)(NSString * blockParam))callBack{
+    
+    NSString *path = [ NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *folderPath = [path stringByAppendingPathComponent:@"musicCache"];
+    NSArray *arr = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:nil];
+    for (NSString *filePath in arr) {
+        NSString *fileName = [NSString stringWithFormat:@"%@/%@", folderPath, filePath];
+        [[NSFileManager defaultManager] removeItemAtPath:fileName error:nil];
+    }
+//    long ff = 0;
+//    for(long i=0;i<3000;i++){
+//        ff = ff + i;
+//        NSLog(@"ff:%ld",ff);
+//    }
+    callBack(@"在方法中 调用了block");
 }
 
 

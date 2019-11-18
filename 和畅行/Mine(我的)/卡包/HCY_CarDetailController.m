@@ -157,23 +157,35 @@
         addButton.backgroundColor = RGB_ButtonBlue;
         [addButton setTitle:ModuleZW(@"添加至卡包") forState:(UIControlStateNormal)];
         [[addButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
-            NSString *UrlPre=URL_PRE;
-            NSString *aUrl = [NSString stringWithFormat:@"%@/member/cashcard/bind.jhtml",UrlPre];
-            ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-            [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-            [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-            if([UserShareOnce shareOnce].languageType){
-                [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-            }
-            [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-            [request setPostValue:self.dateDic[@"data"][@"code"]forKey:@"code"];
             
-            [request setTimeOutSeconds:20];
-            [request setRequestMethod:@"POST"];
-            [request setDelegate:self];
-            [request setDidFailSelector:@selector(requesstuserinfoError1:)];
-            [request setDidFinishSelector:@selector(requesstuserinfoCompleted1:)];
-            [request startAsynchronous];
+//            NSString *UrlPre=URL_PRE;
+//            NSString *aUrl = [NSString stringWithFormat:@"%@/member/cashcard/bind.jhtml",UrlPre];
+//            ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//            [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+//            [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//            if([UserShareOnce shareOnce].languageType){
+//                [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//            }
+//            [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+//            [request setPostValue:self.dateDic[@"data"][@"code"]forKey:@"code"];
+//
+//            [request setTimeOutSeconds:20];
+//            [request setRequestMethod:@"POST"];
+//            [request setDelegate:self];
+//            [request setDidFailSelector:@selector(requesstuserinfoError1:)];
+//            [request setDidFinishSelector:@selector(requesstuserinfoCompleted1:)];
+//            [request startAsynchronous];
+            
+            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+            [dic setObject:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+            [dic setObject:self.dateDic[@"data"][@"code"] forKey:@"code"];
+            __weak typeof(self) weakSelf = self;
+            [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:@"member/cashcard/bind.jhtml" headParameters:nil parameters:dic successBlock:^(id response) {
+                [weakSelf requesstuserinfoCompleted1:response];
+            } failureBlock:^(NSError *error) {
+                [weakSelf requesstuserinfoError1];
+            }];
+            
         }];
         [self.view addSubview:addButton];
 
@@ -183,14 +195,14 @@
     
 }
 
-- (void)requesstuserinfoError1:(ASIHTTPRequest *)request
+- (void)requesstuserinfoError1
 {
     [self showAlertViewController:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
 }
-- (void)requesstuserinfoCompleted1:(ASIHTTPRequest *)request
+- (void)requesstuserinfoCompleted1:(NSDictionary *)dic
 {
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
+//    NSString* reqstr=[request responseString];
+//    NSDictionary * dic=[reqstr JSONValue];
     id status=[dic objectForKey:@"status"];
     NSLog(@"%@",dic);
     if ([status intValue]== 100) {
@@ -235,65 +247,43 @@
 
 - (void)requestPurchaseHistory
 {
-//    NSString *urlStr   = @"weiq/user_record.jhtml";
-//    NSDictionary *dic = @{@"memberId":[UserShareOnce shareOnce].uid,
-//                                    @"card_no":self.model.card_no};
+
     
     [GlobalCommon showMBHudWithView:self.view];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrl = [NSString stringWithFormat:@"%@/md/user_record.jhtml",UrlPre];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    [request setPostValue:self.model.card_no forKey:@"card_no"];
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requesstuserinfoError:)];
-    [request setDidFinishSelector:@selector(requesstuserinfoCompleted:)];
-    [request startAsynchronous];
     
-
-}
-
-- (void)requesstuserinfoError:(ASIHTTPRequest *)request
-{
-    [self layoutCarDetailView];
-    [GlobalCommon hideMBHudWithView:self.view];
-    [self showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
-}
-- (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
-{
-    [GlobalCommon hideMBHudWithView:self.view];
-    NSString* reqstr=[request responseString];
-    //NSLog(@"dic==%@",reqstr);
-    NSDictionary * dic=[reqstr JSONValue];
-    NSLog(@"dic==%@",dic);
-    id status=[dic objectForKey:@"status"];
-    //NSLog(@"234214324%@",status);
-    if ([status intValue]== 100) {
     
-        NSArray *arr = [dic objectForKey:@"data"];
-        if(arr.count>0){
-            self.serviceArr = [arr objectAtIndex:0];
-            [self.serviceTableView reloadData];
-            if(arr.count>1){
-                self.dataArr = [arr objectAtIndex:1];
-//                [self.listTableView reloadData];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+    [dic setObject:self.model.card_no forKey:@"card_no"];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:@"md/user_record.jhtml" headParameters:nil parameters:dic successBlock:^(id response) {
+        [GlobalCommon hideMBHudWithView:weakSelf.view];
+        NSLog(@"response:%@",response);
+        id status=[response objectForKey:@"status"];
+        if([status intValue] == 100){
+            NSArray *arr = [response objectForKey:@"data"];
+            if(arr.count>0){
+                weakSelf.serviceArr = [arr objectAtIndex:0];
+                [weakSelf.serviceTableView reloadData];
+                if(arr.count>1){
+                    weakSelf.dataArr = [arr objectAtIndex:1];
+                }
             }
+            [weakSelf layoutCarDetailView];
+            
+        }else{
+            [weakSelf layoutCarDetailView];
+            [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
         }
-        [self layoutCarDetailView];
+    } failureBlock:^(NSError *error) {
+        [GlobalCommon hideMBHudWithView:weakSelf.view];
+    }];
 
-    }else{
-        [self layoutCarDetailView];
-        [self showAlertWarmMessage:[dic objectForKey:@"message"]];
-    }
-    
 }
+
+
+
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

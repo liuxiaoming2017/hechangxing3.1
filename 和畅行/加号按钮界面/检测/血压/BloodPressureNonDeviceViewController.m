@@ -29,7 +29,7 @@
 #define kHighest @"血压值严重偏高。请注意及时就诊，配合治疗。"
 
 
-@interface BloodPressureNonDeviceViewController ()<UITextFieldDelegate,MBProgressHUDDelegate,ASIHTTPRequestDelegate,UITableViewDataSource,UITableViewDelegate,LJRulerDelegate,ZHPickViewDelegate>
+@interface BloodPressureNonDeviceViewController ()<UITextFieldDelegate,MBProgressHUDDelegate,UITableViewDataSource,UITableViewDelegate,LJRulerDelegate,ZHPickViewDelegate>
 
 @property (nonatomic,strong) UILabel *dataLabel;
 @property (nonatomic,strong) UILabel *timeLabel;
@@ -428,65 +428,57 @@
     long  timeSp = (long)[tempDate timeIntervalSince1970];
     
     //提交数据
-    NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    [request addPostValue:subId forKey:@"memberChildId"];
-    [request addPostValue:@(30) forKey:@"datatype"];
-    [request addPostValue:@(highCount) forKey:@"highPressure"];
-    [request addPostValue:@(lowCount) forKey:@"lowPressure"];
-    [request addPostValue:@(pulseCount) forKey:@"pulse"];
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request addPostValue:@(timeSp) forKey:@"createDate"];
+//    NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+//    [request addPostValue:subId forKey:@"memberChildId"];
+//    [request addPostValue:@(30) forKey:@"datatype"];
+//    [request addPostValue:@(highCount) forKey:@"highPressure"];
+//    [request addPostValue:@(lowCount) forKey:@"lowPressure"];
+//    [request addPostValue:@(pulseCount) forKey:@"pulse"];
+//    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+//    [request addPostValue:@(timeSp) forKey:@"createDate"];
+//
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestError:)];
+//    [request setDidFinishSelector:@selector(requestCompleted:)];
+//    [request startAsynchronous];
+    
+   
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+    [dic setObject:subId forKey:@"memberChildId"];
+    [dic setObject:@(30) forKey:@"datatype"];
+    [dic setObject:@(highCount) forKey:@"highPressure"];
+    [dic setObject:@(lowCount) forKey:@"lowPressure"];
+    [dic setObject:@(pulseCount) forKey:@"pulse"];
+    [dic setObject:[UserShareOnce shareOnce].token forKey:@"token"];
+    [dic setObject:@(timeSp) forKey:@"createDate"];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:@"member/uploadData.jhtml" headParameters:nil parameters:dic successBlock:^(id response) {
+        [weakSelf requestCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf showAlertWarmMessage:ModuleZW(@"提交数据失败")];
+    }];
 
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestError:)];
-    [request setDidFinishSelector:@selector(requestCompleted:)];
-    [request startAsynchronous];
-
-}
-
-- (void)requestResourceslistFinish:(ASIHTTPRequest *)request
-{
-    // [self hudWasHidden:nil];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    id status=[dic objectForKey:@"status"];
-    if ([status intValue]==100)
-    {
-        _showView.hidden = NO;
-        [self.view bringSubviewToFront:_showView];
-        
-        self.dataArr=[dic objectForKey:@"data"];
-        [self.tableView reloadData];
-    }
-    else
-    {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.removeFromSuperViewOnHide =YES;
-        hud.mode = MBProgressHUDModeText;
-        hud.label.text = ModuleZW(@"登录超时，请重新登录");  //提示的内容
-        hud.minSize = CGSizeMake(132.f, 108.0f);
-        [hud hideAnimated:YES afterDelay:2];
-        
-        LoginViewController *login = [[LoginViewController alloc] init];
-        [self.navigationController pushViewController:login animated:YES];
-        [login release];
-    }
 }
 
 
 
 
--(void)requestCompleted:(ASIHTTPRequest *)request{
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
+
+
+-(void)requestCompleted:(NSDictionary *)dic{
+//    NSString* reqstr=[request responseString];
+//    NSDictionary * dic=[reqstr JSONValue];
     //NSDictionary *dataDic = dic[@"data"];
     NSNumber *state = dic[@"status"];
     if (state.integerValue == 100) {
@@ -583,9 +575,7 @@
     //[self customeView];
 }
 
--(void)requestError:(ASIHTTPRequest *)request{
-    [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
-}
+
 
 
 //点击确定

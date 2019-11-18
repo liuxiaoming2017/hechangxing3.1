@@ -11,8 +11,7 @@
 #import "Global.h"
 
 #import "LoginViewController.h"
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
+
 #import "SBJson.h"
 @interface FeedbackViewController ()<UITextViewDelegate>
 @property(nonatomic,retain) UITextView* acceptTV;
@@ -184,43 +183,47 @@
 -(void)userFeedbackButton
 {
     if (_acceptTV.text.length==0) {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"请填写反馈意见") delegate:nil cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-        [av show];
-        
+       
+        [self showAlertWarmMessage:ModuleZW(@"请填写反馈意见")];
         return;
 
     }
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@member_suggest/commit.jhtml?memberId=%@&content=%@",UrlPre,[UserShareOnce shareOnce].uid,_acceptTV.text];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url1 = [NSURL URLWithString:aUrlle];
-    ASIFormDataRequest *request=[[ASIFormDataRequest alloc]initWithURL:url1];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    // [request addRequestHeader:@"token" value:g_userInfo.token];
-    //后面加的10.11
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    [request setDelegate:self];
-    [request setRequestMethod:@"GET"];
-    [request setDidFailSelector:@selector(requestFeedbackError:)];//requestLoginError
-    [request setDidFinishSelector:@selector(requestFeedbackCompleted:)];
-    [request startAsynchronous];
+    
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@member_suggest/commit.jhtml?memberId=%@&content=%@",UrlPre,[UserShareOnce shareOnce].uid,_acceptTV.text];
+//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    NSURL *url1 = [NSURL URLWithString:aUrlle];
+//    ASIFormDataRequest *request=[[ASIFormDataRequest alloc]initWithURL:url1];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    // [request addRequestHeader:@"token" value:g_userInfo.token];
+//    //后面加的10.11
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    [request setDelegate:self];
+//    [request setRequestMethod:@"GET"];
+//    [request setDidFailSelector:@selector(requestFeedbackError:)];//requestLoginError
+//    [request setDidFinishSelector:@selector(requestFeedbackCompleted:)];
+//    [request startAsynchronous];
+    
+    NSString *aUrlle= [NSString stringWithFormat:@"member_suggest/commit.jhtml?memberId=%@&content=%@",[UserShareOnce shareOnce].uid,_acceptTV.text];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:aUrlle parameters:nil successBlock:^(id response) {
+        [weakSelf requestFeedbackCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestFeedbackError];
+    }];
     
 }
-- (void)requestFeedbackError:(ASIHTTPRequest *)request
+- (void)requestFeedbackError
 {
-    //[self hudWasHidden:nil];
-    //[SSWaitViewEx removeWaitViewFrom:self.view];
     
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉，请检查您的网络是否畅通") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-    [av show];
+    [self showAlertWarmMessage:requestErrorMessage];
     
 }
-- (void)requestFeedbackCompleted:(ASIHTTPRequest *)request
+- (void)requestFeedbackCompleted:(NSDictionary *)dic
 {
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
+
     id status=[dic objectForKey:@"status"];
     if ([status intValue]==100)
     {

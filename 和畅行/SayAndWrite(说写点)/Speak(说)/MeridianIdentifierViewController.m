@@ -7,8 +7,6 @@
 //
 
 #import "MeridianIdentifierViewController.h"
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
 #import "MBProgressHUD.h"
 #import "LPPopup.h"
 
@@ -28,7 +26,7 @@
 #define SflowviewHeight 64
 @class STSegmentedControl;
 
-@interface MeridianIdentifierViewController ()<AVAudioRecorderDelegate,AVAudioPlayerDelegate,MBProgressHUDDelegate,ASIHTTPRequestDelegate,ASIProgressDelegate>
+@interface MeridianIdentifierViewController ()<AVAudioRecorderDelegate,AVAudioPlayerDelegate,MBProgressHUDDelegate>
 {
     UIButton *recordButton;
     int timeNStager;
@@ -308,6 +306,10 @@
         __weak typeof(self) blockSelf = self;
         [btn setImage:nil forState:UIControlStateNormal];
         
+        if(kPlayer.playerState == 2){
+            [kPlayer stop];
+        }
+        
         [sender ba_countDownCustomWithTimeInterval:3 block:^(NSInteger currentTime) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -331,6 +333,7 @@
 
 - (void)startRecordAudion
 {
+    
     if([self checkPermission]){
         [self recordAudio];
     }else{
@@ -704,35 +707,44 @@
 -(void)testMp3Upload
 {
     [self showHUD];
-    NSString *UrlPre=URL_PRE;
     
-    //NSString *aUrlle= [NSString stringWithFormat:@"%@/member/fileUpload/upload.jhtml?fileType=media&convert=convert&memberChildId=%@",UrlPre,[MemberUserShance shareOnce].idNum];
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/fileUpload/diagnosis.jhtml?convert=convert&memberChildId=%@",UrlPre,[MemberUserShance shareOnce].idNum];
-    NSLog(@"aurlle===%@",aUrlle);
-    //aUrlle = [aUrlle stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    aUrlle = [aUrlle stringByRemovingPercentEncoding];
-    NSURL *url1 = [NSURL URLWithString:aUrlle];
-    ASIFormDataRequest *request=[[ASIFormDataRequest alloc]initWithURL:url1];
-    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setDelegate:self];
-    [request setRequestMethod:@"POST"];
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setFile:self.filePath forKey:@"file"];   //可以上传图片
-    [request setDidFailSelector:@selector(requestUpLoadError:)];//requestLoginError
-    [request setDidFinishSelector:@selector(requestUpLoadCompleted:)];
-    [request startAsynchronous];
-//    [request release];
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/fileUpload/diagnosis.jhtml?convert=convert&memberChildId=%@",UrlPre,[MemberUserShance shareOnce].idNum];
+//    NSLog(@"aurlle===%@",aUrlle);
+//    //aUrlle = [aUrlle stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//    aUrlle = [aUrlle stringByRemovingPercentEncoding];
+//    NSURL *url1 = [NSURL URLWithString:aUrlle];
+//    ASIFormDataRequest *request=[[ASIFormDataRequest alloc]initWithURL:url1];
+//    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setDelegate:self];
+//    [request setRequestMethod:@"POST"];
+//    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+//    [request setFile:self.filePath forKey:@"file"];   //可以上传图片
+//    [request setDidFailSelector:@selector(requestUpLoadError:)];//requestLoginError
+//    [request setDidFinishSelector:@selector(requestUpLoadCompleted:)];
+//    [request startAsynchronous];
+
+    
+    NSString *urlStr= [NSString stringWithFormat:@"member/fileUpload/diagnosis.jhtml?convert=convert&memberChildId=%@",[MemberUserShance shareOnce].idNum];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithObject:self.filePath forKey:@"file"];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:BAHttpRequestTypeFilePost urlString:urlStr headParameters:nil parameters:dic successBlock:^(id response) {
+        [weakSelf requestUpLoadCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestUpLoadError];
+    }];
+    
 }
-- (void)requestUpLoadCompleted:(ASIHTTPRequest *)request
+- (void)requestUpLoadCompleted:(NSDictionary *)dic
 {
     [GlobalCommon hideMBHudWithView:self.view];
     [self hudWasHidden];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
+//    NSString* reqstr=[request responseString];
+//    NSDictionary * dic=[reqstr JSONValue];
     id status=[dic objectForKey:@"status"];
     
     [self removeLocalFilePath];
@@ -800,7 +812,7 @@
         
     }
 }
-- (void)requestUpLoadError:(ASIHTTPRequest *)request
+- (void)requestUpLoadError
 {
     [self hudWasHidden];
     UIButton* btn=(UIButton*)[self.view viewWithTag:10007];
@@ -815,9 +827,9 @@
         centerAtPoint:point
              duration:5.0f
            completion:nil];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    NSLog(@"dic==%@",dic);
+//    NSString* reqstr=[request responseString];
+//    NSDictionary * dic=[reqstr JSONValue];
+//    NSLog(@"dic==%@",dic);
     recordButton.selected = NO;
     self.filePath = nil;
     yincangView.hidden = YES;

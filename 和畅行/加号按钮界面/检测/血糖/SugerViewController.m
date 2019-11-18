@@ -23,7 +23,7 @@
 #define kEmptyLow @"您空腹血糖偏低，为%.2fmmol/L，建议您适量进食予以缓解，并在医生指导下对血糖进行定期监测，及时纠正。"
 #define kFullHigh @"您餐后2小时血糖偏高，为%.2fmmol/L，建议您在医生指导下对血糖进行定期监测、科学控制。"
 
-@interface SugerViewController ()<UITextFieldDelegate,MBProgressHUDDelegate,ASIHTTPRequestDelegate,UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,LJRulerDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
+@interface SugerViewController ()<UITextFieldDelegate,MBProgressHUDDelegate,UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,LJRulerDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 {
     MBProgressHUD *_progress;
     NSString *_result;
@@ -311,28 +311,58 @@
     
     
     
+//    [self showPreogressView];
+//    NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE] ;
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+//    [request addPostValue:idNumStr forKey:@"memberChildId"];
+//    [request addPostValue:@(60) forKey:@"datatype"];
+//    [request addPostValue:@(self.sugerValue) forKey:@"levels"];
+//    [request addPostValue:typeStr forKey:@"type"];
+////    [request addPostValue:_type forKey:@"type"];
+//    [request addPostValue:@(isAbnormity) forKey:@"isAbnormity"];
+//    [request addPostValue:@(timeSp) forKey:@"createDate"];
+//    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestError:)];
+//    [request setDidFinishSelector:@selector(requestCompleted:)];
+//    [request startAsynchronous];
+    
     [self showPreogressView];
-    NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE] ;
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    [request addPostValue:idNumStr forKey:@"memberChildId"];
-    [request addPostValue:@(60) forKey:@"datatype"];
-    [request addPostValue:@(self.sugerValue) forKey:@"levels"];
-    [request addPostValue:typeStr forKey:@"type"];
-//    [request addPostValue:_type forKey:@"type"];
-    [request addPostValue:@(isAbnormity) forKey:@"isAbnormity"];
-    [request addPostValue:@(timeSp) forKey:@"createDate"];
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestError:)];
-    [request setDidFinishSelector:@selector(requestCompleted:)];
-    [request startAsynchronous];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+    [dic setObject:idNumStr forKey:@"memberChildId"];
+    [dic setObject:@(60) forKey:@"datatype"];
+    [dic setObject:@(self.sugerValue) forKey:@"levels"];
+    //[dic setObject:[UserShareOnce shareOnce].token forKey:@"token"];
+    [dic setObject:typeStr forKey:@"type"];
+    [dic setObject:@(isAbnormity) forKey:@"isAbnormity"];
+    [dic setObject:@(timeSp) forKey:@"createDate"];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:@"member/uploadData.jhtml" headParameters:nil parameters:dic successBlock:^(id response) {
+        [weakSelf hidePreogressView];
+        NSNumber *state = response[@"status"];
+        if (state.integerValue == 100) {
+            NSLog(@"数据提交成功");
+            //请求数据,得到空腹、餐前的数据
+            [weakSelf getData];
+            
+        }else{
+            [weakSelf showAlertWarmMessage:ModuleZW(@"提交数据失败")];
+            
+        }
+    } failureBlock:^(NSError *error) {
+        [weakSelf hidePreogressView];
+        [weakSelf showAlertWarmMessage:ModuleZW(@"提交数据失败")];
+    }];
 }
 
 
@@ -349,58 +379,44 @@
     
     _progress = nil;
 }
--(void)requestCompleted:(ASIHTTPRequest *)request{
-    
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    [self hidePreogressView];
-    //NSDictionary *dataDic = dic[@"data"];
-    NSNumber *state = dic[@"status"];
-    if (state.integerValue == 100) {
-        NSLog(@"数据提交成功");
-        //请求数据,得到空腹、餐前的数据
-        [self getData];
-        
-    }else{
-        [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
-       
-    }
-    
-}
 
--(void)requestError:(ASIHTTPRequest *)request{
-    //[self hudWasHidden];
-    [self hidePreogressView];
-    [self showAlertWarmMessage:ModuleZW(@"提交数据失败")];
-    
-}
 #pragma MARK ---------  获取当天体检血糖的数据
 -(void)getData{
     
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/subject_report /findDate.jhtml?mcId=%@",URL_PRE,[MemberUserShance shareOnce].idNum];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:aUrlle];
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@/subject_report /findDate.jhtml?mcId=%@",URL_PRE,[MemberUserShance shareOnce].idNum];
+//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    NSURL *url = [NSURL URLWithString:aUrlle];
+//
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    [request setRequestMethod:@"GET"];
+//    [request setTimeOutSeconds:20];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(getDataError:)];
+//    [request setDidFinishSelector:@selector(getDataFinish:)];
+//    [request startAsynchronous];
     
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    [request setRequestMethod:@"GET"];
-    [request setTimeOutSeconds:20];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(getDataError:)];
-    [request setDidFinishSelector:@selector(getDataFinish:)];
-    [request startAsynchronous];
+    NSString *urlStr= [NSString stringWithFormat:@"subject_report/findDate.jhtml?mcId=%@",[MemberUserShance shareOnce].idNum];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:@{@"mcId":[MemberUserShance shareOnce].idNum} successBlock:^(id response) {
+        [weakSelf getDataFinish:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf hidePreogressView];
+        [weakSelf showAlertWarmMessage:ModuleZW(@"获取血糖数据失败")];
+    }];
+    
 }
 
--(void)getDataFinish:(ASIHTTPRequest *)request{
+-(void)getDataFinish:(NSDictionary *)dic{
     [self hidePreogressView];
     
     NSArray *typeArray = @[@"type=afterDinner",@"type=beforeBreakfast",@"type=beforeSleep",@"type=full",@"type=beforeDawn",@"type=beforeDinner",@"type=empty",@"type=afterBreakfast"];
     NSMutableArray *tytpAarry1 = [NSMutableArray array];
-    NSString *jsonString = [request responseString];
-    NSDictionary *dic = [jsonString JSONValue];
+//    NSString *jsonString = [request responseString];
+//    NSDictionary *dic = [jsonString JSONValue];
     if ([dic[@"status"] integerValue] == 100) {
         NSLog(@"请求成功");
 
@@ -510,10 +526,7 @@
     
 }
 
--(void)getDataError:(ASIHTTPRequest *)request{
-    [self hidePreogressView];
-    [self showAlertWarmMessage:ModuleZW(@"获取血糖数据失败")];
-}
+
 
 -(void)confirmBtnClick2:(UIButton *)button{
     UIView *v1 = [self.view viewWithTag:331];

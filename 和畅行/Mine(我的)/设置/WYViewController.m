@@ -9,7 +9,6 @@
 #import "WYViewController.h"
 #import "Global.h"
 #import "SBJson.h"
-#import "ASIFormDataRequest.h"
 #import "LoginViewController.h"
 
 
@@ -257,42 +256,54 @@
         return;
     }
     [ self showHUD];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrl = [NSString stringWithFormat:@"%@/member/memberModifi/reset.jhtml",UrlPre];
+    
     NSDate *datenow = [NSDate date];
     NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    [request setPostValue:self.OriginalSec_TF.text forKey:@"password"];
-    [request setPostValue:self.NewSec_TF.text forKey:@"newPassword1"];
-    [request setPostValue:self.NewSure_TF.text forKey:@"newPassword2"];
-    [request setPostValue:[UserShareOnce shareOnce].JSESSIONID forKey:@"JSESSIONID"];
-    [request setPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setPostValue:timeSp forKey:@"time"];
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestFindPassError:)];
-    [request setDidFinishSelector:@selector(requestFindPassCompleted:)];
-    [request startAsynchronous];
+    
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+//    [request setPostValue:self.OriginalSec_TF.text forKey:@"password"];
+//    [request setPostValue:self.NewSec_TF.text forKey:@"newPassword1"];
+//    [request setPostValue:self.NewSure_TF.text forKey:@"newPassword2"];
+//    [request setPostValue:[UserShareOnce shareOnce].JSESSIONID forKey:@"JSESSIONID"];
+//    [request setPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+//    [request setPostValue:timeSp forKey:@"time"];
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestFindPassError:)];
+//    [request setDidFinishSelector:@selector(requestFindPassCompleted:)];
+//    [request startAsynchronous];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+    [dic setObject:self.OriginalSec_TF.text forKey:@"password"];
+    [dic setObject:self.NewSec_TF.text forKey:@"newPassword1"];
+    [dic setObject:self.NewSure_TF.text forKey:@"newPassword2"];
+    [dic setObject:[UserShareOnce shareOnce].JSESSIONID forKey:@"JSESSIONID"];
+    [dic setObject:[UserShareOnce shareOnce].token forKey:@"token"];
+    [dic setObject:timeSp forKey:@"time"];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:@"member/memberModifi/reset.jhtml" parameters:dic successBlock:^(id response) {
+        [weakSelf requestFindPassCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf hudWasHidden];
+        [weakSelf showAlertWarmMessage:ModuleZW(@"抱歉修改密码失败，请重试")];
+    }];
 }
 
 
-- (void)requestFindPassError:(ASIHTTPRequest *)request
+
+
+- (void)requestFindPassCompleted:(NSDictionary *)dic
 {
     [self hudWasHidden];
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉修改密码失败，请重试") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-    [av show];
-    return;
-}
-- (void)requestFindPassCompleted:(ASIHTTPRequest *)request
-{
-    [self hudWasHidden];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
+//    NSString* reqstr=[request responseString];
+//    NSDictionary * dic=[reqstr JSONValue];
     NSLog(@"dic==%@",dic);
     id status=[dic objectForKey:@"status"];
     if (status!=nil)

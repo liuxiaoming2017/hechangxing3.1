@@ -21,7 +21,7 @@
 
 #define kCELLID @"HealthOrderCell"
 
-@interface HealthLectureOrderViewController ()<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,MBProgressHUDDelegate>
+@interface HealthLectureOrderViewController ()<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate>
 
 {
     UITableView    *_tableView;
@@ -29,7 +29,7 @@
     NSMutableArray *_lecturesArr;//讲座信息
     NSMutableArray *_ordersArr;//订单信息
     NSMutableArray *_orderNumArr;//预约码
-    ASIHTTPRequest *_request;
+   
     MBProgressHUD  *_progress;
     
     UIView         *_bottomView;//弹出视图背景
@@ -48,7 +48,7 @@
     [_lecturesArr release];
     [_ordersArr release];
     [_orderNumArr release];
-    [_request release];
+   
     [super dealloc];
 }
 - (void)viewDidLoad {
@@ -67,13 +67,14 @@
 #pragma mark ----- 请求健康讲座数据
 -(void)downloadData{
     _requstCat = 1;
-    NSString *str = [[NSString alloc] initWithFormat:@"%@/member/lecture/list/%@.jhtml",URL_PRE,[UserShareOnce shareOnce].uid];
-    _request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:str]];
-    _request.timeOutSeconds = 20;
-    _request.requestMethod = @"GET";
-    _request.delegate = self;
-    [_request startAsynchronous];
-    [str release];
+    
+//    NSString *str = [[NSString alloc] initWithFormat:@"%@/member/lecture/list/%@.jhtml",URL_PRE,[UserShareOnce shareOnce].uid];
+//    _request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:str]];
+//    _request.timeOutSeconds = 20;
+//    _request.requestMethod = @"GET";
+//    _request.delegate = self;
+//    [_request startAsynchronous];
+//    [str release];
     
     _progress = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:_progress];
@@ -81,6 +82,15 @@
     _progress.delegate = self;
     _progress.label.text = ModuleZW(@"加载中...");
     [_progress showAnimated:YES];
+    
+    NSString *urlStr = [[NSString alloc] initWithFormat:@"member/lecture/list/%@.jhtml",[UserShareOnce shareOnce].uid];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
+        [weakSelf requestComfinish:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestFail];
+    }];
+    
 }
 
 -(void)hudWasHidden{
@@ -89,11 +99,11 @@
     _progress = nil;
 }
 
--(void)requestFinished:(ASIHTTPRequest *)request{
+-(void)requestComfinish:(NSDictionary *)dic{
     if (_requstCat == 1) {
         [self hudWasHidden];
-        NSString *requestStr = [request responseString];
-        NSDictionary *dic = [requestStr JSONValue];
+//        NSString *requestStr = [request responseString];
+//        NSDictionary *dic = [requestStr JSONValue];
         if ([dic[@"status"] integerValue] == 44) {
             
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -156,8 +166,8 @@
             [self initWithController];//初始化界面
         }
     }else if (_requstCat == 2){
-        NSString *requestStr = [request responseString];
-        NSDictionary *dic = [requestStr JSONValue];
+//        NSString *requestStr = [request responseString];
+//        NSDictionary *dic = [requestStr JSONValue];
         if ([dic[@"status"] integerValue] == 44) {
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.removeFromSuperViewOnHide =YES;
@@ -189,10 +199,10 @@
     
 
 }
--(void)requestFailed:(ASIHTTPRequest *)request{
+-(void)requestFail{
     if (_requstCat == 1) {
         [self hudWasHidden];
-        NSLog(@"%@",request.error);
+        
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
         hud.mode = MBProgressHUDModeText;
@@ -745,13 +755,22 @@
     [button removeFromSuperview];
     _requstCat = 2;
     HealthOrderedModel *orderModel = [_dataArr objectAtIndex:button.tag];
-    NSString *str = [[NSString alloc] initWithFormat:@"%@/member/doctorSubscribe/cancel/%@.jhtml?type=10",URL_PRE,orderModel.id];
-    _request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:str]];
-    _request.timeOutSeconds = 20;
-    _request.requestMethod = @"GET";
-    _request.delegate = self;
-    [_request startAsynchronous];
-    [str release];
+    
+//    NSString *str = [[NSString alloc] initWithFormat:@"%@/member/doctorSubscribe/cancel/%@.jhtml?type=10",URL_PRE,orderModel.id];
+//    _request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:str]];
+//    _request.timeOutSeconds = 20;
+//    _request.requestMethod = @"GET";
+//    _request.delegate = self;
+//    [_request startAsynchronous];
+//    [str release];
+    
+    NSString *urlStr = [[NSString alloc] initWithFormat:@"member/doctorSubscribe/cancel/%@.jhtml?type=10",orderModel.id];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
+        [weakSelf requestComfinish:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestFail];
+    }];
 }
 //继续支付
 -(void)continuePayClick:(UIButton *)button{

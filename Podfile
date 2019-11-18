@@ -14,5 +14,6 @@ pod 'YYModel'
 pod 'HHDoctorSDK', :git => "http://code.hh-medic.com/hh_public/HHDoctorSDK.ios.git"
 pod 'ReactiveObjC', '~> 2.1.0'
 pod ‘Masonry’
+pod 'FreeStreamer'                    # 音频播放
 end
 

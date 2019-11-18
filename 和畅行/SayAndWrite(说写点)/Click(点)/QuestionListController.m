@@ -937,108 +937,60 @@
     
     
     
-    NSDictionary *paramDic = @{@"subjectSn":self.str,
-                                             @"memberChildId":[MemberUserShance shareOnce].idNum,
-                                             @"jsonResults":@"",
-                                             @"questionnaireIds":questionIdsString,
-                                             @"tzscore":tzscore};
     
-    __weak typeof(self) weakSelf = self;
-    //NSString *urlStr = @"subject_category/list.jhtml?sn=TZBS";
-//    NSString *urlStr = @"/member/myreport/save_report.jhtml";
     
     
     [GlobalCommon showMBHudWithView:self.view];
     
     
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrl = [NSString stringWithFormat:@"%@/member/myreport/save_report.jhtml",UrlPre];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setPostValue:[MemberUserShance shareOnce].idNum forKey:@"memberChildId"];
-    [request setPostValue:self.str forKey:@"subjectSn"];
-    [request setPostValue:@"" forKey:@"jsonResults"];
-    [request setPostValue:questionIdsString forKey:@"questionnaireIds"];
-    [request setPostValue:tzscore forKey:@"tzscore"];
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requesstuserinfoError:)];
-    [request setDidFinishSelector:@selector(requesstuserinfoCompleted:)];
-    [request startAsynchronous];
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrl = [NSString stringWithFormat:@"%@/member/myreport/save_report.jhtml",UrlPre];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setPostValue:[MemberUserShance shareOnce].idNum forKey:@"memberChildId"];
+//    [request setPostValue:self.str forKey:@"subjectSn"];
+//    [request setPostValue:@"" forKey:@"jsonResults"];
+//    [request setPostValue:questionIdsString forKey:@"questionnaireIds"];
+//    [request setPostValue:tzscore forKey:@"tzscore"];
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requesstuserinfoError:)];
+//    [request setDidFinishSelector:@selector(requesstuserinfoCompleted:)];
+//    [request startAsynchronous];
     
- //
-//    [ZYGASINetworking POST_Path:urlStr params:paramDic completed:^(id JSON, NSString *stringData) {
-//        [GlobalCommon hideMBHudWithView:weakSelf.view];
-//        if([[JSON objectForKey:@"status"] integerValue] == 100){
-//            ResultController *resultVC = [[ResultController alloc] init];
-//            resultVC.TZBSstr = str;
-//            [weakSelf.navigationController pushViewController:resultVC animated:YES];
-//        }else{
-//        }
-//    } failed:^(NSError *error) {
-//        [GlobalCommon hideMBHudWithView:weakSelf.view];
-//        [weakSelf showAlertWarmMessage:@"请求网络失败"];
-//    }];
-    
-    
-    
-//    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:urlStr headParameters:headers parameters:paramDic successBlock:^(id response) {
-//        NSError *errorForJSON = [NSError errorWithDomain:@"请求数据解析为json格式，发出错误" code:2014 userInfo:@{@"请求数据json解析错误": @"中文",@"serial the data to json error":@"English"}];
-//        id jsonData = [NSJSONSerialization JSONObjectWithData:response options:0 error:&errorForJSON];
-//        NSLog(@"data:%@",jsonData);
-//    } failureBlock:^(NSError *error) {
-//        
-//    }];
-    
-//    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
-//        NSArray *dataArr = [response objectForKey:@"data"];
-//        NSDictionary *dataDic = [dataArr objectAtIndex:0];
-//        NSInteger dataID = [[dataDic objectForKey:@"id"] integerValue];
-//        ResultController *resultVC = [[ResultController alloc] init];
-//        resultVC.TZBSstr = str;
-//        resultVC.subCatId = dataID;
-//        [weakSelf.navigationController pushViewController:resultVC animated:YES];
-//    } failureBlock:^(NSError *error) {
-//        [weakSelf showAlertWarmMessage:@"请求网络失败!"];
-//    }];
+    NSDictionary *paramDic = @{@"subjectSn":self.str,
+                               @"memberChildId":[MemberUserShance shareOnce].idNum,
+                               @"jsonResults":@"",
+                               @"questionnaireIds":questionIdsString,
+                               @"tzscore":tzscore};
+
+
+    __weak typeof(self) weakSelf = self;
+
+    NSMutableDictionary *dic = [paramDic copy];
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:@"member/myreport/save_report.jhtml" headParameters:nil parameters:dic successBlock:^(id dic) {
+        [GlobalCommon hideMBHudWithView:weakSelf.view];
+        id status=[dic objectForKey:@"status"];
+
+        if ([status intValue]== 100) {
+
+            [UserShareOnce shareOnce].isRefresh = YES;
+            ResultController *resultVC = [[ResultController alloc] init];
+            resultVC.TZBSstr = weakSelf.str;
+            [weakSelf.navigationController pushViewController:resultVC animated:YES];
+
+        }
+    } failureBlock:^(NSError *error) {
+        [GlobalCommon hideMBHudWithView:weakSelf.view];
+        [weakSelf showAlertWarmMessage:requestErrorMessage];
+    }];
     
 }
-
-
-- (void)requesstuserinfoError:(ASIHTTPRequest *)request
-{
-    //[SSWaitViewEx removeWaitViewFrom:self.view];
-    [GlobalCommon hideMBHudWithView:self.view];
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉，请检查您的网络是否畅通") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-    [av show];
-}
-
-- (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
-{
-    [GlobalCommon hideMBHudWithView:self.view];
-    NSString* reqstr=[request responseString];
-    //NSLog(@"dic==%@",reqstr);
-    NSDictionary * dic=[reqstr JSONValue];
-    NSLog(@"dic==%@",dic);
-    id status=[dic objectForKey:@"status"];
-    //NSLog(@"234214324%@",status);
-    if ([status intValue]== 100) {
-        self.isPush = YES;
-        [UserShareOnce shareOnce].isRefresh = YES;
-        ResultController *resultVC = [[ResultController alloc] init];
-        resultVC.TZBSstr = self.str;
-        resultVC.startTimeStr = self.startTimeStr;
-        [self.navigationController pushViewController:resultVC animated:YES];
-        
-    }
-    
-}
-
 //- (void)networkTZBS
 //{
 //    __weak typeof(self) weakSelf = self;

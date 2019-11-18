@@ -9,8 +9,7 @@
 #import "BoundBlockViewController.h"
 #import "LoginViewController.h"
 #import "MBProgressHUD.h"
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
+
 #import "SBJson.h"
 #import "SGScanningQRCodeVC.h"
 #import "SGAlertView.h"
@@ -19,7 +18,7 @@
 {
     MBProgressHUD* progress_;
 }
-@property (nonatomic ,retain) UITextField *textField;
+@property (nonatomic ,strong) UITextField *textField;
 @end
 
 @implementation BoundBlockViewController
@@ -97,46 +96,53 @@
 
 - (void)bangButton{
     if ([_textField.text isEqualToString:@""]) {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"服务卡密码不能为空") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-        [av show];
-        
+        [self showAlertWarmMessage:ModuleZW(@"服务卡密码不能为空")];
         return;
     }
     [self showHUD];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrl = [NSString stringWithFormat:@"%@/member/cashcard/bind.jhtml",UrlPre];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    [request setPostValue:_textField.text forKey:@"code"];
-
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requesstuserinfoError:)];
-    [request setDidFinishSelector:@selector(requesstuserinfoCompleted:)];
-    [request startAsynchronous];
     
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrl = [NSString stringWithFormat:@"%@/member/cashcard/bind.jhtml",UrlPre];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+//    [request setPostValue:_textField.text forKey:@"code"];
+//
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requesstuserinfoError:)];
+//    [request setDidFinishSelector:@selector(requesstuserinfoCompleted:)];
+//    [request startAsynchronous];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+    [dic setObject:_textField.text forKey:@"code"];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:@"member/cashcard/bind.jhtml" headParameters:nil parameters:dic successBlock:^(id response) {
+        [weakSelf requesstuserinfoCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requesstuserinfoError];
+    }];
     
 }
-- (void)requesstuserinfoError:(ASIHTTPRequest *)request
+- (void)requesstuserinfoError
 {
     [self hudWasHidden];
-    //[SSWaitViewEx removeWaitViewFrom:self.view];
+    [self showAlertWarmMessage:requestErrorMessage];
     
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"抱歉，请检查您的网络是否畅通") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-    [av show];
 }
-- (void)requesstuserinfoCompleted:(ASIHTTPRequest *)request
+- (void)requesstuserinfoCompleted:(NSDictionary *)dic
 {
     [self hudWasHidden];
-    NSString* reqstr=[request responseString];
-    //NSLog(@"dic==%@",reqstr);
-    NSDictionary * dic=[reqstr JSONValue];
+//    NSString* reqstr=[request responseString];
+//    //NSLog(@"dic==%@",reqstr);
+//    NSDictionary * dic=[reqstr JSONValue];
     NSLog(@"dic==%@",dic);
     id status=[dic objectForKey:@"status"];
     //NSLog(@"234214324%@",status);

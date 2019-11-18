@@ -15,7 +15,7 @@
 #define kNomal  ModuleZW(@"血氧饱和度正常。")
 #define kLow ModuleZW(@"血氧饱和度偏低。建议监测，若持续偏低，请及时到医院就诊。")
 
-@interface BloodOxyNonDeviceViewController ()<UITextFieldDelegate,MBProgressHUDDelegate,ASIHTTPRequestDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface BloodOxyNonDeviceViewController ()<UITextFieldDelegate,MBProgressHUDDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     NSMutableArray *_TextFieldArr;
 }
@@ -172,30 +172,46 @@
     float density = [self.textField.text floatValue]/100.0f;
     
     //提交数据
-    NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
-    [request addPostValue:subId forKey:@"memberChildId"];
-    [request addPostValue:@(20) forKey:@"datatype"];
-    [request addPostValue:@(density) forKey:@"density"];
-    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestError:)];
-    [request setDidFinishSelector:@selector(requestCompleted:)];
-    [request startAsynchronous];
+//    NSString *aUrl = [NSString stringWithFormat:@"%@/member/uploadData.jhtml",URL_PRE];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setPostValue:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+//    [request addPostValue:subId forKey:@"memberChildId"];
+//    [request addPostValue:@(20) forKey:@"datatype"];
+//    [request addPostValue:@(density) forKey:@"density"];
+//    [request addPostValue:[UserShareOnce shareOnce].token forKey:@"token"];
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestError:)];
+//    [request setDidFinishSelector:@selector(requestCompleted:)];
+//    [request startAsynchronous];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:[UserShareOnce shareOnce].uid forKey:@"memberId"];
+    [dic setObject:@(20) forKey:@"datatype"];
+    [dic setObject:subId forKey:@"memberChildId"];
+    [dic setObject:@(density) forKey:@"density"];
+    [dic setObject:[UserShareOnce shareOnce].token forKey:@"token"];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:@"member/uploadData.jhtml" headParameters:nil parameters:dic successBlock:^(id response) {
+        [weakSelf requestCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf showAlertWarmMessage:ModuleZW(@"提交数据失败")];
+    }];
+    
+    
 }
 
 
 
--(void)requestCompleted:(ASIHTTPRequest *)request{
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
+-(void)requestCompleted:(NSDictionary *)dic{
+//    NSString* reqstr=[request responseString];
+//    NSDictionary * dic=[reqstr JSONValue];
     NSDictionary *dataDic = dic[@"data"];
     NSNumber *state = dic[@"status"];
     UITextField *tf = _TextFieldArr[0];
@@ -261,10 +277,7 @@
     }
 }
 
--(void)requestError:(ASIHTTPRequest *)request{
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:ModuleZW(@"提交数据失败") delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-    [av show];
-}
+
 
 
 //点击返回检测

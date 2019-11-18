@@ -22,7 +22,9 @@
 
 #import "ArmchairTestResultVC.h"
 
-#define margin ((ScreenWidth-Adapter(107)*3)/4.0)
+#import "NoteView.h"
+
+#define margin ((ScreenWidth-107*3)/4.0)
 
 #define startDevice @"启动设备"
 #define connectDevice @"连接设备"
@@ -108,6 +110,21 @@
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DidBecomeActive) name:UIApplicationWillEnterForegroundNotification object:nil];
 //
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
+    NSString *tuinaHint = [[NSUserDefaults standardUserDefaults] objectForKey:hintTuiNa];
+    if([GlobalCommon stringEqualNull:tuinaHint]){
+        __weak typeof(self) weakSelf = self;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf addNoteView];
+        });
+        
+    }
+}
+
+- (void)addNoteView
+{
+    NoteView *noteV = [NoteView noteViewInitUIWithContent:tuiNaNote withTypeStr:hintTuiNa];
+    [[UIApplication sharedApplication].keyWindow addSubview:noteV];
 }
 
 # pragma mark - 应用进入前台,以及上拉出设置栏通知执行方法
@@ -133,7 +150,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:YES];
-    
+    [[OGA530BluetoothManager shareInstance] removeSubscribe:self.subscribe];
     [self.dataArr removeAllObjects];
 }
 

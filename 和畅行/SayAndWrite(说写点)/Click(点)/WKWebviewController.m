@@ -57,7 +57,8 @@
     
     WKUserContentController *userContentController = WKUserContentController.new;
     NSString *cookieStr = [NSString stringWithFormat:@"document.cookie = '%@=%@';document.cookie = '%@=%@';",@"token",[UserShareOnce shareOnce].token,@"JSESSIONID",[UserShareOnce shareOnce].JSESSIONID];
-    WKUserScript *cookieScript = [[WKUserScript alloc] initWithSource:cookieStr injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:NO];
+    
+    WKUserScript *cookieScript = [[WKUserScript alloc] initWithSource:cookieStr injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
     
     
     [userContentController addUserScript:cookieScript];
@@ -66,6 +67,7 @@
     
     // 通过JS与webview内容交互
     config.userContentController = [[WKUserContentController alloc] init];
+    //config.userContentController = userContentController;
     
     self.wkwebview = [[WKWebView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight)
                                               configuration:config];
@@ -77,6 +79,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
     [request addValue:[self getCookieValue] forHTTPHeaderField:@"Cookie"];
+    
     if([UserShareOnce shareOnce].languageType){
         [request addValue:[UserShareOnce shareOnce].languageType forHTTPHeaderField:@"language"];
     }

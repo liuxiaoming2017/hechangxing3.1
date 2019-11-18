@@ -73,20 +73,32 @@
 
 - (void)downloadFailWithImageStr:(NSString *)nameStr
 {
-    if([nameStr isEqualToString:@"乐药未购买icon"]){
+
+    if([nameStr isEqualToString:@"乐药未购买icon"] || [nameStr isEqualToString:@"已加入购物车"]){
         self.downloadBtn.frame = CGRectMake(ScreenWidth - Adapter(110) , Adapter(30), Adapter(80), Adapter(20));
         self.downloadBtn.backgroundColor = RGB(253, 134, 40);
-        self.downloadBtn.layer.cornerRadius = Adapter(10);
+        
+        if([nameStr isEqualToString:@"已加入购物车"]){
+            self.downloadBtn.backgroundColor = RGB_TextAppGray;
+            
+        }
+        self.downloadBtn.layer.cornerRadius = 10;
         self.downloadBtn.layer.masksToBounds = YES;
         [self.downloadBtn setTitle:ModuleZW(@"加入购物车") forState:(UIControlStateNormal)];
         [self.downloadBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+        self.PlayOrdownload = NO;
     }else{
         self.downloadBtn.frame = CGRectMake(ScreenWidth - Adapter(80), Adapter(25), Adapter(30), Adapter(30));
          self.downloadBtn.backgroundColor = [UIColor clearColor];
+        
          [self.downloadBtn setTitle:@"" forState:(UIControlStateNormal)];
+        self.PlayOrdownload = YES;
+        
     }
     [self.downloadBtn setBackgroundImage:[UIImage imageNamed:nameStr] forState:UIControlStateNormal];
     self.PlayOrdownload = NO;
+//    [self.downloadBtn setImage:[UIImage imageNamed:nameStr] forState:UIControlStateNormal];
+    
 }
 
 - (void)setSelected:(BOOL)selected
@@ -148,15 +160,7 @@
 
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-//    if(self.PlayOrdownload){
-//        if(selected){
-//            [self.downloadBtn setImage:[UIImage imageNamed:@"New_yy_zt_bf"] forState:UIControlStateNormal];
-//        }else{
-//             [self.downloadBtn setImage:[UIImage imageNamed:@"New_yy_zt_zt"] forState:UIControlStateNormal];
-//        }
-//    }
-    
+    [super setSelected:selected animated:animated];    
 }
 
 @end

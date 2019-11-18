@@ -8,8 +8,7 @@
 
 #import "FamilyViewController.h"
 #import "FamilyTableViewCell.h"
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
+
 #import "NSObject+SBJson.h"
 #import "SBJson.h"
 #import "MBProgressHUD.h"
@@ -141,15 +140,6 @@ NSString *isYiBao;
         [weakSelf showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
     }];
     
-//    [ZYGASINetworking GET_Path:@"/member/memberModifi/list.jhtml" params:@{@"memberId":[UserShareOnce shareOnce].uid} completed:^(id JSON, NSString *stringData) {
-//        [self hudWasHidden];
-//        [self requestResourceslistCompletedWith:JSON];
-//    } failed:^(NSError *error) {
-//        [self hudWasHidden];
-//
-//        [self showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
-//
-//    }];
 }
 -(void) showHUD
 {
@@ -295,29 +285,38 @@ NSString *isYiBao;
 - (void)deleteAction
 {
     HCY_FamilyListModel *model = _dataArray[_tag];
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/memberModifi/delete.jhtml?memberId=%@&id=%@",UrlPre,[UserShareOnce shareOnce].uid,model.familyID];
-    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
-    NSURL *url = [NSURL URLWithString:aUrlle];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setRequestMethod:@"GET"];
-    [request setTimeOutSeconds:20];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestResourceslistssError:)];
-    [request setDidFinishSelector:@selector(requestResourceslistssCompleted:)];
-    [request startAsynchronous];
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/memberModifi/delete.jhtml?memberId=%@&id=%@",UrlPre,[UserShareOnce shareOnce].uid,model.familyID];
+//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//
+//    NSURL *url = [NSURL URLWithString:aUrlle];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setRequestMethod:@"GET"];
+//    [request setTimeOutSeconds:20];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestResourceslistssError:)];
+//    [request setDidFinishSelector:@selector(requestResourceslistssCompleted:)];
+//    [request startAsynchronous];
+    
+    NSString *aUrlle= [NSString stringWithFormat:@"member/memberModifi/delete.jhtml?memberId=%@&id=%@",[UserShareOnce shareOnce].uid,model.familyID];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:aUrlle parameters:nil successBlock:^(id response) {
+        [weakSelf requestResourceslistssCompleted:response];
+    } failureBlock:^(NSError *error) {
+        [weakSelf requestResourceslistssError];
+    }];
 }
 
 
-- (void)requestResourceslistssError:(ASIHTTPRequest *)request
+- (void)requestResourceslistssError
 {
     [self hudWasHidden];
     //[SSWaitViewEx removeWaitViewFrom:self.view];
@@ -331,11 +330,11 @@ NSString *isYiBao;
     [self GetResource];
 
 }
-- (void)requestResourceslistssCompleted:(ASIHTTPRequest *)request
+- (void)requestResourceslistssCompleted:(NSDictionary *)dic
 {
     [self hudWasHidden];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
+//    NSString* reqstr=[request responseString];
+//    NSDictionary * dic=[reqstr JSONValue];
     
     id status=[dic objectForKey:@"status"];
     if ([status intValue] == 100)

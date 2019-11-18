@@ -187,50 +187,22 @@ static NSMutableArray *tasks;
     
     BAURLSessionTask *sessionTask = nil;
     
-    if (type == BAHttpRequestTypeGet)
-    {
-        AFHTTPSessionManager *manager = [self sharedAFManager];
-       
-        sessionTask = [manager GET:URLString parameters:parameters  progress:^(NSProgress * _Nonnull downloadProgress) {
-
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-
-            
-            if (successBlock)
-            {
-                successBlock(responseObject);
-            }
-
-
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-
-            if (failureBlock)
-            {
-                failureBlock(error);
-            }
-
-
-        }];
-        
-    }
+    __weak typeof(self) weakSelf = self;
     
-    else if (type == BAHttpRequestTypeHeadGet){
+    if (type == BAHttpRequestTypeHeadGet || type == BAHttpRequestTypeGet){
         
         AFHTTPSessionManager *manager = [self sharedAFManager];
-//        NSDictionary *headers = @{@"version":@"ios_hcy-oem-3.1.3",
-//                                  @"token":[UserShareOnce shareOnce].token,
-//                                  @"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
-//                                             [UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+
         
-//        for(NSString *key in headers.allKeys){
-//            [manager.requestSerializer setValue:[headers objectForKey:key] forHTTPHeaderField:key];
-//        }
+        //[manager.requestSerializer setValue:@"ios_jlsl-yh-3" forHTTPHeaderField:@"version"];
         
-        [manager.requestSerializer setValue:@"ios_hcy-oem-3.1.3" forHTTPHeaderField:@"version"];
+        if(type == BAHttpRequestTypeHeadGet){
+           // [manager.requestSerializer setValue:@"ios_hcy-oem-3.1.3" forHTTPHeaderField:@"version"];
+            NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+            NSString *headStr = [NSString stringWithFormat:@"ios_hcy-oem-%@",nowVersion];
+            [manager.requestSerializer setValue:headStr forHTTPHeaderField:@"version"];
+        }
         
-        [manager.requestSerializer setValue:[UserShareOnce shareOnce].token forHTTPHeaderField:@"token"];
-        [manager.requestSerializer setValue:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
-                                             [UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID] forHTTPHeaderField:@"Cookie"];
         sessionTask = [manager GET:URLString parameters:parameters  progress:^(NSProgress * _Nonnull downloadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -242,10 +214,44 @@ static NSMutableArray *tasks;
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
-            if (failureBlock)
-            {
-                failureBlock(error);
+            /***start***/
+            
+            if([urlString isEqualToString:@"login/commit.jhtml"] || [urlString isEqualToString:@"weiq/weiq/weix/authlogin.jhtml"] || [urlString isEqualToString:@"weiq/sms/relogin.jhtml"]){ //登录接口不做处理
+                if (failureBlock)
+                {
+                    failureBlock(error);
+                }
+            }else{ //其他接口 先判断该用户是否在登录状态,在直接返回 如不在 先登录 成功后 再次请求该接口
+                if([weakSelf isNetworkLogin]){
+                    if (failureBlock)
+                    {
+                        failureBlock(error);
+                    }
+                }else{
+                    [weakSelf loginAgainWithTwo:NO withBlock:^(NSString *blockParam) {
+                        if([blockParam isEqualToString:@"error"]){
+                            if (failureBlock)
+                            {
+                                failureBlock(error);
+                            }
+                        }else{
+                            [manager GET:urlStr parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                if (successBlock)
+                                {
+                                    successBlock(responseObject);
+                                }
+                            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                if (failureBlock)
+                                {
+                                    failureBlock(error);
+                                }
+                            }];
+                        }
+                    }];
+                }
             }
+            
+            /***end***/
             
         }];
         
@@ -255,8 +261,7 @@ static NSMutableArray *tasks;
     {
         AFHTTPSessionManager *manager = [self sharedAFManager];
         
-        
-        
+       
         sessionTask = [manager POST:URLString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -270,12 +275,35 @@ static NSMutableArray *tasks;
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
-            if (failureBlock)
-            {
-                failureBlock(error);
-                NSLog(@"错误信息：%@",error);
+            /***start***/
+            if([weakSelf isNetworkLogin]){
+                if (failureBlock)
+                {
+                    failureBlock(error);
+                }
+            }else{
+                [weakSelf loginAgainWithTwo:NO withBlock:^(NSString *blockParam) {
+                    if([blockParam isEqualToString:@"error"]){
+                        if (failureBlock)
+                        {
+                            failureBlock(error);
+                        }
+                    }else{
+                        [manager POST:urlStr parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                            if (successBlock)
+                            {
+                                successBlock(responseObject);
+                            }
+                        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                            if (failureBlock)
+                            {
+                                failureBlock(error);
+                            }
+                        }];
+                    }
+                }];
             }
-            
+            /***end***/
             
         }];
     }
@@ -284,49 +312,11 @@ static NSMutableArray *tasks;
 }
 
 
-- (void)requestWithformDataWithurlString:(NSString *)urlString
-             parameters:(NSDictionary *)parameters
-              formDataBlock:(BAResponseForm)formDataBlock
-           successBlock:(BAResponseSuccess)successBlock
-           failureBlock:(BAResponseFail)failureBlock
-{
-    BAURLSessionTask *sessionTask = nil;
-    AFHTTPSessionManager *manager = [self sharedAFManager];
-    
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,urlString];
-    /*! 检查地址中是否有中文 */
-    NSString *URLString = [NSURL URLWithString:urlStr] ? urlStr : [self strUTF8Encoding:urlStr];
-    
-    sessionTask = [manager POST:URLString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        
-    } progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-//        if (formDataBlock)
-//        {
-//            formDataBlock(formData);
-//        }
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        if (successBlock)
-        {
-            successBlock(responseObject);
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if (failureBlock)
-        {
-            failureBlock(error);
-            NSLog(@"错误信息：%@",error);
-        }
-    }];
-    
-}
 
-- (void)requestWithType:(BAHttpRequestType)type
+- (void)requestWithCookieType:(BAHttpRequestType)type
               urlString:(NSString *)urlString
          headParameters:(NSDictionary *)headerDic
-             parameters:(NSDictionary *)parameters
+             parameters:(NSMutableDictionary *)parameters
            successBlock:(BAResponseSuccess)successBlock
            failureBlock:(BAResponseFail)failureBlock
 {
@@ -338,36 +328,21 @@ static NSMutableArray *tasks;
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,urlString];
     /*! 检查地址中是否有中文 */
     NSString *URLString = [NSURL URLWithString:urlStr] ? urlStr : [self strUTF8Encoding:urlStr];
-    
-    NSString *requestType;
-    switch (type) {
-        case 0:
-            requestType = @"GET";
-            break;
-        case 1:
-            requestType = @"POST";
-            break;
-        default:
-            break;
-    }
-    
+    __weak typeof(self) weakSelf = self;
     BAURLSessionTask *sessionTask = nil;
     if (type == BAHttpRequestTypeGet)
     {
-       // AFHTTPSessionManager *manager = [self sharedAFManager];
         
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        
         manager.requestSerializer = [AFHTTPRequestSerializer serializer];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         /*! 设置请求超时时间 */
         manager.requestSerializer.timeoutInterval = 30;
-        
+
         for(NSString *key in headerDic.allKeys){
             [manager.requestSerializer setValue:[headerDic objectForKey:key] forHTTPHeaderField:key];
         }
-        
-       
-        
         
         sessionTask = [manager GET:URLString parameters:parameters  progress:^(NSProgress * _Nonnull downloadProgress) {
             
@@ -381,63 +356,179 @@ static NSMutableArray *tasks;
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
-            if (failureBlock)
-            {
-                failureBlock(error);
+            /***start***/
+            if([weakSelf isNetworkLogin]){
+                if (failureBlock)
+                {
+                    failureBlock(error);
+                }
+            }else{
+                [weakSelf loginAgainWithTwo:NO withBlock:^(NSString *blockParam) {
+                    if([blockParam isEqualToString:@"error"]){
+                        if (failureBlock)
+                        {
+                            failureBlock(error);
+                        }
+                    }else{
+                        [manager GET:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                            if (successBlock)
+                            {
+                                successBlock(responseObject);
+                            }
+                        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                            if (failureBlock)
+                            {
+                                failureBlock(error);
+                            }
+                        }];
+                    }
+                }];
             }
-            
+            /***end***/
             
         }];
         
-    }else if (type == BAHttpRequestTypePost)
+    }else if (type == BAHttpRequestTypePost || type == BAHttpRequestTypeFilePost)
     {
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        AFHTTPSessionManager *manager = [self sharedAFManager];
         
-        /*! 设置请求超时时间 */
-        manager.requestSerializer.timeoutInterval = 30;
+         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
+
+        NSDictionary *headers = @{@"token":[UserShareOnce shareOnce].token,
+                                  @"Set-Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
+                                             [UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
         
-        
-        AFJSONRequestSerializer *rqSerializer = [AFJSONRequestSerializer serializerWithWritingOptions:0];//NSJSONWritingPrettyPrinted
-        
-        rqSerializer.stringEncoding = NSUTF8StringEncoding;
-        
-        AFJSONResponseSerializer *rsSerializer = [AFJSONResponseSerializer serializer];
-        
-        rsSerializer.stringEncoding = NSUTF8StringEncoding;
-        //manager.requestSerializer = [AFJSONRequestSerializer new];
-        manager.requestSerializer = rqSerializer;
-        manager.responseSerializer = rsSerializer;
-        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/css",@"text/xml",@"text/plain", @"application/javascript", @"image/*", nil];
-        
-        [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"content-type"];
-        
-        for(NSString *key in headerDic.allKeys){
-            [manager.requestSerializer setValue:[headerDic objectForKey:key] forHTTPHeaderField:key];
-           
+        for(NSString *key in headers.allKeys){
+            [manager.requestSerializer setValue:[headers objectForKey:key] forHTTPHeaderField:key];
         }
         
-        sessionTask = [manager POST:URLString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
-            
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            
-            if (successBlock)
-            {
-                successBlock(responseObject);
+        //[self setCookieWithManager:manager];
+        
+        if(headerDic){
+            for(NSString *key in headerDic.allKeys){
+                [manager.requestSerializer setValue:[headerDic objectForKey:key] forHTTPHeaderField:key];
             }
+        }
+        
+        if(type == BAHttpRequestTypePost){
             
-            
-            
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            
-            if (failureBlock)
-            {
-                failureBlock(error);
-                NSLog(@"错误信息：%@",error);
-            }
-            
-            
-        }];
+            NSString *paramsStr = [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
+            NSLog(@"请求地址：  %@, 请求参数： %@\n", URLString, paramsStr);
+            sessionTask = [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                
+                
+                if (successBlock)
+                {
+                    successBlock(responseObject);
+                }
+                
+                
+                
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                
+                /***start***/
+                if([weakSelf isNetworkLogin]){
+                    if (failureBlock)
+                    {
+                        failureBlock(error);
+                    }
+                }else{
+                    [weakSelf loginAgainWithTwo:NO withBlock:^(NSString *blockParam) {
+                        if([blockParam isEqualToString:@"error"]){
+                            if (failureBlock)
+                            {
+                                failureBlock(error);
+                            }
+                        }else{
+                            
+                            //登录后cookie已经发生变化,需要重新设置
+                            NSDictionary *headers = @{@"token":[UserShareOnce shareOnce].token,
+                                                      @"Set-Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
+                                                                     [UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+                            
+                            for(NSString *key in headers.allKeys){
+                                [manager.requestSerializer setValue:[headers objectForKey:key] forHTTPHeaderField:key];
+                            }
+                            
+                            [manager POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                if (successBlock)
+                                {
+                                    successBlock(responseObject);
+                                }
+                            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                if (failureBlock)
+                                {
+                                    failureBlock(error);
+                                }
+                            }];
+                        }
+                    }];
+                }
+                /***end***/
+                
+            }];
+        }else{
+            //提交文件
+            [manager POST:URLString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+                for (NSString *key in parameters) {
+                    id value = parameters[key];
+                    [formData appendPartWithFileURL:[NSURL fileURLWithPath:value] name:@"file" error:nil];
+                }
+                
+            } progress:^(NSProgress * _Nonnull uploadProgress) {
+                
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                if (successBlock) {
+                    successBlock(responseObject);
+                }
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                /***start***/
+                if([weakSelf isNetworkLogin]){
+                    if (failureBlock)
+                    {
+                        failureBlock(error);
+                    }
+                }else{
+                    [weakSelf loginAgainWithTwo:NO withBlock:^(NSString *blockParam) {
+                        if([blockParam isEqualToString:@"error"]){
+                            if (failureBlock)
+                            {
+                                failureBlock(error);
+                            }
+                        }else{
+                            //登录后cookie已经发生变化,需要重新设置
+                            NSDictionary *headers = @{@"token":[UserShareOnce shareOnce].token,
+                                                      @"Set-Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
+                                                                     [UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+                            
+                            for(NSString *key in headers.allKeys){
+                                [manager.requestSerializer setValue:[headers objectForKey:key] forHTTPHeaderField:key];
+                            }
+                            
+                            [manager POST:URLString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+                                for (NSString *key in parameters) {
+                                    id value = parameters[key];
+                                    [formData appendPartWithFileURL:[NSURL fileURLWithPath:value] name:@"file" error:nil];
+                                }
+                            } progress:^(NSProgress * _Nonnull uploadProgress) {
+                                
+                            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                if (successBlock) {
+                                    successBlock(responseObject);
+                                }
+                            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                if (failureBlock)
+                                {
+                                    failureBlock(error);
+                                }
+                            }];
+                        }
+                    }];
+                }
+                /***end***/
+            }];
+        }
+       
     }
 }
 
@@ -529,6 +620,156 @@ static NSMutableArray *tasks;
         block(response,responseObject,error);
     }];
     [dataTask resume];
+}
+# pragma mark - 判断是否处于登录状态
+- (BOOL)isNetworkLogin
+{
+    
+   // dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    
+    __weak typeof(self) weakSelf = self;
+    
+   // AFHTTPSessionManager *manager = [weakSelf sharedAFManager];
+    
+    __block BOOL isLogin = NO;
+    
+    NSString *urlStr = [NSString stringWithFormat:@"%@login/logincheck.jhtml?memberId=%@",URL_PRE,[UserShareOnce shareOnce].uid];
+
+
+
+//    [manager GET:urlStr parameters:nil progress:NULL success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//
+//        if([[responseObject objectForKey:@"status"] integerValue] == 100){
+//            if([[responseObject objectForKey:@"data"] boolValue] == YES){
+//                isLogin = YES;
+//            }else{
+//                isLogin = NO;
+//            }
+//        }
+//
+//        dispatch_semaphore_signal(semaphore);
+//
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//
+//        //接口请求失败 代表不是cookie问题
+//        isLogin = YES;
+//
+//        dispatch_semaphore_signal(semaphore);
+//    }];
+
+   // dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    
+    return isLogin;
+}
+
+# pragma mark - 进行重新登录操作
+- (void)loginAgainWithTwo:(BOOL)isTwo withBlock:(void(^)(NSString * blockParam))callBack
+{
+    NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
+    NSString *strcheck=[dicTmp objectForKey:@"ischeck"];
+    if([GlobalCommon stringEqualNull:strcheck] || [strcheck isEqualToString:@"0"]){
+        return;
+    }
+    NSString *aUrl = @"";
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    
+    if([strcheck isEqualToString:@"1"]){
+        
+        
+        CGRect rect = [[UIScreen mainScreen] bounds];
+        CGSize size = rect.size;
+        CGFloat width = size.width;
+        CGFloat height = size.height;
+        NSString* widthheight=[NSString stringWithFormat:@"%d*%d",(int)width,(int)height ];
+        NSDate *datenow = [NSDate date];
+        NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+        
+        
+        [dic setObject:@"beta1.4" forKey:@"softver"];
+        [dic setObject:[[UIDevice currentDevice] systemVersion] forKey:@"osver"];
+        [dic setObject:widthheight forKey:@"resolution"];
+        [dic setObject:timeSp forKey:@"time"];
+        NSString *usernameStr = [GlobalCommon AESDecodeWithString:[dicTmp objectForKey:@"USERNAME"]];
+        NSString *passwordStr = [GlobalCommon AESDecodeWithString:[dicTmp objectForKey:@"PASSWORDAES"]];
+        if([usernameStr isEqualToString:@""] || usernameStr == nil || usernameStr.length == 0 ){
+            usernameStr = [dicTmp objectForKey:@"USERNAME"];
+            passwordStr = [dicTmp objectForKey:@"PASSWORDAES"];
+        }
+        [dic setObject:usernameStr forKey:@"username"];
+        [dic setObject:passwordStr forKey:@"password"];
+        [dic setObject:@"" forKey:@"brand"];
+        [dic setObject:@"" forKey:@"devmodel"];
+        
+        aUrl = @"login/commit.jhtml";
+        
+        
+    }else if ([strcheck isEqualToString:@"2"]){
+        
+        
+       
+        NSString *unionidStr = [GlobalCommon AESDecodeWithString:[dicTmp valueForKey:@"UNIONID"]];
+        if([unionidStr isEqualToString:@""] || unionidStr == nil || unionidStr.length == 0 ){
+            unionidStr = [dicTmp valueForKey:@"UNIONID"];
+        }
+        [dic setObject:unionidStr forKey:@"unionid"];
+        [dic setObject:[dicTmp valueForKey:@"SCREENNAME"] forKey:@"screen_name"];
+        [dic setObject:[dicTmp valueForKey:@"GENDER"] forKey:@"gender"];
+        [dic setObject:[dicTmp valueForKey:@"PROFILEIMAGEURL"] forKey:@"profile_image_url"];
+        
+        
+        
+        aUrl = @"weiq/weiq/weix/authlogin.jhtml";
+        
+    }else if ([strcheck isEqualToString:@"3"]){
+        NSString *phoneStr = [GlobalCommon AESDecodeWithString:[dicTmp valueForKey:@"PhoneShortMessage"]];
+        if([phoneStr isEqualToString:@""] || phoneStr == nil || phoneStr.length == 0 ){
+            phoneStr = [dicTmp valueForKey:@"PhoneShortMessage"];
+        }
+        aUrl = @"weiq/sms/relogin.jhtml";
+        NSString *hhhh = [GlobalCommon getNowTimeTimestamp];
+        NSString *iPoneNumber = [NSString stringWithFormat:@"%@%@ky3h.com",phoneStr,hhhh];
+        NSString *iPoneNumberMD5 = [GlobalCommon md5:iPoneNumber].uppercaseString;
+        
+        [dic setObject:phoneStr forKey:@"phone"];
+        [dic setObject:iPoneNumberMD5 forKey:@"token"];
+        [dic setObject:hhhh forKey:@"timestamp"];
+        
+    }
+    
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,aUrl];
+    
+    AFHTTPSessionManager *manager = [self sharedAFManager];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    [manager POST:urlStr parameters:dic  progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        if([[responseObject objectForKey:@"status"] intValue] == 100){
+            
+            UserShareOnce *userShare = [UserShareOnce shareOnce];
+            
+            userShare.JSESSIONID = [[(NSDictionary *)responseObject objectForKey:@"data"] objectForKey:@"JSESSIONID"];
+            userShare.token = [[(NSDictionary *)responseObject objectForKey:@"data"] objectForKey:@"token"];
+            
+            //[[NSNotificationCenter defaultCenter] postNotificationName:@"loginAgain" object:nil];
+            
+        }
+        if(!isTwo){
+            callBack(@"success");
+        }
+       
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        if(isTwo){
+            [weakSelf loginAgainWithTwo:NO withBlock:nil];
+        }else{
+            callBack(@"error");
+        }
+        
+    }];
     
 }
 

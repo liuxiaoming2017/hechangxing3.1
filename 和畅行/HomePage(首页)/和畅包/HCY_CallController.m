@@ -60,8 +60,14 @@
     [cell cellsetAttributewithIndexPath:indexPath];
     
     __weak typeof(self) weakSelf = self;
-    cell.comeToNextBlock = ^(HCY_CallCell * cell) {
-        [weakSelf comeToNextBlockCellwithIndex:indexPath];
+    cell.comeToNextBlock = ^(HCY_CallCell * cell) { //多次点击，重复触发
+        static NSTimeInterval time = 0.0;
+        NSTimeInterval currentTime = [NSDate date].timeIntervalSince1970;
+        if (currentTime - time > 2) {
+            [weakSelf comeToNextBlockCellwithIndex:indexPath];
+        }
+        time = currentTime;
+        
     };
     
     return cell;
@@ -88,6 +94,11 @@
                 return;
             }
         }
+    
+        if(kPlayer.playerState == 2){
+            [kPlayer stop];
+        }
+    
         NSInteger uuid = [[UserShareOnce shareOnce].uuid integerValue];
         if(index.row == 0) {
             if ([UserShareOnce shareOnce].username.length != 11) {

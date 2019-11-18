@@ -56,10 +56,15 @@
     
     //self.backgroundColor = [UIColor whiteColor];
     
+    NSLog(@"size:%f",[UserShareOnce shareOnce].fontSize);
+    
+    //CGFloat fontSize = 18*[UserShareOnce shareOnce].fontSize;
+    
     NSString *titleStr = [self getCurrentTime];
     CGSize strSize = [titleStr boundingRectWithSize:CGSizeMake(1190, Adapter(30)) options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont fontWithName:[[UIFont systemFontOfSize:1] fontName] size:18]} context:nil].size;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(14), Adapter(10), Adapter(strSize.width), Adapter(30))];
+//    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 15, strSize.width+8, strSize.height)];
     titleLabel.font = [UIFont systemFontOfSize:18];
     titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.textColor = [UIColor blackColor];
@@ -67,6 +72,7 @@
     [self addSubview:titleLabel];
     
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.right+Adapter(6), Adapter(10), Adapter(200), Adapter(30))];
+//    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.right, titleLabel.top, 200, strSize.height)];
     timeLabel.font = [UIFont systemFontOfSize:13];
     timeLabel.textAlignment = NSTextAlignmentLeft;
     timeLabel.textColor = UIColorFromHex(0X8E8E93);

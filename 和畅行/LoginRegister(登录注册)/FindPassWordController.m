@@ -9,7 +9,6 @@
 #import "FindPassWordController.h"
 #import <sys/utsname.h>
 #import <CommonCrypto/CommonDigest.h>
-#import "ASIFormDataRequest.h"
 #import "SBJson.h"
 
 @interface FindPassWordController ()
@@ -255,14 +254,7 @@
         
         
     }else{
-//        if (self.RepInputphoneTF.text.length==0) {
-//
-//            [self showAlertWarmMessage:ModuleZW(@"登录手机号不能为空")];
-//            return;
-//        }
         
-        NSString *UrlPre=URL_PRE;
-        NSString *aUrl = [NSString stringWithFormat:@"%@/password/captchaPassword.jhtml",UrlPre];
         NSDate *datenow = [NSDate date];
         NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
         
@@ -273,85 +265,46 @@
         NSString *iPoneNumberMds = [GlobalCommon md5:iPoneNumber];
         
         [GlobalCommon showMBHudTitleWithView:self.view];
-        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-        if([UserShareOnce shareOnce].languageType){
-            [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-        }
-        [request setPostValue:self.RepInputphoneTF.text forKey:@"username"];
-        [request setPostValue:timeSp forKey:@"time"];
-        [request setPostValue:iPoneNumberMds forKey:@"UserPhoneKey"];
-        [request setTimeOutSeconds:20];
-        [request setRequestMethod:@"POST"];
-        [request setDelegate:self];
         
-        [request setDidFailSelector:@selector(requestYZMError:)];
-        [request setDidFinishSelector:@selector(requestYZMCompleted:)];
-        [request startAsynchronous];
+//        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//        if([UserShareOnce shareOnce].languageType){
+//            [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//        }
+//        [request setPostValue:self.RepInputphoneTF.text forKey:@"username"];
+//        [request setPostValue:timeSp forKey:@"time"];
+//        [request setPostValue:iPoneNumberMds forKey:@"UserPhoneKey"];
+//        [request setTimeOutSeconds:20];
+//        [request setRequestMethod:@"POST"];
+//        [request setDelegate:self];
+//
+//        [request setDidFailSelector:@selector(requestYZMError:)];
+//        [request setDidFinishSelector:@selector(requestYZMCompleted:)];
+//        [request startAsynchronous];
+        
+        NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
+        [paramDic setObject:self.RepInputphoneTF.text forKey:@"username"];
+        [paramDic setObject:timeSp forKey:@"time"];
+        [paramDic setObject:iPoneNumberMds forKey:@"UserPhoneKey"];
+        
+        __weak typeof(self) weakSelf = self;
+        [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:@"password/captchaPassword.jhtml" headParameters:nil parameters:paramDic successBlock:^(id response) {
+            [weakSelf requestYZMCompleted:response];
+        } failureBlock:^(NSError *error) {
+            [weakSelf requestYZMError];
+        }];
     }
-    
-  
-    
-    /*
-    NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
-    [paramDic setObject:self.RepInputphoneTF.text forKey:@"username"];
-    [paramDic setObject:timeSp forKey:@"time"];
-    [paramDic setObject:iPoneNumberMds forKey:@"UserPhoneKey"];
-    
-    __weak typeof(self) weakSelf = self;
-    
-    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:paramDic successBlock:^(id response) {
-        id status=[response objectForKey:@"status"];
-        if (status!=nil)
-        {
-            if ([status intValue]==100) {
-                
-                LPPopup *popup = [LPPopup popupWithText:@"请在300秒内输入验证码"];
-                CGPoint point=self.view.center;
-                point.y=point.y+130;
-                [popup showInView:self.view
-                    centerAtPoint:point
-                         duration:5.0f
-                       completion:nil];
-                
-                self->YZMcode= [NSString stringWithString:[response objectForKey:@"data"]];//;
-                self->timer=[NSTimer scheduledTimerWithTimeInterval:1
-                                                       target:self
-                                                     selector:@selector(getResults)
-                                                     userInfo:nil
-                                                      repeats:YES];
-            }
-            
-            else
-            {
-                [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
-                return;
-                
-            }
-        }
-        else
-        {
-            [weakSelf showAlertWarmMessage:@"短信验证码发送失败，请重试"];
-            return;
-            
-        }
-    } failureBlock:^(NSError *error) {
-        [weakSelf showAlertWarmMessage:@"短信验证码发送失败，请重试"];
-    }];
-    */
 }
 
 
-- (void)requestYZMError:(ASIHTTPRequest *)request
+- (void)requestYZMError
 {
     [GlobalCommon hideMBHudTitleWithView:self.view];
    [self showAlertWarmMessage:ModuleZW(@"短信验证码发送失败，请重试")];
     return;
 }
-- (void)requestYZMCompleted:(ASIHTTPRequest *)request
+- (void)requestYZMCompleted:(NSDictionary *)dic
 {
     [GlobalCommon hideMBHudTitleWithView:self.view];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
     NSLog(@"dic==%@",dic);
     id status=[dic objectForKey:@"status"];
     if (status!=nil)

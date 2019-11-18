@@ -73,4 +73,8 @@
 //页面使用时间
 +(void)pageDurationWithpageId:(NSString *)pageIdStr  withstartTime:(NSString *)startTime  withendTime:(NSString *)endTime;
 
++ (void)removeCache:(NSString *)path;
++ (float)sizeAtPath:(NSString *)path;
+
++ (void)networkStatusChange;
 @end

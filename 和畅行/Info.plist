@@ -42,7 +42,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>safepay</string>
@@ -58,6 +58,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>是否允许此APP使用您的蓝牙连接外部设备?</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>是否允许此APP使用您的蓝牙连接外部设备?</string>
 	<key>NSCameraUsageDescription</key>
@@ -66,6 +68,8 @@
 	<string>是否允许此APP使用您的麦克风获取您的读音来评估您的经络功能?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>是否允许此APP访问您的图片库来添加图片?</string>
+	<key>Privacy - Bluetooth Always Usage Description</key>
+	<string>是否允许此APP使用您的蓝牙连接外部设备?</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

@@ -20,6 +20,7 @@
 #import "WXPhoneController.h"
 #import "ArmchairHomeVC.h"
 
+
 @interface CommonTabBarController ()<HSTabBarDelegate,ZKIndexViewDelegate>
 
 @property (nonatomic,strong) ZKIndxView *zkView;
@@ -66,7 +67,11 @@
     NSInteger index = tag - 100;
     switch (index) {
         case 0:
-                vc = [[YueYaoController alloc] initWithType:NO];
+        {
+            vc = [[YueYaoController alloc] initWithType:NO];
+            //vc = [YueYaoController sharePlayerController];
+            
+        }
             
             break;
         case 1:

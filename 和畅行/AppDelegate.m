@@ -42,10 +42,11 @@
 
 #import <OGABluetooth530/OGABluetooth530.h>
 #import "NSBundle+Language.h"
-//#import "ArmchairHomeVC.h"
+
+#import "AFNetworking.h"
 
 @interface AppDelegate ()<WXApiDelegate>
-@property (nonatomic, strong) NSURLSession * session;
+
 @property (nonatomic, strong) NSURLSessionDataTask * dataTask;
 @end
 
@@ -53,9 +54,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+   
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-   // self.window.rootViewController = [self tabBar];
+    
 
     //强制英文
 //    [[NSUserDefaults standardUserDefaults] setObject:@"en" forKey:@"Language"];
@@ -77,18 +78,14 @@
     [UserShareOnce shareOnce].canChageSize = YES;
     
     
-//    NSError *error = nil;
-//    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&error];
-//    AVAudioSession *session = [AVAudioSession sharedInstance];
-//    [session setActive:YES error:&error];
-    
+
     [UserShareOnce shareOnce].isOnline = NO;
     [UserShareOnce shareOnce].yueYaoBuyArr = [NSMutableArray arrayWithCapacity:0];
     [UserShareOnce shareOnce].allYueYaoPrice = 0;
     
     [[UITabBar appearance] setTranslucent:NO];
     
-    //和缓医疗SDK注册,是和缓分配给的productId ffff
+    //和缓医疗SDK注册,是和缓分配给的productId
     #if TARGET_IPHONE_SIMULATOR
     
     #else
@@ -99,16 +96,18 @@
    
 
     [UMCommonLogManager setUpUMCommonLogManager];
-    [UMConfigure setLogEnabled:YES];
+    [UMConfigure setLogEnabled:NO];
     [UMConfigure initWithAppkey:Youmeng_id channel:@"App Store"];
     
     [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
-     [self returnMainPage2];
-     [self.window makeKeyAndVisible];
     
-    [ChangeLanguageObject initUserLanguage];
+    //网络状态监测
+    [self networkStateCheck];
     
-     self.session = [NSURLSession sharedSession];
+    [self returnMainPage2];
+    
+    [self.window makeKeyAndVisible];
+    
    
     //埋点注册  AeKAfeKr4YGknb2kPxd8d4xqxFcbjhg0
     [[BuredPoint sharedYHBuriedPoint]setTheSignatureWithSignStr:BuBuredPointKey withOpenStr:@"1" withLacationKey:@"AeKAfeKr4YGknb2kPxd8d4xqxFcbjhg0"];
@@ -116,11 +115,6 @@
     //创建本地数据库
     [[CacheManager sharedCacheManager] createDataBase];
     
-    for (int i = 0; i < 20; ++i) {
-        NSLog(@"%d",i);
-    }
-    
-    NSLog(@"%@,%@,%@",APP_ID,APP_SECRET,URL_PRE);
     
 //    蒲公英SDK
     //启动基本SDK
@@ -166,7 +160,6 @@
             
         }
         
-
         
     } failureBlock:^(NSError *error) {
         
@@ -176,6 +169,47 @@
 
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
     return UIInterfaceOrientationMaskPortrait;
+}
+- (void)networkStateCheck {
+    
+    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
+    
+    [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+                [UserShareOnce shareOnce].networkState = @"wwan";
+                if([UserShareOnce shareOnce].uid && ![[UserShareOnce shareOnce].uid isEqualToString:@""]){
+                    //[GlobalCommon networkStatusChange];
+                    [[NetworkManager sharedNetworkManager] loginAgainWithTwo:YES withBlock:nil];
+                }
+                NSLog(@"4G");
+                break;
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                [UserShareOnce shareOnce].networkState = @"wifi";
+                if([UserShareOnce shareOnce].uid && ![[UserShareOnce shareOnce].uid isEqualToString:@""]){
+                    //[GlobalCommon networkStatusChange];
+                    [[NetworkManager sharedNetworkManager] loginAgainWithTwo:YES withBlock:nil];
+                }
+                NSLog(@"wifi:%@",[UserShareOnce shareOnce].uid);
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+                [UserShareOnce shareOnce].networkState = @"none";
+                NSLog(@"无网络");
+                break;
+            case AFNetworkReachabilityStatusUnknown:
+                [UserShareOnce shareOnce].networkState = @"none";
+                NSLog(@"无网络");
+                break;
+                
+            default:
+                break;
+        }
+    }];
+    
+    [manager startMonitoring];
+    
+//    if([[UserShareOnce shareOnce].networkState isEqualToString:@"wwan"] || [[UserShareOnce shareOnce].networkState isEqualToString:@"wifi"]){
+  //  }
 }
 
 -(void)returnMainPage{

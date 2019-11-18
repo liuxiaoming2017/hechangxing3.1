@@ -12,8 +12,6 @@
 #import "ChildMemberModel.h"
 #import "HomePageController.h"
 #import "FindPassWordController.h"
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
 #import "SBJson.h"
 #import "WXApi.h"
 #import <UMShare/UMShare.h>

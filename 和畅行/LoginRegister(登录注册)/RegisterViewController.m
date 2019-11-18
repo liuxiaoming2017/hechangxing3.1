@@ -10,9 +10,6 @@
 #import "RegistrationNoteController.h"
 #import "IXAttributeTapLabel.h"
 #import <SafariServices/SafariServices.h>
-
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
 #import "SBJson.h"
 #import <sys/utsname.h>
 #import <CommonCrypto/CommonDigest.h>
@@ -303,66 +300,41 @@
         return;
     }
  
-    NSString *UrlPre=URL_PRE;
-    NSString *aUrl = [NSString stringWithFormat:@"%@/register/captcha.jhtml",UrlPre];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    NSString *UrlPre=URL_PRE;
+//    NSString *aUrl = [NSString stringWithFormat:@"%@/register/captcha.jhtml",UrlPre];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request setPostValue:self.pregistrationTF.text forKey:@"username"];
+//    [request setPostValue:iPoneNumberMD5 forKey:@"UserPhoneKey"];
+//
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requestYZMError:)];
+//    [request setDidFinishSelector:@selector(requestYZMCompleted:)];
+//    [request startAsynchronous];
+    
+    
     /**
      *  MD5加密后的字符串
      */
     NSString *iPoneNumber = [NSString stringWithFormat:@"%@",self.pregistrationTF.text];
     NSString *iPoneNumberMD5 = [GlobalCommon md5:iPoneNumber];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request setPostValue:self.pregistrationTF.text forKey:@"username"];
-    [request setPostValue:iPoneNumberMD5 forKey:@"UserPhoneKey"];
     
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requestYZMError:)];
-    [request setDidFinishSelector:@selector(requestYZMCompleted:)];
-    [request startAsynchronous];
-    
-    /*
     NSMutableDictionary *paramDic = [NSMutableDictionary dictionaryWithCapacity:0];
     [paramDic setObject:self.pregistrationTF.text forKey:@"username"];
-    [paramDic setObject:md5str forKey:@"UserPhoneKey"];
+    [paramDic setObject:iPoneNumberMD5 forKey:@"UserPhoneKey"];
 
     __weak typeof(self) weakSelf = self;
     
-    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:aUrl parameters:paramDic successBlock:^(id response) {
-        id status=[response objectForKey:@"status"];
-        if (status!=nil)
-        {
-            if ([status intValue]==100) {
-                
-                //[self.pYzmTF setText:[NSString stringWithString:[dic objectForKey:@"data"]]];
-                self->YZMcode= [NSString stringWithString:[response objectForKey:@"data"]];//;
-                self->timer=[NSTimer scheduledTimerWithTimeInterval:1
-                                                       target:self
-                                                     selector:@selector(getResults)
-                                                     userInfo:nil
-                                                      repeats:YES];
-            }
-            
-            else
-            {
-                [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
-                return;
-                
-            }
-        }
-        else
-        {
-            [weakSelf showAlertWarmMessage:@"短信验证码发送失败，请重试"];
-            return;
-            
-        }
+    [[NetworkManager sharedNetworkManager] requestWithType:1 urlString:@"register/captcha.jhtml" parameters:paramDic successBlock:^(id response) {
+        [weakSelf requestYZMCompleted:response];
     } failureBlock:^(NSError *error) {
         [weakSelf showAlertWarmMessage:@"短信验证码发送失败，请重试"];
     }];
-     */
+    
 }
 
 -(void)getResults
@@ -379,16 +351,12 @@
     [YZMbtn setTitle:[NSString stringWithFormat:@"请在%i秒内输入验证码",pageNo--] forState:UIControlStateNormal];
 }
 
-- (void)requestYZMError:(ASIHTTPRequest *)request
-{
-    [self showAlertWarmMessage:@"短信验证码发送失败，请重试"];
-    return;
-}
-- (void)requestYZMCompleted:(ASIHTTPRequest *)request
+
+- (void)requestYZMCompleted:(NSDictionary *)dic
 {
     
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
+//    NSString* reqstr=[request responseString];
+//    NSDictionary * dic=[reqstr JSONValue];
     NSLog(@"dic==%@",dic);
     id status=[dic objectForKey:@"status"];
     if (status!=nil)

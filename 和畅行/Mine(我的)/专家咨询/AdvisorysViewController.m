@@ -9,8 +9,7 @@
 #import "AdvisorysViewController.h"
 
 #import "NSObject+SBJson.h"
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
+
 #import "MBProgressHUD.h"
 
 
@@ -618,36 +617,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
 
 
 
-
-- (void)requestResourceslistFinish:(ASIHTTPRequest *)request
-{
-    // [self hudWasHidden:nil];
-    NSString* reqstr=[request responseString];
-    NSDictionary * dic=[reqstr JSONValue];
-    id status=[dic objectForKey:@"status"];
-    if ([status intValue]==100)
-    {
-        _personView.hidden = NO;
-        _showView.hidden = NO;
-        [self.view bringSubviewToFront:_personView];
-        [self.view bringSubviewToFront:_showView];
-        
-        self.dataArr=[dic objectForKey:@"data"];
-        [self.tableView reloadData];
-    }
-    else
-    {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.removeFromSuperViewOnHide =YES;
-        hud.mode = MBProgressHUDModeText;
-        hud.label.text = ModuleZW(@"当前账户已过期，请重新登录");  //提示的内容
-        hud.minSize = CGSizeMake(132.f, 108.0f);
-        [hud hideAnimated:YES afterDelay:2];
-        
-        LoginViewController *login = [[LoginViewController alloc] init];
-        [self.navigationController pushViewController:login animated:YES];
-    }
-}
 
 
 @end

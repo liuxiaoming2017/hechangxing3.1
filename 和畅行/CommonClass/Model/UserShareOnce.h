@@ -75,6 +75,10 @@
 @property (nonatomic,assign) float padSizeFloat;
 
 @property (nonatomic,assign) BOOL canChageSize;
+@property (nonatomic,assign) BOOL wwanPlay;
+
+@property (copy, nonatomic) NSString  *networkState;
+
 
 + (UserShareOnce *)shareOnce;
 +(void)attemptDealloc;

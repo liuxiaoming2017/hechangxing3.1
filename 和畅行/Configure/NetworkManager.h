@@ -19,10 +19,15 @@ typedef NS_ENUM(NSUInteger, BAHttpRequestType)
     BAHttpRequestTypePost,
     
     BAHttpRequestTypeHeadGet,
+    /*post请求 返回格式不一样*/
+    BAHttpRequestTypeCookiePost,
+    /*post请求 提交文件*/
+    BAHttpRequestTypeFilePost,
     /*! put请求 */
     BAHttpRequestTypePut,
     /*! delete请求 */
     BAHttpRequestTypeDelete
+    
 };
 /*! formDataBlock */
 typedef void( ^ BAResponseForm)(id request);
@@ -42,6 +47,7 @@ typedef void( ^ BADownloadProgress)(int64_t bytesProgress,
 typedef NSURLSessionTask BAURLSessionTask;
 
 @interface NetworkManager : NSObject
+
 + (NetworkManager *)sharedNetworkManager;
 
 - (void)requestWithType:(BAHttpRequestType)type
@@ -49,20 +55,15 @@ typedef NSURLSessionTask BAURLSessionTask;
                               parameters:(NSDictionary *)parameters
                             successBlock:(BAResponseSuccess)successBlock
                             failureBlock:(BAResponseFail)failureBlock;
-- (void)requestWithType:(BAHttpRequestType)type
-              urlString:(NSString *)urlString
-         headParameters:(NSDictionary *)headerDic
-             parameters:(NSDictionary *)parameters
-           successBlock:(BAResponseSuccess)successBlock
-           failureBlock:(BAResponseFail)failureBlock;
 
-- (void)requestWithformDataWithurlString:(NSString *)urlString
-                              parameters:(NSDictionary *)parameters
-                            successBlock:(BAResponseSuccess)successBlock
-                            failureBlock:(BAResponseFail)failureBlock;
+- (void)requestWithCookieType:(BAHttpRequestType)type
+                    urlString:(NSString *)urlString
+               headParameters:(NSDictionary *)headerDic
+                   parameters:(NSMutableDictionary *)parameters
+                 successBlock:(BAResponseSuccess)successBlock
+                 failureBlock:(BAResponseFail)failureBlock;
 
-
--(void)submitWithUrl:(NSString *)url token:(NSString *)token dic:(NSDictionary *)dic;
+- (void)loginAgainWithTwo:(BOOL)isTwo withBlock:(void(^)(NSString * blockParam))callBack;
 
 -(void)mainThreadRequestWithUrl:(NSString *)myUrl token:(NSString *)token dic:(NSDictionary *)dic;
 

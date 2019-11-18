@@ -15,38 +15,18 @@
 
 #import "PayViewController.h"
 
-static inline WKUserScript * WKCookieUserScript(NSString *cookieString) {
-    if (!cookieString.length) {
-        return nil;
-    }
-    WKUserScript *cookieScript = [[WKUserScript alloc] initWithSource:cookieString
-                                                        injectionTime:WKUserScriptInjectionTimeAtDocumentStart
-                                                     forMainFrameOnly:NO];
-    return cookieScript;
-}
-
-typedef void(^EDLoadRequestAction)(void);
 
 @interface EDWKWebViewController ()<WKUIDelegate, WKNavigationDelegate>
 
 @property (nonatomic, copy) NSString *rootUrl;
 @property (nonatomic, strong) WKWebView *webview;
-@property (nonatomic, strong) WKWebView *cookieWebview;
-@property (nonatomic, copy) EDLoadRequestAction loadAction;
 @property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
+
 @end
 
 @implementation EDWKWebViewController
 
-+ (WKProcessPool *)sharedProcessPool
-{
-    static WKProcessPool *processPool;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        processPool = [WKProcessPool new];
-    });
-    return processPool;
-}
+
 
 - (instancetype)initWithUrlString:(NSString *)url {
     if (self = [super init]) {
@@ -63,7 +43,7 @@ typedef void(^EDLoadRequestAction)(void);
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
+    [self.rightBtn setImage:[UIImage imageNamed:@"message"] forState:UIControlStateNormal];
     if(self.isCollect){
         self.preBtn.hidden = NO;
         self.leftBtn.hidden = YES;
@@ -75,10 +55,28 @@ typedef void(^EDLoadRequestAction)(void);
     }
     self.startTimeStr = [GlobalCommon getCurrentTimes];
     
-    [self.view addSubview:self.webview];
-    [self.webview addSubview:self.indicatorView];
-    [self startToLoadRequest];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSize:) name:@"CHANGESIZE" object:nil];
+    [self customeViewWithStr:self.rootUrl];
+    if(self.isCollect){
+        self.wkwebview.frame = CGRectMake(0, self.topView.bottom, Screen_Width, Screen_Height-self.topView.bottom);
+    }else{
+        self.wkwebview.frame = CGRectMake(0, self.topView.bottom, Screen_Width, Screen_Height-self.topView.bottom-kTabBarHeight);
+    }
+   
+    self.rightBtn.hidden = NO;
+    [self.rightBtn addTarget:self action:@selector(messageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSize:) name:@"CHANGESIZE" object:nil];
+    
+}
+
+- (void)messageBtnAction:(UIButton *)btn
+{
+//    NSString *cookieStr = [NSString stringWithFormat:@"document.cookie = '%@=%@';document.cookie = '%@=%@';",@"token",[UserShareOnce shareOnce].token,@"JSESSIONID",[UserShareOnce shareOnce].JSESSIONID];
+//    WKUserScript *cookieScript = [[WKUserScript alloc] initWithSource:cookieStr injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
+//
+//    [self.wkwebview.configuration.userContentController addUserScript:cookieScript];
+    
+    [self testCookie];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -86,56 +84,20 @@ typedef void(^EDLoadRequestAction)(void);
     self.leftBtn.hidden = YES;
 }
 
-- (void)startToLoadRequest {
-    [self.indicatorView startAnimating];
-    NSString *urlStr = [NSString string];
-    if([self.rootUrl hasSuffix:@"html"]){
-        urlStr= [self.rootUrl stringByAppendingString:[NSString stringWithFormat:@"?fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
-    }else{
-        urlStr= [self.rootUrl stringByAppendingString:[NSString stringWithFormat:@"&fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
-    }
-    NSURL *url = [NSURL URLWithString:urlStr];
-    __weak typeof(self) weakSelf = self;
-    self.loadAction = ^{
-        __strong typeof(self) strongSelf = weakSelf;
-        [strongSelf.webview loadRequest:[NSURLRequest requestWithURL:url]];
-    };
-    [self syncCookieForURL:url loadAction:self.loadAction];
-}
 
-- (void)syncCookieForURL:(NSURL *)url loadAction:(EDLoadRequestAction)loadAction {
-    [[EDWebviewCookieManager sharedCookieManager] shouldLoadRequestURL:url scriptCallback:^(NSString *cookieScript) {
-        if (cookieScript.length) {
-            [self.cookieWebview.configuration.userContentController removeAllUserScripts];
-            [self.cookieWebview.configuration.userContentController addUserScript:WKCookieUserScript(cookieScript)];
-            NSString *baseWebUrl = [NSString stringWithFormat:@"%@://%@", url.scheme,url.host];
-            //如果需要加载cookie，则需要再cookie webview加载结束后再加载url，也就是在webView:(WKWebView *)webView didFinishNavigation方法中开始加载url
-            [self.cookieWebview loadHTMLString:@"" baseURL:[NSURL URLWithString:baseWebUrl]];
-        } else {
-            //如果没有cookie需要加载，则直接加载url
-            if (loadAction) {
-                loadAction();
-            }
-        }
-    }];
-}
-
-- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+-(void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation
+{
+    NSLog(@"22222");
     
-
-    if (webView == self.cookieWebview) {
-        //cookieWebview加载成功后开始加载真正的url
-        if (self.loadAction) {
-            self.loadAction();
-        }
-        return;
-    }
-    [self.indicatorView stopAnimating];
 }
 
-- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-    [self.indicatorView stopAnimating];
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler
+{
+     NSLog(@"11111");
     
+    decisionHandler(WKNavigationResponsePolicyAllow);
+   
 }
 
 
@@ -143,8 +105,8 @@ typedef void(^EDLoadRequestAction)(void);
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     
     NSString *strRequest = [navigationAction.request.URL.absoluteString stringByRemovingPercentEncoding];
-    
-    NSLog(@"#############%@",[navigationAction.request allHTTPHeaderFields]);
+
+    //NSLog(@"#############%@",[navigationAction.request allHTTPHeaderFields]);
     
     if(self.isCollect){
         if([strRequest isEqualToString:[NSString stringWithFormat:@"%@mobileIndex.html",URL_PRE]]){
@@ -166,99 +128,198 @@ typedef void(^EDLoadRequestAction)(void);
             PayViewController *payVC = [[PayViewController alloc]init];
             payVC.dingdanStr = array[1];
             payVC.hidesBottomBarWhenPushed = YES;
-//            [webView goBack];
             [self.navigationController pushViewController:payVC animated:YES];
            
         }
         else{
+            
+            //[self clearCookieFromWKWebview];
+            
+//            [self.wkwebview.configuration.userContentController removeAllUserScripts];
+//            NSString *cookieStr = [NSString stringWithFormat:@"document.cookie = '%@=%@';document.cookie = '%@=%@';",@"token",[UserShareOnce shareOnce].token,@"JSESSIONID",[UserShareOnce shareOnce].JSESSIONID];
+//            WKUserScript *cookieScript = [[WKUserScript alloc] initWithSource:cookieStr injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
+//
+//            [self.wkwebview.configuration.userContentController addUserScript:cookieScript];
+//
+            
+            
+            NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+            NSArray *_tmpArray = [NSArray arrayWithArray:[cookieStorage cookies]];
+           // NSLog(@"&&&&&:%@",_tmpArray);
+
+
+             NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UserShareOnce shareOnce].token,@"token",[UserShareOnce shareOnce].JSESSIONID,@"JSESSIONID", nil];
+            NSLog(@"dic!!!!:%@",dic);
+            
+           // [self testCookie];
+            
+//            WKUserScript *cookieScript = [[WKUserScript alloc] initWithSource:@"alert(document.cookie);" injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:NO];
+//            [self.wkwebview.configuration.userContentController addUserScript:cookieScript];
+            
+//            NSString *cookieStr = [NSString stringWithFormat:@"document.cookie = '%@=%@';document.cookie = '%@=%@';",@"token",[UserShareOnce shareOnce].token,@"JSESSIONID",[UserShareOnce shareOnce].JSESSIONID];
+//            [self.wkwebview evaluateJavaScript:cookieStr completionHandler:^(id _Nullable success, NSError * _Nullable error) {
+//                if(error){
+//                    NSLog(@"error");
+//                }else{
+//                    NSLog(@"success");
+//                }
+//
+//            }];
+            
             decisionHandler(WKNavigationActionPolicyAllow);
+
+            
+            
+            
+//            if([navigationAction.request allHTTPHeaderFields][@"Cookie"]){
+//                NSLog(@"cookie:%@",[navigationAction.request allHTTPHeaderFields]);
+//                decisionHandler(WKNavigationActionPolicyAllow);
+//            }else{
+//                if([strRequest hasPrefix:@"tel"]){
+//
+//                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strRequest]];
+//
+//                    decisionHandler(WKNavigationActionPolicyCancel);
+//
+//                }else{
+//
+//                    NSString *urlStr =   [NSString stringWithFormat:@"%@",navigationAction.request.URL];
+//                    if([urlStr hasSuffix:@"html"]){
+//                        urlStr = [urlStr stringByAppendingString:[NSString stringWithFormat:@"?fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+//                    }else{
+//                        urlStr = [urlStr stringByAppendingString:[NSString stringWithFormat:@"&fontSize=%.1f",[UserShareOnce shareOnce].fontSize]];
+//                    }
+//                    NSLog(@"===========%@",urlStr);
+//
+//                    NSURL *url = [NSURL URLWithString:urlStr];
+//                    NSMutableURLRequest *request= [NSMutableURLRequest requestWithURL:url];
+//                    //NSURLRequest *request = [navigationAction.request];
+//                    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UserShareOnce shareOnce].token,@"token",[UserShareOnce shareOnce].JSESSIONID,@"JSESSIONID", nil];
+//                    [request addValue:[self readCurrentCookieWith:dic] forHTTPHeaderField:@"Cookie"];
+//                    if([UserShareOnce shareOnce].languageType){
+//                        [request addValue:[UserShareOnce shareOnce].languageType forHTTPHeaderField:@"language"];
+//                    }
+//                    [webView loadRequest:request];
+//                    decisionHandler(WKNavigationActionPolicyCancel);
+//                }
+//            }
+
         }
     NSLog(@"str*****:%@",strRequest);
 }
 
-#pragma mark - getter
-- (WKWebView *)webview {
-    if (!_webview) {
-        WKUserContentController *userContentController = WKUserContentController.new;
-        WKWebViewConfiguration* webViewConfig = WKWebViewConfiguration.new;
-        webViewConfig.userContentController = userContentController;
-        //processPool需要和_cookieWebview的公用一个才能共享_cookieWebview的cookie
-        webViewConfig.processPool = [EDWKWebViewController sharedProcessPool];
-        
-        _webview = [[WKWebView alloc] initWithFrame:CGRectZero configuration:webViewConfig];
-        if(self.isCollect){
-            _webview.frame = CGRectMake(0, self.topView.bottom, Screen_Width, Screen_Height-self.topView.bottom);
-        }else{
-            _webview.frame = CGRectMake(0, self.topView.bottom, Screen_Width, Screen_Height-self.topView.bottom-kTabBarHeight);
-        }
-        _webview.UIDelegate = self;
-        _webview.navigationDelegate = self;
-    }
-    return _webview;
-}
-
-- (WKWebView *)cookieWebview {
-    if (!_cookieWebview) {
-        WKUserContentController *userContentController = WKUserContentController.new;
-        WKWebViewConfiguration* webViewConfig = WKWebViewConfiguration.new;
-        webViewConfig.userContentController = userContentController;
-        webViewConfig.processPool = [EDWKWebViewController sharedProcessPool];
-        
-        if(self.isCollect){
-            _cookieWebview = [[WKWebView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, Screen_Width, Screen_Height-self.topView.bottom) configuration:webViewConfig];
-        }else{
-            _cookieWebview = [[WKWebView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, Screen_Width, Screen_Height-self.topView.bottom-kTabBarHeight) configuration:webViewConfig];
-        }
-        
-        _cookieWebview.UIDelegate = self;
-        _cookieWebview.navigationDelegate = self;
-    }
-    return _cookieWebview;
-}
-
-
-- (UIActivityIndicatorView *)indicatorView {
-    if (!_indicatorView) {
-        _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        _indicatorView.center = CGPointMake([UIScreen mainScreen].bounds.size.width/2, 200);
-    }
-    return _indicatorView;
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-//改变字体大小
--(void)changeSize:(NSNotification *)notifi {
-    [self startToLoadRequest];
+
+- (void)clearCookieFromWKWebview
+{
+    
+    
+    NSArray *types = @[WKWebsiteDataTypeCookies,WKWebsiteDataTypeSessionStorage];
+    
+    NSSet *websitDataTypes = [NSSet setWithArray:types];
+    
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:0];
+    
+    [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websitDataTypes modifiedSince:date completionHandler:^{
+    }];
 }
 
-
--(void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    if(!self.isCollect){
-        self.endTimeStr = [GlobalCommon getCurrentTimes];
-        [GlobalCommon pageDurationWithpageId:@"4" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
-    }else{
-        if (![GlobalCommon stringEqualNull:self.pageIDStr]) {
-            self.endTimeStr = [GlobalCommon getCurrentTimes];
-            [GlobalCommon pageDurationWithpageId:self.pageIDStr withstartTime:self.startTimeStr withendTime:self.endTimeStr];
-        }
-    }
-   
-}
-#pragma mark -- WKUIDelegate
-// 显示一个按钮。点击后调用completionHandler回调
-- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler{
-    
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+- (void)testCookie
+{
+    if (@available(iOS 11.0, *)) {
         
-        completionHandler();
-    }]];
-    [self presentViewController:alertController animated:YES completion:nil];
+        WKHTTPCookieStore *cookieStroe = self.wkwebview.configuration.websiteDataStore.httpCookieStore;
+
+        NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+        NSArray *tmpArray = [NSArray arrayWithArray:[cookieStorage cookies]];
+
+        NSHTTPCookie *cookieToken = nil;
+         NSHTTPCookie *cookieJSESSIONID = nil;
+
+        for(NSHTTPCookie *cookie in tmpArray){
+            if([cookie.name isEqualToString:@"token"]){
+                cookieToken = cookie;
+            }
+            if([cookie.name isEqualToString:@"JSESSIONID"]){
+                cookieJSESSIONID = cookie;
+            }
+        }
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+        dic[NSHTTPCookieName] = @"liuxiaoming";
+        dic[NSHTTPCookieValue] = @"aini";
+        
+        NSHTTPCookie *cookie1 = [NSHTTPCookie cookieWithProperties:[dic copy]];
+        
+        NSLog(@"cokie1:%@",cookie1);
+        
+        [cookieStroe setCookie:cookie1 completionHandler:^{
+            
+        }];
+        
+        //get cookies
+        [cookieStroe getAllCookies:^(NSArray<NSHTTPCookie *> * _Nonnull cookies) {
+            NSLog(@"count:%ld",cookies.count);
+            for(NSHTTPCookie *cookie in cookies){
+                if([cookie.name isEqualToString:@"token"]){
+                    [cookieStroe deleteCookie:cookie completionHandler:^{
+                        [cookieStroe setCookie:cookieToken completionHandler:^{
+                            NSLog(@"success1");
+                        }];
+                    }];
+                    
+                }
+                if([cookie.name isEqualToString:@"JSESSIONID"]){
+                    [cookieStroe deleteCookie:cookie completionHandler:^{
+                        [cookieStroe setCookie:cookieJSESSIONID completionHandler:^{
+                            NSLog(@"success1");
+                        }];
+                    }];
+                NSLog(@"原来的Name:%@,value:%@",cookie.name,cookie.value);
+                }
+                
+            }
+        }];
+        
+        
+        
+        
+        
+//        NSArray *arr = @[@{@"token":[UserShareOnce shareOnce].token},@{@"JSESSIONID":[UserShareOnce shareOnce].JSESSIONID}];
+//
+//        for(NSInteger i=0;i<2;i++){
+//            NSDictionary *dic1 = [arr objectAtIndex:i];
+//            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+//            [dic setObject:[[dic1 allValues] objectAtIndex:0] forKey:NSHTTPCookieValue];
+//            [dic setObject:[[dic1 allKeys] objectAtIndex:0] forKey:NSHTTPCookieName];
+//             NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:dic];
+//            [cookieStroe setCookie:cookie completionHandler:^{
+//                NSLog(@"set cookie");
+//            }];
+//        }
+        
+        
+//        NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+//        NSArray *tmpArray = [NSArray arrayWithArray:[cookieStorage cookies]];
+//
+//        for(NSHTTPCookie *cookie in tmpArray){
+//            [cookieStroe setCookie:cookie completionHandler:^{
+//               // NSLog(@"***Name:%@,value:%@",cookie.name,cookie.value);
+//            }];
+//        }
+        
+       
+        
+    }
+}
+
+- (void)cookiesDidChangeInCookieStore:(WKHTTPCookieStore *)cookieStore
+{
+    NSLog(@"哈哈哈哈");
 }
 
 // 显示两个按钮，通过completionHandler回调判断用户点击的确定还是取消按钮
@@ -290,4 +351,30 @@ typedef void(^EDLoadRequestAction)(void);
     }]];
     [self presentViewController:alertController animated:YES completion:nil];
 }
+
+// 显示一个按钮。点击后调用completionHandler回调
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler{
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+        completionHandler();
+    }]];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    if(!self.isCollect){
+        self.endTimeStr = [GlobalCommon getCurrentTimes];
+        [GlobalCommon pageDurationWithpageId:@"4" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+    }else{
+        if (![GlobalCommon stringEqualNull:self.pageIDStr]) {
+            self.endTimeStr = [GlobalCommon getCurrentTimes];
+            [GlobalCommon pageDurationWithpageId:self.pageIDStr withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+        }
+    }
+}
+
 @end

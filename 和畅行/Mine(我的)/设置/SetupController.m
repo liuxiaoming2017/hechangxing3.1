@@ -292,7 +292,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:@"versions_update/updateVersion.jhtml" headParameters:headDic parameters:nil successBlock:^(id response2) {
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:0 urlString:@"versions_update/updateVersion.jhtml" headParameters:headDic parameters:nil successBlock:^(id response2) {
         NSError *error = NULL;
         id response = [NSJSONSerialization JSONObjectWithData:response2 options:0 error:&error];
         if([[response objectForKey:@"status"] intValue] == 100){
@@ -335,6 +335,31 @@
         if(isUpdate){
             NSURL *url = [NSURL URLWithString:downUrl];
             if (url) {
+                //该接口用于记录用户使用app下载网站资源记录
+                
+                NSString *userSign = [UserShareOnce shareOnce].uid;
+                NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                CFShow(CFBridgingRetain(infoDictionary));
+                
+                NSString *versionStr = [infoDictionary objectForKey:@"CFBundleShortVersionString"];//版本
+                
+                
+                NSString *down_timeStr = [GlobalCommon getCurrentTimes];;//下载时间
+                
+              
+                NSString *downloadStr = [NSString stringWithFormat:@"%@user/download",DATAURL_PRE];
+                NSDictionary *downloadDic = @{ @"body":@{@"channel":@"",
+                                                         @"downTime":down_timeStr,
+                                                         @"remark":@"",
+                                                         @"userSign":userSign,
+                                                         @"userSource":@"1",
+                                                         @"version":versionStr}
+                                               };
+//                [[BuredPoint sharedYHBuriedPoint] submitWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
+//
+//                } failureBlock:^(NSError * _Nonnull error) {
+//
+//                }];
                 
                 [[UIApplication sharedApplication] openURL:url];
                 

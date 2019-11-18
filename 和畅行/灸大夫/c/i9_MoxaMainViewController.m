@@ -36,7 +36,6 @@
 
 #import "GuidanceView.h"
 
-#import "ZYGASINetworking.h"
 
 #import "NSObject+SBJson.h"
 
@@ -1352,49 +1351,39 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
     
     NSString *jsonString = [self jsonStringWithArr:arr];
     
-    /*
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
-    [dic setObject:jsonString forKey:@"data"];
-    [dic setObject:@"1234" forKey:@"qdbs"];
-    [dic setObject:[UserShareOnce shareOnce].username forKey:@"member"];
+  
     
-    [ZYGASINetworking POST_Path:urlStr params:dic completed:^(id JSON, NSString *stringData) {
-        NSLog(@"###:%@,***%@",JSON,stringData);
-    } failed:^(NSError *error) {
+//    NSString *aUrl = [NSString stringWithFormat:@"%@%@",URL_PRE,urlStr];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
+//    [request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
+//    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
+//    if([UserShareOnce shareOnce].languageType){
+//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
+//    }
+//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
+//
+//    [request setPostValue:jsonString forKey:@"data"];
+//    [request setPostValue:@"1234" forKey:@"qdbs"];
+//    [request setPostValue:[UserShareOnce shareOnce].username forKey:@"member"];
+//    [request setTimeOutSeconds:20];
+//    [request setRequestMethod:@"POST"];
+//    [request setDelegate:self];
+//    [request setDidFailSelector:@selector(requesstuserinfoError:)];
+//    [request setDidFinishSelector:@selector(requesstCardCompleted:)];
+//    [request startAsynchronous];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:[UserShareOnce shareOnce].username forKey:@"member"];
+    [dic setObject:@"1234" forKey:@"qdbs"];
+    [dic setObject:jsonString forKey:@"data"];
+    [[NetworkManager sharedNetworkManager] requestWithCookieType:1 urlString:urlStr headParameters:@{@"version":@"ios_hcy-yh-1.0"} parameters:dic successBlock:^(id response) {
+        
+    } failureBlock:^(NSError *error) {
         
     }];
-     */
-    
-    NSString *aUrl = [NSString stringWithFormat:@"%@%@",URL_PRE,urlStr];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:aUrl]];
-    [request addRequestHeader:@"version" value:@"ios_hcy-yh-1.0"];
-    [request addRequestHeader:@"token" value:[UserShareOnce shareOnce].token];
-    if([UserShareOnce shareOnce].languageType){
-        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-    }
-    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-    
-    [request setPostValue:jsonString forKey:@"data"];
-    [request setPostValue:@"1234" forKey:@"qdbs"];
-    [request setPostValue:[UserShareOnce shareOnce].username forKey:@"member"];
-    [request setTimeOutSeconds:20];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request setDidFailSelector:@selector(requesstuserinfoError:)];
-    [request setDidFinishSelector:@selector(requesstCardCompleted:)];
-    [request startAsynchronous];
-}
-
-- (void)requesstuserinfoError:(ASIHTTPRequest *)request
-{
-    
     
 }
 
-- (void)requesstCardCompleted:(ASIHTTPRequest *)request
-{
-    
-}
 
 - (NSString *)jsonStringWithArr:(NSArray *)arr
 {
