@@ -37,14 +37,14 @@
     self.view.backgroundColor = [UIColor whiteColor];
   
     
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, kNavBarHeight + 70, ScreenWidth, 30)];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, kNavBarHeight + Adapter(70), ScreenWidth, Adapter(30))];
     titleLabel.text = ModuleZW(@"请在输入框内输入服务卡密码");
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.font = [UIFont systemFontOfSize:17];
     [self.view addSubview:titleLabel];
     
-    _textField = [[UITextField alloc]initWithFrame:CGRectMake(15, titleLabel.bottom + 30, ScreenWidth - 30, 55)];
+    _textField = [[UITextField alloc]initWithFrame:CGRectMake(Adapter(15), titleLabel.bottom + Adapter(30), ScreenWidth - Adapter(30), Adapter(55))];
     _textField.delegate = self;
     _textField.layer.cornerRadius = 10;
     _textField.layer.masksToBounds = YES;
@@ -58,10 +58,10 @@
     
     
     UIButton *bangButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    bangButton.frame = CGRectMake(ScreenWidth/2 - 90, _textField.bottom+50, 180, 50);
+    bangButton.frame = CGRectMake(ScreenWidth/2 - Adapter(90), _textField.bottom+Adapter(50), Adapter(180), Adapter(50));
     [bangButton setTitle:ModuleZW(@"添加至卡包") forState:(UIControlStateNormal)];
     [bangButton setBackgroundColor:RGB_ButtonBlue];
-    bangButton.layer.cornerRadius = 25;
+    bangButton.layer.cornerRadius = bangButton.height/2;
     bangButton.layer.masksToBounds = YES;
     [bangButton addTarget:self action:@selector(bangButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:bangButton];

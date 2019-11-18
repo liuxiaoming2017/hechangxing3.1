@@ -67,6 +67,12 @@ static NSMutableArray *tasks;
 
         /*! 设置请求超时时间 */
         manager.requestSerializer.timeoutInterval = 30;
+    
+    
+    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSArray *_tmpArray = [NSArray arrayWithArray:[cookieStorage cookies]];
+    NSLog(@"=====-=-=-=-=-=--------%@",_tmpArray);
+    
 
         /*! 打开状态栏的等待菊花 */
         //[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
@@ -460,17 +466,11 @@ static NSMutableArray *tasks;
 
 -(void)mainThreadRequestWithUrl:(NSString *)myUrl token:(NSString *)token dic:(NSDictionary *)dic{
     
-    NSString *dataStr = [self dictionaryToJson:dic];
-    dataStr =  [dataStr stringByReplacingOccurrencesOfString:@"'\\'" withString:@""];
-    dataStr =  [dataStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    
+    myUrl = @"http://api.map.baidu.com/location/ip?ak=AeKAfeKr4YGknb2kPxd8d4xqxFcbjhg0";
     NSURL *url = [NSURL URLWithString:myUrl];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+    [request setHTTPMethod:@"GET"];//设置请求方式为POST，默认为GET
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:token forHTTPHeaderField:@"token"];
-    NSData *data = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
-    [request setHTTPBody:data];
     
     NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     NSDictionary  *  dic1  = [NSJSONSerialization JSONObjectWithData:received options:NSJSONReadingMutableContainers error:nil];
@@ -497,6 +497,39 @@ static NSMutableArray *tasks;
     {
         return [str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     }
+}
+
++ (void)dataGetMethod:(NSString *)urlString withParams:(NSDictionary *)params withBlock:(void (^)(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error))block{
+    NSMutableString *tmpUrlString = [NSMutableString stringWithFormat:@"%@?",urlString];
+    NSArray *allKeys = [params allKeys];
+    for (NSString *key in allKeys) {
+        [tmpUrlString appendFormat:@"%@=%@&",key,[params objectForKey:key]];
+    }
+    
+    //移除最后一个&
+    NSString *url = [tmpUrlString substringToIndex:tmpUrlString.length-1];
+    //    NSLog(@"%@",url);
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults]valueForKey:@"token"];
+    
+    if (token&&![token isEqualToString:@""]&&![token isEqualToString:@"(null)"]) {
+        configuration.HTTPAdditionalHeaders = @{@"Authorization":token};
+    }
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    manager.session.configuration.timeoutIntervalForRequest = 10.0f;//设置超时时间 同上面的类似
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        //回调
+        if (error) {
+            //            NSLog(@"%@",error);
+        }else{
+            //            NSLog(@"%@",responseObject);
+        }
+        block(response,responseObject,error);
+    }];
+    [dataTask resume];
+    
 }
 
 @end

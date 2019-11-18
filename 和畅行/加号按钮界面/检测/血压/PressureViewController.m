@@ -68,7 +68,7 @@ static int const tick = 80;
     [super viewDidLoad];
     
     self.navTitleLabel.text =  ModuleZW(@"血压心率检测");
-    self.navTitleLabel.font = [UIFont systemFontOfSize:18/[UserShareOnce shareOnce].fontSize];
+    self.navTitleLabel.font = [UIFont systemFontOfSize:18/[UserShareOnce shareOnce].multipleFontSize];
     [self initWithController];
     
     self.isHidden = NO;
@@ -79,63 +79,63 @@ static int const tick = 80;
 -(void)initWithController{
     
     //显示用户脉搏、收缩压、舒张压信息
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 30, kScreenSize.width-20, 270)];
-    imageView.layer.cornerRadius = 10;
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(Adapter(10), kNavBarHeight + Adapter(30), kScreenSize.width-Adapter(20), Adapter(270))];
+    imageView.layer.cornerRadius = Adapter(10);
     imageView.layer.masksToBounds = YES;
     [self insertSublayerWithImageView:imageView with:self.view];
     [self.view addSubview:imageView];
     
-    UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth/2 - 25, kNavBarHeight +10, 50, 50)];
+    UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth/2 - Adapter(25), kNavBarHeight +Adapter(10), Adapter(50), Adapter(50))];
     iconImageView.image = [UIImage imageNamed:@"血压icon"];
-    iconImageView.layer.cornerRadius = 10;
+    iconImageView.layer.cornerRadius = Adapter(10);
     iconImageView.layer.masksToBounds = YES;
     [self.view addSubview:iconImageView];
     
     
     //收缩压
-    UILabel *shrink = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 100, 50, 70, 30) text:ModuleZW(@"收缩压") textSize:14];
+    UILabel *shrink = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - Adapter(100), Adapter(50), Adapter(70), Adapter(30)) text:ModuleZW(@"收缩压") textSize:14];
     shrink.textAlignment = NSTextAlignmentRight;
     shrink.textColor = [UIColor blackColor];
     [imageView addSubview:shrink];
     
-    _shrinkPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10 , 50, 60, 30) text:@"__" textSize:19];
+    _shrinkPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - Adapter(10) , Adapter(50), Adapter(60), Adapter(30)) text:@"__" textSize:19];
     _shrinkPressureLabel.textAlignment = NSTextAlignmentRight;
     _shrinkPressureLabel.textColor = [UIColor blackColor];
     [imageView addSubview:_shrinkPressureLabel];
     
-    UILabel *shrinkUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  + 50, 50, 100, 30) text:@"mmHg" textSize:19];
+    UILabel *shrinkUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  + Adapter(50), Adapter(50), Adapter(100), Adapter(30)) text:@"mmHg" textSize:19];
     shrinkUnit.textAlignment = NSTextAlignmentLeft;
     shrinkUnit.textColor = [UIColor blackColor];
     [imageView addSubview:shrinkUnit];
     
     //舒张压
-    UILabel *diastolic = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  - 100, shrinkUnit.bottom + 50, 70, 30) text:ModuleZW(@"舒张压") textSize:14];
+    UILabel *diastolic = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  - Adapter(100), shrinkUnit.bottom + Adapter(50), Adapter(70), Adapter(30)) text:ModuleZW(@"舒张压") textSize:14];
     diastolic.textAlignment = NSTextAlignmentRight;
     diastolic.textColor = [UIColor blackColor];
     [imageView addSubview:diastolic];
     
-    _diastolicPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10, shrinkUnit.bottom + 50, 60, 30) text:@"__" textSize:19];
+    _diastolicPressureLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - Adapter(10), shrinkUnit.bottom + Adapter(50), Adapter(60), Adapter(30)) text:@"__" textSize:19];
     _diastolicPressureLabel.textAlignment = NSTextAlignmentRight;
     _diastolicPressureLabel.textColor = [UIColor blackColor];
     [imageView addSubview:_diastolicPressureLabel];
     
-    UILabel *diastolicUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 + 50, shrinkUnit.bottom + 50, 100, 30) text:@"mmHg" textSize:19];
+    UILabel *diastolicUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 + Adapter(50), shrinkUnit.bottom + Adapter(50), Adapter(100), Adapter(30)) text:@"mmHg" textSize:19];
     diastolicUnit.textAlignment = NSTextAlignmentLeft;
     diastolicUnit.textColor = [UIColor blackColor];
     [imageView addSubview:diastolicUnit];
     
     //脉搏
-    UILabel *pulse = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  - 130, diastolicUnit.bottom + 50, 100, 30) text:ModuleZW(@"心率") textSize:14];
+    UILabel *pulse = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2  - Adapter(130), diastolicUnit.bottom + Adapter(50), Adapter(100), Adapter(30)) text:ModuleZW(@"心率") textSize:14];
     pulse.textAlignment = NSTextAlignmentRight;
     pulse.textColor = [UIColor blackColor];
     [imageView addSubview:pulse];
     
-    _pulseLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - 10, diastolicUnit.bottom + 50, 60, 30) text:@"__" textSize:19];
+    _pulseLabel = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 - Adapter(10), diastolicUnit.bottom + Adapter(50), Adapter(60), Adapter(30)) text:@"__" textSize:19];
     _pulseLabel.textAlignment = NSTextAlignmentRight;
     _pulseLabel.textColor = [UIColor blackColor];
     [imageView addSubview:_pulseLabel];
     
-    UILabel *pulseUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 +50, diastolicUnit.bottom + 50, 50, 30) text:@"BMP" textSize:16];
+    UILabel *pulseUnit = [Tools creatLabelWithFrame:CGRectMake(imageView.width/2 +Adapter(50), diastolicUnit.bottom + Adapter(50), Adapter(50), Adapter(30)) text:@"BMP" textSize:16];
     pulseUnit.font = [UIFont systemFontOfSize:16];
     pulseUnit.textAlignment = NSTextAlignmentLeft;
     pulseUnit.textColor = [UIColor blackColor];
@@ -149,9 +149,9 @@ static int const tick = 80;
 
 -(void)createButton{
     UIButton *startCheckBt = [UIButton  buttonWithType:(UIButtonTypeCustom)];
-    startCheckBt.frame = CGRectMake(ScreenWidth/2 - 70,420, 140, 30);
+    startCheckBt.frame = CGRectMake(ScreenWidth/2 - Adapter(70),Adapter(330)+kNavBarHeight , Adapter(140), Adapter(30));
     startCheckBt.backgroundColor = RGB_ButtonBlue;
-    startCheckBt.layer.cornerRadius = 15;
+    startCheckBt.layer.cornerRadius = Adapter(15);
     [startCheckBt setTitle:ModuleZW(@"开始检测") forState:(UIControlStateNormal)];
     startCheckBt.layer.masksToBounds = YES;
     [startCheckBt.titleLabel setFont:[UIFont systemFontOfSize:14]];
@@ -180,9 +180,9 @@ static int const tick = 80;
     
     
     UIButton *nonDeviceCheckBt = [UIButton  buttonWithType:(UIButtonTypeCustom)];
-    nonDeviceCheckBt.frame = CGRectMake(ScreenWidth/2 - 70,_startCheck.bottom+40, 140, 30);
+    nonDeviceCheckBt.frame = CGRectMake(ScreenWidth/2 - Adapter(70),_startCheck.bottom+Adapter(30), Adapter(140), Adapter(30));
     nonDeviceCheckBt.backgroundColor = RGB_ButtonBlue;
-    nonDeviceCheckBt.layer.cornerRadius = 15;
+    nonDeviceCheckBt.layer.cornerRadius = Adapter(15);
     [nonDeviceCheckBt setTitle:ModuleZW(@"手动录入") forState:(UIControlStateNormal)];
     nonDeviceCheckBt.layer.masksToBounds = YES;
     [nonDeviceCheckBt.titleLabel setFont:[UIFont systemFontOfSize:14]];
@@ -363,10 +363,10 @@ static int const tick = 80;
     _personView.backgroundColor = [UIColor blackColor];
     _personView.alpha = 0.3;
     [self.view addSubview:_personView];
-    _showView = [[UIView alloc]initWithFrame:CGRectMake(30, 100, self.view.frame.size.width - 60, self.view.frame.size.height - 190)];
+    _showView = [[UIView alloc]initWithFrame:CGRectMake(Adapter(30), Adapter(100), self.view.frame.size.width - Adapter(60), self.view.frame.size.height - Adapter(190))];
     _showView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_showView];
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, _showView.frame.size.width, _showView.frame.size.height - 80) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, _showView.frame.size.width, _showView.frame.size.height - Adapter(80)) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [_showView addSubview:_tableView];
@@ -416,7 +416,7 @@ static int const tick = 80;
         self.view.userInteractionEnabled = YES;
         view.userInteractionEnabled = YES;
         view2.userInteractionEnabled = YES;
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width-40, 180)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width-Adapter(40), Adapter(180))];
         imageView.center = self.view.center;
         imageView.userInteractionEnabled = YES;
         imageView.image = [UIImage imageNamed:@"bounceView"];
@@ -427,7 +427,7 @@ static int const tick = 80;
         [sureBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
         [sureBtn setTitle:ModuleZW(@"返回检测") forState:UIControlStateNormal];
         sureBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        sureBtn.frame = CGRectMake(20, kScreenSize.height/2+90, imageView.frame.size.width * 0.5, 40);
+        sureBtn.frame = CGRectMake(Adapter(20), kScreenSize.height/2+Adapter(90), imageView.frame.size.width * 0.5, Adapter(40));
         [sureBtn addTarget:self action:@selector(confirmBtnClick2:) forControlEvents:UIControlEventTouchUpInside];
         [view2 addSubview:sureBtn];
         
@@ -435,39 +435,39 @@ static int const tick = 80;
         [lookBtn setBackgroundImage:[UIImage imageNamed:@"look"] forState:UIControlStateNormal];
         [lookBtn setTitle:ModuleZW(@"查看档案") forState:UIControlStateNormal];
         lookBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        lookBtn.frame = CGRectMake(CGRectGetMaxX(sureBtn.frame), sureBtn.frame.origin.y, imageView.frame.size.width * 0.5, 40);
+        lookBtn.frame = CGRectMake(CGRectGetMaxX(sureBtn.frame), sureBtn.frame.origin.y, imageView.frame.size.width * 0.5, Adapter(40));
         [lookBtn addTarget:self action:@selector(lookClickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [view2 addSubview:lookBtn];
         
-        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前脉搏%ld次/分  收缩压%ldmmHg  舒张压 %ldmmhg"),(long)pulseCount,(long)highCount,(long)lowCount] frame:CGRectMake(0, 50, imageView.bounds.size.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
+        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前脉搏%ld次/分  收缩压%ldmmHg  舒张压 %ldmmhg"),(long)pulseCount,(long)highCount,(long)lowCount] frame:CGRectMake(0, Adapter(50), imageView.bounds.size.width, Adapter(60)) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
         
         
         UILabel *label0 = [[UILabel alloc] init];
         label0.text = ModuleZW(@"血压、脉搏正常范围参考值：");
         label0.textAlignment = NSTextAlignmentCenter;
         label0.font = [UIFont systemFontOfSize:13];
-        label0.frame = CGRectMake(20, 110, imageView.bounds.size.width-40, 20);
+        label0.frame = CGRectMake(Adapter(20), Adapter(110), imageView.bounds.size.width-Adapter(40), Adapter(20));
         [imageView addSubview:label0];
         
         UILabel *label1 = [[UILabel alloc] init];
         label1.text = ModuleZW(@"脉搏：60－100次/分");
         label1.textAlignment = NSTextAlignmentCenter;
         label1.font = [UIFont systemFontOfSize:12];
-        label1.frame = CGRectMake(20, CGRectGetMaxY(label0.frame), imageView.bounds.size.width-40, 16);
+        label1.frame = CGRectMake(Adapter(20), CGRectGetMaxY(label0.frame), imageView.bounds.size.width-Adapter(40), Adapter(16));
         [imageView addSubview:label1];
         
         UILabel *label2 = [[UILabel alloc] init];
         label2.text =ModuleZW( @"90 < 高压 / 收缩压（mmHg）< 140");
         label2.textAlignment = NSTextAlignmentCenter;
         label2.font = [UIFont systemFontOfSize:12];
-        label2.frame = CGRectMake(20, CGRectGetMaxY(label1.frame), imageView.bounds.size.width-40, 16);
+        label2.frame = CGRectMake(Adapter(20), CGRectGetMaxY(label1.frame), imageView.bounds.size.width-Adapter(40), Adapter(16));
         [imageView addSubview:label2];
         
         UILabel *label3 = [[UILabel alloc] init];
         label3.text = ModuleZW(@"60 < 低压 / 舒张压（mmHg）< 90");
         label3.textAlignment = NSTextAlignmentCenter;
         label3.font = [UIFont systemFontOfSize:12];
-        label3.frame = CGRectMake(20, CGRectGetMaxY(label2.frame), imageView.bounds.size.width-40, 16);
+        label3.frame = CGRectMake(Adapter(20), CGRectGetMaxY(label2.frame), imageView.bounds.size.width-Adapter(40), Adapter(16));
         [imageView addSubview:label3];
         
         [imageView addSubview:countLabel];

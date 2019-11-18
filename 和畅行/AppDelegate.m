@@ -70,10 +70,12 @@
      [[UIButton appearance] setExclusiveTouch:YES];
     NSString *fontStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"YHFont"];
     if(![GlobalCommon stringEqualNull:fontStr]){
-        [UserShareOnce shareOnce].fontSize = [fontStr floatValue];
+        [UserShareOnce shareOnce].multipleFontSize = [fontStr floatValue];
     }else{
-        [UserShareOnce shareOnce].fontSize = 1;
+        [UserShareOnce shareOnce].multipleFontSize = 1;
     }
+    [UserShareOnce shareOnce].canChageSize = YES;
+    
     
 //    NSError *error = nil;
 //    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&error];
@@ -108,9 +110,9 @@
     
      self.session = [NSURLSession sharedSession];
    
-    //埋点注册
-    [[BuredPoint sharedYHBuriedPoint]setTheSignatureWithSignStr:BuBuredPointKey  withOpenStr:@"1"];
-    
+    //埋点注册  AeKAfeKr4YGknb2kPxd8d4xqxFcbjhg0
+    [[BuredPoint sharedYHBuriedPoint]setTheSignatureWithSignStr:BuBuredPointKey withOpenStr:@"1" withLacationKey:@"AeKAfeKr4YGknb2kPxd8d4xqxFcbjhg0"];
+//    [self versionContrast111];
     //创建本地数据库
     [[CacheManager sharedCacheManager] createDataBase];
     
@@ -140,11 +142,41 @@
         
     }
     
+    
+    //对比版本
+    [self versionContrast];
+    [self requestUI];
     return YES;
 }
 
+# pragma mark - 活动数据的请求
+-(void)requestUI {
+    
+    NSString *urlStr = @"mobile/index/indexpic.jhtml";
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
+        
+        
+        if([[response objectForKey:@"status"] integerValue] == 100){
+            
+            
+     
+            
+        }else{
+            
+        }
+        
 
+        
+    } failureBlock:^(NSError *error) {
+        
+   
+    }];
+}
 
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    return UIInterfaceOrientationMaskPortrait;
+}
 
 -(void)returnMainPage{
     
@@ -176,7 +208,7 @@
     HomePageController *homeVC = [[HomePageController alloc] init];
     CustomNavigationController *homeNav = [[CustomNavigationController alloc] initWithRootViewController:homeVC];
     
-     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14/[UserShareOnce shareOnce].fontSize]} forState:UIControlStateNormal];
+     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14/[UserShareOnce shareOnce].multipleFontSize]} forState:UIControlStateNormal];
     
     UIEdgeInsets edgeInset = UIEdgeInsetsMake(-1, 0, 1, 0);
     UIOffset offSet = UIOffsetMake(0, 1);
@@ -475,20 +507,94 @@
     NSString *userSign = [UserShareOnce shareOnce].uid;
     NSString *startTimeStr = [UserShareOnce shareOnce].startTime;
     NSString *endTimeStr = [GlobalCommon getCurrentTimes];
-
-    NSString *accessurlStr = [NSString stringWithFormat:@"%@user/access",DATAURL_PRE];
-    NSDictionary *accessDic = @{ @"body":@{@"channel":@"1",
-                                           @"remark":@"1",
-                                           @"userSign":userSign,
-                                           @"startTime":startTimeStr,
-                                           @"userSource":@"1",
-                                           @"quitTime":endTimeStr,
-                                           @"flag":@"1"}
+    
+    NSString *accessurlStr = [NSString stringWithFormat:@"%@user/start",DATAURL_PRE];
+    NSDictionary *accessDic = @{ @"body":@{
+                                         @"id":@"",
+                                         @"userId":userSign,
+                                         @"version":@"3.1.3",
+                                         @"channel":@"Appstore",
+                                         @"province":@"",
+                                         @"city":@"",
+                                         @"startTime":startTimeStr,
+                                         @"quitTime":endTimeStr,
+                                         @"remark":@"1"}
                                  };
-    [[BuredPoint sharedYHBuriedPoint] mainThreadRequestWithUrl:accessurlStr dic:accessDic resultBlock:^(id  _Nonnull response) {
+
+    [[BuredPoint sharedYHBuriedPoint] mainLocationThreadRequestWithUrl:accessurlStr dic:accessDic resultBlock:^(id  _Nonnull response) {
         NSLog(@"%@",response);
     }];
+    
+}
+
+
+//版本对比
+-(void )versionContrast111 {
+    //该接口用于记录用户使用app下载网站资源记录
+            NSString *downloadStr = [NSString stringWithFormat:@"http://10.1.71.96:8086/login"];
+            NSDictionary *downloadDic = @{@"username":@"apiadminuser",
+                                                   @"password":@"123456" };
+            
+            [[BuredPoint sharedYHBuriedPoint] submitWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
+                NSLog(@"%@",response);
+                NSString *codeStr = [NSString stringWithFormat:@"%@",[response valueForKey:@"code"]];
+                if ([codeStr isEqualToString:@"200"]) {
+//                    [UserShareOnce shareOnce].
+                }
+            } failureBlock:^(NSError * _Nonnull error) {
+                NSLog(@"%@",error);
+            }];
+}
+
+
+//版本对比
+-(void )  versionContrast {
+    //该接口用于记录用户使用app下载网站资源记录
+    NSString *userSign = [UserShareOnce shareOnce].uid;
+    if ([GlobalCommon stringEqualNull:userSign]) {
+        userSign = @"";
+    }
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    CFShow(CFBridgingRetain(infoDictionary));
+    NSString *versionStr = [infoDictionary objectForKey:@"CFBundleShortVersionString"];//版本
+    
+    if (![[[NSUserDefaults standardUserDefaults]valueForKey:@"versionSave"] isEqualToString:@"11111"]) {
+        [[NSUserDefaults standardUserDefaults]setValue:versionStr forKey:@"version11"];
+        [[NSUserDefaults standardUserDefaults]setValue:@"11111" forKey:@"versionSave"];
+    }
+    
+    NSString *oldversionStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"version11"];
+    
+    if (![GlobalCommon stringEqualNull:oldversionStr]) {
+        if (![oldversionStr isEqualToString:versionStr]) {
+            NSString *down_timeStr = [GlobalCommon getCurrentTimes];;//下载时间
+            
+            NSString *downloadStr = [NSString stringWithFormat:@"%@user/download",DATAURL_PRE];
+            NSDictionary *downloadDic = @{ @"body":@{
+                                                   @"id":@"",
+                                                   @"userId":@"",
+                                                   @"channel":@"AppStore",
+                                                   @"version":versionStr,
+                                                   @"downTime":down_timeStr,
+                                                   @"remark":@""}
+                                           };
+            
+            [[BuredPoint sharedYHBuriedPoint] submitWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
+                NSLog(@"%@",response);
+                NSString *codeStr = [NSString stringWithFormat:@"%@",[response valueForKey:@"code"]];
+                if ([codeStr isEqualToString:@"200"]) {
+                    [[NSUserDefaults standardUserDefaults]setValue:versionStr forKey:@"version11"];
+                }
+            } failureBlock:^(NSError * _Nonnull error) {
+                
+            }];
+        }
+    }
+    
+    
+    
    
 }
+
 
 @end

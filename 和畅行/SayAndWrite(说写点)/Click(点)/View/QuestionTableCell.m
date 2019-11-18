@@ -21,18 +21,64 @@
 
 - (void)initUI
 {
-    leftView.layer.cornerRadius = 5.0;
+    leftView.layer.cornerRadius = Adapter(5.0);
     leftView.layer.masksToBounds = YES;
     //[leftView.layer addSublayer:[self addGradientLayerWithColor1:UIColorFromHex(0x52c8a1) withColor2:UIColorFromHex(0x0ba151) withFrame:leftView.bounds]];
-    
+    leftView.width = Adapter(30);
+    leftView.height = Adapter(30);
     [leftView.layer insertSublayer:[self addGradientLayerWithColor1:UIColorFromHex(0x52c8a1) withColor2:UIColorFromHex(0x0ba151) withFrame:leftView.bounds] atIndex:0];
     
-    rightView.layer.cornerRadius = 8.0;
+    
+    rightView.width = Adapter(40);
+    rightView.height = Adapter(40);
+    rightView.left =  ScreenWidth -  Adapter(54);
+    rightView.layer.cornerRadius = Adapter(8.0);
     rightView.layer.masksToBounds = YES;
     //rightView.backgroundColor = [UIColor orangeColor];
     //[rightView.layer addSublayer:[self addGradientLayerWithColor1:UIColorFromHex(0x81dddd) withColor2:UIColorFromHex(0x5d97f2) withFrame:rightView.bounds]];
     [rightView.layer insertSublayer:[self addGradientLayerWithColor1:UIColorFromHex(0x81dddd) withColor2:UIColorFromHex(0x5d97f2) withFrame:rightView.bounds] atIndex:0];
     rightView.hidden = YES;
+    self.indexLabel.font = [UIFont systemFontOfSize:16];
+//    @property (weak, nonatomic) IBOutlet UILabel *indexLabel;
+//
+//    @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
+//    @property (weak, nonatomic) IBOutlet UIView *rightView;
+//
+//    @property (weak, nonatomic) IBOutlet UILabel *answerLabel;
+//    @property (weak, nonatomic) IBOutlet UIView *leftView;
+    [self.leftView  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_top).offset(Adapter(5));
+        make.size.mas_equalTo(CGSizeMake(Adapter(30), Adapter(30)));
+        make.leading.equalTo(self.mas_leading).offset(Adapter(5));
+    }];
+    
+    [self.indexLabel  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.leftView.mas_top);
+        make.size.mas_equalTo(CGSizeMake(Adapter(30), Adapter(30)));
+        make.leading.equalTo(self.leftView.mas_leading);
+    }];    
+    
+    
+    [self.backImageView  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_top);
+        make.bottom.equalTo(self.mas_bottom);
+        make.leading.equalTo(self.leftView.mas_leading).offset(Adapter(30));
+        make.trailing.equalTo(self.mas_trailing).offset(Adapter(-54));
+        make.height.greaterThanOrEqualTo(@(Adapter(70)));
+    }];
+    [self.contentLabel  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.backImageView.mas_top).offset(Adapter(5));
+        make.bottom.equalTo(self.backImageView.mas_bottom).offset(Adapter(-5));
+        make.leading.equalTo(self.backImageView.mas_leading).offset(Adapter(20));
+        make.trailing.equalTo(self.backImageView.mas_trailing).offset(Adapter(-10));
+    }];
+    
+    [self.answerLabel  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_top).offset(Adapter(10));
+        make.left.equalTo(self.backImageView.mas_right).offset(Adapter(0));
+        make.size.mas_equalTo(CGSizeMake(Adapter(40), Adapter(40)));
+    }];
+    
     
 }
 
@@ -87,7 +133,7 @@
     rightView.layer.masksToBounds = YES;
     
    
-    [rightView.layer addSublayer:[self addGradientLayerWithColor1:UIColorFromHex(0x81dddd) withColor2:UIColorFromHex(0x5d97f2) withFrame:rightView.bounds]];
+    e[rightView.layer addSublayer:[self addGradientLayerWithColor1:UIColorFromHex(0x81dddd) withColor2:UIColorFromHex(0x5d97f2) withFrame:rightView.bounds]];
     rightView.hidden = YES;
     
     self.answerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 49, 49)];
@@ -132,7 +178,7 @@
 - (CGFloat)setCellHeight:(NSString *)str
 {
     CGSize strSize = [self.contentLabel.text boundingRectWithSize:CGSizeMake(self.contentLabel.width, 1200) options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} context:nil].size;
-    CGFloat hh = MAX(60+20, strSize.height+18+20);
+    CGFloat hh = MAX(Adapter(80), strSize.height+Adapter(38));
     
     return hh;
 }

@@ -32,7 +32,7 @@
     [self.view addSubview:scrollView];
  
     
-    UILabel *timeLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 20 , ScreenWidth, 20)];
+    UILabel *timeLab = [[UILabel alloc]initWithFrame:CGRectMake(0, ScreenWidth*0.053 , ScreenWidth, ScreenWidth*0.053)];
     timeLab.font = [UIFont systemFontOfSize:14];
     timeLab.textColor = UIColorFromHex(0X808080);
     NSDate *data = [[NSDate alloc]initWithTimeIntervalSince1970:[[self.dataDic  objectForKey:@"modifyDate"] doubleValue]/1000.00];
@@ -56,14 +56,14 @@
     answerLabel.font = [UIFont systemFontOfSize:12];
     [scrollView addSubview:answerLabel];
     
-    UIImageView *rightImageView = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth - 64, timeLab.bottom + 10, 44, 44)];
+    UIImageView *rightImageView = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth - ScreenWidth*0.17, timeLab.bottom + Adapter(10), ScreenWidth*0.118, ScreenWidth*0.118)];
     rightImageView.image = [UIImage imageNamed:@"右边头像"];
     [scrollView addSubview:rightImageView];
     
-    UIImageView *rightTextImageView = [[UIImageView alloc]initWithFrame:CGRectMake(70, rightImageView.top, ScreenWidth - 144, 44)];
+    UIImageView *rightTextImageView = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth*0.186, rightImageView.top, ScreenWidth - ScreenWidth*0.118 - ScreenWidth*0.26, ScreenWidth*0.118)];
     UIImage *rihgtimage = [UIImage imageNamed:@"右边对话框"];
     rightTextImageView.userInteractionEnabled = YES;
-    rightTextImageView.image = [rihgtimage resizableImageWithCapInsets:UIEdgeInsetsMake(120, 60,60, 100) resizingMode:UIImageResizingModeStretch];
+//    rightTextImageView.image = [rihgtimage resizableImageWithCapInsets:UIEdgeInsetsMake(120, 60,60, 100) resizingMode:UIImageResizingModeStretch];
 
     [scrollView addSubview:rightTextImageView];
     
@@ -74,11 +74,13 @@
     contentlabel.text = [self.dataDic objectForKey:@"content"];
     [rightTextImageView addSubview:contentlabel];
 
-    CGRect rect = [contentlabel.text boundingRectWithSize:CGSizeMake(rightTextImageView.width - 20, 100000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} context:nil];
+    CGRect rect = [contentlabel.text boundingRectWithSize:CGSizeMake(rightTextImageView.width - Adapter(20), 100000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} context:nil];
     float heiget = rect.size.height;
     
-    
-    contentlabel.frame = CGRectMake(10, 10, rightTextImageView.width - 20, heiget);
+    if (heiget<rightImageView.height) {
+        heiget = rightImageView.height;
+    }
+    contentlabel.frame = CGRectMake(Adapter(10), Adapter(10), rightTextImageView.width - Adapter(20), heiget);
   
  
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
@@ -91,7 +93,7 @@
     
 
     
-    UIScrollView *scrollViews = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 101+heiget, self.view.frame.size.width, 80)];
+    UIScrollView *scrollViews = [[UIScrollView alloc]initWithFrame:CGRectMake(0, ScreenWidth*0.27+heiget, self.view.frame.size.width, ScreenWidth*0.21)];
     [scrollView addSubview:scrollViews];
     
     NSArray *array = [self.dataDic objectForKey:@"userConsultationImages"];
@@ -99,34 +101,35 @@
         array = [array subarrayWithRange:NSMakeRange(0, 4)];
     }
     if (array.count == 0) {
-        rightTextImageView.height = heiget + 20;
+        rightTextImageView.height = heiget + Adapter(20);
     }else{
         // 1. 常见一个发布图片时的photosView
         PYPhotosView * photosView = [PYPhotosView photosViewWithThumbnailUrls:array originalUrls:array];
-        photosView.py_x = 5;
-        photosView.py_y = contentlabel.bottom + 10;
-        photosView.photoWidth =  45;
-        photosView.photoHeight = 45 ;
+        photosView.py_x = Adapter(5);
+        photosView.py_y = contentlabel.bottom + Adapter(10);
+        photosView.photoWidth =  ScreenWidth*0.12;
+        photosView.photoHeight = ScreenWidth*0.12 ;
         photosView.photosMaxCol = 4;
         photosView.placeholderImage = [UIImage imageNamed:@"默认1:1"];
         [rightTextImageView addSubview:photosView];
-        rightTextImageView.height = heiget + 80;
-        if(array.count == 1){
-            rightTextImageView.height = heiget + 120;
+        rightTextImageView.height = heiget + ScreenWidth*0.213;
+        if(array.count == 1 || array.count == 4){
+            rightTextImageView.height = heiget + ScreenWidth*0.32;
         }
-        if(array.count == 4){
-            rightTextImageView.height = heiget + 120;
+        if(ISPaid) {
+            if(array.count == 1){
+                  rightTextImageView.height = heiget + ScreenWidth*0.15;
+            }
         }
-
     }
     [self insertSublayerWithImageView:rightTextImageView with:scrollView];
-    scrollViews.contentSize = CGSizeMake(82*array.count+10, 0) ;
-    heiget+=100;
+    scrollViews.contentSize = CGSizeMake(ScreenWidth*0.22*array.count+Adapter(10), 0) ;
+    heiget+=ScreenWidth*0.27;
     if ([[self.dataDic objectForKey:@"replyUserConsultations"] isEqual:[NSNull null]]) {
-        scrollView.contentSize = CGSizeMake(ScreenWidth, rightTextImageView.height + 60 );
+        scrollView.contentSize = CGSizeMake(ScreenWidth, rightTextImageView.height + ScreenWidth*0.16 );
     }else{
         
-        UILabel *timeLabs = [[UILabel alloc]initWithFrame:CGRectMake(0, rightTextImageView.bottom + 20, ScreenWidth, 20)];
+        UILabel *timeLabs = [[UILabel alloc]initWithFrame:CGRectMake(0, rightTextImageView.bottom + ScreenWidth*0.053, ScreenWidth, ScreenWidth*0.053)];
         timeLabs.font = [UIFont systemFontOfSize:14];
         timeLabs.textColor = UIColorFromHex(0X808080);
         NSDate *datas = [[NSDate alloc]initWithTimeIntervalSince1970:[[[[self.dataDic objectForKey:@"replyUserConsultations"]objectForKey:@"memberChild"] objectForKey:@"modifyDate"] doubleValue]/1000.00];
@@ -146,11 +149,11 @@
         timeLabs.textAlignment = NSTextAlignmentCenter;
         [scrollView addSubview:timeLabs];
         
-        UIImageView *leftImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, timeLabs.bottom + 10, 44, 44)];
+        UIImageView *leftImageView = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth*0.053, timeLabs.bottom + ScreenWidth*0.027, ScreenWidth*0.117, ScreenWidth*0.117)];
         leftImageView.image = [UIImage imageNamed:@"左边头像"];
         [scrollView addSubview:leftImageView];
         
-        UIImageView *leftTextImageView = [[UIImageView alloc]initWithFrame:CGRectMake(74, leftImageView.top, ScreenWidth - 134, 44)];
+        UIImageView *leftTextImageView = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth*0.197, leftImageView.top, ScreenWidth - ScreenWidth*0.357, ScreenWidth*0.117)];
         UIImage *image = [UIImage imageNamed:@"左边对话框"];
         leftTextImageView.image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(image.size.height - 15, image.size.width/2, image.size.height - 15, image.size.width/2) resizingMode:UIImageResizingModeStretch];
         [scrollView addSubview:leftTextImageView];
@@ -159,18 +162,18 @@
         CGRect rect = [[[self.dataDic objectForKey:@"replyUserConsultations"]objectForKey:@"content"] boundingRectWithSize:CGSizeMake(leftTextImageView.width - 20, 100000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} context:nil];
         float labelHeight = rect.size.height;
         
-        UILabel *replyUserConsultations = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, leftTextImageView.width - 20, labelHeight )];
+        UILabel *replyUserConsultations = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(10), Adapter(10), leftTextImageView.width - Adapter(20), labelHeight )];
         replyUserConsultations.numberOfLines = 0;
         replyUserConsultations.text = [NSString stringWithFormat:@"%@",[[self.dataDic objectForKey:@"replyUserConsultations"]objectForKey:@"content"]];
         replyUserConsultations.font = [UIFont systemFontOfSize:16];
         replyUserConsultations.textColor = [UtilityFunc colorWithHexString:@"#7d7d7d"];
         [leftTextImageView addSubview:replyUserConsultations];
-        leftTextImageView.height =  labelHeight + 20;
-        scrollView.contentSize = CGSizeMake(0, 250 +heiget +labelHeight);
+        leftTextImageView.height =  labelHeight + Adapter(20);
+        scrollView.contentSize = CGSizeMake(0, ScreenWidth*0.67 +heiget +labelHeight);
         
         [self insertSublayerWithImageView:leftTextImageView with:scrollView];
 
-        scrollView.contentSize = CGSizeMake(ScreenWidth, rightTextImageView.height + 120 + leftTextImageView.height);
+        scrollView.contentSize = CGSizeMake(ScreenWidth, rightTextImageView.height + ScreenWidth*0.32 + leftTextImageView.height);
     }
 }
 

@@ -98,7 +98,9 @@
     }else{
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
-    
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"6" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+
 }
 
 
@@ -110,6 +112,7 @@
     self.isLound = NO;
     self.topView.backgroundColor = [UIColor clearColor];
     self.navTitleLabel.text = ModuleZW(@"经络功能状态评估");
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
 }
 
 - (void)setupContentView
@@ -140,9 +143,9 @@
     
     
     // 文字背景框
-    UIImageView *wenBgView = [[UIImageView alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(duoView.frame)+75, ScreenWidth-40, 80)];
+    UIImageView *wenBgView = [[UIImageView alloc] initWithFrame:CGRectMake(Adapter(20), CGRectGetMaxY(duoView.frame)+Adapter(75), ScreenWidth-Adapter(40), Adapter(80))];
     if(IS_IPHONE_6){
-        wenBgView.frame = CGRectMake(20, ScreenHeight*0.5, ScreenWidth-40, 80);
+        wenBgView.frame = CGRectMake(Adapter(20), ScreenHeight*0.5, ScreenWidth-Adapter(40), Adapter(80));
     }
     [wenBgView setImage:[UIImage imageNamed:@"Wybs_WinZhi_Img_bg.png"]];
     wenBgView.tag = 10086;
@@ -155,9 +158,9 @@
     CGFloat marin = 10.0;
     CGFloat wenX = wenBgView.bounds.size.width / titleArr.count;
     for (int i = 0; i < titleArr.count; i++) {
-        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(wenX * i + marin, 10, 60, 60)];
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(wenX * i + marin,Adapter(10), Adapter(60), Adapter(60))];
         titleLabel.text = [titleArr objectAtIndex:i];
-        titleLabel.font = [UIFont systemFontOfSize:50.0/[UserShareOnce shareOnce].fontSize];
+        titleLabel.font = [UIFont systemFontOfSize:50.0/[UserShareOnce shareOnce].multipleFontSize];
         titleLabel.textColor = UIColorFromHex(0xFFFFFF);
         titleLabel.tag = 2018+i;
         titleLabel.alpha = 0.44;
@@ -193,7 +196,7 @@
     CGFloat startBtnX = (ScreenWidth - 160) * 0.5;
     
     if(IS_IPHONE_6P){
-        button.frame = CGRectMake(startBtnX, CGRectGetMaxY(wenBgView.frame)+75, 160,160);
+        button.frame = CGRectMake(startBtnX, CGRectGetMaxY(wenBgView.frame)+Adapter(75), 160,160);
     }else{
         CGFloat ff = ScreenHeight - CGRectGetMaxY(wenBgView.frame)-160;
         button.frame = CGRectMake(startBtnX, CGRectGetMaxY(wenBgView.frame)+ff/2.0, 160,160);
@@ -224,7 +227,7 @@
      
      name:@"QianHuanLogin"
      object:nil];
-    yincangView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 51, self.view.frame.size.width, 51)];
+    yincangView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - Adapter(51), self.view.frame.size.width, Adapter(51))];
     [self.view addSubview:yincangView];
     yincangView.hidden = YES;
 }
@@ -770,6 +773,7 @@
         }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = aUrlle;
+        vc.startTimeStr = self.startTimeStr;
         vc.titleStr = ModuleZW(@"经络辨识");
         [self.navigationController pushViewController:vc animated:YES];
     }
@@ -899,6 +903,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 
 

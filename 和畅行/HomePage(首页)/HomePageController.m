@@ -25,7 +25,7 @@
 #import <CoreTelephony/CTCarrier.h>
 #import "Reachability.h"
 #import "LoginViewController.h"
-
+#import "NetworkManager.h"
 #import <sys/utsname.h>
 
 
@@ -90,7 +90,7 @@
     self.isRefresh = YES;
     self.homeImageArray = [NSMutableArray array];
   //  [self createTopView];
-   
+   self.startTimeStr = [GlobalCommon getCurrentTimes];
     [self requestUI];
    // [self handleNetworkGroup];
     
@@ -99,7 +99,8 @@
 //    [UIApplication sharedApplication].windows
     
     [UserShareOnce shareOnce].startTime = [GlobalCommon getCurrentTimes];
-    
+    //埋点数据上传
+    [self buriedDataPoints];
 }
 
 
@@ -184,7 +185,7 @@
         self.imageV.userInteractionEnabled = YES;
         [self.view addSubview:self.imageV];
             
-        self.packgeView = [[HeChangPackge alloc] initWithFrame:CGRectMake(0, -kNavBarHeight, ScreenWidth, ScreenWidth/1.5+20)];
+        self.packgeView = [[HeChangPackge alloc] initWithFrame:CGRectMake(0, -kNavBarHeight, ScreenWidth, ScreenWidth/1.5+Adapter(20))];
         
         NSString *str = [[NSUserDefaults standardUserDefaults] valueForKey:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
         if(str){
@@ -213,7 +214,7 @@
     
     if (!self.readWriteView){
         
-        self.readWriteView = [[ReadOrWriteView alloc] initWithFrame:CGRectMake(0, _havePackage?self.packgeView.bottom+5:5, ScreenWidth, imageHeight+10)];
+        self.readWriteView = [[ReadOrWriteView alloc] initWithFrame:CGRectMake(0, _havePackage?self.packgeView.bottom+Adapter(5):Adapter(5), ScreenWidth, imageHeight+Adapter(10))];
     
         [self.bgScrollView addSubview:self.readWriteView];
     }
@@ -222,9 +223,9 @@
     if(_isActivity){
         if(!self.activityImage){
             
-            CGFloat imageW = ScreenWidth-30;
+            CGFloat imageW = ScreenWidth-Adapter(30);
             
-            self.activityImage = [[UIImageView alloc] initWithFrame:CGRectMake(15, self.readWriteView.bottom+10, imageW, imageW/5.15)];
+            self.activityImage = [[UIImageView alloc] initWithFrame:CGRectMake(Adapter(15), self.readWriteView.bottom+Adapter(10), imageW, imageW/5.15)];
             HCY_HomeImageModel *model = self.pushModel?self.pushModel:self.backImageModel;
             [self.activityImage sd_setImageWithURL:[NSURL URLWithString:model.picurl] placeholderImage:[UIImage imageNamed:@"activityImage"]];
             self.activityImage.userInteractionEnabled = YES;
@@ -237,15 +238,15 @@
     
     
     
-    self.readWriteView.frame = CGRectMake(self.readWriteView.left, _havePackage?self.packgeView.bottom-65:5, self.readWriteView.width, self.readWriteView.height);
+    self.readWriteView.frame = CGRectMake(self.readWriteView.left, _havePackage?self.packgeView.bottom-Adapter(65):Adapter(5), self.readWriteView.width, self.readWriteView.height);
 
     if(_isActivity){
-        self.activityImage.frame = CGRectMake(self.activityImage.left, self.readWriteView.bottom+10, self.activityImage.width, self.activityImage.height);
+        self.activityImage.frame = CGRectMake(self.activityImage.left, self.readWriteView.bottom+Adapter(10), self.activityImage.width, self.activityImage.height);
     }
     
     if(!self.testActivityIndicator){
         self.testActivityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        self.testActivityIndicator.center = CGPointMake(self.view.width/2 , _isActivity?self.activityImage.bottom +100:self.readWriteView.bottom +100);//只能设置中心，不能设置大小
+        self.testActivityIndicator.center = CGPointMake(self.view.width/2 , _isActivity?self.activityImage.bottom +Adapter(100):self.readWriteView.bottom +Adapter(100));//只能设置中心，不能设置大小
         [self.bgScrollView addSubview:self.testActivityIndicator];
         self.testActivityIndicator.color = RGB_TextAppBlue;
        
@@ -265,39 +266,39 @@
                 [mutableArr addObject:model];
             }
         }
-        self.remindView = [[HeChangRemind alloc] initWithFrame:CGRectMake(self.packgeView.left,   self.activityImage?self.activityImage.bottom+10:self.readWriteView.bottom+10, self.readWriteView.width, 58+mutableArr.count*(45+14)) withDataArr:mutableArr];
+        self.remindView = [[HeChangRemind alloc] initWithFrame:CGRectMake(self.packgeView.left,   self.activityImage?self.activityImage.bottom+Adapter(10):self.readWriteView.bottom+Adapter(10), self.readWriteView.width, Adapter(58)+mutableArr.count*(Adapter(59))) withDataArr:mutableArr];
         [self.bgScrollView addSubview:self.remindView];
 
     }
     if(!self.recommendView){
-        CGFloat width = (ScreenWidth - 23 - 10)/2.5;
-        self.recommendView = [[RecommendReadView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.remindView.frame)+10, ScreenWidth, width*0.75+7+40+55)];
+        CGFloat width = (ScreenWidth - Adapter(33))/2.5;
+        self.recommendView = [[RecommendReadView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.remindView.frame)+Adapter(10), ScreenWidth, width*0.75+Adapter(102))];
         [self.bgScrollView addSubview:self.recommendView];
-        self.bgScrollView.contentSize = CGSizeMake(1, self.recommendView.bottom+20);
+        self.bgScrollView.contentSize = CGSizeMake(1, self.recommendView.bottom+Adapter(20));
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeTableSize:) name:@"CHANGETABLESIZE" object:nil];
         
     }
     
-    [self.bgScrollView setContentSize:CGSizeMake(1, self.recommendView.bottom+20)];
+    [self.bgScrollView setContentSize:CGSizeMake(1, self.recommendView.bottom+Adapter(20))];
     
 }
 
 - (void)updateViewFrame
 {
-    self.readWriteView.frame = CGRectMake(self.readWriteView.left, _havePackage?self.packgeView.bottom-65:5, self.readWriteView.width, self.readWriteView.height);
-    self.remindView.frame = CGRectMake(self.remindView.left, self.activityImage?self.activityImage.bottom+10:self.readWriteView.bottom+10, self.remindView.width, self.remindView.height);
-    self.recommendView.frame = CGRectMake(self.recommendView.left,CGRectGetMaxY(self.remindView.frame)+10 , self.recommendView.width, self.recommendView.height);
-    [self.bgScrollView setContentSize:CGSizeMake(1, self.recommendView.bottom+20)];
+    self.readWriteView.frame = CGRectMake(self.readWriteView.left, _havePackage?self.packgeView.bottom-Adapter(65):Adapter(5), self.readWriteView.width, self.readWriteView.height);
+    self.remindView.frame = CGRectMake(self.remindView.left, self.activityImage?self.activityImage.bottom+Adapter(10):self.readWriteView.bottom+Adapter(10), self.remindView.width, self.remindView.height);
+    self.recommendView.frame = CGRectMake(self.recommendView.left,CGRectGetMaxY(self.remindView.frame)+Adapter(10) , self.recommendView.width, self.recommendView.height);
+    [self.bgScrollView setContentSize:CGSizeMake(1, self.recommendView.bottom+Adapter(20))];
     
 }
 
 -(void)changeTableSize:(NSNotification *)notifi {
     
     self.remindView.tableView.height = self.remindView.tableView.contentSize.height;
-    self.remindView.height = 58 +  self.remindView.tableView.height;
+    self.remindView.height = Adapter(58) +  self.remindView.tableView.height;
     NSLog(@"%f",self.remindView.tableView.height);
-    self.recommendView.top = self.remindView.bottom+10;
+    self.recommendView.top = self.remindView.bottom+Adapter(10);
     NSLog(@"%f",self.remindView.bottom);
 }
 
@@ -518,10 +519,10 @@
             
             weakSelf.remindView.dataArr = mutableArr;
             dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf.remindView updateViewWithData:mutableArr withHeight:58+mutableArr.count*(45+14)];
-                weakSelf.recommendView.frame = CGRectMake(0, weakSelf.remindView.bottom+10, weakSelf.recommendView.width, weakSelf.recommendView.height);
+                [weakSelf.remindView updateViewWithData:mutableArr withHeight:Adapter(58)+mutableArr.count*(Adapter(59))];
+                weakSelf.recommendView.frame = CGRectMake(0, weakSelf.remindView.bottom+Adapter(10), weakSelf.recommendView.width, weakSelf.recommendView.height);
                 
-                [weakSelf.bgScrollView setContentSize:CGSizeMake(1, weakSelf.recommendView.bottom+20)];
+                [weakSelf.bgScrollView setContentSize:CGSizeMake(1, weakSelf.recommendView.bottom+Adapter(20))];
                 
             });
             
@@ -578,7 +579,6 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-  //  [self buriedDataPoints];
 
 }
 
@@ -587,10 +587,9 @@
 -(void)buriedDataPoints {
     
     
-    //此接口为用户新增用户信息使用   怎么判断新增客户? 后台判断
+    //==============================此接口为用户新增用户信息使用   怎么判断新增客户? 后台判断=========================
     NSString *userSign = [UserShareOnce shareOnce].uid;
-    NSString *sexStr  = @"1";
-    NSLog(@"%@",[UserShareOnce shareOnce].birthday);
+    NSString *sexStr  = [NSString string];
     if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].gender]) {
         if([[UserShareOnce shareOnce].gender isEqualToString:@"male"]){
             sexStr = @"1";
@@ -599,57 +598,98 @@
         }else{
             sexStr = @"0";
         }
+    }else{
+        sexStr = @"0";
     }
-    NSString *ageStr = @"";
-    if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].birthday]) {
-        ageStr =  [GlobalCommon calculateAgeStr:[UserShareOnce shareOnce].birthday];
+    NSString *birthdayStr = [UserShareOnce shareOnce].birthday;
+    if(![GlobalCommon stringEqualNull:birthdayStr]){
+        birthdayStr = [birthdayStr stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
+    }else{
+        birthdayStr= @"";
     }
-
-    NSString *urlStr = [NSString stringWithFormat:@"%@user/info",DATAURL_PRE];
-    NSDictionary *infodic = @{ @"body":@{@"age":ageStr,
-                                        @"remark":@"",
-                                        @"sex":sexStr,
-                                        @"userSign":userSign,
-                                        @"userSource":@"1"}
-                                        };
     
-    [[BuredPoint sharedYHBuriedPoint] submitWithUrl:urlStr dic:infodic successBlock:^(id  _Nonnull response) {
-        
+    NSString *appSignStr = @"1";
+    NSString *urlStr = [NSString stringWithFormat:@"%@user/info",DATAURL_PRE];
+    NSDictionary *infodic = @{ @"body":@{
+                                       @"userId":userSign,
+                                       @"id":@"",
+                                       @"dateBirth":birthdayStr,
+                                       @"sex":sexStr,
+                                       @"appSign":appSignStr,
+                                       @"province":@"",
+                                       @"city":@"" ,
+                                       @"remark":@""}
+                               };
+    
+    [[BuredPoint sharedYHBuriedPoint] submitLocationWithUrl:urlStr Dic:infodic successBlock:^(id  _Nonnull response) {
+        NSLog(@"%@",response);
     } failureBlock:^(NSError * _Nonnull error) {
         
     }];
     
     
-    //该接口用于记录用户使用app的设备信息
-    //    NSString *userSign = @"";
-    NSString *modelStr           = [GlobalCommon getCurrentDeviceModel];//型号
-    NSString *resolutionStr     = [GlobalCommon getScreenPix];//分辨率
-    NSString *operatorStr       = [GlobalCommon getOperator];//运营商
-    NSString *network_methodStr = [GlobalCommon internetStatus];//联网方式
+ 
+  
     
+    
+    //=============================接口描述： 该接口用于记录用户使用app的设备信息=========================
+    
+    NSString *modelStr           =  [BuredPoint getCurrentDeviceModel];//型号
+    NSString *resolutionStr     = [BuredPoint getScreenPix];//分辨率
+    NSString *operatorStr       = [BuredPoint getOperator];//运营商
+    NSString *network_methodStr = [GlobalCommon internetStatus];//联网方式
+
 
     NSString *deviceStr = [NSString stringWithFormat:@"%@user/device",DATAURL_PRE];
-    NSDictionary *deviceDic = @{ @"body":@{@"brand":@"iPhone",
-                                @"model":modelStr,
-                                @"networkMethod":network_methodStr,
-                                @"operator":operatorStr,
-                                @"remark":@"1",
-                                @"system":@"iOS",
-                                @"userSign":userSign,
-                                @"resolution":resolutionStr,
-                                @"userSource":@"1"}
+    NSDictionary *deviceDic = @{ @"body":@{
+                                         @"id":@"",
+                                         @"userId":userSign,
+                                         @"brand":@"iPhone",
+                                         @"model":modelStr,
+                                         @"system":@"iOS",
+                                         @"resolution":resolutionStr,
+                                         @"operator":operatorStr,
+                                         @"networkMethod":network_methodStr,
+                                         @"remark":@""}
                                 };
-    
+
     [[BuredPoint sharedYHBuriedPoint] submitWithUrl:deviceStr dic:deviceDic successBlock:^(id  _Nonnull response) {
-        
+            NSLog(@"%@",response);
     } failureBlock:^(NSError * _Nonnull error) {
-        
+
     }];
+    
   
     
 }
 
+-(NSString*)dictionaryToJson:(NSDictionary *)dic
+{
+    NSArray *keyArray = [dic[@"body"] allKeys];
+    for (NSString *keyStr in keyArray) {
+        if ([dic[@"body"][keyStr] isEqualToString:@""]||!dic[@"body"][keyStr]) {
+            NSMutableDictionary *bodyDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+            NSMutableDictionary *myDic = [NSMutableDictionary dictionaryWithDictionary:dic[@"body"]];
+            [myDic setValue:@"1" forKey:@"remark"];
+            [bodyDic setValue:myDic forKeyPath:@"body"];
+            dic = bodyDic.copy;
+        }
+    }
+    NSError *parseError = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+    NSString *string =  [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    string =  [string stringByReplacingOccurrencesOfString:@"'\\'" withString:@""];
+    string =  [string stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    return string;
+}
 
+
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"1" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+}
 
 
 @end

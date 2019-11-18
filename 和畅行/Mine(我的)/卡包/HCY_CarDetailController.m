@@ -12,18 +12,16 @@
 #import "ServiceBlockCell.h"
 #import "HCY_CallController.h"
 #import "BlockViewController.h"
-
+#import "ConsumptionController.h"
 @interface HCY_CarDetailController ()<UITableViewDelegate,UITableViewDataSource,ServiceBlockCellDelegate>
 
 @property (nonatomic,strong)UILabel *hLabel;
 @property (nonatomic,strong)UILabel *mLabel;
 @property (nonatomic,strong)UILabel *yLabel;
 @property (nonatomic,strong)UILabel *contentLabel;
-@property (nonatomic,strong)UITableView *listTableView;
 @property (nonatomic,strong)UITableView *serviceTableView;
 @property (nonatomic,strong) NSArray *dataArr;
 @property (nonatomic,strong) NSArray *serviceArr;
-@property (nonatomic,strong) UIView *listBackView;
 @end
 
 @implementation HCY_CarDetailController
@@ -64,17 +62,17 @@
     }
 
 
-    CGRect textRect = [contentStr boundingRectWithSize:CGSizeMake(ScreenWidth - 60, MAXFLOAT)
+    CGRect textRect = [contentStr boundingRectWithSize:CGSizeMake(ScreenWidth - Adapter(60), MAXFLOAT)
                                                            options:NSStringDrawingUsesLineFragmentOrigin
                                                         attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
                                                            context:nil];
     
      NSLog(@"%@",self.model.card_name);
-    CGRect labelRect = [self.model.card_name boundingRectWithSize:CGSizeMake(ScreenWidth - 20 - 60, MAXFLOAT) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} context:nil];
+    CGRect labelRect = [self.model.card_name boundingRectWithSize:CGSizeMake(ScreenWidth - Adapter(80), MAXFLOAT) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]} context:nil];
     
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, kNavBarHeight + 40,ScreenWidth - 20, 70 + textRect.size.height + _serviceArr.count * 30*[UserShareOnce shareOnce].fontSize+labelRect.size.height + 20)];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(Adapter(10), kNavBarHeight + Adapter(40),ScreenWidth - Adapter(20), Adapter(70) + textRect.size.height + _serviceArr.count * Adapter(30)*[UserShareOnce shareOnce].fontSize+labelRect.size.height + Adapter(20))];
     if (imageV.height > ScreenHeight - imageV.top -  kTabBarHeight) {
-        imageV.height = ScreenHeight - imageV.top -  kTabBarHeight - 30;
+        imageV.height = ScreenHeight - imageV.top -  kTabBarHeight - Adapter(30);
     }
     [imageV.layer addSublayer:[UIColor setGradualChangingColor:imageV fromColor:@"4294E1" toColor:@"D1BDFF"]];
     imageV.layer.cornerRadius = 10;
@@ -85,7 +83,7 @@
     
     
     _hLabel = [[UILabel alloc] init];
-    _hLabel.frame = CGRectMake(20, 20, imageV.width - 60, labelRect.size.height);
+    _hLabel.frame = CGRectMake(Adapter(20), Adapter(20), imageV.width - Adapter(60), labelRect.size.height);
     _hLabel.textColor = [UIColor whiteColor];
     _hLabel.numberOfLines = 2;
     _hLabel.text = self.model.card_name;
@@ -93,7 +91,7 @@
     [imageV addSubview:_hLabel];
     
     _mLabel = [[UILabel alloc] init];
-    _mLabel.frame = CGRectMake(20,_hLabel.bottom , imageV.width -  40, 35 );
+    _mLabel.frame = CGRectMake(Adapter(20),_hLabel.bottom , imageV.width -  Adapter(40), Adapter(35) );
     _mLabel.numberOfLines = 2;
     _mLabel.text = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"卡密"),self.model.card_no];
     _mLabel.font = [UIFont systemFontOfSize:16];
@@ -103,7 +101,7 @@
    
     
     _contentLabel = [[UILabel alloc] init];
-    _contentLabel.frame = CGRectMake(20,_hLabel.bottom + 5 , imageV.width -  40, textRect.size.height );
+    _contentLabel.frame = CGRectMake(Adapter(20),_hLabel.bottom + Adapter(5) , imageV.width -  Adapter(40), textRect.size.height );
     _contentLabel.numberOfLines = 0;
     _contentLabel.text = contentStr;
     _contentLabel.font = [UIFont systemFontOfSize:14];
@@ -113,59 +111,35 @@
     
     
     _yLabel = [[UILabel alloc] init];
-    _yLabel.frame = CGRectMake(_mLabel.left , _contentLabel.bottom , 300, 35);
+    _yLabel.frame = CGRectMake(_mLabel.left , _contentLabel.bottom , Adapter(300), Adapter(35));
     _yLabel.text = ModuleZW(@"剩余服务");
     _yLabel.font = [UIFont systemFontOfSize:16];
     _yLabel.textColor = [UIColor whiteColor];
     [imageV addSubview:_yLabel];
     
 
-    self.serviceTableView = [[UITableView alloc]initWithFrame:CGRectMake(_yLabel.left+5, _yLabel.bottom+5, imageV.width-_yLabel.left*2 - 10, _serviceArr.count * 30*[UserShareOnce shareOnce].fontSize) style:UITableViewStylePlain];
+    self.serviceTableView = [[UITableView alloc]initWithFrame:CGRectMake(_yLabel.left+Adapter(5), _yLabel.bottom+Adapter(5), imageV.width-_yLabel.left*2 - Adapter(10), _serviceArr.count * Adapter(30)*[UserShareOnce shareOnce].fontSize) style:UITableViewStylePlain];
     self.serviceTableView.backgroundColor = [UIColor clearColor];
     self.serviceTableView.separatorStyle = UITableViewCellEditingStyleNone;
     self.serviceTableView.dataSource = self;
     self.serviceTableView.delegate = self;
-    self.serviceTableView.estimatedRowHeight = 100;
+    self.serviceTableView.estimatedRowHeight = Adapter(100);
     [imageV addSubview:self.serviceTableView];
     
     
     UIButton *listButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    listButton.frame = CGRectMake(imageV.width - 40, 20, 25, 27);
+    listButton.frame = CGRectMake(imageV.width - Adapter(40), Adapter(20), Adapter(25), Adapter(27));
     [listButton setBackgroundImage:[UIImage imageNamed:@"消费记录icon"] forState:(UIControlStateNormal)];
     [[listButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        
         
         if(self.dataArr.count < 1){
             [self showAlertWarmMessage:ModuleZW(@"暂无消费记录")];
             return ;
         }
+        ConsumptionController *conVC = [[ConsumptionController alloc]init];
+        conVC.dataArr = self.dataArr;
+        [self.navigationController pushViewController:conVC animated:YES];
         
-        if(!self.listBackView) {
-            self.listBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
-            self.listBackView.backgroundColor = RGBA(0, 0, 0, 0.55);
-            self.listBackView.hidden = NO;
-            [self.view addSubview:self.listBackView];
-            
-            self.listTableView = [[UITableView alloc]initWithFrame:CGRectMake(40, ScreenHeight/2 - 110 , ScreenWidth - 80 , 210) style:UITableViewStylePlain];
-            self.listTableView.backgroundColor = UIColorFromHex(0Xffffff);
-            self.listTableView.separatorStyle = UITableViewCellEditingStyleNone;
-            self.listTableView.layer.cornerRadius = 8;
-            self.listTableView.dataSource = self;
-            self.listTableView.delegate = self;
-            self.listTableView.rowHeight = 30;
-            [self.listBackView addSubview:self.listTableView];
-            [self.listTableView registerNib:[UINib nibWithNibName:@"HCY_ConsumptionListCell" bundle:nil] forCellReuseIdentifier:@"HCY_ConsumptionListCell"];
-            
-            UIButton *closeButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            closeButton.frame = CGRectMake(ScreenWidth - 55, ScreenHeight/2 - 145, 28, 28);
-            [closeButton setBackgroundImage:[UIImage imageNamed:@"消费记录取消icon"] forState:(UIControlStateNormal)];
-            [[closeButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
-                self.listBackView.hidden = YES;
-            }];
-            [self.listBackView addSubview:closeButton];
-        }else{
-             self.listBackView.hidden = NO;
-        }
     }];
     [imageV addSubview:listButton];
   
@@ -177,7 +151,7 @@
         _hLabel.text = _dateDic[@"data"][@"name"];
        
         UIButton *addButton =  [UIButton buttonWithType:(UIButtonTypeCustom)];
-        addButton.frame = CGRectMake(40, ScreenHeight - kTabBarHeight - 40, ScreenWidth - 80, 36);
+        addButton.frame = CGRectMake(Adapter(40), ScreenHeight - kTabBarHeight - Adapter(40), ScreenWidth - Adapter(80), Adapter(36));
         addButton.layer.cornerRadius = 18;
         addButton.layer.masksToBounds = YES;
         addButton.backgroundColor = RGB_ButtonBlue;
@@ -202,9 +176,7 @@
             [request startAsynchronous];
         }];
         [self.view addSubview:addButton];
-        if(self.serviceArr.count > 0){
-            [_listTableView reloadData];
-        }
+
         
     }
 
@@ -258,22 +230,8 @@
     }
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (tableView == _listTableView){
-        return 50;
-    }else{
-         return 0;
-    }
-}
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UILabel *listLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,0, tableView.width, 50)];
-    listLabel.backgroundColor = UIColorFromHex(0Xffffff);
-    listLabel.text = ModuleZW(@"   消费记录");
-    listLabel.font = [UIFont systemFontOfSize:16];
-    listLabel.textColor = RGB_TextDarkGray;
-    [self.listTableView addSubview:listLabel];
-    return listLabel;
-}
+
+
 
 - (void)requestPurchaseHistory
 {
@@ -340,22 +298,17 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    if(tableView == self.serviceTableView){
-        if(self.serviceArr){
-            return self.serviceArr.count;
-        }else{
-            return 0;
-        }
-    }else if (tableView == self.listTableView){
-        return self.dataArr.count;
+    if(self.serviceArr){
+        return self.serviceArr.count;
+    }else{
+        return 0;
     }
-    return 0;
+    
 }
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if(tableView == self.serviceTableView){
         ServiceBlockCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ServiceBlockCell"];
         if(cell == nil){
             cell = [[ServiceBlockCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ServiceBlockCell"];
@@ -381,28 +334,13 @@
             
             if(self.dateDic){
                 cell.tradeBtn.hidden = YES;
-                cell.contentLabel.width = ScreenWidth - 130;
+                cell.contentLabel.width = ScreenWidth - Adapter(130);
             }
             
             
         }
         return cell;
-    }else if (tableView == self.listTableView){
-        HCY_ConsumptionListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HCY_ConsumptionListCell" forIndexPath:indexPath];
-        cell.backgroundColor = [UIColor clearColor];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        if(self.dataArr.count>indexPath.row){
-            NSDictionary *dic = [self.dataArr objectAtIndex:indexPath.row];
-            cell.kindLabel.text = [dic objectForKey:@"name"];
-            NSString *timeStr =[NSString stringWithFormat:@"%@", [dic objectForKey:@"createDate"]];
-            if (![GlobalCommon stringEqualNull:timeStr]) {
-                cell.timeLabel.text = [timeStr substringToIndex:10];
-            }
-        }
-        return cell;
-    }
-    
-    return nil;
+  
 };
 
 - (void)selectTradeButton:(NSString *)btnStr

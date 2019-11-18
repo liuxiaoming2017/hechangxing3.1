@@ -12,6 +12,7 @@
 
 @property (nonatomic,copy) NSString *urlStr;
 @property (nonatomic,copy) NSString *titleStr;
+@property (nonatomic,assign) NSInteger typeInteger;
 @property (nonatomic,assign) BOOL noWebviewBack;
 @end
 

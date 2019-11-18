@@ -38,17 +38,22 @@
 {
     self.view.backgroundColor = [UIColor whiteColor];
     
+    CGFloat fontSizeFloat = 1;
+    if (ISPaid) {
+        fontSizeFloat = [UserShareOnce shareOnce].fontSize;
+    }
+    
     UILabel *label = [[UILabel alloc] init];
-    label.frame = CGRectMake((ScreenWidth-86)/2.0,kNavBarHeight+35,86,28);
+    label.frame = CGRectMake((ScreenWidth-Adapter(86))/2.0,kNavBarHeight+Adapter(35),Adapter(86),Adapter(28));
     label.numberOfLines = 0;
     [self.view addSubview:label];
     
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"评估完成！"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17],NSForegroundColorAttributeName: [UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0]}];
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"评估完成！"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17*fontSizeFloat],NSForegroundColorAttributeName: [UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0]}];
     
     label.attributedText = string;
     label.textAlignment = NSTextAlignmentCenter;
     
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake((ScreenWidth-180)/2.0, label.bottom+40, 180, 251)];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake((ScreenWidth-180)/2.0, label.bottom+Adapter(40), 180, 251)];
     imageV.image = [UIImage imageNamed:@"酸疼检测结果"];
     [self.view addSubview:imageV];
     
@@ -61,29 +66,29 @@
     NSArray *titleArr = @[@"轻度",@"中度",@"重度"];
     for(NSInteger i=0;i<3;i++){
         UIView *view1 = [[UIView alloc] init];
-        view1.frame = CGRectMake(imageV.right+12,imageV.bottom-20-50*i,20,20);
+        view1.frame = CGRectMake(imageV.right+Adapter(12),imageV.bottom-Adapter(20)-Adapter(50)*i,Adapter(20),Adapter(20));
         UIColor *color = [colorArr objectAtIndex:2-i];
         view1.layer.backgroundColor = color.CGColor;
-        view1.layer.cornerRadius = 10;
+        view1.layer.cornerRadius = view1.height;
        // [self.view addSubview:view1];
         
-        UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(view1.right+15, view1.top+2, 27.5, 16)];
+        UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(view1.right+Adapter(15), view1.top+Adapter(2), Adapter(27.5), Adapter(16))];
         label1.text = [titleArr objectAtIndex:2-i];
-        label1.font = [UIFont fontWithName:@"PingFang SC" size:12];
+        label1.font = [UIFont fontWithName:@"PingFang SC" size:12*fontSizeFloat];
         label1.textAlignment = NSTextAlignmentLeft;
         label1.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
       //  [self.view addSubview:label1];
     }
     
-    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(28, imageV.bottom+56, 53, 16)];
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(28), imageV.bottom+Adapter(56), Adapter(53), Adapter(16))];
     label1.text = @"疲劳指数";
-    label1.font = [UIFont fontWithName:@"PingFang SC" size:12];
+    label1.font = [UIFont fontWithName:@"PingFang SC" size:12*fontSizeFloat];
     label1.textAlignment = NSTextAlignmentLeft;
     label1.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
     [self.view addSubview:label1];
     
-    self.pilaoLabel = [[UILabel alloc] initWithFrame:CGRectMake(label1.right+11, label1.top, 26, 16)];
-    self.pilaoLabel.font = [UIFont fontWithName:@"PingFang SC" size:12];
+    self.pilaoLabel = [[UILabel alloc] initWithFrame:CGRectMake(label1.right+Adapter(11), label1.top, Adapter(26), Adapter(16))];
+    self.pilaoLabel.font = [UIFont fontWithName:@"PingFang SC" size:12*fontSizeFloat];
     self.pilaoLabel.text = @"中度";
     self.pilaoLabel.textAlignment = NSTextAlignmentLeft;
     self.pilaoLabel.textColor = [UIColor colorWithRed:254/255.0 green:231/255.0 blue:185/255.0 alpha:1.0];
@@ -93,28 +98,28 @@
     }
     [self.view addSubview:self.pilaoLabel];
     
-    UIView *pilaoView = [[UIView alloc] initWithFrame:CGRectMake(28, label1.bottom+8, ScreenWidth-56, 20)];
+    UIView *pilaoView = [[UIView alloc] initWithFrame:CGRectMake(Adapter(28), label1.bottom+Adapter(8), ScreenWidth-Adapter(56), Adapter(20))];
     pilaoView.layer.backgroundColor = [UIColor colorWithRed:246/255.0 green:247/255.0 blue:249/255.0 alpha:1.0].CGColor;
-    pilaoView.layer.cornerRadius = 10.0;
+    pilaoView.layer.cornerRadius = pilaoView.height/2;
     pilaoView.clipsToBounds = YES;
     [self.view addSubview:pilaoView];
     
     for(NSInteger i = 0;i<2;i++){
-        UIImageView *lineV = [[UIImageView alloc] initWithFrame:CGRectMake(pilaoView.left+pilaoView.width/3.0*(i+1), pilaoView.top, 2, pilaoView.height)];
+        UIImageView *lineV = [[UIImageView alloc] initWithFrame:CGRectMake(pilaoView.left+pilaoView.width/3.0*(i+1), pilaoView.top, Adapter(2), pilaoView.height)];
         lineV.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:lineV];
     }
     
     
-    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(28, pilaoView.bottom+11, 53, 16)];
+    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(28), pilaoView.bottom+Adapter(11), Adapter(53), Adapter(16))];
     label2.text = @"酸痛指数";
-    label2.font = [UIFont fontWithName:@"PingFang SC" size:12];
+    label2.font = [UIFont fontWithName:@"PingFang SC" size:12*fontSizeFloat];
     label2.textAlignment = NSTextAlignmentLeft;
     label2.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
     [self.view addSubview:label2];
     
-    self.suantengLabel = [[UILabel alloc] initWithFrame:CGRectMake(label2.right+11, label2.top, 26, 16)];
-    self.suantengLabel.font = [UIFont fontWithName:@"PingFang SC" size:12];
+    self.suantengLabel = [[UILabel alloc] initWithFrame:CGRectMake(label2.right+Adapter(11), label2.top, Adapter(26), Adapter(16))];
+    self.suantengLabel.font = [UIFont fontWithName:@"PingFang SC" size:12*fontSizeFloat];
     self.suantengLabel.text = @"轻度";
     self.suantengLabel.textAlignment = NSTextAlignmentLeft;
     self.suantengLabel.textColor = [UIColor colorWithRed:254/255.0 green:231/255.0 blue:185/255.0 alpha:1.0];
@@ -124,14 +129,14 @@
     }
     [self.view addSubview:self.suantengLabel];
     
-    UIView *suantengView = [[UIView alloc] initWithFrame:CGRectMake(28, label2.bottom+8, ScreenWidth-56, 20)];
+    UIView *suantengView = [[UIView alloc] initWithFrame:CGRectMake(Adapter(28), label2.bottom+Adapter(8), ScreenWidth-Adapter(56), Adapter(20))];
     suantengView.layer.backgroundColor = [UIColor colorWithRed:246/255.0 green:247/255.0 blue:249/255.0 alpha:1.0].CGColor;
-    suantengView.layer.cornerRadius = 10.0;
+    suantengView.layer.cornerRadius =suantengView.height/2;
     suantengView.clipsToBounds = YES;
     [self.view addSubview:suantengView];
     
     for(NSInteger i = 0;i<2;i++){
-        UIImageView *lineV = [[UIImageView alloc] initWithFrame:CGRectMake(suantengView.left+suantengView.width/3.0*(i+1), suantengView.top, 2, suantengView.height)];
+        UIImageView *lineV = [[UIImageView alloc] initWithFrame:CGRectMake(suantengView.left+suantengView.width/3.0*(i+1), suantengView.top, Adapter(2), suantengView.height)];
         lineV.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:lineV];
     }
@@ -143,10 +148,10 @@
     
     UIButton *anmoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     CGFloat btnWidth = 200.0;
-    anmoBtn.frame = CGRectMake((ScreenWidth-btnWidth)/2.0, suantengView.bottom+45 > ScreenHeight-50 ? ScreenHeight-60 : suantengView.bottom+45, btnWidth, 40);
-    anmoBtn.layer.cornerRadius = 6.0;
+    anmoBtn.frame = CGRectMake((ScreenWidth-btnWidth)/2.0, suantengView.bottom+Adapter(45) > ScreenHeight-Adapter(50) ? ScreenHeight-Adapter(60) : suantengView.bottom+Adapter(45), btnWidth, Adapter(40));
+    anmoBtn.layer.cornerRadius = Adapter(6.0);
     anmoBtn.clipsToBounds = YES;
-    anmoBtn.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:17];
+    anmoBtn.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:17*fontSizeFloat];
     [anmoBtn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
     [anmoBtn setTitle:@"智能按摩" forState:UIControlStateNormal];
     [anmoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

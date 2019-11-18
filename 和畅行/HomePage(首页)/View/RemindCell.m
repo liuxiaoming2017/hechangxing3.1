@@ -64,44 +64,44 @@
     
     self.circleImageV = [[UIImageView alloc] init];
     self.circleImageV.backgroundColor = [UIColor redColor];
-    self.circleImageV.layer.cornerRadius = 3.0;
+    self.circleImageV.layer.cornerRadius = Adapter(3.0);
     self.circleImageV.layer.masksToBounds = YES;
     [imageV  addSubview:self.circleImageV];
     
     [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView.mas_top).offset(5);
-        make.bottom.equalTo(self.contentView.mas_bottom).offset(-5);
-        make.leading.equalTo(self.contentView.mas_leading).offset(10);
-        make.trailing.equalTo(self.contentView.mas_trailing).offset(-10);
+        make.top.equalTo(self.contentView.mas_top).offset(Adapter(5));
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(Adapter(-5));
+        make.leading.equalTo(self.contentView.mas_leading).offset(Adapter(10));
+        make.trailing.equalTo(self.contentView.mas_trailing).offset(Adapter(-10));
     }];
     
     [self.lineImageV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(imageV.mas_top).offset(10);
-        make.bottom.equalTo(imageV.mas_bottom).offset(-10);
+        make.top.equalTo(imageV.mas_top).offset(Adapter(10));
+        make.bottom.equalTo(imageV.mas_bottom).offset(Adapter(-10));
         make.leading.equalTo(imageV.mas_leading);
-        make.width.mas_equalTo(2);
+        make.width.mas_equalTo(Adapter(2));
     }];
     
     [self.typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(imageV.mas_top);
         make.bottom.equalTo(imageV.mas_bottom);
-        make.leading.equalTo(imageV.mas_leading).offset(15);
-        make.width.mas_equalTo(70);
-        make.height.greaterThanOrEqualTo(@(49));
+        make.leading.equalTo(imageV.mas_leading).offset(Adapter(15));
+        make.width.mas_equalTo(Adapter(70));
+        make.height.greaterThanOrEqualTo(@(Adapter(49)));
     }];
     
     [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(imageV.mas_top);
         make.bottom.equalTo(imageV.mas_bottom);
-        make.leading.equalTo(imageV.mas_leading).offset(85);
-        make.trailing.equalTo(imageV.mas_trailing).offset(-30);
-        make.height.greaterThanOrEqualTo(@(49));
+        make.leading.equalTo(imageV.mas_leading).offset(Adapter(85));
+        make.trailing.equalTo(imageV.mas_trailing).offset(Adapter(-30));
+        make.height.greaterThanOrEqualTo(@(Adapter(49)));
     }];
     
     [self.circleImageV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(imageV.mas_centerY);
-        make.size.mas_equalTo(CGSizeMake(6, 6));
-        make.trailing.equalTo(imageV.mas_trailing).offset(-15);
+        make.size.mas_equalTo(CGSizeMake(Adapter(6), Adapter(6)));
+        make.trailing.equalTo(imageV.mas_trailing).offset(Adapter(-15));
         
     }];
 }

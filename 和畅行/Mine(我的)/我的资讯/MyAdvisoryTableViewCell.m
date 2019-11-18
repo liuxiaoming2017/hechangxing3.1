@@ -17,8 +17,8 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         
-        UIImageView *backView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 10, ScreenWidth - 30, 130)];
-        backView.layer.cornerRadius = 10;
+        UIImageView *backView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(15), Adapter(10), ScreenWidth - Adapter(30), ScreenWidth*0.3466)];
+        backView.layer.cornerRadius = Adapter(10);
         backView.layer.masksToBounds = YES;
         backView.userInteractionEnabled = YES;
         backView.backgroundColor = [UIColor whiteColor];
@@ -49,9 +49,9 @@
 }
 - (void)layoutSubviews{
     [super layoutSubviews];
-    _contentlabel.frame = CGRectMake(10, 10, ScreenWidth - 60, 90);
-    _answerLabel.frame = CGRectMake(ScreenWidth - 150, 100, 100, 30);
-    _timeLabel.frame = CGRectMake(20, 100, 200, 30);
+    _contentlabel.frame = CGRectMake(Adapter(10), Adapter(10), ScreenWidth - Adapter(60), ScreenWidth*0.24);
+    _answerLabel.frame = CGRectMake(ScreenWidth*0.6, ScreenWidth*0.267, ScreenWidth*0.267, ScreenWidth*0.08);
+    _timeLabel.frame = CGRectMake(Adapter(20), ScreenWidth*0.267, ScreenWidth*0.533, ScreenWidth*0.08);
     
 }
 -(void)insertSublayerWithImageView:(UIImageView *)imageV

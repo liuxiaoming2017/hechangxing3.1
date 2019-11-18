@@ -30,7 +30,6 @@
 #import "BaseControlViewController.h"
 #import "RemindRegAlertView.h"
 #import "MBProgressHUD.h"
-#import "MoxiHeadInfView_i9.h"
 #import "i9_UISetTTViewController.h"
 
 #import <moxibustion/moxibustion.h>
@@ -41,7 +40,7 @@
 
 #import "NSObject+SBJson.h"
 
-@interface i9_MoxaMainViewController () <MoxiHeadInfView_i9_Delegate,NewChannelViewGestureDelegate,moxibustionDelegate, UIClickLabelDelegate, CMPopTipViewDelegate,AVAudioPlayerDelegate, RemindRegDelegate, MBProgressHUDDelegate,i9_UISetTTDelegate>
+@interface i9_MoxaMainViewController () <NewChannelViewGestureDelegate,moxibustionDelegate, UIClickLabelDelegate, CMPopTipViewDelegate,AVAudioPlayerDelegate, RemindRegDelegate, MBProgressHUDDelegate,i9_UISetTTDelegate>
 
 @property (retain, nonatomic) UIClickLabel *indicatorLab;
 @property (retain, nonatomic) UIActivityIndicatorView *searchIndicator;
@@ -56,7 +55,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *soundBtn;       //声音按钮
 @property (weak, nonatomic) IBOutlet UIButton *settingBtn;     //设置按钮
 
-@property (retain,nonatomic) MoxiHeadInfView_i9 *headinfView;
+@property (strong,nonatomic) UIButton *headBT;
 
 @property (retain, nonatomic) CMPopTipView *popTipView;
 
@@ -229,18 +228,18 @@
         height2 = (SCREEN_HEI - 64)/6*5;
     }
     
-    height = 45;
     height2=SCREEN_HEI - height - self.topView.bottom;
     
-    _headinfView = [[MoxiHeadInfView_i9 alloc] initWithFrame:CGRectMake(0, kNavBarHeight, SCREEN_WID, height)];
-    _headinfView.backgroundColor = UIColorFromHex(0x1e82d2);
+    _headBT = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    _headBT.frame = CGRectMake(0, kNavBarHeight, ScreenWidth, Adapter(45));
+    [_headBT setBackgroundColor:RGB(30, 130, 210)];
+    
+    [_headBT setImage:[[UIImage imageNamed:@"AllSwitch.png"]transformWidth:Adapter(25) height:Adapter(25)] forState:(UIControlStateNormal)];
+    [_headBT addTarget:self action:@selector(onOrOffAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:_headBT];
     
     
-    _headinfView.delegate = self;
-    [self.view addSubview:_headinfView];
-    
-    
-    UILabel *remnderlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _headinfView.bottom, ScreenWidth, 40)];
+    UILabel *remnderlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _headBT.bottom, ScreenWidth, Adapter(40))];
     remnderlabel.font = [UIFont systemFontOfSize:16];
     remnderlabel.numberOfLines = 0;
     remnderlabel.textAlignment = NSTextAlignmentLeft;
@@ -266,23 +265,20 @@
     _mRemindModifPasswordIsShow = YES;
     if(isFirstIn)
     {
-        NSArray *arrayOfViews = [[NSBundle mainBundle]loadNibNamed:@"moxaTopView" owner:self options:nil];
-        NSLog(@"---arrayOfViews.count = %lu",(unsigned long)arrayOfViews.count);
-        UIView *view =  [[[NSBundle mainBundle]loadNibNamed:@"moxaTopView" owner:self options:nil] lastObject];
-        view.frame = CGRectMake(ScreenWidth/2.0-100, kStatusBarHeight, 200, 44);
-        NSLog(@"---view = %@",[view description]);
-        _indicatorLab = (UIClickLabel*)[view viewWithTag:1];
+        _indicatorLab = [[UIClickLabel alloc]initWithFrame:CGRectMake(Adapter(40), kNavBarHeight - 40,ScreenWidth -  Adapter(80), 40)];
+        _indicatorLab.textAlignment = NSTextAlignmentCenter;
         [_indicatorLab setTextColor:[UIColor blackColor]];
         [_indicatorLab addUnderLine:ModuleZW(@"设备搜寻中")];
-        _searchIndicator = (UIActivityIndicatorView *)[view viewWithTag:2];
+//        _searchIndicator = (UIActivityIndicatorView *)[view viewWithTag:2];
         [_searchIndicator setHidden:YES];
-        _coverIndicatorBtn = (UIButton*)[view viewWithTag:3];
+        _coverIndicatorBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        _coverIndicatorBtn.frame = CGRectMake(Adapter(40), kNavBarHeight - 40,ScreenWidth -  Adapter(80), 40);
         _recipelListBtn = [self creatMoxaRightBtn];
         [_coverIndicatorBtn addTarget:self action:@selector(onClickBleBtn:) forControlEvents:UIControlEventTouchUpInside];
         //self.navigationItem.titleView = view;
         
-        [self.topView addSubview:view];
-        
+        [self.topView addSubview:_indicatorLab];
+        [self.topView addSubview:_coverIndicatorBtn];
         [_recipelListBtn addTarget:self action:@selector(onClickRecipelListBtn:) forControlEvents:UIControlEventTouchUpInside];
         _recipelListBtn.frame = CGRectMake(ScreenWidth-37-14, 2+kStatusBarHeight, 40, 40);
         [self.topView addSubview:_recipelListBtn];
@@ -291,7 +287,8 @@
         
         isFirstIn = false;
     }
-    [_headinfView.mChoosePlanBtn setTitle:ModuleZW(@"当前无灸疗计划") forState:UIControlStateNormal];
+    [_headBT setTitle:ModuleZW(@"当前无灸疗计划") forState:UIControlStateNormal];
+    [_headBT setImage:[UIImage imageNamed:@""] forState:(UIControlStateNormal)];
 }
 
 
@@ -299,7 +296,7 @@
     UIImage *image2 = [UIImage imageNamed:@"btn_recipelst_normal.png"];
     UIImage *image1 = [UIImage imageNamed:@"btn_recipelst_normal.png"];  //@"btn_recipelst_pressed.png"
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(0, 0, 32, 32);
+    btn.frame = CGRectMake(0, 0, Adapter(32), Adapter(32));
     [btn setImage:image1 forState:UIControlStateNormal];
     [btn setImage:image2 forState:UIControlStateHighlighted];
     return btn;
@@ -422,7 +419,7 @@
         alertViewY = SCREEN_HEI - 50 - alertViewheight-33;
         
     }else{
-        alertViewY = SCREEN_HEI - 50 - alertViewheight;
+        alertViewY = SCREEN_HEI - Adapter(50) - alertViewheight;
     }
     mSetAlertView = [[i9_UISetTTViewForRollerController alloc] initWithNibName:@"i9_UISetTTViewForRoller" bundle:nil];
     mSetAlertView.setTTDelegate = self;
@@ -759,10 +756,11 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
 
 -(void)trackCommunicationfresh{
     [self freshIndicatorLab];
+    [_headBT setImage:[UIImage imageNamed:@"AllSwitch.png"] forState:(UIControlStateNormal)];
     if([self checkHasMoxaNotWork]){
-        [_headinfView.mSwitch setTitle:ModuleZW(@"一键开") forState:UIControlStateNormal];
+        [_headBT setTitle:ModuleZW(@"一键开") forState:UIControlStateNormal];
     }else{
-        [_headinfView.mSwitch setTitle:ModuleZW(@"全部关") forState:UIControlStateNormal];
+        [_headBT setTitle:ModuleZW(@"全部关") forState:UIControlStateNormal];
     }
 }
 
@@ -1964,11 +1962,11 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
 
 #pragma mark ----MoxiHeadInfView_i9_Delegate
 
-- (void)SwitchBtnOnclink:(id)sender{
-    UIButton *btn = (UIButton *)sender;
-    if([btn.titleLabel.text isEqualToString:ModuleZW(@"一键开")]){
+- (void)onOrOffAction:(UIButton *)button{
+    [_headBT setImage:[UIImage imageNamed:@"AllSwitch.png"] forState:(UIControlStateNormal)];
+    if([button.titleLabel.text isEqualToString:ModuleZW(@"一键开")]){
         [self OpenAllChannel];
-    }else if([btn.titleLabel.text isEqualToString:ModuleZW(@"全部关")]){
+    }else if([button.titleLabel.text isEqualToString:ModuleZW(@"全部关")]){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:ModuleZW(@"温馨提示") message:ModuleZW(@"是否要关闭所有灸头") delegate:self cancelButtonTitle:ModuleZW(@"取消") otherButtonTitles:ModuleZW(@"确定"), nil];
         alert.tag = 5;
         [alert show];

@@ -33,20 +33,20 @@
 //    quarterLabel;
 //    timeLabel;
     
-    self.backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, ScreenWidth - 20, 100)];
+    self.backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(10), Adapter(10), ScreenWidth - Adapter(20), Adapter(100))];
     [self.backImageView.layer addSublayer:[UIColor setGradualChangingColor:self.backImageView fromColor:@"4294E1" toColor:@"D1BDFF"]];
     self.backImageView.layer.cornerRadius = 10;
     self.backImageView.layer.masksToBounds = YES;
     [self.contentView addSubview:self.backImageView];
     
-    self.quarterLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.backImageView.width, 80)];
+    self.quarterLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.backImageView.width, Adapter(80))];
     self.quarterLabel.backgroundColor = [UIColor clearColor];
     self.quarterLabel.textColor = [UIColor whiteColor];
     self.quarterLabel.text = @"第一季度阶段报告";
     self.quarterLabel.textAlignment = NSTextAlignmentCenter;
     self.quarterLabel.font = [UIFont systemFontOfSize:24];
     
-    self.timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 60, self.backImageView.width, 30)];
+    self.timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, Adapter(60), self.backImageView.width, Adapter(30))];
     self.timeLabel.backgroundColor = [UIColor clearColor];
     self.timeLabel.textColor = [UIColor whiteColor];
     self.timeLabel.text = @"2018.01.30-2018.03.31";

@@ -43,6 +43,8 @@
 @property (nonatomic,strong) NSArray *headTitleArr;
 @property (nonatomic,assign) NSIndexPath *selectIndexPath;
 @property (nonatomic,assign) BOOL isSelect;
+
+@property (nonatomic,assign)BOOL isPush;
 //@property (nonatomic,strong) NSMutableArray *indexPaths;
 
 @end
@@ -55,6 +57,18 @@
     self.repeatQuestionArr = nil;
     collectionV = nil;
 }
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.isPush = NO;
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    if (!self.isPush) {
+        self.endTimeStr = [GlobalCommon getCurrentTimes];
+        [GlobalCommon pageDurationWithpageId:@"7" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -62,10 +76,10 @@
     _rowNum = 1;
     _sectionNum = 1;
     _answerCount = 0;
-    
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     self.cellH = @{}.mutableCopy;
     self.navTitleLabel.text = ModuleZW(@"体质辨识");
-    self.navTitleLabel.font = [UIFont systemFontOfSize:18/[UserShareOnce shareOnce].fontSize];
+    self.navTitleLabel.font = [UIFont systemFontOfSize:18/[UserShareOnce shareOnce].multipleFontSize];
     self.anwerArr = [NSArray arrayWithObjects:ModuleZW(@"没有"),ModuleZW(@"很少"),ModuleZW(@"有时"),ModuleZW(@"经常"),ModuleZW(@"总是"), nil];
 
     self.headTitleArr = [NSArray arrayWithObjects:@"第一部分  五官面部及皮肤自查",@"第二部分  冷热感应状况",@"第三部分  精神状况",@"第四部分  身体及代谢症状", nil];
@@ -91,7 +105,7 @@
     self.selectIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     
     //添加tableview
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-220-20) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-Adapter(220)) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor=[UIColor clearColor];
@@ -114,11 +128,11 @@
 # pragma mark - 底部视图
 - (void)createBottomView
 {
-    UIView *bottomV = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-220, ScreenWidth, 220)];
+    UIView *bottomV = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-Adapter(220), ScreenWidth, Adapter(220))];
     bottomV.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:bottomV];
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-200)/2.0, 15, 200, 20)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-Adapter(200))/2.0, Adapter(15), Adapter(200), Adapter(20))];
     titleLabel.font = [UIFont systemFontOfSize:16];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.textColor = [UIColor blackColor];
@@ -135,13 +149,13 @@
     for (NSInteger i=0;i<5;i++) {
         UIButton *selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         if(i<3){
-           selectBtn.frame = CGRectMake((ScreenWidth-54*3-60)/2.0+(54+30)*i, titleLabel.bottom+15, 54, 54);
+           selectBtn.frame = CGRectMake((ScreenWidth-Adapter(54)*3-Adapter(60))/2.0+(Adapter(84))*i, titleLabel.bottom+Adapter(15), Adapter(54), Adapter(54));
         }else{
-            selectBtn.frame = CGRectMake((ScreenWidth-54*2-30)/2.0+(54+30)*(i-3), titleLabel.bottom+10+54+22, 54, 54);
+            selectBtn.frame = CGRectMake((ScreenWidth-Adapter(54)*2-Adapter(30))/2.0+(Adapter(84))*(i-3), titleLabel.bottom+Adapter(86), Adapter(54), Adapter(54));
         }
         selectBtn.tag = 2019+i;
         
-        selectBtn.layer.cornerRadius = 8.0;
+        selectBtn.layer.cornerRadius = Adapter(8.0);
         selectBtn.layer.masksToBounds = YES;
         //添加渐变色
         CAGradientLayer *gradientLayer = [CAGradientLayer layer];
@@ -154,7 +168,7 @@
         
         NSString *str = [self.anwerArr objectAtIndex:i];
         [selectBtn setTitle:str forState:UIControlStateNormal];
-        [selectBtn.titleLabel setFont:[UIFont systemFontOfSize:16/[UserShareOnce shareOnce].fontSize]];
+        [selectBtn.titleLabel setFont:[UIFont systemFontOfSize:16/[UserShareOnce shareOnce].multipleFontSize]];
         [selectBtn.titleLabel setNumberOfLines:2];
         [selectBtn.titleLabel setTextAlignment:NSTextAlignmentCenter];
         [selectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -240,13 +254,13 @@
     [self.view addSubview:backView];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(ScreenWidth-30, ScreenHeight-kNavBarHeight-30-50);
+    layout.itemSize = CGSizeMake(ScreenWidth-Adapter(30), ScreenHeight-kNavBarHeight-Adapter(80));
     layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     layout.minimumInteritemSpacing = 0;
     layout.minimumLineSpacing = 0;
     
-    collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth-30, layout.itemSize.height) collectionViewLayout:layout];
+    collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth-Adapter(30), layout.itemSize.height) collectionViewLayout:layout];
     collectionV.delegate = self;
     collectionV.dataSource = self;
     collectionV.showsHorizontalScrollIndicator = NO;
@@ -259,7 +273,7 @@
     
     
     self.lastPage = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.lastPage.frame = CGRectMake(15, backView.height-40, 65, 30);
+    self.lastPage.frame = CGRectMake(Adapter(15), backView.height-Adapter(40), Adapter(65), Adapter(30));
     [self.lastPage setTitle:ModuleZW(@"上一页") forState:UIControlStateNormal];
     self.lastPage.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.lastPage setTitleColor:[Tools colorWithHexString:@"#0282bf"] forState:UIControlStateNormal];
@@ -267,7 +281,7 @@
     [self.lastPage addTarget:self action:@selector(lastPageAction) forControlEvents:UIControlEventTouchUpInside];
     [backView addSubview:self.lastPage];
     
-    self.allPage = [[UILabel alloc] initWithFrame:CGRectMake((backView.width-100)/2.0, self.lastPage.top, 100, 30)];
+    self.allPage = [[UILabel alloc] initWithFrame:CGRectMake((backView.width-Adapter(100))/2.0, self.lastPage.top, Adapter(100), Adapter(30))];
     self.allPage.font = [UIFont systemFontOfSize:15];
     self.allPage.textAlignment = NSTextAlignmentCenter;
     self.allPage.textColor = [Tools colorWithHexString:@"#0282bf"];
@@ -275,7 +289,7 @@
     [backView addSubview:self.allPage];
     
     self.nextPage = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.nextPage.frame = CGRectMake(backView.width-60-15, self.lastPage.top, 60, 30);
+    self.nextPage.frame = CGRectMake(backView.width-Adapter(75), self.lastPage.top, Adapter(60), Adapter(30));
     [self.nextPage setTitle:ModuleZW(@"下一页") forState:UIControlStateNormal];
     self.nextPage.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.nextPage setTitleColor:[Tools colorWithHexString:@"#0282bf"] forState:UIControlStateNormal];
@@ -551,14 +565,14 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 65.0;
+    return Adapter(65.0);
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 65)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, Adapter(65))];
     view.backgroundColor = UIColorFromHex(0Xf1f1f1);
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 2.5, ScreenWidth - 40, 60)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(20), Adapter(2.5), ScreenWidth - Adapter(40), Adapter(60))];
     titleLabel.font = [UIFont systemFontOfSize:17];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.numberOfLines = 2;
@@ -680,7 +694,7 @@
 
 - (CGPoint)nearestTargetOffsetForOffset:(CGPoint)offset
 {
-    CGFloat pageSize = 0 + ScreenWidth-30;
+    CGFloat pageSize = 0 + ScreenWidth-Adapter(30);
     //四舍五入
     NSInteger page = roundf(offset.x / pageSize);
     CGFloat targetX = pageSize * page;
@@ -1014,10 +1028,11 @@
     id status=[dic objectForKey:@"status"];
     //NSLog(@"234214324%@",status);
     if ([status intValue]== 100) {
-        
+        self.isPush = YES;
         [UserShareOnce shareOnce].isRefresh = YES;
         ResultController *resultVC = [[ResultController alloc] init];
         resultVC.TZBSstr = self.str;
+        resultVC.startTimeStr = self.startTimeStr;
         [self.navigationController pushViewController:resultVC animated:YES];
         
     }
@@ -1107,6 +1122,8 @@
     }
     return @"";
 }
+
+
 
 
 @end

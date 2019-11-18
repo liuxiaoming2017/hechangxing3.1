@@ -19,7 +19,7 @@
 #define currentMonth [currentMonthString integerValue]
 
 
-@interface PersonalInformationViewController ()<ZHPickViewDelegate,MBProgressHUDDelegate,UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate>
+@interface PersonalInformationViewController ()<ZHPickViewDelegate,MBProgressHUDDelegate,UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UITableViewDelegate,UITableViewDataSource>
 
 //@property (nonatomic,strong)ZHPickView *pickview;
 @property (nonatomic,strong)UIView *blackView;
@@ -138,33 +138,31 @@
         leftLabel.textColor =  RGB_TextDarkGray;
         leftLabel.font = [UIFont systemFontOfSize:16];
         if(i == 0){
-            leftLabel.frame = CGRectMake(30, kNavBarHeight , 100, 90);
+            leftLabel.frame = CGRectMake(Adapter(30), kNavBarHeight , ScreenWidth*0.267, ScreenWidth*0.24);
             UIButton *photoButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            photoButton.frame = CGRectMake(ScreenWidth - 100, kNavBarHeight + 10, 70, 70);
-            photoButton.layer.cornerRadius = 35;
+            photoButton.frame = CGRectMake(ScreenWidth - ScreenWidth*0.186 - Adapter(40), kNavBarHeight + Adapter(10), ScreenWidth*0.186, ScreenWidth*0.186);
+            photoButton.layer.cornerRadius = photoButton.width/2;
             photoButton.layer.masksToBounds = YES;
             if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].memberImage]) {
-                self.urlHttpImg=[UserShareOnce shareOnce].memberImage;
                 [photoButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage] forState:(UIControlStateNormal)];
                 
                  [photoButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage]  forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"1我的_03"]];
             } else{
-                [photoButton setBackgroundImage:[UIImage imageNamed:@"1我的_03"] forState:(UIControlStateNormal)];
             }
-            [photoButton addTarget:self action:@selector(uploadImageClick) forControlEvents:(UIControlEventTouchUpInside)];
+            [photoButton addTarget:self action:@selector(uploadImageClick:) forControlEvents:(UIControlEventTouchUpInside)];
             
-            UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(photoButton.right + 10, kNavBarHeight + 37.5 , 12, 15)];
+            UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(photoButton.right + Adapter(10),  photoButton.height/2 + kNavBarHeight , Adapter(12), Adapter(20))];
             iconImageView.image = [UIImage imageNamed:@"1我的_09"];
             [self.view addSubview:iconImageView];
             [self.view addSubview:photoButton];
             self.photoButton = photoButton;
             
         }else {
-            leftLabel.frame = CGRectMake(30, kNavBarHeight + 90 + 45 *(i-1), 150, 45);
+            leftLabel.frame = CGRectMake(Adapter(30), kNavBarHeight + ScreenWidth*0.24 + ScreenWidth*0.12 *(i-1), ScreenWidth*0.4, ScreenWidth*0.12);
             UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            button.frame = CGRectMake(leftLabel.right , leftLabel.top, ScreenWidth - leftLabel.right - 30, 45);
+            button.frame = CGRectMake(leftLabel.right , leftLabel.top, ScreenWidth - leftLabel.right - Adapter(40), leftLabel.height);
             if (i == 5) {
-                button.frame = CGRectMake(leftLabel.right - 70, leftLabel.top, ScreenWidth - leftLabel.right + 40 , 45);
+                button.frame = CGRectMake(leftLabel.right - Adapter(70), leftLabel.top, ScreenWidth - leftLabel.right + Adapter(30) , leftLabel.height);
             }
             [button setTitle:contentArray[i] forState:(UIControlStateNormal)];
             [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
@@ -216,7 +214,7 @@
                         UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"" message:nil preferredStyle:
                                                       UIAlertControllerStyleAlert];
                         [alertVc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-                            textField.placeholder = ModuleZW(@"绑定邮箱");
+                            textField.placeholder = ModuleZW(@"请输入邮箱");
                             [textField addTarget:self action:@selector(textFieldDidChanged:) forControlEvents:UIControlEventEditingChanged];
                             textField.tag = 1002;
                         }];
@@ -241,7 +239,7 @@
             if(i == 4){
                 weakSelf.phoneBT = button;
             }
-            UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(button.width + 10, 15 , 12, 15)];
+            UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(button.width + Adapter(10), button.height/2 - ScreenWidth*0.026 , ScreenWidth*0.026, ScreenWidth*0.052)];
             iconImageView.image = [UIImage imageNamed:@"1我的_09"];
             [button addSubview:iconImageView];
             [self.view addSubview:button];
@@ -262,11 +260,11 @@
     [self.view addSubview:blackView];
     self.blackView = blackView;
     //SexStr
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth/2-110, self.view.center.y-60, 220, 120)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth/2-Adapter(110), self.view.center.y-Adapter(60), Adapter(220), Adapter(120))];
     imageView.alpha = 1;
     imageView.backgroundColor = [UIColor whiteColor];
     imageView.image = [UIImage imageNamed:@"个人信息_弹出背景"];
-    UIImageView *line = [Tools creatImageViewWithFrame:CGRectMake(0, 59.5, 220, 1) imageName:@"orderLine"];
+    UIImageView *line = [Tools creatImageViewWithFrame:CGRectMake(0, Adapter(59.5), Adapter(220), 1) imageName:@"orderLine"];
     [imageView addSubview:line];
     imageView.userInteractionEnabled = YES;
     [blackView addSubview:imageView];
@@ -274,7 +272,7 @@
     NSArray *arr = @[ModuleZW(@"男"),ModuleZW(@"女")];
     for (int i=0; i<2; i++) {
         UIButton *btn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        btn.frame = CGRectMake(0, 60*i, 220, 59);
+        btn.frame = CGRectMake(0, Adapter(60)*i, Adapter(220), Adapter(59));
         [btn setTitle:arr[i] forState:(UIControlStateNormal)];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         btn.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -363,7 +361,7 @@
 
 
 //上传头像
-- (void)uploadImageClick{
+- (void)uploadImageClick:(UIButton *) button{
     
     
     UIAlertController *alVC = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
@@ -420,7 +418,17 @@
     [alVC addAction:kakaAction];
     [alVC addAction:photoAction];
     [alVC addAction:cancelAction];
+    
+    if(ISPaid)  {
+        UIPopoverPresentationController *popover = alVC.popoverPresentationController;
+        if (popover) {
+            popover.sourceView = button;
+            popover.sourceRect = button.bounds;
+            popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        }
+    }
     [self presentViewController:alVC animated:YES completion:nil];
+
     
 }
 
@@ -443,7 +451,7 @@
     [controller dismissViewControllerAnimated:YES completion:NULL];
     [self.photoButton setBackgroundImage:croppedImage forState:(UIControlStateNormal)];
     CGSize imagesize = croppedImage.size;
-    imagesize.width = 300;
+    imagesize.width = Adapter(300);
     imagesize.height = imagesize.width*croppedImage.size.height/croppedImage.size.width;
     if (croppedImage) {
         croppedImage = [GlobalCommon imageWithImage:croppedImage scaledToSize:imagesize];
@@ -611,24 +619,24 @@
         backView.backgroundColor = RGBA(0, 0, 0, 0.4);
         [self.view addSubview:backView];
         _backView = backView;
-        UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(10, ScreenHeight - 290, ScreenWidth - 20, 280)];
+        UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(Adapter(10), ScreenHeight - Adapter(290), ScreenWidth - Adapter(20), Adapter(280))];
         bottomView.backgroundColor = [UIColor whiteColor];
-        bottomView.layer.cornerRadius = 15;
+        bottomView.layer.cornerRadius = Adapter(15);
         [backView addSubview:bottomView];
         
-        UILabel *dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 10, 100, 30)];
+        UILabel *dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(30), Adapter(10), Adapter(100), Adapter(30))];
         dataLabel.textColor = RGB_TextGray;
         dataLabel.font = [UIFont systemFontOfSize:14];
         [bottomView addSubview:dataLabel];
 //        _datatypeLabel = dataLabel;
         
         
-        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(bottomView.width/2 - 0.25,bottomView.height - 36, 0.5, 32)];
+        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(bottomView.width/2 - Adapter(0.25),bottomView.height - Adapter(36), Adapter(0.5), Adapter(32))];
         lineView.backgroundColor = RGB(230, 230, 230);
         [bottomView addSubview:lineView];
-        
+        [UserShareOnce shareOnce].canChageSize = NO;
         self.datePicker = [[UIDatePicker alloc] init];
-        self.datePicker.frame = CGRectMake(30, 40, bottomView.width - 80, 200);
+        self.datePicker.frame = CGRectMake(Adapter(30), Adapter(40), bottomView.width - Adapter(80), Adapter(200));
         if([UserShareOnce shareOnce].languageType){
             self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"us"];
         }else{
@@ -643,10 +651,10 @@
         NSArray *buttonTitleArray = @[ModuleZW(@"取消"),ModuleZW(@"确定")];
         for (int i = 0; i < 2; i++) {
             UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            button.frame = CGRectMake(40 + (bottomView.width/2-40)*i  , bottomView.height - 40, (bottomView.width - 80)/2, 40);
+            button.frame = CGRectMake(Adapter(40) + (bottomView.width/2-Adapter(40))*i  , bottomView.height - Adapter(40), (bottomView.width - Adapter(80))/2, Adapter(40));
             [button setTitle:buttonTitleArray[i] forState:(UIControlStateNormal)];
             [button setTitleColor:UIColorFromHex(0Xffa200) forState:(UIControlStateNormal)];
-            [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
+            [button.titleLabel setFont:[UIFont systemFontOfSize:16*[UserShareOnce shareOnce].fontSize*0.8]];
             __weak typeof(self) weakSelf = self;
             [[button rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
                 if(i == 1){
@@ -654,6 +662,7 @@
                     [weakSelf.brithdayButton setTitle:self->_brithdayStr forState:(UIControlStateNormal)];
                      [weakSelf commitClick];
                 }
+                [UserShareOnce shareOnce].canChageSize = YES;
                 backView.hidden = YES;
             }];
             [bottomView addSubview:button];
@@ -666,12 +675,12 @@
     
     if(![self.brithdayStr isEqualToString:ModuleZW(@"未设置")]&&[self.brithdayStr isEqualToString:ModuleZW(@"")]){
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"YYYY/MM/dd"];
+        [dateFormatter setDateFormat:@"YYYY-MM-dd"];
         NSDate *tempDate = [dateFormatter dateFromString:_brithdayStr];
         [self.datePicker setDate:tempDate animated:YES];
     }else{
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyyy/MM/dd";
+        formatter.dateFormat = @"YYYY-MM-dd";
         NSString *dateStr = [formatter  stringFromDate:[NSDate date]];
         self.dateString = dateStr;
     }
@@ -681,7 +690,7 @@
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
-    formatter.dateFormat = @"yyyy/MM/dd";
+    formatter.dateFormat = @"YYYY-MM-dd";
     NSString *dateStr = [formatter  stringFromDate:datePicker.date];
     self.dateString = dateStr;
  

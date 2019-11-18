@@ -68,7 +68,7 @@
     [self.view addGestureRecognizer:recognizer];
     
     // 列表
-    CGRect rect = CGRectMake(ScreenWidth, 0, kSidebarWidth, self.view.bounds.size.height);
+    CGRect rect = CGRectMake(ScreenWidth, 0, Adapter(kSidebarWidth), self.view.bounds.size.height);
     self.contentView = [[UIView alloc] initWithFrame:rect];
     [self.view addSubview:self.contentView];
     
@@ -129,7 +129,7 @@
         LLLog(@"自动弹出");
         self.view.hidden = NO;
         [UIView animateWithDuration:duration animations:^{
-            [self setSidebarOriginX:ScreenWidth-kSidebarWidth];
+            [self setSidebarOriginX:ScreenWidth-Adapter(kSidebarWidth)];
         } completion:^(BOOL finished) {
             _isMoving = NO;
             [self sidebarDidShown];

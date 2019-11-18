@@ -31,7 +31,7 @@
     CGFloat imageWidth = 122;
     CGFloat imageHeight = 96;
     
-    imageWidth = (ScreenWidth - 10*4)/3.0;
+    imageWidth = (ScreenWidth - Adapter(15)*4)/3.0;
     imageHeight = imageWidth*76.8/97.7;
     
     
@@ -40,7 +40,7 @@
     for(NSInteger i = 0;i<3;i++){
         
         UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        rightBtn.frame = CGRectMake(10+(imageWidth+10)*i, 10, imageWidth, imageHeight);
+        rightBtn.frame = CGRectMake(Adapter(15)+(imageWidth+Adapter(15))*i, Adapter(15), imageWidth, imageHeight);
         [rightBtn setBackgroundImage:[UIImage imageNamed:[imageArr objectAtIndex:i]] forState:UIControlStateNormal];
         rightBtn.tag=100+i;
         [rightBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -59,7 +59,7 @@
     CGFloat imageWidth = 122;
     CGFloat imageHeight = 96;
     
-    imageWidth = (ScreenWidth - 10*4)/3.0;
+    imageWidth = (ScreenWidth - Adapter(10)*4)/3.0;
     imageHeight = imageWidth*76.8/97.7;
     
     NSArray *imageArr = @[ModuleZW(@"readImage"),ModuleZW(@"writeImage"),ModuleZW(@"hitImage")];
@@ -72,7 +72,7 @@
             model =  array[i+2];
         }
         UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        rightBtn.frame = CGRectMake(10+(imageWidth+10)*i, 10, imageWidth, imageHeight);
+        rightBtn.frame = CGRectMake(Adapter(10)+(imageWidth+Adapter(10))*i, Adapter(10), imageWidth, imageHeight);
         
         if (model.picurl == nil ||[model.picurl isKindOfClass:[NSNull class]]||model.picurl.length == 0) {
             [rightBtn setBackgroundImage:[UIImage imageNamed:[imageArr objectAtIndex:i]] forState:UIControlStateNormal];

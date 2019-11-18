@@ -119,7 +119,7 @@
 
     if (self.typeInteger == 1) {
         if (self.topModel != nil && ![self.topModel isKindOfClass:[NSNull class]]) {
-            return 90;
+            return Adapter(90);
         }else{
             return 0;
         }
@@ -137,38 +137,38 @@
         
         if ([model.type isEqualToString:@"MedicRecord"]) {
             if(indexPath.row == 0){
-                return 130;
+                return Adapter(130);
             }else{
                 HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
                 NSString *notimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",model.createTime]];
                 NSString *nexttimeStr = [self getDateStringWithOtherTimeStr:[NSString stringWithFormat:@"%@",onAmodel.createTime]];
                 if ([notimeStr isEqualToString:nexttimeStr]) {
-                    return 95;
+                    return Adapter(95);
                 }else {
-                    return 130;
+                    return Adapter(130);
                 }
             }
         }else{
             if (![model.type isEqualToString:@"REPORT"]){
                 return UITableViewAutomaticDimension;
             }else{
-                return 120;
+                return Adapter(120);
             }
         }
        
         
     }if (self.typeInteger == 2) {
-        return 120;
+        return Adapter(120);
     }else {
         
         if (indexPath.row == 0) {
-            return 130;
+            return Adapter(130);
         }else {
             HealthTipsModel *onAmodel = _dataArr[indexPath.row - 1];
             if ([model.createTime isEqualToString:onAmodel.createTime]) {
-                return 95;
+                return Adapter(95);
             }else {
-                return 130;
+                return Adapter(130);
             }
         }
     }

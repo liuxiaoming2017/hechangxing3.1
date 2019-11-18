@@ -36,6 +36,7 @@
 @property (nonatomic,strong)UIButton *leftButton;
 @property (nonatomic,strong)UIButton *registeredBT;
 @property (nonatomic,strong)UISegmentedControl *segment;
+@property (nonatomic,strong)UIScrollView *backScrollView;
 @end
 
 @implementation LoginViewController
@@ -60,21 +61,22 @@
 - (void)initWithUI
 {
     self.view.backgroundColor=[UIColor whiteColor];
-    
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake((ScreenWidth-110)/2.0, kNavBarHeight+30, 110, 77)];
+    UIScrollView *backScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+    [self.view addSubview:backScrollView];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake((ScreenWidth-Adapter(110))/2.0, kNavBarHeight+Adapter(30), Adapter(110), Adapter(77))];
     imageV.image = [UIImage imageNamed:@"和畅logo"];
-    [self.view addSubview:imageV];
+    [backScrollView addSubview:imageV];
     NSArray *titleArray = @[ModuleZW(@"短信登录"),ModuleZW(@"密码登录")];
     UISegmentedControl *segment = [[UISegmentedControl alloc]initWithItems:titleArray];
-    segment.frame = CGRectMake(40, imageV.bottom + 40, ScreenWidth - 80, 30);
+    segment.frame = CGRectMake(Adapter(40), imageV.bottom + Adapter(40), ScreenWidth - Adapter(80), Adapter(30));
     segment.tintColor = [UIColor clearColor];
-    NSDictionary* selectedTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:24],NSForegroundColorAttributeName: RGB_ButtonBlue };
+    NSDictionary* selectedTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:24*[UserShareOnce shareOnce].fontSize],NSForegroundColorAttributeName: RGB_ButtonBlue };
     [segment setTitleTextAttributes:selectedTextAttributes forState:UIControlStateSelected];
-    NSDictionary* unselectedTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:24],NSForegroundColorAttributeName: RGB_ButtonBlue };
+    NSDictionary* unselectedTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:24*[UserShareOnce shareOnce].fontSize],NSForegroundColorAttributeName: RGB_ButtonBlue };
     [segment setTitleTextAttributes:unselectedTextAttributes forState:UIControlStateNormal];
     segment.selectedSegmentIndex = 0;
     [segment addTarget:self action:@selector(selected:) forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:segment];
+    [backScrollView addSubview:segment];
     self.segment = segment;
     if([UserShareOnce shareOnce].languageType){
         segment.top = imageV.bottom - 0;
@@ -82,15 +84,15 @@
   
     
     
-    UIView *blueView  = [[UIView alloc]initWithFrame:CGRectMake(40, segment.bottom + 5, ScreenWidth/2 - 40, 1.5)];
+    UIView *blueView  = [[UIView alloc]initWithFrame:CGRectMake(Adapter(40), segment.bottom + Adapter(5), ScreenWidth/2 - Adapter(40), Adapter(1.5))];
     blueView.backgroundColor = RGB_ButtonBlue;
-    [self.view addSubview:blueView];
+    [backScrollView addSubview:blueView];
     self.blueView = blueView;
     
  
     
     userNameBox=[[UITextField alloc] init];
-    userNameBox.frame=CGRectMake(segment.left, segment.bottom+40, ScreenWidth - 140 ,30 );
+    userNameBox.frame=CGRectMake(segment.left, segment.bottom+Adapter(40), ScreenWidth - Adapter(140) ,Adapter(30) );
     userNameBox.borderStyle=UITextBorderStyleNone;
     userNameBox.returnKeyType=UIReturnKeyNext;
     userNameBox.keyboardType=UIKeyboardTypeNumberPad;
@@ -98,27 +100,27 @@
     userNameBox.delegate=self;
     userNameBox.font=[UIFont systemFontOfSize:15.0];
     userNameBox.placeholder=ModuleZW(@"  请输入手机号");
-    [self.view addSubview:userNameBox];
+    [backScrollView addSubview:userNameBox];
     
-    UILabel *addNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(userNameBox.width, 0, 50, 30)];
+    UILabel *addNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(userNameBox.width, 0, Adapter(50), Adapter(30))];
     addNumberLabel.text = @"+86";
     addNumberLabel.textColor = RGB_TextMidLightGray;
     [userNameBox addSubview:addNumberLabel];
     self.addNumberLabel = addNumberLabel;
     
-    UIImageView *imageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(segment.left, userNameBox.bottom+2, ScreenWidth-segment.left*2, 1)];
+    UIImageView *imageV2 = [[UIImageView alloc] initWithFrame:CGRectMake(segment.left, userNameBox.bottom+Adapter(2), ScreenWidth-segment.left*2, Adapter(1))];
     imageV2.backgroundColor = UIColorFromHex(0X1E82D2);
-    [self.view addSubview:imageV2];
+    [backScrollView addSubview:imageV2];
     
     passWordBox=[[UITextField alloc]init];
-    passWordBox.frame=CGRectMake(segment.left, imageV2.bottom+10, 160 ,userNameBox.height );
+    passWordBox.frame=CGRectMake(segment.left, imageV2.bottom+Adapter(10), Adapter(160) ,userNameBox.height );
     passWordBox.clearButtonMode=UITextFieldViewModeWhileEditing;
     passWordBox.delegate = self;
     passWordBox.font=[UIFont systemFontOfSize:15.0];
     passWordBox.placeholder=ModuleZW(@"  请输入验证码");
     passWordBox.keyboardType = UIKeyboardTypeNumberPad;
     passWordBox.returnKeyType=UIReturnKeyDone;
-    [self.view addSubview:passWordBox];
+    [backScrollView addSubview:passWordBox];
     
     NSArray *buttonTitleArray = @[ModuleZW(@"我已阅读并同意"),ModuleZW(@"《炎黄用户协议》")];
     for (int i = 0; i < 2; i++) {
@@ -126,15 +128,15 @@
         [button setTitle:buttonTitleArray[i] forState:(UIControlStateNormal)];
         [button addTarget:self action:@selector(agreeDeal:) forControlEvents:(UIControlEventTouchUpInside)];
         [button.titleLabel setFont:[UIFont systemFontOfSize:12]];
-        [button setFrame:CGRectMake(segment.left + 105*i, passWordBox.bottom + 20, 110, 20)];
+        [button setFrame:CGRectMake(segment.left + 105*i, passWordBox.bottom + Adapter(20), Adapter(110), Adapter(20))];
         [button setTag:1000 + i];
-        [self.view addSubview:button];
+        [backScrollView addSubview:button];
         [button  sizeToFit];
         if(i == 0 ) {
             [button setTitleColor:RGB_TextMidLightGray forState:(UIControlStateNormal)];
-            [button setImage:[[UIImage imageNamed:@"协议选中"] transformWidth:15 height:15] forState:(UIControlStateNormal)];
-            [button setImageEdgeInsets:UIEdgeInsetsMake(0, -5, 0, 0)];
-            button.width = button.width + 15;
+            [button setImage:[[UIImage imageNamed:@"协议选中"] transformWidth:Adapter(15) height:Adapter(15)] forState:(UIControlStateNormal)];
+            [button setImageEdgeInsets:UIEdgeInsetsMake(0, Adapter(-5), 0, 0)];
+            button.width = button.width + Adapter(15);
             _leftButton = button;
         }else{
             [button setTitleColor:RGB_ButtonBlue forState:(UIControlStateNormal)];
@@ -142,12 +144,12 @@
         }
     }
     
-    UIImageView *imageV3 = [[UIImageView alloc] initWithFrame:CGRectMake(segment.left, passWordBox.bottom+2, imageV2.width, 1)];
+    UIImageView *imageV3 = [[UIImageView alloc] initWithFrame:CGRectMake(segment.left, passWordBox.bottom+Adapter(2), imageV2.width, Adapter(1))];
     imageV3.backgroundColor = UIColorFromHex(0X1E82D2);
-    [self.view addSubview:imageV3];
+    [backScrollView addSubview:imageV3];
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightBtn.frame = CGRectMake(imageV3.right-140, passWordBox.top, 140, passWordBox.height);
+    rightBtn.frame = CGRectMake(imageV3.right-Adapter(140), passWordBox.top, Adapter(140), passWordBox.height);
     rightBtn.tag = 2018;
     [rightBtn setTitle:ModuleZW(@"获取验证码") forState:UIControlStateNormal];
     
@@ -155,21 +157,21 @@
     [rightBtn setTitleColor:[UIColor colorWithRed:69/255.0 green:139/255.0 blue:208/255.0 alpha:1.0] forState:UIControlStateNormal];
     rightBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [rightBtn addTarget:self action:@selector(rightBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:rightBtn];
+    [backScrollView addSubview:rightBtn];
     
 //    userNameBox.width = rightBtn.left-userNameBox.left;
 //    passWordBox.width = userNameBox.width;
     
     
     UIButton *loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    loginBtn.frame = CGRectMake(segment.left, passWordBox.bottom + 60, imageV3.width, 44);
+    loginBtn.frame = CGRectMake(segment.left, passWordBox.bottom + Adapter(60), imageV3.width, Adapter(44));
    
     loginBtn.backgroundColor = UIColorFromHex(0x1e82d2);
     [loginBtn setTitle:ModuleZW(@"登录") forState:UIControlStateNormal];
     loginBtn.titleLabel.font = [UIFont systemFontOfSize:18.0];
     [loginBtn setTitleColor:UIColorFromHex(0xffffff) forState:UIControlStateNormal];
     [loginBtn addTarget:self action:@selector(userLogin) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:loginBtn];
+    [backScrollView addSubview:loginBtn];
     self.loginBtn = loginBtn;
     
     
@@ -184,12 +186,12 @@
         return @(username.length && password.length);
     }];
     
-    UILabel *promptLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, loginBtn.bottom , ScreenWidth, 40)];
+    UILabel *promptLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, loginBtn.bottom , ScreenWidth, Adapter(40))];
     promptLabel.text = ModuleZW(@"无需注册，可直接登录");
     promptLabel.textAlignment = NSTextAlignmentCenter;
     promptLabel.font = [UIFont systemFontOfSize:14];
     promptLabel.textColor = RGB_TextLightGray;
-    [self.view addSubview:promptLabel];
+    [backScrollView addSubview:promptLabel];
     self.promptLabel = promptLabel;
     
     if([UserShareOnce shareOnce].languageType){
@@ -201,7 +203,7 @@
         
         loginBtn.height = 35;
         UIButton *registeredBT = [UIButton buttonWithType:UIButtonTypeCustom];
-        registeredBT.frame = CGRectMake(segment.left, passWordBox.bottom + 110, imageV3.width, 35);
+        registeredBT.frame = CGRectMake(segment.left, passWordBox.bottom + Adapter(110), imageV3.width, Adapter(35));
         registeredBT.layer.cornerRadius = registeredBT.height/2;
         registeredBT.layer.masksToBounds = YES;
         registeredBT.backgroundColor = RGB(232, 241, 255);
@@ -213,11 +215,11 @@
             [self.navigationController pushViewController:enVC animated:YES];
         }];
 //        [registeredBT addTarget:self action:@selector(userLogin) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:registeredBT];
+        [backScrollView addSubview:registeredBT];
         self.registeredBT = registeredBT;
         self.ageButton.hidden = YES;
-        userNameBox.left = 40;
-        passWordBox.left = 40;
+        userNameBox.left = Adapter(40);
+        passWordBox.left = Adapter(40);
     }else{
         segment.hidden = NO;
         self.blueView.hidden = NO;
@@ -228,26 +230,26 @@
     loginBtn.layer.cornerRadius = loginBtn.height/2;
     loginBtn.layer.masksToBounds = YES;
     
-    UILabel *otherLoginLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-120)/2.0, promptLabel.bottom+30, 120, 30)];
+    UILabel *otherLoginLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-Adapter(120))/2.0, promptLabel.bottom+Adapter(30), Adapter(120), Adapter(30))];
     otherLoginLabel.font = [UIFont systemFontOfSize:14];
     otherLoginLabel.textAlignment = NSTextAlignmentCenter;
     otherLoginLabel.textColor = UIColorFromHex(0xcecece);
     otherLoginLabel.text = ModuleZW(@"其他登录方式");
-    [self.view addSubview:otherLoginLabel];
+    [backScrollView addSubview:otherLoginLabel];
     
-    UIImageView *imageV4 = [[UIImageView alloc] initWithFrame:CGRectMake(otherLoginLabel.left-100, otherLoginLabel.top+otherLoginLabel.height/2.0, 100, 1)];
+    UIImageView *imageV4 = [[UIImageView alloc] initWithFrame:CGRectMake(otherLoginLabel.left-Adapter(100), otherLoginLabel.top+otherLoginLabel.height/2.0, Adapter(100), 1)];
     imageV4.backgroundColor = UIColorFromHex(0xb8b8b8);
-    [self.view addSubview:imageV4];
+    [backScrollView addSubview:imageV4];
     
-    UIImageView *imageV5 = [[UIImageView alloc] initWithFrame:CGRectMake(otherLoginLabel.right, imageV4.top, imageV4.width, 1)];
+    UIImageView *imageV5 = [[UIImageView alloc] initWithFrame:CGRectMake(otherLoginLabel.right, imageV4.top, imageV4.width, Adapter(1))];
     imageV5.backgroundColor = UIColorFromHex(0xb8b8b8);
-    [self.view addSubview:imageV5];
+    [backScrollView addSubview:imageV5];
     
     UIButton *weixinBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    weixinBtn.frame = CGRectMake((ScreenWidth-40)/2.0, otherLoginLabel.bottom+20, 40, 40);
-    [weixinBtn setImage:[UIImage imageNamed:@"微信登录"] forState:UIControlStateNormal];
+    weixinBtn.frame = CGRectMake((ScreenWidth-Adapter(40))/2.0, otherLoginLabel.bottom+Adapter(20), Adapter(40), Adapter(40));
+    [weixinBtn setBackgroundImage:[UIImage imageNamed:@"微信登录"] forState:UIControlStateNormal];
     [weixinBtn addTarget:self action:@selector(weixinBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:weixinBtn];
+    [backScrollView addSubview:weixinBtn];
     
     
     if (![WXApi isWXAppInstalled]) {
@@ -257,15 +259,17 @@
         imageV4.hidden = YES;
         weixinBtn.hidden = YES;
         if([UserShareOnce shareOnce].languageType){
-            self.registeredBT.top = ScreenHeight - kTabBarHeight - 20;
-            otherLoginLabel.top = self.registeredBT.top - 40;
-            imageV5.top = otherLoginLabel.top + 15;
-            imageV4.top = otherLoginLabel.top + 15;
+            self.registeredBT.top = ScreenHeight - kTabBarHeight - Adapter(20);
+            otherLoginLabel.top = self.registeredBT.top - Adapter(40);
+            imageV5.top = otherLoginLabel.top + Adapter(15);
+            imageV4.top = otherLoginLabel.top + Adapter(15);
             otherLoginLabel.hidden = NO;
             imageV5.hidden = NO;
             imageV4.hidden = NO;
         }
     }
+    
+    backScrollView.contentSize = CGSizeMake(ScreenWidth, otherLoginLabel.bottom+Adapter(80));
     
     //从本地查找用户
     NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
@@ -296,16 +300,18 @@
     switch (control.selectedSegmentIndex) {
         case 0:{
             [UIView animateWithDuration:0.4 animations:^{
-                self.blueView.left = 40;
+                self.blueView.left = Adapter(40);
             }];
             self.addNumberLabel.hidden = NO;
             userNameBox.placeholder = ModuleZW(@"  请输入手机号");
             passWordBox.placeholder = ModuleZW(@"  请输入验证码");
-            userNameBox.left = 40;
-            passWordBox.left = 40;
+            userNameBox.left = Adapter(40);
+            passWordBox.left = Adapter(40);
+            passWordBox.width = Adapter(160);
             passWordBox.secureTextEntry=NO;
             passWordBox.keyboardType = UIKeyboardTypeNumberPad;
             [btn setTitle:ModuleZW(@"获取验证码") forState:UIControlStateNormal];
+            [btn setTitleColor:RGB_ButtonBlue forState:(UIControlStateNormal)];
             self.promptLabel.hidden  = NO;
             if(self.ageButton){
                 self.ageButton.hidden = YES;
@@ -320,13 +326,14 @@
             self.addNumberLabel.hidden = YES;
             userNameBox.placeholder = ModuleZW(@"  请输入和畅账户");
             passWordBox.placeholder = ModuleZW(@"  请输入密码");
-            userNameBox.left = 60;
-            passWordBox.left = 60;
+            userNameBox.left = Adapter(60);
+            passWordBox.left = Adapter(60);
+            passWordBox.width = Adapter(140);
             passWordBox.secureTextEntry=YES;
             passWordBox.keyboardType = UIKeyboardTypeDefault;
             if(!self.ageButton){
                 self.ageButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-                self.ageButton.frame = CGRectMake(passWordBox.left - 25,passWordBox.top + passWordBox.height/2 -10, 20, 20);
+                self.ageButton.frame = CGRectMake(Adapter(-25),passWordBox.height/2 -Adapter(10), Adapter(20), Adapter(20));
                 [self.ageButton setImage:[UIImage imageNamed:@"眼睛闭icon"] forState:(UIControlStateNormal)];
                 [[self.ageButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
                     x.selected  = !x.selected;
@@ -338,7 +345,7 @@
                         self->passWordBox.secureTextEntry = YES;
                     }
                 }];
-                [self.view addSubview: self.ageButton];
+                [passWordBox addSubview: self.ageButton];
             }else{
                 self.ageButton.hidden = NO;
             }
@@ -361,9 +368,9 @@
         button.selected = !button.selected;
         self.isChoose = !button.selected;
         if (button.selected) {
-            [button setImage:[[UIImage imageNamed:@"协议未选中"] transformWidth:15 height:15] forState:(UIControlStateNormal)];
+            [button setImage:[[UIImage imageNamed:@"协议未选中"] transformWidth:Adapter(15) height:Adapter(15)] forState:(UIControlStateNormal)];
         }else{
-            [button setImage:[[UIImage imageNamed:@"协议选中"] transformWidth:15 height:15] forState:(UIControlStateNormal)];
+            [button setImage:[[UIImage imageNamed:@"协议选中"] transformWidth:Adapter(15) height:Adapter(15)] forState:(UIControlStateNormal)];
         }
     }else {
         HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];

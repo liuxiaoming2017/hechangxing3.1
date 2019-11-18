@@ -24,9 +24,9 @@
     [super viewDidLoad];
     
     self.navTitleLabel.text =  ModuleZW(@"血压心率检测");
-    self.navTitleLabel.font = [UIFont systemFontOfSize:18/[UserShareOnce shareOnce].fontSize];
+    self.navTitleLabel.font = [UIFont systemFontOfSize:18/[UserShareOnce shareOnce].multipleFontSize];
     
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight)];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth,ScreenHeight - kTabBarHeight + 44 - Adapter(110)-kNavBarHeight)];
     scrollView.showsVerticalScrollIndicator = NO;
     scrollView.tag = 1024;
     [self.view addSubview:scrollView];
@@ -49,7 +49,7 @@
         [scrollView addSubview:imageV];
         
     }
-    scrollView.contentSize = CGSizeMake(1, (0.57+0.73+0.75+0.23)*ScreenWidth);
+    scrollView.contentSize = CGSizeMake(ScreenWidth, (0.57+0.73+0.75+0.23)*ScreenWidth);
     scrollView.bounces = NO;
     
     
@@ -59,23 +59,21 @@
 {
     _isBottom = isBottom;
     if(isBottom){
-        UIScrollView *scv = (UIScrollView *)[self.view viewWithTag:1024];
-        scv.contentSize = CGSizeMake(1, (0.57+0.73+0.75+0.23)*ScreenWidth+110);
         [self createBottomView];
     }
 }
 
 - (void)createBottomView
 {
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kScreenSize.height-110, kScreenSize.width, 110)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, ScreenHeight - kTabBarHeight + 44 - Adapter(110), kScreenSize.width, Adapter(110))];
     imageView.userInteractionEnabled = YES;
     imageView.image = [UIImage imageNamed:ModuleZW(@"流程介绍页_02")];
     [self.view addSubview:imageView];
     
-    UIButton *checkInstance = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-60, 18, 120, 30) target:self sel:@selector(chekInstaceClick:) tag:11 image:ModuleZW(@"立即检测") title:nil];
+    UIButton *checkInstance = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-Adapter(60), Adapter(18), Adapter(120), Adapter(30)) target:self sel:@selector(chekInstaceClick:) tag:11 image:ModuleZW(@"立即检测") title:nil];
     [imageView addSubview:checkInstance];
     
-    UIButton *neverCaution = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-60, 63, 120, 30) target:self sel:@selector(neverCautionClick:) tag:12 image:ModuleZW(@"不再提醒") title:nil];
+    UIButton *neverCaution = [Tools creatButtonWithFrame:CGRectMake(kScreenSize.width/2-Adapter(60), Adapter(63), Adapter(120), Adapter(30)) target:self sel:@selector(neverCautionClick:) tag:12 image:ModuleZW(@"不再提醒") title:nil];
     [imageView addSubview:neverCaution];
 }
 

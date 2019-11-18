@@ -21,9 +21,17 @@
 
 + (UIFont *)adjustFont:(CGFloat)fontSize {
     UIFont *newFont = nil;
-   
-    newFont = [UIFont adjustFont:fontSize * [UserShareOnce shareOnce].fontSize];
-    return newFont;
+    [UserShareOnce shareOnce].padSizeFloat  = 1.0;
+    if(ISPaid) {
+        [UserShareOnce shareOnce].padSizeFloat  = 1.8;
+    }
+    [UserShareOnce shareOnce].fontSize = [UserShareOnce shareOnce].multipleFontSize*[UserShareOnce shareOnce].padSizeFloat;
+    newFont = [UIFont adjustFont:fontSize * [UserShareOnce shareOnce].fontSize ];
+    
+    if ([UserShareOnce shareOnce].canChageSize == NO){
+        newFont = [UIFont adjustFont:fontSize*1.35];
+    }
+     return newFont;
 }
 
 

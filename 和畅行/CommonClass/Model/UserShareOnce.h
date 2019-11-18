@@ -65,10 +65,16 @@
 @property (copy, nonatomic) NSString  *startTime;
 //字体大小设置倍数
 @property (assign, nonatomic) CGFloat  fontSize;
+
+@property (assign, nonatomic) CGFloat  multipleFontSize;
 //
 @property (copy, nonatomic) NSString  *bindCard;
 
 @property (nonatomic,assign) BOOL ogaConnected;
+
+@property (nonatomic,assign) float padSizeFloat;
+
+@property (nonatomic,assign) BOOL canChageSize;
 
 + (UserShareOnce *)shareOnce;
 +(void)attemptDealloc;

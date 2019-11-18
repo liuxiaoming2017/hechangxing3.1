@@ -71,9 +71,9 @@
     _selectedCount = 0;
     
     
-    UIButton *selectedSymDisBtn = [Tools creatButtonWithFrame:CGRectMake(30, ScreenHeight - 50, ScreenWidth - 60, 40) target:self sel:@selector(selectedSymDisBtnClick:) tag:22 image:nil title:ModuleZW(@"确定")];
+    UIButton *selectedSymDisBtn = [Tools creatButtonWithFrame:CGRectMake(Adapter(30), ScreenHeight - Adapter(50), ScreenWidth - Adapter(60), Adapter(40)) target:self sel:@selector(selectedSymDisBtnClick:) tag:22 image:nil title:ModuleZW(@"确定")];
     selectedSymDisBtn.backgroundColor = RGB_ButtonBlue;
-    selectedSymDisBtn.layer.cornerRadius = 20;
+    selectedSymDisBtn.layer.cornerRadius = selectedSymDisBtn.height/2;
     selectedSymDisBtn.layer.masksToBounds = YES;
     [selectedSymDisBtn.titleLabel setFont:[UIFont systemFontOfSize:18]];
     [self.view addSubview:selectedSymDisBtn];
@@ -95,30 +95,41 @@
 
 #pragma mark ------ searchBar相关
 -(void)customsearchBar{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, kNavBarHeight, ScreenWidth-20, 56)];
-    view.layer.cornerRadius = 10;
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(Adapter(10), kNavBarHeight, ScreenWidth-Adapter(20), Adapter(56))];
+    view.layer.cornerRadius = Adapter(10);
     view.backgroundColor = [UIColor whiteColor];
     view.layer.shadowColor = RGB(200, 200, 200).CGColor;
     view.layer.shadowOffset = CGSizeMake(0,0);
     view.layer.shadowOpacity = 0.5;
-    view.layer.shadowRadius = 5;
+    view.layer.shadowRadius = Adapter(5);
     self.backView = view;
     [self.view addSubview:view];
     
-    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(10, 10, ScreenWidth-40, 36)];
-    _searchBar.layer.cornerRadius = 18;
+    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(Adapter(10), Adapter(10), ScreenWidth-Adapter(40), Adapter(36))];
+    _searchBar.layer.cornerRadius = _searchBar.height/2;
     _searchBar.delegate = self;
     _searchBar.tag = 100;
+     [_searchBar setImage:[UIImage imageNamed:@"搜索 (1)"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
     _searchBar.placeholder = ModuleZW(@"搜索疾病名称");
-    _searchBar.backgroundImage = [UIImage new];
-//    [_searchBar setImage:[UIImage imageNamed:@"搜索 (1)"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
+    self.searchBar.barStyle=UIBarStyleDefault;
+    self.searchBar.backgroundColor = RGB_ButtonBlue;
     
-    UITextField *searchTextField =  [[[_searchBar.subviews firstObject] subviews] lastObject];
-    searchTextField.layer.masksToBounds = YES;
-    searchTextField.layer.cornerRadius = 18;
-    searchTextField.layer.borderWidth = 1.0;
-    searchTextField.layer.borderColor = RGB_ButtonBlue.CGColor;
+    for (UIView *view in self.searchBar.subviews) {
+        if ([view isKindOfClass:NSClassFromString(@"UIView")] && view.subviews.count > 0) {
+            [[view.subviews objectAtIndex:0] removeFromSuperview];
+            break;
+        }
+    }
+    NSArray *searchBarSubViews = [[self.searchBar.subviews objectAtIndex:0] subviews];
     
+    for (UIView *view in searchBarSubViews) {
+        if([view isKindOfClass:[UITextField class]]){
+            UITextField* textField = (UITextField*)view;
+            textField.backgroundColor = [UIColor clearColor];
+            textField.textColor = [UIColor whiteColor];
+            [textField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+        }
+    }
     
     for(UIView *searchBarSubview in [_searchBar subviews]){
         for(UIView *subView in [searchBarSubview subviews]){
@@ -168,9 +179,9 @@
     NSMutableArray *marr = [[NSMutableArray alloc] initWithArray:arr];
     _dataArr = [marr mutableCopy];
     if(arr.count > 0){
-        self.backView.frame = CGRectMake(10, kNavBarHeight, ScreenWidth-20, ScreenHeight - kNavBarHeight  );
+        self.backView.frame = CGRectMake(Adapter(10), kNavBarHeight, ScreenWidth-Adapter(20), ScreenHeight - kNavBarHeight  );
     }else{
-        self.backView.frame = CGRectMake(10, kNavBarHeight, ScreenWidth-20, 56);
+        self.backView.frame = CGRectMake(Adapter(10), kNavBarHeight, ScreenWidth-Adapter(20), Adapter(56));
     }
     [_tableView reloadData];
 }
@@ -183,7 +194,7 @@
 #pragma mark- tableView相关
 -(void)createTableView{
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kNavBarHeight+76, ScreenWidth, ScreenHeight-kNavBarHeight - kTabBarHeight - 76 ) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kNavBarHeight+Adapter(76), ScreenWidth, ScreenHeight-kNavBarHeight - kTabBarHeight - Adapter(76) ) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.backgroundColor = [UIColor clearColor];
@@ -204,7 +215,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44.0f;
+    return Adapter(44);
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -219,9 +230,9 @@
             OrganDiseaseModel *model = _dataArr[indexPath.row];
             NSMutableString *contentStr = [[NSMutableString alloc] initWithString:model.content];
             NSArray *contentArr = [contentStr componentsSeparatedByString:@"_"];
-            UILabel *title = [Tools labelWith:contentArr[0] frame:CGRectMake(48, 0, 260, 44) textSize:14 textColor:[Tools colorWithHexString:@"#666"] lines:0 aligment:NSTextAlignmentLeft];
+            UILabel *title = [Tools labelWith:contentArr[0] frame:CGRectMake(Adapter(48), 0, Adapter(260), Adapter(44)) textSize:14 textColor:[Tools colorWithHexString:@"#666"] lines:0 aligment:NSTextAlignmentLeft];
             [cell.contentView addSubview:title];
-            UIImageView *lineView = [Tools creatImageViewWithFrame:CGRectMake(40, 43, ScreenWidth-80, 1) imageName:@"ICD10_leftGrayLine"];
+            UIImageView *lineView = [Tools creatImageViewWithFrame:CGRectMake(Adapter(40), Adapter(43), ScreenWidth-Adapter(80), 1) imageName:@"ICD10_leftGrayLine"];
             [cell.contentView addSubview:lineView];
             if (_selectedArr.count) {
                 for (OrganDiseaseModel *diseaseModel in _selectedArr) {
@@ -308,7 +319,7 @@
 #pragma mark-添加、去除“对勾”
 -(void)addCheckWith:(UITableViewCell *)cell{
     //UIImageView *check = [[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width-14-20.5, 9.75, 20.5, 20.5)];
-    UIImageView *check = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth-40-22, 9.75, 20.5, 20.5)];
+    UIImageView *check = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth-Adapter(62), Adapter(9.75), Adapter(20.5), Adapter(20.5))];
 
     check.image = [UIImage imageNamed:@"ICD10_selected"];
     
@@ -327,6 +338,8 @@
     hpiVC.bottomArray =  _selectedArr;
     hpiVC.rightDataArr = _rightDataArr;
     hpiVC.sex = _sex;
+    NSLog(@"%@",self.startTimeStr);
+    hpiVC.startTimeStr = self.startTimeStr;
     [self.navigationController pushViewController:hpiVC animated:YES];
    
 }

@@ -66,26 +66,26 @@
     
     
     
-    self.sliderView = [[UIView alloc] initWithFrame:CGRectMake(20+10, 0+8, self.frame.size.width - 40 -20, self.frame.size.height - 16)];
-    self.sliderView.layer.cornerRadius = (self.frame.size.height - 16)/2.0;
+    self.sliderView = [[UIView alloc] initWithFrame:CGRectMake(Adapter(30), Adapter(8), self.frame.size.width -Adapter(60), self.frame.size.height - Adapter(16))];
+    self.sliderView.layer.cornerRadius = (self.frame.size.height - Adapter(16))/2.0;
     self.sliderView.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:243/255.0 alpha:1.0];
     [self addSubview:self.sliderView];
     
     UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     //addBtn.frame = CGRectMake(0, 0, 15, 15);
-    addBtn.frame = CGRectMake(10, 8, 15, 15);
-    [addBtn setImage:[UIImage imageNamed:@"按摩_减"] forState:UIControlStateNormal];
+    addBtn.frame = CGRectMake(Adapter(10), Adapter(8), Adapter(15), Adapter(15));
+    [addBtn setBackgroundImage:[UIImage imageNamed:@"按摩_减"] forState:UIControlStateNormal];
     [addBtn addTarget:self action:@selector(reduceBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:addBtn];
     
     UIButton *reduceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    reduceBtn.frame = CGRectMake(self.frame.size.width-15-10, 0+8, 15, 15);
-    [reduceBtn setImage:[UIImage imageNamed:@"按摩_加"] forState:UIControlStateNormal];
+    reduceBtn.frame = CGRectMake(self.frame.size.width-Adapter(25), Adapter(8), Adapter(15), Adapter(15));
+    [reduceBtn setBackgroundImage:[UIImage imageNamed:@"按摩_加"] forState:UIControlStateNormal];
     [reduceBtn addTarget:self action:@selector(addBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:reduceBtn];
     
-    [addBtn setHitTestEdgeInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
-    [reduceBtn setHitTestEdgeInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+    [addBtn setHitTestEdgeInsets:UIEdgeInsetsMake(Adapter(50), Adapter(50), Adapter(50), Adapter(50))];
+    [reduceBtn setHitTestEdgeInsets:UIEdgeInsetsMake(Adapter(50), Adapter(50), Adapter(50), Adapter(50))];
     
     /** 数值视图*/
     _leftView = [[UIView alloc]init];

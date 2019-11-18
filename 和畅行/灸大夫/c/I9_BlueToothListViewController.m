@@ -43,13 +43,14 @@
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;
     self.navTitleLabel.text = ModuleZW(@"灸大夫隔物灸仪列表");
-    self.navTitleLabel.font = [UIFont systemFontOfSize:17/[UserShareOnce shareOnce].fontSize];
+    self.navTitleLabel.font = [UIFont systemFontOfSize:17/[UserShareOnce shareOnce].multipleFontSize];
     if(_deviceNetName != nil){
         _mCurrentConnect.text = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"现连接灸头网络名称"),_deviceNetName];
     }else{
         _mCurrentConnect.text = ModuleZW(@"当前未连接设备");
     }
     _titleLabelEn.text = ModuleZW(@"灸头网络列表");
+    _titleLabelEn.font = [UIFont systemFontOfSize:12];
     _mTableList.dataSource = self;
     _mTableList.delegate = self;
     _deviceList = [NSMutableArray new];
@@ -140,6 +141,21 @@
 //    i9_BluetoothPeripheralModule *module = [[i9_BluetoothClientFactory getInstance] getPeripheralInfInArrByUUID:[[pheral identifier] UUIDString]];
 //    NSString *str;
     NSString *name = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"灸头ID"),devcie.bodyCode];
+    cell.mMechineName.font = [UIFont systemFontOfSize:17];
+    cell.mMechineName.textAlignment = NSTextAlignmentLeft;
+    [cell.mMechineName mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(cell.contentView.mas_top).offset(Adapter(10.0));
+        make.leading.equalTo(cell.contentView.mas_leading).offset(Adapter(20));
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth -  Adapter(70), Adapter(30)));
+        
+    }];
+    
+    [cell.mContectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(cell.contentView.mas_top).offset(Adapter(10.0));
+        make.size.mas_equalTo(CGSizeMake(Adapter(30), Adapter(30)));
+        make.left.equalTo(cell.mMechineName.mas_right).offset(Adapter(10.0));
+    }];
+    
     cell.mMechineName.text = name;
     cell.delegate = self;
     cell.mContectBtn.section = section;
@@ -158,17 +174,17 @@
 
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WID, 60)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WID, Adapter(60))];
     [view setBackgroundColor:[UIColor whiteColor]];
     UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WID, 1)];
     [line1 setBackgroundColor:[UIColor colorWithRed:(230 / 255.0) green:(230 / 255.0) blue:(230 / 255.0) alpha:1.0]];
     [view addSubview:line1];
     
-    UILabel *tittle =  [[UILabel alloc] initWithFrame:CGRectMake(15, 10, SCREEN_WID - 70, 40)];
+    UILabel *tittle =  [[UILabel alloc] initWithFrame:CGRectMake(Adapter(15), Adapter(10), SCREEN_WID - Adapter(70), Adapter(40))];
     tittle.text = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"灸头网络名称"),[_deviceMeshnameList objectAtIndex:section]];
     [view addSubview:tittle];
     
-    UIButton *contentBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WID - 48, 10, 40, 40)];
+    UIButton *contentBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WID - Adapter(48), Adapter(10), Adapter(40), Adapter(40))];
     contentBtn.tag = section;
     [contentBtn setBackgroundImage:[UIImage imageNamed:@"connect_device"] forState:UIControlStateNormal];
     [contentBtn addTarget:self action:@selector(ConnectNetWorkOnclinck:) forControlEvents:UIControlEventTouchUpInside];
@@ -185,7 +201,7 @@
         }
     }
     
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 60, SCREEN_WID, 1)];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, Adapter(60), SCREEN_WID, Adapter(1))];
     [line setBackgroundColor:[UIColor colorWithRed:(230 / 255.0) green:(230 / 255.0) blue:(230 / 255.0) alpha:1.0]];
     [view addSubview:line];
     
@@ -193,12 +209,12 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 60.0;
+    return Adapter(60.0);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    return 58.0f;
+    return Adapter(58.0f);
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

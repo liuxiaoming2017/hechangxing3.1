@@ -18,15 +18,15 @@
 }
 -(void)layOutCellView{
     
-    _typeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5,70, self.height - 10)];
+    _typeLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(10), Adapter(5),Adapter(70), self.height - Adapter(10))];
     _typeLabel.textColor = RGB_TextGray;
     _typeLabel.textAlignment = NSTextAlignmentCenter;
     _typeLabel.lineBreakMode = NSLineBreakByCharWrapping;
     _typeLabel.numberOfLines = 0;
     _typeLabel.font = [UIFont systemFontOfSize:14];
-    _numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 0, 14, 14)];
+    _numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(75), 0, Adapter(14), Adapter(14))];
     _numberLabel.backgroundColor = RGB_TextAppOrange;
-    _numberLabel.layer.cornerRadius = 7;
+    _numberLabel.layer.cornerRadius = _numberLabel.height/2;
     _numberLabel.layer.masksToBounds = YES;
     _numberLabel.textAlignment = NSTextAlignmentCenter;
     _numberLabel.hidden = YES;
@@ -38,11 +38,11 @@
     self.backgroundColor = [UIColor clearColor];
     
     [_typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView.mas_top).offset(5);
-        make.bottom.equalTo(self.contentView.mas_bottom).offset(-5);
+        make.top.equalTo(self.contentView.mas_top).offset(Adapter(5));
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(Adapter(-5));
         make.leading.equalTo(self);
         make.trailing.equalTo(self);
-        make.height.greaterThanOrEqualTo(@(40));
+        make.height.greaterThanOrEqualTo(@(Adapter(40)));
     }];
     
     

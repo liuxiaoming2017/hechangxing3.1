@@ -22,7 +22,7 @@
 
 #import "ArmchairTestResultVC.h"
 
-#define margin ((ScreenWidth-107*3)/4.0)
+#define margin ((ScreenWidth-Adapter(107)*3)/4.0)
 
 #define startDevice @"启动设备"
 #define connectDevice @"连接设备"
@@ -71,11 +71,11 @@
     
     self.navTitleLabel.text = @"推拿";
     
-    self.dataArr = [NSMutableArray arrayWithCapacity:0];
+    self.dataArr = [NSMutableArray array];
     
 
     UIView *view = [[UIView alloc] init];
-    view.frame = CGRectMake(14,kNavBarHeight+20,107.5,115);
+    view.frame = CGRectMake(Adapter(14),kNavBarHeight+Adapter(20),Adapter(107.5),Adapter(115));
     
     view.layer.backgroundColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1.0].CGColor;
     view.layer.cornerRadius = 8;
@@ -150,10 +150,10 @@
             ArmChairModel *model = [self recommendModelWithStr];
             [layerView setImageAndTitleWithModel:model withName:@""];
             label.top = layerView.top;
-            label.height = 75;
+            label.height = Adapter(75);
             NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
             label.attributedText = [self attributedStringWithTitle:[NSString stringWithFormat:@"1、您的经络检测类型为%@\n2、建议您选用%@推拿手法",str,str]];
-            speakBtn.frame = CGRectMake(label.left, label.bottom+10, label.width, 20);
+            speakBtn.frame = CGRectMake(label.left, label.bottom+Adapter(10), label.width, Adapter(20));
             [speakBtn setTitle:@"3、点我再次检测" forState:UIControlStateNormal];
         }
         
@@ -182,11 +182,11 @@
         
         if(self.dataArr.count>12){
             int count = (int)ceil(self.dataArr.count/3.0);
-            self.collectionV.height = 125*count+50+20;
+            self.collectionV.height = Adapter(125)*count+Adapter(50)+Adapter(20);
         }else{
-            self.collectionV.height = 125*4+50;
+            self.collectionV.height = Adapter(125)*4+Adapter(50);
         }
-        self.bgScrollView.contentSize = CGSizeMake(1, self.collectionV.bottom+10);
+        self.bgScrollView.contentSize = CGSizeMake(1, self.collectionV.bottom+Adapter(10));
         [self.collectionV reloadData];
     }
     
@@ -239,11 +239,11 @@
 - (void)createRecommendView
 {
     
-    self.recommendV = [[UIView alloc] initWithFrame:CGRectMake(0, 15, ScreenWidth, 148)];
+    self.recommendV = [[UIView alloc] initWithFrame:CGRectMake(0, Adapter(15), ScreenWidth, Adapter(148))];
     [self.bgScrollView addSubview:self.recommendV];
     
     UILabel *recommendLabel = [[UILabel alloc] init];
-    recommendLabel.frame = CGRectMake(margin,0,240,22.5);
+    recommendLabel.frame = CGRectMake(margin,0,Adapter(240),Adapter(22.5));
     recommendLabel.text = @"推拿处方";
     recommendLabel.textAlignment = NSTextAlignmentLeft;
     recommendLabel.font = [UIFont fontWithName:@"PingFang SC" size:16*[UserShareOnce shareOnce].fontSize];
@@ -252,7 +252,7 @@
     
     ArmChairModel *model = [self recommendModelWithStr];
     
-    SublayerView *sublayerView = [[SublayerView alloc] initWithFrame:CGRectMake(recommendLabel.left, recommendLabel.bottom+10, 108, 115)];
+    SublayerView *sublayerView = [[SublayerView alloc] initWithFrame:CGRectMake(recommendLabel.left, recommendLabel.bottom+Adapter(10), Adapter(108), Adapter(115))];
     sublayerView.tag = 2008;
     [sublayerView setImageAndTitleWithModel:model withName:@""];
     [sublayerView insertSublayerFromeView:self.recommendV];
@@ -264,7 +264,7 @@
     
     
     UILabel *label1 = [[UILabel alloc] init];
-    label1.frame = CGRectMake(sublayerView.right+19,sublayerView.top+20,240.5+15,75);
+    label1.frame = CGRectMake(sublayerView.right+Adapter(19),sublayerView.top+Adapter(20),Adapter(255.5),Adapter(75));
     label1.numberOfLines = 0;
     label1.tag = 222;
     [self.recommendV addSubview:label1];
@@ -274,7 +274,7 @@
     NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
     if([jlbsName isEqualToString:@""] || jlbsName==nil ){
         recommandStr = @"1、您尚未进行经络检测";
-        label1.height = 30;
+        label1.height = Adapter(30);
         btnStr = @"2、点我立即检测";
     }else{
         label1.top = sublayerView.top;
@@ -288,7 +288,10 @@
     label1.alpha = 1.0;
     
     UIButton *speakBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    speakBtn.frame = CGRectMake(label1.left, label1.bottom+10, label1.width, 20);
+    speakBtn.frame = CGRectMake(label1.left, label1.bottom+10, label1.width, Adapter(20));
+    if (ISPaid) {
+       speakBtn.top =  label1.bottom - 10;
+    }
     [speakBtn setTitle:btnStr forState:UIControlStateNormal];
     [speakBtn setTitleColor:[UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0] forState:UIControlStateNormal];
     speakBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -318,7 +321,7 @@
   //  CGFloat margin = ((ScreenWidth-107*3)/4.0);
     
     UILabel *label = [[UILabel alloc] init];
-    label.frame = CGRectMake(margin,self.recommendV.bottom+15,120,20);
+    label.frame = CGRectMake(margin,self.recommendV.bottom+Adapter(15),Adapter(120),Adapter(20));
     //label.frame = CGRectMake(margin,kNavBarHeight+15,120,20);
     label.font = [UIFont fontWithName:@"PingFang SC" size:16*[UserShareOnce shareOnce].fontSize];
     label.text = @"按摩手法";
@@ -328,14 +331,14 @@
     //[self.view addSubview:label];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(107+margin, 111+margin);
+    layout.itemSize = CGSizeMake(Adapter(107)+margin, Adapter(111)+margin);
     //layout.itemSize = CGSizeMake(130, 106);
     layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
     layout.minimumLineSpacing = 0;
     layout.minimumInteritemSpacing = 0;
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
-    self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom, ScreenWidth-margin, 125*4+50) collectionViewLayout:layout];
+    self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom, ScreenWidth-margin, Adapter(125)*4+Adapter(50)) collectionViewLayout:layout];
      //self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom+8, ScreenWidth-margin, ScreenHeight-label.bottom-8) collectionViewLayout:layout];
     self.collectionV.delegate = self;
     self.collectionV.dataSource = self;
@@ -350,7 +353,7 @@
     
     [self.bgScrollView addSubview:self.collectionV];
 
-    self.bgScrollView.contentSize = CGSizeMake(1, self.collectionV.bottom+10);
+    self.bgScrollView.contentSize = CGSizeMake(1, self.collectionV.bottom+Adapter(10));
 }
 
 # pragma mark - 推荐按摩点击事件

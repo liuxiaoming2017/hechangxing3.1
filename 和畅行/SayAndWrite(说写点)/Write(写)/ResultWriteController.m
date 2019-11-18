@@ -23,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navTitleLabel.text = ModuleZW(@"健康档案");
+    self.navTitleLabel.text = self.titleStr;
     [self customeViewWithStr:self.urlStr];
 }
 
@@ -33,6 +33,19 @@
         [self.navigationController popToRootViewControllerAnimated:YES];
     }else{
         [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    NSString *pageIDStr = @"";
+    if ([self.navTitleLabel.text isEqualToString:ModuleZW(@"脏腑辨识")]) {
+        pageIDStr = @"7";
+    }
+    if (![pageIDStr isEqualToString:@""]) {
+        self.endTimeStr = [GlobalCommon getCurrentTimes];
+        [GlobalCommon pageDurationWithpageId:pageIDStr withstartTime:self.startTimeStr withendTime:self.endTimeStr];
     }
 }
 

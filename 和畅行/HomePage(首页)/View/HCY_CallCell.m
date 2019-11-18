@@ -21,7 +21,57 @@
     self.backView.layer.shadowOffset = CGSizeMake(0,1);
     self.backView.layer.shadowOpacity = 0.4;
     self.backView.layer.shadowRadius = 4;
+    self.typeImageView.frame = CGRectMake(Adapter(10), Adapter(10), Adapter(90), Adapter(90));
     
+    self.typeLabel.font = [UIFont systemFontOfSize:17];
+    self.oneLabel.font = [UIFont systemFontOfSize:14];
+    self.twoLabel.font = [UIFont systemFontOfSize:14];
+    self.threeLabel.font = [UIFont systemFontOfSize:14];
+    [self.comeButton.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    
+    [self.typeImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.backView.mas_top).offset(Adapter(10.0));
+        make.size.mas_equalTo(CGSizeMake(Adapter(90), Adapter(90)));
+        make.leading.equalTo(self.backView.mas_leading).offset(Adapter(10.0));
+    }];
+    
+    [self.typeLabel  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.typeImageView.mas_bottom);
+        make.bottom.equalTo(self.backView.mas_bottom);
+        make.leading.equalTo(self.backView.mas_leading).offset(Adapter(20.0));
+        make.width.mas_equalTo(200);
+    }];
+    
+
+    [self.oneLabel  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.backView.mas_top);
+        make.left.equalTo(self.typeImageView.mas_right).offset(Adapter(10));
+        make.right.equalTo(self.contentView.mas_right).offset(Adapter(-10));
+        make.height.mas_equalTo(Adapter(35));
+
+    }];
+    [self.twoLabel  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.oneLabel.mas_bottom);
+        make.left.equalTo(self.typeImageView.mas_right).offset(Adapter(10));
+        make.right.equalTo(self.backView.mas_right).offset(Adapter(-10));
+        make.height.mas_equalTo(Adapter(35));
+        
+    }];
+    [self.threeLabel  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.twoLabel.mas_bottom);
+        make.left.equalTo(self.typeImageView.mas_right).offset(Adapter(10));
+        make.right.equalTo(self.backView.mas_right).offset(Adapter(-10));
+        make.height.mas_equalTo(Adapter(35));
+    }];
+
+
+    [self.comeButton  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.backView.mas_bottom).offset(Adapter(-36));
+        make.left.equalTo(self.backView.mas_right).offset(Adapter(-75));
+        make.right.equalTo(self.backView.mas_right).offset(Adapter(-10));
+        make.size.mas_equalTo(CGSizeMake(Adapter(65), Adapter(26)));
+    }];
+   
     
     
 }

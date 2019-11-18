@@ -17,9 +17,9 @@
 #import <AVFoundation/AVFoundation.h>
 
 /** 扫描内容的Y值 */
-#define scanContent_Y self.frame.size.height * 0.24
+#define scanContent_Y Adapter(80)
 /** 扫描内容的Y值 */
-#define scanContent_X self.frame.size.width * 0.15
+#define scanContent_X Adapter(80)
 
 @interface SGScanningQRCodeView ()
 @property (nonatomic, strong) CALayer *basedLayer;
@@ -146,7 +146,7 @@ static CGFloat const timer_animation_Duration = 0.05;
     CGFloat promptLabelH = 25;
     promptLabel.frame = CGRectMake(promptLabelX, promptLabelY, promptLabelW, promptLabelH);
     promptLabel.textAlignment = NSTextAlignmentCenter;
-    promptLabel.font = [UIFont boldSystemFontOfSize:13.0];
+    promptLabel.font = [UIFont systemFontOfSize:13.0];
     promptLabel.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
     promptLabel.text = @"将二维码/条码放入框内, 即可自动扫描";
     [self addSubview:promptLabel];
@@ -166,8 +166,12 @@ static CGFloat const timer_animation_Duration = 0.05;
     [light_button addTarget:self action:@selector(light_buttonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:light_button];
     
+    if (ISPaid) {
+        light_button.hidden = YES;
+    }
     
-    UIButton *manualBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - 15 ,light_button.bottom + 30, 30, 30) target:self sel:@selector(rightBarButtonItenAction) tag:31 image:@"手" title:nil];
+    
+    UIButton *manualBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - Adapter(15) ,light_button.bottom + Adapter(30), Adapter(30), Adapter(30)) target:self sel:@selector(rightBarButtonItenAction) tag:31 image:@"手" title:nil];
     [manualBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [self addSubview:manualBtn];
     

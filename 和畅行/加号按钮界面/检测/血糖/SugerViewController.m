@@ -87,7 +87,7 @@
     _personView.backgroundColor = [UIColor blackColor];
     _personView.alpha = 0.3;
     [self.view addSubview:_personView];
-    _showView = [[UIView alloc]initWithFrame:CGRectMake(30, 100, self.view.frame.size.width - 60, self.view.frame.size.height - 190)];
+    _showView = [[UIView alloc]initWithFrame:CGRectMake(Adapter(30), Adapter(100), self.view.frame.size.width - Adapter(60), self.view.frame.size.height - Adapter(190))];
     _showView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_showView];
     
@@ -122,7 +122,7 @@
     NSArray *titleArray = @[dateString,dateString1,typeStr];
     
     for (int i = 0; i < 2; i++) {
-        UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10+kNavBarHeight, ScreenWidth - 20, 150)];
+        UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(10), Adapter(10)+kNavBarHeight, ScreenWidth - Adapter(20), Adapter(150))];
         backImageView.backgroundColor = [UIColor whiteColor];
         backImageView.userInteractionEnabled = YES;
         backImageView.layer.cornerRadius = 10;
@@ -132,14 +132,12 @@
                 UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
                 button.frame = CGRectMake(0, 0 +backImageView.height*j/3 , backImageView.width, backImageView.height/3 );
                 [button setTitle:buttonTitleArray[j] forState:(UIControlStateNormal)];
-                [button setImage:[UIImage imageNamed:@"1我的_09"] forState:(UIControlStateNormal)];
                 [button setTitleColor:RGB_TextGray forState:(UIControlStateNormal)];
                 [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
                 [button setTitleEdgeInsets:UIEdgeInsetsMake(0, -button.currentImage.size.width,0,0)];
-                [button.titleLabel setFrame:CGRectMake(20, 0, button.width - 20, button.height)];
+                [button.titleLabel setFrame:CGRectMake(Adapter(20), 0, button.width - Adapter(20), button.height)];
                 [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
                 [button setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,0)];
-                [button setImageEdgeInsets:UIEdgeInsetsMake(0, backImageView.width - 40 , 0, -backImageView.width + 40)];
                 [[button rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
                     if(j == 0){
                         [self  layoutDataViewWithType:1];
@@ -151,7 +149,12 @@
                 }];
                 [backImageView addSubview:button];
                 
-                UILabel *dataLable = [[UILabel alloc]initWithFrame:CGRectMake(backImageView.width - 200, 0, 150, backImageView.height/3)];
+                UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(button.width - Adapter(30), button.height/2 - Adapter(10), Adapter(12), Adapter(20))];
+                imageView.image = [UIImage imageNamed:@"1我的_09"];
+                imageView.userInteractionEnabled = YES;
+                [button addSubview:imageView];
+                
+                UILabel *dataLable = [[UILabel alloc]initWithFrame:CGRectMake(backImageView.width - Adapter(200), 0, Adapter(150), backImageView.height/3)];
                 dataLable.font = [UIFont systemFontOfSize:16];
                 dataLable.textAlignment = NSTextAlignmentRight;
                 dataLable.text = titleArray[j];
@@ -164,7 +167,7 @@
                     self.typeLabel = dataLable;
                 }
                 if(j < 2){
-                    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, backImageView.height*(j+1)/3 - 0.25, backImageView.width, 0.5)];
+                    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, backImageView.height*(j+1)/3 - Adapter(0.25), backImageView.width, Adapter(0.5))];
                     lineView.backgroundColor = UIColorFromHex(0XD6D6D6);
                     [backImageView addSubview:lineView];
                 }
@@ -173,23 +176,23 @@
           
         }else{
             
-                backImageView.top = kNavBarHeight + 180 ;
-                backImageView.height = 150;
+                backImageView.top = kNavBarHeight + Adapter(180) ;
+                backImageView.height = Adapter(150);
 //
-                UILabel *bloodLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 10, 300, 30)];
+                UILabel *bloodLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(30), Adapter(10), Adapter(300), Adapter(30))];
                 bloodLabel.text = ModuleZW(@"血糖");
                 bloodLabel.font = [UIFont systemFontOfSize:16];
                 bloodLabel.textColor = RGB_TextGray;
                 [backImageView addSubview:bloodLabel];
             
-            UILabel *rightlabel =  [[UILabel alloc]initWithFrame:CGRectMake(0,bloodLabel.bottom + 10 , backImageView.width, 30)];
+            UILabel *rightlabel =  [[UILabel alloc]initWithFrame:CGRectMake(0,bloodLabel.bottom + Adapter(10) , backImageView.width, Adapter(30))];
             rightlabel.text = @"3mmol/L";
             rightlabel.textAlignment = NSTextAlignmentCenter;
             rightlabel.font  =  [UIFont systemFontOfSize:19];
             [backImageView addSubview:rightlabel];
             self.sugarLabel = rightlabel;
             
-            LJRuler *ruler = [[LJRuler alloc] initWithFrame:CGRectMake(40, rightlabel.bottom + 10 , backImageView.width - 80, 34)];
+            LJRuler *ruler = [[LJRuler alloc] initWithFrame:CGRectMake(Adapter(40), rightlabel.bottom + Adapter(10) , backImageView.width - Adapter(80), Adapter(34))];
             ruler.rulerColor = [UIColor whiteColor];
             ruler.delegate = self;
             ruler.scaleCount = 330;
@@ -207,11 +210,11 @@
 
 
     UIButton *suerButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    suerButton.frame = CGRectMake(ScreenWidth/2 - 45, 350 +kNavBarHeight, 90, 30);
+    suerButton.frame = CGRectMake(ScreenWidth/2 - Adapter(45), Adapter(350) +kNavBarHeight, Adapter(90), Adapter(30));
     [suerButton setTitle:ModuleZW(@"确定") forState:(UIControlStateNormal)];
     [suerButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [suerButton setBackgroundColor:RGB_ButtonBlue];
-    suerButton.layer.cornerRadius = 15;
+    suerButton.layer.cornerRadius = Adapter(15);
     suerButton.layer.masksToBounds = YES;
     [suerButton addTarget:self action:@selector(commitClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:suerButton];
@@ -433,7 +436,7 @@
         mbHud.removeFromSuperViewOnHide = YES;
         mbHud.mode = MBProgressHUDModeText;
         mbHud.label.text = @"获取血糖数据失败";
-        mbHud.minSize = CGSizeMake(132.f, 108.f);
+        mbHud.minSize = CGSizeMake(Adapter(132.f), Adapter(108.f));
         [mbHud hideAnimated:YES afterDelay:2];
     }
 }
@@ -447,12 +450,12 @@
     view.alpha = 0.3;
     UIView *view2 = [[UIView alloc] initWithFrame:self.view.frame];
     view2.tag = 332;
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 303*1.1, 195*1.1)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, Adapter(303)*1.1, Adapter(195)*1.1)];
     imageView.center = self.view.center;
     imageView.userInteractionEnabled = YES;
     imageView.image = [UIImage imageNamed:@"bounceView"];
 
-    UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您今天测量血糖%ld次，正常%ld次，异常%ld次\n您当前检测%@血糖值为%.1fmmol/L"),(long)_totalCount,(long)_nomalCount,(long)_unNomalCount,self.typeLabel.text,self.sugerValue] frame:CGRectMake(20, 80, imageView.bounds.size.width - 40, 20) textSize:12 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
+    UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您今天测量血糖%ld次，正常%ld次，异常%ld次\n您当前检测%@血糖值为%.1fmmol/L"),(long)_totalCount,(long)_nomalCount,(long)_unNomalCount,self.typeLabel.text,self.sugerValue] frame:CGRectMake(Adapter(20), Adapter(80), imageView.bounds.size.width - Adapter(40), Adapter(20)) textSize:12 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
     [imageView addSubview:countLabel];
     CGRect textRect1 = [countLabel.text  boundingRectWithSize:CGSizeMake(imageView.bounds.size.width-40, MAXFLOAT)
                                                       options:NSStringDrawingUsesLineFragmentOrigin
@@ -460,7 +463,7 @@
                                                       context:nil];
     countLabel.height = textRect1.size.height;
     
-    UILabel *hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, countLabel.bottom + 10, imageView.bounds.size.width-40, 60)];
+    UILabel *hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(20), countLabel.bottom + Adapter(10), imageView.bounds.size.width-Adapter(40), Adapter(60))];
     
     hintLabel.numberOfLines = 0;
     hintLabel.font = [UIFont systemFontOfSize:12];
@@ -476,16 +479,16 @@
     hintLabel.attributedText = hintString;
     [imageView addSubview:hintLabel];
     NSString *str = [NSString stringWithFormat:@"%@",hintString];
-    CGRect hintRect = [str boundingRectWithSize:CGSizeMake(imageView.width - 40, MAXFLOAT) options:(NSStringDrawingOptions)NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil];
+    CGRect hintRect = [str boundingRectWithSize:CGSizeMake(imageView.width - Adapter(40), MAXFLOAT) options:(NSStringDrawingOptions)NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil];
     hintLabel.height = hintRect.size.height;
     
-    imageView.height = countLabel.height + hintLabel.height + 100;
+    imageView.height = countLabel.height + hintLabel.height + Adapter(100);
     
     UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [sureBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
     [sureBtn setTitle: ModuleZW(@"返回检测") forState:UIControlStateNormal];
     sureBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    sureBtn.frame = CGRectMake(20, imageView.bottom, imageView.frame.size.width * 0.5, 40);
+    sureBtn.frame = CGRectMake(Adapter(20), imageView.bottom, imageView.frame.size.width * 0.5, Adapter(40));
     [sureBtn addTarget:self action:@selector(confirmBtnClick2:) forControlEvents:UIControlEventTouchUpInside];
     [view2 addSubview:sureBtn];
     
@@ -493,7 +496,7 @@
     [lookBtn setBackgroundImage:[UIImage imageNamed:@"look"] forState:UIControlStateNormal];
     [lookBtn setTitle:ModuleZW(@"查看档案") forState:UIControlStateNormal];
     lookBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    lookBtn.frame = CGRectMake(CGRectGetMaxX(sureBtn.frame), sureBtn.frame.origin.y, imageView.frame.size.width * 0.5, 40);
+    lookBtn.frame = CGRectMake(CGRectGetMaxX(sureBtn.frame), sureBtn.frame.origin.y, imageView.frame.size.width * 0.5, Adapter(40));
     [lookBtn addTarget:self action:@selector(lookClickBtn:) forControlEvents:UIControlEventTouchUpInside];
     [view2 addSubview:lookBtn];
 
@@ -547,20 +550,20 @@
         backView.backgroundColor = RGBA(0, 0, 0, 0.4);
         [self.view addSubview:backView];
         _backView = backView;
-        UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(10, ScreenHeight - 290, ScreenWidth - 20, 280)];
+        UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(10, ScreenHeight - Adapter(290), ScreenWidth - Adapter(20), Adapter(280))];
         bottomView.backgroundColor = [UIColor whiteColor];
-        bottomView.layer.cornerRadius = 15;
+        bottomView.layer.cornerRadius = Adapter(15);
         [backView addSubview:bottomView];
         self.bottomView = bottomView;
         
-        UILabel *dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 10, 100, 30)];
+        UILabel *dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(30), Adapter(10), Adapter(100), Adapter(30))];
         dataLabel.textColor = RGB_TextGray;
         dataLabel.font = [UIFont systemFontOfSize:14];
         [bottomView addSubview:dataLabel];
         _datatypeLabel = dataLabel;
         
         
-        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(bottomView.width/2 - 0.25,bottomView.height - 36, 0.5, 32)];
+        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(bottomView.width/2 - Adapter(0.25),bottomView.height - Adapter(36), Adapter(0.5), Adapter(32))];
         lineView.backgroundColor = RGB(230, 230, 230);
         [bottomView addSubview:lineView];
         
@@ -587,10 +590,10 @@
         NSArray *buttonTitleArray = @[ModuleZW(@"取消"),ModuleZW(@"确定")];
         for (int i = 0; i < 2; i++) {
             UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            button.frame = CGRectMake(40 + (bottomView.width/2-40)*i  , bottomView.height - 40, (bottomView.width - 80)/2, 40);
+            button.frame = CGRectMake(Adapter(40) + (bottomView.width/2-Adapter(40))*i  , bottomView.height - Adapter(40), (bottomView.width - Adapter(80))/2, Adapter(40));
             [button setTitle:buttonTitleArray[i] forState:(UIControlStateNormal)];
             [button setTitleColor:UIColorFromHex(0Xffa200) forState:(UIControlStateNormal)];
-            [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
+            [button.titleLabel setFont:[UIFont systemFontOfSize:16*[UserShareOnce shareOnce].fontSize*0.8]];
             [[button rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
                 if(i == 1){
                     if([self.datatypeLabel.text isEqualToString: ModuleZW(@"日期")]){
@@ -602,6 +605,7 @@
                     }
                 }
                 backView.hidden = YES;
+                 [UserShareOnce shareOnce].canChageSize = YES;
             }];
             [bottomView addSubview:button];
         }
@@ -655,8 +659,9 @@
 
 -(UIDatePicker *)datePicker{
     if(!_datePicker){
+        [UserShareOnce shareOnce].canChageSize = NO;
         self.datePicker = [[UIDatePicker alloc] init];
-        self.datePicker.frame = CGRectMake(30, 40, _bottomView.width - 60, 200);
+        self.datePicker.frame = CGRectMake(Adapter(30), Adapter(40), _bottomView.width - Adapter(60), Adapter(200));
         if([UserShareOnce shareOnce].languageType){
             self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"us"];
         }else{
@@ -672,7 +677,7 @@
 -(UIPickerView *)pickerView{
     if(!_pickerView){
         self.pickerView = [[UIPickerView alloc] init];
-        self.pickerView.frame = CGRectMake(30, 40, _bottomView.width - 80, 200);
+        self.pickerView.frame = CGRectMake(Adapter(30), Adapter(40), _bottomView.width - Adapter(80), Adapter(200));
         self.pickerView.dataSource = self;
         self.pickerView.delegate = self;
         [self.pickerView selectRow:3 inComponent:0 animated:NO];
@@ -702,7 +707,7 @@
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
-    return 40;
+    return Adapter(40);
 }
 
 

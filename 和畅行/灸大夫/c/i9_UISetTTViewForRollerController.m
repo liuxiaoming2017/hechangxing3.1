@@ -19,6 +19,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *synWendu;
 @property (weak, nonatomic) IBOutlet UIButton *synTime;
 @property (weak, nonatomic) IBOutlet UIButton *openBtn;
+@property (weak, nonatomic) IBOutlet UIButton *closeBT;
+@property (weak, nonatomic) IBOutlet UIView *topView;
+@property (weak, nonatomic) IBOutlet UIView *midView;
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (retain,nonatomic) NSMutableArray *wenduArray;
 @property (retain,nonatomic) NSMutableArray *shijianArray;
 @property (retain, nonatomic) NewChannelView *channelView;
@@ -62,6 +66,83 @@
         [_shijianArray addObject:[NSString stringWithFormat:@"%d", sjval]];
     }
     [self showStartMode];
+    //
+    _moxaNumLable.font = [UIFont systemFontOfSize:20];
+    _wenduRemind.font = [UIFont systemFontOfSize:16];
+    [_synWendu.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    [_synTime.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    [_openBtn.titleLabel setFont:[UIFont systemFontOfSize:17]];
+    [_topView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(self.view.mas_leading);
+        make.top.equalTo(self.view.mas_top);
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth, Adapter(30)));
+    }];
+    
+    [_midView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(self.view.mas_leading);
+        make.top.equalTo(self.topView.mas_bottom);
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth, Adapter(180)));
+    }];
+    
+    [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(self.view.mas_leading);
+        make.top.equalTo(self.midView.mas_bottom);
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth, Adapter(40)));
+    }];
+    
+    [_moxaNumLable mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(self.view.mas_leading);
+        make.top.equalTo(self.view.mas_top);
+        make.size.mas_equalTo(CGSizeMake(Adapter(120), Adapter(30)));
+    }];
+    
+    [_closeBT mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(self.view.mas_leading).offset(ScreenWidth - Adapter(25));
+        make.top.equalTo(self.view.mas_top).offset(Adapter(5));
+        make.size.mas_equalTo(CGSizeMake(Adapter(20), Adapter(20)));
+    }];
+    
+    
+    
+    [_wenduRemind mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(self.view.mas_leading).offset(Adapter(20));
+        make.top.equalTo(self.moxaNumLable.mas_bottom).offset(Adapter(5));
+        make.size.mas_equalTo(CGSizeMake(Adapter(100), Adapter(20)));
+    }];
+    
+    [_wenduPicker mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(self.view.mas_leading).offset(Adapter(20));
+        make.top.equalTo(self.wenduRemind.mas_bottom).offset(Adapter(5));
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth/2 - Adapter(30), Adapter(120)));
+    }];
+    
+    [_timePicker mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(self.view.mas_leading).offset(ScreenWidth/2 + Adapter(20));
+        make.top.equalTo(self.wenduRemind.mas_bottom);
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth/2 - Adapter(30), Adapter(120)));
+    }];
+    
+    [_synWendu mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(self.view.mas_leading).offset(ScreenWidth/4 - Adapter(50));
+        make.top.equalTo(self.timePicker .mas_bottom);
+        make.size.mas_equalTo(CGSizeMake(Adapter(100),Adapter(26)));
+    }];
+    
+    [_synTime mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(self.view.mas_leading).offset(ScreenWidth/4*3 - Adapter(50));
+        make.top.equalTo(self.timePicker .mas_bottom);
+        make.size.mas_equalTo(CGSizeMake(Adapter(100),Adapter(26)));
+    }];
+    
+    [_openBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(self.view.mas_leading);
+        make.top.equalTo(self.synTime.mas_bottom).offset(Adapter(15));
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth, Adapter(30)));
+    }];
+    
+    
+    
+    
     
     _synWendu.layer.borderColor = RGB(49, 141, 214).CGColor;
     _synWendu.layer.borderWidth =1.0;

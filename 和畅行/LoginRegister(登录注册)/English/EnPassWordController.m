@@ -93,7 +93,12 @@
                 passVC.passWordStr = phoneTF.text;
                 [self.navigationController pushViewController:passVC animated:YES];
             }else{
-                [self showAlertWarmMessage:response[@"message"]];
+                if ([GlobalCommon stringEqualNull:response[@"message"]]) {
+                    [self showAlertWarmMessage:response[@"data"]];
+                }else{
+                    [self showAlertWarmMessage:response[@"message"]];
+                }
+                
             }
         
         } failureBlock:^(NSError *error) {

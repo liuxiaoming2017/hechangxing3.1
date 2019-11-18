@@ -76,10 +76,10 @@
         }
     }
     if (totalBtnWidth <= CGRectGetWidth(self.bounds)) {//不能滑动
-        CGFloat itemBtnWidth = CGRectGetWidth(self.bounds)/self.itemBtnArr.count - 20;
+        CGFloat itemBtnWidth = CGRectGetWidth(self.bounds)/self.itemBtnArr.count - Adapter(20);
         CGFloat itemBtnHeight = CGRectGetHeight(self.bounds);
         [self.itemBtnArr enumerateObjectsUsingBlock:^(UIButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            obj.frame = CGRectMake( 10 *(idx + 1)+idx*10+idx * itemBtnWidth, 0, itemBtnWidth, itemBtnHeight);
+            obj.frame = CGRectMake( Adapter(10) *(idx + 1)+idx*Adapter(10)+idx * itemBtnWidth, 0, itemBtnWidth, itemBtnHeight);
         }];
         self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.bounds), CGRectGetHeight(self.scrollView.bounds));
     }else{//超出屏幕 可以滑动
@@ -89,7 +89,7 @@
             titleFont = btn.isSelected?_titleSelectFont:_titleFont;
             CGFloat itemBtnWidth = [FSSegmentTitleView getWidthWithString:self.titlesArr[idx] font:titleFont] + self.itemMargin;
             CGFloat itemBtnHeight = CGRectGetHeight(self.bounds);
-            btn.frame = CGRectMake(currentX+10 *(idx + 1), 0, itemBtnWidth - 10, itemBtnHeight);
+            btn.frame = CGRectMake(currentX+Adapter(10) *(idx + 1), 0, itemBtnWidth - Adapter(10), itemBtnHeight);
             currentX += itemBtnWidth;
         }
         self.scrollView.contentSize = CGSizeMake(currentX, CGRectGetHeight(self.scrollView.bounds));
@@ -180,7 +180,7 @@
         btn.titleLabel.font = _titleFont;
         btn.layer.borderColor = [RGB_TextAppGray CGColor];
         btn.layer.borderWidth = 0.5f;
-        btn.layer.cornerRadius = 15;
+        btn.layer.cornerRadius = Adapter(15);
         btn.layer.masksToBounds = YES;
         [self.scrollView addSubview:btn];
         if(self.itemBtnArr.count == 0){

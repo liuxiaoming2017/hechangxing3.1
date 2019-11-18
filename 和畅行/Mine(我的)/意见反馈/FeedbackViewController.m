@@ -69,11 +69,11 @@
     [self.view addGestureRecognizer:tap];
    
     UILabel* Linelb1=[[UILabel alloc] init];
-    Linelb1.frame=CGRectMake(0, kNavBarHeight+35, ScreenWidth, 1);
+    Linelb1.frame=CGRectMake(0, kNavBarHeight+ScreenWidth*0.093, ScreenWidth, 1);
     Linelb1.backgroundColor=[UtilityFunc colorWithHexString:@"#e7e7e5"];
     [self.view addSubview:Linelb1];
     
-    _textLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, kNavBarHeight+41, ScreenWidth-20, 20)];
+    _textLabel = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth*0.027, kNavBarHeight+ScreenWidth*0.12, ScreenWidth-ScreenWidth*0.054, ScreenWidth*0.053)];
     _textLabel.text = ModuleZW(@" 请提出您的宝贵意见");
     _textLabel.font = [UIFont systemFontOfSize:13];
     _textLabel.textColor = [UtilityFunc colorWithHexString:@"#666666"];
@@ -86,14 +86,14 @@
     _acceptTV.backgroundColor=[UIColor clearColor];
     _acceptTV.keyboardAppearance = UIKeyboardTypePhonePad;
 //    _acceptTV.textColor=[UtilityFunc colorWithHexString:@"#676767"];
-    UIView *grayView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40)];
+    UIView *grayView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, ScreenWidth*0.1067)];
     grayView.backgroundColor=[UtilityFunc colorWithHexString:@"#f1f3f6"];
    // _acceptTV.inputAccessoryView=grayView;
     _acceptTV.tag = 125;
     [_acceptTV setReturnKeyType:UIReturnKeyDone];
     //_textLabel.hidden = [_acceptTV hasText];
     UIButton *doneButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    doneButton.frame=CGRectMake(self.view.frame.size.width - 80, 0, 50, 40);
+    doneButton.frame=CGRectMake(self.view.frame.size.width - ScreenWidth*0.21, 0, ScreenWidth*0.42, ScreenWidth*0.1067);
     //设置按钮的标题UIControlStateNormal是按钮正常显示的状态
     [doneButton setTitle:@"Done" forState:UIControlStateNormal];
     //改变字体颜色
@@ -104,7 +104,7 @@
     [grayView addSubview:doneButton];
     
 //    [_acceptTV.layer setMasksToBounds:YES];
-    _acceptTV.frame=CGRectMake(10, kNavBarHeight+36, ScreenWidth-20, (ScreenHeight-kNavBarHeight-36)/2);
+    _acceptTV.frame=CGRectMake(ScreenWidth*0.027, _textLabel.top, ScreenWidth-ScreenWidth*0.054, (ScreenHeight-kNavBarHeight-ScreenWidth*0.096)/2);
     [self.view addSubview:_acceptTV];
     
     UILabel* Linelb2=[[UILabel alloc] init];
@@ -114,9 +114,11 @@
    
     
     UIButton *findpsButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *findImg=[UIImage imageNamed:ModuleZW(@"Feedback_btn")];
-    [findpsButton setImage:findImg forState:UIControlStateNormal];
-    findpsButton.frame=CGRectMake((ScreenWidth-findImg.size.width/2)/2,Linelb2.frame.origin.y+Linelb2.frame.size.height+(((ScreenHeight-kNavBarHeight-36)/2)-findImg.size.height/2)/2, findImg.size.width/2,findImg.size.height/2);
+    [findpsButton setTitle:ModuleZW(@"提交") forState:(UIControlStateNormal)];
+    [findpsButton setBackgroundColor:RGB_ButtonBlue];
+    findpsButton.frame=CGRectMake((ScreenWidth-ScreenWidth*0.266)/2,_acceptTV.bottom + ScreenWidth*0.133, ScreenWidth*0.266,ScreenWidth*0.08);
+    findpsButton.layer.cornerRadius = findpsButton.height/2;
+    findpsButton.layer.masksToBounds = YES;
     [findpsButton addTarget:self action:@selector(userFeedbackButton) forControlEvents:UIControlEventTouchUpInside];
     findpsButton.userInteractionEnabled = NO;
     findpsButton.alpha = 0.4;
@@ -287,6 +289,11 @@
     self.view.frame=rect;
     //  NSLog(@"%f %f %f %f",self.view.frame.origin.x,self.view.frame.origin.y,self.view.frame.size.width,self.view.frame.size.height);
     [UIView commitAnimations];
+}
+
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [_acceptTV resignFirstResponder];
 }
 #pragma mark - UITextView Delegate Methods
 //-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text

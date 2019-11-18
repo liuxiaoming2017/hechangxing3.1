@@ -31,12 +31,12 @@
     [self.view addSubview:contentImageView];
     
     
-    UILabel *titleLabel = [Tools creatLabelWithFrame:CGRectMake(0, contentImageView.height - 85, contentImageView.width, 20) text:ModuleZW(@"咨询预约敬请致电") textSize:16];
+    UILabel *titleLabel = [Tools creatLabelWithFrame:CGRectMake(0, contentImageView.height - Adapter(85), contentImageView.width, Adapter(20)) text:ModuleZW(@"咨询预约敬请致电") textSize:16];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [contentImageView addSubview:titleLabel];
     
-    UIButton *phoneButton = [Tools creatButtonWithFrame:CGRectMake(0, titleLabel.bottom -15 , contentImageView.width, 60) target:self sel:@selector(callPhoneAction) tag:100 image:nil title:@"400 6776 668"];
+    UIButton *phoneButton = [Tools creatButtonWithFrame:CGRectMake(0, titleLabel.bottom -Adapter(15) , contentImageView.width, Adapter(60)) target:self sel:@selector(callPhoneAction) tag:100 image:nil title:@"400 6776 668"];
     [phoneButton.titleLabel setFont:[UIFont systemFontOfSize:26]];
     [phoneButton setTitleColor:RGB(243, 222, 99) forState:(UIControlStateNormal)];
     [contentImageView addSubview:phoneButton];

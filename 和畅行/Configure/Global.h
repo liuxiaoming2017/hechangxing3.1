@@ -16,18 +16,22 @@ extern BOOL isJY;
 extern BOOL isSF;
 extern BOOL isBF;
 
-#define isProduct YES
+#define isProduct NO
 
 //数据统计测试环境
-#define DATAURL_PRE @"http://47.92.160.74:8086/api/v1/"
+//#define DATAURL_PRE @"http://47.92.160.74:8086/api/v1/"
+#define DATAURL_PRE @"http://10.1.71.96:8086/api/v1/"
 
+#define DATAURL_PRE1 @"http://10.1.71.96:8086/login/"
 //测试环境
-//#define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://10.1.71.38:8888/hcy-system/")
 #define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://47.92.73.99:8080/healthlm/")
+//#define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://204.9.61.24:80/healthlm/")
 
 //预发布 http://47.92.73.99:8080/healthlm/
 
 //测试  http://10.1.71.181:8080/healthlm/
+
+//英文版  http://204.9.61.24:80/healthlm/
 
 //生产环境
 //#define URL_PRE @"http://eky3h.com/healthlm/"

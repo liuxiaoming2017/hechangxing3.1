@@ -67,8 +67,8 @@
 //    [leftButton addTarget:self action:@selector(leftButton) forControlEvents:UIControlEventTouchUpInside];
    
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height -kNavBarHeight-44) style:UITableViewStylePlain];
-    _tableView.rowHeight = 60;
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height -kNavBarHeight + 44 - Adapter(44)) style:UITableViewStylePlain];
+    _tableView.rowHeight = Adapter(60);
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.tableFooterView = [[UIView alloc]init];
@@ -87,12 +87,12 @@
     self.view.backgroundColor = [UIColor whiteColor];
 
     [self generatePayOrders];
-    UIImageView *xiaofeijinerImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - kTabBarHeight, self.view.frame.size.width - 105, 44)];
+    UIImageView *xiaofeijinerImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - kTabBarHeight + 44 - Adapter(44), self.view.frame.size.width - Adapter(105), Adapter(44))];
     xiaofeijinerImage.image = [UIImage imageNamed:@"leyaoxiaofeijiner.png"];
     [self.view addSubview:xiaofeijinerImage];
     
     UIButton *jiesuanButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    jiesuanButton.frame = CGRectMake(self.view.frame.size.width -  105, self.view.frame.size.height - kTabBarHeight, 105, 44);
+    jiesuanButton.frame = CGRectMake(self.view.frame.size.width -  Adapter(105), xiaofeijinerImage.top, Adapter(105), Adapter(44));
     [jiesuanButton addTarget:self action:@selector(zhifujiesuanButton) forControlEvents:(UIControlEventTouchUpInside)];
     [jiesuanButton setTitle:ModuleZW(@"去结算") forState:(UIControlStateNormal)];
     [jiesuanButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
@@ -100,16 +100,16 @@
     [self.view addSubview:jiesuanButton];
     
     
-    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 12, 50, 20)];
+    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(50), Adapter(12), Adapter(50), Adapter(20))];
     zongjinerLabel.text = ModuleZW(@"总计: ");
     zongjinerLabel.textColor = [UIColor whiteColor];
     zongjinerLabel.font = [UIFont systemFontOfSize:13];
     [xiaofeijinerImage addSubview:zongjinerLabel];
     
     
-    _jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(100, 12, 60, 20)];
+    _jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(100), Adapter(12), Adapter(60), Adapter(20))];
     _jinerLabel.textColor = [UIColor whiteColor];
-    _jinerLabel.font = [UIFont boldSystemFontOfSize:13];
+    _jinerLabel.font = [UIFont systemFontOfSize:13];
     if (self.dingdanStr.length == 0) {
         _jinerLabel.text  = [NSString stringWithFormat:@"¥%.2f",[_priceAPPStr floatValue]];
     }
@@ -286,16 +286,16 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CELL" forIndexPath:indexPath];
-    UIImageView *zhifufangshiImage = [[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 40, 40)];
+    UIImageView *zhifufangshiImage = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(20), Adapter(10), Adapter(40), Adapter(40))];
     zhifufangshiImage.image = [UIImage imageNamed:self.tabArray[indexPath.row]];
     [cell addSubview:zhifufangshiImage];
-    UILabel *zhifufangshiLabel = [[UILabel alloc]initWithFrame:CGRectMake(110, 20, 180, 20)];
+    UILabel *zhifufangshiLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(110), Adapter(20), Adapter(180), Adapter(20))];
     zhifufangshiLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
     zhifufangshiLabel.font = [UIFont systemFontOfSize:15];
     zhifufangshiLabel.text = _zhifufangshiArray[indexPath.row];
     [cell addSubview:zhifufangshiLabel];
     UIButton *zhifuButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    zhifuButton.frame = CGRectMake(self.view.frame.size.width- 60, 20, 20, 20);
+    zhifuButton.frame = CGRectMake(self.view.frame.size.width- Adapter(60), Adapter(20), Adapter(20), Adapter(20));
     zhifuButton.tag = 6000 +indexPath.row;
     [zhifuButton setBackgroundImage:[UIImage imageNamed:@"zhifuweishiyong.png"] forState:UIControlStateNormal];
     [zhifuButton setBackgroundImage:[UIImage imageNamed:@"leyaozhifuxianjinka.png"] forState:UIControlStateSelected];

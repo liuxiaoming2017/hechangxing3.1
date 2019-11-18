@@ -74,43 +74,43 @@
    
     [lineImageV  mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView.mas_top);
-        make.size.mas_equalTo(CGSizeMake(1, 20));
-        make.left.equalTo(self.contentView.mas_left).offset(30);
+        make.size.mas_equalTo(CGSizeMake(1, Adapter(20)));
+        make.left.equalTo(self.contentView.mas_left).offset(Adapter(30));
     }];
     [self.createDateLabel  mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lineImageV.mas_bottom);
-        make.size.mas_equalTo(CGSizeMake(60, 20));
+        make.size.mas_equalTo(CGSizeMake(Adapter(60), Adapter(20)));
         make.left.equalTo(self.contentView.mas_left);
     }];
     [self.lineImageV2  mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.createDateLabel.mas_bottom);
         make.width.mas_equalTo(1);
-        make.left.equalTo(self.contentView.mas_left).offset(30);
+        make.left.equalTo(self.contentView.mas_left).offset(Adapter(30));
         make.bottom.equalTo(self.contentView.mas_bottom);
     }];
     
     
     [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineImageV.mas_bottom).offset(-5);
-        make.bottom.equalTo(self.contentView.mas_bottom).offset(-5);
-        make.leading.equalTo(self.contentView.mas_leading).offset(65);
-        make.trailing.equalTo(self.contentView.mas_trailing).offset(-10);
+        make.top.equalTo(lineImageV.mas_bottom).offset(Adapter(-5));
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(Adapter(-5));
+        make.leading.equalTo(self.contentView.mas_leading).offset(Adapter(65));
+        make.trailing.equalTo(self.contentView.mas_trailing).offset(Adapter(-10));
         
     }];
     
     [self.kindImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(imageV.mas_top).offset(9);
-        make.left.equalTo(imageV.mas_left).offset(9);
-        make.size.mas_equalTo(CGSizeMake(31, 31));
+        make.top.equalTo(imageV.mas_top).offset(Adapter(9));
+        make.left.equalTo(imageV.mas_left).offset(Adapter(9));
+        make.size.mas_equalTo(CGSizeMake(Adapter(31), Adapter(31)));
     }];
 
     
     [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(imageV.mas_top);
         make.bottom.equalTo(imageV.mas_bottom);
-        make.leading.equalTo(imageV.mas_leading).offset(60);
+        make.leading.equalTo(imageV.mas_leading).offset(Adapter(60));
         make.trailing.equalTo(imageV.mas_trailing);
-        make.height.greaterThanOrEqualTo(@(49));
+        make.height.greaterThanOrEqualTo(@(Adapter(49)));
     }];
     
    

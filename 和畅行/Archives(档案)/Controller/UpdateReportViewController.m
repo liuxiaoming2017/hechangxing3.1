@@ -24,6 +24,7 @@
 @property(nonatomic,strong)UIImageView *backImageView;
 @property(nonatomic,strong)UIView *backView;
 @property (nonatomic,strong)UIView *uploadReportView;
+@property (nonatomic,strong)UIScrollView *backScrollView;
 @end
 
 #define CCWeakSelf __weak typeof(self) weakSelf = self;
@@ -41,94 +42,101 @@
 //布局上传报告页面
 -(void )layoutUploadReport{
     
-        _uploadReportView = [[UIView alloc]initWithFrame: CGRectMake(0, self.topView.bottom, ScreenWidth, ScreenHeight-self.topView.bottom)];
-        _uploadReportView.backgroundColor = RGB_AppWhite;
-        [self.view addSubview:_uploadReportView];
-        
-        UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10,   10, ScreenWidth - 20, 300)];
-        backImageView.backgroundColor = [UIColor whiteColor];
-        backImageView.layer.cornerRadius = 10;
-        backImageView.userInteractionEnabled = YES;
-        backImageView.layer.shadowColor = RGB_TextGray.CGColor;
-        backImageView.layer.shadowOffset = CGSizeMake(0,0);
-        backImageView.layer.shadowOpacity = 0.5;
-        backImageView.layer.shadowRadius = 5;
-        
-        [self.uploadReportView addSubview:backImageView];
-        self.backImageView =  backImageView;
-        
-        UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(10, 10, backImageView.width - 20, 210)];
-        backView.backgroundColor = [UIColor whiteColor];
-        backView.layer.borderColor = RGB(221, 221, 221).CGColor;
-        backView.layer.borderWidth =0.5;
-        [backImageView addSubview:backView];
-        self.backView = backView;
-        
-        _textView = [[CPTextViewPlaceholder alloc]initWithFrame:CGRectMake(5, 5, backView.width - 10, 190)];
-        _textView.delegate = self;
-        _textView.textContainerInset = UIEdgeInsetsMake(10, 0, 20, 10);
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChangess) name:UITextViewTextDidChangeNotification object:self.textView];
-        
-        _textView.font = [UIFont systemFontOfSize:15];
-        _textView.textColor = [UtilityFunc colorWithHexString:@"#666666"];
-        
-        _textViews = [[UITextView alloc]initWithFrame:CGRectMake(10,5, backView.width - 30, 100)];
-        _textView.keyboardType = UIKeyboardTypeDefault;
-        _textView.returnKeyType = UIReturnKeyDone;
-        _textViews.text = ModuleZW(@"请输入报告说明内容");
-        _textViews.font = [UIFont systemFontOfSize:15];
-        _textViews.textColor =RGB(162, 162, 162);
-        [backView addSubview:_textViews];
-        _textView.backgroundColor = [UIColor clearColor];
-        [backView addSubview:_textView];
-        
-        UILabel *numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(backView.width - 100, backView.height - 20, 90, 20)];
-        numberLabel.text = @"0/200";
-        numberLabel.textColor =RGB(162, 162, 162);
-        numberLabel.textAlignment = NSTextAlignmentRight;
-        [backView addSubview:numberLabel];
-        _numberLabel = numberLabel;
-        
-        // 1. 常见一个发布图片时的photosView
-        PYPhotosView *publishPhotosView = [PYPhotosView photosView];
-        publishPhotosView.py_x = 15;
-        publishPhotosView.py_y = backView.bottom + 10;
-        publishPhotosView.photoWidth = (backImageView.width-50)/4 ;
-        publishPhotosView.photoHeight = (backImageView.width-50)/4 ;
-        // 2.1 设置本地图片
-        publishPhotosView.images = nil;
-        publishPhotosView.hideDeleteView = YES;
-        // 3. 设置代理
-        publishPhotosView.delegate = self;
-        //publishPhotosView.backgroundColor = [UIColor blackColor];
-        publishPhotosView.photosMaxCol = 4;//每行显示最大图片个数
-        publishPhotosView.imagesMaxCountWhenWillCompose = 9;//最多选择图片的个数
-        // 4. 添加photosView
-        [backImageView addSubview:publishPhotosView];
-        self.publishPhotosView = publishPhotosView;
-        
-        
-        UIButton *photoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        photoButton.frame = CGRectMake(backImageView.width/8-20, backView.bottom + 20 , 40, 40) ;
-        [photoButton setBackgroundImage:[UIImage imageNamed:@"专家咨询添加图片"] forState:UIControlStateNormal];
-        [photoButton addTarget:self action:@selector(photoAction) forControlEvents:UIControlEventTouchUpInside];
-        [backImageView addSubview:photoButton];
-        self.photoButton = photoButton;
-        
-        UIButton *finishButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        finishButton.frame = CGRectMake(self.view.frame.size.width / 2 - 45,backImageView.bottom + 40, 90, 26);
-        [finishButton setBackgroundColor:RGB_ButtonBlue];
-        [finishButton setTitle:ModuleZW(@"提交") forState:UIControlStateNormal];
-        [finishButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        finishButton.layer.cornerRadius = 13;
-        finishButton.clipsToBounds = YES;
-        finishButton.alpha = 0.4;
-        finishButton.userInteractionEnabled = NO;
-        [finishButton addTarget:self action:@selector(finishButtonAction) forControlEvents:UIControlEventTouchUpInside];
-        [self.uploadReportView addSubview:finishButton];
-        self.finishButton = finishButton;
-        
+    UIScrollView *backScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight - kNavBarHeight)];
+    backScrollView.backgroundColor = RGB_AppWhite;
+    [self.view addSubview:backScrollView];
+    self.backScrollView = backScrollView;
+    
+    _uploadReportView = [[UIView alloc]initWithFrame: CGRectMake(0, 0, ScreenWidth, ScreenHeight-self.topView.bottom)];
+    _uploadReportView.backgroundColor = RGB_AppWhite;
+    [backScrollView addSubview:_uploadReportView];
+    
+    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(10), Adapter(10), ScreenWidth - Adapter(20), Adapter(300))];
+    backImageView.backgroundColor = [UIColor whiteColor];
+    backImageView.layer.cornerRadius = 10;
+    backImageView.userInteractionEnabled = YES;
+    backImageView.layer.shadowColor = RGB_TextGray.CGColor;
+    backImageView.layer.shadowOffset = CGSizeMake(0,0);
+    backImageView.layer.shadowOpacity = 0.5;
+    backImageView.layer.shadowRadius = 5;
+    
+    [self.uploadReportView addSubview:backImageView];
+    self.backImageView =  backImageView;
+    
+    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(Adapter(10), Adapter(10), backImageView.width - Adapter(20), Adapter(210))];
+    backView.backgroundColor = [UIColor whiteColor];
+    backView.layer.borderColor = RGB(221, 221, 221).CGColor;
+    backView.layer.borderWidth =0.5;
+    [backImageView addSubview:backView];
+    self.backView = backView;
+    
+    _textView = [[CPTextViewPlaceholder alloc]initWithFrame:CGRectMake(Adapter(5), Adapter(5), backView.width - Adapter(10), Adapter(190))];
+    _textView.delegate = self;
+    _textView.textContainerInset = UIEdgeInsetsMake(Adapter(10), 0, Adapter(20), Adapter(10));
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChangess) name:UITextViewTextDidChangeNotification object:self.textView];
+    
+    _textView.font = [UIFont systemFontOfSize:15];
+    _textView.textColor = [UtilityFunc colorWithHexString:@"#666666"];
+    
+    _textViews = [[UITextView alloc]initWithFrame:CGRectMake(Adapter(10),Adapter(7.5), backView.width - Adapter(30), Adapter(25))];
+    _textView.keyboardType = UIKeyboardTypeDefault;
+    _textView.returnKeyType = UIReturnKeyDone;
+    _textViews.text = ModuleZW(@"请输入报告说明内容");
+    _textViews.font = [UIFont systemFontOfSize:15];
+    _textViews.textColor =RGB(162, 162, 162);
+    [backView addSubview:_textViews];
+    _textView.backgroundColor = [UIColor clearColor];
+    [backView addSubview:_textView];
+    
+    UILabel *numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(backView.width - Adapter(100), backView.height - Adapter(20), Adapter(90), Adapter(20))];
+    numberLabel.text = @"0/200";
+    numberLabel.textColor =RGB(162, 162, 162);
+    numberLabel.textAlignment = NSTextAlignmentRight;
+    [backView addSubview:numberLabel];
+    _numberLabel = numberLabel;
+    
+    // 1. 常见一个发布图片时的photosView
+    PYPhotosView *publishPhotosView = [PYPhotosView photosView];
+    publishPhotosView.py_x = Adapter(15);
+    publishPhotosView.py_y = backView.bottom + Adapter(10);
+    publishPhotosView.photoWidth = (backImageView.width-Adapter(50))/4 ;
+    publishPhotosView.photoHeight = (backImageView.width-Adapter(50))/4 ;
+    // 2.1 设置本地图片
+    publishPhotosView.images = nil;
+    publishPhotosView.hideDeleteView = YES;
+    // 3. 设置代理
+    publishPhotosView.delegate = self;
+    //publishPhotosView.backgroundColor = [UIColor blackColor];
+    publishPhotosView.photosMaxCol = 4;//每行显示最大图片个数
+    publishPhotosView.imagesMaxCountWhenWillCompose = 9;//最多选择图片的个数
+    // 4. 添加photosView
+    [backImageView addSubview:publishPhotosView];
+    self.publishPhotosView = publishPhotosView;
+    
+    
+    UIButton *photoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    photoButton.frame = CGRectMake(backImageView.width/8-Adapter(20), backView.bottom + Adapter(20) , Adapter(40), Adapter(40)) ;
+    [photoButton setBackgroundImage:[UIImage imageNamed:@"专家咨询添加图片"] forState:UIControlStateNormal];
+    [photoButton addTarget:self action:@selector(photoAction:) forControlEvents:UIControlEventTouchUpInside];
+    [backImageView addSubview:photoButton];
+    self.photoButton = photoButton;
+    
+    UIButton *finishButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    finishButton.frame = CGRectMake(self.view.frame.size.width / 2 - Adapter(45),backImageView.bottom + Adapter(40), Adapter(90), Adapter(26));
+    [finishButton setBackgroundColor:RGB_ButtonBlue];
+    [finishButton setTitle:ModuleZW(@"提交") forState:UIControlStateNormal];
+    [finishButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    finishButton.layer.cornerRadius = finishButton.height/2;;
+    finishButton.clipsToBounds = YES;
+    finishButton.alpha = 0.4;
+    finishButton.userInteractionEnabled = NO;
+    [finishButton addTarget:self action:@selector(finishButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.uploadReportView addSubview:finishButton];
+    self.finishButton = finishButton;
+    
+    self.backScrollView.contentSize = CGSizeMake(ScreenWidth, finishButton.bottom +60);
+    
     
 }
 
@@ -160,7 +168,7 @@
 }
 
 # pragma mark - 照片按钮事件
-- (void)photoAction{
+- (void)photoAction:(UIButton *)button{
     
     UIAlertController *alectSheet = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     
@@ -176,7 +184,14 @@
     [alectSheet addAction:action1];
     [alectSheet addAction:action2];
     [alectSheet addAction:cancleAction];
-    
+    if(ISPaid)  {
+        UIPopoverPresentationController *popover = alectSheet.popoverPresentationController;
+        if (popover) {
+            popover.sourceView = button;
+            popover.sourceRect = button.bounds;
+            popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        }
+    }
     [self presentViewController:alectSheet animated:YES completion:NULL];
     
 }
@@ -275,7 +290,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [self.photos addObject:image];
     [self.publishPhotosView reloadDataWithImages:self.photos];
     [self updateThePage];
-    bottomView.top = self.publishPhotosView.bottom+20;
+    bottomView.top = self.publishPhotosView.bottom+Adapter(20);
     
 }
 
@@ -345,23 +360,23 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
 -(void)updateThePage{
     if (self.photos.count < 4 ) {
         self.photoButton.hidden = NO;
-        self.photoButton.left = (ScreenWidth - 20)/8-20 + (((ScreenWidth - 20)-50)/4 + 10)*self.photos.count;
-        self.photoButton.top = self->_backView.bottom +20;
-        self.backImageView.height = 320;
+        self.photoButton.left = (ScreenWidth - Adapter(20))/8-Adapter(20) + (((ScreenWidth - Adapter(20))-Adapter(50))/4 + Adapter(10))*self.photos.count;
+        self.photoButton.top = self->_backView.bottom +Adapter(20);
+        self.backImageView.height = Adapter(320);
     }else if (self.photos.count > 3&&self.photos.count < 8 ){
         self.photoButton.hidden = NO;
-        self.photoButton.left = (ScreenWidth - 20)/8-20 + (((ScreenWidth - 20)-50)/4 + 10)*(self.photos.count%4);
-        self.photoButton.top = self->_backView.bottom +20 +  (self->_backImageView.width-50)/4 +10;
-        self.backImageView.height = 320 + (self->_backImageView.width-50)/4 + 10;
+        self.photoButton.left = (ScreenWidth - Adapter(20))/8-Adapter(20) + (((ScreenWidth - Adapter(20))-Adapter(50))/4 + Adapter(10))*(self.photos.count%4);
+        self.photoButton.top = self->_backView.bottom +Adapter(20) +  (self->_backImageView.width-Adapter(50))/4 +Adapter(10);
+        self.backImageView.height = Adapter(320) + (self->_backImageView.width-Adapter(50))/4 + Adapter(10);
     } else if(self.photos.count == 8 ){
         self.photoButton.hidden = NO;
-        self.backImageView.height = 320 + (self->_backImageView.width-50)/2 + 20;
-        self.photoButton.top = self->_backView.bottom +30 +  (self->_backImageView.width-50)/2 +10;
-        self.photoButton.left = _backImageView.width/8-20;
+        self.backImageView.height = Adapter(320) + (self->_backImageView.width-Adapter(50))/2 + Adapter(20);
+        self.photoButton.top = self->_backView.bottom +Adapter(30) +  (self->_backImageView.width-Adapter(50))/2 +Adapter(10);
+        self.photoButton.left = _backImageView.width/8-Adapter(20);
     }else{
         self.photoButton.hidden = YES;
-        self.backImageView.height = 320 + (self->_backImageView.width-50)/2 + 20;
-        self.photoButton.top = self->_backView.bottom +20 +  (self->_backImageView.width-50)/2 +10;
+        self.backImageView.height = Adapter(320) + (self->_backImageView.width-Adapter(50))/2 + Adapter(20);
+        self.photoButton.top = self->_backView.bottom +Adapter(20) +  (self->_backImageView.width-Adapter(50))/2 +Adapter(10);
         
     }
     if(self.photos.count>0){
@@ -375,7 +390,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         self.numberLabel.text = [NSString stringWithFormat:@"%lu/%d", (unsigned long)[_textView.text length], 200];
         [self.publishPhotosView reloadDataWithImages:self.photos];
     }
-    self.finishButton.top = self.backImageView.bottom+40;
+    self.finishButton.top = self.backImageView.bottom+Adapter(40);
+    self.backScrollView.contentSize = CGSizeMake(ScreenWidth, self.finishButton.bottom +60);
 }
 
 
@@ -394,3 +410,4 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
 
 
 @end
+

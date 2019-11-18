@@ -30,7 +30,7 @@
 
 -(void)layoutAcitivaTionView{
     
-    CGFloat imageWidth = ScreenWidth - 20;
+    CGFloat imageWidth = ScreenWidth - Adapter(20);
     
     NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     style.lineBreakMode = NSLineBreakByWordWrapping;
@@ -48,14 +48,14 @@
     }
     
     //添加渐变色
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10,kNavBarHeight + 20 ,ScreenWidth - 20, 80+5+textHeight+15)];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(Adapter(10),kNavBarHeight + Adapter(20) ,ScreenWidth - Adapter(20), Adapter(85)+textHeight+Adapter(15))];
     imageV.userInteractionEnabled = YES;
     [imageV.layer addSublayer:[UIColor setGradualChangingColor:imageV fromColor:@"4294E1" toColor:@"D1BDFF"]];
-    imageV.layer.cornerRadius = 10;
+    imageV.layer.cornerRadius = Adapter(10);
     imageV.layer.masksToBounds = YES;
     [self.view addSubview:imageV];
     
-    UILabel *carTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0 , 10, imageWidth, 45)];
+    UILabel *carTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0 , Adapter(10), imageWidth, Adapter(45))];
     carTitleLabel.text = _model.card_name;
     carTitleLabel.backgroundColor = [UIColor clearColor];
     carTitleLabel.textColor = [UIColor whiteColor];
@@ -65,7 +65,7 @@
     
     
     
-    UITextView *contentTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, carTitleLabel.bottom ,imageWidth - 20, 30)];
+    UITextView *contentTextView = [[UITextView alloc]initWithFrame:CGRectMake(Adapter(10), carTitleLabel.bottom ,imageWidth - Adapter(20), Adapter(30))];
     
     
     contentTextView.text  = [NSString stringWithFormat:@"%@:%@",ModuleZW(@"卡密"),_model.card_no];;
@@ -79,7 +79,7 @@
 //    [imageV addSubview:contentTextView];
     
     
-    UILabel * descriptLabel = [[UILabel alloc] initWithFrame: CGRectMake(contentTextView.left, carTitleLabel.bottom+5, contentTextView.width, textHeight)];
+    UILabel * descriptLabel = [[UILabel alloc] initWithFrame: CGRectMake(contentTextView.left, carTitleLabel.bottom+Adapter(5), contentTextView.width, textHeight)];
     descriptLabel.backgroundColor = [UIColor clearColor];
     descriptLabel.textColor = [UIColor whiteColor];
     descriptLabel.textAlignment = NSTextAlignmentLeft;
@@ -94,10 +94,10 @@
     
     
     
-    UIButton *activationBT = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - 75, imageV.bottom + 30, 150, 50) target:self sel:@selector(activationAction) tag:11111 image:nil title:ModuleZW(@"激活")];
+    UIButton *activationBT = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - Adapter(75), imageV.bottom + Adapter(30), Adapter(150), Adapter(50)) target:self sel:@selector(activationAction) tag:11111 image:nil title:ModuleZW(@"激活")];
     [activationBT setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
     [activationBT setBackgroundColor:RGB_ButtonBlue];
-    activationBT.layer.cornerRadius = 25;
+    activationBT.layer.cornerRadius = Adapter(25);
     activationBT.layer.masksToBounds = YES;
     
     [self.view addSubview:activationBT];
@@ -113,13 +113,13 @@
    self.blackView.backgroundColor = [UIColor colorWithRed:180/255 green:180/255 blue:180/255 alpha:0.5];
     [self.view addSubview:self.blackView];
     
-    UIView *whiteView = [[UIView alloc]initWithFrame:CGRectMake(40, ScreenHeight/2 -(ScreenWidth - 80)*4/10 - 30 , ScreenWidth - 80, (ScreenWidth - 80)*4/5)];
+    UIView *whiteView = [[UIView alloc]initWithFrame:CGRectMake(Adapter(40), ScreenHeight/2 -(ScreenWidth - Adapter(80))*4/10 - Adapter(30) , ScreenWidth - Adapter(80), (ScreenWidth - Adapter(80))*4/5)];
     whiteView.backgroundColor = [UIColor whiteColor];
-    whiteView.layer.cornerRadius = 10;
+    whiteView.layer.cornerRadius = Adapter(10);
     whiteView.layer.masksToBounds = YES;
     [self.blackView addSubview:whiteView];
     
-    UILabel *txtLabel = [[UILabel alloc]initWithFrame:CGRectMake( 50, 0, whiteView.width - 100, whiteView.height - 62)];
+    UILabel *txtLabel = [[UILabel alloc]initWithFrame:CGRectMake( Adapter(50), 0, whiteView.width - Adapter(100), whiteView.height - Adapter(62))];
     txtLabel.text =  [NSString stringWithFormat:ModuleZW(@"您将激活%@,是否继续?"),_model.card_name] ;
     txtLabel.textColor = RGB_TextLightGray;
     txtLabel.font = [UIFont systemFontOfSize:17];
@@ -132,10 +132,10 @@
     
     
     for (int i = 0 ; i < 2; i++) {
-        UIButton *button = [Tools creatButtonWithFrame:CGRectMake( whiteView.width/8 + (whiteView.width/2)*i, txtLabel.bottom + (whiteView.height - txtLabel.height - 40)/2 - 20, whiteView.width/4, 40) target:self sel:@selector(chooseAction:) tag:1000+i image:nil title:titleArray[i]];
+        UIButton *button = [Tools creatButtonWithFrame:CGRectMake( whiteView.width/8 + (whiteView.width/2)*i, txtLabel.bottom + (whiteView.height - txtLabel.height - Adapter(40))/2 - Adapter(20), whiteView.width/4, Adapter(40)) target:self sel:@selector(chooseAction:) tag:1000+i image:nil title:titleArray[i]];
         [button setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
         [button setBackgroundColor:RGB_ButtonBlue];
-        button.layer.cornerRadius = 20;
+        button.layer.cornerRadius = Adapter(20);
         button.layer.masksToBounds = YES;
         [whiteView addSubview:button];
     }

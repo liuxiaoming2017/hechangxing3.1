@@ -33,23 +33,27 @@
 - (void)initUI
 {
     self.backgroundColor = [UIColor whiteColor];
-    self.layer.cornerRadius = 10;
+    self.layer.cornerRadius = Adapter(10);
     self.layer.masksToBounds = YES;
     self.userInteractionEnabled = YES;
     
     //self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(25, 19, self.frame.size.width-48, self.frame.size.height-19-47)];
     
-    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake((self.frame.size.width-60)/2.0, (self.frame.size.height-49-10-20)/2.0, 60, 49)];
+    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake((self.frame.size.width-Adapter(60))/2.0, (self.frame.size.height-Adapter(79))/2.0, Adapter(60), Adapter(49))];
     //NSLog(@"frame:%@",NSStringFromCGRect(self.imageV.frame));
     
-    self.imageV.layer.cornerRadius = 8;
+    self.imageV.layer.cornerRadius = Adapter(8);
     self.imageV.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:self.imageV];
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(2, CGRectGetMaxY(self.imageV.frame)+10, self.frame.size.width-2*2, 20)];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(2), CGRectGetMaxY(self.imageV.frame)+Adapter(10), self.frame.size.width-Adapter(2)*2, Adapter(20))];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     //self.titleLabel.highlightedTextColor = [UIColor redColor];
-    self.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize > 16.0 ? 16.0 : 14*[UserShareOnce shareOnce].fontSize];
+    if(ISPaid) {
+       self.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize];
+    }else{
+        self.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize > 16.0 ? 16.0 : 14*[UserShareOnce shareOnce].fontSize];
+    }
     self.titleLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
     self.titleLabel.text = @"发卡拉";
     self.titleLabel.numberOfLines = 0;
@@ -75,13 +79,13 @@
     if([jlbsName isEqualToString:@""] || jlbsName==nil){
         self.titleLabel.text = @"";
         self.imageV.image = [UIImage imageNamed:@"推荐_默认"];
-        self.imageV.frame = CGRectMake((self.frame.size.width-70)/2.0, (self.frame.size.height-70)/2.0, 70, 70);
-        self.titleLabel.frame = CGRectMake(2, CGRectGetMaxY(self.imageV.frame)+10, self.frame.size.width-2*2, 20);
+        self.imageV.frame = CGRectMake((self.frame.size.width-70)/2.0, (self.frame.size.height-Adapter(70))/2.0, Adapter(70), Adapter(70));
+        self.titleLabel.frame = CGRectMake(Adapter(2), CGRectGetMaxY(self.imageV.frame)+Adapter(10), self.frame.size.width-Adapter(2)*2, Adapter(20));
     }else{
         self.titleLabel.text = [NSString stringWithFormat:@"%@推拿手法",jlbsName];
         jlbsName = [jlbsName substringFromIndex:[jlbsName length]-1];
         self.imageV.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@icon",jlbsName]];
-        self.imageV.frame = CGRectMake((self.frame.size.width-55)/2.0, (self.frame.size.height-55-10-20)/2.0, 55, 55);
+        self.imageV.frame = CGRectMake((self.frame.size.width-Adapter(55))/2.0, (self.frame.size.height-Adapter(85))/2.0, Adapter(55), Adapter(55));
         self.titleLabel.frame = CGRectMake(2, CGRectGetMaxY(self.imageV.frame)+10, self.frame.size.width-2*2, 20);
     }
     

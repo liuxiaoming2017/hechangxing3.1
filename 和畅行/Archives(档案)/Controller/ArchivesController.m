@@ -119,7 +119,7 @@
     if(!memberId){
         memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
     }
-    
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     self.navTitleLabel.text = ModuleZW(@"健康档案");
     [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     
@@ -130,7 +130,7 @@
     [self.view addSubview:self.noView ];
     
     UIButton *ploadRreportBT = [UIButton buttonWithType:UIButtonTypeCustom];
-    ploadRreportBT.frame = CGRectMake(ScreenWidth-80-14, 2+kStatusBarHeight, 80, 40);
+    ploadRreportBT.frame = CGRectMake(ScreenWidth-Adapter(94), 2+kStatusBarHeight, Adapter(80), 40);
     [ploadRreportBT setTitle:ModuleZW(@"上传报告") forState:(UIControlStateNormal)];
     [ploadRreportBT.titleLabel setFont:[UIFont systemFontOfSize:15]];
     [ploadRreportBT setTitleColor:RGB_ButtonBlue forState:(UIControlStateNormal)];
@@ -176,8 +176,8 @@
     
    //档案筛选按钮
     self.filterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.filterBtn.frame = CGRectMake(ScreenWidth-37-14, ScreenHeight-120, 36, 36);
-    [self.filterBtn setImage:[UIImage imageNamed:@"筛选"] forState:UIControlStateNormal];
+    self.filterBtn.frame = CGRectMake(ScreenWidth-Adapter(51), ScreenHeight-Adapter(120), Adapter(36), Adapter(36));
+    [self.filterBtn setBackgroundImage:[UIImage imageNamed:@"筛选"] forState:UIControlStateNormal];
     [self.filterBtn addTarget:self action:@selector(filterBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.filterBtn];
     //    [[UIApplication sharedApplication].keyWindow addSubview:self.filterBtn];
@@ -800,10 +800,15 @@
     [GlobalCommon showMessage:ModuleZW(@"请求失败!") duration:2];
     //[self addFailView];
 }
-
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"2" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+}
 
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+
     if (self.timeLinvView.hud){
         [self.timeLinvView.hud hideAnimated:YES];
     }

@@ -31,22 +31,22 @@
     self.preBtn.hidden = NO;
     self.leftBtn.hidden = YES;
     
-    UIImageView *beijingImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, 300)];
+    UIImageView *beijingImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, Adapter(300))];
     beijingImage.image = [UIImage imageNamed:@"zhifubeijingtupian"];
     [self.view addSubview:beijingImage];
    
-    UIImageView *zhifuchenggongImage = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width - 158.5) / 2, kNavBarHeight + 20, 158.5, 158.5)];
+    UIImageView *zhifuchenggongImage = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width - Adapter(158.5)) / 2, kNavBarHeight + 20, Adapter(158.5), Adapter(158.5))];
     zhifuchenggongImage.image = [UIImage imageNamed:@"zhifuchenggong"];
     [self.view addSubview:zhifuchenggongImage];
    
-    UILabel *chenggongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  zhifuchenggongImage.bottom + 20, self.view.frame.size.width, 20)];
+    UILabel *chenggongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  zhifuchenggongImage.bottom + Adapter(20), self.view.frame.size.width, Adapter(20))];
     chenggongLabel.textAlignment = NSTextAlignmentCenter;
     chenggongLabel.text = ModuleZW(@"支付成功");
     chenggongLabel.textColor = [UIColor whiteColor];
     chenggongLabel.font = [UIFont systemFontOfSize:22];
     [self.view addSubview:chenggongLabel];
    
-    UILabel *chashouLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  chenggongLabel.bottom + 10, self.view.frame.size.width, 50)];
+    UILabel *chashouLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  chenggongLabel.bottom + Adapter(10), self.view.frame.size.width, Adapter(50))];
     chashouLabel.textColor = [UIColor whiteColor];
     chashouLabel. numberOfLines = 2;
     chashouLabel.text = ModuleZW(@"您已成功购买商品，请注意查收");
@@ -55,9 +55,9 @@
     [self.view addSubview:chashouLabel];
 
     UIButton *wanchengButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    wanchengButton.frame = CGRectMake((self.view.frame.size.width - 210) / 2, 254 + 158.5, 210, 40);
+    wanchengButton.frame = CGRectMake((self.view.frame.size.width - Adapter(210)) / 2, Adapter(412.5), Adapter(210), Adapter(40));
     [wanchengButton setBackgroundColor:RGB(109, 192, 235)];
-    wanchengButton.layer.cornerRadius = 8;
+    wanchengButton.layer.cornerRadius = Adapter(8);
     wanchengButton.layer.masksToBounds = YES;
     [wanchengButton setTitle:ModuleZW(@"确认完成") forState:(UIControlStateNormal)];
     [wanchengButton addTarget:self action:@selector(wanchengButton) forControlEvents:UIControlEventTouchUpInside];

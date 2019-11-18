@@ -116,7 +116,7 @@
 #pragma mark - tableview代理方法
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 250;
+    return Adapter(250);
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -182,16 +182,16 @@
             int highPressure =[model.highPressure intValue];
             int lowPressure =[model.lowPressure intValue];
             if (lowPressure >=0&&lowPressure<=60){
-                cell.arrowImageView.left = (ScreenWidth - 60)/6 + 10;
+                cell.arrowImageView.left = (ScreenWidth - Adapter(60))/6 + Adapter(10);
             }else if (lowPressure >=90){
-                cell.arrowImageView.left = (ScreenWidth - 60)*5/6 + 10;
+                cell.arrowImageView.left = (ScreenWidth - Adapter(60))*5/6 + Adapter(10);
             }else{
                 if(highPressure >=140){
-                    cell.arrowImageView.left = (ScreenWidth - 60)*5/6 + 10;
+                    cell.arrowImageView.left = (ScreenWidth - Adapter(60))*5/6 + Adapter(10);
                 }else if(highPressure <=90){
-                    cell.arrowImageView.left = (ScreenWidth - 60)/6 + 10;
+                    cell.arrowImageView.left = (ScreenWidth - Adapter(60))/6 + Adapter(10);
                 }else{
-                    cell.arrowImageView.left = (ScreenWidth - 60)*3/6 + 10;
+                    cell.arrowImageView.left = (ScreenWidth - Adapter(60))*3/6 + Adapter(10);
                 }
             }
             
@@ -205,11 +205,11 @@
             [cell.rightBtn setTitle:ModuleZW(@"血糖监测") forState:(UIControlStateNormal)];
             if (![GlobalCommon stringEqualNull:model.levels]){
                 if ([model.levels floatValue] <3.9) {
-                    cell.arrowImageView.left = (ScreenWidth - 60)/6 + 10;
+                    cell.arrowImageView.left = (ScreenWidth - Adapter(60))/6 + Adapter(10);
                 }else if ([model.levels intValue]  <=6.1){
-                     cell.arrowImageView.left = (ScreenWidth - 60)*3/6 + 10;
+                     cell.arrowImageView.left = (ScreenWidth - Adapter(60))*3/6 + Adapter(10);
                 }else{
-                     cell.arrowImageView.left = (ScreenWidth - 60)*5/6 + 10;
+                     cell.arrowImageView.left = (ScreenWidth - Adapter(60))*5/6 + Adapter(10);
                 }
                 cell.middLabel.text = [NSString stringWithFormat:@"%@mmol",model.levels];
 

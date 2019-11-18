@@ -85,31 +85,31 @@
     }
 
     
-    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, kNavBarHeight + 10, ScreenWidth - 20, 245 + (ScreenWidth - 70)/4)];
+    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(10), kNavBarHeight + Adapter(10), ScreenWidth - Adapter(20), Adapter(245) + (ScreenWidth - Adapter(70))/4)];
     backImageView.backgroundColor = [UIColor whiteColor];
-    backImageView.layer.cornerRadius = 10;
+    backImageView.layer.cornerRadius = Adapter(10);
     backImageView.layer.masksToBounds = YES;
     backImageView.userInteractionEnabled = YES;
     [self insertSublayerWithImageView:backImageView with:self.view];
     [self.view addSubview:backImageView];
     
     
-    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(10, 10, backImageView.width - 20, 210)];
+    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(Adapter(10), Adapter(10), backImageView.width - Adapter(20), Adapter(210))];
     backView.backgroundColor = [UIColor whiteColor];
     backView.layer.borderColor = RGB(221, 221, 221).CGColor;
     backView.layer.borderWidth =0.5;
     [backImageView addSubview:backView];
     
-    _textView = [[CPTextViewPlaceholder alloc]initWithFrame:CGRectMake(5, 5, backView.width - 10, 190)];
+    _textView = [[CPTextViewPlaceholder alloc]initWithFrame:CGRectMake(Adapter(5), Adapter(5), backView.width - Adapter(10), Adapter(190))];
     _textView.delegate = self;
-    _textView.textContainerInset = UIEdgeInsetsMake(10, 0, 20, 10);
+    _textView.textContainerInset = UIEdgeInsetsMake(Adapter(10), 0, Adapter(20), Adapter(10));
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChangess) name:UITextViewTextDidChangeNotification object:self.textView];
     
     _textView.font = [UIFont systemFontOfSize:15];
     _textView.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     
-    _textViews = [[UITextView alloc]initWithFrame:CGRectMake(10,5, backView.width - 30, 100)];
+    _textViews = [[UITextView alloc]initWithFrame:CGRectMake(Adapter(10),Adapter(7.5), backView.width - Adapter(30), Adapter(100))];
     _textView.keyboardType = UIKeyboardTypeDefault;
     _textView.returnKeyType = UIReturnKeyDone;
     _textViews.text = ModuleZW(@"请输入您想咨询的内容");
@@ -119,7 +119,7 @@
     _textView.backgroundColor = [UIColor clearColor];
     [backView addSubview:_textView];
     
-    UILabel *numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(backView.width - 100, backView.height - 20, 90, 20)];
+    UILabel *numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(backView.width - Adapter(100), backView.height - Adapter(20), Adapter(90), Adapter(20))];
     numberLabel.text = @"0/200";
     numberLabel.textColor =RGB(162, 162, 162);
     numberLabel.textAlignment = NSTextAlignmentRight;
@@ -128,10 +128,10 @@
     
     // 1. 常见一个发布图片时的photosView
     PYPhotosView *publishPhotosView = [PYPhotosView photosView];
-    publishPhotosView.py_x = 15;
-    publishPhotosView.py_y = backView.bottom + 10;
-    publishPhotosView.photoWidth = (backImageView.width-50)/4 ;
-    publishPhotosView.photoHeight = (backImageView.width-50)/4 ;
+    publishPhotosView.py_x = Adapter(15);
+    publishPhotosView.py_y = backView.bottom + Adapter(10);
+    publishPhotosView.photoWidth = (backImageView.width-Adapter(50))/4 ;
+    publishPhotosView.photoHeight = (backImageView.width-Adapter(50))/4 ;
     // 2.1 设置本地图片
     publishPhotosView.images = nil;
     publishPhotosView.hideDeleteView = YES;
@@ -146,18 +146,18 @@
     
 
     UIButton *photoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    photoButton.frame = CGRectMake(backImageView.width/8-20, backView.bottom - 10 +  (backImageView.width-50)/8 , 40, 40) ;
+    photoButton.frame = CGRectMake(backImageView.width/8-Adapter(20), backView.bottom - Adapter(10) +  (backImageView.width-Adapter(50))/8 , Adapter(40), Adapter(40)) ;
     [photoButton setBackgroundImage:[UIImage imageNamed:@"专家咨询添加图片"] forState:UIControlStateNormal];
-    [photoButton addTarget:self action:@selector(photoAction) forControlEvents:UIControlEventTouchUpInside];
+    [photoButton addTarget:self action:@selector(photoAction:) forControlEvents:UIControlEventTouchUpInside];
     [backImageView addSubview:photoButton];
     self.photoButton = photoButton;
     
     UIButton *finishButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    finishButton.frame = CGRectMake(self.view.frame.size.width / 2 - 45,backImageView.bottom + 40, 90, 26);
+    finishButton.frame = CGRectMake(self.view.frame.size.width / 2 - Adapter(45),backImageView.bottom + Adapter(40), Adapter(90), Adapter(26));
     [finishButton setBackgroundColor:RGB_ButtonBlue];
     [finishButton setTitle:ModuleZW(@"提交") forState:UIControlStateNormal];
     [finishButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
-    finishButton.layer.cornerRadius = 13;
+    finishButton.layer.cornerRadius = Adapter(13);
     finishButton.clipsToBounds = YES;
     finishButton.alpha = 0.4;
     finishButton.userInteractionEnabled = NO;
@@ -275,7 +275,7 @@
     
 }
 # pragma mark - 照片按钮事件
-- (void)photoAction{
+- (void)photoAction:(UIButton *)button{
     
     UIAlertController *alectSheet = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     
@@ -291,6 +291,14 @@
     [alectSheet addAction:action1];
     [alectSheet addAction:action2];
     [alectSheet addAction:cancleAction];
+    if(ISPaid)  {
+        UIPopoverPresentationController *popover = alectSheet.popoverPresentationController;
+        if (popover) {
+            popover.sourceView = button;
+            popover.sourceRect = button.bounds;
+            popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        }
+    }
     
     [self presentViewController:alectSheet animated:YES completion:NULL];
     
@@ -318,7 +326,7 @@
 - (void)photosViewDeleteImageAction
 {
     UIView *bottomView = [self.view viewWithTag:2018];
-    bottomView.top = self.publishPhotosView.bottom+20;
+    bottomView.top = self.publishPhotosView.bottom+Adapter(20);
     
     
     
@@ -343,11 +351,11 @@
         [self.publishPhotosView reloadDataWithImages:weakSelf.photos];
         if (self.photos.count < 4 ) {
             self.photoButton.hidden = NO;
-            self.photoButton.left = (ScreenWidth - 20)/8-20 + (((ScreenWidth - 20)-50)/4 + 10)*self.photos.count;
+            self.photoButton.left = (ScreenWidth - Adapter(20))/8-Adapter(20) + ((ScreenWidth - Adapter(70))/4 + Adapter(10))*self.photos.count;
         }else{
             self.photoButton.hidden = YES;
         }
-        bottomView.top = self.publishPhotosView.bottom+20;
+        bottomView.top = self.publishPhotosView.bottom+Adapter(20);
     }];
     [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
 }
@@ -355,7 +363,7 @@
 -(void)photosView:(PYPhotosView *)photosView didDeleteImageIndex:(NSInteger)imageIndex{
     if (self.photos.count < 4 ) {
         self.photoButton.hidden = NO;
-        self.photoButton.left = (ScreenWidth - 20)/8-20 + (((ScreenWidth - 20)-50)/4 + 10)*self.photos.count;
+        self.photoButton.left = (ScreenWidth - Adapter(20))/8-Adapter(20) + ((ScreenWidth - Adapter(70))/4 + Adapter(10))*self.photos.count;
     }else{
         self.photoButton.hidden = YES;
     }
@@ -404,11 +412,11 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [self.publishPhotosView reloadDataWithImages:self.photos];
     if (self.photos.count < 4 ) {
         self.photoButton.hidden = NO;
-        self.photoButton.left = (ScreenWidth - 20)/8-20 + (((ScreenWidth - 20)-50)/4 + 10)*self.photos.count;
+        self.photoButton.left = (ScreenWidth - Adapter(20))/8-Adapter(20) + ((ScreenWidth - Adapter(70))/4 + Adapter(10))*self.photos.count;
     }else{
         self.photoButton.hidden = YES;
     }
-    bottomView.top = self.publishPhotosView.bottom+20;
+    bottomView.top = self.publishPhotosView.bottom+Adapter(20);
 
 }
 

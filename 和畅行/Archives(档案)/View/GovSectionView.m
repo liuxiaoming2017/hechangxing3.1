@@ -12,7 +12,7 @@
 @implementation GovSectionView
 
 + (GovSectionView *)showWithModel:(HealthTipsModel *)model {
-    GovSectionView  *sectionV = [[GovSectionView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 90)];
+    GovSectionView  *sectionV = [[GovSectionView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, Adapter(90))];
     sectionV.backgroundColor = [UIColor clearColor];
     
     NSString *topColor = [NSString string];
@@ -46,14 +46,14 @@
         timeStr = [NSString stringWithFormat:@"%@.10.01-%@.12.31",model.year,model.year];
     }
     
-    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, ScreenWidth - 20, 80)];
+    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(10), Adapter(10), ScreenWidth - Adapter(20), Adapter(80))];
     [backImageView.layer addSublayer:[UIColor setGradualChangingColor:backImageView fromColor:topColor toColor:bottomColor]];
     backImageView.userInteractionEnabled = YES;
     backImageView.layer.cornerRadius = 10;
     backImageView.layer.masksToBounds = YES;
     [sectionV addSubview:backImageView];
     
-    UILabel *quarterLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, backImageView.width, 70)];
+    UILabel *quarterLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, backImageView.width, Adapter(70))];
     quarterLabel.backgroundColor = [UIColor clearColor];
     quarterLabel.textColor = [UIColor whiteColor];
     quarterLabel.text = quarterStr;
@@ -61,7 +61,7 @@
     quarterLabel.font = [UIFont systemFontOfSize:24];
     [backImageView addSubview:quarterLabel];
     
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 50, backImageView.width, 30)];
+    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, Adapter(50), backImageView.width, Adapter(30))];
     timeLabel.backgroundColor = [UIColor clearColor];
     timeLabel.textColor = [UIColor whiteColor];
     timeLabel.text = timeStr;

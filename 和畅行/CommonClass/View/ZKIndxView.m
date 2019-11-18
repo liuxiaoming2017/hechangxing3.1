@@ -37,25 +37,25 @@
         if([UserShareOnce shareOnce].isOnline){
 
         }
-        NSInteger lieshu = imagesData.count/3+imagesData.count%3;
+        NSInteger lieshu = imagesData.count/3;
         //NSInteger lieshu = imagesData.count%3;
         for(int i=0;i<imagesData.count;i++){
             //row排数;col列数
             int row = i/3;
             int col = i%3;
-            CGFloat ICON_W = 50*proportion;
-            CGFloat MARGIN = 50*proportion;
+            CGFloat ICON_W = Adapter(50);
+            CGFloat MARGIN = Adapter(50);
             
             CGFloat margin = (ScreenWidth-ICON_W*3)/4.0;
             
-            CGFloat topY = ScreenHeight  - lieshu * (ICON_W + MARGIN) +80;
-            NSLog(@"yyyy:%f",topY);
-            if(iPhoneX111){
-                topY = ScreenHeight  - lieshu * (ICON_W + MARGIN)-34 +80;
-            }
+            CGFloat topY = ScreenHeight  - lieshu * (ICON_W + MARGIN) - Adapter(50);
+//            NSLog(@"yyyy:%f",topY);
+//            if(iPhoneX111){
+//                topY = ScreenHeight  - lieshu * (ICON_W + MARGIN)-34 +80;
+//            }
             
             
-            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(margin*(col+1) + col * ICON_W, ScreenHeight - topY  + row * (ICON_W + MARGIN), ICON_W, ICON_W)];
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(margin*(col+1) + col * ICON_W, topY  + row * (ICON_W + MARGIN), ICON_W, ICON_W)];
            
 //            if(i==7){
 //                button.frame = CGRectMake(margin*3 + 2 * ICON_W, ScreenHeight - topY  + row * (ICON_W + MARGIN), ICON_W, ICON_W);
@@ -98,10 +98,8 @@
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setImage:[UIImage imageNamed:@"tabBar_publish_icon_selected"] forState:(UIControlStateNormal)];
-        button.frame = CGRectMake(ScreenWidth/2-25,ScreenHeight - 50, 50, 50);
-        if(iPhoneX111){
-            button.top = ScreenHeight - 50 - 34;
-        }
+        button.frame = CGRectMake(ScreenWidth/2-Adapter(25),ScreenHeight - kTabBarHeight + 44 -  Adapter(55) , Adapter(50), Adapter(50));
+        
         [button addTarget:self action:@selector(dismissClick:) forControlEvents:(UIControlEventTouchUpInside)];
         
         

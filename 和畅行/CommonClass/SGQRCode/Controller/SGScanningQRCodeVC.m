@@ -61,8 +61,8 @@
     UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [button setTitle:@"相册" forState:(UIControlStateNormal)];
     [button  setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-    [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
-    button.frame =CGRectMake(ScreenWidth - 60  , kNavBarHeight -44, 60, 44);
+    [button.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    button.frame =CGRectMake(ScreenWidth - Adapter(60)  , kNavBarHeight -44, Adapter(60), 44);
     [button addTarget:self action:@selector(photoAlbum) forControlEvents:(UIControlEventTouchUpInside)];
     _button = button;
     

@@ -35,17 +35,17 @@
 {
     
     self.commandButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    if(self.width == 56){
-        self.commandButton.frame = CGRectMake((self.width-33)/2.0, 5, 33, 33);
+    if(self.width == Adapter(56)){
+        self.commandButton.frame = CGRectMake((self.width-Adapter(33))/2.0, Adapter(5), Adapter(33), Adapter(33));
     }
-    else if(self.width >= 53){
-        self.commandButton.frame = CGRectMake((self.width-53)/2.0, 5, 53, 53);
+    else if(self.width >= Adapter(53)){
+        self.commandButton.frame = CGRectMake((self.width-Adapter(53))/2.0, Adapter(5), Adapter(53), Adapter(53));
     }else{
-        self.commandButton.frame = CGRectMake((self.width-33)/2.0, 5, 33, 33);
+        self.commandButton.frame = CGRectMake((self.width-Adapter(33))/2.0, Adapter(5), Adapter(33), Adapter(33));
     }
     
-    [self.commandButton setImage:[UIImage imageNamed:title] forState:UIControlStateNormal];
-    [self.commandButton setImage:[UIImage imageNamed:title] forState:UIControlStateHighlighted];
+    [self.commandButton setImage:[[UIImage imageNamed:title] transformWidth:Adapter(20) height:Adapter(20)] forState:(UIControlStateNormal)];
+    [self.commandButton setImage:[[UIImage imageNamed:title] transformWidth:Adapter(20) height:Adapter(20)] forState:(UIControlStateHighlighted)];
     
 //    CGSize size = self.CommandButton.frame.size;
 //    CGFloat radius = self.CommandButton.width/2.0;
@@ -63,8 +63,12 @@
     }
     
     UILabel *label = [[UILabel alloc] init];
-    label.frame = CGRectMake(0,self.commandButton.bottom+5,self.width,20);
-    label.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize > 16.0 ? 16.0 : 14*[UserShareOnce shareOnce].fontSize];
+    label.frame = CGRectMake(0,self.commandButton.bottom+Adapter(5),self.width,Adapter(20));
+    if (ISPaid) {
+        label.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize];
+    }else{
+        label.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize > 16.0 ? 16.0 : 14*[UserShareOnce shareOnce].fontSize];
+    }
     label.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
     label.text = title;
     label.textAlignment = NSTextAlignmentCenter;

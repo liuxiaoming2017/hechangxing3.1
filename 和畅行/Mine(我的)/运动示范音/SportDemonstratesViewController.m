@@ -75,7 +75,7 @@
     self.navTitleLabel.text = ModuleZW(@"运动示范音");
     
     UITableView *tableview=[[UITableView alloc]init];
-    tableview.frame=CGRectMake(0,kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-56);
+    tableview.frame=CGRectMake(0,kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-Adapter(56));
     tableview.delegate=self;
     tableview.dataSource=self;
     tableview.separatorStyle=UITableViewCellSeparatorStyleNone;
@@ -91,14 +91,14 @@
    
     [self GetResourceslist];
     
-    UIView *diView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 56, self.view.frame.size.width, 56)];
+    UIView *diView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - Adapter(56), self.view.frame.size.width, Adapter(56))];
     diView.backgroundColor = [UtilityFunc colorWithHexString:@"#f2f1ef"];
     [self.view addSubview:diView];
-    UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width / 2 - 60, 12, 120, 32)];
+    UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width / 2 - Adapter(60), Adapter(12), Adapter(120), Adapter(32))];
     imageV.image = [UIImage imageNamed:ModuleZW(@"quanbuxiazai")];
     [diView addSubview:imageV];
     UIButton *imageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    imageButton.frame = CGRectMake(self.view.frame.size.width / 2 - 60, 12, 120, 32);
+    imageButton.frame = imageV.frame;
     [imageButton addTarget:self action:@selector(imageButton) forControlEvents:UIControlEventTouchUpInside];
     [diView addSubview:imageButton];
     
@@ -337,8 +337,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    float height=47;
-    return height;
+    return Adapter(47);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -364,7 +363,7 @@
         }
     }
     UILabel* lbname=[[UILabel alloc] init];
-    lbname.frame=CGRectMake(14.5, (cell.frame.size.height-23)/2, 80, 23);
+    lbname.frame=CGRectMake(Adapter(14.5), 0, ScreenWidth*0.21, ScreenWidth*0.125);
     lbname.backgroundColor=[UIColor clearColor];
     lbname.textColor=[UtilityFunc colorWithHexString:@"#666666"];
     lbname.font=[UIFont systemFontOfSize:11];
@@ -382,7 +381,7 @@
     
     //lbname.frame.origin.x+lbname.frame.size.width+5+30
     UILabel* lbBuy_Date=[[UILabel alloc] init];
-    lbBuy_Date.frame=CGRectMake(lbname.right , (cell.frame.size.height-23)/2, ScreenWidth -lbname.right - 50 , 23);
+    lbBuy_Date.frame=CGRectMake(lbname.right , 0, ScreenWidth -lbname.right - ScreenWidth*0.13 , ScreenWidth*0.125);
     lbBuy_Date.backgroundColor=[UIColor clearColor];
     lbBuy_Date.textColor=[UtilityFunc colorWithHexString:@"#666666"];
     lbBuy_Date.font=[UIFont systemFontOfSize:11];
@@ -419,7 +418,7 @@
     if ([[_downloadHanlder.downloadingDic objectForKey:[NSString stringWithFormat:@"%@",[[[[self.LeMedicArray objectAtIndex:indexPath.row] objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"title"]]] length]>0)
     {
         UIButton* statusbtn=[UIButton buttonWithType:UIButtonTypeCustom];
-        statusbtn.frame=CGRectMake(ScreenWidth-statusviewImg.size.height/2-24.5, (cell.frame.size.height-statusviewImg.size.height/2)/2, statusviewImg.size.width/2  , statusviewImg.size.height/2);
+        statusbtn.frame=CGRectMake(ScreenWidth-statusviewImg.size.height/2-Adapter(24.5), (cell.frame.size.height-statusviewImg.size.height/2)/2, statusviewImg.size.width/2  , statusviewImg.size.height/2);
         [statusbtn addTarget:self action:@selector(DownloadButton:) forControlEvents:UIControlEventTouchUpInside];
         statusbtn.tag=indexPath.row+10000;//[[[self.segmendatatarray objectAtIndex:indexPath.row] objectForKey:@"id"] intValue];
         [_downloadHanlder setButton:statusbtn];
@@ -441,7 +440,7 @@
         [cell addSubview:statusbtn];
     }
     UILabel* Linebg=[[UILabel alloc] init];
-    Linebg.frame=CGRectMake(5, cell.frame.size.height-0.5, ScreenWidth-10, 0.5);
+    Linebg.frame=CGRectMake(5, ScreenWidth*0.125-0.5, ScreenWidth-10, 0.5);
     Linebg.backgroundColor=[UtilityFunc colorWithHexString:@"#d8d8d8"];
     [cell addSubview:Linebg];
     

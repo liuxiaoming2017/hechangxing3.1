@@ -110,8 +110,8 @@ typedef enum : NSInteger {
     
     pointDirect = PointDirectLevel;
     slideDirect = SlideDirectTopToBottom;
-    panViewMaxY = ScreenHeight-100;
-    panViewMinY = ScreenHeight-275+90;
+    panViewMaxY = ScreenHeight-Adapter(100);
+    panViewMinY = ScreenHeight-Adapter(185);
     
     //按摩椅添加订阅
     self.ogaSubscribe = [[OGA530Subscribe alloc] init];
@@ -248,23 +248,26 @@ typedef enum : NSInteger {
 
 - (void)initUI
 {
+    CGFloat fontSizeFloat = 1;
+    if (ISPaid) {
+        fontSizeFloat = [UserShareOnce shareOnce].fontSize;
+    }
     
-    self.navTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-240)/2.0, 2+kStatusBarHeight, 240, 40)];
+    self.navTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-Adapter(240))/2.0, 2+kStatusBarHeight, Adapter(240), 40)];
     self.navTimeLabel.font = [UIFont systemFontOfSize:18];
     self.navTimeLabel.textAlignment = NSTextAlignmentCenter;
     self.navTimeLabel.textColor = [UIColor blackColor];
     self.navTimeLabel.hidden = YES;
     [self.topView addSubview:self.navTimeLabel];
     
-    
     if (!self.bgScrollView){
-        self.bgScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-100)];
+        self.bgScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-Adapter(100))];
         self.bgScrollView.showsVerticalScrollIndicator = NO;
         
         self.bgScrollView.backgroundColor = [UIColor whiteColor];
         self.bgScrollView.bounces = YES;
         self.bgScrollView.delegate = self;
-        self.bgScrollView.contentSize = CGSizeMake(1, ScreenHeight-kNavBarHeight-100);
+        self.bgScrollView.contentSize = CGSizeMake(1, ScreenHeight-kNavBarHeight-Adapter(100));
         [self.view addSubview:self.bgScrollView];
     }
     
@@ -280,9 +283,9 @@ typedef enum : NSInteger {
     
     if(!self.isAdvanced && !isZhuanshu && !self.isRecommend){
         UIButton *likeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        likeBtn.frame = CGRectMake(self.rightBtn.left-42, 2+kStatusBarHeight, 37, 40);
-        [likeBtn setImage:[UIImage imageNamed:@"按摩收藏_未"] forState:UIControlStateNormal];
-        [likeBtn setImage:[UIImage imageNamed:@"按摩收藏_已"] forState:UIControlStateSelected];
+        likeBtn.frame = CGRectMake(self.rightBtn.left-Adapter(42), Adapter(2)+kStatusBarHeight, Adapter(37), Adapter(40));
+        [likeBtn setBackgroundImage:[UIImage imageNamed:@"按摩收藏_未"] forState:UIControlStateNormal];
+        [likeBtn setBackgroundImage:[UIImage imageNamed:@"按摩收藏_已"] forState:UIControlStateSelected];
         BOOL isSelect = [[CacheManager sharedCacheManager] selectArmchairModel:self.armchairModel];
         likeBtn.selected = isSelect;
         [likeBtn addTarget:self action:@selector(likeBtnAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -294,26 +297,31 @@ typedef enum : NSInteger {
 # pragma mark - 头部视图
 - (void)initTopView
 {
+    
+    CGFloat fontSizeFloat = 1;
+    if (ISPaid) {
+        fontSizeFloat = [UserShareOnce shareOnce].fontSize;
+    }
 
    // self.view.backgroundColor = [UIColor whiteColor];
     //头部视图
-    self.upsideView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, ScreenWidth, 180)];
+    self.upsideView = [[UIView alloc] initWithFrame:CGRectMake(0, Adapter(10), ScreenWidth, Adapter(180))];
     [self.bgScrollView addSubview:self.upsideView];
     
     
-    InsidelayerView *layerView = [[InsidelayerView alloc] initWithFrame:CGRectMake(25, 34-8-5, 80+30+15, 90+40+18)];
+    InsidelayerView *layerView = [[InsidelayerView alloc] initWithFrame:CGRectMake(Adapter(25), Adapter(21), Adapter(125), Adapter(138))];
     [layerView insertSublayerFromeView:self.upsideView];
     
-    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 5+3, layerView.width, 15)];
-    nameLabel.font = [UIFont fontWithName:@"PingFang SC" size:15];
+    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, Adapter(8), layerView.width, Adapter(15))];
+    nameLabel.font = [UIFont fontWithName:@"PingFang SC" size:15*fontSizeFloat];
     nameLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
     //titleLabel.backgroundColor = [UIColor redColor];
     nameLabel.text = @"肩中俞/肩井";
     nameLabel.textAlignment = NSTextAlignmentCenter;
     [layerView addSubview:nameLabel];
     
-    self.acupointLabel = [[UITextView alloc] initWithFrame:CGRectMake(8, nameLabel.bottom, layerView.width-16, layerView.height-nameLabel.bottom-5)];
-    self.acupointLabel.font = [UIFont fontWithName:@"PingFang SC" size:14];
+    self.acupointLabel = [[UITextView alloc] initWithFrame:CGRectMake(Adapter(8), nameLabel.bottom, layerView.width-Adapter(16), layerView.height-nameLabel.bottom-Adapter(5))];
+    self.acupointLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*fontSizeFloat];
     self.acupointLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
     self.acupointLabel.userInteractionEnabled = NO;
     //self.acupointLabel.backgroundColor = [UIColor orangeColor];
@@ -325,9 +333,9 @@ typedef enum : NSInteger {
     
     [self.upsideView addSubview:layerView];
     
-    CGFloat animationLeft = layerView.right+30 > (ScreenWidth-142)/2.0 ? layerView.right+30 : (ScreenWidth-142)/2.0;
+    CGFloat animationLeft = layerView.right+Adapter(30) > (ScreenWidth-Adapter(142))/2.0 ? layerView.right+Adapter(30) : (ScreenWidth-Adapter(142))/2.0;
     
-    UIView *animationView = [[UIView alloc] initWithFrame:CGRectMake(animationLeft, 25, 142, 134)];
+    UIView *animationView = [[UIView alloc] initWithFrame:CGRectMake(animationLeft, Adapter(25), Adapter(142), Adapter(134))];
     animationView.tag = 1024;
     //animationView.backgroundColor = [UIColor orangeColor];
     //NSArray *timeArr = @[@3.0,@2.8,@2.6,@2.4,@2.2];
@@ -335,7 +343,7 @@ typedef enum : NSInteger {
     for(NSInteger i = 5;i>0;i--){
         UIImageView *animationImageV = [[UIImageView alloc] init];
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"播放动画%ld",i]];
-        CGSize size = image.size;
+        CGSize size = CGSizeMake(Adapter(image.size.width), Adapter(image.size.height));
         animationImageV.size = size;
         animationImageV.center = CGPointMake(animationView.width/2.0, animationView.height/2.0);
         animationImageV.image = image;
@@ -355,19 +363,19 @@ typedef enum : NSInteger {
         
     }
     
-    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake((animationView.width-81)/2.0, (animationView.height-35)/2.0-7, 81, 35)];
-    self.timeLabel.font = [UIFont fontWithName:@"PingFang SC" size:30];
+    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake((animationView.width-Adapter(81))/2.0, (animationView.height-Adapter(35))/2.0-Adapter(7), Adapter(81), Adapter(35))];
+    self.timeLabel.font = [UIFont fontWithName:@"PingFang SC" size:30*fontSizeFloat];
     self.timeLabel.textColor = [UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0];
     self.timeLabel.text = @"15:00";
     self.timeLabel.textAlignment = NSTextAlignmentCenter;
     [animationView addSubview:self.timeLabel];
     
     self.playBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.playBtn.frame = CGRectMake((animationView.width-20)/2.0, self.timeLabel.bottom+3, 20, 20);
-    [self.playBtn setImage:[UIImage imageNamed:@"按摩_播放"] forState:UIControlStateNormal];
-    [self.playBtn setImage:[UIImage imageNamed:@"按摩_暂停"] forState:UIControlStateSelected];
+    self.playBtn.frame = CGRectMake((animationView.width-Adapter(20))/2.0, self.timeLabel.bottom+Adapter(3), Adapter(20), Adapter(20));
+    [self.playBtn setBackgroundImage:[UIImage imageNamed:@"按摩_播放"] forState:UIControlStateNormal];
+    [self.playBtn setBackgroundImage:[UIImage imageNamed:@"按摩_暂停"] forState:UIControlStateSelected];
     [self.playBtn addTarget:self action:@selector(playAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.playBtn setHitTestEdgeInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
+    [self.playBtn setHitTestEdgeInsets:UIEdgeInsetsMake(Adapter(50), Adapter(50), Adapter(50), Adapter(50))];
     [animationView addSubview:self.playBtn];
     
     [self.upsideView addSubview:animationView];
@@ -411,33 +419,38 @@ typedef enum : NSInteger {
 # pragma mark - 高级按摩手法
 - (void)createAdvancedView
 {
-    self.advancedView = [[UIView alloc] initWithFrame:CGRectMake(0, self.upsideView.bottom+10, ScreenWidth, 200+30)];
+    CGFloat fontSizeFloat = 1;
+    if (ISPaid) {
+        fontSizeFloat = [UserShareOnce shareOnce].fontSize;
+    }
+    
+    self.advancedView = [[UIView alloc] initWithFrame:CGRectMake(0, self.upsideView.bottom+Adapter(10), ScreenWidth, Adapter(230))];
     [self.bgScrollView addSubview:self.advancedView];
     
-    InsidelayerView *layerView = [[InsidelayerView alloc] initWithFrame:CGRectMake(15, 0, ScreenWidth-30, self.advancedView.height)];
+    InsidelayerView *layerView = [[InsidelayerView alloc] initWithFrame:CGRectMake(Adapter(15), 0, ScreenWidth-Adapter(30), self.advancedView.height)];
     [layerView insertSublayerFromeView:self.advancedView];
     
     NSArray *commandArr1 = [self loadDataPlistWithStr:@"基础"];
     NSArray *commandArr2 = [self loadDataPlistWithStr:@"特殊"];
     
-    CGFloat btnWidth = 58.0+10;
-    CGFloat btnHeight = 83.0;
+    CGFloat btnWidth = Adapter(68);
+    CGFloat btnHeight = Adapter(83.0);
     
     CGFloat buttonMargin = (layerView.width-btnWidth*5)/6.0;
     
-    UILabel *jichuLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonMargin+15, 5, 81, 30)];
+    UILabel *jichuLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonMargin+Adapter(15), Adapter(5), Adapter(81), Adapter(30))];
     //NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"按摩手法"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
     jichuLabel.text = @"按摩手法";
-    jichuLabel.font = [UIFont fontWithName:@"PingFang SC" size:17];
+    jichuLabel.font = [UIFont fontWithName:@"PingFang SC" size:17*fontSizeFloat];
     jichuLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
     jichuLabel.textAlignment = NSTextAlignmentLeft;
     [self.advancedView addSubview:jichuLabel];
     
-    UILabel *teshuLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonMargin+15, 45+btnHeight, 81, 30)];
+    UILabel *teshuLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonMargin+Adapter(15), Adapter(45)+btnHeight, Adapter(81), Adapter(30))];
     //NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc] initWithString:@"特殊"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
     teshuLabel.textAlignment = NSTextAlignmentLeft;
     teshuLabel.text = @"特殊";
-    teshuLabel.font = [UIFont fontWithName:@"PingFang SC" size:17];
+    teshuLabel.font = [UIFont fontWithName:@"PingFang SC" size:17*fontSizeFloat];
     teshuLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
    // [self.advancedView addSubview:teshuLabel];
     
@@ -445,7 +458,7 @@ typedef enum : NSInteger {
         
         ArmChairModel *model = [commandArr1 objectAtIndex:i];
         
-        CommandButtonView *commandView = [[CommandButtonView alloc] initWithFrame:CGRectMake((buttonMargin+btnWidth)*i+buttonMargin+15, 10+28, btnWidth, btnHeight) withModel:model];
+        CommandButtonView *commandView = [[CommandButtonView alloc] initWithFrame:CGRectMake((buttonMargin+btnWidth)*i+buttonMargin+Adapter(15), Adapter(38), btnWidth, btnHeight) withModel:model];
         commandView.tag = 100+i;
         commandView.delegate = self;
         [self.advancedView addSubview:commandView];
@@ -453,7 +466,7 @@ typedef enum : NSInteger {
     for(NSInteger i=0;i<commandArr2.count;i++){
         
         ArmChairModel *model = [commandArr2 objectAtIndex:i];
-        CommandButtonView *commandView = [[CommandButtonView alloc] initWithFrame:CGRectMake((buttonMargin+btnWidth)*i+buttonMargin+15, 20+btnHeight+28, btnWidth, btnHeight) withModel:model];
+        CommandButtonView *commandView = [[CommandButtonView alloc] initWithFrame:CGRectMake((buttonMargin+btnWidth)*i+buttonMargin+Adapter(15), Adapter(20)+btnHeight+Adapter(28), btnWidth, btnHeight) withModel:model];
         commandView.tag = 200+i;
         commandView.delegate = self;
         [self.advancedView addSubview:commandView];
@@ -463,20 +476,26 @@ typedef enum : NSInteger {
 # pragma mark - 中间视图
 - (void)createMiddleView
 {
+    
+    CGFloat fontSizeFloat = 1;
+    if (ISPaid) {
+        fontSizeFloat = [UserShareOnce shareOnce].fontSize;
+    }
+    
     //中间视图
-    self.middleView = [[UIView alloc] initWithFrame:CGRectMake(0, self.isAdvanced ? self.advancedView.bottom+10 : self.upsideView.bottom+10, ScreenWidth, 190)];
+    self.middleView = [[UIView alloc] initWithFrame:CGRectMake(0, self.isAdvanced ? self.advancedView.bottom+Adapter(10) : self.upsideView.bottom+Adapter(10), ScreenWidth, Adapter(190))];
     [self.bgScrollView addSubview:self.middleView];
     
-    InsidelayerView *layerView2 = [[InsidelayerView alloc] initWithFrame:CGRectMake(15, 0, ScreenWidth-30, self.middleView.height)];
+    InsidelayerView *layerView2 = [[InsidelayerView alloc] initWithFrame:CGRectMake(Adapter(15), 0, ScreenWidth-Adapter(30), self.middleView.height)];
     [layerView2 insertSublayerFromeView:self.middleView];
     
-    CGFloat buttonMargin = (ScreenWidth-30-73*2)/3.0;
+    CGFloat buttonMargin = (ScreenWidth-Adapter(30)-Adapter(73)*2)/3.0;
     NSArray *commandArr = @[k530Command_BackWarm,k530Command_FootRoll];
     NSArray *arr = [self loadDataPlistWithStr:@"背部脚底"];
     for(NSUInteger i =0;i<arr.count;i++){
         ArmChairModel *model = [arr objectAtIndex:i];
         model.command = [commandArr objectAtIndex:i];
-        CommandButtonView *commandView = [[CommandButtonView alloc] initWithFrame:CGRectMake(buttonMargin+15+(70+buttonMargin)*i, 15, 70+20, 83) withModel:model];
+        CommandButtonView *commandView = [[CommandButtonView alloc] initWithFrame:CGRectMake(buttonMargin+Adapter(15)+(Adapter(70)+buttonMargin)*i, Adapter(15), Adapter(90), Adapter(83)) withModel:model];
         commandView.tag = 300+i;
         commandView.delegate = self;
         [self.middleView addSubview:commandView];
@@ -490,21 +509,21 @@ typedef enum : NSInteger {
 //    commandView2.tag = 301;
 //    [self.middleView addSubview:commandView2];
     
-    CGFloat commandBottom = 15+83;
+    CGFloat commandBottom = Adapter(98);
     
     NSArray *titleArr = @[@"按摩强度",@"气囊强度"];
     for(NSInteger i = 0; i<titleArr.count;i++){
         UILabel *label = [[UILabel alloc] init];
-        label.frame = CGRectMake(25,commandBottom+10+(23+10)*i,70,23);
+        label.frame = CGRectMake(Adapter(25),commandBottom+Adapter(10)+Adapter(33)*i,Adapter(70),Adapter(23));
         
-        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:[titleArr objectAtIndex:i] attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:[titleArr objectAtIndex:i] attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16*fontSizeFloat],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
         
         label.attributedText = string;
         label.textAlignment = NSTextAlignmentCenter;
         [self.middleView addSubview:label];
         
        // HCYSlider *slider1 = [[HCYSlider alloc]initWithFrame:CGRectMake(label.right+5, label.top+4, layerView2.right-10-label.right-10, 15) withTag:200+i];
-        HCYSlider *slider1 = [[HCYSlider alloc]initWithFrame:CGRectMake(label.right-5, label.top+4-8, layerView2.right-10-label.right-10+20, 15+16) withTag:200+i];
+        HCYSlider *slider1 = [[HCYSlider alloc]initWithFrame:CGRectMake(label.right-Adapter(5), label.top-Adapter(4), layerView2.right-Adapter(10)-label.right+Adapter(10), Adapter(31)) withTag:200+i];
         slider1.currentValueColor = [UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0];
         //slider1.backgroundColor = [UIColor orangeColor];
         slider1.maxValue = 5;
@@ -517,23 +536,26 @@ typedef enum : NSInteger {
 #pragma mark - 气压视图
 - (void)createQiyaView
 {
-    
+    CGFloat fontSizeFloat = 1;
+    if (ISPaid) {
+        fontSizeFloat = [UserShareOnce shareOnce].fontSize;
+    }
     //气压视图
-    self.qiyaView = [[UIView alloc] initWithFrame:CGRectMake(0, self.middleView.bottom+10, ScreenWidth, 145)];
+    self.qiyaView = [[UIView alloc] initWithFrame:CGRectMake(0, self.middleView.bottom+Adapter(10), ScreenWidth, Adapter(145))];
     [self.bgScrollView addSubview:self.qiyaView];
     
-    [self.bgScrollView setContentSize:CGSizeMake(1, self.qiyaView.bottom+20)];
+    [self.bgScrollView setContentSize:CGSizeMake(1, self.qiyaView.bottom+Adapter(20))];
     
-    InsidelayerView *layerView = [[InsidelayerView alloc] initWithFrame:CGRectMake(15, 0, ScreenWidth-30, self.qiyaView.height)];
+    InsidelayerView *layerView = [[InsidelayerView alloc] initWithFrame:CGRectMake(Adapter(15), 0, ScreenWidth-Adapter(30), self.qiyaView.height)];
     [layerView insertSublayerFromeView:self.qiyaView];
     
-    CGFloat buttonMargin = (layerView.width-53*5)/6.0;
+    CGFloat buttonMargin = (layerView.width-Adapter(53)*5)/6.0;
     
-    UILabel *qiyaLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonMargin+15, 10, 81, 35)];
+    UILabel *qiyaLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonMargin+Adapter(15), Adapter(10), Adapter(81), Adapter(35))];
 //    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"气压"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
 //    qiyaLabel.attributedText = string;
     qiyaLabel.text = @"气压";
-    qiyaLabel.font = [UIFont fontWithName:@"PingFang SC" size:17];
+    qiyaLabel.font = [UIFont fontWithName:@"PingFang SC" size:17*fontSizeFloat];
     qiyaLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
     qiyaLabel.textAlignment = NSTextAlignmentLeft;
     [self.qiyaView addSubview:qiyaLabel];
@@ -546,7 +568,7 @@ typedef enum : NSInteger {
     
     for(NSInteger i = 0; i<qiyaModelArr.count;i++){
         ArmChairModel *model = [qiyaModelArr objectAtIndex:i];
-        CommandButtonView *commandView = [[CommandButtonView alloc] initWithFrame:CGRectMake((buttonMargin+53)*i+buttonMargin+15, qiyaLabel.bottom, 53, 83) withModel:model];
+        CommandButtonView *commandView = [[CommandButtonView alloc] initWithFrame:CGRectMake((buttonMargin+Adapter(53))*i+buttonMargin+Adapter(15), qiyaLabel.bottom, Adapter(53), Adapter(83)) withModel:model];
         commandView.tag = 400+i;
         commandView.delegate = self;
         [self.qiyaView addSubview:commandView];
@@ -571,18 +593,18 @@ typedef enum : NSInteger {
     [self.styleView addGestureRecognizer:tap];
     
     
-    UIView *layerView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-90, ScreenWidth, 20)];
+    UIView *layerView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-Adapter(90), ScreenWidth, Adapter(20))];
     layerView.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:layerView];
 
-    InsidelayerView *insidelayerView = [[InsidelayerView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 20)];
+    InsidelayerView *insidelayerView = [[InsidelayerView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, Adapter(20))];
     [insidelayerView insertSublayerFromeView:layerView];
     [layerView addSubview:insidelayerView];
     
-    self.postBottomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-100, ScreenWidth, 275-90)];
+    self.postBottomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-Adapter(100), ScreenWidth, Adapter(185))];
     self.postBottomView.backgroundColor = [UIColor whiteColor];
     
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth/2.0-6, 5, 12, 5)];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth/2.0-Adapter(6), Adapter(5), Adapter(12), Adapter(5))];
     imageV.image = [UIImage imageNamed:@"气压_上拉"];
     imageV.tag = 2019;
     [self.postBottomView addSubview:imageV];
@@ -622,13 +644,13 @@ typedef enum : NSInteger {
 
     
     NSArray *nameArr = [self loadDataPlistWithStr:@"姿势"];
-    CGFloat buttonMargin = (self.postBottomView.width-56*3)/4.0;
-    CGFloat buttonMargin2 = (self.postBottomView.width-56*4)/5.0;
+    CGFloat buttonMargin = (self.postBottomView.width-Adapter(56)*3)/4.0;
+    CGFloat buttonMargin2 = (self.postBottomView.width-Adapter(56)*4)/5.0;
     for(NSInteger i=0;i<nameArr.count;i++){
         
         ArmChairModel  *model = [nameArr objectAtIndex:i];
         if(i<3){
-            CommandButtonView *commandView = [[CommandButtonView alloc] initWithFrame:CGRectMake((buttonMargin+56)*i+buttonMargin, 15, 56, 58) withModel:model];
+            CommandButtonView *commandView = [[CommandButtonView alloc] initWithFrame:CGRectMake((buttonMargin+Adapter(56))*i+buttonMargin, Adapter(15), Adapter(56), Adapter(58)) withModel:model];
             commandView.tag = 500+i;
             commandView.delegate = self;
             [self.postBottomView addSubview:commandView];
@@ -637,7 +659,7 @@ typedef enum : NSInteger {
             NSInteger j = (i-3)/4;
             NSInteger k = (i-3)%4;
             
-            CommandButtonView *commandView = [[CommandButtonView alloc] initWithFrame:CGRectMake((buttonMargin2+56)*k+buttonMargin2, 90+15+90*j, 56, 58) withModel:model];
+            CommandButtonView *commandView = [[CommandButtonView alloc] initWithFrame:CGRectMake((buttonMargin2+Adapter(56))*k+buttonMargin2, Adapter(105)+Adapter(90)*j, Adapter(56), Adapter(58)) withModel:model];
             commandView.delegate = self;
             commandView.tag = 500+i;
             [self.postBottomView addSubview:commandView];
@@ -679,7 +701,7 @@ typedef enum : NSInteger {
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     //NSLog(@"yyyyyyy:%f",scrollView.contentOffset.y);
-    if(scrollView.contentOffset.y > 180){
+    if(scrollView.contentOffset.y > Adapter(180)){
         self.navTitleLabel.hidden = YES;
         self.navTimeLabel.hidden = NO;
     }else{
@@ -916,7 +938,7 @@ typedef enum : NSInteger {
     CGFloat viewWidth = CGRectGetWidth(view.frame);
     CGFloat viewHeight = CGRectGetHeight(view.frame);
     
-    CGFloat topMargin = 10;
+    CGFloat topMargin = Adapter(10);
     
     UIBezierPath *path = [UIBezierPath bezierPath];
     

@@ -33,7 +33,7 @@
 
 - (void)initWithView
 {
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((kSidebarWidth-72*2-26)/2.0 -15, kNavBarHeight, 100, 25)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(20) , kNavBarHeight, Adapter(100), Adapter(25))];
     titleLabel.font = [UIFont systemFontOfSize:20];
     titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.textColor = UIColorFromHex(0X000000);
@@ -72,16 +72,16 @@
                          ModuleZW(@"心率"),
                          ModuleZW(@"呼吸"),
                          ModuleZW(@"体温"),
-                         @"体检报告",
+                         ModuleZW(@"体检报告"),
                          nil];
     }
    
 
     for(NSInteger i=0;i<self.titleArr.count;i++){
         UIButton *selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        selectBtn.frame = CGRectMake(titleLabel.left+(90+17)*(i%2), titleLabel.bottom+26+(42+23)*(i/2), 95, 45);
+        selectBtn.frame = CGRectMake(titleLabel.left+(Adapter(107))*(i%2), titleLabel.bottom+26+(Adapter(45))*(i/2) + 20*(i/2), Adapter(95), Adapter(45));
         selectBtn.tag = i+100;
-        selectBtn.layer.cornerRadius = 15;
+        selectBtn.layer.cornerRadius = Adapter(15);
         selectBtn.titleLabel.numberOfLines = 2;
         selectBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
         selectBtn.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
@@ -90,7 +90,7 @@
         [selectBtn.layer setBorderWidth:1.0];
         [selectBtn setTitle:[self.titleArr objectAtIndex:i] forState:UIControlStateNormal];
         [selectBtn setBackgroundColor:UIColorFromHex(0XEEEEEE)];
-        selectBtn.titleLabel.font = [UIFont systemFontOfSize:16/[UserShareOnce shareOnce].fontSize];
+        selectBtn.titleLabel.font = [UIFont systemFontOfSize:16/[UserShareOnce shareOnce].multipleFontSize];
         [selectBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [selectBtn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
         [selectBtn addTarget:self action:@selector(selectBtnAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -102,7 +102,7 @@
     UIButton *selButton = (UIButton *)[self.contentView viewWithTag:100+self.titleArr.count-1];
     NSLog(@"frame:%@",NSStringFromCGRect(selButton.frame));
     UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    sureBtn.frame = CGRectMake((kSidebarWidth-150)/2.0, selButton.bottom+40, 150, 42);
+    sureBtn.frame = CGRectMake((kSidebarWidth-Adapter(150))/2.0, selButton.bottom+Adapter(40), Adapter(150), Adapter(42));
     sureBtn.layer.cornerRadius = sureBtn.height/2.0;
     sureBtn.layer.masksToBounds = YES;
     [sureBtn setTitle:ModuleZW(@"确定") forState:UIControlStateNormal];

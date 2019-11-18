@@ -58,13 +58,13 @@
     
     self.dataArray = [NSMutableArray arrayWithCapacity:0];
     
-    scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height - kNavBarHeight - kTabBarHeight-65)];
+    scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height - kNavBarHeight - kTabBarHeight + 44 - Adapter(109))];
     scrollView.backgroundColor = [UIColor whiteColor];
     scrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:scrollView];
     
     // Do any additional setup after loading the view.
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, [UserShareOnce shareOnce].yueYaoBuyArr.count*55) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, [UserShareOnce shareOnce].yueYaoBuyArr.count*Adapter(55)) style:UITableViewStylePlain];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.scrollEnabled = NO;
@@ -72,34 +72,34 @@
     //self.automaticallyAdjustsScrollViewInsets = NO;
     [scrollView addSubview:_tableView];
     
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, _tableView.bottom, ScreenWidth, 10)];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, _tableView.bottom, ScreenWidth, Adapter(10))];
     lineView.backgroundColor = [UIColor colorWithRed:242/255.0 green:241/255.0 blue:239/255.0 alpha:1.0];
     [scrollView addSubview:lineView];
     
     //现金卡视图
-    cashcardView = [[UIView alloc] initWithFrame:CGRectMake(0, _tableView.bottom+15, ScreenWidth, 245)];
+    cashcardView = [[UIView alloc] initWithFrame:CGRectMake(0, _tableView.bottom+Adapter(15), ScreenWidth, Adapter(245))];
     cashcardView.backgroundColor = [UIColor whiteColor];
     [scrollView addSubview:cashcardView];
     
-    UILabel *cardTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 200, 25)];
+    UILabel *cardTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(20), Adapter(10), Adapter(200), Adapter(25))];
     cardTitleLabel.font = [UIFont systemFontOfSize:18];
     cardTitleLabel.textAlignment = NSTextAlignmentLeft;
     cardTitleLabel.textColor = [UIColor grayColor];
     cardTitleLabel.text = ModuleZW(@"现金卡支付");
     [cashcardView addSubview:cardTitleLabel];
     
-    UIImageView *cardBackImg = [[UIImageView alloc]initWithFrame:CGRectMake(22, cardTitleLabel.bottom+5, self.view.frame.size.width - 44, 200)];
+    UIImageView *cardBackImg = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(22), cardTitleLabel.bottom+Adapter(5), self.view.frame.size.width - Adapter(44), Adapter(200))];
     cardBackImg.image = [UIImage imageNamed:@"cashcardBack.png"];
     [cashcardView addSubview:cardBackImg];
     self.cardBackImg = cardBackImg;
     
     
-    UIImageView *no_CardImage = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth/2.0-50, cardBackImg.top+(cardBackImg.height-65)/2.0, 100, 40)];
+    UIImageView *no_CardImage = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth/2.0-Adapter(50), cardBackImg.top+(cardBackImg.height-Adapter(65))/2.0, Adapter(100), Adapter(40))];
     no_CardImage.image = [UIImage imageNamed:@"no_card.png"];
     [cashcardView addSubview:no_CardImage];
     self.no_CardImage = no_CardImage;
     
-    UILabel *nocardLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth/2.0-100, no_CardImage.bottom+5, 200, 40)];
+    UILabel *nocardLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth/2.0-Adapter(100), no_CardImage.bottom+Adapter(5), Adapter(200), Adapter(40))];
     nocardLabel.font = [UIFont systemFontOfSize:16];
     nocardLabel.numberOfLines = 2;
     nocardLabel.textAlignment = NSTextAlignmentCenter;
@@ -108,7 +108,7 @@
     [cashcardView addSubview:nocardLabel];
     self.nocardLabel = nocardLabel;
     
-    UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(0, cashcardView.bottom, ScreenWidth, 10)];
+    UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(0, cashcardView.bottom, ScreenWidth, Adapter(10))];
     lineView2.backgroundColor = [UIColor colorWithRed:242/255.0 green:241/255.0 blue:239/255.0 alpha:1.0];
     [scrollView addSubview:lineView2];
     
@@ -120,42 +120,42 @@
     
     [self payMentWithBlock];
     
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, scrollView.bottom, ScreenWidth, 65)];
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, scrollView.bottom, ScreenWidth, Adapter(65))];
     bottomView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:bottomView];
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 120, 25)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(20), Adapter(10), Adapter(120), Adapter(25))];
     titleLabel.font = [UIFont systemFontOfSize:16];
     titleLabel.textAlignment = NSTextAlignmentRight;
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.text = ModuleZW(@"消费金额： ");
-    CGRect textRect = [titleLabel.text  boundingRectWithSize:CGSizeMake(MAXFLOAT, 25)
+    CGRect textRect = [titleLabel.text  boundingRectWithSize:CGSizeMake(MAXFLOAT, Adapter(25))
                                                options:NSStringDrawingUsesLineFragmentOrigin
                                             attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]}
                                                context:nil];
     titleLabel.width = textRect.size.width;
     [bottomView addSubview:titleLabel];
     
-    UILabel *ciaofeiLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.right, 10, 200, 25)];
+    UILabel *ciaofeiLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.right, Adapter(10), Adapter(200), Adapter(25))];
     ciaofeiLabel.font = [UIFont systemFontOfSize:16];
     ciaofeiLabel.textAlignment = NSTextAlignmentLeft;
     ciaofeiLabel.textColor = [UtilityFunc colorWithHexString:@"#ff9933"];
     ciaofeiLabel.text = [NSString stringWithFormat:@"¥%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
     [bottomView addSubview:ciaofeiLabel];
     
-    UILabel *cardLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.left, titleLabel.bottom, 120, 25)];
+    UILabel *cardLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.left, titleLabel.bottom, Adapter(120), Adapter(25))];
     cardLabel.font = [UIFont systemFontOfSize:16];
     cardLabel.textAlignment = NSTextAlignmentRight;
     cardLabel.textColor = [UIColor blackColor];
     cardLabel.text = ModuleZW(@"现金卡支付： ");
-    CGRect textRect1 = [cardLabel.text  boundingRectWithSize:CGSizeMake(MAXFLOAT, 25)
+    CGRect textRect1 = [cardLabel.text  boundingRectWithSize:CGSizeMake(MAXFLOAT, Adapter(25))
                                                      options:NSStringDrawingUsesLineFragmentOrigin
                                                   attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]}
                                                      context:nil];
     cardLabel.width = textRect1.size.width;
     [bottomView addSubview:cardLabel];
     
-    UILabel *cardxiaofeiLabel = [[UILabel alloc] initWithFrame:CGRectMake(cardLabel.right, cardLabel.top, 200, 25)];
+    UILabel *cardxiaofeiLabel = [[UILabel alloc] initWithFrame:CGRectMake(cardLabel.right, cardLabel.top, Adapter(200), Adapter(25))];
     cardxiaofeiLabel.font = [UIFont systemFontOfSize:16];
     cardxiaofeiLabel.textAlignment = NSTextAlignmentLeft;
     cardxiaofeiLabel.textColor = [UtilityFunc colorWithHexString:@"#ff9933"];
@@ -164,21 +164,21 @@
     xianjinkaLabel  =  cardxiaofeiLabel;
     
     
-    UIView *zhifuView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-kTabBarHeight, ScreenWidth, 44)];
+    UIView *zhifuView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-kTabBarHeight + 44 - Adapter(44), ScreenWidth, Adapter(44))];
     zhifuView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:zhifuView];
     
-    UIImageView *xiaofeijinerImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 105, zhifuView.height)];
+    UIImageView *xiaofeijinerImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - Adapter(105), zhifuView.height)];
     xiaofeijinerImage.image = [UIImage imageNamed:@"leyaoxiaofeijiner.png"];
     [zhifuView addSubview:xiaofeijinerImage];
     
 
     
-    UIImageView *gouwucheImage = [[UIImageView alloc]initWithFrame:CGRectMake(25, 12, 20, 20)];
+    UIImageView *gouwucheImage = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(25), Adapter(12), Adapter(20), Adapter(20))];
     gouwucheImage.image = [UIImage imageNamed:@"qianbao.png"];
     [zhifuView addSubview:gouwucheImage];
     
-    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 12, 120, 20)];
+    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(50), Adapter(12), Adapter(120), Adapter(20))];
     zongjinerLabel.text = ModuleZW(@"还需支付：");
     CGRect textRect2 = [zongjinerLabel.text  boundingRectWithSize:CGSizeMake(MAXFLOAT, 20)
                                                      options:NSStringDrawingUsesLineFragmentOrigin
@@ -190,16 +190,16 @@
     zongjinerLabel.font = [UIFont systemFontOfSize:16];
     [zhifuView addSubview:zongjinerLabel];
     
-    _jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(zongjinerLabel.right, 12, 60, 20)];
+    _jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(zongjinerLabel.right, Adapter(12), Adapter(60), Adapter(20))];
    
     
     _jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
     _jinerLabel.textColor = [UIColor whiteColor];
-    _jinerLabel.font = [UIFont boldSystemFontOfSize:16];
+    _jinerLabel.font = [UIFont systemFontOfSize:16];
     [zhifuView addSubview:_jinerLabel];
     
     UIButton *jiesuanButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    jiesuanButton.frame = CGRectMake(self.view.frame.size.width - 105, 0, 105, 44);
+    jiesuanButton.frame = CGRectMake(self.view.frame.size.width - Adapter(105), 0, Adapter(105), Adapter(44));
     [jiesuanButton addTarget:self action:@selector(zhifuqujiesuanButton) forControlEvents:(UIControlEventTouchUpInside)];
     [jiesuanButton setTitle:ModuleZW(@"去结算") forState:(UIControlStateNormal)];
     [jiesuanButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
@@ -563,14 +563,14 @@
                 self.cardBackImg.hidden = NO;
                 self.no_CardImage.hidden = NO;
                 self.nocardLabel.hidden = NO;
-                 cashcardView.frame =  CGRectMake(0, _tableView.bottom+15, ScreenWidth, 245);
+                 cashcardView.frame =  CGRectMake(0, _tableView.bottom+Adapter(15), ScreenWidth, Adapter(245));
                 return;
             }
             self.cardBackImg.hidden = YES;
             self.no_CardImage.hidden = YES;
             self.nocardLabel.hidden = YES;
-            cashcardView.frame =  CGRectMake(0, _tableView.bottom+15, ScreenWidth, self.dataArray.count*(139 / 2 +10));
-            scrollView.contentSize = CGSizeMake(0, _tableView.bottom+65+self.dataArray.count*(139 / 2 +10));
+            cashcardView.frame =  CGRectMake(0, _tableView.bottom+Adapter(15), ScreenWidth, self.dataArray.count*(Adapter(79.5)));
+            scrollView.contentSize = CGSizeMake(0, _tableView.bottom+Adapter(65)+self.dataArray.count*(Adapter(79.5)));
             [self payWithBlockDetails];
             //[_blockTableView reloadData];
         }
@@ -590,7 +590,7 @@
 # pragma mark - 创建会员卡页面
 - (void)payWithBlockDetails{
     for (int i = 0; i < self.dataArray.count; i++) {
-        UIView *diView = [[UIView alloc]initWithFrame:CGRectMake(0,_tableView.bottom+65+(139 / 2 +10)*i, self.view.frame.size.width, 139 / 2 +10)];
+        UIView *diView = [[UIView alloc]initWithFrame:CGRectMake(0,_tableView.bottom+Adapter(65)+(Adapter(79.5))*i, self.view.frame.size.width, Adapter(79.5))];
         [scrollView addSubview:diView];
         
         NSDate *datas = [[NSDate alloc]initWithTimeIntervalSince1970:[[[self.dataArray[i]objectForKey:@"cashcard"]objectForKey:@"endDate"] doubleValue]/1000.00];
@@ -619,7 +619,7 @@
         [diView addSubview:_mLabel];
         
         _hLabel = [[UILabel alloc] init];
-        _hLabel.frame = CGRectMake(115, 15, 60, 15);
+        _hLabel.frame = CGRectMake(Adapter(115), Adapter(15), Adapter(60), Adapter(15));
         _hLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
         //_hLabel.text = ModuleZW(@"会员卡：");
         _hLabel.text = [[self.dataArray[i]objectForKey:@"cashcard"]objectForKey:@"name"];
@@ -628,7 +628,7 @@
     
         [diView addSubview:_hLabel];
         _yLabel = [[UILabel alloc] init];
-        _yLabel.frame = CGRectMake(115, 40, 60, 15);
+        _yLabel.frame = CGRectMake(Adapter(115), Adapter(40), Adapter(60), Adapter(15));
         _yLabel.text = ModuleZW(@"有效期：");
         _yLabel.font = [UIFont systemFontOfSize:10];
          [_yLabel sizeToFit];
@@ -644,13 +644,13 @@
         _tLabel.text = [NSString stringWithFormat:@"%@",confromTimespStrs];
         _tLabel.font = [UIFont systemFontOfSize:10];
         [diView addSubview:_tLabel];
-        _backImage.frame = CGRectMake(10, 0, self.view.frame.size.width-20, 139 / 2);
-        _imageV.frame  =CGRectMake(10, 0, 101, 139 / 2);
-        _mLabel.frame = CGRectMake(10, 0, 101, 139 /2 );
-        _wLabel.frame = CGRectMake(_hLabel.right + 10, _hLabel.top, 100, _hLabel.height);
-        _tLabel.frame = CGRectMake(_yLabel.right, _yLabel.top, 200, _yLabel.height);
+        _backImage.frame = CGRectMake(Adapter(10), 0, self.view.frame.size.width-Adapter(20), Adapter(69.5));
+        _imageV.frame  =CGRectMake(Adapter(10), 0, Adapter(101), Adapter(69.5));
+        _mLabel.frame = CGRectMake(Adapter(10), 0, Adapter(101), Adapter(69.5) );
+        _wLabel.frame = CGRectMake(_hLabel.right + Adapter(10), _hLabel.top, Adapter(100), _hLabel.height);
+        _tLabel.frame = CGRectMake(_yLabel.right, _yLabel.top, Adapter(200), _yLabel.height);
         UIButton *zhifuButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        zhifuButton.frame = CGRectMake(self.view.frame.size.width- 50, 25, 20, 20);
+        zhifuButton.frame = CGRectMake(self.view.frame.size.width- Adapter(50), Adapter(25), Adapter(20), Adapter(20));
         zhifuButton.tag = 2000 +i;
         [zhifuButton setBackgroundImage:[UIImage imageNamed:@"zhifuweishiyong.png"] forState:UIControlStateNormal];
         [zhifuButton setBackgroundImage:[UIImage imageNamed:@"leyaozhifuxianjinka.png"] forState:UIControlStateSelected];
@@ -658,7 +658,7 @@
         
         [diView addSubview:zhifuButton];
         UIButton *dianjiButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        dianjiButton.frame = CGRectMake(10, 0, self.view.frame.size.width - 20, 139 / 2);
+        dianjiButton.frame = CGRectMake(Adapter(10), 0, self.view.frame.size.width - Adapter(20), Adapter(69.5));
         [dianjiButton addTarget:self action:@selector(dianjiButton:) forControlEvents:UIControlEventTouchUpInside];
         dianjiButton.tag = 3080 + i;
         [diView addSubview:dianjiButton];
@@ -726,7 +726,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 55.0;
+    return Adapter(55.0);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -752,21 +752,21 @@
             cell.backgroundColor=[UIColor clearColor];
             cell.textLabel.font = [UIFont systemFontOfSize:15];
         }
-        UIImageView *nameImage = [[UIImageView alloc]initWithFrame:CGRectMake(18, 9, 35, 36.5)];
+        UIImageView *nameImage = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(18), Adapter(9), Adapter(35), Adapter(36.5))];
         nameImage.image = [UIImage imageNamed:@"乐药购物车1及支付_03.png"];
         [cell addSubview:nameImage];
-        UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(60, 20, 85, 15)];
+        UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(60), Adapter(20), Adapter(85), Adapter(15))];
         nameLabel.text = ModuleZW(@"乐药名称：");
         nameLabel.textColor = [UtilityFunc colorWithHexString:@"#666666"];
         nameLabel.font = [UIFont systemFontOfSize:14];
         //[cell addSubview:nameLabel];
-        UILabel *leyaoLabel = [[UILabel alloc]initWithFrame:CGRectMake((ScreenWidth-150)/2.0, 20, 150, 15)];
+        UILabel *leyaoLabel = [[UILabel alloc]initWithFrame:CGRectMake((ScreenWidth-Adapter(150))/2.0, Adapter(20), Adapter(150), Adapter(15))];
         leyaoLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
         leyaoLabel.font = [UIFont systemFontOfSize:14];
         SongListModel *model = [[UserShareOnce shareOnce].yueYaoBuyArr objectAtIndex:indexPath.row];
         leyaoLabel.text = model.title;
         [cell addSubview:leyaoLabel];
-        UILabel *moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 96, 20, 60, 15)];
+        UILabel *moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width - Adapter(96), Adapter(20), Adapter(60), Adapter(15))];
         moneyLabel.text = [NSString stringWithFormat:@"¥%.2f",model.price];
         //    moneyLabel.text = [self.dataArray[0] objectForKey:@"price"];
         moneyLabel.textAlignment = NSTextAlignmentCenter;

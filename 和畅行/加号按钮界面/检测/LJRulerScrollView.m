@@ -68,22 +68,22 @@
             
             if(value/10 == (int)i/10&&value% 10 == 0){
                 scaleValueLabel.textColor = UIColorFromHex(0Xffa200);
-                scaleValueLabel.font = [UIFont systemFontOfSize:12/[UserShareOnce shareOnce].fontSize];
+                scaleValueLabel.font = [UIFont systemFontOfSize:12/[UserShareOnce shareOnce].multipleFontSize];
             }else{
                 scaleValueLabel.textColor = UIColorFromHex(0XC6C6C6);
-                scaleValueLabel.font = [UIFont systemFontOfSize:9/[UserShareOnce shareOnce].fontSize];
+                scaleValueLabel.font = [UIFont systemFontOfSize:9/[UserShareOnce shareOnce].multipleFontSize];
             }
            
         }
        
         if (  (i - self.mixscaleCount )  >  nuber - 4 &&  (i - self.mixscaleCount )  <  nuber + 4  ) {
-            CGFloat viey = 22  + 2 * (abs((int)nuber - (int) (i - self.mixscaleCount )));
+            CGFloat viey = Adapter(20)  + 2 * (abs((int)nuber - (int) (i - self.mixscaleCount )));
             UIView *view = [[UIView alloc] initWithFrame:CGRectMake(self.scaleSpacing *  (i - self.mixscaleCount ),viey - 5, 1,self.rulerHeight - viey )];
             [self addSubview:view];
             view.backgroundColor = UIColorFromHex(0Xffa200);
         }else {
             CGPathMoveToPoint(averageScalePathRef, NULL, self.scaleSpacing * (i - self.mixscaleCount ) , self.rulerHeight -5 );
-            CGPathAddLineToPoint(averageScalePathRef, NULL, self.scaleSpacing * (i - self.mixscaleCount ), 23);
+            CGPathAddLineToPoint(averageScalePathRef, NULL, self.scaleSpacing * (i - self.mixscaleCount ), Adapter(22));
         }
         
        

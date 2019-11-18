@@ -65,4 +65,6 @@ typedef NSURLSessionTask BAURLSessionTask;
 -(void)submitWithUrl:(NSString *)url token:(NSString *)token dic:(NSDictionary *)dic;
 
 -(void)mainThreadRequestWithUrl:(NSString *)myUrl token:(NSString *)token dic:(NSDictionary *)dic;
+
++ (void)dataGetMethod:(NSString *)urlString withParams:(NSDictionary *)params withBlock:(void (^)(NSURLResponse *response, id responseObject, NSError * error))block;
 @end

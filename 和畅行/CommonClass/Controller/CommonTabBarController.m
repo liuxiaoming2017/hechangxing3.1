@@ -24,6 +24,10 @@
 
 @property (nonatomic,strong) ZKIndxView *zkView;
 
+@property (nonatomic,copy) NSString *startTimeStr;
+
+@property (nonatomic,copy) NSString *endTimeStr;
+
 @end
 
 @implementation CommonTabBarController
@@ -34,6 +38,8 @@
     HSTabBar *tabBar = [[HSTabBar alloc] init];
     tabBar.tabBarDelegate = self;
     [self setValue:tabBar forKeyPath:@"tabBar"];
+    
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
 }
 
 # pragma mark - HSTabBarDelegate
@@ -132,6 +138,7 @@
             
             if([[[NSUserDefaults standardUserDefaults] objectForKey:@"bloodNeverCaution"] isEqualToString:@"1"]){
                 PressureViewController *vc = [[PressureViewController alloc] init];
+                 vc.hidesBottomBarWhenPushed = YES;
                 [[self selectedViewController] pushViewController:vc animated:YES];
             }else{
                 BloodGuideViewController * vc1 = [[BloodGuideViewController alloc] init];
@@ -162,6 +169,11 @@
     
     vc.hidesBottomBarWhenPushed = YES;
     [[self selectedViewController] pushViewController:vc animated:YES];
+    
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"3" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+
+    
 }
 
 - (void)indexDissmiss

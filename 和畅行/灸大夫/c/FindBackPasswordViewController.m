@@ -24,6 +24,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *mPasswordLable;
 @property (weak, nonatomic) IBOutlet UIButton *mConnectServicer;
 @property (strong, nonatomic) IBOutlet UIControl *mControl;
+@property (weak, nonatomic) IBOutlet UIView *bluebackView;
+@property (weak, nonatomic) IBOutlet UIImageView *blueImage;
+@property (weak, nonatomic) IBOutlet UIView *textBackView;
+@property (weak, nonatomic) IBOutlet UIImageView *callImage;
+@property (weak, nonatomic) IBOutlet UILabel *bottomLabel;
+@property (weak, nonatomic) IBOutlet UITextField *codeTF;
+@property (weak, nonatomic) IBOutlet UILabel *i9Label;
 
 @end
 
@@ -36,7 +43,7 @@
     self.rightBtn.hidden = YES;
     self.preBtn.hidden = NO;
     self.navTitleLabel.text = ModuleZW(@"找回灸头密码");
-    self.mCodeInputView.text = ModuleZW(@"请输入机身编码");
+    self.mCodeInputView.placeholder = ModuleZW(@"请输入机身编码");
     self.passLabel.text = ModuleZW(@"通过机身编码找回密码");
     self.blueLabel.text = ModuleZW(@"若忘记密码，可用上述方式输入机身编码找回密码");
     self.phoneLabel.text = ModuleZW(@"联系客服");
@@ -45,12 +52,125 @@
     [self.mBtnGetPwd setTitle:ModuleZW(@"找回密码") forState:(UIControlStateNormal)];
     [self.mBtnGetPwd.titleLabel setNumberOfLines:2];
     [self.mConnectServicer setTitle:ModuleZW(@"联系客服 ") forState:(UIControlStateNormal)];
-    [self.mConnectServicer.titleLabel setFont:[UIFont systemFontOfSize:19/[UserShareOnce shareOnce].fontSize]];
+    [self.mConnectServicer.titleLabel setFont:[UIFont systemFontOfSize:19/[UserShareOnce shareOnce].multipleFontSize]];
     //self.topView.hidden = YES;
+    
+    self.passLabel.font = [UIFont systemFontOfSize:16];
+    self.mCodeInputView.font = [UIFont systemFontOfSize:13];
+    self.blueLabel.font = [UIFont systemFontOfSize:11];
+    self.phoneLabel.font = [UIFont systemFontOfSize:16];
+    self.blue2.font = [UIFont systemFontOfSize:13];
+    self.blue3.font = [UIFont systemFontOfSize:11];
+    self.i9Label.font = [UIFont systemFontOfSize:13];
+    [self.mBtnGetPwd.titleLabel setFont:[UIFont systemFontOfSize:12]];
+    [self.mConnectServicer.titleLabel setFont:[UIFont systemFontOfSize:19]];
+    self.blueImage.image = [UIImage imageNamed:@"ic_password.png"];
+   self.callImage.image = [UIImage imageNamed:@"ic_password.png"];
     
     [self initData];
     [self initView];
     // Do any additional setup after loading the view.
+    [self.bluebackView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top).offset(kNavBarHeight);
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth, Adapter(60)));
+        make.leading.equalTo(self.view.mas_leading);
+    }];
+    
+    [self.blueImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.bluebackView.mas_top).offset(Adapter(15));
+        make.size.mas_equalTo(CGSizeMake(Adapter(30), Adapter(30)));
+        make.leading.equalTo(self.view.mas_leading).offset(Adapter(10));
+    }];
+    
+    [self.passLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.bluebackView.mas_top);
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth - Adapter(50), Adapter(60)));
+        make.leading.equalTo(self.view.mas_leading).offset(Adapter(50));
+    }];
+    [self.textBackView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.bluebackView.mas_bottom).offset(Adapter(10));
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth - Adapter(100), Adapter(50)));
+        make.leading.equalTo(self.view.mas_leading).offset(Adapter(10));
+    }];
+    
+    [self.i9Label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.textBackView.mas_top).offset(Adapter(5));
+        make.size.mas_equalTo(CGSizeMake(Adapter(50), Adapter(40)));
+        make.leading.equalTo(self.view.mas_leading).offset(Adapter(5));
+    }];
+    
+    [self.codeTF mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.textBackView.mas_top).offset(Adapter(5));
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth -  Adapter(160), Adapter(40)));
+        make.leading.equalTo(self.view.mas_leading).offset(Adapter(60));
+    }];
+    
+    [self.mBtnGetPwd mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.bluebackView.mas_bottom).offset(Adapter(10));
+        make.size.mas_equalTo(CGSizeMake(Adapter(60), Adapter(50)));
+        make.trailing.equalTo(self.view.mas_trailing).offset(Adapter(-10));
+    }];
+    [self.blueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.textBackView.mas_bottom).offset(Adapter(10));
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth - Adapter(20), Adapter(30)));
+        make.leading.equalTo(self.view.mas_leading).offset(Adapter(10));
+    }];
+    [self.callImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.blueLabel.mas_bottom).offset(Adapter(20));
+        make.size.mas_equalTo(CGSizeMake(Adapter(30), Adapter(30)));
+        make.leading.equalTo(self.view.mas_leading).offset(Adapter(10));
+    }];
+    
+    [self.phoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.blueLabel.mas_bottom).offset(Adapter(20));
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth - Adapter(50), Adapter(30)));
+        make.leading.equalTo(self.view.mas_leading).offset(Adapter(50));
+    }];
+    
+    [self.blue2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.phoneLabel.mas_bottom).offset(Adapter(20));
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth - Adapter(20), Adapter(30)));
+        make.leading.equalTo(self.view.mas_leading).offset(Adapter(10));
+    }];
+    
+    [self.blue3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.blue2.mas_bottom).offset(Adapter(20));
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth - Adapter(20), Adapter(20)));
+        make.leading.equalTo(self.view.mas_leading).offset(Adapter(10));
+    }];
+    
+    [self.bottomLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.blue3.mas_bottom).offset(Adapter(20));
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth - Adapter(20), Adapter(40)));
+        make.leading.equalTo(self.view.mas_leading).offset(Adapter(10));
+    }];
+    
+    [self.mConnectServicer mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.bottomLabel.mas_bottom).offset(Adapter(20));
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth - Adapter(80), Adapter(30)));
+        make.leading.equalTo(self.view.mas_leading).offset(Adapter(40));
+    }];
+    
+   
+    
+    
+    
+//    [self.blueImage  mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.timeLabel.mas_bottom).offset(Adapter(5));
+//        make.size.mas_equalTo(CGSizeMake(1, Adapter(20)));
+//        make.left.equalTo(self.contentView.mas_left).offset(Adapter(30));
+//    }];
+//    [self.createDateLabel  mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(lineImageV.mas_bottom);
+//        make.size.mas_equalTo(CGSizeMake(Adapter(60), Adapter(20)));
+//        make.left.equalTo(self.contentView.mas_left);
+//    }];
+//    [self.lineImageV2  mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.createDateLabel.mas_bottom);
+//        make.width.mas_equalTo(1);
+//        make.left.equalTo(self.contentView.mas_left).offset(Adapter(30));
+//        make.bottom.equalTo(self.contentView.mas_bottom);
+//    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated

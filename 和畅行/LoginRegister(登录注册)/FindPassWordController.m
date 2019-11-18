@@ -26,22 +26,21 @@
     [self addBackBtn];
     
     UIImage *registrationImageTextField = [UIImage imageNamed:@"RegistTF_bg.png"];
-    CGFloat leftX = (ScreenWidth-registrationImageTextField.size.width/2)/2.0;
     
     //设置手机号框
     UITextField* registrationTF=[[ UITextField alloc] init];
-    registrationTF.frame=CGRectMake(leftX, kNavBarHeight+27, registrationImageTextField.size.width/2, registrationImageTextField.size.height/2);
+    registrationTF.frame=CGRectMake( Adapter(40), kNavBarHeight+Adapter(27), ScreenWidth - Adapter(80),Adapter(40));
     registrationTF.borderStyle=UITextBorderStyleNone;
     CALayer *imageLayer = [CALayer layer];
-    imageLayer.frame = CGRectMake(0, 0, registrationImageTextField.size.width/2, registrationImageTextField.size.height/2);
+    imageLayer.frame = CGRectMake(0, 0, registrationTF.width, registrationTF.height);
     imageLayer.contents = (id) registrationImageTextField.CGImage;
     [registrationTF.layer addSublayer:imageLayer];
     registrationTF.font=[UIFont systemFontOfSize:14];
     UIImage* Regist_Tele=[UIImage imageNamed:@"Regist_Tele.png"];
     CGRect frame = [registrationTF frame];  //为你定义的UITextField
-    frame.size.width = Regist_Tele.size.width/2+16.5+11.5;
+    frame.size.width = Regist_Tele.size.width/2+Adapter(16.5)+Adapter(11.5);
     UIImageView* RegistImgView=[[UIImageView alloc] init];
-    RegistImgView.frame=CGRectMake(16.5, 12.5, Regist_Tele.size.width/2, Regist_Tele.size.height/2);
+    RegistImgView.frame=CGRectMake(Adapter(16), Adapter(15), Adapter(10), Adapter(10));
     RegistImgView.image=Regist_Tele;
     UIView *leftview1 = [[UIView alloc] initWithFrame:frame];
     [leftview1 addSubview:RegistImgView];
@@ -64,19 +63,19 @@
     
     //设置密码框
     UITextField* Regist_Sec_TF=[[ UITextField alloc] init];
-    Regist_Sec_TF.frame=CGRectMake(leftX, registrationTF.frame.origin.y+registrationTF.frame.size.height+8, registrationImageTextField.size.width/2, registrationImageTextField.size.height/2);
+    Regist_Sec_TF.frame=CGRectMake(registrationTF.left, registrationTF.bottom+Adapter(8), registrationTF.width,registrationTF.height);
     Regist_Sec_TF.borderStyle=UITextBorderStyleNone;
     CALayer *SecimageLayer = [CALayer layer];
-    SecimageLayer.frame = CGRectMake(0, 0, registrationImageTextField.size.width/2, registrationImageTextField.size.height/2);
+    SecimageLayer.frame = CGRectMake(0, 0, Regist_Sec_TF.width, Regist_Sec_TF.height);
     SecimageLayer.contents = (id) registrationImageTextField.CGImage;
     [Regist_Sec_TF.layer addSublayer:SecimageLayer];
     Regist_Sec_TF.font=[UIFont systemFontOfSize:14];
     Regist_Sec_TF.returnKeyType=UIReturnKeyNext;
     UIImage* Regist_Sec=[UIImage imageNamed:@"Regist_passwork.png"];
     CGRect frame_sec = [Regist_Sec_TF frame];  //为你定义的UITextField
-    frame_sec.size.width = Regist_Sec.size.width/2+16.5+11.5;
+    frame_sec.size.width = Regist_Sec.size.width/2+Adapter(16.5)+Adapter(11.5);
     UIImageView* Regist_sec_ImgView=[[UIImageView alloc] init];
-    Regist_sec_ImgView.frame=CGRectMake(16.5, 12.5, Regist_Sec.size.width/2, Regist_Sec.size.height/2);
+    Regist_sec_ImgView.frame= CGRectMake(Adapter(16), Adapter(15), Adapter(10), Adapter(10));
     Regist_sec_ImgView.image=Regist_Sec;
     UIView *left_secview = [[UIView alloc] initWithFrame:frame_sec];
     [left_secview addSubview:Regist_sec_ImgView];
@@ -96,11 +95,11 @@
     
     
     UITextField* sureSecTF=[[ UITextField alloc] init];
-    sureSecTF.frame=CGRectMake(leftX, Regist_Sec_TF.frame.origin.y+Regist_Sec_TF.frame.size.height+8, registrationImageTextField.size.width/2, registrationImageTextField.size.height/2);
+    sureSecTF.frame=CGRectMake(registrationTF.left, Regist_Sec_TF.bottom+Adapter(8),registrationTF.width, registrationTF.height);
     sureSecTF.borderStyle=UITextBorderStyleNone;
     
     CALayer *Sure_SecimageLayer = [CALayer layer];
-    Sure_SecimageLayer.frame = CGRectMake(0, 0, registrationImageTextField.size.width/2, registrationImageTextField.size.height/2);
+    Sure_SecimageLayer.frame = CGRectMake(0, 0, registrationTF.width, registrationTF.height);
     Sure_SecimageLayer.contents = (id) registrationImageTextField.CGImage;
     [sureSecTF.layer addSublayer:Sure_SecimageLayer];
     
@@ -109,9 +108,9 @@
     
     UIImage* Regist_Sure_Sec=[UIImage imageNamed:@"Regist_surepass.png"];
     CGRect frame__Sure_sec = [sureSecTF frame];  //为你定义的UITextField
-    frame__Sure_sec.size.width = Regist_Sure_Sec.size.width/2+16.5+11.5;
+    frame__Sure_sec.size.width = Regist_Sure_Sec.size.width/2+Adapter(16.5)+Adapter(11.5);
     UIImageView* Regist_Sure_sec_ImgView=[[UIImageView alloc] init];
-    Regist_Sure_sec_ImgView.frame=CGRectMake(16.5, 12.5, Regist_Sure_Sec.size.width/2, Regist_Sure_Sec.size.height/2);
+    Regist_Sure_sec_ImgView.frame=CGRectMake(Adapter(16), Adapter(15), Adapter(10), Adapter(10));
     Regist_Sure_sec_ImgView.image=Regist_Sure_Sec;
     UIView *left_Sure_secview = [[UIView alloc] initWithFrame:frame__Sure_sec];
     [left_Sure_secview addSubview:Regist_Sure_sec_ImgView];
@@ -131,19 +130,19 @@
     UIImage* YzmImg=[UIImage imageNamed:@"Regist_yzm_bg.png"];
     
     UITextField* YZMTF=[[ UITextField alloc] init];
-    YZMTF.frame=CGRectMake(leftX, sureSecTF.frame.origin.y+sureSecTF.frame.size.height+8, YzmImg.size.width/2, YzmImg.size.height/2);
+    YZMTF.frame=CGRectMake(registrationTF.left, sureSecTF.bottom+Adapter(8), registrationTF.width/2, registrationTF.height);
     YZMTF.borderStyle=UITextBorderStyleNone;
     
     CALayer *YzmimageLayer = [CALayer layer];
-    YzmimageLayer.frame = CGRectMake(0, 0, YzmImg.size.width/2, YzmImg.size.height/2);
+    YzmimageLayer.frame = CGRectMake(0, 0, sureSecTF.width/2, registrationTF.height);
     YzmimageLayer.contents = (id) YzmImg.CGImage;
     [YZMTF.layer addSublayer:YzmimageLayer];
     
     UIImage* Regist_Yzm=[UIImage imageNamed:@"Regist_SMS.png"];
     CGRect frame_Yzm = [YZMTF frame];  //为你定义的UITextField
-    frame_Yzm.size.width = Regist_Yzm.size.width/2+16.5+11.5;
+    frame_Yzm.size.width = Regist_Yzm.size.width/2+Adapter(16.5)+Adapter(11.5);
     UIImageView* Regist_Yzm_ImgView=[[UIImageView alloc] init];
-    Regist_Yzm_ImgView.frame=CGRectMake(16.5, 12.5, Regist_Yzm.size.width/2, Regist_Yzm.size.height/2);
+    Regist_Yzm_ImgView.frame=CGRectMake(Adapter(16), Adapter(15), Adapter(10), Adapter(10));
     Regist_Yzm_ImgView.image=Regist_Yzm;
     UIView *left_Yzm_view = [[UIView alloc] initWithFrame:frame_Yzm];
     [left_Yzm_view addSubview:Regist_Yzm_ImgView];
@@ -164,7 +163,7 @@
 
     UIImage* ObtainYzm_img=[UIImage imageNamed:@"Regist_YZM"];
     UIButton *YZMButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    YZMButton.frame=CGRectMake(YZMTF.frame.origin.x+YZMTF.frame.size.width+10.5,  sureSecTF.frame.origin.y+sureSecTF.frame.size.height+8, ObtainYzm_img.size.width/2 + 13,ObtainYzm_img.size.height/2);
+    YZMButton.frame=CGRectMake(YZMTF.right + Adapter(10 ),YZMTF.top, YZMTF.width -Adapter(10 ) , YZMTF.height);
     [YZMButton setBackgroundImage:ObtainYzm_img forState:UIControlStateNormal];
     [YZMButton setTitle:ModuleZW(@"获取验证码") forState:UIControlStateNormal];
     [YZMButton addTarget:self action:@selector(userYZMButton) forControlEvents:UIControlEventTouchUpInside];
@@ -176,7 +175,7 @@
     //    //    registrationTF.frame=CGRectMake(leftX, kNavBarHeight+27, registrationImageTextField.size.width/2, registrationImageTextField.size.height/2);
 
     UIButton *findpsButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    findpsButton.frame=CGRectMake(leftX,YZMButton.frame.origin.y+YZMButton.frame.size.height+19, registrationTF.width,40);
+    findpsButton.frame=CGRectMake(YZMTF.left,YZMTF.bottom + Adapter(19), registrationTF.width,Adapter(40));
     [findpsButton setTitle:ModuleZW(@"提交")  forState:(UIControlStateNormal)];
     [findpsButton setBackgroundColor:RGB_ButtonBlue];
     [findpsButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
