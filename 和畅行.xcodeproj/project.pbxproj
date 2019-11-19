@@ -148,7 +148,6 @@
 		036E84CF2186EB1A001B9BB4 /* switch_onblue.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E84622186EB07001B9BB4 /* switch_onblue.png */; };
 		036E84D22186EB1A001B9BB4 /* btn_aijiu_recipe_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E84652186EB08001B9BB4 /* btn_aijiu_recipe_2.png */; };
 		036E84D62186EB1A001B9BB4 /* btn_recipelst_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E84692186EB08001B9BB4 /* btn_recipelst_pressed.png */; };
-		036E84D72186EB1A001B9BB4 /* ic_electricity_cyan.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E846A2186EB0A001B9BB4 /* ic_electricity_cyan.png */; };
 		036E84D82186EB1A001B9BB4 /* icon_wechat_share.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E846B2186EB0A001B9BB4 /* icon_wechat_share.png */; };
 		036E84DA2186EB1A001B9BB4 /* i9setPwd.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E846D2186EB0C001B9BB4 /* i9setPwd.png */; };
 		036E84DB2186EB1A001B9BB4 /* sound_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E846E2186EB0C001B9BB4 /* sound_close.png */; };
@@ -219,7 +218,6 @@
 		036E85642186EB2A001B9BB4 /* I9_BlueToothListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 036E853E2186EB28001B9BB4 /* I9_BlueToothListView.xib */; };
 		036E85652186EB2A001B9BB4 /* MoxiHeadInfView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 036E853F2186EB28001B9BB4 /* MoxiHeadInfView.xib */; };
 		036E85662186EB2A001B9BB4 /* FindBackPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 036E85402186EB28001B9BB4 /* FindBackPasswordView.xib */; };
-		036E85672186EB2A001B9BB4 /* MoxiHeadInfView_i9.xib in Resources */ = {isa = PBXBuildFile; fileRef = 036E85412186EB28001B9BB4 /* MoxiHeadInfView_i9.xib */; };
 		036E85682186EB2A001B9BB4 /* blelistviewcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 036E85422186EB28001B9BB4 /* blelistviewcell.xib */; };
 		036E85692186EB2A001B9BB4 /* i9_UISetAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 036E85432186EB28001B9BB4 /* i9_UISetAlertView.xib */; };
 		036E856A2186EB2A001B9BB4 /* chooseMoxaModelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 036E85442186EB28001B9BB4 /* chooseMoxaModelView.xib */; };
@@ -240,7 +238,6 @@
 		036E85792186EB2A001B9BB4 /* AcupointPrescriptionListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 036E85532186EB29001B9BB4 /* AcupointPrescriptionListCell.xib */; };
 		036E858F2186EB4C001B9BB4 /* PPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E857C2186EB46001B9BB4 /* PPLabel.m */; };
 		036E85902186EB4C001B9BB4 /* UIClickLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E857E2186EB46001B9BB4 /* UIClickLabel.m */; };
-		036E85912186EB4C001B9BB4 /* MoxiHeadInfView_i9.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E857F2186EB46001B9BB4 /* MoxiHeadInfView_i9.m */; };
 		036E85922186EB4C001B9BB4 /* ChannelScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E85802186EB46001B9BB4 /* ChannelScrollView.m */; };
 		036E85932186EB4C001B9BB4 /* ImgTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E85832186EB46001B9BB4 /* ImgTextView.m */; };
 		036E85942186EB4C001B9BB4 /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E85842186EB46001B9BB4 /* CMPopTipView.m */; };
@@ -458,27 +455,11 @@
 		83C5F8222272EED300889370 /* WriteleftTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C5F8212272EED300889370 /* WriteleftTableViewCell.m */; };
 		83D4C50F221FE1C700006CA9 /* sportImageText_en.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83D4C50E221FE1C700006CA9 /* sportImageText_en.plist */; };
 		83D54E6821E7165100474F58 /* HCY_ReportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D54E6721E7165100474F58 /* HCY_ReportCell.m */; };
-		83DC65BB2275414600B10F23 /* pinggu.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC650D2275414500B10F23 /* pinggu.png */; };
-		83DC65BC2275414600B10F23 /* tizhi_default_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC650E2275414500B10F23 /* tizhi_default_icon.png */; };
-		83DC65BD2275414600B10F23 /* 健康讲座线.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC650F2275414500B10F23 /* 健康讲座线.png */; };
-		83DC65BE2275414600B10F23 /* jinluo_default_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65102275414500B10F23 /* jinluo_default_icon.png */; };
-		83DC65BF2275414600B10F23 /* archiveElec.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65112275414500B10F23 /* archiveElec.png */; };
 		83DC65C02275414600B10F23 /* orderLine.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65132275414500B10F23 /* orderLine.png */; };
 		83DC65C12275414600B10F23 /* LeMedicineType_img.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65142275414500B10F23 /* LeMedicineType_img.png */; };
 		83DC65C22275414600B10F23 /* 个人信息_性别.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65152275414500B10F23 /* 个人信息_性别.png */; };
 		83DC65C32275414600B10F23 /* 个人信息_弹出背景.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65162275414500B10F23 /* 个人信息_弹出背景.png */; };
 		83DC65C42275414600B10F23 /* Feedback_UserImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65172275414500B10F23 /* Feedback_UserImg.png */; };
-		83DC65C52275414600B10F23 /* 私人医生_背景.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65192275414500B10F23 /* 私人医生_背景.png */; };
-		83DC65C62275414600B10F23 /* 星星_未点亮.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC651A2275414500B10F23 /* 星星_未点亮.png */; };
-		83DC65C72275414600B10F23 /* 私人医生_添加.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC651B2275414500B10F23 /* 私人医生_添加.png */; };
-		83DC65C82275414600B10F23 /* 私人医生_医生图标.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC651C2275414500B10F23 /* 私人医生_医生图标.png */; };
-		83DC65C92275414600B10F23 /* 私人医生_医生背景.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC651D2275414500B10F23 /* 私人医生_医生背景.png */; };
-		83DC65CA2275414600B10F23 /* 星星_点亮.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC651E2275414500B10F23 /* 星星_点亮.png */; };
-		83DC65CB2275414600B10F23 /* 私人医生_头像线.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC651F2275414500B10F23 /* 私人医生_头像线.png */; };
-		83DC65CC2275414600B10F23 /* 私人服务_line.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65202275414500B10F23 /* 私人服务_line.png */; };
-		83DC65CD2275414600B10F23 /* 私人医生_更改.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65212275414500B10F23 /* 私人医生_更改.png */; };
-		83DC65CE2275414600B10F23 /* 私人医生_查看.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65222275414500B10F23 /* 私人医生_查看.png */; };
-		83DC65CF2275414600B10F23 /* 私人医生预加载.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65232275414500B10F23 /* 私人医生预加载.png */; };
 		83DC65D02275414600B10F23 /* newzhiji_erweima.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65252275414500B10F23 /* newzhiji_erweima.jpg */; };
 		83DC65D12275414600B10F23 /* newguanzhu.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65262275414500B10F23 /* newguanzhu.png */; };
 		83DC65D22275414600B10F23 /* ReplaceSec_User.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65282275414500B10F23 /* ReplaceSec_User.png */; };
@@ -543,7 +524,6 @@
 		83DC66102275414600B10F23 /* zhifuwancheng.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC656B2275414500B10F23 /* zhifuwancheng.png */; };
 		83DC66112275414600B10F23 /* zhifubao.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC656C2275414500B10F23 /* zhifubao.png */; };
 		83DC66122275414600B10F23 /* zhifuweishiyong.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC656D2275414500B10F23 /* zhifuweishiyong.png */; };
-		83DC66132275414600B10F23 /* 乐药购物车1及支付_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC656F2275414500B10F23 /* 乐药购物车1及支付_03.png */; };
 		83DC66142275414600B10F23 /* Wybs_la.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65702275414500B10F23 /* Wybs_la.png */; };
 		83DC66152275414600B10F23 /* Wybs_duo.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65712275414500B10F23 /* Wybs_duo.png */; };
 		83DC66162275414600B10F23 /* YD_JingYin.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65722275414600B10F23 /* YD_JingYin.png */; };
@@ -572,12 +552,6 @@
 		83DC662D2275414600B10F23 /* Wybs_sao.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65892275414600B10F23 /* Wybs_sao.png */; };
 		83DC662E2275414600B10F23 /* YD_Type.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC658A2275414600B10F23 /* YD_Type.png */; };
 		83DC662F2275414600B10F23 /* Wybs_mi.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC658B2275414600B10F23 /* Wybs_mi.png */; };
-		83DC66302275414600B10F23 /* 专家咨询_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC658D2275414600B10F23 /* 专家咨询_16.png */; };
-		83DC66312275414600B10F23 /* 专家咨询_13.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC658E2275414600B10F23 /* 专家咨询_13.png */; };
-		83DC66322275414600B10F23 /* 专家咨询_06.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC658F2275414600B10F23 /* 专家咨询_06.png */; };
-		83DC66332275414600B10F23 /* 专家咨询_08.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65902275414600B10F23 /* 专家咨询_08.png */; };
-		83DC66342275414600B10F23 /* 专家咨询1_03(111).png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65912275414600B10F23 /* 专家咨询1_03(111).png */; };
-		83DC66352275414600B10F23 /* 专家咨询1_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65922275414600B10F23 /* 专家咨询1_03.png */; };
 		83DC66362275414600B10F23 /* unconnectedImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65952275414600B10F23 /* unconnectedImage.png */; };
 		83DC66372275414600B10F23 /* bloodguide4.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65962275414600B10F23 /* bloodguide4.png */; };
 		83DC66382275414600B10F23 /* bloodguide1.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65972275414600B10F23 /* bloodguide1.png */; };
@@ -634,7 +608,6 @@
 		C973090221BA6C9100060447 /* HCY_ActivationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C973090121BA6C9100060447 /* HCY_ActivationController.m */; };
 		C973090521BE16B700060447 /* HCY_InformationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C973090421BE16B700060447 /* HCY_InformationController.m */; };
 		C9847E972341A17B00202B70 /* UpdateReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9847E962341A17B00202B70 /* UpdateReportViewController.m */; };
-		C9875CA122F1792C00936A73 /* YHDFBuriedPoint.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9875CA022F1792C00936A73 /* YHDFBuriedPoint.framework */; };
 		C99B717221B903BE00F1FF5F /* HCY_DAVisceraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */; };
 		C9A2D3302331C68B00AC5185 /* NSBundle+Language.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A2D32F2331C68B00AC5185 /* NSBundle+Language.m */; };
 		C9B306472304F84E008D6D38 /* HealthLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B306462304F84D008D6D38 /* HealthLectureViewController.m */; };
@@ -1010,7 +983,6 @@
 		036E853E2186EB28001B9BB4 /* I9_BlueToothListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = I9_BlueToothListView.xib; sourceTree = "<group>"; };
 		036E853F2186EB28001B9BB4 /* MoxiHeadInfView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoxiHeadInfView.xib; sourceTree = "<group>"; };
 		036E85402186EB28001B9BB4 /* FindBackPasswordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindBackPasswordView.xib; sourceTree = "<group>"; };
-		036E85412186EB28001B9BB4 /* MoxiHeadInfView_i9.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoxiHeadInfView_i9.xib; sourceTree = "<group>"; };
 		036E85422186EB28001B9BB4 /* blelistviewcell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = blelistviewcell.xib; sourceTree = "<group>"; };
 		036E85432186EB28001B9BB4 /* i9_UISetAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = i9_UISetAlertView.xib; sourceTree = "<group>"; };
 		036E85442186EB28001B9BB4 /* chooseMoxaModelView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = chooseMoxaModelView.xib; sourceTree = "<group>"; };
@@ -1033,9 +1005,7 @@
 		036E857C2186EB46001B9BB4 /* PPLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPLabel.m; sourceTree = "<group>"; };
 		036E857D2186EB46001B9BB4 /* CMPopTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPopTipView.h; sourceTree = "<group>"; };
 		036E857E2186EB46001B9BB4 /* UIClickLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIClickLabel.m; sourceTree = "<group>"; };
-		036E857F2186EB46001B9BB4 /* MoxiHeadInfView_i9.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoxiHeadInfView_i9.m; sourceTree = "<group>"; };
 		036E85802186EB46001B9BB4 /* ChannelScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelScrollView.m; sourceTree = "<group>"; };
-		036E85812186EB46001B9BB4 /* MoxiHeadInfView_i9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoxiHeadInfView_i9.h; sourceTree = "<group>"; };
 		036E85822186EB46001B9BB4 /* ChannelScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelScrollView.h; sourceTree = "<group>"; };
 		036E85832186EB46001B9BB4 /* ImgTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImgTextView.m; sourceTree = "<group>"; };
 		036E85842186EB46001B9BB4 /* CMPopTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPopTipView.m; sourceTree = "<group>"; };
@@ -1528,11 +1498,6 @@
 		83D4C50E221FE1C700006CA9 /* sportImageText_en.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sportImageText_en.plist; sourceTree = "<group>"; };
 		83D54E6621E7165000474F58 /* HCY_ReportCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCY_ReportCell.h; sourceTree = "<group>"; };
 		83D54E6721E7165100474F58 /* HCY_ReportCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCY_ReportCell.m; sourceTree = "<group>"; };
-		83DC650D2275414500B10F23 /* pinggu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinggu.png; sourceTree = "<group>"; };
-		83DC650E2275414500B10F23 /* tizhi_default_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tizhi_default_icon.png; sourceTree = "<group>"; };
-		83DC650F2275414500B10F23 /* 健康讲座线.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "健康讲座线.png"; sourceTree = "<group>"; };
-		83DC65102275414500B10F23 /* jinluo_default_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jinluo_default_icon.png; sourceTree = "<group>"; };
-		83DC65112275414500B10F23 /* archiveElec.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = archiveElec.png; sourceTree = "<group>"; };
 		83DC65132275414500B10F23 /* orderLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orderLine.png; sourceTree = "<group>"; };
 		83DC65142275414500B10F23 /* LeMedicineType_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LeMedicineType_img.png; sourceTree = "<group>"; };
 		83DC65152275414500B10F23 /* 个人信息_性别.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "个人信息_性别.png"; sourceTree = "<group>"; };
@@ -1642,12 +1607,6 @@
 		83DC65892275414600B10F23 /* Wybs_sao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wybs_sao.png; sourceTree = "<group>"; };
 		83DC658A2275414600B10F23 /* YD_Type.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = YD_Type.png; sourceTree = "<group>"; };
 		83DC658B2275414600B10F23 /* Wybs_mi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wybs_mi.png; sourceTree = "<group>"; };
-		83DC658D2275414600B10F23 /* 专家咨询_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "专家咨询_16.png"; sourceTree = "<group>"; };
-		83DC658E2275414600B10F23 /* 专家咨询_13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "专家咨询_13.png"; sourceTree = "<group>"; };
-		83DC658F2275414600B10F23 /* 专家咨询_06.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "专家咨询_06.png"; sourceTree = "<group>"; };
-		83DC65902275414600B10F23 /* 专家咨询_08.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "专家咨询_08.png"; sourceTree = "<group>"; };
-		83DC65912275414600B10F23 /* 专家咨询1_03(111).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "专家咨询1_03(111).png"; sourceTree = "<group>"; };
-		83DC65922275414600B10F23 /* 专家咨询1_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "专家咨询1_03.png"; sourceTree = "<group>"; };
 		83DC65952275414600B10F23 /* unconnectedImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unconnectedImage.png; sourceTree = "<group>"; };
 		83DC65962275414600B10F23 /* bloodguide4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bloodguide4.png; sourceTree = "<group>"; };
 		83DC65972275414600B10F23 /* bloodguide1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bloodguide1.png; sourceTree = "<group>"; };
@@ -1790,7 +1749,6 @@
 				0377198C21056EE20010EA8B /* UIKit.framework in Frameworks */,
 				03CEFC0A21A64B6B0097CB17 /* moxibustion.framework in Frameworks */,
 				03D99E5921AD2CBE00C766FD /* UMShare.framework in Frameworks */,
-				C9875CA122F1792C00936A73 /* YHDFBuriedPoint.framework in Frameworks */,
 				038517022186AB8E001DD2B7 /* libWeChatSDK.a in Frameworks */,
 				0377198921056E700010EA8B /* libz.1.1.3.tbd in Frameworks */,
 				0306C5CD21CCBF0B00DA5DC1 /* libSocialSina.a in Frameworks */,
@@ -2636,7 +2594,6 @@
 				036E85322186EB27001B9BB4 /* moxaTopView.xib */,
 				036E85392186EB27001B9BB4 /* MoxiaExperienceCell.xib */,
 				036E853D2186EB27001B9BB4 /* MoxibustionExperience.xib */,
-				036E85412186EB28001B9BB4 /* MoxiHeadInfView_i9.xib */,
 				036E853F2186EB28001B9BB4 /* MoxiHeadInfView.xib */,
 				036E85352186EB27001B9BB4 /* MySwitch.xib */,
 				036E85302186EB27001B9BB4 /* NewShareView.xib */,
@@ -2671,8 +2628,6 @@
 				036E858A2186EB47001B9BB4 /* i9_blelistViewCell.m */,
 				036E85872186EB47001B9BB4 /* ImgTextView.h */,
 				036E85832186EB46001B9BB4 /* ImgTextView.m */,
-				036E85812186EB46001B9BB4 /* MoxiHeadInfView_i9.h */,
-				036E857F2186EB46001B9BB4 /* MoxiHeadInfView_i9.m */,
 				036E85852186EB46001B9BB4 /* OMGToast.h */,
 				036E85892186EB47001B9BB4 /* OMGToast.m */,
 				036E858E2186EB4C001B9BB4 /* PPLabel.h */,
@@ -3493,28 +3448,14 @@
 		83DC650B2275414500B10F23 /* OtherImage */ = {
 			isa = PBXGroup;
 			children = (
-				83DC650C2275414500B10F23 /* 档案 */,
 				83DC65122275414500B10F23 /* 我的 */,
 				83DC65452275414500B10F23 /* 乐药 */,
 				83DC65562275414500B10F23 /* 登录注册 */,
 				83DC65622275414500B10F23 /* 支付 */,
 				83DC656E2275414500B10F23 /* 经络辨识 */,
-				83DC658C2275414600B10F23 /* 家庭成员 */,
 				83DC65932275414600B10F23 /* 检测 */,
 			);
 			path = OtherImage;
-			sourceTree = "<group>";
-		};
-		83DC650C2275414500B10F23 /* 档案 */ = {
-			isa = PBXGroup;
-			children = (
-				83DC650D2275414500B10F23 /* pinggu.png */,
-				83DC650E2275414500B10F23 /* tizhi_default_icon.png */,
-				83DC650F2275414500B10F23 /* 健康讲座线.png */,
-				83DC65102275414500B10F23 /* jinluo_default_icon.png */,
-				83DC65112275414500B10F23 /* archiveElec.png */,
-			);
-			path = "档案";
 			sourceTree = "<group>";
 		};
 		83DC65122275414500B10F23 /* 我的 */ = {
@@ -3699,19 +3640,6 @@
 				83DC658B2275414600B10F23 /* Wybs_mi.png */,
 			);
 			path = "经络辨识";
-			sourceTree = "<group>";
-		};
-		83DC658C2275414600B10F23 /* 家庭成员 */ = {
-			isa = PBXGroup;
-			children = (
-				83DC658D2275414600B10F23 /* 专家咨询_16.png */,
-				83DC658E2275414600B10F23 /* 专家咨询_13.png */,
-				83DC658F2275414600B10F23 /* 专家咨询_06.png */,
-				83DC65902275414600B10F23 /* 专家咨询_08.png */,
-				83DC65912275414600B10F23 /* 专家咨询1_03(111).png */,
-				83DC65922275414600B10F23 /* 专家咨询1_03.png */,
-			);
-			path = "家庭成员";
 			sourceTree = "<group>";
 		};
 		83DC65932275414600B10F23 /* 检测 */ = {
@@ -3935,23 +3863,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				036E84D72186EB1A001B9BB4 /* ic_electricity_cyan.png in Resources */,
 				0325A5FE2109C2D300275671 /* sportImageText.plist in Resources */,
-				83DC66132275414600B10F23 /* 乐药购物车1及支付_03.png in Resources */,
-				83DC65CE2275414600B10F23 /* 私人医生_查看.png in Resources */,
 				83DC662C2275414600B10F23 /* Wybs_WinZhi_Img_bg.png in Resources */,
 				83DC66532275414600B10F23 /* 完成.png in Resources */,
-				83DC65CA2275414600B10F23 /* 星星_点亮.png in Resources */,
 				036E851A2186EB1A001B9BB4 /* add_device.png in Resources */,
 				839E0C552213E0540090F179 /* InfoPlist.strings in Resources */,
 				C9B3067F230506B0008D6D38 /* 支付图标.png in Resources */,
 				036E84502186EAF5001B9BB4 /* wd55.mp3 in Resources */,
-				83DC65CC2275414600B10F23 /* 私人服务_line.png in Resources */,
 				83DC66412275414600B10F23 /* 血压03.png in Resources */,
 				83DC65D32275414600B10F23 /* Regist_surepass.png in Resources */,
 				036E85222186EB1A001B9BB4 /* channel_num1.png in Resources */,
 				83DC65DC2275414600B10F23 /* Feedback_btn.png in Resources */,
-				83DC65BB2275414600B10F23 /* pinggu.png in Resources */,
 				83DC662A2275414600B10F23 /* WY_bssf.mp3.wav in Resources */,
 				83DC66582275414600B10F23 /* 血糖8.png in Resources */,
 				036E84DE2186EB1A001B9BB4 /* pulldownMoxaSet.png in Resources */,
@@ -3963,11 +3885,9 @@
 				83DC66502275414600B10F23 /* recheck_blue.png in Resources */,
 				036E84EF2186EB1A001B9BB4 /* ic_no_recipe.png in Resources */,
 				036E84E02186EB1A001B9BB4 /* icon_wx_friends.png in Resources */,
-				83DC65BF2275414600B10F23 /* archiveElec.png in Resources */,
 				83DC66552275414600B10F23 /* 血糖7.png in Resources */,
 				036E84FD2186EB1A001B9BB4 /* ic_help.png in Resources */,
 				83DC661D2275414600B10F23 /* 111_106.png in Resources */,
-				83DC66302275414600B10F23 /* 专家咨询_16.png in Resources */,
 				83DC65F52275414600B10F23 /* New_yy_zt_zt.png in Resources */,
 				83DC65FD2275414600B10F23 /* ReplaceSec_BTN.png in Resources */,
 				036E84DD2186EB1A001B9BB4 /* icon_close.png in Resources */,
@@ -4002,7 +3922,6 @@
 				036E84FB2186EB1A001B9BB4 /* longclick_drag_guide.png in Resources */,
 				83DC66062275414600B10F23 /* checkboxyes.png in Resources */,
 				036E84DA2186EB1A001B9BB4 /* i9setPwd.png in Resources */,
-				83DC65C82275414600B10F23 /* 私人医生_医生图标.png in Resources */,
 				036E84E12186EB1A001B9BB4 /* ic_password_normal.png in Resources */,
 				83DC663D2275414600B10F23 /* 流程介绍页_02.png in Resources */,
 				03FBDF4421927DB3006116FC /* UMCommonLog.bundle in Resources */,
@@ -4020,7 +3939,6 @@
 				036E855C2186EB2A001B9BB4 /* WriteExperienceCell.xib in Resources */,
 				036E850E2186EB1A001B9BB4 /* btn_aijiu_choosed_green.png in Resources */,
 				036E85002186EB1A001B9BB4 /* AllSwitch.png in Resources */,
-				83DC66332275414600B10F23 /* 专家咨询_08.png in Resources */,
 				0325A5FD2109C2D300275671 /* sportImageType.plist in Resources */,
 				036E84E62186EB1A001B9BB4 /* icon_unhappy.png in Resources */,
 				036E84DB2186EB1A001B9BB4 /* sound_close.png in Resources */,
@@ -4029,7 +3947,6 @@
 				83DC65F92275414600B10F23 /* leyaoxiaofeijiner.png in Resources */,
 				036E84FE2186EB1A001B9BB4 /* ic_electricity_red.png in Resources */,
 				83DC66252275414600B10F23 /* yundongyueyaoting.png in Resources */,
-				83DC65CB2275414600B10F23 /* 私人医生_头像线.png in Resources */,
 				036E85772186EB2A001B9BB4 /* ImgTextView.xib in Resources */,
 				83DC65F72275414600B10F23 /* My_DeleIcon.png in Resources */,
 				83DC65FB2275414600B10F23 /* leyaogouwuche.png in Resources */,
@@ -4052,7 +3969,6 @@
 				C9B30689230506B0008D6D38 /* 余额图标2.png in Resources */,
 				036E84CB2186EB1A001B9BB4 /* btn_aijiu_recipe_4.png in Resources */,
 				036E85252186EB1A001B9BB4 /* btn_aijiu_recipe_day_delete.png in Resources */,
-				83DC65C92275414600B10F23 /* 私人医生_医生背景.png in Resources */,
 				83DC65DE2275414600B10F23 /* 我的卡包_04.png in Resources */,
 				036E85202186EB1A001B9BB4 /* icon_qzone_share.png in Resources */,
 				83DC65E12275414600B10F23 /* 查看报告.png in Resources */,
@@ -4066,7 +3982,6 @@
 				C9B30677230506B0008D6D38 /* 支付完成.png in Resources */,
 				036E850C2186EB1A001B9BB4 /* help_picture_two.png in Resources */,
 				036E84E92186EB1A001B9BB4 /* bluetooth_reduce.png in Resources */,
-				83DC65C72275414600B10F23 /* 私人医生_添加.png in Resources */,
 				036E84CE2186EB1A001B9BB4 /* switch_ongrey.png in Resources */,
 				036E85562186EB2A001B9BB4 /* NewShareView.xib in Resources */,
 				83DC66082275414600B10F23 /* no_card.png in Resources */,
@@ -4093,21 +4008,17 @@
 				83DC66272275414600B10F23 /* WinZhi_Img_duo_1.png in Resources */,
 				83DC66152275414600B10F23 /* Wybs_duo.png in Resources */,
 				83DC66572275414600B10F23 /* 血糖9.png in Resources */,
-				83DC65CF2275414600B10F23 /* 私人医生预加载.png in Resources */,
 				03513AD820E9CAD4004E2805 /* LaunchScreen.storyboard in Resources */,
 				83DC661B2275414600B10F23 /* qianbao.png in Resources */,
 				C9B30680230506B0008D6D38 /* 支付结果背景.png in Resources */,
 				83DC662B2275414600B10F23 /* DownImg.png in Resources */,
 				036E84F12186EB1A001B9BB4 /* foucsepoint@2x.png in Resources */,
 				C9B30685230506B0008D6D38 /* 健康讲座头像.png in Resources */,
-				83DC66342275414600B10F23 /* 专家咨询1_03(111).png in Resources */,
-				83DC65BC2275414600B10F23 /* tizhi_default_icon.png in Resources */,
 				83DC65D12275414600B10F23 /* newguanzhu.png in Resources */,
 				036E84F02186EB1A001B9BB4 /* i9findpwd.png in Resources */,
 				036E84F92186EB1A001B9BB4 /* 68MoxaHead.png in Resources */,
 				036E85552186EB2A001B9BB4 /* channel.xib in Resources */,
 				036E85632186EB2A001B9BB4 /* MoxibustionExperience.xib in Resources */,
-				83DC66352275414600B10F23 /* 专家咨询1_03.png in Resources */,
 				0338E50F212C059100BBF576 /* MessageCell.xib in Resources */,
 				036E84DC2186EB1A001B9BB4 /* longclick_guide.png in Resources */,
 				036E85692186EB2A001B9BB4 /* i9_UISetAlertView.xib in Resources */,
@@ -4122,8 +4033,6 @@
 				83DC65DA2275414600B10F23 /* noMessage.png in Resources */,
 				C9B30688230506B0008D6D38 /* 订单图片.png in Resources */,
 				83DC65ED2275414600B10F23 /* YY_YuIcon.png in Resources */,
-				83DC65C62275414600B10F23 /* 星星_未点亮.png in Resources */,
-				036E85672186EB2A001B9BB4 /* MoxiHeadInfView_i9.xib in Resources */,
 				83DC65C32275414600B10F23 /* 个人信息_弹出背景.png in Resources */,
 				83DC66162275414600B10F23 /* YD_JingYin.png in Resources */,
 				83DC65EE2275414600B10F23 /* quanbuxiazai.png in Resources */,
@@ -4136,7 +4045,6 @@
 				036E85742186EB2A001B9BB4 /* SetNetsPassWordView.xib in Resources */,
 				83DC66142275414600B10F23 /* Wybs_la.png in Resources */,
 				83DC66482275414600B10F23 /* 血压10.png in Resources */,
-				83DC65BD2275414600B10F23 /* 健康讲座线.png in Resources */,
 				036E84C92186EB1A001B9BB4 /* ic_electricity_yellow.png in Resources */,
 				83DC66562275414600B10F23 /* 血糖4.png in Resources */,
 				83DC664A2275414600B10F23 /* 立即检测.png in Resources */,
@@ -4163,13 +4071,11 @@
 				83DC65F82275414600B10F23 /* YY_ZhiIcon.png in Resources */,
 				03F97D082100676F00A0F842 /* symptom.txt in Resources */,
 				83DC663E2275414600B10F23 /* 血压14.png in Resources */,
-				83DC65BE2275414600B10F23 /* jinluo_default_icon.png in Resources */,
 				83E644912213E883004D286C /* ModuleZW.strings in Resources */,
 				C9B30675230506B0008D6D38 /* 支付失败图片.png in Resources */,
 				83DC66222275414600B10F23 /* WinZhi_Img_ruai_1.png in Resources */,
 				83DC65D62275414600B10F23 /* ReplaceSec_Tele.png in Resources */,
 				036E84F32186EB1A001B9BB4 /* connect_device.png in Resources */,
-				83DC65CD2275414600B10F23 /* 私人医生_更改.png in Resources */,
 				83DC65D02275414600B10F23 /* newzhiji_erweima.jpg in Resources */,
 				83DC65E02275414600B10F23 /* 221323_03.png in Resources */,
 				036E85642186EB2A001B9BB4 /* I9_BlueToothListView.xib in Resources */,
@@ -4222,9 +4128,7 @@
 				036E85762186EB2A001B9BB4 /* Recipel.xib in Resources */,
 				036E850F2186EB1A001B9BB4 /* help_picture_one.png in Resources */,
 				036E855B2186EB2A001B9BB4 /* MySwitch.xib in Resources */,
-				83DC66312275414600B10F23 /* 专家咨询_13.png in Resources */,
 				C9B30684230506B0008D6D38 /* 无现金卡.png in Resources */,
-				83DC65C52275414600B10F23 /* 私人医生_背景.png in Resources */,
 				83DC66282275414600B10F23 /* WinZhi_Img_la_1.png in Resources */,
 				83DC660F2275414600B10F23 /* zhifubeijingtupian.png in Resources */,
 				83DC66592275414600B10F23 /* 0_15.png in Resources */,
@@ -4235,7 +4139,6 @@
 				83DC65EF2275414600B10F23 /* leyaozhifuxianjinka.png in Resources */,
 				83DC66072275414600B10F23 /* Regist_YZM.png in Resources */,
 				03140CF9227FD9BC00BC79D9 /* QuestionTableCell.xib in Resources */,
-				83DC66322275414600B10F23 /* 专家咨询_06.png in Resources */,
 				83DC66012275414600B10F23 /* Regist_Tele.png in Resources */,
 				83DC65EB2275414600B10F23 /* 个人信息_背景.png in Resources */,
 				83DC660E2275414600B10F23 /* zhifudetu.png in Resources */,
@@ -4389,7 +4292,6 @@
 				C97308FC21BA50FB00060447 /* SGQRCodeTool.m in Sources */,
 				03A07C0C20EF625F00002274 /* GlobalCommon.m in Sources */,
 				038516FC2186AB67001DD2B7 /* AlipayRequestConfig.m in Sources */,
-				036E85912186EB4C001B9BB4 /* MoxiHeadInfView_i9.m in Sources */,
 				03439082210AB8BB00B57142 /* HYSegmentedControl.m in Sources */,
 				034A4E89211A9AD900936A46 /* NSBundle+TZImagePicker.m in Sources */,
 				036721672329EB93001F863E /* HCYSlider.m in Sources */,
@@ -4900,7 +4802,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};
 			name = Debug;
@@ -4965,7 +4867,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 arm64e armv7";
 			};
 			name = Release;

@@ -250,7 +250,6 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
 }
 
 - (id)initWithType:(BOOL )isYueLuoyi
@@ -279,12 +278,6 @@
     [topSegment addTarget:self action:@selector(valuesegChanged:) forControlEvents:(UIControlEventValueChanged)];
     topSegment.tag = 1024;
     [self.view addSubview:topSegment];
-    
-//    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    rightBtn.frame = CGRectMake(topSegment.right, topSegment.top, 37, 40);
-//    [rightBtn setImage:[UIImage imageNamed:@"message"] forState:UIControlStateNormal];
-//    [rightBtn addTarget:self action:@selector(noteVC) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:rightBtn];
     
     
     hysegmentControl = [[HYSegmentedControl alloc] initWithOriginY:topSegment.bottom + Adapter(15) Titles: @[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫",] delegate:self];
@@ -331,7 +324,6 @@
         [self requestYueyaoListWithType:@"少宫"];
         topSegment.selectedSegmentIndex = 0;
 
-//        [hysegmentControl changeSegmentedControlWithIndex:0];
     }
     
 }
@@ -459,16 +451,7 @@
             cell.titleLabel.text = model.title;
         }
         cell.currentSelect = NO;
-        BOOL fileExists = [self existFileWithName:model.title];
-        if(fileExists){ //如果本地存在 则是可以播放 不存在则显示下载按钮
-            [cell downloadSuccess];
-            if([model.title isEqualToString:self.selectSongName] && self.isPlaying){//正在播放的cell,设置为选中 [self.avPlayer isPlaying]
-                cell.currentSelect = YES;
-                [cell.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
-                [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-            }
         NSString *imageStr = @"";
-        
         NSLog(@"url:%@,***:%lu",kPlayer.playUrlStr,kPlayer.playerState);
         
         if(kPlayer.playUrlStr && [model.source isEqualToString:kPlayer.playUrlStr] && kPlayer.playerState == 2){
@@ -494,29 +477,6 @@
             }
             [cell downloadFailWithImageStr:imageStr];
         }
-        //判断当前cell是否处在下载中
-        UIButton *btn = cell.downloadBtn;
-        if([[downhander.downloadingDic objectForKey:model.title] length] > 0){//正在下载
-            NSLog(@"正在下载");
-            [cell.downloadBtn setBackgroundImage:nil forState:UIControlStateNormal];
-            SongListModel *model = [self.dataArr objectAtIndex:indexPath.row];
-            [cell.downloadBtn addSubview:[downhander.progressDic objectForKey:model.title]];
-            [downhander setButton:btn];
-            
-        }else{
-            
-            for (int i=0; i<[btn subviews].count; i++)
-            {
-                
-                UIView *view = (UIView *)[[btn subviews] objectAtIndex:i];
-                if([view isKindOfClass:[ProgressIndicator class]]){
-                    [view removeFromSuperview];
-                }
-                
-            }
-        }
-        
-    }
     
         switch (SegIndex) {
             case 0:
@@ -538,9 +498,10 @@
                 break;
         }
         
-  
+    }
     return cell;
 }
+    
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -557,11 +518,7 @@
         SongListModel *model = [self.dataArr objectAtIndex:indexPath.row];
         
         if(cell.currentSelect){
-            [cell.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
-            NSString *musicStr = [[GlobalCommon Createfilepath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3",model.title]];
-            [self palyActionWithUrlStr:musicStr];
-            self.selectSongName = cell.titleLabel.text;
-            
+        
             /***********流量播放弹框********/
             if(![UserShareOnce shareOnce].wwanPlay){
                 if([[UserShareOnce shareOnce].networkState isEqualToString:@"wwan"]){
@@ -701,12 +658,7 @@
             [weakSelf.tableView reloadData];
             
             if(isSelectRow){
-                
                 weakSelf.currentIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
-//                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
-//                if(indexPath){
-//                    [weakSelf.tableView.delegate tableView:weakSelf.tableView didSelectRowAtIndexPath:indexPath];
-//                }
             }else{
                 weakSelf.currentIndexPath = nil;
             }
@@ -774,7 +726,6 @@
 #pragma mark - 乐药购买事件
 - (void)downloadWithIndex:(NSInteger)index withBtn:(UIButton *)btn
 {
-    if(btn.height == Adapter(20)){ //未购买
    
     NSLog(@"haha:%@",[UserShareOnce shareOnce].yueYaoBuyArr);
     
@@ -807,8 +758,6 @@
                             self->_backView.top  = ScreenHeight - kTabBarHeight + 44 - self.backView.height;
                             self->_tableView.height = ScreenHeight-self->hysegmentControl.bottom  - self.backView.height - kTabBarHeight + 24;
                         }
-                        
-                        
                     }];
                 }
 
@@ -819,36 +768,6 @@
                 [self presentViewController:alertVC animated:YES completion:nil];
             });
         }
-        return;
-    }
-    
-    SongListModel *model = [self.dataArr objectAtIndex:index];
-    NSString* NewFileName=model.source; //leyaoPath
-    
-    NSString *urlPathName = model.title;
-    btn.frame = CGRectMake(ScreenWidth - Adapter(80), Adapter(25), Adapter(30), Adapter(30));
-    btn.backgroundColor = [UIColor clearColor];
-    [btn setTitle:@"" forState:(UIControlStateNormal)];
-    downhander = [DownloadHandler sharedInstance];
-    [downhander.downloadingDic setValue:@"downloading" forKey: [NSString stringWithFormat:@"%@",urlPathName]];
-    NSString *aurl = [NewFileName stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    ProgressIndicator *progress = [[ProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, Adapter(30), Adapter(30))];
-    downhander.name = [NSString stringWithFormat:@"%@",urlPathName];
-    [btn setBackgroundImage:nil forState:UIControlStateNormal];
-    
-    btn.tag = 100 + index;
-    progress.frame=btn.bounds;
-    [btn addSubview:progress];
-    downhander.url = aurl;
-    [downhander setButton:btn];
-    downhander.downdelegate = self;
-    downhander.fileType =@"mp3";
-    downhander.savePath = [GlobalCommon Createfilepath];
-    
-    [downhander setProgress:progress] ;
-    [downhander start];
-=======
->>>>>>> b5671d1afb4309873e90dbb0ec5aa73a5a4aab5b
 }
 
 # pragma mark - 判断该乐药是否已经加入到购买列表里
@@ -862,24 +781,7 @@
             return YES;
         }
     }
-    
-    DownloadHandler *downhander = [DownloadHandler sharedInstance];
-    [downhander.downloadingDic setValue:@"downloading" forKey: [NSString stringWithFormat:@"%@",urlPathName]];
-    NSString *aurl = [NewFileName stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    ProgressIndicator *progress = [[ProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, Adapter(30), Adapter(30))];
-    downhander.name = [NSString stringWithFormat:@"%@",urlPathName];
-    [btn setBackgroundImage:nil forState:UIControlStateNormal];
-    
-    btn.tag = 100 + indexPath.row;
-    progress.frame=btn.bounds;
-    [btn addSubview:progress];
-    downhander.url = aurl;
-    [downhander setButton:btn];
-    downhander.downdelegate = self;
-    downhander.fileType =@"mp3";
-    downhander.savePath = [GlobalCommon Createfilepath];
-    [downhander setProgress:progress] ;
-    [downhander start];
+
     return NO;
 }
 
@@ -1089,11 +991,7 @@
 {
     UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:index];
     self.typeStr = btn.titleLabel.text;
-    if (self.isFirstIn == YES) {
-        self.isFirstIn = NO;
-    }else{
-        [self requestYueyaoListWithType:btn.titleLabel.text];
-    }
+    [self requestYueyaoListWithType:btn.titleLabel.text];
 }
 
 

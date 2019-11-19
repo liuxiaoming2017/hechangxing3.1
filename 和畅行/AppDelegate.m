@@ -110,7 +110,7 @@
     
    
     //埋点注册  AeKAfeKr4YGknb2kPxd8d4xqxFcbjhg0
-    [[BuredPoint sharedYHBuriedPoint]setTheSignatureWithSignStr:BuBuredPointKey withOpenStr:@"1" withLacationKey:@"AeKAfeKr4YGknb2kPxd8d4xqxFcbjhg0"];
+//    [[BuredPoint sharedYHBuriedPoint]setTheSignatureWithSignStr:BuBuredPointKey withOpenStr:@"1" withLacationKey:@"AeKAfeKr4YGknb2kPxd8d4xqxFcbjhg0"];
 //    [self versionContrast111];
     //创建本地数据库
     [[CacheManager sharedCacheManager] createDataBase];
@@ -555,9 +555,9 @@
                                          @"remark":@"1"}
                                  };
 
-    [[BuredPoint sharedYHBuriedPoint] mainLocationThreadRequestWithUrl:accessurlStr dic:accessDic resultBlock:^(id  _Nonnull response) {
-        NSLog(@"%@",response);
-    }];
+//    [[BuredPoint sharedYHBuriedPoint] mainLocationThreadRequestWithUrl:accessurlStr dic:accessDic resultBlock:^(id  _Nonnull response) {
+//        NSLog(@"%@",response);
+//    }];
     
 }
 
@@ -569,15 +569,15 @@
             NSDictionary *downloadDic = @{@"username":@"apiadminuser",
                                                    @"password":@"123456" };
             
-            [[BuredPoint sharedYHBuriedPoint] submitWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
-                NSLog(@"%@",response);
-                NSString *codeStr = [NSString stringWithFormat:@"%@",[response valueForKey:@"code"]];
-                if ([codeStr isEqualToString:@"200"]) {
-//                    [UserShareOnce shareOnce].
-                }
-            } failureBlock:^(NSError * _Nonnull error) {
-                NSLog(@"%@",error);
-            }];
+//            [[BuredPoint sharedYHBuriedPoint] submitWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
+//                NSLog(@"%@",response);
+//                NSString *codeStr = [NSString stringWithFormat:@"%@",[response valueForKey:@"code"]];
+//                if ([codeStr isEqualToString:@"200"]) {
+////                    [UserShareOnce shareOnce].
+//                }
+//            } failureBlock:^(NSError * _Nonnull error) {
+//                NSLog(@"%@",error);
+//            }];
 }
 
 
@@ -613,15 +613,15 @@
                                                    @"remark":@""}
                                            };
             
-            [[BuredPoint sharedYHBuriedPoint] submitWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
-                NSLog(@"%@",response);
-                NSString *codeStr = [NSString stringWithFormat:@"%@",[response valueForKey:@"code"]];
-                if ([codeStr isEqualToString:@"200"]) {
-                    [[NSUserDefaults standardUserDefaults]setValue:versionStr forKey:@"version11"];
-                }
-            } failureBlock:^(NSError * _Nonnull error) {
-                
-            }];
+//            [[BuredPoint sharedYHBuriedPoint] submitWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
+//                NSLog(@"%@",response);
+//                NSString *codeStr = [NSString stringWithFormat:@"%@",[response valueForKey:@"code"]];
+//                if ([codeStr isEqualToString:@"200"]) {
+//                    [[NSUserDefaults standardUserDefaults]setValue:versionStr forKey:@"version11"];
+//                }
+//            } failureBlock:^(NSError * _Nonnull error) {
+//
+//            }];
         }
     }
     

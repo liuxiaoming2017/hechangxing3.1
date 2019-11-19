@@ -842,35 +842,35 @@
 //页面使用时间
 +(void)pageDurationWithpageId:(NSString *)pageIdStr  withstartTime:(NSString *)startTime  withendTime:(NSString *)endTime{
     
-    NSString *userSign = [UserShareOnce shareOnce].uid;
-    if ([GlobalCommon stringEqualNull:userSign]) {
-        userSign = @"";
-    }
-    
-    if ([GlobalCommon stringEqualNull:startTime]||[GlobalCommon stringEqualNull:startTime]||[GlobalCommon stringEqualNull:pageIdStr]) {
-        NSLog(@"=========== 有参数为 null");
-        return;
-    }
-    
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    CFShow(CFBridgingRetain(infoDictionary));
-    NSString *versionStr = [infoDictionary objectForKey:@"CFBundleShortVersionString"];//版本
-    NSString *downloadStr = [NSString stringWithFormat:@"%@/user/visit",DATAURL_PRE];
-    NSDictionary *downloadDic = @{ @"body":@{
-                                           @"userId":userSign,
-                                           @"pageId":pageIdStr,
-                                           @"eventId":@"1",
-                                           @"startTime":startTime,
-                                           @"endTime":endTime,
-                                           @"version":versionStr,
-                                           @"remark":@"1"}
-                                   };
-    
-    [[BuredPoint sharedYHBuriedPoint] submitWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
-        NSLog(@"%@",response);
-    } failureBlock:^(NSError * _Nonnull error) {
-        
-    }];
+//    NSString *userSign = [UserShareOnce shareOnce].uid;
+//    if ([GlobalCommon stringEqualNull:userSign]) {
+//        userSign = @"";
+//    }
+//    
+//    if ([GlobalCommon stringEqualNull:startTime]||[GlobalCommon stringEqualNull:startTime]||[GlobalCommon stringEqualNull:pageIdStr]) {
+//        NSLog(@"=========== 有参数为 null");
+//        return;
+//    }
+//    
+//    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+//    CFShow(CFBridgingRetain(infoDictionary));
+//    NSString *versionStr = [infoDictionary objectForKey:@"CFBundleShortVersionString"];//版本
+//    NSString *downloadStr = [NSString stringWithFormat:@"%@/user/visit",DATAURL_PRE];
+//    NSDictionary *downloadDic = @{ @"body":@{
+//                                           @"userId":userSign,
+//                                           @"pageId":pageIdStr,
+//                                           @"eventId":@"1",
+//                                           @"startTime":startTime,
+//                                           @"endTime":endTime,
+//                                           @"version":versionStr,
+//                                           @"remark":@"1"}
+//                                   };
+//    
+//    [[BuredPoint sharedYHBuriedPoint] submitWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
+//        NSLog(@"%@",response);
+//    } failureBlock:^(NSError * _Nonnull error) {
+//        
+//    }];
 }
 
 

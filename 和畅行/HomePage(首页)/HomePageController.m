@@ -726,34 +726,33 @@
     
     //=============================接口描述： 该接口用于记录用户使用app的设备信息=========================
     
-    NSString *modelStr           =  [BuredPoint getCurrentDeviceModel];//型号
-    NSString *resolutionStr     = [BuredPoint getScreenPix];//分辨率
-    NSString *operatorStr       = [BuredPoint getOperator];//运营商
-    NSString *network_methodStr = [GlobalCommon internetStatus];//联网方式
+//    NSString *modelStr           =  [BuredPoint getCurrentDeviceModel];//型号
+//    NSString *resolutionStr     = [BuredPoint getScreenPix];//分辨率
+//    NSString *operatorStr       = [BuredPoint getOperator];//运营商
+//    NSString *network_methodStr = [GlobalCommon internetStatus];//联网方式
 
 
-    NSString *deviceStr = [NSString stringWithFormat:@"%@user/device",DATAURL_PRE];
-    NSDictionary *deviceDic = @{ @"body":@{
-                                         @"id":@"",
-                                         @"userId":userSign,
-                                         @"brand":@"iPhone",
-                                         @"model":modelStr,
-                                         @"system":@"iOS",
-                                         @"resolution":resolutionStr,
-                                         @"operator":operatorStr,
-                                         @"networkMethod":network_methodStr,
-                                         @"remark":@""}
+//    NSString *deviceStr = [NSString stringWithFormat:@"%@user/device",DATAURL_PRE];
+//    NSDictionary *deviceDic = @{ @"body":@{
+//                                         @"id":@"",
+//                                         @"userId":userSign,
+//                                         @"brand":@"iPhone",
+//                                         @"model":modelStr,
+//                                         @"system":@"iOS",
+//                                         @"resolution":resolutionStr,
+//                                         @"operator":operatorStr,
+//                                         @"networkMethod":network_methodStr,
+//                                         @"remark":@""}
                                 };
 
-    [[BuredPoint sharedYHBuriedPoint] submitWithUrl:deviceStr dic:deviceDic successBlock:^(id  _Nonnull response) {
-            NSLog(@"%@",response);
-    } failureBlock:^(NSError * _Nonnull error) {
+//    [[BuredPoint sharedYHBuriedPoint] submitWithUrl:deviceStr dic:deviceDic successBlock:^(id  _Nonnull response) {
+//            NSLog(@"%@",response);
+//    } failureBlock:^(NSError * _Nonnull error) {
+//
+//    }];
 
-    }];
-    
   
     
-}
 
 -(NSString*)dictionaryToJson:(NSDictionary *)dic
 {

@@ -60,7 +60,7 @@
         tableView.showsVerticalScrollIndicator = NO;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         if(i == 0){
-            view.frame = CGRectMake(Adapter(10), kNavBarHeight + Adapter(10), ScreenWidth - Adapter(20), _topArray.count * Adapter(46) + Adapter(60));
+            view.frame = CGRectMake(Adapter(10), Adapter(10), ScreenWidth - Adapter(20), _topArray.count * Adapter(46) + Adapter(60));
             tableView.frame = CGRectMake(0, Adapter(50), ScreenWidth - Adapter(20), _topArray.count * Adapter(46) );
             self.top1View = view;
             self.topTableView = tableView;

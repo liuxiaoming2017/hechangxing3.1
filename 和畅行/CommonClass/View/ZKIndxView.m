@@ -53,7 +53,7 @@
             
             CGFloat margin = (ScreenWidth-ICON_W*3)/4.0;
             
-            CGFloat topY = ScreenHeight  - lieshu * (ICON_W + MARGIN) - Adapter(50);
+            CGFloat topY = ScreenHeight  - lieshu * (ICON_W + MARGIN) - Adapter(70);
 //            NSLog(@"yyyy:%f",topY);
 //            if(iPhoneX111){
 //                topY = ScreenHeight  - lieshu * (ICON_W + MARGIN)-34 +80;

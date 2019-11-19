@@ -51,7 +51,7 @@
     [super layoutSubviews];
     _contentlabel.frame = CGRectMake(Adapter(10), Adapter(10), ScreenWidth - Adapter(60), ScreenWidth*0.24);
     _answerLabel.frame = CGRectMake(ScreenWidth*0.6, ScreenWidth*0.267, ScreenWidth*0.267, ScreenWidth*0.08);
-    _timeLabel.frame = CGRectMake(Adapter(20), ScreenWidth*0.267, ScreenWidth*0.533, ScreenWidth*0.08);
+    _timeLabel.frame = CGRectMake(Adapter(10), ScreenWidth*0.267, ScreenWidth*0.533, ScreenWidth*0.08);
     
 }
 -(void)insertSublayerWithImageView:(UIImageView *)imageV

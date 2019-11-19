@@ -47,7 +47,7 @@
 //    @property (weak, nonatomic) IBOutlet UILabel *answerLabel;
 //    @property (weak, nonatomic) IBOutlet UIView *leftView;
     [self.leftView  mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).offset(Adapter(5));
+        make.top.equalTo(self.mas_top).offset(Adapter(8));
         make.size.mas_equalTo(CGSizeMake(Adapter(30), Adapter(30)));
         make.leading.equalTo(self.mas_leading).offset(Adapter(5));
     }];
@@ -74,8 +74,8 @@
     }];
     
     [self.answerLabel  mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).offset(Adapter(10));
-        make.left.equalTo(self.backImageView.mas_right).offset(Adapter(0));
+        make.top.equalTo(self.rightView);
+        make.left.equalTo(self.rightView.mas_left);
         make.size.mas_equalTo(CGSizeMake(Adapter(40), Adapter(40)));
     }];
     

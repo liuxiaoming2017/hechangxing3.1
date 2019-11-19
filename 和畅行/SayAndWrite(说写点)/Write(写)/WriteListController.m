@@ -15,8 +15,7 @@
 #import "WriteleftTableViewCell.h"
 
 #define popCellHeight Adapter(50)
-
-#define Adapterbody(d)   Adapter(d)*0.8
+#define Adapterbody(d) (ISPaid ? Adapter(d)*0.8 : Adapter(d))
 
 @interface WriteListController ()<UITableViewDelegate,UITableViewDataSource>
 

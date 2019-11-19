@@ -78,7 +78,7 @@ static CGFloat const timer_animation_Duration = 0.05;
     // 扫描内容的创建
     CALayer *scanContent_layer = [[CALayer alloc] init];
     CGFloat scanContent_layerX = scanContent_X;
-    CGFloat scanContent_layerY = scanContent_Y;
+    CGFloat scanContent_layerY = scanContent_Y+kNavBarHeight;
     CGFloat scanContent_layerW = self.frame.size.width - 2 * scanContent_X;
     CGFloat scanContent_layerH = scanContent_layerW;
     scanContent_layer.frame = CGRectMake(scanContent_layerX, scanContent_layerY, scanContent_layerW, scanContent_layerH);

@@ -169,7 +169,7 @@
     [backScrollView addSubview:imageV];
     [self insertSublayerWithImageView:imageV];
     
-    UIImageView *buttonBackImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(15), backImageView.bottom+ imageV.height/2 + Adapter(20), ScreenWidth - Adapter(30), Adapter(232))];
+    UIImageView *buttonBackImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(15), backImageView.bottom+ Adapter(60), ScreenWidth - Adapter(30), listNamesArr.count*Adapter(58))];
 //    UIImageView *buttonBackImageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, backImageView.bottom+ 60, ScreenWidth - 30, listNamesArr.count*58)];
     buttonBackImageView.backgroundColor = [UIColor whiteColor];
     buttonBackImageView.userInteractionEnabled = YES;
@@ -181,7 +181,7 @@
     backScrollView.contentSize = CGSizeMake(0, buttonBackImageView.bottom + Adapter(20));
     
 
-    for (int i=0; i<listNamesArr.count; i++) {
+    for (int i=0; i<titleArr.count; i++) {
         
         if (i < numberArray.count){
             UIButton *numberButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
@@ -228,7 +228,7 @@
         }
         if(i < titleArr.count){
             UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            button.frame = CGRectMake(0 + imageV.width*i/titleArr.count , 0, imageV.width/titleArr.count, imageV.height);
+            button.frame = CGRectMake(imageV.width*i/titleArr.count , 0, imageV.width/titleArr.count, imageV.height);
             [self.buttonArray addObject:button];
             UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(imageV.width*(2*i+1)/8 -ScreenWidth*0.03,Adapter(10), Adapter(20),Adapter(20))];
             iconImageView.image = [UIImage imageNamed:imageArr[i]];
@@ -273,14 +273,20 @@
                     default:
                         break;
                 }
+                EDWKWebViewController *vc = [[EDWKWebViewController alloc] initWithUrlString:urlStr];
+                vc.isCollect = YES;
+                vc.titleStr = titleStr;
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
             }];
+            [imageV addSubview:button];
         }
     }
     
     for (int i=0; i<listNamesArr.count; i++) {
         
         UIButton *bottomButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        bottomButton.frame = CGRectMake(Adapter(20), buttonBackImageView.height/4*i,ScreenWidth - Adapter(40), buttonBackImageView.height/4);
+        bottomButton.frame = CGRectMake(Adapter(20), buttonBackImageView.height/listNamesArr.count*i,ScreenWidth - Adapter(40), Adapter(58));
         [bottomButton setTitle:ModuleZW(listNamesArr[i]) forState:(UIControlStateNormal)];
         [bottomButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [bottomButton setTitleColor: UIColorFromHex(0x8e8e93) forState:(UIControlStateNormal)];
