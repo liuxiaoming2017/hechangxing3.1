@@ -608,6 +608,7 @@
 		C973090221BA6C9100060447 /* HCY_ActivationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C973090121BA6C9100060447 /* HCY_ActivationController.m */; };
 		C973090521BE16B700060447 /* HCY_InformationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C973090421BE16B700060447 /* HCY_InformationController.m */; };
 		C9847E972341A17B00202B70 /* UpdateReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9847E962341A17B00202B70 /* UpdateReportViewController.m */; };
+		C988EFD32383917800DCAF80 /* BuredPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = C988EFD12383917800DCAF80 /* BuredPoint.m */; };
 		C99B717221B903BE00F1FF5F /* HCY_DAVisceraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */; };
 		C9A2D3302331C68B00AC5185 /* NSBundle+Language.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A2D32F2331C68B00AC5185 /* NSBundle+Language.m */; };
 		C9B306472304F84E008D6D38 /* HealthLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B306462304F84D008D6D38 /* HealthLectureViewController.m */; };
@@ -1681,7 +1682,8 @@
 		C973090421BE16B700060447 /* HCY_InformationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_InformationController.m; sourceTree = "<group>"; };
 		C9847E952341A17B00202B70 /* UpdateReportViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateReportViewController.h; sourceTree = "<group>"; };
 		C9847E962341A17B00202B70 /* UpdateReportViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateReportViewController.m; sourceTree = "<group>"; };
-		C9875CA022F1792C00936A73 /* YHDFBuriedPoint.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YHDFBuriedPoint.framework; sourceTree = "<group>"; };
+		C988EFD12383917800DCAF80 /* BuredPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuredPoint.m; sourceTree = "<group>"; };
+		C988EFD22383917800DCAF80 /* BuredPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuredPoint.h; sourceTree = "<group>"; };
 		C99B717021B903BE00F1FF5F /* HCY_DAVisceraCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_DAVisceraCell.h; sourceTree = "<group>"; };
 		C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_DAVisceraCell.m; sourceTree = "<group>"; };
 		C9A2D32E2331C68B00AC5185 /* NSBundle+Language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Language.h"; sourceTree = "<group>"; };
@@ -2009,7 +2011,8 @@
 		032A7A2320EA1E7C003D4952 /* Configure */ = {
 			isa = PBXGroup;
 			children = (
-				C9875CA022F1792C00936A73 /* YHDFBuriedPoint.framework */,
+				C988EFD22383917800DCAF80 /* BuredPoint.h */,
+				C988EFD12383917800DCAF80 /* BuredPoint.m */,
 				032A7A2420EA1E8B003D4952 /* GlobalDefine.h */,
 				03A7CB1D2303BD3700A1B7D9 /* Global.h */,
 				0334105620EDBDB800BD68C2 /* NetworkManager.h */,
@@ -4349,6 +4352,7 @@
 				C97308F721BA50FB00060447 /* SGScanningQRCodeVC.m in Sources */,
 				03EE39AC2366D42400369B34 /* YueYaoController.m in Sources */,
 				03E29ACA2331FDCB0056A258 /* UIButton+ExpandScope.m in Sources */,
+				C988EFD32383917800DCAF80 /* BuredPoint.m in Sources */,
 				03535EF620F7263C00664FA9 /* TipSpeakController.m in Sources */,
 				036E843D2186EAD3001B9BB4 /* KeyBoardManager.m in Sources */,
 				C9FDB92721BE35AC00E726F3 /* HCY_UnderlineButton.m in Sources */,
