@@ -32,7 +32,7 @@
     self.preBtn.hidden = NO;
     //[self.leftBtn setImage:[UIImage imageNamed:@"user_01"] forState:UIControlStateNormal];
     self.leftBtn.hidden = NO;
-    [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
+//    [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     
     
 }

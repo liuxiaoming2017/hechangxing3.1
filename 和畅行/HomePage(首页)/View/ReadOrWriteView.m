@@ -46,9 +46,7 @@
         [rightBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:rightBtn];
     }
-   
-    
-   
+      
 }
 
 

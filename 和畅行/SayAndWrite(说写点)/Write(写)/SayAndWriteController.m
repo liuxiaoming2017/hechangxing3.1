@@ -18,7 +18,7 @@
     [super viewDidLoad];
     self.preBtn.hidden = NO;
     self.leftBtn.hidden = YES;
-    [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
+//    [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     self.view.backgroundColor = RGB_AppWhite;
     
 }

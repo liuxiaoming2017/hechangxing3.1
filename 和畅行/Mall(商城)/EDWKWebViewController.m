@@ -43,7 +43,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self.rightBtn setImage:[UIImage imageNamed:@"message"] forState:UIControlStateNormal];
+//    [self.rightBtn setImage:[UIImage imageNamed:@"message"] forState:UIControlStateNormal];
     if(self.isCollect){
         self.preBtn.hidden = NO;
         self.leftBtn.hidden = YES;

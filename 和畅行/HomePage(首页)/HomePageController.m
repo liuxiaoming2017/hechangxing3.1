@@ -104,7 +104,7 @@
     //埋点数据上传
     [self buriedDataPoints];
     
-    self.rightBtn.hidden = NO;
+//    self.rightBtn.hidden = NO;
      [self.rightBtn addTarget:self action:@selector(messageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -220,11 +220,11 @@
     if ([self.backImageModel.link isEqualToString:@"0"]) {
         self.packgeView.titleLabel.textColor = [UIColor blackColor];
         self.packgeView.remindLabel.textColor = [UIColor blackColor];
-        [self.rightBtn setImage:[UIImage imageNamed:@"message"] forState:UIControlStateNormal];
+//        [self.rightBtn setImage:[UIImage imageNamed:@"message"] forState:UIControlStateNormal];
     }else {
         self.packgeView.titleLabel.textColor = [UIColor whiteColor];
         self.packgeView.remindLabel.textColor = [UIColor whiteColor];
-        [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
+//        [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     }
     
     if(_havePackage){
@@ -679,8 +679,9 @@
 -(void)buriedDataPoints {
     //获取买点token
     NSString *downloadStr = [NSString stringWithFormat:@"http://10.1.71.96:8086/login"];
-    NSDictionary *downloadDic = @{@"username":@"apiadminuser",
-                                  @"password":@"123456" };
+    NSString *appSignStr = [[NSBundle mainBundle] bundleIdentifier];
+    NSDictionary *downloadDic = @{@"username":appSignStr,
+                                  @"password":@"ky3h" };
     [[BuredPoint sharedYHBuriedPoint]getTokenWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
         [self submitData];
     } failureBlock:^(NSError * _Nonnull error) {
