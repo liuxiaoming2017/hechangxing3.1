@@ -96,6 +96,8 @@
     UIImage *image = [UIImage imageNamed:[_iconArray objectAtIndex:indexPath.row]];
     index = 2;
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    cell.imageView.width  =  Adapter(20);
+    cell.imageView.height =  Adapter(20);
     if (indexPath.row == index){
         if(iPhone4 || iPhone5){
             cell.imageView.image = [[self getSettingVoiceIcon] transformWidth:ICON_WITHD_SMALL height:ICON_WITHD_SMALL scale:1.0];
@@ -121,7 +123,9 @@
     cell.textLabel.text = [_titleArray objectAtIndex:indexPath.row];
     if (indexPath.row == index) {
         CGFloat height = [self tableView:tableView heightForRowAtIndexPath:indexPath];
-        UISwitch *uiswitch = [[UISwitch alloc]initWithFrame:CGRectMake(self.view.frame.size.width-80, (height - 32)/2, 32, 32)];
+        UISwitch *uiswitch = [[UISwitch alloc]initWithFrame:CGRectMake(self.view.frame.size.width-Adapter(80), (height - Adapter(32))/2, Adapter(52), Adapter(42))];
+       uiswitch.transform = CGAffineTransformMakeScale(1*[UserShareOnce shareOnce].fontSize, 1*[UserShareOnce shareOnce].fontSize);
+        uiswitch.top = (Adapter(56) - uiswitch.height)/2;
         [cell.contentView addSubview:uiswitch];
         [uiswitch addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
         [uiswitch setOn:_isVoiceEn];
@@ -133,7 +137,7 @@
     if(iPhone4 || iPhone5){
         return 44;
     }else{
-        return 56;
+        return Adapter(56);
     }
 }
 

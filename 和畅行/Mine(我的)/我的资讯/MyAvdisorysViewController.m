@@ -28,6 +28,8 @@
 @implementation MyAvdisorysViewController
 - (void)dealloc{
     
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"43" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
     
 }
 
@@ -41,11 +43,12 @@
     // Do any additional setup after loading the view.
     self.navTitleLabel.text = ModuleZW(@"咨询记录");
     self.view.backgroundColor = [UIColor whiteColor];
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     self.dataArray = [[NSMutableArray alloc]init];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height - kNavBarHeight) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.rowHeight = 150;
+    _tableView.rowHeight = ScreenWidth*0.4;
     _tableView.separatorStyle = UITableViewCellAccessoryNone;
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:_tableView];

@@ -53,7 +53,7 @@
         self.leftBtn.hidden = NO;
         self.navTitleLabel.text = ModuleZW(@"和畅商城");
     }
-    
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     
     [self customeViewWithStr:self.rootUrl];
     if(self.isCollect){
@@ -128,7 +128,6 @@
             PayViewController *payVC = [[PayViewController alloc]init];
             payVC.dingdanStr = array[1];
             payVC.hidesBottomBarWhenPushed = YES;
-           // [webView goBack];
             [self.navigationController pushViewController:payVC animated:YES];
            
         }
@@ -362,6 +361,20 @@
         completionHandler();
     }]];
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    if(!self.isCollect){
+        self.endTimeStr = [GlobalCommon getCurrentTimes];
+        [GlobalCommon pageDurationWithpageId:@"4" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+    }else{
+        if (![GlobalCommon stringEqualNull:self.pageIDStr]) {
+            self.endTimeStr = [GlobalCommon getCurrentTimes];
+            [GlobalCommon pageDurationWithpageId:self.pageIDStr withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+        }
+    }
 }
 
 @end

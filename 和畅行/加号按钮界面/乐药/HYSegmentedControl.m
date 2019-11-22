@@ -8,9 +8,9 @@
 
 #import "HYSegmentedControl.h"
 
-#define HYSegmentedControl_Height 32
+#define HYSegmentedControl_Height Adapter(32)
 #define HYSegmentedControl_Width ([UIScreen mainScreen].bounds.size.width)
-#define Min_Width_4_Button 80.0
+#define Min_Width_4_Button Adapter(80)
 
 #define Define_Tag_add 1000
 
@@ -71,7 +71,7 @@
                                                       options:NSStringDrawingUsesLineFragmentOrigin
                                                    attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
                                                       context:nil];
-            CGFloat with = textRect.size.width + 26;
+            CGFloat with = textRect.size.width + Adapter(26);
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             btn.frame = CGRectMake(ScreenWidth*(2*i+1)/(titles.count*2) -with/2 , .0f, with, HYSegmentedControl_Height);
             [btn setTitleColor:RGB_TextAppGray forState:UIControlStateNormal];
@@ -101,7 +101,7 @@
                                                   options:NSStringDrawingUsesLineFragmentOrigin
                                                attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
                                                   context:nil];
-        CGFloat with = textRect.size.width + 26;
+        CGFloat with = textRect.size.width + Adapter(26);
         UIButton* btn=[_array4Btn objectAtIndex:i];
         btn.titleLabel.text=[titles objectAtIndex:i];
         [btn setTitle:[titles objectAtIndex:i] forState:UIControlStateNormal];

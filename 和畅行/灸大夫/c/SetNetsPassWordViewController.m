@@ -63,6 +63,45 @@
     _mCancleBtn.layer.masksToBounds = YES;
     _mCancleBtn.layer.cornerRadius = 5;
      [_mCancleBtn setTitle:ModuleZW(@"取消") forState:(UIControlStateNormal)];
+    
+    _mNewPwd.input.font = [UIFont systemFontOfSize:16];
+    _mOldPwd.input.font = [UIFont systemFontOfSize:16];
+    [_mSureBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [_mCancleBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    
+    /*
+     [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+     make.top.equalTo(self.contentView.mas_top).offset(Adapter(10.0));
+     make.size.mas_equalTo(CGSizeMake(Adapter(200), Adapter(20)));
+     make.leading.equalTo(self.contentView.mas_leading).offset(Adapter(10.0));
+     }];
+     */
+    [_mNewPwd mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top).offset(kNavBarHeight + Adapter(20));
+        make.leading.equalTo(self.view.mas_leading).offset(Adapter(30));
+        make.trailing.equalTo(self.view.mas_trailing).offset(Adapter(-30));
+        make.height.mas_equalTo(Adapter(40));
+    }];
+    
+    [_mOldPwd mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self->_mNewPwd.mas_bottom).offset(Adapter(20));
+        make.leading.equalTo(self.view.mas_leading).offset(Adapter(30));
+        make.trailing.equalTo(self.view.mas_trailing).offset(Adapter(-30));
+        make.height.mas_equalTo(Adapter(40));
+    }];
+    
+    [_mSureBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self->_mOldPwd.mas_bottom).offset(Adapter(40));
+        make.leading.equalTo(self.view.mas_leading).offset(ScreenWidth/5);
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth/5, Adapter(40)));
+    }];
+    
+    [_mCancleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self->_mOldPwd.mas_bottom).offset(Adapter(40));
+        make.trailing.equalTo(self.view.mas_trailing).offset(-ScreenWidth/5);
+       make.size.mas_equalTo(CGSizeMake(ScreenWidth/5, Adapter(40)));
+    }];
+    
 }
 
 - (IBAction)onClickControl:(id)sender {

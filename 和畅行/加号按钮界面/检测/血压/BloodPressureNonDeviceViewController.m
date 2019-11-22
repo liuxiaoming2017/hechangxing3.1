@@ -66,7 +66,7 @@
 -(void)bounceView{
     //弹出视图
    
-    _showView = [[UIView alloc]initWithFrame:CGRectMake(30, 100, self.view.frame.size.width - 60, self.view.frame.size.height - 190)];
+    _showView = [[UIView alloc]initWithFrame:CGRectMake(Adapter(30), Adapter(100), self.view.frame.size.width - Adapter(60), self.view.frame.size.height - Adapter(190))];
     _showView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_showView];
     _showView.hidden = YES;
@@ -80,7 +80,7 @@
 -(void)initWithController{
     
     
-    UIScrollView *myScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kNavBarHeight + 10, ScreenWidth, ScreenHeight - kNavBarHeight)];
+    UIScrollView *myScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kNavBarHeight + Adapter(10), ScreenWidth, ScreenHeight - kNavBarHeight)];
     myScrollView.backgroundColor = RGB_AppWhite;
     [self.view addSubview:myScrollView];
     
@@ -97,15 +97,15 @@
     NSArray *titleArray = @[dateString,dateString1];
     
     for (int i = 0; i < 3; i++) {
-        UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, ScreenWidth - 20, 100)];
+        UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(10), Adapter(10), ScreenWidth - Adapter(20), Adapter(100))];
         backImageView.backgroundColor = [UIColor whiteColor];
         backImageView.userInteractionEnabled = YES;
-        backImageView.layer.cornerRadius = 10;
+        backImageView.layer.cornerRadius = Adapter(10);
         backImageView.layer.masksToBounds = YES;
         if(i == 1) {
-            backImageView.top = 130 ;
-            backImageView.height = 230;
-            UILabel *bloodLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 10, 300, 30)];
+            backImageView.top = Adapter(130) ;
+            backImageView.height = Adapter(230);
+            UILabel *bloodLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(30), Adapter(10), Adapter(300), Adapter(30))];
             bloodLabel.text = ModuleZW(@"血压");
             bloodLabel.font = [UIFont systemFontOfSize:16];
             bloodLabel.textColor = RGB_TextGray;
@@ -115,13 +115,13 @@
             
             for (int k = 0; k < 2; k++) {
                 
-                UILabel *leftlabel =  [[UILabel alloc]initWithFrame:CGRectMake(0,bloodLabel.bottom + 10 + 84*k, backImageView.width/2 - 5, 30)];
+                UILabel *leftlabel =  [[UILabel alloc]initWithFrame:CGRectMake(0,bloodLabel.bottom + Adapter(10) + Adapter(84)*k, backImageView.width/2 - Adapter(5), Adapter(30))];
                 leftlabel.text = leftArray[k];
                 leftlabel.textAlignment = NSTextAlignmentRight;
                 leftlabel.font  =  [UIFont systemFontOfSize:14];
                 [backImageView addSubview:leftlabel];
                 
-                UILabel *rightlabel =  [[UILabel alloc]initWithFrame:CGRectMake(backImageView.width/2 + 5,bloodLabel.bottom + 10 + 84*k, leftlabel.width, 30)];
+                UILabel *rightlabel =  [[UILabel alloc]initWithFrame:CGRectMake(backImageView.width/2 + Adapter(5),bloodLabel.bottom + Adapter(10) + Adapter(84)*k, leftlabel.width, Adapter(30))];
                 rightlabel.text = rightArray[k];
                 rightlabel.font  =  [UIFont systemFontOfSize:19];
                 [backImageView addSubview:rightlabel];
@@ -131,7 +131,7 @@
                     self.DBPLabel = rightlabel;
                 }
                 
-                LJRuler *ruler = [[LJRuler alloc] initWithFrame:CGRectMake(40, leftlabel.bottom + 10 , backImageView.width - 80, 34)];
+                LJRuler *ruler = [[LJRuler alloc] initWithFrame:CGRectMake(Adapter(40), leftlabel.bottom + Adapter(10) , backImageView.width - Adapter(80), Adapter(34))];
                 ruler.rulerColor = [UIColor whiteColor];
                 ruler.delegate = self;
                 
@@ -158,28 +158,28 @@
           
             
         }else if(i == 2) {
-            backImageView.top = 370 ;
-            backImageView.height = 150;
+            backImageView.top = Adapter(370) ;
+            backImageView.height = Adapter(150);
             
-            UILabel *bloodLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 10, 300, 30)];
+            UILabel *bloodLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(30), Adapter(10), Adapter(300), Adapter(30))];
             bloodLabel.text = ModuleZW(@"心率");
             bloodLabel.font = [UIFont systemFontOfSize:16];
             bloodLabel.textColor = RGB_TextGray;
             [backImageView addSubview:bloodLabel];
             
-            UILabel *leftlabel =  [[UILabel alloc]initWithFrame:CGRectMake(5,bloodLabel.bottom + 10 ,backImageView.width/2 - 5, 30)];
+            UILabel *leftlabel =  [[UILabel alloc]initWithFrame:CGRectMake(Adapter(5),bloodLabel.bottom + Adapter(10) ,backImageView.width/2 - Adapter(5), Adapter(30))];
             leftlabel.text = ModuleZW(@"心率");
             leftlabel.textAlignment = NSTextAlignmentRight;
             leftlabel.font  =  [UIFont systemFontOfSize:14];
             [backImageView addSubview:leftlabel];
             
-            UILabel *rightlabel =  [[UILabel alloc]initWithFrame:CGRectMake(backImageView.width/2 + 5,bloodLabel.bottom + 10 , leftlabel.width, 30)];
+            UILabel *rightlabel =  [[UILabel alloc]initWithFrame:CGRectMake(backImageView.width/2 + Adapter(5),bloodLabel.bottom + Adapter(10) , leftlabel.width, Adapter(30))];
             rightlabel.text = @"60BBPM";
             rightlabel.font  =  [UIFont systemFontOfSize:19];
             [backImageView addSubview:rightlabel];
             self.rateLabel = rightlabel;
             
-            LJRuler *ruler = [[LJRuler alloc] initWithFrame:CGRectMake(40, leftlabel.bottom + 10 , backImageView.width - 80, 34)];
+            LJRuler *ruler = [[LJRuler alloc] initWithFrame:CGRectMake(Adapter(40), leftlabel.bottom + Adapter(10) , backImageView.width - Adapter(80), Adapter(34))];
             ruler.rulerColor = [UIColor whiteColor];
             ruler.delegate = self;
             ruler.tag  = 1002;
@@ -197,14 +197,14 @@
                 UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
                 button.frame = CGRectMake(0, 0 +backImageView.height*j/2 , backImageView.width, backImageView.height/2 );
                 [button setTitle:buttonTitleArray[j] forState:(UIControlStateNormal)];
-                [button setImage:[UIImage imageNamed:@"1我的_09"] forState:(UIControlStateNormal)];
+                [button setImage:[UIImage imageNamed:@""] forState:(UIControlStateNormal)];
                 [button setTitleColor:RGB_TextGray forState:(UIControlStateNormal)];
                 [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
                 [button setTitleEdgeInsets:UIEdgeInsetsMake(0, -button.currentImage.size.width,0,0)];
-                [button.titleLabel setFrame:CGRectMake(20, 0, button.width - 20, button.height)];
+                [button.titleLabel setFrame:CGRectMake(Adapter(20), 0, button.width - Adapter(20), button.height)];
                 [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
                 [button setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,0)];
-                [button setImageEdgeInsets:UIEdgeInsetsMake(0, backImageView.width - 40 , 0, -backImageView.width + 40)];
+                [button setImageEdgeInsets:UIEdgeInsetsMake(0, backImageView.width - Adapter(40) , 0, -backImageView.width + Adapter(40))];
                 [[button rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
                     if(j == 0){
                         [self  layoutDataViewWithType:1];
@@ -214,7 +214,12 @@
                 }];
                 [backImageView addSubview:button];
                 
-                UILabel *dataLable = [[UILabel alloc]initWithFrame:CGRectMake(backImageView.width - 200, 0, 150, backImageView.height/2)];
+                UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(button.width - Adapter(30), button.height/2 - Adapter(10), Adapter(12), Adapter(20))];
+                imageView.image = [UIImage imageNamed:@"1我的_09"];
+                imageView.userInteractionEnabled = YES;
+                [button addSubview:imageView];
+                
+                UILabel *dataLable = [[UILabel alloc]initWithFrame:CGRectMake(backImageView.width - Adapter(200), 0, Adapter(150), backImageView.height/2)];
                 dataLable.font = [UIFont systemFontOfSize:16];
                 dataLable.textAlignment = NSTextAlignmentRight;
                 dataLable.text = titleArray[j];
@@ -226,21 +231,21 @@
                 }
                 
             }
-            UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, backImageView.height/2 - 0.25, backImageView.width, 0.5)];
+            UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, backImageView.height/2 - Adapter(0.25), backImageView.width, Adapter(0.5))];
             lineView.backgroundColor = UIColorFromHex(0XD6D6D6);
             [backImageView addSubview:lineView];
         }
         [myScrollView addSubview:backImageView];
     
     }
-    myScrollView.contentSize = CGSizeMake(0, 530);
+    myScrollView.contentSize = CGSizeMake(0, Adapter(530) + Adapter(60));
     
     UIButton *suerButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    suerButton.frame = CGRectMake(ScreenWidth/2 - 45, ScreenHeight - 60, 90, 30);
+    suerButton.frame = CGRectMake(ScreenWidth/2 - Adapter(45), ScreenHeight - Adapter(60), Adapter(90), Adapter(30));
     [suerButton setTitle:ModuleZW(@"确定") forState:(UIControlStateNormal)];
     [suerButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [suerButton setBackgroundColor:RGB_ButtonBlue];
-    suerButton.layer.cornerRadius = 15;
+    suerButton.layer.cornerRadius = Adapter(15);
     suerButton.layer.masksToBounds = YES;
     [suerButton addTarget:self action:@selector(saveClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:suerButton];
@@ -298,20 +303,20 @@
         backView.backgroundColor = RGBA(0, 0, 0, 0.4);
         [self.view addSubview:backView];
         _backView = backView;
-        UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(10, ScreenHeight - 290, ScreenWidth - 20, 280)];
+        UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(Adapter(10), ScreenHeight - Adapter(290), ScreenWidth - Adapter(20), Adapter(280))];
         bottomView.backgroundColor = [UIColor whiteColor];
         bottomView.layer.cornerRadius = 15;
         [backView addSubview:bottomView];
         self.bottomView = bottomView;
         
-        UILabel *dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 10, 100, 30)];
+        UILabel *dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(30), Adapter(10), Adapter(100), Adapter(30))];
         dataLabel.textColor = RGB_TextGray;
         dataLabel.font = [UIFont systemFontOfSize:14];
         [bottomView addSubview:dataLabel];
         _datatypeLabel = dataLabel;
         
         
-        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(bottomView.width/2 - 0.25,bottomView.height - 36, 0.5, 32)];
+        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(bottomView.width/2 - Adapter(0.25),bottomView.height - Adapter(36), Adapter(0.5), Adapter(32))];
         lineView.backgroundColor = RGB(230, 230, 230);
         [bottomView addSubview:lineView];
         
@@ -330,10 +335,10 @@
         NSArray *buttonTitleArray = @[ModuleZW(@"取消"),ModuleZW(@"确定")];
         for (int i = 0; i < 2; i++) {
             UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            button.frame = CGRectMake(40 + (bottomView.width/2-40)*i  , bottomView.height - 40, (bottomView.width - 80)/2, 40);
+            button.frame = CGRectMake(Adapter(40) + (bottomView.width/2-Adapter(40))*i  , bottomView.height - Adapter(40), (bottomView.width - Adapter(80))/2, Adapter(40));
             [button setTitle:buttonTitleArray[i] forState:(UIControlStateNormal)];
             [button setTitleColor:UIColorFromHex(0Xffa200) forState:(UIControlStateNormal)];
-            [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
+            [button.titleLabel setFont:[UIFont systemFontOfSize:16*[UserShareOnce shareOnce].fontSize*0.8]];
             [[button rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
                 if(i == 1){
                     if([_datatypeLabel.text isEqualToString: ModuleZW(@"日期")]){
@@ -342,6 +347,7 @@
                         self.timeLabel.text = self.timeString;
                     }
                 }
+                [UserShareOnce shareOnce].canChageSize = YES;
                 backView.hidden = YES;
             }];
             [bottomView addSubview:button];
@@ -369,8 +375,9 @@
 
 -(UIDatePicker *)datePicker{
     if(!_datePicker){
+        [UserShareOnce shareOnce].canChageSize = NO;
         self.datePicker = [[UIDatePicker alloc] init];
-        self.datePicker.frame = CGRectMake(30, 40, _bottomView.width - 60, 200);
+        self.datePicker.frame = CGRectMake(Adapter(30), Adapter(40), _bottomView.width - Adapter(60), Adapter(200));
         if([UserShareOnce shareOnce].languageType){
             self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"us"];
         }else{
@@ -492,7 +499,7 @@
         self.view.userInteractionEnabled = YES;
         view.userInteractionEnabled = YES;
         view2.userInteractionEnabled = YES;
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width-40, 180)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width-Adapter(40), Adapter(180))];
         imageView.center = self.view.center;
         imageView.userInteractionEnabled = YES;
         imageView.image = [UIImage imageNamed:@"bounceView"];
@@ -502,7 +509,7 @@
         [sureBtn setBackgroundImage:[UIImage imageNamed:@"sure"] forState:UIControlStateNormal];
         [sureBtn setTitle: ModuleZW(@"返回检测") forState:UIControlStateNormal];
         sureBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        sureBtn.frame = CGRectMake(20, kScreenSize.height/2+90, imageView.frame.size.width * 0.5, 40);
+        sureBtn.frame = CGRectMake(Adapter(20), kScreenSize.height/2+Adapter(90), imageView.frame.size.width * 0.5, Adapter(40));
         [sureBtn addTarget:self action:@selector(confirmBtnClick2:) forControlEvents:UIControlEventTouchUpInside];
         [view2 addSubview:sureBtn];
         
@@ -510,25 +517,25 @@
         [lookBtn setBackgroundImage:[UIImage imageNamed:@"look"] forState:UIControlStateNormal];
         [lookBtn setTitle:ModuleZW(@"查看档案") forState:UIControlStateNormal];
         lookBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        lookBtn.frame = CGRectMake(CGRectGetMaxX(sureBtn.frame), sureBtn.frame.origin.y, imageView.frame.size.width * 0.5, 40);
+        lookBtn.frame = CGRectMake(CGRectGetMaxX(sureBtn.frame), sureBtn.frame.origin.y, imageView.frame.size.width * 0.5, Adapter(40));
         [lookBtn addTarget:self action:@selector(lookClickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [view2 addSubview:lookBtn];
         
-        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前脉搏%ld次/分  收缩压%ldmmHg   舒张压 %ldmmhg"),(long)pulseCount,(long)highCount,(long)lowCount] frame:CGRectMake(0, 50, imageView.width, 60) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
+        UILabel *countLabel = [Tools labelWith:[NSString stringWithFormat:ModuleZW(@"您当前脉搏%ld次/分  收缩压%ldmmHg  舒张压 %ldmmhg"),(long)pulseCount,(long)highCount,(long)lowCount] frame:CGRectMake(0, Adapter(50), imageView.width, Adapter(60)) textSize:14 textColor:[Tools colorWithHexString:@"#e79947"] lines:0 aligment:NSTextAlignmentCenter];
         
         UILabel *label0 = [[UILabel alloc] init];
         label0.text = ModuleZW(@"血压、脉搏正常范围参考值：");
         label0.numberOfLines = 2;
         label0.textAlignment = NSTextAlignmentCenter;
         label0.font = [UIFont systemFontOfSize:13];
-        label0.frame = CGRectMake(20, 110, imageView.bounds.size.width-40, 25);
+        label0.frame = CGRectMake(Adapter(20), Adapter(110), imageView.bounds.size.width-Adapter(40), Adapter(25));
         [imageView addSubview:label0];
-        CGRect textRect1 = [label0.text  boundingRectWithSize:CGSizeMake(imageView.bounds.size.width-40, MAXFLOAT)
+        CGRect textRect1 = [label0.text  boundingRectWithSize:CGSizeMake(imageView.bounds.size.width-Adapter(40), MAXFLOAT)
                                                       options:NSStringDrawingUsesLineFragmentOrigin
                                                    attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]}
                                                       context:nil];
         label0.height = textRect1.size.height;
-        imageView.height = 180 + label0.height ;
+        imageView.height = Adapter(180) + label0.height ;
         sureBtn.top = imageView.bottom;
         lookBtn.top = sureBtn.top;
         
@@ -536,21 +543,21 @@
         label1.text = ModuleZW(@"脉搏：60－100次/分");
         label1.textAlignment = NSTextAlignmentCenter;
         label1.font = [UIFont systemFontOfSize:12];
-        label1.frame = CGRectMake(20, CGRectGetMaxY(label0.frame), imageView.bounds.size.width-40, 16);
+        label1.frame = CGRectMake(Adapter(20), CGRectGetMaxY(label0.frame), imageView.bounds.size.width-Adapter(40), Adapter(16));
         [imageView addSubview:label1];
         
         UILabel *label2 = [[UILabel alloc] init];
         label2.text = ModuleZW(@"90 < 高压 / 收缩压（mmHg）< 140");
         label2.textAlignment = NSTextAlignmentCenter;
         label2.font = [UIFont systemFontOfSize:12];
-        label2.frame = CGRectMake(20, CGRectGetMaxY(label1.frame), imageView.bounds.size.width-40, 16);
+        label2.frame = CGRectMake(Adapter(20), CGRectGetMaxY(label1.frame), imageView.bounds.size.width-Adapter(40), Adapter(16));
         [imageView addSubview:label2];
         
         UILabel *label3 = [[UILabel alloc] init];
         label3.text = ModuleZW(@"60 < 低压 / 舒张压（mmHg）< 90");
         label3.textAlignment = NSTextAlignmentCenter;
         label3.font = [UIFont systemFontOfSize:12];
-        label3.frame = CGRectMake(20, CGRectGetMaxY(label2.frame), imageView.bounds.size.width-40, 16);
+        label3.frame = CGRectMake(Adapter(20), CGRectGetMaxY(label2.frame), imageView.bounds.size.width-Adapter(40), Adapter(16));
         [imageView addSubview:label3];
         
         [imageView addSubview:countLabel];

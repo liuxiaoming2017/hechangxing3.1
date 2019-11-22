@@ -27,19 +27,19 @@
 - (void)setupUI
 {
     
-    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 5, ScreenWidth - 20, 80)];
+    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(10), Adapter(5), ScreenWidth - Adapter(20), Adapter(80))];
     backImageView.backgroundColor = [UIColor whiteColor];
-    backImageView.layer.cornerRadius = 10;
+    backImageView.layer.cornerRadius = Adapter(10);
     backImageView.layer.masksToBounds = YES;
     backImageView.userInteractionEnabled = YES;
     [self  insertSublayerWithImageView:backImageView];
     [self addSubview:backImageView];
     
-    self.iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(10, 15, 50, 50)];
+    self.iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(Adapter(10), Adapter(15), Adapter(50), Adapter(50))];
     self.iconImage.image = [UIImage imageNamed:@"宫icon"];
     [backImageView addSubview:self.iconImage];
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80 ,15, backImageView.width  - 150 , 50)];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(80) ,Adapter(15), backImageView.width  - Adapter(150) , Adapter(50))];
     self.titleLabel.textAlignment=NSTextAlignmentLeft;
     self.titleLabel.numberOfLines = 0;
     self.titleLabel.font=[UIFont systemFontOfSize:16.0];
@@ -47,8 +47,8 @@
     self.titleLabel.backgroundColor=[UIColor clearColor];
     
     self.downloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.downloadBtn.frame = CGRectMake(backImageView.width - 60, 25, 30, 30);
-    [self.downloadBtn  setImage:[UIImage imageNamed:@"乐药下载icon"] forState:UIControlStateNormal];
+    self.downloadBtn.frame = CGRectMake(backImageView.width - Adapter(60), Adapter(25), Adapter(30), Adapter(30));
+    [self.downloadBtn  setBackgroundImage:[UIImage imageNamed:@"乐药下载icon"] forState:UIControlStateNormal];
     self.downloadBtn.userInteractionEnabled = NO;
     
     
@@ -58,10 +58,10 @@
 
 - (void)downloadSuccess
 {
-    self.downloadBtn.frame = CGRectMake(ScreenWidth - 80, 25, 30, 30);
+    self.downloadBtn.frame = CGRectMake(ScreenWidth - Adapter(80), Adapter(25), Adapter(30), Adapter(30));
     self.downloadBtn.backgroundColor = [UIColor clearColor];
     [self.downloadBtn setTitle:@"" forState:(UIControlStateNormal)];
-    [self.downloadBtn setImage:[UIImage imageNamed:@"乐药播放icon"] forState:UIControlStateNormal];
+    [self.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药播放icon"] forState:UIControlStateNormal];
     
     [self.downloadBtn.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if([obj isKindOfClass:[ProgressIndicator class]]){
@@ -73,8 +73,9 @@
 
 - (void)downloadFailWithImageStr:(NSString *)nameStr
 {
+
     if([nameStr isEqualToString:@"乐药未购买icon"] || [nameStr isEqualToString:@"已加入购物车"]){
-        self.downloadBtn.frame = CGRectMake(ScreenWidth - 110 , 30, 80, 20);
+        self.downloadBtn.frame = CGRectMake(ScreenWidth - Adapter(110) , Adapter(30), Adapter(80), Adapter(20));
         self.downloadBtn.backgroundColor = RGB(253, 134, 40);
         
         if([nameStr isEqualToString:@"已加入购物车"]){
@@ -87,14 +88,15 @@
         [self.downloadBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
         self.PlayOrdownload = NO;
     }else{
-        self.downloadBtn.frame = CGRectMake(ScreenWidth - 80, 25, 30, 30);
+        self.downloadBtn.frame = CGRectMake(ScreenWidth - Adapter(80), Adapter(25), Adapter(30), Adapter(30));
          self.downloadBtn.backgroundColor = [UIColor clearColor];
         
          [self.downloadBtn setTitle:@"" forState:(UIControlStateNormal)];
         self.PlayOrdownload = YES;
         
     }
-    [self.downloadBtn setImage:[UIImage imageNamed:nameStr] forState:UIControlStateNormal];
+    [self.downloadBtn setBackgroundImage:[UIImage imageNamed:nameStr] forState:UIControlStateNormal];
+//    [self.downloadBtn setImage:[UIImage imageNamed:nameStr] forState:UIControlStateNormal];
     
 }
 

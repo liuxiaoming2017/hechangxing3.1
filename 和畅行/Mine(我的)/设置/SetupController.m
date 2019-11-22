@@ -24,6 +24,7 @@
 @property (nonatomic,strong) NSArray *listImagesArr;
 @property (nonatomic,strong) NSMutableArray *buttonArray;
 @property (nonatomic,strong) UILabel *fontSizeLabel;
+@property (nonatomic,assign)BOOL isPush;
 @end
 
 @implementation SetupController
@@ -34,18 +35,27 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.isPush = NO;
+}
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    if (!self.isPush) {
+        self.endTimeStr = [GlobalCommon getCurrentTimes];
+        [GlobalCommon pageDurationWithpageId:@"46" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+    }
+}
 
 
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-    
     self.navTitleLabel.text = ModuleZW(@"设置");
     self.view.backgroundColor = RGB_AppWhite;
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     self.buttonArray = [NSMutableArray array];
     [self getPayRequest];
     
@@ -56,18 +66,17 @@
         NSArray *changeArray = @[ModuleZW(@"修改密码"),ModuleZW(@"退出登录")];
         
         for (int i = 0 ; i < listNamesArr.count; i++) {
-            UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(14, kNavBarHeight +10 + (10 + 50)*i, ScreenWidth - 28, 50)];
+            UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth*0.037, kNavBarHeight +Adapter(10) + (ScreenWidth*0.16)*i, ScreenWidth - ScreenWidth*0.074, ScreenWidth*0.133)];
             backImageView.backgroundColor = [UIColor whiteColor];
-            backImageView.layer.cornerRadius = 10;
+            backImageView.layer.cornerRadius = Adapter(10);
             backImageView.layer.masksToBounds = YES;
             backImageView.userInteractionEnabled = YES;
             [self insertSublayerWithImageView:backImageView];
             [self.view addSubview:backImageView];
             
             UIButton *bottomButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            bottomButton.frame = CGRectMake(0, 0,backImageView.width, 50);
+            bottomButton.frame = CGRectMake(0, 0,backImageView.width, ScreenWidth*0.133);
             [bottomButton setTitle:ModuleZW(listNamesArr[i]) forState:(UIControlStateNormal)];
-            [bottomButton setImage:[UIImage imageNamed:@"1我的_09"] forState:(UIControlStateNormal)];
             [bottomButton.titleLabel setTextAlignment:(NSTextAlignmentCenter)];
             [bottomButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
             [bottomButton setTitleColor: UIColorFromHex(0x8e8e93) forState:(UIControlStateNormal)];
@@ -75,22 +84,25 @@
             [bottomButton.titleLabel setFrame:bottomButton.bounds];
             [bottomButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
             [bottomButton setTitleEdgeInsets:UIEdgeInsetsMake(0,10,0,0)];
-            [bottomButton setImageEdgeInsets:UIEdgeInsetsMake(0, backImageView.width - 20 , 0, -backImageView.width + 40)];
+            UIImageView *goImageView= [[UIImageView alloc]initWithFrame:CGRectMake(bottomButton.width - Adapter(25), bottomButton.height/2 - ScreenWidth*0.026, ScreenWidth*0.026, ScreenWidth*0.052)];
+            goImageView.image = [UIImage imageNamed:@"1我的_09"];
+            goImageView.userInteractionEnabled = YES;
+            [bottomButton addSubview:goImageView];
             [self.buttonArray addObject:bottomButton];
             if (i == 2) {
-                UILabel *fontSizeLabel = [[UILabel alloc]initWithFrame:CGRectMake(bottomButton.width - 240, 0, 210, 50)];
+                UILabel *fontSizeLabel = [[UILabel alloc]initWithFrame:CGRectMake(bottomButton.width - ScreenWidth*0.64, 0, ScreenWidth*0.56, ScreenWidth*0.133)];
                 fontSizeLabel.textAlignment = NSTextAlignmentRight;
                 fontSizeLabel.font = [UIFont systemFontOfSize:13];
                 fontSizeLabel.textColor = RGB_TextGray;
                 [bottomButton addSubview:fontSizeLabel];
-                NSLog(@"%f",[UserShareOnce shareOnce].fontSize);
-                if ([UserShareOnce shareOnce].fontSize > 0.99&&[UserShareOnce shareOnce].fontSize < 1.01) {
+                NSLog(@"%f",[UserShareOnce shareOnce].multipleFontSize);
+                if ([UserShareOnce shareOnce].multipleFontSize > 0.99&&[UserShareOnce shareOnce].multipleFontSize < 1.01) {
                     fontSizeLabel.text = ModuleZW(@"小");
-                }else  if ([UserShareOnce shareOnce].fontSize >1.09 &&[UserShareOnce shareOnce].fontSize < 1.11) {
+                }else  if ([UserShareOnce shareOnce].multipleFontSize >1.09 &&[UserShareOnce shareOnce].multipleFontSize < 1.11) {
                     fontSizeLabel.text = ModuleZW(@"中");
-                }else  if ([UserShareOnce shareOnce].fontSize >1.19 &&[UserShareOnce shareOnce].fontSize < 1.21) {
+                }else  if ([UserShareOnce shareOnce].multipleFontSize >1.19 &&[UserShareOnce shareOnce].multipleFontSize < 1.21) {
                     fontSizeLabel.text = ModuleZW(@"大");
-                }else  if ([UserShareOnce shareOnce].fontSize >1.29 &&[UserShareOnce shareOnce].fontSize < 1.31) {
+                }else  if ([UserShareOnce shareOnce].multipleFontSize >1.29 &&[UserShareOnce shareOnce].multipleFontSize < 1.31) {
                     fontSizeLabel.text = ModuleZW(@"特大");
                 }else{
                     fontSizeLabel.text = ModuleZW(@"小");
@@ -100,6 +112,7 @@
                 
             }
             [[bottomButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+                self.isPush = YES;
                 switch (i) {
                     case 0:
                     {
@@ -134,7 +147,7 @@
                         UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:@"" message:ModuleZW(@"字体大小") preferredStyle:UIAlertControllerStyleActionSheet];
                         UIAlertAction *smallAction = [UIAlertAction actionWithTitle:ModuleZW(@"小") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
                             [[NSUserDefaults standardUserDefaults]setValue:@"1.0" forKey:@"YHFont"];
-                            [UserShareOnce shareOnce].fontSize = 1.0;
+                            [UserShareOnce shareOnce].multipleFontSize = 1.0;
                             if(fontSize != 1.0){
                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGESIZE" object:nil];
                                  self.fontSizeLabel.text = ModuleZW(@"小");
@@ -144,7 +157,7 @@
                         
                         UIAlertAction *middleAction = [UIAlertAction actionWithTitle:ModuleZW(@"中") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
                             [[NSUserDefaults standardUserDefaults]setValue:@"1.1" forKey:@"YHFont"];
-                            [UserShareOnce shareOnce].fontSize = 1.1;
+                            [UserShareOnce shareOnce].multipleFontSize = 1.1;
                             if(fontSize != 1.1){
                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGESIZE" object:nil];
                                 self.fontSizeLabel.text = ModuleZW(@"中");
@@ -153,7 +166,7 @@
                         }];
                         UIAlertAction *bigAction = [UIAlertAction actionWithTitle:ModuleZW(@"大") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
                             [[NSUserDefaults standardUserDefaults]setValue:@"1.2" forKey:@"YHFont"];
-                            [UserShareOnce shareOnce].fontSize = 1.2;
+                            [UserShareOnce shareOnce].multipleFontSize = 1.2;
                             if(fontSize != 1.2){
                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGESIZE" object:nil];
                                 self.fontSizeLabel.text = ModuleZW(@"大");
@@ -162,7 +175,7 @@
                         }];
                         UIAlertAction *superBigAction = [UIAlertAction actionWithTitle:ModuleZW(@"特大") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
                             [[NSUserDefaults standardUserDefaults]setValue:@"1.3" forKey:@"YHFont"];
-                            [UserShareOnce shareOnce].fontSize = 1.3;
+                            [UserShareOnce shareOnce].multipleFontSize = 1.3;
                             if(fontSize != 1.3){
                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CHANGESIZE" object:nil];
                                 self.fontSizeLabel.text = ModuleZW(@"特大");
@@ -179,7 +192,14 @@
                         [alerVC addAction:superBigAction];
                         [alerVC addAction:cencelAction];
                         
-                        
+                        if(ISPaid)  {
+                            UIPopoverPresentationController *popover = alerVC.popoverPresentationController;
+                            if (popover) {
+                                popover.sourceView = x;
+                                popover.sourceRect = x.bounds;
+                                popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+                            }
+                        }
                         [self presentViewController:alerVC animated:YES completion:nil];
                     }
                         break;
@@ -198,10 +218,10 @@
             
             if(i < changeArray.count){
                 UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
-                button.frame = CGRectMake(30, backImageView.bottom + 220 + 10*i, ScreenWidth - 60, 44);
+                button.frame = CGRectMake(ScreenWidth*0.08, backImageView.bottom + ScreenWidth*0.586 + 0.027*i, ScreenWidth - ScreenWidth*0.16, ScreenWidth*0.117);
                 [button setTitle:changeArray[i] forState:(UIControlStateNormal)];
                 [button.titleLabel setFont:[UIFont systemFontOfSize:18]];
-                button.layer.cornerRadius = 22;
+                button.layer.cornerRadius = button.height/2;
                 button.tag = 1000 + i;
                 [self.buttonArray addObject:button];
                 if(i == 0){
@@ -336,9 +356,9 @@
                                                          @"version":versionStr}
                                                };
                 [[BuredPoint sharedYHBuriedPoint] submitWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
-                    
+
                 } failureBlock:^(NSError * _Nonnull error) {
-                    
+
                 }];
                 
                 [[UIApplication sharedApplication] openURL:url];

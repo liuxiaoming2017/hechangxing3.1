@@ -9,10 +9,10 @@
 #import "GLYPageView.h"
 
 static const NSInteger kBastTag          = 100;
-static const CGFloat   kScrollViewHeight = 50.0f;
-
-static const CGFloat   kImageWidth       = 12.f;
-static const CGFloat   kImageHeight      = 12.f;
+// CGFloat   kScrollViewHeight = Adapter(50.0f);
+//
+// CGFloat   kImageWidth       = Adapter(12.f);
+// CGFloat   kImageHeight      = Adapter(12.f);
 
 @interface GLYPageView ()
 
@@ -38,13 +38,13 @@ static const CGFloat   kImageHeight      = 12.f;
         self.titlesArray = titlesArray;
         
         //10.f为titleLabel离父视图上边的距离，30.f为titleLabel的高度，所以设置frame的高度不得小于40.f。
-        self.scrollViewTop = CGRectGetHeight(frame) - 10.f - 30.f;
+        self.scrollViewTop = CGRectGetHeight(frame) - Adapter(40);
         
         self.scrollViewBackgroundColor = [UIColor colorWithRed:248.f/255.f green:248.f/255.f blue:248.f/255.f alpha:1.f];
         self.scrollViewBackgroundColor = [UIColor whiteColor];
         
-        self.imageLeft = 8.f;
-        self.labelRight = 18.f;
+        self.imageLeft = Adapter(8.f);
+        self.labelRight = Adapter(18.f);
         
         self.selectTitleColor = [UIColor colorWithRed:30.f/255.f green:130.f/255.f blue:210.f/255.f alpha:1.f];
         self.titleColor = [UIColor colorWithRed:0.f/255.f green:0.f/255.f blue:0.f/255.f alpha:1.f];
@@ -60,7 +60,7 @@ static const CGFloat   kImageHeight      = 12.f;
 
 - (void)initalUI
 {
-    CGFloat imageWidth = self.isHaveImages ? 12.f : 0.f;
+    CGFloat imageWidth = self.isHaveImages ? Adapter(12.f) : 0.f;
     
     //所有item总长度
     CGFloat totalWidth = 0.f;
@@ -68,7 +68,7 @@ static const CGFloat   kImageHeight      = 12.f;
     for (NSInteger i = 0; i < self.titlesArray.count; i++)
     {
         NSString *title = self.titlesArray[i];
-        CGFloat titleWidth = widthForValue(title, self.titleFont, 30.f);
+        CGFloat titleWidth = widthForValue(title, self.titleFont, Adapter(30.f));
         totalWidth += titleWidth + imageWidth + 2 * self.imageLeft;
     }
     
@@ -91,7 +91,7 @@ static const CGFloat   kImageHeight      = 12.f;
     
     self.itemScrollView = ({
         
-        UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, scrollViewWidth, kScrollViewHeight)];
+        UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, scrollViewWidth, Adapter(50))];
         //scrollView.center = CGPointMake(CGRectGetWidth(self.frame)/2.f, scrollView.center.y);
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.contentSize = CGSizeMake(totalWidth, 0.f);
@@ -102,7 +102,7 @@ static const CGFloat   kImageHeight      = 12.f;
     });
     
     
-    CGFloat titleMargin = (ScreenWidth-50*self.titlesArray.count)/6.0 ;
+    CGFloat titleMargin = (ScreenWidth-Adapter(50)*self.titlesArray.count)/6.0 ;
     
     //起点位置
     CGFloat startX = 0;
@@ -111,7 +111,7 @@ static const CGFloat   kImageHeight      = 12.f;
         UIImageView *imageView = nil;
         if (self.isHaveImages)
         {
-            imageView = [[UIImageView alloc] initWithFrame:CGRectMake(startX + self.imageLeft, 19.f, kImageWidth, kImageHeight)];
+            imageView = [[UIImageView alloc] initWithFrame:CGRectMake(startX + self.imageLeft, Adapter(19.f), Adapter(12), Adapter(12))];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             imageView.image = [UIImage imageNamed:self.imagesArray[i]];
             [self.itemScrollView addSubview:imageView];
@@ -120,7 +120,7 @@ static const CGFloat   kImageHeight      = 12.f;
 //        CGFloat titleWidth = widthForValue(self.titlesArray[i], self.titleFont, 30.f);
 //        CGFloat left  = startX + self.imageLeft + (self.isHaveImages ? kImageWidth : 0.f);
         
-        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleMargin+(50+titleMargin)*i, 10.f, 50, 30.f)];
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleMargin+(Adapter(50)+titleMargin)*i, Adapter(10.f), Adapter(50), Adapter(30.f))];
         if (i == 0)
         {
             titleLabel.textColor = self.selectTitleColor;
@@ -174,23 +174,23 @@ CGFloat widthForValue(NSString *value, UIFont *font, CGFloat height)
 {
     CGRect sizeToFit = [value boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, height) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:font} context:nil];
     
-    return sizeToFit.size.width + 10.f;
+    return sizeToFit.size.width + Adapter(10.f);
 }
 
 - (CGRect)lineFrameWithLabel:(UIView *)label
 {
     CGRect labelRect = label.frame;
     
-    CGFloat titleWidth = widthForValue(self.titlesArray[label.tag - 100], self.titleFont, 30.f);
+    CGFloat titleWidth = widthForValue(self.titlesArray[label.tag - 100], self.titleFont, Adapter(30.f));
     
     CGRect lineFrame;
     if (self.isHaveImages)
     {
-        lineFrame = CGRectMake(CGRectGetMinX(labelRect) - kImageWidth, CGRectGetMinY(self.lineView.frame), kImageWidth + titleWidth, 4.f);
+        lineFrame = CGRectMake(CGRectGetMinX(labelRect) - Adapter(12), CGRectGetMinY(self.lineView.frame), Adapter(12) + titleWidth, Adapter(4));
     }
     else
     {
-        lineFrame = CGRectMake(CGRectGetMinX(labelRect), CGRectGetMinY(self.lineView.frame), titleWidth, 4.f);
+        lineFrame = CGRectMake(CGRectGetMinX(labelRect), CGRectGetMinY(self.lineView.frame), titleWidth, Adapter(4));
     }
     
     return lineFrame;
@@ -258,7 +258,7 @@ CGFloat widthForValue(NSString *value, UIFont *font, CGFloat height)
         {
             //目标Label
             UIView *targetLabel = [self.itemScrollView viewWithTag:kBastTag + targetIndex];
-            CGFloat targetMinX = CGRectGetMinX(targetLabel.frame) - (self.isHaveImages ? kImageWidth : 0.f) - self.imageLeft;
+            CGFloat targetMinX = CGRectGetMinX(targetLabel.frame) - (self.isHaveImages ? Adapter(12) : 0.f) - self.imageLeft;
             
             [self changeTitleColor:targetLabel];
 

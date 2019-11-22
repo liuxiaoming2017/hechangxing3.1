@@ -30,14 +30,14 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight + 10, ScreenWidth, ScreenHeight - label.bottom) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight + Adapter(10), ScreenWidth, ScreenHeight - label.bottom) style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     tableView.showsVerticalScrollIndicator = NO;
     tableView.showsHorizontalScrollIndicator = NO;
     tableView.backgroundColor = [UIColor clearColor];
-    tableView.rowHeight = 170;
+    tableView.rowHeight = Adapter(170);
     [self.view addSubview:tableView];
     [tableView registerNib:[UINib nibWithNibName:@"HCY_CallCell" bundle:nil] forCellReuseIdentifier:@"HCY_CallCell"];
     

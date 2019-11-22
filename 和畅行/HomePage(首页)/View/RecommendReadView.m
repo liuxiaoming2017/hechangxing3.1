@@ -42,7 +42,7 @@
 {
     
     self.backgroundColor = UIColorFromHex(0xFFFFFF);
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(23, 15, 200, 25)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(23), Adapter(15), Adapter(200), Adapter(25))];
     //titleLabel.textColor = UIColorFromHex(0x7D7D7D);
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.font = [UIFont systemFontOfSize:17];
@@ -50,23 +50,23 @@
     [self addSubview:titleLabel];
     
     UIButton *moreButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    moreButton.frame = CGRectMake(self.width - 90, 15, 90, 20);
+    moreButton.frame = CGRectMake(self.width - Adapter(90), Adapter(15), Adapter(90), Adapter(20));
     [moreButton setImage:[UIImage imageNamed:@"HCY_right"] forState:(UIControlStateNormal)];
     [moreButton addTarget:self action:@selector(moreAction) forControlEvents:(UIControlEventTouchUpInside)];
     [self addSubview:moreButton];
     
-    CGFloat width = (ScreenWidth - 23 - 10)/2.5;
+    CGFloat width = (ScreenWidth - Adapter(33))/2.5;
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     //layout.itemSize = CGSizeMake(width, width*0.75+7+40);
-    layout.itemSize = CGSizeMake(125, 125*0.6+7+50);
+    layout.itemSize = CGSizeMake(Adapter(125), Adapter(125)*0.6+Adapter(57));
     //layout.itemSize = CGSizeMake(130, 106);
-    layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 10);
+    layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, Adapter(10));
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
     self.recommendArr = [NSMutableArray array];
     
-    self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(23, 40+10, self.bounds.size.width-23*2, layout.itemSize.height) collectionViewLayout:layout];
+    self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(Adapter(23), Adapter(50), self.bounds.size.width-Adapter(46), layout.itemSize.height) collectionViewLayout:layout];
     self.collectionV.delegate = self;
     self.collectionV.dataSource = self;
     self.collectionV.showsHorizontalScrollIndicator = NO;
@@ -285,31 +285,6 @@
         if(isUpdate){
             NSURL *url = [NSURL URLWithString:downUrl];
             if (url) {
-                //该接口用于记录用户使用app下载网站资源记录
-                
-                NSString *userSign = [UserShareOnce shareOnce].uid;
-                NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-                CFShow(CFBridgingRetain(infoDictionary));
-                
-                NSString *versionStr = [infoDictionary objectForKey:@"CFBundleShortVersionString"];//版本
-                NSString *down_timeStr = [GlobalCommon getCurrentTimes];;//下载时间
-                
-                NSString *downloadStr = [NSString stringWithFormat:@"%@user/download",DATAURL_PRE];
-                NSDictionary *downloadDic = @{ @"body":@{@"channel":@"",
-                                                         @"downTime":down_timeStr,
-                                                         @"remark":@"",
-                                                         @"userSign":userSign,
-                                                         @"userSource":@"1",
-                                                         @"version":versionStr}
-                                               };
-                
-                [[BuredPoint sharedYHBuriedPoint] submitWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
-                    
-                } failureBlock:^(NSError * _Nonnull error) {
-                    
-                }];
-                 
-                
                 [[UIApplication sharedApplication] openURL:url];
             }
         }

@@ -25,7 +25,7 @@
     self.navTitleLabel.text = self.titleStr;
     [self customeViewWithStr:self.urlStr];
     
-    if([self.titleStr isEqualToString:@"季度报告详情"]){
+    if([self.titleStr isEqualToString:ModuleZW(@"季度报告详情")]){
         [self.navigationController.interactivePopGestureRecognizer setEnabled:YES];
         self.navigationController.interactivePopGestureRecognizer.delegate = self;
     }
@@ -51,6 +51,8 @@
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
     return YES;
 }
+
+
 
 #pragma mark - WKNavigationDelegate
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {

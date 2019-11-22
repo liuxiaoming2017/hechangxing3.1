@@ -60,17 +60,7 @@
 
 + (void)removeMaskView;
 
-//算年龄
-+(NSString *)calculateAgeStr:(NSString *)str;
 
-//获取手机型号
-+(NSString *)getCurrentDeviceModel;
-
-//获取屏幕分辨率
-+(NSString *)getScreenPix;
-
-//获取本机运营商名称
-+(NSString *)getOperator;
 
 //获取网路链接方式
 +(NSString *)internetStatus;
@@ -79,6 +69,9 @@
 + (NSString *)AESDecodeWithString:(NSString *)str;
 
 + (NSString *)commandFromName:(NSString *)str;
+
+//页面使用时间
++(void)pageDurationWithpageId:(NSString *)pageIdStr  withstartTime:(NSString *)startTime  withendTime:(NSString *)endTime;
 
 + (void)removeCache:(NSString *)path;
 + (float)sizeAtPath:(NSString *)path;

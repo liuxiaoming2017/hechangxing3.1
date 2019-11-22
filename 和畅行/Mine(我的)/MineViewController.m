@@ -51,6 +51,7 @@
     self.view.backgroundColor = RGB(253, 253, 253);
     self.topView.hidden = YES;
     self.buttonArray = [NSMutableArray array];
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     [self createUI];
     [self changUserInfo];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSize:) name:@"CHANGESIZE" object:nil];
@@ -122,7 +123,7 @@
     self.backScrollView = backScrollView;
     
     //顶部蓝色背景
-    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 224+kNavBarHeight)];
+    UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, Adapter(224)+kNavBarHeight)];
     backImageView.tag = 1000;
     backImageView.backgroundColor = RGB_ButtonBlue;
     backImageView.userInteractionEnabled = YES;
@@ -130,7 +131,7 @@
     [backScrollView addSubview:backImageView];
     
     //头像
-    MyView *userIcon = [[MyView alloc] initWithFrame:CGRectMake(ScreenWidth/2 - 35,kNavBarHeight, 70, 70)];
+    MyView *userIcon = [[MyView alloc] initWithFrame:CGRectMake(ScreenWidth/2 - Adapter(35),kNavBarHeight, Adapter(70), Adapter(70))];
     if([[UserShareOnce shareOnce].memberImage isKindOfClass:[NSNull class]]){
         userIcon.image = [UIImage imageNamed:@"1我的_03"];
     }else{
@@ -153,134 +154,153 @@
     if(![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].name]&&[UserShareOnce shareOnce].name.length < 26){
         dispalyName = [UserShareOnce shareOnce].name;
     }
-    UILabel *userName = [Tools creatLabelWithFrame:CGRectMake(40, userIcon.bottom + 20, ScreenWidth - 80, 30) text:dispalyName textSize:22];
+    UILabel *userName = [Tools creatLabelWithFrame:CGRectMake(Adapter(40), userIcon.bottom + Adapter(20), ScreenWidth - Adapter(80), Adapter(30)) text:dispalyName textSize:22];
     userName.textColor = [UIColor whiteColor];
     userName.textAlignment = NSTextAlignmentCenter;
     [backImageView addSubview:userName];
     self.userNameLabel = userName;
     
-    
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(15 , backImageView.bottom-35, ScreenWidth-35, 70)];
-    imageV.layer.cornerRadius = 10.0;
+    //e(15 , backImageView.bottom-, ScreenWidth-35, 70)
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(Adapter(15) , backImageView.bottom-Adapter(35), ScreenWidth-Adapter(35), Adapter(70))];
+    imageV.layer.cornerRadius = Adapter(10.0);
     imageV.userInteractionEnabled = YES;
     imageV.layer.masksToBounds = YES;
     imageV.backgroundColor = [UIColor whiteColor];
     [backScrollView addSubview:imageV];
     [self insertSublayerWithImageView:imageV];
     
-    UIImageView *buttonBackImageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, backImageView.bottom+ 60, ScreenWidth - 30, listNamesArr.count*58)];
+    UIImageView *buttonBackImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(15), backImageView.bottom+ Adapter(60), ScreenWidth - Adapter(30), listNamesArr.count*Adapter(58))];
+//    UIImageView *buttonBackImageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, backImageView.bottom+ 60, ScreenWidth - 30, listNamesArr.count*58)];
     buttonBackImageView.backgroundColor = [UIColor whiteColor];
     buttonBackImageView.userInteractionEnabled = YES;
-    buttonBackImageView.layer.cornerRadius = 10;
+    buttonBackImageView.layer.cornerRadius = Adapter(10);
     buttonBackImageView.layer.masksToBounds = YES;
     [backScrollView addSubview:buttonBackImageView];
     [self insertSublayerWithImageView:buttonBackImageView];
     
-    backScrollView.contentSize = CGSizeMake(0, buttonBackImageView.bottom + 20);
+    backScrollView.contentSize = CGSizeMake(0, buttonBackImageView.bottom + Adapter(20));
     
-    
-    for(int i=0;i<numberArray.count;i++){
-        UIButton *numberButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        numberButton.frame = CGRectMake(15 + (ScreenWidth - 30)*i/3, userName.bottom + 10, (ScreenWidth - 30)/3, 50);
-        [numberButton setTitle:numberArray[i] forState:(UIControlStateNormal)];
-        [numberButton setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
-        [numberButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        [numberButton.titleLabel setTextAlignment:(NSTextAlignmentCenter)];
-        [numberButton.titleLabel setNumberOfLines:2];
-        numberButton.tag = 111 + i;
-        if(i== 0){
-            self.collectBT = numberButton;
-        }else if(i == 1) {
-            self.cardBT = numberButton;
-        }else{
-            self.integralsBT = numberButton;
+
+    for (int i=0; i<titleArr.count; i++) {
+        
+        if (i < numberArray.count){
+            UIButton *numberButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+            numberButton.frame = CGRectMake(Adapter(15) + (ScreenWidth - Adapter(30))*i/3, userName.bottom + Adapter(10), (ScreenWidth - Adapter(30))/3, Adapter(50));
+            [numberButton setTitle:numberArray[i] forState:(UIControlStateNormal)];
+            [numberButton setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
+            [numberButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+            [numberButton.titleLabel setTextAlignment:(NSTextAlignmentCenter)];
+            [numberButton.titleLabel setNumberOfLines:2];
+            numberButton.tag = 111 + i;
+            if(i== 0){
+                self.collectBT = numberButton;
+            }else if(i == 1) {
+                self.cardBT = numberButton;
+            }else{
+                self.integralsBT = numberButton;
+            }
+            [self.self.buttonArray addObject:numberButton];
+            [[numberButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+                if(x.tag == 111){
+                    NSString *urlStr =  [NSString stringWithFormat:@"%@member/mobile/focus_ware/list.jhtml",URL_PRE];
+                    EDWKWebViewController *vc = [[EDWKWebViewController alloc] initWithUrlString:urlStr];
+                    vc.isCollect = YES;
+                    vc.pageIDStr = @"36";
+                    vc.startTimeStr = self.startTimeStr;
+                    vc.titleStr =ModuleZW( @"收藏");
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else  if(x.tag == 112){
+                    BlockViewController *vc = [[BlockViewController alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else{
+                    HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
+                    vc.noWebviewBack = YES;
+                    vc.progressType = progress2;
+                    vc.titleStr = ModuleZW(@"我的积分");
+                    vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/order/pointList.jhtml",URL_PRE];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }];
+            [backImageView addSubview:numberButton];
         }
-        [self.self.buttonArray addObject:numberButton];
-        [[numberButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-            if(x.tag == 111){
-                NSString *urlStr =  [NSString stringWithFormat:@"%@member/mobile/focus_ware/list.jhtml",URL_PRE];
+        if(i < titleArr.count){
+            UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
+            button.frame = CGRectMake(imageV.width*i/titleArr.count , 0, imageV.width/titleArr.count, imageV.height);
+            [self.buttonArray addObject:button];
+            UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(imageV.width*(2*i+1)/8 -ScreenWidth*0.03,Adapter(10), Adapter(20),Adapter(20))];
+            iconImageView.image = [UIImage imageNamed:imageArr[i]];
+            iconImageView.userInteractionEnabled = YES;
+            [imageV addSubview:iconImageView];
+            
+            UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0 + imageV.width*i/titleArr.count , iconImageView.bottom , imageV.width/titleArr.count, imageV.height - Adapter(16) - iconImageView.height)];
+            titleLabel.text = ModuleZW(titleArr[i]);
+            titleLabel.textAlignment =NSTextAlignmentCenter;
+            titleLabel.textColor = UIColorFromHex(0X7f7f7f);
+            titleLabel.numberOfLines = 2;
+            if (ISPaid) {
+                titleLabel.font = [UIFont systemFontOfSize:15/[UserShareOnce shareOnce].multipleFontSize];
+            }else{
+                titleLabel.font = [UIFont systemFontOfSize:14/[UserShareOnce shareOnce].fontSize];
+            }
+            [imageV addSubview:titleLabel];
+            
+            
+            [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+                
+                NSString *urlStr =  @"";
+                NSString *titleStr = @"";
+                NSString *pageIDStr = @"";
+                switch (i) {
+                    case 0:
+                        pageIDStr = @"39";
+                        titleStr = ModuleZW(@"待付款");
+                        urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=unpaid",URL_PRE];
+                        break;
+                    case 1:
+                        pageIDStr = @"40";
+                        titleStr = ModuleZW( @"待评价");
+                        urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=completed",URL_PRE];
+                        break;
+                    case 2:
+                        pageIDStr = @"41";
+                        titleStr = ModuleZW( @"退款记录");
+                        urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=refund&",URL_PRE];
+                        break;
+                    case 3:
+                        pageIDStr = @"42";
+                        titleStr = ModuleZW(@"全部订单");
+                        urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=all",URL_PRE];
+                        break;
+                    default:
+                        break;
+                }
                 EDWKWebViewController *vc = [[EDWKWebViewController alloc] initWithUrlString:urlStr];
                 vc.isCollect = YES;
-                vc.titleStr =ModuleZW( @"收藏");
+                vc.titleStr = titleStr;
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
-            }else  if(x.tag == 112){
-                BlockViewController *vc = [[BlockViewController alloc] init];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-            }else{
-                HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-                vc.noWebviewBack = YES;
-                vc.progressType = progress2;
-                vc.titleStr = ModuleZW(@"我的积分");
-                vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/order/pointList.jhtml",URL_PRE];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
-        }];
-        [backImageView addSubview:numberButton];
-    }
-    
-    for(int i=0;i<titleArr.count;i++){
-        UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        button.frame = CGRectMake(0 + imageV.width*i/titleArr.count , 0, imageV.width/titleArr.count, imageV.height);
-        [button setTitle: ModuleZW(titleArr[i])forState:(UIControlStateNormal)];
-        [button setImage:[UIImage imageNamed:imageArr[i]] forState:(UIControlStateNormal)];
-        [button.titleLabel setTextAlignment:(NSTextAlignmentCenter)];
-        [button.titleLabel setNumberOfLines:2];
-        [button.titleLabel setFont:[UIFont systemFontOfSize:15/[UserShareOnce shareOnce].fontSize]];
-        [button setTitleColor:UIColorFromHex(0X7f7f7f) forState:(UIControlStateNormal)];
-        [button setImageEdgeInsets:UIEdgeInsetsMake(-23,0,0, -button.titleLabel.intrinsicContentSize.width)];
-        [button setTitleEdgeInsets:UIEdgeInsetsMake(25, -button.currentImage.size.width,0,0)];
-        [self.self.buttonArray addObject:button];
-        [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-            
-            NSString *urlStr =  @"";
-            NSString *titleStr = @"";
-            switch (i) {
-                case 0:
-                    titleStr = ModuleZW(@"待付款");
-                    urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=unpaid",URL_PRE];
-                    break;
-                case 1:
-                    titleStr = ModuleZW( @"待评价");
-                    urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=completed",URL_PRE];
-                    break;
-                case 2:
-                    titleStr = ModuleZW( @"退款记录");
-                    urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=refund&",URL_PRE];
-                    break;
-                case 3:
-                    titleStr = ModuleZW(@"全部订单");
-                    urlStr = [NSString stringWithFormat:@"%@member/mobile/order/list.jhtml?type=all",URL_PRE];
-                    break;
-                default:
-                    break;
-            }
-            EDWKWebViewController *vc = [[EDWKWebViewController alloc] initWithUrlString:urlStr];
-            vc.isCollect = YES;
-            vc.titleStr = titleStr;
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-            
-        }];
-        
-        [imageV addSubview:button];
+            }];
+            [imageV addSubview:button];
+        }
     }
     
     for (int i=0; i<listNamesArr.count; i++) {
         
         UIButton *bottomButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        bottomButton.frame = CGRectMake(20, 58*i,ScreenWidth - 40, 58);
+        bottomButton.frame = CGRectMake(Adapter(20), buttonBackImageView.height/listNamesArr.count*i,ScreenWidth - Adapter(40), Adapter(58));
         [bottomButton setTitle:ModuleZW(listNamesArr[i]) forState:(UIControlStateNormal)];
-        [bottomButton setImage:[UIImage imageNamed:@"1我的_09"] forState:(UIControlStateNormal)];
         [bottomButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [bottomButton setTitleColor: UIColorFromHex(0x8e8e93) forState:(UIControlStateNormal)];
         [bottomButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -bottomButton.currentImage.size.width,0,0)];
         [bottomButton.titleLabel setFrame:bottomButton.bounds];
         [bottomButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-        [bottomButton setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,0)];
-        [bottomButton setImageEdgeInsets:UIEdgeInsetsMake(0, buttonBackImageView.width - 40 , 0, -buttonBackImageView.width + 40)];
+        UIImageView *goImageView= [[UIImageView alloc]initWithFrame:CGRectMake(bottomButton.width - Adapter(25), bottomButton.height/2 - ScreenWidth*0.026, ScreenWidth*0.026, ScreenWidth*0.052)];
+        goImageView.image = [UIImage imageNamed:@"1我的_09"];
+        goImageView.userInteractionEnabled = YES;
+        [bottomButton addSubview:goImageView];
         [self.buttonArray addObject:bottomButton];
         [[bottomButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             switch (i) {
@@ -310,9 +330,9 @@
                     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                     //__weak typeof(self) weakSelf = self;
                     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-                        [self removeCacheBlock:^(NSString *blockParam) {
-                            
-                        }];
+//                        [self removeCacheBlock:^(NSString *blockParam) {
+//
+//                        }];
                     dispatch_async(dispatch_get_main_queue(), ^{
                             [MBProgressHUD hideHUDForView:self.view animated:YES];
                         });
@@ -408,6 +428,7 @@
          [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
     }
 }
+
 
 
 @end

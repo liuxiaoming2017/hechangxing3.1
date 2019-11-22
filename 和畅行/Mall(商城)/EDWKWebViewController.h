@@ -12,6 +12,7 @@
 @interface EDWKWebViewController : MainWebViewController
 @property (nonatomic,assign) BOOL isCollect;
 @property (nonatomic,copy) NSString *titleStr;
+@property (nonatomic,copy) NSString *pageIDStr;
 - (instancetype)initWithUrlString:(NSString *)url;
 
 @end

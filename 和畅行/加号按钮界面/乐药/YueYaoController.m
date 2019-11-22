@@ -26,7 +26,6 @@
 
 
 
-
 #define SCREEN_WIDTH_Size ([UIScreen mainScreen].bounds.size.width)/375
 
 @interface YueYaoController ()<UITableViewDelegate,UITableViewDataSource,songListCellDelegate,CBCentralManagerDelegate,CBPeripheralDelegate,MuscicNoramlDeleaget,GKAudioPlayerDelegate>
@@ -64,6 +63,7 @@
 
 @property (nonatomic,assign) BOOL isBackground;
 
+@property (nonatomic,assign) BOOL isFirstIn;
 @property (nonatomic,copy) NSString *currentSubjectSn;
 
 @property (nonatomic,strong) NSIndexPath *currentIndexPath; //拿来做 类型切换 乐药播放时 找到暂停上一首乐药cell
@@ -125,6 +125,7 @@
     [super viewDidLoad];
     self.isOnPay = YES;
     self.isPlaying = NO;
+    self.isFirstIn = YES;
     if(self.isYueLuoyi){
         self.navTitleLabel.text = @"樂絡怡";
     }else{
@@ -174,7 +175,7 @@
     
     
     UIButton *iKnowBT = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    iKnowBT.frame = CGRectMake(ScreenWidth - 150,  kScreenSize.height- kNavBarHeight - 160 - 100, 100, 50);
+    iKnowBT.frame = CGRectMake(ScreenWidth - Adapter(150),  kScreenSize.height- kNavBarHeight - Adapter(240), Adapter(100), Adapter(50));
     __weak typeof(self) weakSelf = self;
     [iKnowBT setBackgroundImage:[UIImage imageNamed:ModuleZW(@"我知道了")] forState:(UIControlStateNormal)];
     [[iKnowBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
@@ -187,7 +188,7 @@
     
     NSArray *imageArray = @[@"左边箭头",@"右边箭头"];
     for (int i = 0; i < 2; i++) {
-        UIImageView *leftImagaView = [[UIImageView alloc]initWithFrame:CGRectMake(40 + (ScreenWidth - 180 - 40)*i, kScreenSize.height- kNavBarHeight - 180, 120, 120)];
+        UIImageView *leftImagaView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(40) + (ScreenWidth - Adapter(220))*i, kScreenSize.height- kNavBarHeight - Adapter(160), Adapter(120), Adapter(120))];
         leftImagaView.image = [UIImage imageNamed:ModuleZW(imageArray[i])];
         [blackView addSubview:leftImagaView];
     }
@@ -195,7 +196,6 @@
     self.musciView.userInteractionEnabled = NO;
     self.blueTBT.userInteractionEnabled = NO;
     [self.view addSubview:self.musciView];
-    [self.view addSubview:self.blueTBT];
 }
 
 - (void)remoteControlReceivedWithEvent:(UIEvent *)event{
@@ -216,31 +216,26 @@
     [super viewWillAppear:animated];
     if(self.backView){
         if([UserShareOnce shareOnce].yueYaoBuyArr.count == 0){
-            if(_backView.top == ScreenHeight - kTabBarHeight - 16){
-                [UIView animateWithDuration:0.3 animations:^{
-                    self->_backView.top  = ScreenHeight ;
-                }];
+            
+            if(self.isYueLuoyi){
+                self.musciView.top = ScreenHeight - kTabBarHeight + 44 - self.backView.height;
+                self.tableView.height = ScreenHeight-hysegmentControl.bottom  - self.backView.height - kTabBarHeight + 24;
+            }else{
+                self.tableView.height = ScreenHeight-hysegmentControl.bottom - kTabBarHeight + 24;
             }
+            
+            self.backView.top  = ScreenHeight ;
+  
         }else{
-            if(_backView.top == ScreenHeight){
-                [UIView animateWithDuration:0.3 animations:^{
-                    self->_backView.top  = ScreenHeight  - kTabBarHeight - 16;
-                }];
+            
+            if(self.isYueLuoyi){
+                self.musciView.top = ScreenHeight - kTabBarHeight + 24 - self.backView.height*2;
+                self.tableView.height = ScreenHeight-hysegmentControl.bottom  - self.backView.height*2 - kTabBarHeight + 24;
+            }else{
+                self.tableView.height = ScreenHeight-hysegmentControl.bottom - self.backView.height - kTabBarHeight + 24;
             }
-        }
-    }
-    
-    if([UserShareOnce shareOnce].yueYaoBuyArr.count == 0&&self.backView){
-        if(self->_backView.top == ScreenHeight - kTabBarHeight - 16){
-            [UIView animateWithDuration:0.3 animations:^{
-                self->_backView.top  = ScreenHeight ;
-            }];
-        }
-    }else{
-        if(self->_backView.top == ScreenHeight){
-            [UIView animateWithDuration:0.3 animations:^{
-                self->_backView.top  = ScreenHeight - kTabBarHeight - 16;
-            }];
+            
+            self.backView.top  = ScreenHeight - kTabBarHeight + 44 - self.backView.height;
         }
     }
     
@@ -255,7 +250,6 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
 }
 
 - (id)initWithType:(BOOL )isYueLuoyi
@@ -273,32 +267,25 @@
     
     NSArray *titleArray = @[@"宫", @"商", @"角", @"徵",@"羽"];
     UISegmentedControl *topSegment = [[UISegmentedControl alloc]initWithItems:titleArray];
-    topSegment.frame = CGRectMake(0, kNavBarHeight+5, 250, 50);
+    topSegment.frame = CGRectMake(0, kNavBarHeight+Adapter(5), Adapter(250), Adapter(50));
     topSegment.tintColor = [UIColor whiteColor];
-    NSDictionary *selectedDic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:28],
+    NSDictionary *selectedDic = @{NSFontAttributeName:[UIFont systemFontOfSize:28],
                                   NSForegroundColorAttributeName:[UIColor blackColor]};
-    NSDictionary *noSelectedDic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:25],
+    NSDictionary *noSelectedDic = @{NSFontAttributeName:[UIFont systemFontOfSize:25],
                                     NSForegroundColorAttributeName:RGB_TextAppGray};
     [topSegment setTitleTextAttributes:selectedDic forState:(UIControlStateSelected)];
     [topSegment setTitleTextAttributes:noSelectedDic forState:(UIControlStateNormal)];
-    topSegment.selectedSegmentIndex = 0;
     [topSegment addTarget:self action:@selector(valuesegChanged:) forControlEvents:(UIControlEventValueChanged)];
     topSegment.tag = 1024;
     [self.view addSubview:topSegment];
     
-//    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    rightBtn.frame = CGRectMake(topSegment.right, topSegment.top, 37, 40);
-//    [rightBtn setImage:[UIImage imageNamed:@"message"] forState:UIControlStateNormal];
-//    [rightBtn addTarget:self action:@selector(noteVC) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:rightBtn];
     
-    
-    hysegmentControl = [[HYSegmentedControl alloc] initWithOriginY:topSegment.bottom + 15 Titles: @[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫",] delegate:self];
+    hysegmentControl = [[HYSegmentedControl alloc] initWithOriginY:topSegment.bottom + Adapter(15) Titles: @[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫",] delegate:self];
     [self.view addSubview:hysegmentControl];
 
 
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, hysegmentControl.bottom+20, ScreenWidth, ScreenHeight-hysegmentControl.bottom) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, hysegmentControl.bottom+20, ScreenWidth, ScreenHeight-hysegmentControl.bottom - 25) style:UITableViewStylePlain];
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
@@ -334,7 +321,9 @@
         [self dealHysegmentControlWithStr:physicalStr];
     }
     if ([GlobalCommon stringEqualNull:physicalStr] || [physicalStr isEqualToString:@""]){
-        [hysegmentControl changeSegmentedControlWithIndex:0];
+        [self requestYueyaoListWithType:@"少宫"];
+        topSegment.selectedSegmentIndex = 0;
+
     }
     
 }
@@ -370,45 +359,43 @@
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"noAppstoreCheck"]){
         [self createConsumeView];
         self.isOnPay = YES;
-        //[self.tableView reloadData];
     }else{
         self.isOnPay = NO;
-      //  [self.tableView reloadData];
     }
     
 }
 # pragma mark - 下方金额视图
 - (void)createConsumeView
 {
-    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth  , 60)];
+    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth  , Adapter(60))];
     backView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:backView];
     self.backView = backView;
     
     UIButton *jiesuanButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    jiesuanButton.frame = CGRectMake(ScreenWidth-  105,10, 80, 40);
+    jiesuanButton.frame = CGRectMake(ScreenWidth-  Adapter(105),Adapter(10), Adapter(95), Adapter(40));
     [jiesuanButton addTarget:self action:@selector(jiesuanButton) forControlEvents:(UIControlEventTouchUpInside)];
     [jiesuanButton.layer addSublayer:[UIColor setGradualChangingColor:jiesuanButton fromColor:@"f5c366" toColor:@"e79036"]];
-    jiesuanButton.layer.cornerRadius = 20;
+    jiesuanButton.layer.cornerRadius = jiesuanButton.height/2;
     jiesuanButton.layer.masksToBounds = YES;
     [jiesuanButton setTitle:ModuleZW(@"结算") forState:(UIControlStateNormal)];
     [jiesuanButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
     jiesuanButton.backgroundColor = RGB(68, 204, 82);
     [backView addSubview:jiesuanButton];
     
-    UIImageView *gouwucheImage = [[UIImageView alloc]initWithFrame:CGRectMake(25, 20, 20, 20)];
+    UIImageView *gouwucheImage = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(25), Adapter(20), Adapter(20), Adapter(20))];
     gouwucheImage.image = [UIImage imageNamed:@"购物车icon"];
     [backView addSubview:gouwucheImage];
     
-    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 0, 50, 60)];
+    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(50), 0, Adapter(60), Adapter(60))];
     zongjinerLabel.text = ModuleZW(@"总计: ");
     zongjinerLabel.textColor = RGB_TextAppGray;
     zongjinerLabel.font = [UIFont systemFontOfSize:16];
     [backView addSubview:zongjinerLabel];
     
-    jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(zongjinerLabel.right, 0, 100, 60)];
+    jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(zongjinerLabel.right, 0, Adapter(110), Adapter(60))];
     jinerLabel.textColor = RGB(222, 119, 36);
-    jinerLabel.font = [UIFont boldSystemFontOfSize:16];
+    jinerLabel.font = [UIFont systemFontOfSize:16];
     [backView addSubview:jinerLabel];
 
     
@@ -429,7 +416,7 @@
 #pragma mark - tableview代理方法
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 90;
+    return Adapter(90);
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -465,7 +452,6 @@
         }
         cell.currentSelect = NO;
         NSString *imageStr = @"";
-        
         NSLog(@"url:%@,***:%lu",kPlayer.playUrlStr,kPlayer.playerState);
         
         if(kPlayer.playUrlStr && [model.source isEqualToString:kPlayer.playUrlStr] && kPlayer.playerState == 2){
@@ -491,9 +477,6 @@
             }
             [cell downloadFailWithImageStr:imageStr];
         }
-        
-        
-    }
     
         switch (SegIndex) {
             case 0:
@@ -515,13 +498,14 @@
                 break;
         }
         
-  
+    }
     return cell;
 }
+    
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     SongListCell *cell = (SongListCell *)[tableView cellForRowAtIndexPath:indexPath];
     if(cell.PlayOrdownload){ //播放暂停
         
@@ -541,7 +525,7 @@
                     __weak typeof(self) weakSelf = self;
                     [self showAlertMessage:@"当前正在使用流量，是否继续？" withSure:^(NSString *blockParam) {
                         [UserShareOnce shareOnce].wwanPlay = YES;
-                        [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
+                        [cell.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
                         if(![model.subjectSn isEqualToString:weakSelf.currentSubjectSn]){ //切换乐药播放列表
                             weakSelf.currentSubjectSn = model.subjectSn;
                             [weakSelf currentPlayYueYaoList];
@@ -560,7 +544,7 @@
             }
             /*********END**********/
             
-            [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
+            [cell.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
             if(![model.subjectSn isEqualToString:self.currentSubjectSn]){ //切换乐药播放列表
                 self.currentSubjectSn = model.subjectSn;
                 [self currentPlayYueYaoList];
@@ -572,8 +556,8 @@
             
             self.selectSongName = model.source; //播放链接
         }else{
-            [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药播放icon"] forState:UIControlStateNormal];
-          //  self.selectSongName = @"";
+            [cell.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药播放icon"] forState:UIControlStateNormal];
+            //  self.selectSongName = @"";
             [self pauseMusic];
         }
         
@@ -588,7 +572,7 @@
    
     SongListCell *cell = (SongListCell *)[tableView cellForRowAtIndexPath:indexPath];
     if(cell.PlayOrdownload){
-        [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药播放icon"] forState:UIControlStateNormal];
+        [cell.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药播放icon"] forState:UIControlStateNormal];
         cell.currentSelect = NO;
         self.selectSongName = @"";
         [self stopMusic];
@@ -674,12 +658,7 @@
             [weakSelf.tableView reloadData];
             
             if(isSelectRow){
-                
                 weakSelf.currentIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
-//                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
-//                if(indexPath){
-//                    [weakSelf.tableView.delegate tableView:weakSelf.tableView didSelectRowAtIndexPath:indexPath];
-//                }
             }else{
                 weakSelf.currentIndexPath = nil;
             }
@@ -771,7 +750,14 @@
                 self->_gouMaiCount += 1;
                 if(self->_backView.top == ScreenHeight){
                     [UIView animateWithDuration:0.3 animations:^{
-                        self->_backView.top  = ScreenHeight - kTabBarHeight - 16;
+                        if(self.isYueLuoyi){
+                            self->_backView.top  = ScreenHeight - kTabBarHeight + 44 - self.backView.height;
+                            self->_musciView.top = ScreenHeight - kTabBarHeight + 44 - self.backView.height*2;
+                            self->_tableView.height = ScreenHeight-self->hysegmentControl.bottom  - self.backView.height*2 - kTabBarHeight + 24;
+                        }else{
+                            self->_backView.top  = ScreenHeight - kTabBarHeight + 44 - self.backView.height;
+                            self->_tableView.height = ScreenHeight-self->hysegmentControl.bottom  - self.backView.height - kTabBarHeight + 24;
+                        }
                     }];
                 }
 
@@ -795,6 +781,7 @@
             return YES;
         }
     }
+
     return NO;
 }
 
@@ -1004,7 +991,6 @@
 {
     UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:index];
     self.typeStr = btn.titleLabel.text;
-    //NSLog(@"haha：%@",btn.titleLabel.text);
     [self requestYueyaoListWithType:btn.titleLabel.text];
 }
 
@@ -1099,18 +1085,19 @@
 #pragma -mark 蓝牙初始化界面
 - (void)BluBluetoothView{
     //ScreenHeight  - kTabBarHeight - 16
-    self.musciView = [[MuisicNoraml alloc]initWithFrame:CGRectMake(0, kScreenSize.height- kTabBarHeight - 80, kScreenSize.width, 100/2*SCREEN_WIDTH_Size + 20)];
+    
+    self.musciView = [[MuisicNoraml alloc]initWithFrame:CGRectMake(0, ScreenHeight - kTabBarHeight + 44 - Adapter(60) , ScreenWidth, Adapter(60))];
     self.musciView.delegate = self;
     [self.view addSubview:self.musciView];
-    
+    self.tableView.height = ScreenHeight-hysegmentControl.bottom  - self.musciView.height - kTabBarHeight + 24 ;
     UIButton *blueTBT = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    blueTBT.frame = CGRectMake(40,  self.musciView.top +10 , self.musciView.height - 20, self.musciView.height - 20);
+    blueTBT.frame = CGRectMake(Adapter(40),  Adapter(10) ,  Adapter(40), Adapter(40));
     [blueTBT setBackgroundImage:[UIImage imageNamed:@"蓝牙未连接"] forState:(UIControlStateNormal)];
     __weak typeof(self) weakSelf = self;
     [[blueTBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
         [weakSelf showAlertWarmMessage:ModuleZW(@"请先连接设备")];
     }];
-    [self.view addSubview:blueTBT];
+    [self.musciView addSubview:blueTBT];
     self.blueTBT = blueTBT;
     blueTBT.userInteractionEnabled = YES;
 }

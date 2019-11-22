@@ -26,41 +26,41 @@
     
     self.navTitleLabel.text = ModuleZW(@"购物车");
     
-    listTable = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height - kNavBarHeight -  44) style:UITableViewStylePlain];
+    listTable = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, self.view.frame.size.height - kNavBarHeight -  Adapter(44)) style:UITableViewStylePlain];
     listTable.delegate = self;
     listTable.dataSource = self;
-    listTable.rowHeight = 55;
+    listTable.rowHeight = Adapter(55);
     listTable.tableFooterView = [[UIView alloc]init];
     [self.view addSubview:listTable];
     
     //[_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"CELL"];
-    UIImageView *xiaofeijinerImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - kTabBarHeight, self.view.frame.size.width - 105, 44)];
+    UIImageView *xiaofeijinerImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - kTabBarHeight + 44 -Adapter(44) , self.view.frame.size.width - Adapter(105), Adapter(44))];
     xiaofeijinerImage.image = [UIImage imageNamed:@"leyaoxiaofeijiner.png"];
     [self.view addSubview:xiaofeijinerImage];
    
     UIButton *jiesuanButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    jiesuanButton.frame = CGRectMake(self.view.frame.size.width -  105, self.view.frame.size.height - kTabBarHeight, 105, 44);
+    jiesuanButton.frame = CGRectMake(self.view.frame.size.width -  Adapter(105), xiaofeijinerImage.top, Adapter(105), Adapter(44));
     [jiesuanButton addTarget:self action:@selector(qujiesuanButton) forControlEvents:(UIControlEventTouchUpInside)];
     [jiesuanButton setTitle:ModuleZW(@"去结算") forState:(UIControlStateNormal)];
     [jiesuanButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
     jiesuanButton.backgroundColor = RGB(68, 204, 82);
     [self.view addSubview:jiesuanButton];
     
-    UIImageView *gouwucheImage = [[UIImageView alloc]initWithFrame:CGRectMake(15, 12, 20, 20)];
+    UIImageView *gouwucheImage = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(15), Adapter(12), Adapter(20), Adapter(20))];
     gouwucheImage.image = [UIImage imageNamed:@"leyaogouwuche.png"];
     [xiaofeijinerImage addSubview:gouwucheImage];
     
-    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 12, 40, 20)];
+    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(40), Adapter(12), Adapter(60), Adapter(20))];
     zongjinerLabel.text = ModuleZW(@"总计: ");
     zongjinerLabel.textColor = [UIColor whiteColor];
     zongjinerLabel.font = [UIFont systemFontOfSize:13];
     [xiaofeijinerImage addSubview:zongjinerLabel];
     
-    jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(zongjinerLabel.right, 12, 60, 20)];
+    jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(zongjinerLabel.right, Adapter(12), Adapter(60), Adapter(20))];
     
     jinerLabel.text = [NSString stringWithFormat:@"¥%.2f",[UserShareOnce shareOnce].allYueYaoPrice];
     jinerLabel.textColor = [UIColor whiteColor];
-    jinerLabel.font = [UIFont boldSystemFontOfSize:13];
+    jinerLabel.font = [UIFont systemFontOfSize:13];
     [xiaofeijinerImage addSubview:jinerLabel];
     
 }
@@ -94,17 +94,17 @@
     }
     
     
-    UIImageView *nameImage = [[UIImageView alloc]initWithFrame:CGRectMake(18, 9, 35, 36.5)];
+    UIImageView *nameImage = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(18), Adapter(9), Adapter(35), Adapter(36.5))];
     nameImage.image = [UIImage imageNamed:@"乐药购物车1及支付_03.png"];
     [cell addSubview:nameImage];
     
-    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(60, 20, 85, 15)];
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(60), Adapter(20), Adapter(85), Adapter(15))];
     nameLabel.text = @"乐药名称：";
     nameLabel.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     nameLabel.font = [UIFont systemFontOfSize:14];
    // [cell addSubview:nameLabel];
     
-    UILabel *leyaoLabel = [[UILabel alloc]initWithFrame:CGRectMake((ScreenWidth-150)/2.0, 20, 150, 15)];
+    UILabel *leyaoLabel = [[UILabel alloc]initWithFrame:CGRectMake((ScreenWidth-Adapter(150))/2.0, Adapter(20), Adapter(150), Adapter(15))];
     leyaoLabel.textColor = [UtilityFunc colorWithHexString:@"#333333"];
     leyaoLabel.font = [UIFont systemFontOfSize:14];
     SongListModel *model = [self.dataArr objectAtIndex:indexPath.row];
@@ -112,7 +112,7 @@
    
     [cell addSubview:leyaoLabel];
     
-    UILabel *moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 96, 20, 60, 15)];
+    UILabel *moneyLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width - Adapter(96), Adapter(20), Adapter(60), Adapter(15))];
     moneyLabel.text = [NSString stringWithFormat:@"%.2f",model.price];
     
     moneyLabel.textAlignment = NSTextAlignmentCenter;
@@ -121,7 +121,7 @@
     [cell addSubview:moneyLabel];
    
     UIButton *deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    deleteButton.frame = CGRectMake(self.view.frame.size.width - 36, 19, 17, 17);
+    deleteButton.frame = CGRectMake(self.view.frame.size.width - Adapter(36), Adapter(19), Adapter(17), Adapter(17));
     [deleteButton setBackgroundImage:[UIImage imageNamed:@"111_106.png"] forState:UIControlStateNormal];
     deleteButton.tag = indexPath.row + 102200;
     [deleteButton addTarget:self action:@selector(deleteButton:) forControlEvents:UIControlEventTouchUpInside];

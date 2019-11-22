@@ -21,7 +21,7 @@
     [self layoutEnPassWordView];
 }
 -(void) layoutEnPassWordView{
-    UILabel *topLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, ScreenHeight/ 2 - 140, ScreenWidth - 20, 30)];
+    UILabel *topLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(10), ScreenHeight/ 2 - Adapter(140), ScreenWidth - Adapter(20), Adapter(30))];
     topLabel.text = @"Create a PassWPassword";
     topLabel.textAlignment = NSTextAlignmentCenter;
     topLabel.textColor = RGB_ButtonBlue;
@@ -29,19 +29,19 @@
     [self.view addSubview:topLabel];
     
     
-    UITextField *phoneTF = [[UITextField alloc]initWithFrame:CGRectMake(25, topLabel.bottom +  20, ScreenWidth - 50, 30)];
+    UITextField *phoneTF = [[UITextField alloc]initWithFrame:CGRectMake(Adapter(25), topLabel.bottom +  Adapter(20), ScreenWidth - Adapter(50), Adapter(30))];
     phoneTF.font = [UIFont systemFontOfSize:15];
     phoneTF.placeholder = @"Password";
     phoneTF.secureTextEntry = YES;
     [self.view addSubview:phoneTF];
     self.phoneTF = phoneTF;
     
-    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(20, phoneTF.bottom, ScreenWidth - 40, 1)];
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(Adapter(20), phoneTF.bottom, ScreenWidth - Adapter(40), Adapter(1))];
     lineView.backgroundColor = RGB_ButtonBlue;
     [self.view addSubview:lineView];
     
     
-    UILabel *bottowLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, lineView.bottom + 10, ScreenWidth - 40, 50)];
+    UILabel *bottowLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(20), lineView.bottom + Adapter(10), ScreenWidth - Adapter(40), Adapter(50))];
     bottowLabel.text = @"Enter 6-20 characters, which can be letters, numbers or symbols combination";
     bottowLabel.numberOfLines = 2;
     bottowLabel.textAlignment = NSTextAlignmentCenter;
@@ -51,7 +51,7 @@
     
     
     UIButton *nextButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    nextButton.frame = CGRectMake(20, bottowLabel.bottom + 30, ScreenWidth - 40, 35);
+    nextButton.frame = CGRectMake(Adapter(20), bottowLabel.bottom + Adapter(30), ScreenWidth - Adapter(40), Adapter(35));
     nextButton.layer.cornerRadius = nextButton.height/2;
     nextButton.layer.masksToBounds = YES;
     [nextButton setTitle:@"Send Code" forState:(UIControlStateNormal)];
@@ -93,7 +93,12 @@
                 passVC.passWordStr = phoneTF.text;
                 [self.navigationController pushViewController:passVC animated:YES];
             }else{
-                [self showAlertWarmMessage:response[@"message"]];
+                if ([GlobalCommon stringEqualNull:response[@"message"]]) {
+                    [self showAlertWarmMessage:response[@"data"]];
+                }else{
+                    [self showAlertWarmMessage:response[@"message"]];
+                }
+                
             }
         
         } failureBlock:^(NSError *error) {

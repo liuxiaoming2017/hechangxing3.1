@@ -25,31 +25,38 @@
     self.leftBtn.hidden = YES;
     
     self.view.backgroundColor = [UIColor whiteColor];
-    UIImageView *beijingImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, 300)];
+    UIImageView *beijingImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, self.view.frame.size.width, Adapter(300))];
     beijingImage.image = [UIImage imageNamed:@"zhifubeijingtupian"];
     [self.view addSubview:beijingImage];
     
-    UIImageView *zhifuchenggongImage = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width - 158.5) / 2, kNavBarHeight + 20, 158.5, 158.5)];
+    UIImageView *zhifuchenggongImage = [[UIImageView alloc]initWithFrame:CGRectMake((self.view.frame.size.width - Adapter(158.5)) / 2, kNavBarHeight + Adapter(20), Adapter(158.5), Adapter(158.5))];
     zhifuchenggongImage.image = [UIImage imageNamed:@"zhifushibai.png"];
     [self.view addSubview:zhifuchenggongImage];
     
-    UILabel *chenggongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, zhifuchenggongImage.bottom + 20, self.view.frame.size.width, 20)];
+    UILabel *chenggongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, zhifuchenggongImage.bottom + Adapter(20), self.view.frame.size.width, Adapter(20))];
     chenggongLabel.textAlignment = NSTextAlignmentCenter;
     chenggongLabel.text = ModuleZW(@"支付异常");
     chenggongLabel.textColor = [UIColor whiteColor];
     chenggongLabel.font = [UIFont systemFontOfSize:22];
     [self.view addSubview:chenggongLabel];
     
-    UILabel *chashouLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, chenggongLabel.bottom + 10, self.view.frame.size.width, 20)];
+    
+    UILabel *chashouLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  chenggongLabel.bottom + Adapter(10), self.view.frame.size.width, Adapter(50))];
     chashouLabel.textColor = [UIColor whiteColor];
+    chashouLabel. numberOfLines = 2;
     chashouLabel.text = ModuleZW(@"当前支付异常，请重新支付");
     chashouLabel.textAlignment = NSTextAlignmentCenter;
     chashouLabel.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:chashouLabel];
     
+    
+    
     UIButton *wanchengButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    wanchengButton.frame = CGRectMake((self.view.frame.size.width - 210) / 2, 254 + 158.5, 210, 40);
-    [wanchengButton setBackgroundImage:[UIImage imageNamed:@"zhongxinzhifu"] forState:UIControlStateNormal];
+    wanchengButton.frame = CGRectMake((self.view.frame.size.width - Adapter(210)) / 2, Adapter(412.55), Adapter(210), Adapter(40));
+    [wanchengButton setTitle:ModuleZW(@"重新支付") forState:(UIControlStateNormal)];
+    wanchengButton.backgroundColor = RGB_ButtonBlue;
+    wanchengButton.layer.cornerRadius = Adapter(10);
+    wanchengButton.layer.masksToBounds = YES;
     [wanchengButton addTarget:self action:@selector(chongxinButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:wanchengButton];
     

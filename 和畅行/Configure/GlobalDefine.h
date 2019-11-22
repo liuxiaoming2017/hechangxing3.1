@@ -118,6 +118,10 @@
 #define HeightFor4InchScreen                568.0f
 #define HeightFor3p5InchScreen              480.0f
 
+#define Adapter(d)                         ((CGFloat)d/375)*ScreenWidth
+
+#define ISPaid                         [UIDevice currentDevice].userInterfaceIdiom ==UIUserInterfaceIdiomPad
+
 #define ViewCtrlTopBarHeight                (IsiOS7Later ? (NaviBarHeight + StatusBarHeight) : NaviBarHeight)
 #define IsUseIOS7SystemSwipeGoBack          (IsiOS7Later ? YES : NO)
 

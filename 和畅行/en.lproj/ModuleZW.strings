@@ -245,7 +245,7 @@
 //============================= 加号 ==================================
 "音乐"                                                              = "Treatment Music";
 "运动"                                                              = "Exercise";
-
+"艾灸"                                                              = "Moxibustion";
 "电话"                                                              = "Tel";
 "视频"                                                              = "Video";
 "留言"                                                              = "Harmony package";
@@ -1448,7 +1448,7 @@
 "90 < 高压 / 收缩压（mmHg）< 140"     =   "  90 < SBP（mmHg）< 140";
 "60 < 低压 / 舒张压（mmHg）< 90"     =   "  60 < DBP（mmHg）< 90";
 "提交数据失败"     =   " Failed to submit data";
-"您当前脉搏%ld次/分\n  收缩压%ldmmHg\n舒张压 %ldmmhg"     =   "  Your current pulse rate is %ld/min\n, SBP %ldmmHg\n, DBP %ldmmhg";
+"您当前脉搏%ld次/分  收缩压%ldmmHg  舒张压 %ldmmhg"     =   "  Your current pulse rate is %ld/min, SBP %ldmmHg, DBP %ldmmhg";
 "脉搏次数"     =   "Pulse rate";
 "收缩压不能为空"     =   " SBP cannot be empty";
 "您的输入有误，请重新输入"     =   "Your input is incorrect, please re-enter";
@@ -1807,7 +1807,6 @@
 "我的上传报告"    =      "My report uploaded";
 "报告详情"    =      "Detail";
 "全部服务"    =      "All services";
-"我的上传报告"    =      "My report uploaded";
 "字体大小"    =      "Font size";
 
 

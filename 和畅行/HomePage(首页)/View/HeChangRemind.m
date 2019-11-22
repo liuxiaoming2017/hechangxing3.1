@@ -61,16 +61,18 @@
     //CGFloat fontSize = 18*[UserShareOnce shareOnce].fontSize;
     
     NSString *titleStr = [self getCurrentTime];
-    CGSize strSize = [titleStr boundingRectWithSize:CGSizeMake(1190, 2500) options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont fontWithName:[[UIFont systemFontOfSize:1] fontName] size:18]} context:nil].size;
+    CGSize strSize = [titleStr boundingRectWithSize:CGSizeMake(1190, Adapter(30)) options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont fontWithName:[[UIFont systemFontOfSize:1] fontName] size:18*[UserShareOnce shareOnce].fontSize]} context:nil].size;
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 15, strSize.width+8, strSize.height)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(14), Adapter(10), Adapter(strSize.width), Adapter(30))];
+//    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 15, strSize.width+8, strSize.height)];
     titleLabel.font = [UIFont systemFontOfSize:18];
     titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.text = ModuleZW( @"和畅提醒");
     [self addSubview:titleLabel];
     
-    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.right, titleLabel.top, 200, strSize.height)];
+    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.right+Adapter(6), Adapter(10), Adapter(200), Adapter(30))];
+//    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.right, titleLabel.top, 200, strSize.height)];
     timeLabel.font = [UIFont systemFontOfSize:13];
     timeLabel.textAlignment = NSTextAlignmentLeft;
     timeLabel.textColor = UIColorFromHex(0X8E8E93);
@@ -82,7 +84,7 @@
 //    [self addSubview:lineImageV];
     
     //添加tableview
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 52, self.frame.size.width, (45+14)*self.dataArr.count) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, Adapter(52), self.frame.size.width, Adapter(59)*self.dataArr.count) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor=[UIColor clearColor];

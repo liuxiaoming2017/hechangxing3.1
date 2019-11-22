@@ -26,7 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navTitleLabel.text = @"酸疼检测";
-    
+  
     [self initUI];
     
     self.subscribe = [[OGA530Subscribe alloc] init];
@@ -108,36 +108,42 @@
 {
     self.view.backgroundColor = [UIColor whiteColor];
     
-    remindLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-116)/2.0, kNavBarHeight+35, 90, 35)];
-    remindLabel.font = [UIFont fontWithName:@"PingFang SC" size:17];
+    remindLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-Adapter(116))/2.0, kNavBarHeight+Adapter(35), Adapter(90), Adapter(35))];
+    remindLabel.font = [UIFont fontWithName:@"PingFang SC" size:17*[UserShareOnce shareOnce].fontSize];
     remindLabel.textColor = [UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0];
     remindLabel.text = @"酸疼检测中";
     remindLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:remindLabel];
     
-    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(remindLabel.right, remindLabel.top+5, 50, 25)];
+    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(remindLabel.right, remindLabel.top+Adapter(5), Adapter(50), Adapter(25))];
     topView.backgroundColor = [UIColor clearColor];
+    
     [self setupAnimationInLayer:topView.layer withSize:topView.frame.size tintColor:[UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0]];
     [self.view addSubview:topView];
     
-    CGFloat height = 251/677.0*(ScreenWidth-40);
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(20, remindLabel.bottom+55, ScreenWidth-40, height)];
+    CGFloat height = 251/677.0*(ScreenWidth-Adapter(40));
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(Adapter(20), remindLabel.bottom+Adapter(55), ScreenWidth-Adapter(40), height)];
     imageV.image = [UIImage imageNamed:@"体测图"];
     [self.view addSubview:imageV];
     
     UILabel *label = [[UILabel alloc] init];
-    label.frame = CGRectMake(imageV.left,imageV.bottom+55,124.5,22.5);
+    label.frame = CGRectMake(imageV.left,imageV.bottom+55,Adapter(124.5),Adapter(22.5));
     label.numberOfLines = 0;
     [self.view addSubview:label];
     
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"手心握住电极片"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
+    CGFloat fontSizeFloat = 1;
+    if (ISPaid) {
+        fontSizeFloat = [UserShareOnce shareOnce].fontSize;
+    }
+    
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"手心握住电极片"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17*fontSizeFloat],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
     
     label.attributedText = string;
     label.textAlignment = NSTextAlignmentLeft;
    
     
     UILabel *label2 = [[UILabel alloc] init];
-    label2.frame = CGRectMake(imageV.left,label.bottom+15,245,150);
+    label2.frame = CGRectMake(imageV.left,label.bottom+Adapter(15),Adapter(245),Adapter(150));
     label2.numberOfLines = 0;
     [self.view addSubview:label2];
     
@@ -145,7 +151,7 @@
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     paragraphStyle.lineSpacing = 5;
     
-    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc] initWithString:@"①静坐并背靠在按摩椅上 \n②右手自然放于体侧，掌心向下 \n③左手握住金属电极 \n④保持安静 \n⑤全程需要4~5分钟左右"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16],NSForegroundColorAttributeName: [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
+    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc] initWithString:@"①静坐并背靠在按摩椅上 \n②右手自然放于体侧，掌心向下 \n③左手握住金属电极 \n④保持安静 \n⑤全程需要4~5分钟左右"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16*fontSizeFloat],NSForegroundColorAttributeName: [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
     
     label2.attributedText = string2;
     label2.textAlignment = NSTextAlignmentLeft;
@@ -193,17 +199,17 @@
     }
      */
     CAReplicatorLayer *containerLayer = [CAReplicatorLayer layer];
-    containerLayer.frame = CGRectMake(0,25-10-3,size.width,size.height);
+    containerLayer.frame = CGRectMake(0,Adapter(12),size.width,size.height);
     containerLayer.masksToBounds = YES;
     containerLayer.instanceCount = 3;
     containerLayer.instanceDelay = 1.1 / containerLayer.instanceCount;
-    containerLayer.instanceTransform = CATransform3DMakeTranslation(10,0,0);
+    containerLayer.instanceTransform = CATransform3DMakeTranslation(Adapter(10),0,0);
     [layer addSublayer:containerLayer];
     
     CALayer *subLayer2 = [CALayer layer];
     subLayer2.backgroundColor = [UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0].CGColor;
-    subLayer2.frame = CGRectMake(0, 0, 7, 7);
-    subLayer2.cornerRadius = 7 / 2;
+    subLayer2.frame = CGRectMake(0, 0, Adapter(7), Adapter(7));
+    subLayer2.cornerRadius = Adapter(3.5);
     subLayer2.transform = CATransform3DMakeScale(0, 0, 0);
     [containerLayer addSublayer:subLayer2];
     //opacity  transform.scale

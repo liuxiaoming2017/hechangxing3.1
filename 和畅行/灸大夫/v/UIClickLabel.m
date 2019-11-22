@@ -54,6 +54,9 @@
 -(void)addUnderLine:(NSString*)s {
     if (s != nil) {
         NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithString:s];
+        [attr addAttribute:NSFontAttributeName
+                              value:[UIFont systemFontOfSize:18]
+                              range:NSMakeRange(0 , [s length])];
         NSRange range = {0, [s length]};
         [attr addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:range];
         self.attributedText = attr;

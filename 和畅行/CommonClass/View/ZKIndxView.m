@@ -34,12 +34,13 @@
                                                             ModuleZW(@"艾灸"),ModuleZW(@"电话"),
                                                             ModuleZW(@"视频"),ModuleZW(@"血压"),
                                                             ModuleZW(@"图文"),@"推拿",ModuleZW(@"耳穴")];
-        if([UserShareOnce shareOnce].languageType){
-            imagesNameData = @[ModuleZW(@"音乐"),ModuleZW(@"运动"),
-                               ModuleZW(@"艾灸"),ModuleZW(@"电话"),
-                               ModuleZW(@"视频"),ModuleZW(@"血压"),
-                               ModuleZW(@"图文"),ModuleZW(@"耳穴")];
-        }
+//        if([UserShareOnce shareOnce].languageType){
+//            imagesNameData = @[ModuleZW(@"音乐"),ModuleZW(@"运动"),
+//                               ModuleZW(@"艾灸"),ModuleZW(@"电话"),
+//                               ModuleZW(@"视频"),ModuleZW(@"血压"),
+//                               ModuleZW(@"图文"),ModuleZW(@"耳穴")];
+//        }
+//        NSInteger lieshu = imagesData.count/3;
        
         NSInteger lieshu = imagesData.count/3+imagesData.count%3;
         //NSInteger lieshu = imagesData.count%3;
@@ -47,19 +48,19 @@
             //row排数;col列数
             int row = i/3;
             int col = i%3;
-            CGFloat ICON_W = 50*proportion;
-            CGFloat MARGIN = 50*proportion;
+            CGFloat ICON_W = Adapter(50);
+            CGFloat MARGIN = Adapter(50);
             
             CGFloat margin = (ScreenWidth-ICON_W*3)/4.0;
             
-            CGFloat topY = ScreenHeight  - lieshu * (ICON_W + MARGIN) +80;
-            NSLog(@"yyyy:%f",topY);
-            if(iPhoneX111){
-                topY = ScreenHeight  - lieshu * (ICON_W + MARGIN)-34 +80;
-            }
+            CGFloat topY = ScreenHeight  - lieshu * (ICON_W + MARGIN) - Adapter(70);
+//            NSLog(@"yyyy:%f",topY);
+//            if(iPhoneX111){
+//                topY = ScreenHeight  - lieshu * (ICON_W + MARGIN)-34 +80;
+//            }
             
             
-            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(margin*(col+1) + col * ICON_W, ScreenHeight - topY  + row * (ICON_W + MARGIN), ICON_W, ICON_W)];
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(margin*(col+1) + col * ICON_W, topY  + row * (ICON_W + MARGIN), ICON_W, ICON_W)];
            
 //            if(i==7){
 //                button.frame = CGRectMake(margin*3 + 2 * ICON_W, ScreenHeight - topY  + row * (ICON_W + MARGIN), ICON_W, ICON_W);
@@ -73,7 +74,7 @@
             button.tag = 100+i;
             [button addTarget:self action:@selector(pushButtonClick:) forControlEvents:UIControlEventTouchUpInside];
             
-            CGRect textRect = [imagesNameData[i] boundingRectWithSize:CGSizeMake(120, MAXFLOAT)
+            CGRect textRect = [imagesNameData[i] boundingRectWithSize:CGSizeMake(Adapter(105), MAXFLOAT)
                                                               options:NSStringDrawingUsesLineFragmentOrigin
                                                            attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}
                                                               context:nil];
@@ -81,7 +82,7 @@
             UILabel *name = [[UILabel alloc]init];
             name.text = imagesNameData[i];
             name.numberOfLines = 2;
-            name.frame = CGRectMake(30 + col * (40+MARGIN), CGRectGetMaxY(button.frame )+ 5, 120, textRect.size.height);
+            name.frame = CGRectMake(Adapter(30) + col * (Adapter(40)+MARGIN), CGRectGetMaxY(button.frame )+ Adapter(5), Adapter(105), textRect.size.height);
             name.font =[UIFont systemFontOfSize:15];
             name.textColor = [UIColor whiteColor];
             name.centerX = button.centerX;
@@ -102,10 +103,8 @@
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setImage:[UIImage imageNamed:@"tabBar_publish_icon_selected"] forState:(UIControlStateNormal)];
-        button.frame = CGRectMake(ScreenWidth/2-25,ScreenHeight - 50, 50, 50);
-        if(iPhoneX111){
-            button.top = ScreenHeight - 50 - 34;
-        }
+        button.frame = CGRectMake(ScreenWidth/2-Adapter(25),ScreenHeight - kTabBarHeight + 44 -  Adapter(55) , Adapter(50), Adapter(50));
+        
         [button addTarget:self action:@selector(dismissClick:) forControlEvents:(UIControlEventTouchUpInside)];
         
         

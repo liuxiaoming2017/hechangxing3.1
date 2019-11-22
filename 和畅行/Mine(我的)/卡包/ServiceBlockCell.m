@@ -26,9 +26,6 @@
 
 - (void)setupUI
 {
-    NSLog(@"width:%f",self.width);
-    
-    CGFloat cellWidth = ScreenWidth - 20 -20*2-10;
     
     self.typeLabel = [[UILabel alloc] init];
     self.typeLabel.textAlignment=NSTextAlignmentLeft;
@@ -55,27 +52,27 @@
     [self.contentView addSubview:self.tradeBtn];
     
     [self.typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView.mas_top).offset(2);
-        make.bottom.equalTo(self.contentView.mas_bottom).offset(-2);
-        make.leading.equalTo(self.contentView.mas_leading).offset(5);
-        make.width.mas_equalTo((self.contentView.width- 60)/2);
-        make.height.greaterThanOrEqualTo(@(30));
+        make.top.equalTo(self.contentView.mas_top).offset(Adapter(2));
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(Adapter(-2));
+        make.leading.equalTo(self.contentView.mas_leading).offset(Adapter(0));
+        make.width.mas_equalTo((ScreenWidth - Adapter(70))/3);
+        make.height.greaterThanOrEqualTo(@(Adapter(30)));
     }];
     
     [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView.mas_top).offset(2);
-        make.bottom.equalTo(self.contentView.mas_bottom).offset(-2);
+        make.top.equalTo(self.contentView.mas_top).offset(Adapter(2));
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(Adapter(-2));
         make.left.equalTo(self.typeLabel.mas_right);
-        make.width.mas_equalTo(60);
-        make.height.greaterThanOrEqualTo(@(30));
+        make.width.mas_equalTo((ScreenWidth - Adapter(70))/3);
+        make.height.greaterThanOrEqualTo(@(Adapter(30)));
     }];
     
     [self.tradeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView.mas_top).offset(2);
-        make.bottom.equalTo(self.contentView.mas_bottom).offset(-2);
-        make.trailing.equalTo(self.contentView.mas_trailing).offset(-5);
-        make.width.mas_equalTo((self.contentView.width- 60)/2);
-        make.height.greaterThanOrEqualTo(@(30));
+        make.top.equalTo(self.contentView.mas_top).offset(Adapter(2));
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(Adapter(-2));
+        make.trailing.equalTo(self.contentView.mas_trailing).offset(Adapter(-5));
+        make.width.mas_equalTo((ScreenWidth - Adapter(70))/3);
+        make.height.greaterThanOrEqualTo(@(Adapter(30)));
     }];
 }
 

@@ -23,6 +23,10 @@
 
 @property (nonatomic,strong) UIButton *popBT;
 
+@property (nonatomic,copy) NSString *startTimeStr;
+
+@property (nonatomic,copy) NSString *endTimeStr;
+
 - (void)showAlertViewController:(NSString *)message;
 
 - (void)showAlertWarmMessage:(NSString *)message;

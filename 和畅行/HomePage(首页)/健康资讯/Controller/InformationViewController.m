@@ -50,6 +50,10 @@
     self.hotArray = nil;
     self.healthArray = nil;
     self.idArray = nil;
+    
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"9" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -58,6 +62,7 @@
     _typeStr = nil;
     _idArray = [[NSMutableArray alloc]init];
     self.navTitleLabel.text = ModuleZW(@"健康资讯");
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     self.hotArray = [[NSMutableArray alloc]init];
     self.healthArray = [NSMutableArray array];
     
@@ -118,14 +123,14 @@
     [self.view addSubview:lb];
 
     
-    _BaoGaosegment = [[FSSegmentTitleView alloc]initWithFrame:CGRectMake(0, self.topView.bottom, CGRectGetWidth(self.view.bounds), 30) titles:array delegate:self indicatorType:FSIndicatorTypeEqualTitle];
+    _BaoGaosegment = [[FSSegmentTitleView alloc]initWithFrame:CGRectMake(0, self.topView.bottom + Adapter(5), CGRectGetWidth(self.view.bounds), Adapter(30)) titles:array delegate:self indicatorType:FSIndicatorTypeEqualTitle];
     _BaoGaosegment.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_BaoGaosegment];
 
-    _healthTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _BaoGaosegment.bottom + 10, ScreenWidth, ScreenHeight-_BaoGaosegment.bottom - 10) style:UITableViewStylePlain];
+    _healthTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _BaoGaosegment.bottom + Adapter(10), ScreenWidth, ScreenHeight-_BaoGaosegment.bottom - Adapter(15)) style:UITableViewStylePlain];
     _healthTableView.tableFooterView = [[UIView alloc]init];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    _healthTableView.rowHeight = 85;
+    _healthTableView.rowHeight = Adapter(85);
     _healthTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _healthTableView.backgroundView = nil;
     _healthTableView.backgroundColor = [UIColor clearColor];
@@ -401,6 +406,7 @@
     vc.titleStr = ModuleZW(@"健康资讯");
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_PRE,[self.healthArray[indexPath.row] objectForKey:@"path"]];
     vc.urlStr = urlStr;
+    vc.typeInteger = self.typeInteger;
     [self.navigationController pushViewController:vc animated:YES];
     
 }

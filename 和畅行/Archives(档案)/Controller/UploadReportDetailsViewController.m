@@ -46,9 +46,9 @@
 
 -(void)layoutUploadReportDView{
     
-    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight  - kNavBarHeight - 20)];
+    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight  - kNavBarHeight - Adapter(20))];
     [self.view addSubview:scrollView];
-    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, ScreenWidth - 30, ScreenHeight - kNavBarHeight - 30 -kTabBarHeight +44 )];
+    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(15), Adapter(15), ScreenWidth - Adapter(30), ScreenHeight - kNavBarHeight - kTabBarHeight + Adapter(14) )];
     backImageView.layer.cornerRadius = 8.0;
     backImageView.backgroundColor = [UIColor whiteColor];
     backImageView.userInteractionEnabled = YES;
@@ -61,7 +61,7 @@
     backImageView.layer.shadowRadius = 5;
     
     
-    UILabel *timeLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 20 , backImageView.width, 20)];
+    UILabel *timeLab = [[UILabel alloc]initWithFrame:CGRectMake(0, Adapter(20) , backImageView.width, Adapter(20))];
     timeLab.font = [UIFont systemFontOfSize:14];
     timeLab.textColor = UIColorFromHex(0X808080);
     NSDate *data = [[NSDate alloc]initWithTimeIntervalSince1970:[self.model.createDate longValue]/1000.00];
@@ -103,7 +103,7 @@
     float heiget = rect.size.height;
     
     
-    contentlabel.frame = CGRectMake(15, timeLab.bottom +30, backImageView.width - 30, heiget);
+    contentlabel.frame = CGRectMake(Adapter(15), timeLab.bottom +Adapter(30), backImageView.width - Adapter(30), heiget);
     
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
@@ -116,17 +116,17 @@
 
 
     PYPhotosView * photosView = [PYPhotosView photosViewWithThumbnailUrls:self.model.pictures originalUrls:self.model.pictures];
-    photosView.py_x = 15;
+    photosView.py_x = Adapter(15);
     photosView.placeholderImage = [UIImage imageNamed:@"默认1:1"];
-    photosView.py_y = contentlabel.bottom + 30;
-    photosView.photoWidth =  (backImageView.width-50)/4 ;;
-    photosView.photoHeight = (backImageView.width-50)/4 ; ;
+    photosView.py_y = contentlabel.bottom + Adapter(30);
+    photosView.photoWidth =  (backImageView.width-Adapter(50))/4 ;;
+    photosView.photoHeight = (backImageView.width-Adapter(50))/4 ; ;
     photosView.photosMaxCol = 4;
     photosView.delegate = self;
     [backImageView addSubview:photosView];
 
-    backImageView.height =  photosView.bottom + 30;
-    scrollView.contentSize = CGSizeMake(ScreenWidth, backImageView.height + 40);
+    backImageView.height =  photosView.bottom + Adapter(30);
+    scrollView.contentSize = CGSizeMake(ScreenWidth, backImageView.height + Adapter(40));
 }
 
 #pragma mark - PYPhotosViewDelegate

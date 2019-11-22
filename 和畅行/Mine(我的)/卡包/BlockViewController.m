@@ -34,6 +34,7 @@
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
     self.navTitleLabel.text = ModuleZW(@"我的卡包");
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     [[NSNotificationCenter defaultCenter] addObserver :self selector:@selector(cardNameSuccess) name:@"cardNameSuccess" object:nil];
     [self getDatawithpageInteger:self.pageInteger];
     [self layoutView];
@@ -56,13 +57,13 @@
 }
 
 -(void)layoutView {
-    UIButton *marryStateBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth - 55, kNavBarHeight + 13, 36, 36) target:self sel:@selector(addAction) tag:1000 image:@"HCY_addcard" title:nil];
+    UIButton *marryStateBtn = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth - Adapter(55), kNavBarHeight + Adapter(13), Adapter(36), Adapter(36)) target:self sel:@selector(addAction) tag:1000 image:@"HCY_addcard" title:nil];
     [self.view addSubview:marryStateBtn];
     
-    UIButton *allServiceBT = [Tools creatButtonWithFrame:CGRectMake(20, kNavBarHeight + 13, 100, 36) target:self sel:@selector(allServiceAction) tag:1000 image:nil title:ModuleZW(@"全部服务")];
+    UIButton *allServiceBT = [Tools creatButtonWithFrame:CGRectMake(Adapter(20), kNavBarHeight + Adapter(13), Adapter(100), Adapter(36)) target:self sel:@selector(allServiceAction) tag:1000 image:nil title:ModuleZW(@"全部服务")];
     allServiceBT.backgroundColor = RGB_ButtonBlue;
-    allServiceBT.layer.cornerRadius = 18;
-    [allServiceBT.titleLabel setFont:[UIFont systemFontOfSize:16/[UserShareOnce shareOnce].fontSize]];
+    allServiceBT.layer.cornerRadius = allServiceBT.height/2;
+    [allServiceBT.titleLabel setFont:[UIFont systemFontOfSize:16/[UserShareOnce shareOnce].multipleFontSize]];
     allServiceBT.layer.masksToBounds  = YES;
     [self.view addSubview:allServiceBT];
     
@@ -72,7 +73,7 @@
     blockLabel.font = [UIFont systemFontOfSize:21];
     //[self.view addSubview:blockLabel];
     
-    self.nullLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, marryStateBtn.bottom , ScreenWidth, 200)];
+    self.nullLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, marryStateBtn.bottom , ScreenWidth, Adapter(200))];
     self.nullLabel.text = ModuleZW(@"还没有卡\n快去添加新卡吧~");
     self.nullLabel.numberOfLines = 2;
     self.nullLabel.font = [UIFont systemFontOfSize:17];
@@ -82,13 +83,13 @@
     
     self.dataArray = [NSMutableArray array];
     self.servieArray = [NSMutableArray array];
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(17, kNavBarHeight+65, self.view.frame.size.width - 34, self.view.frame.size.height - kNavBarHeight-60) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight+Adapter(65), ScreenWidth, self.view.frame.size.height - kNavBarHeight-Adapter(60)) style:UITableViewStylePlain];
     self.tableView.separatorStyle = UITableViewCellEditingStyleNone;
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.tableView.rowHeight = 140;
+    self.tableView.rowHeight = Adapter(140);
     self.tableView.tableFooterView = [[UIView alloc]init];
     [self.view addSubview:_tableView];
     [self.tableView registerClass:[BlockTableViewCell class] forCellReuseIdentifier:@"BlockTableViewCell"];
@@ -265,17 +266,17 @@
         self.listBackView.hidden = NO;
         [self.view addSubview:self.listBackView];
         
-        self.listTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, kNavBarHeight + 20  , ScreenWidth - 40 , ScreenHeight - kTabBarHeight - kNavBarHeight - 20) style:UITableViewStylePlain];
+        self.listTableView = [[UITableView alloc]initWithFrame:CGRectMake(Adapter(20), kNavBarHeight + Adapter(20)  , ScreenWidth - Adapter(40) , ScreenHeight - kTabBarHeight - kNavBarHeight - Adapter(20)) style:UITableViewStylePlain];
         self.listTableView.backgroundColor = UIColorFromHex(0Xffffff);
         self.listTableView.separatorStyle = UITableViewCellEditingStyleNone;
         self.listTableView.layer.cornerRadius = 8;
         self.listTableView.dataSource = self;
         self.listTableView.delegate = self;
-        self.listTableView.estimatedRowHeight = 100;
-        self.listTableView.contentInset = UIEdgeInsetsMake(20, 0, 20, 0);
+        self.listTableView.estimatedRowHeight = Adapter(100);
+        self.listTableView.contentInset = UIEdgeInsetsMake(Adapter(20), 0, Adapter(20), 0);
         [self.listBackView addSubview:self.listTableView];
         UIButton *closeButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        closeButton.frame = CGRectMake(ScreenWidth - 40, kNavBarHeight -10, 30, 30);
+        closeButton.frame = CGRectMake(ScreenWidth - Adapter(40), kNavBarHeight -10, Adapter(30), Adapter(30));
         [closeButton setBackgroundImage:[UIImage imageNamed:@"消费记录取消icon"] forState:(UIControlStateNormal)];
         [[closeButton rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
             self.listBackView.hidden = YES;
@@ -305,6 +306,12 @@
     [alVC addAction:sureAction];
     [alVC addAction:cancelAction];
     [self presentViewController:alVC animated:YES completion:nil];
+}
+-(void)dealloc {
+    
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"37" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+    
 }
 
 @end

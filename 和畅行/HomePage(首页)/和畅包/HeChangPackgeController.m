@@ -35,6 +35,7 @@
     self.navTitleLabel.text = self.titleStr;
     [self customeViewWithStr:self.urlStr];
     isForeground = NO;
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appHasGoneForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
@@ -189,6 +190,28 @@
     isForeground = YES;
     //NSLog(@"回到前台");
 }
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    NSString *pageIDStr = @"";
+    if([self.titleStr isEqualToString:ModuleZW(@"收货地址")]){
+        pageIDStr = @"44";
+    }else if([self.titleStr isEqualToString:ModuleZW(@"我的积分")]){
+        pageIDStr = @"38";
+    }else if([self.titleStr isEqualToString:ModuleZW(@"健康资讯")]){
+        if (self.typeInteger == 0) {
+            pageIDStr = @"10";
+        }else if (self.typeInteger == 2) {
+            pageIDStr = @"11";
+        }
+    }
+    if (![pageIDStr isEqualToString:@""]) {
+        self.endTimeStr = [GlobalCommon getCurrentTimes];
+        [GlobalCommon pageDurationWithpageId:pageIDStr withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+    }
+    
+}
+
 
 - (void)dealloc
 {

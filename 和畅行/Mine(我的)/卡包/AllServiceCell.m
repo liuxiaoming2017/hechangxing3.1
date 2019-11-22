@@ -56,28 +56,28 @@
     
     
     [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView.mas_top).offset(8);
-        make.bottom.equalTo(self.contentView.mas_bottom).offset(-8);
-        make.leading.equalTo(self.contentView.mas_leading).offset(15);
-        make.trailing.equalTo(self.contentView.mas_trailing).offset(-15);
+        make.top.equalTo(self.contentView.mas_top).offset(Adapter(8));
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(Adapter(-8));
+        make.leading.equalTo(self.contentView.mas_leading).offset(Adapter(15));
+        make.trailing.equalTo(self.contentView.mas_trailing).offset(Adapter(-15));
         
     }];
     
     
     
     [self.typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(imageV.mas_top).offset(10);
-        make.bottom.equalTo(imageV.mas_bottom).offset(-10);
-        make.leading.equalTo(imageV.mas_leading).offset(5);
-        make.trailing.equalTo(imageV.mas_trailing).offset(-100);
-        make.height.greaterThanOrEqualTo(@(35));
+        make.top.equalTo(imageV.mas_top).offset(Adapter(10));
+        make.bottom.equalTo(imageV.mas_bottom).offset(Adapter(-10));
+        make.leading.equalTo(imageV.mas_leading).offset(Adapter(5));
+        make.trailing.equalTo(imageV.mas_trailing).offset(Adapter(-100));
+        make.height.greaterThanOrEqualTo(@(Adapter(35)));
     }];
     
     [self.numberLabel  mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(imageV.mas_top).offset(5);
-        make.bottom.equalTo(imageV.mas_bottom).offset(-5);
-        make.trailing.equalTo(imageV.mas_trailing).offset(-5);
-        make.width.mas_equalTo(95);
+        make.top.equalTo(imageV.mas_top).offset(Adapter(5));
+        make.bottom.equalTo(imageV.mas_bottom).offset(Adapter(-5));
+        make.trailing.equalTo(imageV.mas_trailing).offset(Adapter(-5));
+        make.width.mas_equalTo(Adapter(95));
     }];
     
     

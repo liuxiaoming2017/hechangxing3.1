@@ -10,7 +10,7 @@
 #import "SublayerView.h"
 #import "ArmChairModel.h"
 
-#define cellW 108
+#define cellW Adapter(108)
 #define themeCellMargin (ScreenWidth-cellW*3)/4.0
 
 @implementation ThemeCollectionViewCell
@@ -24,7 +24,7 @@
         ArmChairModel *model = [array objectAtIndex:i];
         NSInteger column = i / 3;
         NSInteger row = i % 3;
-        SublayerView *layerView = [[SublayerView alloc] initWithFrame:CGRectMake(themeCellMargin+(108+themeCellMargin)*row, themeCellMargin + (115+themeCellMargin)*column, cellW, 115)];
+        SublayerView *layerView = [[SublayerView alloc] initWithFrame:CGRectMake(themeCellMargin+(Adapter(108)+themeCellMargin)*row, themeCellMargin + (Adapter(115)+themeCellMargin)*column, cellW, Adapter(115))];
         [layerView setImageVandTitleLabelwithModel:model];
         layerView.tag = 100 + i;
         [self addSubview:layerView];

@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) IBOutlet UILabel *answerLabel;
 @property (weak, nonatomic) IBOutlet UIView *leftView;
+@property (weak, nonatomic) IBOutlet UIImageView *backImageView;
 
 - (CGFloat)setCellHeight:(NSString *)str;
 - (void)setanswerLabelContent:(NSString *)str;

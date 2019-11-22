@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="i9_UISetTTViewForRollerController">
             <connections>
+                <outlet property="bottomView" destination="2QA-Hv-mxO" id="Bzg-2a-DxZ"/>
+                <outlet property="closeBT" destination="6dC-8F-vBv" id="k8y-8g-Ftl"/>
+                <outlet property="midView" destination="W0v-IM-acz" id="Mfa-Kh-mR7"/>
                 <outlet property="moxaNumLable" destination="GrM-SD-XaA" id="fVF-Kg-bA2"/>
                 <outlet property="openBtn" destination="hfd-3U-hlx" id="W2q-Fq-rrr"/>
                 <outlet property="synTime" destination="TpK-Da-t1M" id="e97-c2-WPC"/>
                 <outlet property="synWendu" destination="5dy-Gc-J84" id="hIi-ND-czU"/>
                 <outlet property="timePicker" destination="TdU-64-I6d" id="xNm-UD-Lkf"/>
+                <outlet property="topView" destination="O6P-hQ-6ln" id="yIl-bE-zpe"/>
                 <outlet property="view" destination="iN0-l3-epB" id="P6d-9Y-Pl9"/>
                 <outlet property="wenduPicker" destination="mWh-K2-jnZ" id="Rdp-87-yPI"/>
                 <outlet property="wenduRemind" destination="llZ-q6-VEw" id="Do9-XM-P2E"/>
@@ -34,7 +38,7 @@
                             <rect key="frame" x="178" y="45" width="119" height="126"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         </pickerView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="wordWrap" id="TpK-Da-t1M">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" id="TpK-Da-t1M">
                             <rect key="frame" x="190" y="181" width="94" height="26"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -47,7 +51,7 @@
                                 <action selector="synTempOnClinck:" destination="-1" eventType="touchUpInside" id="XBF-S4-OwS"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="5dy-Gc-J84">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="5dy-Gc-J84">
                             <rect key="frame" x="39" y="181" width="94" height="26"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -118,12 +122,12 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="929.60000000000002" y="293.25337331334333"/>
+            <point key="canvasLocation" x="-174" y="187"/>
         </view>
     </objects>
     <resources>
-        <image name="ajys_bluetooth_clost.png" width="23" height="23"/>
-        <image name="ajys_bluetooth_normal.png" width="23" height="23"/>
-        <image name="ajys_bluetooth_tick.png" width="23" height="23"/>
+        <image name="ajys_bluetooth_clost.png" width="23.333333969116211" height="23.333333969116211"/>
+        <image name="ajys_bluetooth_normal.png" width="23.333333969116211" height="23.333333969116211"/>
+        <image name="ajys_bluetooth_tick.png" width="23.333333969116211" height="23.333333969116211"/>
     </resources>
 </document>

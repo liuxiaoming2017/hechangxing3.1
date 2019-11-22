@@ -264,7 +264,6 @@
 
 - (void)safariControllerAction
 {
-    
     SFSafariViewController *sfVC = [[SFSafariViewController alloc]initWithURL:[NSURL URLWithString:@"http://eky3h.com/hcx-policy.html"]];
     sfVC.delegate = self;
     [self.navigationController presentViewController:sfVC animated:YES completion:nil];

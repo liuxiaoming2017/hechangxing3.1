@@ -1,6 +1,0 @@
-framework module YHDFBuriedPoint {
-  umbrella header "YHDFBuriedPoint.h"
-
-  export *
-  module * { export * }
-}

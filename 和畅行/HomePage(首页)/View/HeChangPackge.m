@@ -53,7 +53,7 @@
     
     //CGFloat originX = (ScreenWidth - 122*3-18)/2.0;
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, self.height/2.0-50, ScreenWidth - 40, 30)];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(20), self.height/2.0-Adapter(50), ScreenWidth - Adapter(40), Adapter(30))];
     self.titleLabel.font = [UIFont systemFontOfSize:21];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.textColor = [UIColor whiteColor];
@@ -61,7 +61,7 @@
     [self addSubview:self.titleLabel];
     
     
-    self.remindLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, self.titleLabel.bottom, ScreenWidth - 140 , 80)];
+    self.remindLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(70), self.titleLabel.bottom, ScreenWidth - Adapter(140) , Adapter(80))];
     self.remindLabel.font = [UIFont systemFontOfSize:16];
     self.remindLabel.numberOfLines = 0;
     self.remindLabel.textAlignment = NSTextAlignmentCenter;
@@ -81,12 +81,12 @@
     
     self.toViewButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [self.toViewButton addTarget:self action:@selector(pushAction) forControlEvents:(UIControlEventTouchUpInside)];
-    self.toViewButton.frame = CGRectMake(ScreenWidth/2.0 - 136, self.imageV.bottom - 25, 272, 60);
+    self.toViewButton.frame = CGRectMake(ScreenWidth/2.0 - Adapter(136), self.imageV.bottom - Adapter(25), Adapter(272), Adapter(60));
    // [self addSubview:self.toViewButton];
 
     
     UIButton *tapButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    tapButton.frame = CGRectMake(10, self.height/2.0-30, self.width-120, 90);
+    tapButton.frame = CGRectMake(Adapter(10),self.titleLabel.top, self.width-Adapter(20), Adapter(110));
     [tapButton addTarget:self action:@selector(tapAction) forControlEvents:(UIControlEventTouchUpInside)];
     [self addSubview:tapButton];
     

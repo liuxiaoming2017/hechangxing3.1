@@ -145,6 +145,11 @@
     [super viewDidDisappear:animated];
     [self stopTimer];
 }
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"27" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+}
 
 - (void)viewDidLoad {
     
@@ -153,7 +158,7 @@
     [self createUI];
     
     shifanyinCount = 0;
-    
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     self.shifanyinPlayArr = [NSMutableArray arrayWithCapacity:0];
     
    // [self dealWithShiFanYinYueYaoData];
@@ -176,7 +181,7 @@
     
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(ScreenWidth, ScreenHeight-kNavBarHeight-kTabBarHeight);
+    layout.itemSize = CGSizeMake(ScreenWidth, ScreenHeight-kNavBarHeight-kTabBarHeight + 44 - Adapter(44));
     layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     layout.minimumInteritemSpacing = 0;
@@ -195,19 +200,19 @@
     [self.view addSubview:collectionV];
     [collectionV reloadData];
     
-    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, collectionV.bottom, ScreenWidth, kTabBarHeight)];
+    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, collectionV.bottom, ScreenWidth,  Adapter(44))];
     footView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:footView];
     
     voiceButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    voiceButton.frame = CGRectMake((ScreenWidth - 25 * 3) / 6, 2, 25, 25);
+    voiceButton.frame = CGRectMake((ScreenWidth - Adapter(25) * 3) / 6, Adapter(2), Adapter(25), Adapter(25));
     [voiceButton setBackgroundImage:[UIImage imageNamed:@"yundongtupian2.png"] forState:UIControlStateSelected];
     [voiceButton setBackgroundImage:[UIImage imageNamed:@"yundongtupian1.png"] forState:UIControlStateNormal];
     [voiceButton addTarget:self action:@selector(voiceAction:) forControlEvents:UIControlEventTouchUpInside];
     //voiceButton.selected = YES;
     [footView addSubview:voiceButton];
     
-    UILabel *lunbotu = [[UILabel alloc]initWithFrame:CGRectMake(0, voiceButton.bottom, ScreenWidth/3,16)];
+    UILabel *lunbotu = [[UILabel alloc]initWithFrame:CGRectMake(0, voiceButton.bottom, ScreenWidth/3,Adapter(16))];
     lunbotu.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     lunbotu.text =ModuleZW(@"轮播暂停");
     lunbotu.textAlignment = NSTextAlignmentCenter;
@@ -219,7 +224,7 @@
     [audioSession setActive:YES error:nil];
     
     yueYaoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    yueYaoButton.frame = CGRectMake((ScreenWidth - 25 * 3) / 2 + 25, 3, 25, 25);
+    yueYaoButton.frame = CGRectMake((ScreenWidth - Adapter(25) * 3) / 2 + Adapter(25), Adapter(3), Adapter(25), Adapter(25));
     
     [yueYaoButton setBackgroundImage:[UIImage imageNamed:@"yudongbofang2.png"] forState:UIControlStateNormal];
     [yueYaoButton setBackgroundImage:[UIImage imageNamed:@"yundongbofang1.png"] forState:UIControlStateSelected];
@@ -227,7 +232,7 @@
     [yueYaoButton addTarget:self action:@selector(yueYaoAction:) forControlEvents:UIControlEventTouchUpInside];
     
     [footView addSubview:yueYaoButton];
-    UILabel *bofangyueYao = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/3, voiceButton.bottom, ScreenWidth/3,16)];
+    UILabel *bofangyueYao = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/3, voiceButton.bottom, ScreenWidth/3,Adapter(16))];
     bofangyueYao.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     
     bofangyueYao.text = ModuleZW(@"播放乐药");
@@ -235,12 +240,12 @@
     bofangyueYao.font = [UIFont systemFontOfSize:12];
     [footView addSubview:bofangyueYao];
     shifanyinButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    shifanyinButton.frame = CGRectMake((ScreenWidth - 25 * 3) * 5 / 6 + 50, 3, 25, 25);
+    shifanyinButton.frame = CGRectMake((ScreenWidth - Adapter(25) * 3) * 5 / 6 + Adapter(50), Adapter(3), Adapter(25), Adapter(25));
     [shifanyinButton setBackgroundImage:[UIImage imageNamed:@"yundongyueyaoting.png"] forState:UIControlStateNormal];
     [shifanyinButton setBackgroundImage:[UIImage imageNamed:@"yundongyueyao.png"] forState:UIControlStateSelected];
     [shifanyinButton addTarget:self action:@selector(shifanyinAction:) forControlEvents:UIControlEventTouchUpInside];
     [footView addSubview:shifanyinButton];
-    UILabel *shifanyin = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth*2/3, voiceButton.bottom, ScreenWidth/3,16)];
+    UILabel *shifanyin = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth*2/3, voiceButton.bottom, ScreenWidth/3,Adapter(16))];
     shifanyin.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     shifanyin.text = ModuleZW(@"动作示范音");
     shifanyin.textAlignment = NSTextAlignmentCenter;
@@ -249,27 +254,27 @@
     
     /********************************************/
     
-    UIImageView *countImageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, collectionV.top+5, 50.4, 64.8)];
+    UIImageView *countImageV = [[UIImageView alloc] initWithFrame:CGRectMake(Adapter(10), collectionV.top+Adapter(5), Adapter(50.4), Adapter(64.8))];
     countImageV.userInteractionEnabled = YES;
     countImageV.tag = 2001;
     countImageV.image = [UIImage imageNamed:@"YD_Type"];
     [self.view addSubview:countImageV];
 
-    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 3, countImageV.width, 15)];
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, Adapter(3), countImageV.width, Adapter(15))];
     label1.text =ModuleZW([GlobalCommon getSportNameWithIndex:self.titleIndex+1]);
     label1.tag = 2002;
     label1.textAlignment = NSTextAlignmentCenter;
     label1.font = [UIFont systemFontOfSize:15];
     label1.textColor = [UIColor whiteColor];
     [countImageV addSubview:label1];
-    CGRect textRect = [label1.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 15)
+    CGRect textRect = [label1.text boundingRectWithSize:CGSizeMake(MAXFLOAT, Adapter(15))
                                                 options:NSStringDrawingUsesLineFragmentOrigin
                                              attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}
                                                 context:nil];
    label1.width = textRect.size.width;
     countImageV.width = textRect.size.width;
 
-    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(0, label1.bottom+6, countImageV.width, label1.height)];
+    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(0, label1.bottom+Adapter(6), countImageV.width, label1.height)];
     label2.text = [NSString stringWithFormat:@"1/%lu",(unsigned long)self.imageArr.count];
     label2.textAlignment = NSTextAlignmentCenter;
     label2.font = [UIFont systemFontOfSize:16];
@@ -278,11 +283,11 @@
     [countImageV addSubview:label2];
     label2.width = textRect.size.width;
 
-    UIImageView *imgV = [[UIImageView alloc] initWithFrame:CGRectMake((countImageV.width-8)/2, label2.bottom+6, 8, 5)];
+    UIImageView *imgV = [[UIImageView alloc] initWithFrame:CGRectMake((countImageV.width-Adapter(8))/2, label2.bottom+Adapter(6), Adapter(8), Adapter(5))];
     imgV.image = [UIImage imageNamed:@"DownImg"];
     imgV.tag = 2004;
     [countImageV addSubview:imgV];
-    imgV.left = textRect.size.width/2 - 4;
+    imgV.left = textRect.size.width/2 - Adapter(4);
 
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
     [countImageV addGestureRecognizer:tap];
@@ -825,7 +830,7 @@
 //        return;
 //    }
     NSArray *arr = [NSArray arrayWithObjects:ModuleZW(@"全部   "),ModuleZW(@"预备   "),ModuleZW( @"第一式   起式"), ModuleZW(@"第二式   剑指后仰式"), ModuleZW(@"第三式   俯身下探式"), ModuleZW(@"第四式   左右扭转式"), ModuleZW(@"第五式   体侧弯腰式"), ModuleZW(@"第六式   俯身下探加强式"), ModuleZW(@"第七式   婴儿环抱式"), ModuleZW(@"第八式   收式"), nil];
-    MenuTypeView *menuView = [[MenuTypeView alloc] initWithFrame:CGRectMake(10, kNavBarHeight, 220, 320)];
+    MenuTypeView *menuView = [[MenuTypeView alloc] initWithFrame:CGRectMake(Adapter(10), kNavBarHeight, Adapter(220), Adapter(320))];
     menuView.menuArr = arr;
     menuView.delegate = self;
 

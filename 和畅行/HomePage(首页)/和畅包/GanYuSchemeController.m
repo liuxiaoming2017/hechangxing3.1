@@ -32,8 +32,9 @@
 
 - (void)createUI
 {
-    CGFloat imageHeight = 100;
-    CGFloat imageWidth = (ScreenWidth-55)/2.0;
+    
+    CGFloat imageHeight = Adapter(100);
+    CGFloat imageWidth = (ScreenWidth-Adapter(55))/2.0;
     imageHeight = imageWidth/2.16;
    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight)];
    scrollView.showsVerticalScrollIndicator = NO;
@@ -46,7 +47,7 @@
                                        ModuleZW( @"体质调理方案"),
                                        ModuleZW( @"状态护理方案")];
     for(NSInteger i=0;i<titleArr.count;i++){
-        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 5+(imageHeight+30)*i, ScreenWidth - 100, 20)];
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(20), Adapter(5)+(imageHeight+Adapter(30))*i, ScreenWidth - Adapter(100), Adapter(20))];
         titleLabel.font = [UIFont systemFontOfSize:15];
         titleLabel.textAlignment = NSTextAlignmentLeft;
         titleLabel.textColor = [UIColor blackColor];
@@ -57,7 +58,7 @@
     
     
     UIButton *allBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    allBtn.frame = CGRectMake(ScreenWidth-80, 5, 80, 20);
+    allBtn.frame = CGRectMake(ScreenWidth-Adapter(80), Adapter(5), Adapter(80), Adapter(20));
     NSString *buttonStr = ModuleZW(@"全部  >");
     [allBtn setTitle:buttonStr forState:UIControlStateNormal];
     allBtn.titleLabel.font = [UIFont systemFontOfSize:15];
@@ -90,22 +91,22 @@
                 xx = i%2;
                 yy = i/2;
                 
-                imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+(imageHeight+30)*yy, imageWidth, imageHeight);
+                imageV.frame = CGRectMake(Adapter(15)+(imageWidth+Adapter(25))*xx, Adapter(30)+(imageHeight+Adapter(30))*yy, imageWidth, imageHeight);
             }else if (i==2){
-                imageV.frame = CGRectMake(15, 30+(imageHeight+30), ScreenWidth-30, imageHeight);
+                imageV.frame = CGRectMake(Adapter(15), Adapter(30)+(imageHeight+Adapter(30)), ScreenWidth-Adapter(30), imageHeight);
                 imageV.tag = 201+i;
             }else if (i==3){
-                imageV.frame = CGRectMake(15, 30+(imageHeight+30)*2, ScreenWidth-30, imageHeight);
+                imageV.frame = CGRectMake(Adapter(15), Adapter(30)+(imageHeight+Adapter(30))*2, ScreenWidth-Adapter(30), imageHeight);
                 imageV.tag = 201+i;
             }else{
                 xx = (i)%2;
                 yy = (i)/2;
                 imageV.tag = 201+i;
                 if(yy==3){
-                    imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+(imageHeight+30)*(yy+1)-10, imageWidth, imageHeight);
+                    imageV.frame = CGRectMake(Adapter(15)+(imageWidth+Adapter(25))*xx, Adapter(30)+(imageHeight+Adapter(30))*(yy+1)-Adapter(10), imageWidth, imageHeight);
                 }
                 else{
-                    imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+imageHeight*(yy+1)+30*(yy+1), imageWidth, imageHeight);
+                    imageV.frame = CGRectMake(Adapter(15)+(imageWidth+Adapter(25))*xx, Adapter(30)+imageHeight*(yy+1)+Adapter(30)*(yy+1), imageWidth, imageHeight);
                 }
                 
             }
@@ -114,16 +115,16 @@
                 xx = i%2;
                 yy = i/2;
                 
-                imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+(imageHeight+30)*yy, imageWidth, imageHeight);
+                imageV.frame = CGRectMake(Adapter(15)+(imageWidth+Adapter(25))*xx, Adapter(30)+(imageHeight+Adapter(30))*yy, imageWidth, imageHeight);
             }else if (i==4){
-                imageV.frame = CGRectMake(15, 30+(imageHeight+30)*2, ScreenWidth-30, imageHeight);
+                imageV.frame = CGRectMake(Adapter(15), Adapter(30)+(imageHeight+Adapter(30))*2, ScreenWidth-Adapter(30), imageHeight);
             }else{
                 xx = (i+1)%2;
                 yy = (i+1)/2;
                 if(yy==3){
-                    imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+(imageHeight+30)*yy, imageWidth, imageHeight);
+                    imageV.frame = CGRectMake(Adapter(15)+(imageWidth+Adapter(25))*xx, Adapter(30)+(imageHeight+Adapter(30))*yy, imageWidth, imageHeight);
                 }else{
-                    imageV.frame = CGRectMake(15+(imageWidth+25)*xx, 30+imageHeight*yy+30*(yy-1)+15, imageWidth, imageHeight);
+                    imageV.frame = CGRectMake(Adapter(15)+(imageWidth+Adapter(25))*xx, Adapter(30)+imageHeight*yy+Adapter(30)*(yy-Adapter(1))+Adapter(15), imageWidth, imageHeight);
                 }
                 
             }
@@ -138,6 +139,7 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTapAction:)];
         [imageV addGestureRecognizer:tap];
     }
+    scrollView.contentSize = CGSizeMake(ScreenWidth, (imageHeight + Adapter(20))*6);
 }
 
 - (void)allBtnAction

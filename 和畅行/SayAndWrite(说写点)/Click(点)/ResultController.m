@@ -64,6 +64,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"8" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+}
+
 
 
 @end

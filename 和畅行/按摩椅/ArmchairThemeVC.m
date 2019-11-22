@@ -57,21 +57,21 @@
     
    
     
-    self.pageView = [[GLYPageView alloc] initWithFrame:CGRectMake(0.f, kNavBarHeight, ScreenWidth, 50.f) titlesArray:titleArr];
+    self.pageView = [[GLYPageView alloc] initWithFrame:CGRectMake(0.f, kNavBarHeight, ScreenWidth, Adapter(50.f)) titlesArray:titleArr];
     self.pageView.delegate = self;
     [self.pageView initalUI];
     [self.view addSubview:self.pageView];
     
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(ScreenWidth, ScreenHeight-kNavBarHeight-50);
+    layout.itemSize = CGSizeMake(ScreenWidth, ScreenHeight-kNavBarHeight-Adapter(50));
     //layout.itemSize = CGSizeMake(130, 106);
     layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
     layout.minimumLineSpacing = 0;
     layout.minimumInteritemSpacing = 0;
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
-    self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(0,kNavBarHeight+50, ScreenWidth, ScreenHeight-kNavBarHeight-50) collectionViewLayout:layout];
+    self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(0,kNavBarHeight+Adapter(50), ScreenWidth, ScreenHeight-kNavBarHeight-Adapter(50)) collectionViewLayout:layout];
     self.collectionV.delegate = self;
     self.collectionV.dataSource = self;
     self.collectionV.showsHorizontalScrollIndicator = NO;

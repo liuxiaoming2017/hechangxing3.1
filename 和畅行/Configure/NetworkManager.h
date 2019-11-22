@@ -65,4 +65,7 @@ typedef NSURLSessionTask BAURLSessionTask;
 
 - (void)loginAgainWithTwo:(BOOL)isTwo withBlock:(void(^)(NSString * blockParam))callBack;
 
+-(void)mainThreadRequestWithUrl:(NSString *)myUrl token:(NSString *)token dic:(NSDictionary *)dic;
+
++ (void)dataGetMethod:(NSString *)urlString withParams:(NSDictionary *)params withBlock:(void (^)(NSURLResponse *response, id responseObject, NSError * error))block;
 @end

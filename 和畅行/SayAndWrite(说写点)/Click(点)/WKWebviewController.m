@@ -180,6 +180,17 @@
 
     }
     
+    NSString *pageIDStr = @"";
+    
+    
+    if ([self.navTitleLabel.text isEqualToString:ModuleZW(@"经络辨识")]) {
+        pageIDStr = @"6";
+    }
+    if (![pageIDStr isEqualToString:@""]) {
+        self.endTimeStr = [GlobalCommon getCurrentTimes];
+        [GlobalCommon pageDurationWithpageId:pageIDStr withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+    }
+    
 }
 
 #pragma mark - KVO

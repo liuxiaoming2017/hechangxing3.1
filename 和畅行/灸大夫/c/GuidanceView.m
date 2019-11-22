@@ -21,7 +21,7 @@
 
 - (void)setupUI
 {
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 50, ScreenWidth - 80, 40)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(60), Adapter(50), ScreenWidth - Adapter(80), Adapter(40))];
     titleLabel.font = [UIFont systemFontOfSize:16];
     titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.numberOfLines = 0;
@@ -30,21 +30,21 @@
     [titleLabel sizeToFit];
     [self addSubview:titleLabel];
     
-    CGFloat width1 = 210;
-    UIImageView *imgV1 = [[UIImageView alloc] initWithFrame:CGRectMake((ScreenWidth-width1)/2.0, titleLabel.bottom+30, width1, 60)];
+    CGFloat width1 = Adapter(210);
+    UIImageView *imgV1 = [[UIImageView alloc] initWithFrame:CGRectMake((ScreenWidth-width1)/2.0, titleLabel.bottom+Adapter(30), width1, Adapter(60))];
     imgV1.image = [UIImage imageNamed:@"jiutou1"];
     imgV1.contentMode = UIViewContentModeScaleAspectFill;
     [self addSubview:imgV1];
     
-    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.left, imgV1.bottom+30, 200, 20)];
+    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(titleLabel.left, imgV1.bottom+Adapter(30), Adapter(200), Adapter(20))];
     label2.font = [UIFont systemFontOfSize:16];
     label2.textAlignment = NSTextAlignmentLeft;
     label2.textColor = [UIColor blackColor];
     label2.text = ModuleZW(@"打开蓝牙");
     [self addSubview:label2];
     
-    CGFloat width2 = 90;
-    UIImageView *imgV2 = [[UIImageView alloc] initWithFrame:CGRectMake((ScreenWidth-width2)/2.0, label2.bottom+30, width2, 100)];
+    CGFloat width2 = Adapter(90);
+    UIImageView *imgV2 = [[UIImageView alloc] initWithFrame:CGRectMake((ScreenWidth-width2)/2.0, label2.bottom+Adapter(30), width2, Adapter(100))];
     imgV2.image = [UIImage imageNamed:@"lanya1"];
     imgV2.contentMode = UIViewContentModeScaleAspectFill;
     [self addSubview:imgV2];

@@ -23,7 +23,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if(self){
-        self.frame = CGRectMake(0, 0, ScreenWidth, 100);
+        self.frame = CGRectMake(0, 0, ScreenWidth, Adapter(100));
         [self createUI];
     }
     return self;
@@ -33,12 +33,12 @@
 {
     NSLog(@"frame:%@",NSStringFromCGRect(self.frame));
     
-    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 100, 75)];
+    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(Adapter(10), Adapter(5), Adapter(100), Adapter(75))];
     self.imageV.layer.cornerRadius = 3;
     self.imageV.image = [UIImage imageNamed:@"sports01"];
     [self addSubview:self.imageV];
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.imageV.right + 10, self.imageV.top, ScreenWidth - self.imageV.right - 20, 60)];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.imageV.right + Adapter(10), self.imageV.top, ScreenWidth - self.imageV.right - Adapter(20), Adapter(60))];
     self.titleLabel.font = [UIFont systemFontOfSize:16];
     self.titleLabel.textAlignment = NSTextAlignmentLeft;
     self.titleLabel.numberOfLines = 2;
@@ -52,13 +52,13 @@
 //    self.descriptionLabel.textColor = UIColorFromHex(0x7D7D7D);
 //    [self addSubview:self.descriptionLabel];
     
-    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 130, self.imageV.bottom - 14, 120, 14)];
+    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.width - Adapter(130), self.imageV.bottom - Adapter(14), Adapter(120), Adapter(14))];
     self.timeLabel.font = [UIFont systemFontOfSize:14];
     self.timeLabel.textAlignment = NSTextAlignmentRight;
     self.timeLabel.textColor = UIColorFromHex(0x7D7D7D);
     [self addSubview:self.timeLabel];
     
-    UIImageView *lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 84, ScreenWidth, 1)];
+    UIImageView *lineImageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, Adapter(84), ScreenWidth, 1)];
     lineImageV.alpha = 0.5;
     lineImageV.backgroundColor = UIColorFromHex(0xDADADA);
     [self addSubview:lineImageV];
