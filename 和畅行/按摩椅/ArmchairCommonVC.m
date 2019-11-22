@@ -126,6 +126,7 @@
                       @{@"name":@"降腿",@"command":k530Command_legDown}
                       ];
     
+    
     NSArray *arr7 = @[@{@"name":@"揉捏",@"command":k530Command_MovementKnead},
                       @{@"name":@"敲击",@"command":k530Command_MovementKnock},
                       @{@"name":@"指压",@"command":k530Command_MovementShiatsu},
