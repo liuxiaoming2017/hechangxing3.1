@@ -40,16 +40,23 @@
     chenggongLabel.font = [UIFont systemFontOfSize:22];
     [self.view addSubview:chenggongLabel];
     
-    UILabel *chashouLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, chenggongLabel.bottom + Adapter(10), self.view.frame.size.width, Adapter(20))];
+    
+    UILabel *chashouLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  chenggongLabel.bottom + Adapter(10), self.view.frame.size.width, Adapter(50))];
     chashouLabel.textColor = [UIColor whiteColor];
+    chashouLabel. numberOfLines = 2;
     chashouLabel.text = ModuleZW(@"当前支付异常，请重新支付");
     chashouLabel.textAlignment = NSTextAlignmentCenter;
     chashouLabel.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:chashouLabel];
     
+    
+    
     UIButton *wanchengButton = [UIButton buttonWithType:UIButtonTypeCustom];
     wanchengButton.frame = CGRectMake((self.view.frame.size.width - Adapter(210)) / 2, Adapter(412.55), Adapter(210), Adapter(40));
-    [wanchengButton setBackgroundImage:[UIImage imageNamed:@"zhongxinzhifu"] forState:UIControlStateNormal];
+    [wanchengButton setTitle:ModuleZW(@"重新支付") forState:(UIControlStateNormal)];
+    wanchengButton.backgroundColor = RGB_ButtonBlue;
+    wanchengButton.layer.cornerRadius = Adapter(10);
+    wanchengButton.layer.masksToBounds = YES;
     [wanchengButton addTarget:self action:@selector(chongxinButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:wanchengButton];
     

@@ -25,13 +25,13 @@
 }
 -(void)layoutSendCodeView{
     
-    UILabel *topLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, kNavBarHeight , ScreenWidth - 40, 40)];
+    UILabel *topLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(20), kNavBarHeight , ScreenWidth - Adapter(40), Adapter(40))];
     topLabel.text = @"What's the code ?";
     topLabel.textColor = RGB_ButtonBlue;
     topLabel.font = [UIFont systemFontOfSize:26];
     [self.view addSubview:topLabel];
     
-    UILabel *modLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, topLabel.bottom + 10 , ScreenWidth - 40, 45)];
+    UILabel *modLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(20), topLabel.bottom + Adapter(10) , ScreenWidth - Adapter(40), Adapter(45))];
     modLabel.numberOfLines = 0;
     if([self.numberStr containsString:@"@"]){
         modLabel.text =  [NSString stringWithFormat:@"Enter the code sent to  %@",self.numberStr] ;
@@ -45,7 +45,7 @@
     
     
     HWTFCursorView *code4View = [[HWTFCursorView alloc] initWithCount:4 margin:20];
-    code4View.frame = CGRectMake(20, modLabel.bottom + 30 , ScreenWidth - 40, 50);
+    code4View.frame = CGRectMake(Adapter(20), modLabel.bottom + Adapter(30) , ScreenWidth - Adapter(40), Adapter(50));
     [self.view addSubview:code4View];
     self.code4View = code4View;
     __weak typeof(self) weakself = self;
@@ -54,7 +54,7 @@
     };
     
     UIButton *codeButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    codeButton.frame = CGRectMake(20, code4View.bottom + 20, ScreenWidth - 40, 30);
+    codeButton.frame = CGRectMake(Adapter(20), code4View.bottom + Adapter(20), ScreenWidth - Adapter(40), Adapter(30));
     [codeButton setTitle:@"Problems receiving the code?" forState:(UIControlStateNormal)];
     [codeButton setTitleColor:RGB_ButtonBlue forState:(UIControlStateNormal)];
     [codeButton.titleLabel setFont:[UIFont systemFontOfSize:13]];

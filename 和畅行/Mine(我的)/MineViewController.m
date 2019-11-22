@@ -240,7 +240,11 @@
             titleLabel.textAlignment =NSTextAlignmentCenter;
             titleLabel.textColor = UIColorFromHex(0X7f7f7f);
             titleLabel.numberOfLines = 2;
-            titleLabel.font = [UIFont systemFontOfSize:15/[UserShareOnce shareOnce].multipleFontSize];
+            if (ISPaid) {
+                titleLabel.font = [UIFont systemFontOfSize:15/[UserShareOnce shareOnce].multipleFontSize];
+            }else{
+                titleLabel.font = [UIFont systemFontOfSize:14/[UserShareOnce shareOnce].fontSize];
+            }
             [imageV addSubview:titleLabel];
             
             

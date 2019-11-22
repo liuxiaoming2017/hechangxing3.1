@@ -34,12 +34,12 @@
                                                             ModuleZW(@"艾灸"),ModuleZW(@"电话"),
                                                             ModuleZW(@"视频"),ModuleZW(@"血压"),
                                                             ModuleZW(@"图文"),@"推拿",ModuleZW(@"耳穴")];
-        if([UserShareOnce shareOnce].languageType){
-            imagesNameData = @[ModuleZW(@"音乐"),ModuleZW(@"运动"),
-                               ModuleZW(@"艾灸"),ModuleZW(@"电话"),
-                               ModuleZW(@"视频"),ModuleZW(@"血压"),
-                               ModuleZW(@"图文"),ModuleZW(@"耳穴")];
-        }
+//        if([UserShareOnce shareOnce].languageType){
+//            imagesNameData = @[ModuleZW(@"音乐"),ModuleZW(@"运动"),
+//                               ModuleZW(@"艾灸"),ModuleZW(@"电话"),
+//                               ModuleZW(@"视频"),ModuleZW(@"血压"),
+//                               ModuleZW(@"图文"),ModuleZW(@"耳穴")];
+//        }
 //        NSInteger lieshu = imagesData.count/3;
        
         NSInteger lieshu = imagesData.count/3+imagesData.count%3;
@@ -74,7 +74,7 @@
             button.tag = 100+i;
             [button addTarget:self action:@selector(pushButtonClick:) forControlEvents:UIControlEventTouchUpInside];
             
-            CGRect textRect = [imagesNameData[i] boundingRectWithSize:CGSizeMake(120, MAXFLOAT)
+            CGRect textRect = [imagesNameData[i] boundingRectWithSize:CGSizeMake(Adapter(105), MAXFLOAT)
                                                               options:NSStringDrawingUsesLineFragmentOrigin
                                                            attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}
                                                               context:nil];
@@ -82,7 +82,7 @@
             UILabel *name = [[UILabel alloc]init];
             name.text = imagesNameData[i];
             name.numberOfLines = 2;
-            name.frame = CGRectMake(30 + col * (40+MARGIN), CGRectGetMaxY(button.frame )+ 5, 120, textRect.size.height);
+            name.frame = CGRectMake(Adapter(30) + col * (Adapter(40)+MARGIN), CGRectGetMaxY(button.frame )+ Adapter(5), Adapter(105), textRect.size.height);
             name.font =[UIFont systemFontOfSize:15];
             name.textColor = [UIColor whiteColor];
             name.centerX = button.centerX;

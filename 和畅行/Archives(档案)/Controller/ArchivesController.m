@@ -130,9 +130,14 @@
     [self.view addSubview:self.noView ];
     
     UIButton *ploadRreportBT = [UIButton buttonWithType:UIButtonTypeCustom];
-    ploadRreportBT.frame = CGRectMake(ScreenWidth-Adapter(94), 2+kStatusBarHeight, Adapter(80), 40);
+    ploadRreportBT.frame = CGRectMake(ScreenWidth-Adapter(104), 2+kStatusBarHeight, Adapter(100), 40);
     [ploadRreportBT setTitle:ModuleZW(@"上传报告") forState:(UIControlStateNormal)];
-    [ploadRreportBT.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    if (ISPaid) {
+        [ploadRreportBT.titleLabel setFont:[UIFont systemFontOfSize:15/[UserShareOnce shareOnce].multipleFontSize]];
+    }else{
+        [ploadRreportBT.titleLabel setFont:[UIFont systemFontOfSize:15/[UserShareOnce shareOnce].fontSize]];
+    }
+    
     [ploadRreportBT setTitleColor:RGB_ButtonBlue forState:(UIControlStateNormal)];
     [[ploadRreportBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
         UpdateReportViewController *updateVC = [[UpdateReportViewController alloc]init];

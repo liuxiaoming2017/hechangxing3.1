@@ -39,7 +39,7 @@
         make.top.equalTo(self.typeImageView.mas_bottom);
         make.bottom.equalTo(self.backView.mas_bottom);
         make.leading.equalTo(self.backView.mas_leading).offset(Adapter(20.0));
-        make.width.mas_equalTo(200);
+        make.width.mas_equalTo(Adapter(200));
     }];
     
 

@@ -219,8 +219,8 @@
 {
     [super layoutSubviews];
     
-    CGFloat h = 30;
-    CGFloat w = 2;
+    CGFloat h = Adapter(30);
+    CGFloat w = Adapter(2);
     CGFloat x = self.bounds.size.width * 0.5;
     CGFloat y = self.bounds.size.height * 0.5;
     self.cursorView.frame = CGRectMake(0, 0, w, h);

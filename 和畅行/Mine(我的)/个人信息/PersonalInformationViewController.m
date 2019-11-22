@@ -146,7 +146,9 @@
                 [photoButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage] forState:(UIControlStateNormal)];
                 
                  [photoButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage]  forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"1我的_03"]];
+                self.urlHttpImg = [UserShareOnce shareOnce].memberImage;
             } else{
+                self.urlHttpImg = @"";
             }
             [photoButton addTarget:self action:@selector(uploadImageClick:) forControlEvents:(UIControlEventTouchUpInside)];
             
@@ -359,6 +361,7 @@
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
     [dic setObject:[UserShareOnce shareOnce].uid forKey:@"id"];
+    
     [dic setObject:self.urlHttpImg forKey:@"memberImage"];
     [dic setObject:self.sexupStr forKey:@"gender"];
     [dic setObject:self.nameStr forKey:@"name"];

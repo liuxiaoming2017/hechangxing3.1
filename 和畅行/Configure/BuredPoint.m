@@ -18,6 +18,7 @@ static NSMutableArray *tasks;
 @property (nonatomic,copy)NSString *signStr;
 @property (nonatomic,copy)NSString *openStr;
 @property (nonatomic,copy)NSString *locationKey;
+@property (nonatomic,copy)NSString *pointToken;
 @end
 @implementation BuredPoint
 
@@ -83,17 +84,77 @@ static NSMutableArray *tasks;
     return tasks;
 }
 
+//获取埋点token 登录认证
+
+-(void)getTokenWithUrl:(NSString *)myUrl  dic:(NSDictionary *)dic successBlock:(BAResponseSuccess)successBlock failureBlock:(BAResponseFail)failureBlock{
+    
+    if(![self.openStr isEqualToString:@"1"]){
+        NSLog(@"数据上传开关为关闭状态");
+        return;
+    }
+    if(!myUrl||myUrl.length<1){
+        NSLog(@"===========url错误============");
+        return;
+    }
+    NSError *parseError = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+    NSString *string =  [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    string =  [string stringByReplacingOccurrencesOfString:@"'\\'" withString:@""];
+    string =  [string stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSURL *url = [NSURL URLWithString:myUrl];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:self.pointToken forHTTPHeaderField:@"x-auth-token"];
+    //    [request setValue:tokenStr forHTTPHeaderField:@"token"];
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    [request setHTTPBody:data];
+    
+    //3.获得会话对象
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error == nil) {
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+           
+            if ([[dict valueForKey:@"data"] valueForKey:@"x-auth-token"]) {
+                self.pointToken = [[dict valueForKey:@"data"] valueForKey:@"x-auth-token"];
+            }else{
+                self.pointToken = nil;
+            }
+            if (successBlock)
+            {
+                successBlock(response);
+            }
+             NSLog(@"%@",self.pointToken);
+        }else{
+            self.pointToken = nil;
+            if (failureBlock)
+            {
+                failureBlock(error);
+            }
+        }
+    }];
+    
+    //5.执行任务
+    [dataTask resume];
+    
+    
+}
+
+
 //正常情况下的 埋点数据上传  (有定位)
 
 -(void)submitLocationWithUrl:(NSString *)myUrl Dic:(NSDictionary *)dic successBlock:(BAResponseSuccess)successBlock failureBlock:(BAResponseFail)failureBlock{
     
     
     NSMutableDictionary *parmDic1 = [[NSMutableDictionary alloc]initWithDictionary:dic];
+    NSMutableDictionary *parmDic2 = [[NSMutableDictionary alloc]initWithDictionary:[dic valueForKey:@"body"]];
     if( self.locationKey&& self.locationKey.length > 0){
         
         NSURL *urlStr = [NSURL URLWithString: [NSString stringWithFormat:@"http://api.map.baidu.com/location/ip?ak=%@",self.locationKey]];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:urlStr cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-        [request setHTTPMethod:@"GET"];//设置请求方式为POST，默认为GET
+        [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
         [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         
         //3.获得会话对象
@@ -105,8 +166,9 @@ static NSMutableArray *tasks;
                 if (successBlock)
                 {
                     if ([[[dict valueForKey:@"content"] valueForKey:@"address_detail"] valueForKey:@"province"]) {
-                        parmDic1[@"province"] = [[[dict valueForKey:@"content"] valueForKey:@"address_detail"] valueForKey:@"province"];
-                        parmDic1[@"city"]  =     [[[dict valueForKey:@"content"] valueForKey:@"address_detail"] valueForKey:@"city"] ;
+                        parmDic2[@"province"] = [[[dict valueForKey:@"content"] valueForKey:@"address_detail"] valueForKey:@"province"];
+                        parmDic2[@"city"]  =     [[[dict valueForKey:@"content"] valueForKey:@"address_detail"] valueForKey:@"city"] ;
+                        [parmDic1 setValue:parmDic2 forKey:@"body"];
                     }
                     
                     [self submitWithUrl:myUrl dic:parmDic1 successBlock:^(id  _Nonnull response) {
@@ -162,6 +224,7 @@ static NSMutableArray *tasks;
 -(void)mainLocationThreadRequestWithUrl:(NSString *)myUrl dic:(NSDictionary *)dic resultBlock:(BAResponseResult)resultBlock {
     
     NSMutableDictionary *parmDic1 = [[NSMutableDictionary alloc]initWithDictionary:dic];
+     NSMutableDictionary *parmDic2 = [[NSMutableDictionary alloc]initWithDictionary:[dic valueForKey:@"body"]];
     if( self.locationKey&& self.locationKey.length > 0){
         
         NSURL *urlStr = [NSURL URLWithString: [NSString stringWithFormat:@"http://api.map.baidu.com/location/ip?ak=%@",self.locationKey]];
@@ -174,10 +237,12 @@ static NSMutableArray *tasks;
         NSDictionary  *  dic1  = [NSJSONSerialization JSONObjectWithData:received options:NSJSONReadingMutableContainers error:&error];
         
         if ([[[dic1 valueForKey:@"content"] valueForKey:@"address_detail"] valueForKey:@"province"]) {
-            parmDic1[@"province"] = [[[dic1 valueForKey:@"content"] valueForKey:@"address_detail"] valueForKey:@"province"];
-            parmDic1[@"city"]  =     [[[dic1 valueForKey:@"content"] valueForKey:@"address_detail"] valueForKey:@"city"] ;
+            parmDic2[@"province"] = [[[dic1 valueForKey:@"content"] valueForKey:@"address_detail"] valueForKey:@"province"];
+            parmDic2[@"city"]  =     [[[dic1 valueForKey:@"content"] valueForKey:@"address_detail"] valueForKey:@"city"];
+            [parmDic1 setValue:parmDic2 forKey:@"body"];
         }
-        [self mainThreadRequestWithUrl:myUrl dic:parmDic1 resultBlock:^(id  _Nonnull response) {
+        dic = parmDic1;
+        [self mainThreadRequestWithUrl:myUrl dic:dic resultBlock:^(id  _Nonnull response) {
             if (resultBlock)
             {
                 resultBlock(response);
@@ -186,7 +251,7 @@ static NSMutableArray *tasks;
         
     }else{
      
-        [self mainThreadRequestWithUrl:myUrl dic:parmDic1 resultBlock:^(id  _Nonnull response) {
+        [self mainThreadRequestWithUrl:myUrl dic:dic resultBlock:^(id  _Nonnull response) {
             if (resultBlock)
             {
                 resultBlock(response);
@@ -212,12 +277,19 @@ static NSMutableArray *tasks;
         return;
     }
     
+    if(!self.pointToken){
+        NSLog(@"===========未成功获取埋点token============");
+        return;
+    }
+    
     NSString *dataStr = [self dictionaryToJson:dic];
     NSString * tokenStr = [self sortingWithDic:dic];
     NSURL *url = [NSURL URLWithString:myUrl];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    
     [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:self.pointToken forHTTPHeaderField:@"x-auth-token"];
     [request setValue:tokenStr forHTTPHeaderField:@"token"];
     NSData *data = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
     [request setHTTPBody:data];
@@ -255,12 +327,17 @@ static NSMutableArray *tasks;
         return;
     }
     if(!myUrl||myUrl.length<10){
-        NSLog(@"===========url错误============");
+        NSLog(@"============url错误============");
         return;
     }
     
     if(!dic||[dic isEqual: [NSNull null]]||![dic[@"body"] isKindOfClass:[NSDictionary class]]){
         NSLog(@"===========请求参数错误============");
+        return;
+    }
+    
+    if(!self.pointToken){
+        NSLog(@"===========未成功获取埋点token============");
         return;
     }
     NSString *dataStr = [self dictionaryToJson:dic];
@@ -269,23 +346,19 @@ static NSMutableArray *tasks;
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
     [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:self.pointToken forHTTPHeaderField:@"x-auth-token"];
     [request setValue:tokenStr forHTTPHeaderField:@"token"];
     NSData *data = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
     [request setHTTPBody:data];
     
     NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    
-
     NSDictionary  *  dic1  = [NSJSONSerialization JSONObjectWithData:received options:NSJSONReadingMutableContainers error:nil];
-    
     if (resultBlock)
     {
         resultBlock(dic1);
     }
-    
 }
--(NSString*)dictionaryToJson:(NSDictionary *)dic
-{
+-(NSString*)dictionaryToJson:(NSDictionary *)dic{
     NSArray *keyArray = [dic[@"body"] allKeys];
     for (NSString *keyStr in keyArray) {
         if ([dic[@"body"][keyStr] isEqualToString:@""]||!dic[@"body"][keyStr]) {
@@ -314,7 +387,7 @@ static NSMutableArray *tasks;
 
 
 -(NSString *)sortingWithDic:(NSDictionary *)dic{
-    
+
     NSArray *allKeyArray = [dic[@"body"] allKeys];
     
     NSStringCompareOptions comparisonOptions = NSCaseInsensitiveSearch|NSNumericSearch|

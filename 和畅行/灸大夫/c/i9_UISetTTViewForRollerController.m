@@ -107,7 +107,7 @@
     [_wenduRemind mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.equalTo(self.view.mas_leading).offset(Adapter(20));
         make.top.equalTo(self.moxaNumLable.mas_bottom).offset(Adapter(5));
-        make.size.mas_equalTo(CGSizeMake(Adapter(100), Adapter(20)));
+        make.size.mas_equalTo(CGSizeMake(Adapter(200), Adapter(20)));
     }];
     
     [_wenduPicker mas_makeConstraints:^(MASConstraintMaker *make) {

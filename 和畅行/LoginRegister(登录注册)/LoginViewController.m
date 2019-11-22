@@ -199,7 +199,7 @@
         [self selected:segment];
         self.promptLabel.hidden = YES;
         
-        loginBtn.height = 35;
+        loginBtn.height = Adapter(35);
         UIButton *registeredBT = [UIButton buttonWithType:UIButtonTypeCustom];
         registeredBT.frame = CGRectMake(segment.left, passWordBox.bottom + Adapter(110), imageV3.width, Adapter(35));
         registeredBT.layer.cornerRadius = registeredBT.height/2;

@@ -50,7 +50,7 @@
     gouwucheImage.image = [UIImage imageNamed:@"leyaogouwuche.png"];
     [xiaofeijinerImage addSubview:gouwucheImage];
     
-    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(50), Adapter(12), Adapter(40), Adapter(20))];
+    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(40), Adapter(12), Adapter(60), Adapter(20))];
     zongjinerLabel.text = ModuleZW(@"总计: ");
     zongjinerLabel.textColor = [UIColor whiteColor];
     zongjinerLabel.font = [UIFont systemFontOfSize:13];

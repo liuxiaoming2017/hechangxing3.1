@@ -37,11 +37,11 @@
     UILabel *stateLabel = [Tools labelWith:[self.result isEqualToString:@"success"]?@"支付成功":@"支付异常" frame:CGRectMake(kScreenSize.width/2-Adapter(50), Adapter(240), Adapter(100), Adapter(15)) textSize:22 textColor:[UIColor whiteColor] lines:1 aligment:NSTextAlignmentCenter];
     stateLabel.font = [UIFont boldSystemFontOfSize:22];
     [backImageView addSubview:stateLabel];
-    UILabel *infoLabel = [Tools labelWith:[self.result isEqualToString:@"success"]?@"您已成功购买商品，请注意查收":@"当前支付异常，请重新支付" frame:CGRectMake(0, Adapter(260), kScreenSize.width, Adapter(10)) textSize:16 textColor:[UIColor whiteColor] lines:1 aligment:NSTextAlignmentCenter];
+    UILabel *infoLabel = [Tools labelWith:[self.result isEqualToString:@"success"]?@"您已成功购买商品，请注意查收":@"当前支付异常，请重新支付" frame:CGRectMake(0, Adapter(260), kScreenSize.width, Adapter(30)) textSize:16 textColor:[UIColor whiteColor] lines:2 aligment:NSTextAlignmentCenter];
     infoLabel.font = [UIFont boldSystemFontOfSize:16];
     [backImageView addSubview:infoLabel];
 
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(kScreenSize.width/2-80, kScreenSize.height-Adapter(140), Adapter(160), Adapter(30))];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(kScreenSize.width/2-Adapter(80), kScreenSize.height-Adapter(140), Adapter(160), Adapter(30))];
     [button setImage:[UIImage imageNamed:[self.result isEqualToString:@"success"]?@"支付完成":@"重新支付图标"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];

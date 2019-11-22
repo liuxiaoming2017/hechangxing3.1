@@ -46,17 +46,17 @@
 - (void)setupUI:(NSString *)content
 {
     self.backgroundColor = [UIColor whiteColor];
-    self.layer.cornerRadius = 8.0;
+    self.layer.cornerRadius = Adapter(8.0);
 //    self.layer.borderWidth = 1.0;
 //    self.layer.borderColor = [UIColor blackColor].CGColor;
 //
     
-    CGFloat viewWidth = ScreenWidth-30;
+    CGFloat viewWidth = ScreenWidth-Adapter(30);
     
     // 计算高度，但是如果有换行符，计算不出实际高度
     CGFloat contentH = ScreenHeight-kNavBarHeight*2.5;
     
-    UILabel *alerLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, viewWidth, 26)];
+    UILabel *alerLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, Adapter(10), viewWidth, Adapter(26))];
     alerLabel. text = @"解读";
     alerLabel.textColor = RGB_TextOrange;
     alerLabel.textAlignment = NSTextAlignmentCenter;
@@ -81,12 +81,12 @@
 //        contentH = size.height;
 //    }
     
-    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(5, alerLabel.bottom, viewWidth-10, contentH-alerLabel.bottom-5-46)];
+    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(Adapter(5), alerLabel.bottom, viewWidth-Adapter(10), contentH-alerLabel.bottom-Adapter(51))];
     [self addSubview:textView];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraphStyle.lineSpacing = 5;
+    paragraphStyle.lineSpacing = Adapter(5);
     
     NSString *noteStr = content;
     
@@ -100,7 +100,7 @@
     self.frame = CGRectMake((ScreenWidth-viewWidth)/2.0, (ScreenHeight-contentH)/2.0, viewWidth, contentH);
     
     UIButton *cancelBtn = [[UIButton alloc] init];
-    cancelBtn.frame = CGRectMake(10, textView.bottom + 8, (viewWidth-30)/2.0f, 36);
+    cancelBtn.frame = CGRectMake(Adapter(10), textView.bottom + Adapter(8), (viewWidth-Adapter(30))/2.0f, Adapter(36));
     cancelBtn.backgroundColor = RGB_ButtonBlue;
     [cancelBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
     [cancelBtn setTitle:@"关闭" forState:UIControlStateNormal];
@@ -113,9 +113,9 @@
     
     
     UIButton *affirmBtn = [[UIButton alloc] init];
-    affirmBtn.frame =  CGRectMake(cancelBtn.right + 10, cancelBtn.top, cancelBtn.width, 36);
+    affirmBtn.frame =  CGRectMake(cancelBtn.right + Adapter(10), cancelBtn.top, cancelBtn.width, Adapter(36));
     affirmBtn.backgroundColor = RGB_ButtonBlue;
-    affirmBtn.layer.cornerRadius = 8;
+    affirmBtn.layer.cornerRadius = Adapter(8);
     affirmBtn.layer.masksToBounds = YES;
     [affirmBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
     [affirmBtn setTitle:@"不再提示" forState:UIControlStateNormal];

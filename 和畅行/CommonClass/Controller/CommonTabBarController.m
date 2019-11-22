@@ -114,20 +114,7 @@
             }
             
              [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
-            
-            if([UserShareOnce shareOnce].isOnline){
-                i9_MoxaMainViewController * vc1 = [[i9_MoxaMainViewController alloc] init];
-                vc1.hidesBottomBarWhenPushed = YES;
-                [[self selectedViewController] pushViewController:vc1 animated:YES];
-                return;
-            }else{
-                if([[[NSUserDefaults standardUserDefaults] objectForKey:@"bloodNeverCaution"] isEqualToString:@"1"]){
-                    vc = [[PressureViewController alloc] init];
-                }else{
-                    
-                }
-            }
-            
+
         }
             
             break;

@@ -59,14 +59,14 @@
     
 
     //强制英文
-//    [[NSUserDefaults standardUserDefaults] setObject:@"en" forKey:@"Language"];
-//    [NSBundle setLanguage:@"en"];
-//     [UserShareOnce shareOnce].languageType  = @"us-en";
+    [[NSUserDefaults standardUserDefaults] setObject:@"en" forKey:@"Language"];
+    [NSBundle setLanguage:@"en"];
+     [UserShareOnce shareOnce].languageType  = @"us-en";
     
     //强制中文
-    [[NSUserDefaults standardUserDefaults] setObject:@"zh-Hans" forKey:@"Language"];
-    [NSBundle setLanguage:@"zh-Hans"];
-    [UserShareOnce shareOnce].languageType  = nil;
+//    [[NSUserDefaults standardUserDefaults] setObject:@"zh-Hans" forKey:@"Language"];
+//    [NSBundle setLanguage:@"zh-Hans"];
+//    [UserShareOnce shareOnce].languageType  = nil;
     
      [[UIButton appearance] setExclusiveTouch:YES];
     NSString *fontStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"YHFont"];
@@ -110,8 +110,8 @@
     
    
     //埋点注册  AeKAfeKr4YGknb2kPxd8d4xqxFcbjhg0
-//    [[BuredPoint sharedYHBuriedPoint]setTheSignatureWithSignStr:BuBuredPointKey withOpenStr:@"1" withLacationKey:@"AeKAfeKr4YGknb2kPxd8d4xqxFcbjhg0"];
-//    [self versionContrast111];
+    [[BuredPoint sharedYHBuriedPoint]setTheSignatureWithSignStr:BuBuredPointKey withOpenStr:@"1" withLacationKey:@"AeKAfeKr4YGknb2kPxd8d4xqxFcbjhg0"];
+    
     //创建本地数据库
     [[CacheManager sharedCacheManager] createDataBase];
     
@@ -555,30 +555,15 @@
                                          @"remark":@"1"}
                                  };
 
-//    [[BuredPoint sharedYHBuriedPoint] mainLocationThreadRequestWithUrl:accessurlStr dic:accessDic resultBlock:^(id  _Nonnull response) {
-//        NSLog(@"%@",response);
-//    }];
+    [[BuredPoint sharedYHBuriedPoint] mainLocationThreadRequestWithUrl:accessurlStr dic:accessDic resultBlock:^(id  _Nonnull response) {
+        NSLog(@"%@",response);
+    }];
     
 }
 
 
 //版本对比
--(void )versionContrast111 {
-    //该接口用于记录用户使用app下载网站资源记录
-            NSString *downloadStr = [NSString stringWithFormat:@"http://10.1.71.96:8086/login"];
-            NSDictionary *downloadDic = @{@"username":@"apiadminuser",
-                                                   @"password":@"123456" };
-            
-//            [[BuredPoint sharedYHBuriedPoint] submitWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
-//                NSLog(@"%@",response);
-//                NSString *codeStr = [NSString stringWithFormat:@"%@",[response valueForKey:@"code"]];
-//                if ([codeStr isEqualToString:@"200"]) {
-////                    [UserShareOnce shareOnce].
-//                }
-//            } failureBlock:^(NSError * _Nonnull error) {
-//                NSLog(@"%@",error);
-//            }];
-}
+
 
 
 //版本对比
@@ -613,15 +598,15 @@
                                                    @"remark":@""}
                                            };
             
-//            [[BuredPoint sharedYHBuriedPoint] submitWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
-//                NSLog(@"%@",response);
-//                NSString *codeStr = [NSString stringWithFormat:@"%@",[response valueForKey:@"code"]];
-//                if ([codeStr isEqualToString:@"200"]) {
-//                    [[NSUserDefaults standardUserDefaults]setValue:versionStr forKey:@"version11"];
-//                }
-//            } failureBlock:^(NSError * _Nonnull error) {
-//
-//            }];
+            [[BuredPoint sharedYHBuriedPoint] submitWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
+                NSLog(@"%@",response);
+                NSString *codeStr = [NSString stringWithFormat:@"%@",[response valueForKey:@"code"]];
+                if ([codeStr isEqualToString:@"200"]) {
+                    [[NSUserDefaults standardUserDefaults]setValue:versionStr forKey:@"version11"];
+                }
+            } failureBlock:^(NSError * _Nonnull error) {
+
+            }];
         }
     }
     

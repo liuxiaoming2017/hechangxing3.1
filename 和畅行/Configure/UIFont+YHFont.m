@@ -29,7 +29,12 @@
     newFont = [UIFont adjustFont:fontSize * [UserShareOnce shareOnce].fontSize ];
     
     if ([UserShareOnce shareOnce].canChageSize == NO){
-        newFont = [UIFont adjustFont:fontSize*1.35];
+        if(ISPaid) {
+            newFont = [UIFont adjustFont:fontSize*1.35];
+        }else{
+            newFont = [UIFont adjustFont:fontSize*1.1];
+        }
+        
     }
      return newFont;
 }

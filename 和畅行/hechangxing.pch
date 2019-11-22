@@ -47,7 +47,7 @@
         #import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 #endif
 //数据埋点
-//#import "BuredPoint.h"
+#import "BuredPoint.h"
 //#import <YHDFBuriedPoint/BuredPoint.h>
 #import "Masonry.h"
 #endif /* ____pch */

@@ -586,16 +586,21 @@
         if(ret == NO){
             title.backgroundColor = [UIColor whiteColor];
             title.textColor = RGB_TextGray;
+            title.layer.cornerRadius = 0;
+            title.layer.masksToBounds = NO;
         }else{
             title.textColor = [UIColor whiteColor];
             title.backgroundColor = RGB_TextOrange;
+            title.layer.cornerRadius = title.height/2;
+            title.layer.masksToBounds = YES;
         }
         if(_myIndexPath.section == section){
             title.textColor = [UIColor whiteColor];
             title.backgroundColor = RGB_TextOrange;
+            title.layer.cornerRadius = title.height/2;
+            title.layer.masksToBounds = YES;
         }
-        title.layer.cornerRadius = title.height/2;
-        title.layer.masksToBounds = YES;
+     
         [view addSubview:title];
         view.isClick = ret;
         return view ;

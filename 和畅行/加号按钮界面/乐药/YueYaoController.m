@@ -373,7 +373,7 @@
     self.backView = backView;
     
     UIButton *jiesuanButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    jiesuanButton.frame = CGRectMake(ScreenWidth-  Adapter(105),Adapter(10), Adapter(80), Adapter(40));
+    jiesuanButton.frame = CGRectMake(ScreenWidth-  Adapter(105),Adapter(10), Adapter(95), Adapter(40));
     [jiesuanButton addTarget:self action:@selector(jiesuanButton) forControlEvents:(UIControlEventTouchUpInside)];
     [jiesuanButton.layer addSublayer:[UIColor setGradualChangingColor:jiesuanButton fromColor:@"f5c366" toColor:@"e79036"]];
     jiesuanButton.layer.cornerRadius = jiesuanButton.height/2;
@@ -387,13 +387,13 @@
     gouwucheImage.image = [UIImage imageNamed:@"购物车icon"];
     [backView addSubview:gouwucheImage];
     
-    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(50), 0, Adapter(50), Adapter(60))];
+    UILabel *zongjinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(50), 0, Adapter(60), Adapter(60))];
     zongjinerLabel.text = ModuleZW(@"总计: ");
     zongjinerLabel.textColor = RGB_TextAppGray;
     zongjinerLabel.font = [UIFont systemFontOfSize:16];
     [backView addSubview:zongjinerLabel];
     
-    jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(zongjinerLabel.right, 0, Adapter(100), Adapter(60))];
+    jinerLabel = [[UILabel alloc]initWithFrame:CGRectMake(zongjinerLabel.right, 0, Adapter(110), Adapter(60))];
     jinerLabel.textColor = RGB(222, 119, 36);
     jinerLabel.font = [UIFont systemFontOfSize:16];
     [backView addSubview:jinerLabel];
@@ -505,7 +505,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     SongListCell *cell = (SongListCell *)[tableView cellForRowAtIndexPath:indexPath];
     if(cell.PlayOrdownload){ //播放暂停
         
@@ -518,14 +518,14 @@
         SongListModel *model = [self.dataArr objectAtIndex:indexPath.row];
         
         if(cell.currentSelect){
-        
+            
             /***********流量播放弹框********/
             if(![UserShareOnce shareOnce].wwanPlay){
                 if([[UserShareOnce shareOnce].networkState isEqualToString:@"wwan"]){
                     __weak typeof(self) weakSelf = self;
                     [self showAlertMessage:@"当前正在使用流量，是否继续？" withSure:^(NSString *blockParam) {
                         [UserShareOnce shareOnce].wwanPlay = YES;
-                        [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
+                        [cell.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
                         if(![model.subjectSn isEqualToString:weakSelf.currentSubjectSn]){ //切换乐药播放列表
                             weakSelf.currentSubjectSn = model.subjectSn;
                             [weakSelf currentPlayYueYaoList];
@@ -544,7 +544,7 @@
             }
             /*********END**********/
             
-            [cell.downloadBtn setImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
+            [cell.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
             if(![model.subjectSn isEqualToString:self.currentSubjectSn]){ //切换乐药播放列表
                 self.currentSubjectSn = model.subjectSn;
                 [self currentPlayYueYaoList];
@@ -557,7 +557,7 @@
             self.selectSongName = model.source; //播放链接
         }else{
             [cell.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药播放icon"] forState:UIControlStateNormal];
-          //  self.selectSongName = @"";
+            //  self.selectSongName = @"";
             [self pauseMusic];
         }
         

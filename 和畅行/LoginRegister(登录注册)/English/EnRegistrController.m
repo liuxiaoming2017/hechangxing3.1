@@ -28,21 +28,21 @@
 -(void)layoutRegistView {
     
     
-    UILabel *topLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, ScreenHeight/ 2 - 140, ScreenWidth - 20, 30)];
+    UILabel *topLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(10), ScreenHeight/ 2 - Adapter(140), ScreenWidth - Adapter(20), Adapter(30))];
     topLabel.text = @"What's Your MobMobile Number?";
     topLabel.textAlignment = NSTextAlignmentCenter;
     topLabel.textColor = RGB_ButtonBlue;
     topLabel.font = [UIFont systemFontOfSize:22];
     [self.view addSubview:topLabel];
     
-    UILabel *areaNumberLB = [[UILabel alloc]initWithFrame:CGRectMake(20, topLabel.bottom + 20, 50, 30)];
+    UILabel *areaNumberLB = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(20), topLabel.bottom + Adapter(20), Adapter(50), Adapter(30))];
     areaNumberLB.text = @"US  +1";
     areaNumberLB.font = [UIFont systemFontOfSize:15];
     areaNumberLB.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:areaNumberLB];
     
     
-    UITextField *phoneTF = [[UITextField alloc]initWithFrame:CGRectMake(80, topLabel.bottom +  20, ScreenWidth - 100, 30)];
+    UITextField *phoneTF = [[UITextField alloc]initWithFrame:CGRectMake(Adapter(80), topLabel.bottom +  Adapter(20), ScreenWidth - Adapter(100), Adapter(30))];
     phoneTF.font = [UIFont systemFontOfSize:15];
     phoneTF.delegate = self;
     phoneTF.keyboardType = UIKeyboardTypeNumberPad;
@@ -50,12 +50,12 @@
     
     self.phoneTF = phoneTF;
     
-    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(20, phoneTF.bottom, ScreenWidth - 40, 1)];
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(Adapter(20), phoneTF.bottom, ScreenWidth - Adapter(40), 1)];
     lineView.backgroundColor = RGB_ButtonBlue;
     [self.view addSubview:lineView];
     
     UIButton *nextButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    nextButton.frame = CGRectMake(20, lineView.bottom + 15, ScreenWidth - 40, 35);
+    nextButton.frame = CGRectMake(Adapter(20), lineView.bottom + Adapter(15), ScreenWidth - Adapter(40), Adapter(35));
     nextButton.layer.cornerRadius = nextButton.height/2;
     nextButton.layer.masksToBounds = YES;
     [nextButton setTitle:@"Next" forState:(UIControlStateNormal)];
@@ -90,7 +90,7 @@
    
     
     UIButton *changeButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    changeButton.frame = CGRectMake(20, nextButton.bottom + 30, ScreenWidth - 40, 35);
+    changeButton.frame = CGRectMake(Adapter(20), nextButton.bottom + Adapter(30), ScreenWidth - Adapter(40), Adapter(35));
     changeButton.layer.cornerRadius = nextButton.height/2;
     changeButton.layer.masksToBounds = YES;
     [changeButton setTitle:@"User your email address" forState:(UIControlStateNormal)];
@@ -106,7 +106,7 @@
             phoneTF.keyboardType = UIKeyboardTypeDefault;
             [phoneTF becomeFirstResponder];
             self.isPhone = NO;
-            phoneTF.left = 30;
+            phoneTF.left = Adapter(30);
         }else{
             [changeButton setTitle:@"User your email address" forState:(UIControlStateNormal)];
             topLabel.text = @"What's Your Mobile Number?";
@@ -114,7 +114,7 @@
             self.isPhone = YES;
             phoneTF.keyboardType = UIKeyboardTypeNumberPad;
             [phoneTF becomeFirstResponder];
-            phoneTF.left = 80;
+            phoneTF.left = Adapter(80);
         }
         [UIView animateWithDuration:0.5 animations:^{
             self.backView.alpha = 1;

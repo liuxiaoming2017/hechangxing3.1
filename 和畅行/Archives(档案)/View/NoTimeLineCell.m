@@ -240,7 +240,7 @@
     }else if ([typeStr isEqualToString:ModuleZW(@"脏腑")]) {
         kindStr = @"";
         kindIcon = @"脏腑Icon";
-    }else  if ([typeStr isEqualToString:ModuleZW(@"我的上传报告")]){
+    }else  if ([typeStr isEqualToString:@"我的上传报告"]){
         kindStr = @"";
         kindIcon = @"报告";
     }
@@ -248,7 +248,7 @@
         kindStr = @"";
         kindIcon = @"报告";
     }
-    
+    NSLog(@"-=-=-=-=-=-=-=-=-=-=-=-=-%@",typeStr);
     NSString *salaryStr1 = [NSString string];
     if (kindStr.length > 1){
         salaryStr1 =  [NSString stringWithFormat:@"%@%@",self.contentLabel.text,kindStr];

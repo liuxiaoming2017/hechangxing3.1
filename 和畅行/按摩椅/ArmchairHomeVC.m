@@ -24,7 +24,7 @@
 
 #import "NoteView.h"
 
-#define margin ((ScreenWidth-107*3)/4.0)
+#define margin ((ScreenWidth-Adapter(107)*3)/4.0)
 
 #define startDevice @"启动设备"
 #define connectDevice @"连接设备"
@@ -355,8 +355,8 @@
     layout.minimumInteritemSpacing = 0;
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
-    self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom, ScreenWidth-margin, Adapter(125)*4+Adapter(50)) collectionViewLayout:layout];
-     //self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom+8, ScreenWidth-margin, ScreenHeight-label.bottom-8) collectionViewLayout:layout];
+//    self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom, ScreenWidth-margin, Adapter(125)*4+Adapter(50)) collectionViewLayout:layout];
+     self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom+Adapter(8), ScreenWidth-margin, ScreenHeight-label.bottom-Adapter(8)) collectionViewLayout:layout];
     self.collectionV.delegate = self;
     self.collectionV.dataSource = self;
     self.collectionV.showsHorizontalScrollIndicator = NO;
@@ -482,8 +482,7 @@
         ArmchairAcheTestVC *vc = [[ArmchairAcheTestVC alloc] init];
         vc.armchairModel = model;
         [self.navigationController pushViewController:vc animated:YES];
-    }
-    else{
+    } else{
         ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:NO withTitleStr:model.name];
         vc.armchairModel = model;
         [vc commandActionWithModel:model];

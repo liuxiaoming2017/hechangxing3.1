@@ -40,8 +40,8 @@ typedef void( ^ BAResponseResult)(id response);
                       withOpenStr:(NSString *)openStr
                   withLacationKey:(NSString *)lacationKey;
 
-
-;
+//获取埋点token
+-(void)getTokenWithUrl:(NSString *)myUrl  dic:(NSDictionary *)dic successBlock:(BAResponseSuccess)successBlock failureBlock:(BAResponseFail)failureBlock;
 //无定位异步请求
 -(void)submitWithUrl:(NSString *)url  dic:(NSDictionary *)dic successBlock:(BAResponseSuccess)successBlock failureBlock:(BAResponseFail)failureBlock;
 

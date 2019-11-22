@@ -355,11 +355,11 @@
                                                          @"userSource":@"1",
                                                          @"version":versionStr}
                                                };
-//                [[BuredPoint sharedYHBuriedPoint] submitWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
-//
-//                } failureBlock:^(NSError * _Nonnull error) {
-//
-//                }];
+                [[BuredPoint sharedYHBuriedPoint] submitWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
+
+                } failureBlock:^(NSError * _Nonnull error) {
+
+                }];
                 
                 [[UIApplication sharedApplication] openURL:url];
                 

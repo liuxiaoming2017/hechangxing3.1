@@ -132,7 +132,7 @@
     finishButton.alpha = 0.4;
     finishButton.userInteractionEnabled = NO;
     [finishButton addTarget:self action:@selector(finishButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.uploadReportView addSubview:finishButton];
+    [self.backScrollView addSubview:finishButton];
     self.finishButton = finishButton;
     
     self.backScrollView.contentSize = CGSizeMake(ScreenWidth, finishButton.bottom +60);

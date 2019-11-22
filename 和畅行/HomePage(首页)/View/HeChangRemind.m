@@ -61,7 +61,7 @@
     //CGFloat fontSize = 18*[UserShareOnce shareOnce].fontSize;
     
     NSString *titleStr = [self getCurrentTime];
-    CGSize strSize = [titleStr boundingRectWithSize:CGSizeMake(1190, Adapter(30)) options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont fontWithName:[[UIFont systemFontOfSize:1] fontName] size:18]} context:nil].size;
+    CGSize strSize = [titleStr boundingRectWithSize:CGSizeMake(1190, Adapter(30)) options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont fontWithName:[[UIFont systemFontOfSize:1] fontName] size:18*[UserShareOnce shareOnce].fontSize]} context:nil].size;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(14), Adapter(10), Adapter(strSize.width), Adapter(30))];
 //    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 15, strSize.width+8, strSize.height)];

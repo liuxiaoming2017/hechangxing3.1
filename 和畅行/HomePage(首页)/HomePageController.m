@@ -677,10 +677,22 @@
 //数据上传处理
 
 -(void)buriedDataPoints {
+    //获取买点token
+    NSString *downloadStr = [NSString stringWithFormat:@"http://10.1.71.96:8086/login"];
+    NSDictionary *downloadDic = @{@"username":@"apiadminuser",
+                                  @"password":@"123456" };
+    [[BuredPoint sharedYHBuriedPoint]getTokenWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
+        [self submitData];
+    } failureBlock:^(NSError * _Nonnull error) {
+        
+    }];
+
+}
     
-    
+-(void)submitData{
     //==============================此接口为用户新增用户信息使用   怎么判断新增客户? 后台判断=========================
     NSString *userSign = [UserShareOnce shareOnce].uid;
+    NSString *memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
     NSString *sexStr  = [NSString string];
     if (![GlobalCommon stringEqualNull:[UserShareOnce shareOnce].gender]) {
         if([[UserShareOnce shareOnce].gender isEqualToString:@"male"]){
@@ -700,10 +712,11 @@
         birthdayStr= @"";
     }
     
-    NSString *appSignStr = @"1";
+    NSString *appSignStr = [[NSBundle mainBundle] bundleIdentifier];
     NSString *urlStr = [NSString stringWithFormat:@"%@user/info",DATAURL_PRE];
     NSDictionary *infodic = @{ @"body":@{
                                        @"userId":userSign,
+                                       @"memberId":memberId,
                                        @"id":@"",
                                        @"dateBirth":birthdayStr,
                                        @"sex":sexStr,
@@ -713,66 +726,45 @@
                                        @"remark":@""}
                                };
     
-//    [[BuredPoint sharedYHBuriedPoint] submitLocationWithUrl:urlStr Dic:infodic successBlock:^(id  _Nonnull response) {
-//        NSLog(@"%@",response);
-//    } failureBlock:^(NSError * _Nonnull error) {
-//        
-//    }];
+    [[BuredPoint sharedYHBuriedPoint] submitLocationWithUrl:urlStr Dic:infodic successBlock:^(id  _Nonnull response) {
+        NSLog(@"%@",response);
+    } failureBlock:^(NSError * _Nonnull error) {
+        
+    }];
     
     
- 
-  
+    
+    
     
     
     //=============================接口描述： 该接口用于记录用户使用app的设备信息=========================
     
-//    NSString *modelStr           =  [BuredPoint getCurrentDeviceModel];//型号
-//    NSString *resolutionStr     = [BuredPoint getScreenPix];//分辨率
-//    NSString *operatorStr       = [BuredPoint getOperator];//运营商
-//    NSString *network_methodStr = [GlobalCommon internetStatus];//联网方式
-
-
-//    NSString *deviceStr = [NSString stringWithFormat:@"%@user/device",DATAURL_PRE];
-//    NSDictionary *deviceDic = @{ @"body":@{
-//                                         @"id":@"",
-//                                         @"userId":userSign,
-//                                         @"brand":@"iPhone",
-//                                         @"model":modelStr,
-//                                         @"system":@"iOS",
-//                                         @"resolution":resolutionStr,
-//                                         @"operator":operatorStr,
-//                                         @"networkMethod":network_methodStr,
-//                                         @"remark":@""}
-                                };
-
-//    [[BuredPoint sharedYHBuriedPoint] submitWithUrl:deviceStr dic:deviceDic successBlock:^(id  _Nonnull response) {
-//            NSLog(@"%@",response);
-//    } failureBlock:^(NSError * _Nonnull error) {
-//
-//    }];
-
-  
+    NSString *modelStr           =  [BuredPoint getCurrentDeviceModel];//型号
+    NSString *resolutionStr     = [BuredPoint getScreenPix];//分辨率
+    NSString *operatorStr       = [BuredPoint getOperator];//运营商
+    NSString *network_methodStr = [GlobalCommon internetStatus];//联网方式
     
-
--(NSString*)dictionaryToJson:(NSDictionary *)dic
-{
-    NSArray *keyArray = [dic[@"body"] allKeys];
-    for (NSString *keyStr in keyArray) {
-        if ([dic[@"body"][keyStr] isEqualToString:@""]||!dic[@"body"][keyStr]) {
-            NSMutableDictionary *bodyDic = [NSMutableDictionary dictionaryWithDictionary:dic];
-            NSMutableDictionary *myDic = [NSMutableDictionary dictionaryWithDictionary:dic[@"body"]];
-            [myDic setValue:@"1" forKey:@"remark"];
-            [bodyDic setValue:myDic forKeyPath:@"body"];
-            dic = bodyDic.copy;
-        }
-    }
-    NSError *parseError = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
-    NSString *string =  [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    string =  [string stringByReplacingOccurrencesOfString:@"'\\'" withString:@""];
-    string =  [string stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    return string;
+    
+    NSString *deviceStr = [NSString stringWithFormat:@"%@user/device",DATAURL_PRE];
+    NSDictionary *deviceDic = @{ @"body":@{
+                                         @"id":@"",
+                                         @"userId":userSign,
+                                         @"memberId":memberId,
+                                         @"brand":@"iPhone",
+                                         @"model":modelStr,
+                                         @"system":@"iOS",
+                                         @"resolution":resolutionStr,
+                                         @"operator":operatorStr,
+                                         @"networkMethod":network_methodStr,
+                                         @"remark":@""}
+                                 };
+    
+    [[BuredPoint sharedYHBuriedPoint] submitWithUrl:deviceStr dic:deviceDic successBlock:^(id  _Nonnull response) {
+        NSLog(@"%@",response);
+    } failureBlock:^(NSError * _Nonnull error) {
+    }];
 }
+
 
 
 

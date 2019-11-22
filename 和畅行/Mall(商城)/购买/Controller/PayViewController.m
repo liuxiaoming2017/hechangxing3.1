@@ -495,6 +495,7 @@
 //    [request startAsynchronous];
     
     NSString *urlStr= [NSString stringWithFormat:@"member/mobile/order/getOrderInfo.jhtml?sn=%@&token=%@&JESSONID=%@",_dingdanStr,[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID];
+    urlStr = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     __weak typeof(self) weakSelf = self;
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
         [weakSelf requestMayCompleted:response];
@@ -526,7 +527,7 @@
 -(void)requestMayError
 {
     [self hudWasHidden];
-    [self showAlertWarmMessage:@"抱歉，请检查您的网络是否畅通"];
+//    [self showAlertWarmMessage:ModuleZW(@"抱歉，请检查您的网络是否畅通")];
     
     
 }

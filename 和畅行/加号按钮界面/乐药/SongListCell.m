@@ -96,7 +96,6 @@
         
     }
     [self.downloadBtn setBackgroundImage:[UIImage imageNamed:nameStr] forState:UIControlStateNormal];
-    self.PlayOrdownload = NO;
 //    [self.downloadBtn setImage:[UIImage imageNamed:nameStr] forState:UIControlStateNormal];
     
 }
