@@ -79,6 +79,10 @@
             return;
         }
         NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
+        
+        //11.22
+        physicalStr = [GlobalCommon getStringWithSubjectSn:physicalStr];
+        
         NSString *yueyaoIndex = [GlobalCommon getSportTypeFrom:physicalStr];
         if(yueyaoIndex == nil){
             MySportController *vc = [[MySportController alloc] initWithAllSport];

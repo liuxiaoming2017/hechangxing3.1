@@ -572,10 +572,11 @@
             id jlbsData = [[response objectForKey:@"data"] objectForKey:@"jlbs"];
             if(jlbsData != nil && ![jlbsData isKindOfClass:[NSNull class]]){
                 NSDictionary *jlbsDic = [jlbsData objectForKey:@"subject"];
-                NSString *jlbsName = [jlbsDic objectForKey:@"name"];
-               
-                //jlbsName = @"";
+                //NSString *jlbsName = [jlbsDic objectForKey:@"name"];
+                NSString *jlbsName = [jlbsDic objectForKey:@"subject_sn"];
                 
+                //jlbsName = @"";
+                //11.22
                 [[NSUserDefaults standardUserDefaults]setValue: jlbsName forKey:@"Physical"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
             }else{

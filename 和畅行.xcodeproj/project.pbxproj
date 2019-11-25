@@ -115,8 +115,8 @@
 		0369D67E238BC5E100FD3272 /* InsidelayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D669238BC5DD00FD3272 /* InsidelayerView.m */; };
 		0369D67F238BC5E100FD3272 /* GLYPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D66E238BC5E100FD3272 /* GLYPageView.m */; };
 		0369D680238BC5E100FD3272 /* GLYPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D66E238BC5E100FD3272 /* GLYPageView.m */; };
-		0369D682238BC7AF00FD3272 /* CommonTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A7CB1E2303BD6F00A1B7D9 /* CommonTabBarController.m */; };
-		0369D685238BC7BB00FD3272 /* CommonTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D684238BC7BA00FD3272 /* CommonTabBarController.m */; };
+		0369D687238BCAA900FD3272 /* CommonTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A7CB1E2303BD6F00A1B7D9 /* CommonTabBarController.m */; };
+		0369D68A238BCAB200FD3272 /* CommonTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D688238BCAB100FD3272 /* CommonTabBarController.m */; };
 		036A667D2113ECBB0096A006 /* PrivateServiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 036A66782113ECBA0096A006 /* PrivateServiceModel.m */; };
 		036A667E2113ECBB0096A006 /* SelectedAdvisorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 036A667B2113ECBA0096A006 /* SelectedAdvisorModel.m */; };
 		036A667F2113ECBB0096A006 /* PrivateDoctorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 036A667C2113ECBB0096A006 /* PrivateDoctorModel.m */; };
@@ -1485,8 +1485,8 @@
 		0369D66C238BC5DF00FD3272 /* CommandButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandButtonView.h; sourceTree = "<group>"; };
 		0369D66D238BC5E000FD3272 /* InsidelayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsidelayerView.h; sourceTree = "<group>"; };
 		0369D66E238BC5E100FD3272 /* GLYPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLYPageView.m; sourceTree = "<group>"; };
-		0369D683238BC7BA00FD3272 /* CommonTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonTabBarController.h; path = "../../../Documents/GitHubSource/harmonyYi/和畅行/CommonClass/Controller/CommonTabBarController.h"; sourceTree = "<group>"; };
-		0369D684238BC7BA00FD3272 /* CommonTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonTabBarController.m; path = "../../../Documents/GitHubSource/harmonyYi/和畅行/CommonClass/Controller/CommonTabBarController.m"; sourceTree = "<group>"; };
+		0369D688238BCAB100FD3272 /* CommonTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonTabBarController.m; path = "../../harmonyYi/和畅行/CommonClass/Controller/CommonTabBarController.m"; sourceTree = "<group>"; };
+		0369D689238BCAB200FD3272 /* CommonTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonTabBarController.h; path = "../../harmonyYi/和畅行/CommonClass/Controller/CommonTabBarController.h"; sourceTree = "<group>"; };
 		036A66772113ECB90096A006 /* SelectedAdvisorModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedAdvisorModel.h; sourceTree = "<group>"; };
 		036A66782113ECBA0096A006 /* PrivateServiceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivateServiceModel.m; sourceTree = "<group>"; };
 		036A66792113ECBA0096A006 /* PrivateServiceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateServiceModel.h; sourceTree = "<group>"; };
@@ -3956,8 +3956,8 @@
 				0369D656238BC53000FD3272 /* PostButtonView.m */,
 				0369D653238BC4BD00FD3272 /* GlobalCommon.h */,
 				0369D654238BC4BE00FD3272 /* GlobalCommon.m */,
-				0369D683238BC7BA00FD3272 /* CommonTabBarController.h */,
-				0369D684238BC7BA00FD3272 /* CommonTabBarController.m */,
+				0369D689238BCAB200FD3272 /* CommonTabBarController.h */,
+				0369D688238BCAB100FD3272 /* CommonTabBarController.m */,
 				03BD840A238BC02800F57978 /* 730B按摩椅 */,
 			);
 			path = HarmonyYi;
@@ -5509,7 +5509,7 @@
 				03003E4E21CB707B003C89EE /* ServiceBlockCell.m in Sources */,
 				03430B4521119AF7008EE6C8 /* JingLuoSchemeController.m in Sources */,
 				036E843B2186EAD3001B9BB4 /* UINavigationController+MHDismissModalView.m in Sources */,
-				0369D682238BC7AF00FD3272 /* CommonTabBarController.m in Sources */,
+				0369D687238BCAA900FD3272 /* CommonTabBarController.m in Sources */,
 				03535EFF20F7462900664FA9 /* QuestionView.m in Sources */,
 				03DEBC6E2108637C008434BD /* ElecDetailViewController.m in Sources */,
 				03EE39A92366D41900369B34 /* GKAudioPlayer.m in Sources */,
@@ -5948,7 +5948,7 @@
 				03BD841B238BC04B00F57978 /* OGA730BCommonVC.m in Sources */,
 				03BD8250238BB89000F57978 /* PaySuccessViewController.m in Sources */,
 				03BD8251238BB89000F57978 /* base64.m in Sources */,
-				0369D685238BC7BB00FD3272 /* CommonTabBarController.m in Sources */,
+				0369D68A238BCAB200FD3272 /* CommonTabBarController.m in Sources */,
 				03BD8252238BB89000F57978 /* InformationCell.m in Sources */,
 				03BD8253238BB89000F57978 /* AppDelegate.m in Sources */,
 				03BD8254238BB89000F57978 /* SidebarViewController.m in Sources */,
