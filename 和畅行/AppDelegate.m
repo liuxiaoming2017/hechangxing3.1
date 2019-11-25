@@ -142,6 +142,7 @@
 //        [[OGA530BluetoothManager shareInstance] setIsLog:YES];
     }else{
         //奥佳华按摩椅
+        //NSLog(@"haha:%@",OGA530AppKey);
         [[OGABluetoothManager_730B shareInstance] setAppkey:OGA530AppKey appSecret:OGA530AppSecret];
         [[OGABluetoothManager_730B shareInstance] setIsLog:YES];
     }

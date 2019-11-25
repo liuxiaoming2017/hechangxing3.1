@@ -2856,7 +2856,6 @@
 			isa = PBXGroup;
 			children = (
 				03BD8401238BBA8F00F57978 /* HarmonyYi.plist */,
-				03BD8407238BBC1400F57978 /* OGABluetooth730B.framework */,
 				03BD8409238BBC4200F57978 /* HarmonyYi */,
 				030126CB21F96334000FA318 /* Language.strings */,
 				03513ACA20E9CAD3004E2805 /* 和畅行 */,
@@ -3732,6 +3731,7 @@
 				034243C0235EA31B001231E7 /* Pods_和畅行.framework */,
 				0328F6302334CA6400BD25F7 /* CoreBluetooth.framework */,
 				036C8E0B23289B4800729889 /* Pods_和畅行.framework */,
+				03BD8407238BBC1400F57978 /* OGABluetooth730B.framework */,
 				035260AF230BD4B200A716C8 /* OGABluetooth530.framework */,
 				83C5F8232272FF1A00889370 /* HHDoctorSDK.framework */,
 				036859DD222783DE00B10BE7 /* Pods_和畅行.framework */,
