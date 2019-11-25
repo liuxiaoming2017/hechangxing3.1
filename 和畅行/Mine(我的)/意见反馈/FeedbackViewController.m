@@ -48,12 +48,12 @@
     
     UIImage* userImg=[UIImage imageNamed:@"Feedback_UserImg.png"];
     UIImageView* UserImgView=[[UIImageView alloc] init];
-    UserImgView.frame=CGRectMake(16.5, kNavBarHeight+10.5, userImg.size.width/2, userImg.size.height/2);
+    UserImgView.frame=CGRectMake(Adapter(16.5), kNavBarHeight+Adapter(10.5), userImg.size.width/2, userImg.size.height/2);
     UserImgView.image=userImg;
     [self.view addSubview:UserImgView];
    
     UILabel* UserNameLb=[[UILabel alloc ] init];
-    UserNameLb.frame=CGRectMake(UserImgView.right+8.5, kNavBarHeight+10.5, ScreenWidth -UserImgView.right -12 , userImg.size.height/2);
+    UserNameLb.frame=CGRectMake(UserImgView.right+Adapter(8.5), kNavBarHeight+Adapter(10.5), ScreenWidth -UserImgView.right -Adapter(12) , userImg.size.height/2);
     UserNameLb.text=ModuleZW(@"感谢您提出的宝贵意见");
     UserNameLb.textColor=[UtilityFunc colorWithHexString:@"#333333"];
     UserNameLb.font=[UIFont systemFontOfSize:12];
@@ -72,7 +72,7 @@
     Linelb1.backgroundColor=[UtilityFunc colorWithHexString:@"#e7e7e5"];
     [self.view addSubview:Linelb1];
     
-    _textLabel = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth*0.027, kNavBarHeight+ScreenWidth*0.12, ScreenWidth-ScreenWidth*0.054, ScreenWidth*0.053)];
+    _textLabel = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth*0.027, kNavBarHeight+ScreenWidth*0.12, ScreenWidth-ScreenWidth*0.054, Adapter(30))];
     _textLabel.text = ModuleZW(@" 请提出您的宝贵意见");
     _textLabel.font = [UIFont systemFontOfSize:13];
     _textLabel.textColor = [UtilityFunc colorWithHexString:@"#666666"];

@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    
-    self.navTitleLabel.text = @"推拿";
+    self.navTitleLabel.text = ModuleZW(@"推拿");
     
     self.preBtn.hidden = NO;
     self.leftBtn.hidden = YES;

@@ -71,7 +71,7 @@
     
     [self initUI];
     
-    self.navTitleLabel.text = @"推拿";
+    self.navTitleLabel.text = ModuleZW(@"推拿");
     
     self.dataArr = [NSMutableArray array];
     

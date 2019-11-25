@@ -59,14 +59,14 @@
     
 
     //强制英文
-//    [[NSUserDefaults standardUserDefaults] setObject:@"en" forKey:@"Language"];
-//    [NSBundle setLanguage:@"en"];
-//     [UserShareOnce shareOnce].languageType  = @"us-en";
+    [[NSUserDefaults standardUserDefaults] setObject:@"en" forKey:@"Language"];
+    [NSBundle setLanguage:@"en"];
+     [UserShareOnce shareOnce].languageType  = @"us-en";
     
     //强制中文
-    [[NSUserDefaults standardUserDefaults] setObject:@"zh-Hans" forKey:@"Language"];
-    [NSBundle setLanguage:@"zh-Hans"];
-    [UserShareOnce shareOnce].languageType  = nil;
+//    [[NSUserDefaults standardUserDefaults] setObject:@"zh-Hans" forKey:@"Language"];
+//    [NSBundle setLanguage:@"zh-Hans"];
+//    [UserShareOnce shareOnce].languageType  = nil;
     
      [[UIButton appearance] setExclusiveTouch:YES];
     NSString *fontStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"YHFont"];

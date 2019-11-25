@@ -91,10 +91,10 @@ static CGFloat const timer_animation_Duration = 0.05;
     self.animation_line = [[UIImageView alloc] init];
     _animation_line.image = [UIImage imageNamed:@"QRCodeLine"];
     _animation_line.frame = CGRectMake(scanContent_X * 0.5, scanContent_layerY, self.frame.size.width - scanContent_X , animation_line_H);
-    [self.basedLayer addSublayer:_animation_line.layer];
+//    [self.basedLayer addSublayer:_animation_line.layer];
     
     // 添加定时器
-    self.timer =[NSTimer scheduledTimerWithTimeInterval:timer_animation_Duration target:self selector:@selector(animation_line_action) userInfo:nil repeats:YES];
+//    self.timer =[NSTimer scheduledTimerWithTimeInterval:timer_animation_Duration target:self selector:@selector(animation_line_action) userInfo:nil repeats:YES];
     
 #pragma mark - - - 扫描外部View的创建
     // 顶部layer的创建
@@ -148,7 +148,7 @@ static CGFloat const timer_animation_Duration = 0.05;
     promptLabel.textAlignment = NSTextAlignmentCenter;
     promptLabel.font = [UIFont systemFontOfSize:13.0];
     promptLabel.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
-    promptLabel.text = @"将二维码/条码放入框内, 即可自动扫描";
+    promptLabel.text = ModuleZW(@"将二维码放入框内");
     [self addSubview:promptLabel];
     
     // 添加闪光灯按钮
@@ -158,8 +158,8 @@ static CGFloat const timer_animation_Duration = 0.05;
     CGFloat light_buttonW = self.frame.size.width;
     CGFloat light_buttonH = 25;
     light_button.frame = CGRectMake(light_buttonX, light_buttonY, light_buttonW, light_buttonH);
-    [light_button setTitle:@"打开照明灯" forState:UIControlStateNormal];
-    [light_button setTitle:@"关闭照明灯" forState:UIControlStateSelected];
+    [light_button setTitle:ModuleZW(@"打开照明灯") forState:UIControlStateNormal];
+    [light_button setTitle:ModuleZW(@"关闭照明灯") forState:UIControlStateSelected];
     [light_button setTitleColor:promptLabel.textColor forState:(UIControlStateNormal)];
     light_button.titleLabel.font = [UIFont systemFontOfSize:17];
     
