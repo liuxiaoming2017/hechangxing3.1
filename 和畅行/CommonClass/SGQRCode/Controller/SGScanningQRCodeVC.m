@@ -59,7 +59,7 @@
     self.isNetValid = YES;
     
     UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    [button setTitle:@"相册" forState:(UIControlStateNormal)];
+    [button setTitle:ModuleZW(@"相册") forState:(UIControlStateNormal)];
     [button  setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [button.titleLabel setFont:[UIFont systemFontOfSize:15]];
     button.frame =CGRectMake(ScreenWidth - Adapter(60)  , kNavBarHeight -44, Adapter(60), 44);
