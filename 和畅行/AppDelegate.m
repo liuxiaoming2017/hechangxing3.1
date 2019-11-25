@@ -40,7 +40,13 @@
 //#import <PgySDK/PgyManager.h>
 //#import <PgyUpdate/PgyUpdateManager.h>
 
-#import <OGABluetooth530/OGABluetooth530.h>
+//#if FIRST_FLAG
+//#import <OGABluetooth530/OGABluetooth530.h>
+//
+//#else
+//#import <OGABluetooth730B/OGABluetoothManager_730B.h>
+//#endif
+
 #import "NSBundle+Language.h"
 
 #import "AFNetworking.h"
@@ -58,15 +64,21 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
 
-    //强制英文
-    [[NSUserDefaults standardUserDefaults] setObject:@"en" forKey:@"Language"];
-    [NSBundle setLanguage:@"en"];
-     [UserShareOnce shareOnce].languageType  = @"us-en";
+   
+    if(FIRST_FLAG){
+        //强制中文
+        [[NSUserDefaults standardUserDefaults] setObject:@"zh-Hans" forKey:@"Language"];
+        [NSBundle setLanguage:@"zh-Hans"];
+        [UserShareOnce shareOnce].languageType  = nil;
+    }else{
+         //强制英文
+        [[NSUserDefaults standardUserDefaults] setObject:@"en" forKey:@"Language"];
+        [NSBundle setLanguage:@"en"];
+        [UserShareOnce shareOnce].languageType  = @"us-en";
+    }
+
     
-    //强制中文
-//    [[NSUserDefaults standardUserDefaults] setObject:@"zh-Hans" forKey:@"Language"];
-//    [NSBundle setLanguage:@"zh-Hans"];
-//    [UserShareOnce shareOnce].languageType  = nil;
+    
     
      [[UIButton appearance] setExclusiveTouch:YES];
     NSString *fontStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"YHFont"];
@@ -122,9 +134,17 @@
 //    //启动更新检查SDK
 //    [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"da15cba9ecb9d085233da45a1422f52c"];
     
-    //奥佳华按摩椅
-    [[OGA530BluetoothManager shareInstance] setAppkey:OGA530AppKey appSecret:OGA530AppSecret];
-    [[OGA530BluetoothManager shareInstance] setIsLog:YES];
+    
+    
+    if(FIRST_FLAG){
+        //奥佳华按摩椅
+//        [[OGA530BluetoothManager shareInstance] setAppkey:OGA530AppKey appSecret:OGA530AppSecret];
+//        [[OGA530BluetoothManager shareInstance] setIsLog:YES];
+    }else{
+        //奥佳华按摩椅
+        [[OGABluetoothManager_730B shareInstance] setAppkey:OGA530AppKey appSecret:OGA530AppSecret];
+        [[OGABluetoothManager_730B shareInstance] setIsLog:YES];
+    }
     
     if(@available(iOS 11.0,*)){
         

@@ -869,8 +869,8 @@
         codeStr = @"";
     }
     
-    NSString *jlbsStr = [GlobalCommon getStringWithSubjectSn:codeStr];
-    [[NSUserDefaults standardUserDefaults]setValue: jlbsStr forKey:@"Physical"];
+    //NSString *jlbsStr = [GlobalCommon getStringWithSubjectSn:codeStr];
+    [[NSUserDefaults standardUserDefaults]setValue: codeStr forKey:@"Physical"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     return codeStr;
 }

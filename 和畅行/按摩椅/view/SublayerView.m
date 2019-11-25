@@ -75,18 +75,27 @@
 - (void)setImageAndTitleWithModel:(ArmChairModel *)model withName:(NSString *)name
 {
     self.model = model;
-    NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
-    if([jlbsName isEqualToString:@""] || jlbsName==nil){
+    NSString *jlbsName2 = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
+    
+    if([jlbsName2 isEqualToString:@""] || jlbsName2==nil){
         self.titleLabel.text = @"";
         self.imageV.image = [UIImage imageNamed:@"推荐_默认"];
-        self.imageV.frame = CGRectMake((self.frame.size.width-70)/2.0, (self.frame.size.height-Adapter(70))/2.0, Adapter(70), Adapter(70));
+        self.imageV.frame = CGRectMake((self.frame.size.width-Adapter(70))/2.0, (self.frame.size.height-Adapter(70))/2.0, Adapter(70), Adapter(70));
         self.titleLabel.frame = CGRectMake(Adapter(2), CGRectGetMaxY(self.imageV.frame)+Adapter(10), self.frame.size.width-Adapter(2)*2, Adapter(20));
     }else{
+        //11.22
+        NSString *jlbsName = [GlobalCommon getStringWithLanguageSubjectSn:jlbsName2];
+        
         self.titleLabel.text = [NSString stringWithFormat:@"%@推拿手法",jlbsName];
-        jlbsName = [jlbsName substringFromIndex:[jlbsName length]-1];
-        self.imageV.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@icon",jlbsName]];
+        if([UserShareOnce shareOnce].languageType){
+            self.titleLabel.text = jlbsName;
+        }
+        //11.22
+        NSString *imageStr = [GlobalCommon getStringWithSubjectSn:jlbsName2];
+        imageStr = [imageStr substringFromIndex:[imageStr length]-1];
+        self.imageV.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@icon",imageStr]];
         self.imageV.frame = CGRectMake((self.frame.size.width-Adapter(55))/2.0, (self.frame.size.height-Adapter(85))/2.0, Adapter(55), Adapter(55));
-        self.titleLabel.frame = CGRectMake(2, CGRectGetMaxY(self.imageV.frame)+10, self.frame.size.width-2*2, 20);
+        self.titleLabel.frame = CGRectMake(2, CGRectGetMaxY(self.imageV.frame)+10, self.frame.size.width-2*2, Adapter(20));
     }
     
 }

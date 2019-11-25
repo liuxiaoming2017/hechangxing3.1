@@ -40,6 +40,12 @@
 #import "CacheManager.h"
 #import "GKAudioPlayer.h"
 
+#if FIRST_FLAG
+#import <OGABluetooth530/OGABluetooth530.h>
+#else
+#import <OGABluetooth730B/OGABluetoothManager_730B.h>
+#endif
+
 //和缓
 #if TARGET_IPHONE_SIMULATOR
 

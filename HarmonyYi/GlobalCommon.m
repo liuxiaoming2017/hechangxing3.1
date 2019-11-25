@@ -16,7 +16,6 @@
 #import <sys/utsname.h>
 
 
-
 #import "LoginViewController.h"
 #import "CustomNavigationController.h"
 
@@ -80,10 +79,10 @@
     label.font = [UIFont systemFontOfSize:14];
     [showview addSubview:label];
     
-//    showview.frame = CGRectMake((screenSize.width - labelSize.width - 40)/2,
-//                                (screenSize.height - labelSize.height - 20)/2,
-//                                labelSize.width+40,
-//                                labelSize.height+30);
+    //    showview.frame = CGRectMake((screenSize.width - labelSize.width - 40)/2,
+    //                                (screenSize.height - labelSize.height - 20)/2,
+    //                                labelSize.width+40,
+    //                                labelSize.height+30);
     showview.frame = CGRectMake((screenSize.width - labelSize.width - 40)/2,
                                 ScreenHeight-labelSize.height-65-10,
                                 labelSize.width+40,
@@ -136,13 +135,13 @@
     [showview addSubview:label];
     
     showview.frame = CGRectMake((screenSize.width - ScreenWidth/2)/2,
-                                    (screenSize.height - labelSize.height - 20)/2,
-                                    ScreenWidth/2,
-                                    labelSize.height+30);
-//    showview.frame = CGRectMake((screenSize.width - labelSize.width - 40)/2,
-//                                ScreenHeight-labelSize.height-65,
-//                                labelSize.width+40,
-//                                labelSize.height+30);
+                                (screenSize.height - labelSize.height - 20)/2,
+                                ScreenWidth/2,
+                                labelSize.height+30);
+    //    showview.frame = CGRectMake((screenSize.width - labelSize.width - 40)/2,
+    //                                ScreenHeight-labelSize.height-65,
+    //                                labelSize.width+40,
+    //                                labelSize.height+30);
     
     NSLog(@"show:%@",NSStringFromCGRect(showview.frame));
     
@@ -164,26 +163,33 @@
         NSInteger numberIndex = [lastStr integerValue];
         if([firstStr isEqualToString:@"G"]){
             NSArray *arr = @[@"大宫",@"加宫",@"上宫",@"少宫",@"左角宫"];
+            
             returnStr = [arr objectAtIndex:numberIndex-1];
         }else if([firstStr isEqualToString:@"S"]){
             NSArray *arr = @[@"上商",@"少商",@"钛商",@"右商",@"左商"];
+            
             returnStr = [arr objectAtIndex:numberIndex-1];
         }else if([firstStr isEqualToString:@"J"]){
             NSArray *arr = @[@"大角",@"判角",@"上角",@"少角",@"钛角"];
+            
             returnStr = [arr objectAtIndex:numberIndex-1];
         }else if([firstStr isEqualToString:@"Z"]){
             NSArray *arr = @[@"判徵",@"上徵",@"少徵",@"右徵",@"质徵"];
+            
             returnStr = [arr objectAtIndex:numberIndex-1];
         }else if([firstStr isEqualToString:@"Y"]){
             NSArray *arr = @[@"大羽",@"上羽",@"少羽",@"桎羽",@"众羽"];
+            
             returnStr = [arr objectAtIndex:numberIndex-1];
         }
     }
     return returnStr;
 }
 
+
 +(NSString *)getStringWithLanguageSubjectSn:(NSString *)nameStr
 {
+    
     NSArray *arr = [nameStr componentsSeparatedByString:@"-"];
     NSString *returnStr = @"";
     if(arr.count>0){
@@ -228,7 +234,6 @@
     }
     return returnStr;
 }
-
 
 +(NSString *)getSubjectSnFrom:(NSString *)subjectName{
     if ([subjectName isEqualToString:@"大宫"]) {
@@ -282,7 +287,10 @@
     }else if ([subjectName isEqualToString:@"众羽"]) {
         return @"JLBS-Y5";
     }
-    return nil;
+    if([GlobalCommon stringEqualNull:subjectName] || [subjectName isEqualToString:@""]){
+        return @"JLBS-G1";
+    }
+    return subjectName;
 }
 
 +(NSString *)getSportTypeFrom:(NSString *)subjectName
@@ -398,9 +406,9 @@
 }
 
 + (NSString *)userInfoTmp{
-   // NSMutableDictionary *dic = [UtilityFunc mutableDictionaryFromUserInfo];
+    // NSMutableDictionary *dic = [UtilityFunc mutableDictionaryFromUserInfo];
     
-   
+    
     
     NSString *str = [NSString stringWithFormat:@"tmp/%@/", [MemberUserShance shareOnce].name];
     
@@ -481,7 +489,7 @@
 
 + (void)showMBHudWithView:(UIView *)view
 {
-   [MBProgressHUD showHUDAddedTo:view animated:YES];
+    [MBProgressHUD showHUDAddedTo:view animated:YES];
 }
 
 + (void)hideMBHudWithView:(UIView *)view
@@ -531,7 +539,7 @@
 
 + (BOOL)isManyMember
 {
-     NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberChirldArr"];
+    NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberChirldArr"];
     if(arr.count>1){
         return YES;
     }else{
@@ -567,7 +575,7 @@
     
     [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
     
-        NSDate *datenow = [NSDate date];
+    NSDate *datenow = [NSDate date];
     NSString *currentTimeString = [formatter stringFromDate:datenow];
     
     NSLog(@"currentTimeString =  %@",currentTimeString);
@@ -698,45 +706,45 @@
 
 + (NSString *)commandFromName:(NSString *)str
 {
-    NSDictionary *dic = @{
-                          @"大师精选":k530Command_MassageMaster,
-                          @"轻松自在":k530Command_MassageRelease,
-                          @"关节呵护":k530Command_KneeCare,
-                          @"脊柱支柱":k530Command_SpinalReleasePressure,
-                          @"驾车族":k530Command_Traceller,
-                          @"低头族":k530Command_TextNeck,
-                          @"御宅派":k530Command_CosyComfort,
-                          @"运动派":k530Command_Athlete,
-                          @"爱购派":k530Command_Shopping,
-                          @"巴黎式":k530Command_Balinese,
-                          @"中式":k530Command_MassageChinese,
-                          @"泰式":k530Command_MassageThai,
-                          @"深层按摩":k530Command_MassageDeepTissue,
-                          @"美臀塑型":k530Command_MassageHipsShapping,
-                          @"活血循环":k530Command_MassageBloodCirculation,
-                          @"元气复苏":k530Command_MassageEnergyRecovery,
-                          @"活力唤醒":k530Command_MassageMotionRecovery,
-                          @"绽放魅力":k530Command_MassageBalanceMind,
-                          @"清晨唤醒":k530Command_MassageAMRoutine,
-                          @"瞬间补眠":k530Command_MassageMiddayRest,
-                          @"夜晚助眠":k530Command_MassageSweetDreams,
-                          @"酸疼检测":k530Command_MassageIntellect
-                          };
-    if(str){
-        NSString *resultStr = [dic objectForKey:str];
-        if(resultStr){
-           return resultStr;
-        }
-        return @"";
-    }
+    //    NSDictionary *dic = @{
+    //                          @"大师精选":k530Command_MassageMaster,
+    //                          @"轻松自在":k530Command_MassageRelease,
+    //                          @"关节呵护":k530Command_KneeCare,
+    //                          @"脊柱支柱":k530Command_SpinalReleasePressure,
+    //                          @"驾车族":k530Command_Traceller,
+    //                          @"低头族":k530Command_TextNeck,
+    //                          @"御宅派":k530Command_CosyComfort,
+    //                          @"运动派":k530Command_Athlete,
+    //                          @"爱购派":k530Command_Shopping,
+    //                          @"巴黎式":k530Command_Balinese,
+    //                          @"中式":k530Command_MassageChinese,
+    //                          @"泰式":k530Command_MassageThai,
+    //                          @"深层按摩":k530Command_MassageDeepTissue,
+    //                          @"美臀塑型":k530Command_MassageHipsShapping,
+    //                          @"活血循环":k530Command_MassageBloodCirculation,
+    //                          @"元气复苏":k530Command_MassageEnergyRecovery,
+    //                          @"活力唤醒":k530Command_MassageMotionRecovery,
+    //                          @"绽放魅力":k530Command_MassageBalanceMind,
+    //                          @"清晨唤醒":k530Command_MassageAMRoutine,
+    //                          @"瞬间补眠":k530Command_MassageMiddayRest,
+    //                          @"夜晚助眠":k530Command_MassageSweetDreams,
+    //                          @"酸疼检测":k530Command_MassageIntellect
+    //                          };
+    //    if(str){
+    //        NSString *resultStr = [dic objectForKey:str];
+    //        if(resultStr){
+    //           return resultStr;
+    //        }
+    //        return @"";
+    //    }
     return @"";
 }
 
 + (void)removeCache:(NSString *)path {
     NSArray *arr = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
     for (NSString *filePath in arr) {
-     NSString *fileName = [NSString stringWithFormat:@"%@/%@", path, filePath];
-     [[NSFileManager defaultManager] removeItemAtPath:fileName error:nil];
+        NSString *fileName = [NSString stringWithFormat:@"%@/%@", path, filePath];
+        [[NSFileManager defaultManager] removeItemAtPath:fileName error:nil];
         
     }
 }

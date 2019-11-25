@@ -318,6 +318,9 @@
     
     if (![GlobalCommon stringEqualNull:physicalStr]) {
         
+        //11.22
+        physicalStr = [GlobalCommon getStringWithSubjectSn:physicalStr];
+        
         [self dealHysegmentControlWithStr:physicalStr];
     }
     if ([GlobalCommon stringEqualNull:physicalStr] || [physicalStr isEqualToString:@""]){

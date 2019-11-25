@@ -230,10 +230,10 @@
                     cell.timeLabel.font=[UIFont systemFontOfSize:16.0];
                     cell.createDateLabel.font=[UIFont systemFontOfSize:13.0];
                     cell.contentLabel.font=[UIFont systemFontOfSize:16];
-                    if ([model.subjectCategorySn isEqualToString:@"JLBS"]){
-                        [[NSUserDefaults standardUserDefaults]setValue: [model.subject valueForKey:@"name"] forKey:@"Physical"];
-                        [[NSUserDefaults standardUserDefaults] synchronize];
-                    }
+//                    if ([model.subjectCategorySn isEqualToString:@"JLBS"]){
+//                        [[NSUserDefaults standardUserDefaults]setValue: [model.subject valueForKey:@"name"] forKey:@"Physical"];
+//                        [[NSUserDefaults standardUserDefaults] synchronize];
+//                    }
                     
                     if (_dataArr.count > 1) {
                         HealthTipsModel *nextmodel = _dataArr[indexPath.row+1];

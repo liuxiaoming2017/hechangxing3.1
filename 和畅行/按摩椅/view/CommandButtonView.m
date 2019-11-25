@@ -35,17 +35,17 @@
 {
     
     self.commandButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    if(self.width == Adapter(56)){
-        self.commandButton.frame = CGRectMake((self.width-Adapter(33))/2.0, Adapter(5), Adapter(33), Adapter(33));
+    if(self.width == 56){
+        self.commandButton.frame = CGRectMake((self.width-33)/2.0, 5, 33, 33);
     }
-    else if(self.width >= Adapter(53)){
-        self.commandButton.frame = CGRectMake((self.width-Adapter(53))/2.0, Adapter(5), Adapter(53), Adapter(53));
+    else if(self.width >= 53){
+        self.commandButton.frame = CGRectMake((self.width-53)/2.0, 5, 53, 53);
     }else{
-        self.commandButton.frame = CGRectMake((self.width-Adapter(33))/2.0, Adapter(5), Adapter(33), Adapter(33));
+        self.commandButton.frame = CGRectMake((self.width-33)/2.0, 5, 33, 33);
     }
     
-    [self.commandButton setImage:[[UIImage imageNamed:title] transformWidth:Adapter(20) height:Adapter(20)] forState:(UIControlStateNormal)];
-    [self.commandButton setImage:[[UIImage imageNamed:title] transformWidth:Adapter(20) height:Adapter(20)] forState:(UIControlStateHighlighted)];
+    [self.commandButton setImage:[UIImage imageNamed:title] forState:UIControlStateNormal];
+    [self.commandButton setImage:[UIImage imageNamed:title] forState:UIControlStateHighlighted];
     
 //    CGSize size = self.CommandButton.frame.size;
 //    CGFloat radius = self.CommandButton.width/2.0;
@@ -63,12 +63,8 @@
     }
     
     UILabel *label = [[UILabel alloc] init];
-    label.frame = CGRectMake(0,self.commandButton.bottom+Adapter(5),self.width,Adapter(20));
-    if (ISPaid) {
-        label.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize];
-    }else{
-        label.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize > 16.0 ? 16.0 : 14*[UserShareOnce shareOnce].fontSize];
-    }
+    label.frame = CGRectMake(-10,self.commandButton.bottom+5,self.width+20,20);
+    label.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize > 16.0 ? 16.0 : 14*[UserShareOnce shareOnce].fontSize];
     label.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
     label.text = title;
     label.textAlignment = NSTextAlignmentCenter;
@@ -89,8 +85,8 @@
 //        button.layer.backgroundColor = [UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1.0].CGColor;
 //
 //    }
-    if([self.delegate respondsToSelector:@selector(commandActionWithModel:)]){
-        [self.delegate commandActionWithModel:self.model];
+    if([self.delegate respondsToSelector:@selector(commandActionWithModel:withTag:)]){
+        [self.delegate commandActionWithModel:self.model withTag:self.tag];
     }
 }
 
@@ -100,8 +96,23 @@
     if(select){
         self.titleLabel.textColor = [UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0];
         self.commandButton.layer.backgroundColor = [UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0].CGColor;
+        
     }else{
         self.titleLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
+        self.commandButton.layer.backgroundColor = [UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1.0].CGColor;
+    }
+}
+
+- (void)setButtonViewSelect:(BOOL)select WithImageStr:(NSString *)str
+{
+    self.commandButton.selected = select;
+    if(select){
+        self.titleLabel.textColor = [UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0];
+        [self.commandButton setImage:[UIImage imageNamed:str] forState:UIControlStateNormal];
+        self.commandButton.layer.backgroundColor = [UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1.0].CGColor;
+    }else{
+        self.titleLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
+        [self.commandButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
         self.commandButton.layer.backgroundColor = [UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1.0].CGColor;
     }
 }
