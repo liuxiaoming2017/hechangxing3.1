@@ -121,7 +121,7 @@
     }
     self.startTimeStr = [GlobalCommon getCurrentTimes];
     self.navTitleLabel.text = ModuleZW(@"健康档案");
-    [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
+//    [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     
     self.timeLinvView = [[TimeLineView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, ScreenWidth, ScreenHeight-self.topView.bottom-kTabBarHeight) withData:self.dataListArray];
     [self.view addSubview:self.timeLinvView];

@@ -15,7 +15,7 @@
 #import "AESCipher.h"
 #import <sys/utsname.h>
 
-#import <OGABluetooth530/OGABluetooth530.h>
+
 
 #import "LoginViewController.h"
 #import "CustomNavigationController.h"
@@ -181,6 +181,54 @@
     }
     return returnStr;
 }
+
++(NSString *)getStringWithLanguageSubjectSn:(NSString *)nameStr
+{
+    NSArray *arr = [nameStr componentsSeparatedByString:@"-"];
+    NSString *returnStr = @"";
+    if(arr.count>0){
+        NSString *str1 = [arr objectAtIndex:1];
+        NSString *firstStr = [str1 substringToIndex:1];
+        NSString *lastStr = [str1 substringFromIndex:str1.length-1];
+        NSInteger numberIndex = [lastStr integerValue];
+        if([firstStr isEqualToString:@"G"]){
+            NSArray *arr = @[@"大宫",@"加宫",@"上宫",@"少宫",@"左角宫"];
+            if([UserShareOnce shareOnce].languageType){
+                arr = @[@"Da Gong",@"Jia Gong",@"Shang Gong",@"Shao Gong",@"Zuojue Gong"];
+            }
+            
+            returnStr = [arr objectAtIndex:numberIndex-1];
+        }else if([firstStr isEqualToString:@"S"]){
+            NSArray *arr = @[@"上商",@"少商",@"钛商",@"右商",@"左商"];
+            if([UserShareOnce shareOnce].languageType){
+                arr = @[@"Shang Shang",@"Shao Shang",@"Tai Shang",@"You Shang",@"Zuo Shang"];
+            }
+            
+            returnStr = [arr objectAtIndex:numberIndex-1];
+        }else if([firstStr isEqualToString:@"J"]){
+            NSArray *arr = @[@"大角",@"判角",@"上角",@"少角",@"钛角"];
+            if([UserShareOnce shareOnce].languageType){
+                arr = @[@"Da Jue",@"Pan Jue",@"Shang Jue",@"Shao Jue",@"Tai Jue"];
+            }
+            
+            returnStr = [arr objectAtIndex:numberIndex-1];
+        }else if([firstStr isEqualToString:@"Z"]){
+            NSArray *arr = @[@"判徵",@"上徵",@"少徵",@"右徵",@"质徵"];
+            if([UserShareOnce shareOnce].languageType){
+                arr = @[@"Pan Zhi",@"Shang Zhi",@"Shao Zhi",@"You Zhi",@"Zhi Zhi"];
+            }
+            returnStr = [arr objectAtIndex:numberIndex-1];
+        }else if([firstStr isEqualToString:@"Y"]){
+            NSArray *arr = @[@"大羽",@"上羽",@"少羽",@"桎羽",@"众羽"];
+            if([UserShareOnce shareOnce].languageType){
+                arr = @[@"Da Yu",@"Shang Yu",@"Shao Yu",@"You Yu",@"Zhi Yu"];
+            }
+            returnStr = [arr objectAtIndex:numberIndex-1];
+        }
+    }
+    return returnStr;
+}
+
 
 +(NSString *)getSubjectSnFrom:(NSString *)subjectName{
     if ([subjectName isEqualToString:@"大宫"]) {

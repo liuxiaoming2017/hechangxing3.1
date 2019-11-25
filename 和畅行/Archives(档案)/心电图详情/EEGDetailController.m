@@ -51,7 +51,7 @@
     [super viewDidLoad];
     
     self.navTitleLabel.text = ModuleZW(@"心电图查看");
-    [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
+//    [self.rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     self.rightBtn.userInteractionEnabled = NO;
     self.leftBtn.userInteractionEnabled = NO;
     self.preBtn.hidden = NO;

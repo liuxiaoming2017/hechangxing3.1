@@ -19,9 +19,42 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if(self){
-        [self setupUI];
+        if([reuseIdentifier isEqualToString:@"chairList"]){
+            [self chairUI];
+        }else{
+            [self setupUI];
+        }
+        
     }
     return self;
+}
+
+- (void)chairUI
+{
+    CGFloat width = ScreenWidth-Adapter(162)-Adapter(35);
+   // CGFloat height = 40.0;
+    
+    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, Adapter(35), width , 1)];
+    backImageView.alpha = 0.8;
+    backImageView.backgroundColor = UIColorFromHex(0xDADADA);;
+
+    [self addSubview:backImageView];
+    
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(10) ,Adapter(3), backImageView.width  - Adapter(35) , Adapter(30))];
+    self.titleLabel.textAlignment=NSTextAlignmentLeft;
+    self.titleLabel.numberOfLines = 0;
+    self.titleLabel.font=[UIFont systemFontOfSize:12.0];
+    self.titleLabel.textColor = RGB_TextAppGray;
+    self.titleLabel.backgroundColor=[UIColor clearColor];
+    
+    self.downloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.downloadBtn.frame = CGRectMake(backImageView.width - Adapter(30), Adapter(9), Adapter(18), Adapter(18));
+    [self.downloadBtn  setBackgroundImage:[UIImage imageNamed:@"乐药下载icon"] forState:UIControlStateNormal];
+    self.downloadBtn.userInteractionEnabled = NO;
+    self.downloadBtn.hidden = YES;
+    
+    [self addSubview:self.titleLabel];
+    [self addSubview:self.downloadBtn];
 }
 
 - (void)setupUI
@@ -29,7 +62,7 @@
     
     UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(10), Adapter(5), ScreenWidth - Adapter(20), Adapter(80))];
     backImageView.backgroundColor = [UIColor whiteColor];
-    backImageView.layer.cornerRadius = Adapter(10);
+    backImageView.layer.cornerRadius = 10;
     backImageView.layer.masksToBounds = YES;
     backImageView.userInteractionEnabled = YES;
     [self  insertSublayerWithImageView:backImageView];
@@ -73,7 +106,6 @@
 
 - (void)downloadFailWithImageStr:(NSString *)nameStr
 {
-
     if([nameStr isEqualToString:@"乐药未购买icon"] || [nameStr isEqualToString:@"已加入购物车"]){
         self.downloadBtn.frame = CGRectMake(ScreenWidth - Adapter(110) , Adapter(30), Adapter(80), Adapter(20));
         self.downloadBtn.backgroundColor = RGB(253, 134, 40);
@@ -82,7 +114,7 @@
             self.downloadBtn.backgroundColor = RGB_TextAppGray;
             
         }
-        self.downloadBtn.layer.cornerRadius = 10;
+        self.downloadBtn.layer.cornerRadius = Adapter(10);
         self.downloadBtn.layer.masksToBounds = YES;
         [self.downloadBtn setTitle:ModuleZW(@"加入购物车") forState:(UIControlStateNormal)];
         [self.downloadBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
@@ -95,8 +127,35 @@
         self.PlayOrdownload = YES;
         
     }
+    //[self.downloadBtn setBackgroundImage:[UIImage imageNamed:nameStr] forState:UIControlStateNormal];
     [self.downloadBtn setBackgroundImage:[UIImage imageNamed:nameStr] forState:UIControlStateNormal];
-//    [self.downloadBtn setImage:[UIImage imageNamed:nameStr] forState:UIControlStateNormal];
+}
+
+
+- (void)downloadChairWithImageStr:(NSString *)nameStr
+{
+    if([nameStr isEqualToString:@"乐药未购买icon"] || [nameStr isEqualToString:@"已加入购物车"]){
+        //self.downloadBtn.frame = CGRectMake(ScreenWidth - 110 , 30, 80, 20);
+        self.downloadBtn.backgroundColor = RGB(253, 134, 40);
+        
+        if([nameStr isEqualToString:@"已加入购物车"]){
+            self.downloadBtn.backgroundColor = RGB_TextAppGray;
+            
+        }
+        self.downloadBtn.layer.cornerRadius = Adapter(10);
+        self.downloadBtn.layer.masksToBounds = YES;
+        [self.downloadBtn setTitle:ModuleZW(@"加入购物车") forState:(UIControlStateNormal)];
+        [self.downloadBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+        self.PlayOrdownload = NO;
+    }else{
+       // self.downloadBtn.frame = CGRectMake(ScreenWidth - 80, 25, 30, 30);
+        self.downloadBtn.backgroundColor = [UIColor clearColor];
+        
+        [self.downloadBtn setTitle:@"" forState:(UIControlStateNormal)];
+        self.PlayOrdownload = YES;
+        
+    }
+    [self.downloadBtn setBackgroundImage:[UIImage imageNamed:nameStr] forState:UIControlStateNormal];
     
 }
 

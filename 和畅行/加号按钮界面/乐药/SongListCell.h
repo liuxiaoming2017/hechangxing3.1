@@ -36,4 +36,6 @@
 - (void)downloadSuccess;
 
 - (void)downloadFailWithImageStr:(NSString *)nameStr;
+
+- (void)downloadChairWithImageStr:(NSString *)nameStr;
 @end

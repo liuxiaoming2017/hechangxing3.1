@@ -70,7 +70,7 @@
     [rightBtn setImage:[UIImage imageNamed:@"message_01"] forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(messageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     rightBtn.hidden = YES;
-//    [topView addSubview:rightBtn];
+    [topView addSubview:rightBtn];
     
     leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     leftBtn.frame = CGRectMake(15, 2+kStatusBarHeight+2.5, 32, 32);

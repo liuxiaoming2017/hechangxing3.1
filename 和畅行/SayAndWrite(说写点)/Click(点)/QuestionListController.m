@@ -15,6 +15,7 @@
 #import "ResultController.h"
 #import "QuestionTableCell.h"
 
+#define Adapterbody(d) (ISPaid ? Adapter(d)*0.7 : Adapter(d))
 @interface QuestionListController ()<UICollectionViewDelegate,UICollectionViewDataSource,QuestionCellDelegate,UITableViewDelegate,UITableViewDataSource>
 {
     NSInteger _pages;
@@ -105,7 +106,7 @@
     self.selectIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     
     //添加tableview
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-Adapter(220)) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight-kNavBarHeight-Adapterbody(220)) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor=[UIColor clearColor];
@@ -128,11 +129,11 @@
 # pragma mark - 底部视图
 - (void)createBottomView
 {
-    UIView *bottomV = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-Adapter(220), ScreenWidth, Adapter(220))];
+    UIView *bottomV = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-Adapterbody(220), ScreenWidth, Adapterbody(220))];
     bottomV.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:bottomV];
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-Adapter(200))/2.0, Adapter(15), Adapter(200), Adapter(20))];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-Adapterbody(200))/2.0, Adapterbody(15), Adapterbody(200), Adapterbody(20))];
     titleLabel.font = [UIFont systemFontOfSize:16];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.textColor = [UIColor blackColor];
@@ -149,13 +150,13 @@
     for (NSInteger i=0;i<5;i++) {
         UIButton *selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         if(i<3){
-           selectBtn.frame = CGRectMake((ScreenWidth-Adapter(54)*3-Adapter(60))/2.0+(Adapter(84))*i, titleLabel.bottom+Adapter(15), Adapter(54), Adapter(54));
+           selectBtn.frame = CGRectMake((ScreenWidth-Adapterbody(54)*3-Adapterbody(60))/2.0+(Adapterbody(84))*i, titleLabel.bottom+Adapterbody(15), Adapterbody(54), Adapterbody(54));
         }else{
-            selectBtn.frame = CGRectMake((ScreenWidth-Adapter(54)*2-Adapter(30))/2.0+(Adapter(84))*(i-3), titleLabel.bottom+Adapter(86), Adapter(54), Adapter(54));
+            selectBtn.frame = CGRectMake((ScreenWidth-Adapterbody(54)*2-Adapterbody(30))/2.0+(Adapterbody(84))*(i-3), titleLabel.bottom+Adapterbody(86), Adapterbody(54), Adapterbody(54));
         }
         selectBtn.tag = 2019+i;
         
-        selectBtn.layer.cornerRadius = Adapter(8.0);
+        selectBtn.layer.cornerRadius = Adapterbody(8.0);
         selectBtn.layer.masksToBounds = YES;
         //添加渐变色
         CAGradientLayer *gradientLayer = [CAGradientLayer layer];
@@ -565,14 +566,14 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return Adapter(65.0);
+    return Adapter(55);
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, Adapter(65))];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, Adapter(55))];
     view.backgroundColor = UIColorFromHex(0Xf1f1f1);
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(20), Adapter(2.5), ScreenWidth - Adapter(40), Adapter(60))];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(20), Adapter(2.5), ScreenWidth - Adapter(40), Adapter(50))];
     titleLabel.font = [UIFont systemFontOfSize:17];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.numberOfLines = 2;

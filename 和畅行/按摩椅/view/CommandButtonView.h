@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol CommandButtonDelegate <NSObject>
 
-- (void)commandActionWithModel:(ArmChairModel *)model;
+- (void)commandActionWithModel:(ArmChairModel *)model withTag:(NSInteger )tag;
 
 @end
 
@@ -34,6 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (id)initWithFrame:(CGRect)frame withModel:(ArmChairModel *)model;
 
 - (void)setButtonViewSelect:(BOOL)select;
+
+- (void)setButtonViewSelect:(BOOL)select WithImageStr:(NSString *)str;
 
 @end
 

@@ -116,16 +116,17 @@ static NSMutableArray *tasks;
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error == nil) {
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-           
-            if ([[dict valueForKey:@"data"] valueForKey:@"x-auth-token"]) {
-                self.pointToken = [[dict valueForKey:@"data"] valueForKey:@"x-auth-token"];
+            NSString *token = [NSString stringWithFormat:@"%@",[dict valueForKey:@"data11"]];
+            if (![self stringEqualNull:token]) {
+                self.pointToken = token;
+                if (successBlock)
+                {
+                    successBlock(response);
+                }
             }else{
                 self.pointToken = nil;
             }
-            if (successBlock)
-            {
-                successBlock(response);
-            }
+          
              NSLog(@"%@",self.pointToken);
         }else{
             self.pointToken = nil;
@@ -573,7 +574,14 @@ static NSMutableArray *tasks;
     return mobile;
 }
 
-
+- (BOOL)stringEqualNull:(NSString *)str
+{
+    if([str isEqual:[NSNull null]] || str == nil || str.length == 0 || [str isEqualToString:@"(null)"]){
+        return YES;
+    }else{
+        return NO;
+    }
+}
 
 
 @end
