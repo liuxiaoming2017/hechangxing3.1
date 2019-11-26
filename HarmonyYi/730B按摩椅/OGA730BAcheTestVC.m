@@ -43,6 +43,7 @@
    acheArray = [NSMutableArray arrayWithArray:@[@(2),@(2),@(1),@(2),@(2),@(2)]];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //self.startTimeStr = [GlobalCommon getCurrentTimes];
         [[OGABluetoothManager_730B shareInstance] sendShortCommand:k730Command_DetectionAche success:nil];
     });
     
@@ -103,6 +104,10 @@
         
         self.acheStatus = NO;
         
+//        self.endTimeStr = [GlobalCommon getCurrentTimes];
+//        NSString *timeStr = [self dateTimeDifferenceWithStartTime:self.startTimeStr endTime:self.endTimeStr];
+//        [self showAlertWarmMessage:timeStr];
+        
         __weak typeof(self) weakSelf = self;
         [[OGABluetoothManager_730B shareInstance] acheAndFatigue:[acheArray[0] integerValue]
                                                     shoulderIn:[acheArray[1] integerValue]
@@ -111,6 +116,7 @@
                                                           back:[acheArray[4] integerValue]
                                                          waist:[acheArray[5] integerValue]
                                                         result:^(NSMutableArray * _Nonnull acheArray, NSInteger acheResult, NSInteger fatigueResult) {
+                                                            
                                                             
                                                             OGA730BTestResultVC *vc = [[OGA730BTestResultVC alloc] initWithacheResult:(int)acheResult withfatigueResult:(int)fatigueResult];
                                                             [weakSelf.navigationController pushViewController:vc animated:YES];
@@ -205,4 +211,52 @@
 //    OGA730BTestResultVC *vc = [[OGA730BTestResultVC alloc] initWithacheResult:3 withfatigueResult:2];
 //    [self.navigationController pushViewController:vc animated:YES];
 //}
+
+-(NSString *)dateTimeDifferenceWithStartTime:(NSString *)startTime endTime:(NSString *)endTime{
+    
+    NSDateFormatter *date = [[NSDateFormatter alloc]init];
+    
+    [date setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    NSDate *startD =[date dateFromString:startTime];
+    
+    NSDate *endD = [date dateFromString:endTime];
+    
+    NSTimeInterval start = [startD timeIntervalSince1970]*1;
+    
+    NSTimeInterval end = [endD timeIntervalSince1970]*1;
+    
+    NSTimeInterval value = end - start;
+    
+    int second = (int)value %60;//秒
+    
+    int minute = (int)value /60%60;
+    
+    int house = (int)value % (24 * 3600)/3600;
+    
+    int day = (int)value / (24 * 3600);
+    
+    NSString *str;
+    
+    if (day != 0) {
+        
+        str = [NSString stringWithFormat:@"耗时%d天%d小时%d分%d秒",day,house,minute,second];
+        
+    }else if (day==0 && house != 0) {
+        
+        str = [NSString stringWithFormat:@"耗时%d小时%d分%d秒",house,minute,second];
+        
+    }else if (day== 0 && house== 0 && minute!=0) {
+        
+        str = [NSString stringWithFormat:@"耗时%d分%d秒",minute,second];
+        
+    }else{
+        
+        str = [NSString stringWithFormat:@"耗时%d秒",second];
+        
+    }
+    
+    return str;
+    
+}
 @end

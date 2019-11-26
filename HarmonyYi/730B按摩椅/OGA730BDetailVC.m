@@ -1265,7 +1265,7 @@ typedef enum : NSInteger {
 - (void)playAction:(UIButton *)button
 {
     // __weak typeof(self) weakSelf = self;
-    [[OGABluetoothManager_730B shareInstance] sendShortCommand:k730Command_Stop success:^(BOOL success) {
+    [[OGABluetoothManager_730B shareInstance] sendShortCommand:k730Command_PowerOn success:^(BOOL success) {
         if (success) {
             // weakSelf.playBtn.selected = !weakSelf.playBtn.selected;
             // [weakSelf layerAnimationWithPause:weakSelf.playBtn.selected];

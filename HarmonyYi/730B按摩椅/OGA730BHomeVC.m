@@ -428,7 +428,7 @@
             return;
         }else{
             self.armchairModel = model;
-            if([OGABluetoothManager_730B shareInstance].respondModel.modeProgrameSelect == NO){
+            if([self chairIsPowerOn] == NO){
 
                 [self showProgressHUD:startDevice];
 
