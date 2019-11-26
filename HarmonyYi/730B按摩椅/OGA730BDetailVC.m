@@ -580,7 +580,7 @@ typedef enum : NSInteger {
     CommandButtonView *gaoji203 = (CommandButtonView *)[self.advancedView viewWithTag:203];
     [gaoji203 setButtonViewSelect:respond.massage_ExecuteKnead3];
     CommandButtonView *gaoji204 = (CommandButtonView *)[self.advancedView viewWithTag:204];
-    [gaoji204 setButtonViewSelect:respond.massage_ExecuteRollBack];
+    [gaoji204 setButtonViewSelect:respond.massage_ExecuteRollBack || respond.massage_ExecuteRollPart];
    
 }
 

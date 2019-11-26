@@ -71,7 +71,7 @@
     
     self.rightBtn.selected = [self chairPowerOnWithRespond:respond];;
     
-    if(!self.rightBtn.selected || respond.acheStatus == kDetectionAcheStatusNone){
+    if(!self.rightBtn.selected){
         [self.navigationController popViewControllerAnimated:NO];
     }
     

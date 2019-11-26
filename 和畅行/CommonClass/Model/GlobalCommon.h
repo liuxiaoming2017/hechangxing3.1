@@ -48,7 +48,8 @@
 
 + (NSString *)md5:(NSString *)str;
 +(NSString*)getCurrentTimes;
-+ (NSString *)md5Points:(NSString *)str;
+
+//+ (NSString *)md5Points:(NSString *)str;
 
 + (BOOL)stringEqualNull:(NSString *)str;
 
