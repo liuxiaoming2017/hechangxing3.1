@@ -93,7 +93,6 @@
 		035BBC6021ABDF2300AB537D /* GovSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035BBC5E21ABDF2200AB537D /* GovSectionView.m */; };
 		035F31F4231D0604009A0D94 /* ArmchairHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F31F3231D0604009A0D94 /* ArmchairHomeVC.m */; };
 		036285992106BB020090020D /* CellUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 036285982106BB020090020D /* CellUtil.m */; };
-		0369D658238BC53100FD3272 /* PostButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D656238BC53000FD3272 /* PostButtonView.m */; };
 		0369D65B238BC57400FD3272 /* SongListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D65A238BC57400FD3272 /* SongListCell.m */; };
 		0369D65C238BC57400FD3272 /* SongListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D65A238BC57400FD3272 /* SongListCell.m */; };
 		0369D66F238BC5E100FD3272 /* ArmchairHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D65D238BC5D300FD3272 /* ArmchairHomeCell.m */; };
@@ -102,8 +101,6 @@
 		0369D672238BC5E100FD3272 /* ThemeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D65F238BC5D500FD3272 /* ThemeCollectionViewCell.m */; };
 		0369D673238BC5E100FD3272 /* HCYSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D661238BC5D600FD3272 /* HCYSlider.m */; };
 		0369D674238BC5E100FD3272 /* HCYSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D661238BC5D600FD3272 /* HCYSlider.m */; };
-		0369D675238BC5E100FD3272 /* CommandButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D662238BC5D700FD3272 /* CommandButtonView.m */; };
-		0369D676238BC5E100FD3272 /* CommandButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D662238BC5D700FD3272 /* CommandButtonView.m */; };
 		0369D677238BC5E100FD3272 /* OGBluetoothListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D663238BC5D800FD3272 /* OGBluetoothListView.m */; };
 		0369D678238BC5E100FD3272 /* OGBluetoothListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D663238BC5D800FD3272 /* OGBluetoothListView.m */; };
 		0369D679238BC5E100FD3272 /* SublayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D665238BC5DA00FD3272 /* SublayerView.m */; };
@@ -1017,7 +1014,6 @@
 		03D1BF592328D38600F2BDD6 /* ArmChairModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D1BF582328D38600F2BDD6 /* ArmChairModel.m */; };
 		03D1E50321D7B0E10089E6CA /* VersionUpdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D1E50221D7B0E00089E6CA /* VersionUpdateView.m */; };
 		03D59BF6238CBD3A00502A18 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		03D59BF7238CC36800502A18 /* GlobalCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = C9865C5D238CB7A100ECAAB9 /* GlobalCommon.m */; };
 		03D99E5921AD2CBE00C766FD /* UMShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D99E5821AD2CBD00C766FD /* UMShare.framework */; };
 		03D99E5B21AD334300C766FD /* libSocialWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D99E5A21AD334300C766FD /* libSocialWeChat.a */; };
 		03D99E5D21AD335100C766FD /* libSocialQQ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D99E5C21AD335100C766FD /* libSocialQQ.a */; };
@@ -1254,6 +1250,10 @@
 		C973090521BE16B700060447 /* HCY_InformationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C973090421BE16B700060447 /* HCY_InformationController.m */; };
 		C9847E972341A17B00202B70 /* UpdateReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9847E962341A17B00202B70 /* UpdateReportViewController.m */; };
 		C9865C5E238CB7A100ECAAB9 /* GlobalCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = C9865C5D238CB7A100ECAAB9 /* GlobalCommon.m */; };
+		C9865C62238CBF7200ECAAB9 /* PostButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9865C60238CBF7100ECAAB9 /* PostButtonView.m */; };
+		C9865C63238CBFEB00ECAAB9 /* GlobalCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = C9865C5D238CB7A100ECAAB9 /* GlobalCommon.m */; };
+		C9865C66238CF23000ECAAB9 /* CommandButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9865C65238CF22F00ECAAB9 /* CommandButtonView.m */; };
+		C9865C67238CF23000ECAAB9 /* CommandButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9865C65238CF22F00ECAAB9 /* CommandButtonView.m */; };
 		C988EFD32383917800DCAF80 /* BuredPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = C988EFD12383917800DCAF80 /* BuredPoint.m */; };
 		C99B717221B903BE00F1FF5F /* HCY_DAVisceraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */; };
 		C9A2D3302331C68B00AC5185 /* NSBundle+Language.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A2D32F2331C68B00AC5185 /* NSBundle+Language.m */; };
@@ -1462,8 +1462,6 @@
 		036285972106BB020090020D /* CellUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CellUtil.h; sourceTree = "<group>"; };
 		036285982106BB020090020D /* CellUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CellUtil.m; sourceTree = "<group>"; };
 		036859DD222783DE00B10BE7 /* Pods_和畅行.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_和畅行.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0369D656238BC53000FD3272 /* PostButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostButtonView.m; sourceTree = "<group>"; };
-		0369D657238BC53000FD3272 /* PostButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostButtonView.h; sourceTree = "<group>"; };
 		0369D659238BC57300FD3272 /* SongListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongListCell.h; sourceTree = "<group>"; };
 		0369D65A238BC57400FD3272 /* SongListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongListCell.m; sourceTree = "<group>"; };
 		0369D65D238BC5D300FD3272 /* ArmchairHomeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArmchairHomeCell.m; sourceTree = "<group>"; };
@@ -1471,7 +1469,6 @@
 		0369D65F238BC5D500FD3272 /* ThemeCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeCollectionViewCell.m; sourceTree = "<group>"; };
 		0369D660238BC5D500FD3272 /* HCYSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCYSlider.h; sourceTree = "<group>"; };
 		0369D661238BC5D600FD3272 /* HCYSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCYSlider.m; sourceTree = "<group>"; };
-		0369D662238BC5D700FD3272 /* CommandButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandButtonView.m; sourceTree = "<group>"; };
 		0369D663238BC5D800FD3272 /* OGBluetoothListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBluetoothListView.m; sourceTree = "<group>"; };
 		0369D664238BC5D900FD3272 /* OGBluetoothListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBluetoothListView.h; sourceTree = "<group>"; };
 		0369D665238BC5DA00FD3272 /* SublayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SublayerView.m; sourceTree = "<group>"; };
@@ -1481,7 +1478,6 @@
 		0369D669238BC5DD00FD3272 /* InsidelayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsidelayerView.m; sourceTree = "<group>"; };
 		0369D66A238BC5DE00FD3272 /* GLYPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLYPageView.h; sourceTree = "<group>"; };
 		0369D66B238BC5DE00FD3272 /* SublayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SublayerView.h; sourceTree = "<group>"; };
-		0369D66C238BC5DF00FD3272 /* CommandButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandButtonView.h; sourceTree = "<group>"; };
 		0369D66D238BC5E000FD3272 /* InsidelayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsidelayerView.h; sourceTree = "<group>"; };
 		0369D66E238BC5E100FD3272 /* GLYPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLYPageView.m; sourceTree = "<group>"; };
 		0369D688238BCAB100FD3272 /* CommonTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonTabBarController.m; path = "../../harmonyYi/和畅行/CommonClass/Controller/CommonTabBarController.m"; sourceTree = "<group>"; };
@@ -2347,6 +2343,10 @@
 		C9847E962341A17B00202B70 /* UpdateReportViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateReportViewController.m; sourceTree = "<group>"; };
 		C9865C5C238CB7A000ECAAB9 /* GlobalCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalCommon.h; sourceTree = "<group>"; };
 		C9865C5D238CB7A100ECAAB9 /* GlobalCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalCommon.m; sourceTree = "<group>"; };
+		C9865C60238CBF7100ECAAB9 /* PostButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostButtonView.m; sourceTree = "<group>"; };
+		C9865C61238CBF7100ECAAB9 /* PostButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostButtonView.h; sourceTree = "<group>"; };
+		C9865C64238CF22F00ECAAB9 /* CommandButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandButtonView.h; sourceTree = "<group>"; };
+		C9865C65238CF22F00ECAAB9 /* CommandButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandButtonView.m; sourceTree = "<group>"; };
 		C988EFD12383917800DCAF80 /* BuredPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuredPoint.m; sourceTree = "<group>"; };
 		C988EFD22383917800DCAF80 /* BuredPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuredPoint.h; sourceTree = "<group>"; };
 		C99B717021B903BE00F1FF5F /* HCY_DAVisceraCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_DAVisceraCell.h; sourceTree = "<group>"; };
@@ -3022,10 +3022,10 @@
 		035F31F5231D06DC009A0D94 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				C9865C64238CF22F00ECAAB9 /* CommandButtonView.h */,
+				C9865C65238CF22F00ECAAB9 /* CommandButtonView.m */,
 				0369D666238BC5DA00FD3272 /* ArmchairHomeCell.h */,
 				0369D65D238BC5D300FD3272 /* ArmchairHomeCell.m */,
-				0369D66C238BC5DF00FD3272 /* CommandButtonView.h */,
-				0369D662238BC5D700FD3272 /* CommandButtonView.m */,
 				0369D66A238BC5DE00FD3272 /* GLYPageView.h */,
 				0369D66E238BC5E100FD3272 /* GLYPageView.m */,
 				0369D660238BC5D500FD3272 /* HCYSlider.h */,
@@ -3951,8 +3951,8 @@
 		03BD8409238BBC4200F57978 /* HarmonyYi */ = {
 			isa = PBXGroup;
 			children = (
-				0369D657238BC53000FD3272 /* PostButtonView.h */,
-				0369D656238BC53000FD3272 /* PostButtonView.m */,
+				C9865C61238CBF7100ECAAB9 /* PostButtonView.h */,
+				C9865C60238CBF7100ECAAB9 /* PostButtonView.m */,
 				0369D689238BCAB200FD3272 /* CommonTabBarController.h */,
 				0369D688238BCAB100FD3272 /* CommonTabBarController.m */,
 				03BD840A238BC02800F57978 /* 730B按摩椅 */,
@@ -5543,7 +5543,6 @@
 				036A667E2113ECBB0096A006 /* SelectedAdvisorModel.m in Sources */,
 				036E84412186EAD3001B9BB4 /* UIImage+Util.m in Sources */,
 				03C5913D2331BB030058EF33 /* ArmchairTestResultVC.m in Sources */,
-				0369D675238BC5E100FD3272 /* CommandButtonView.m in Sources */,
 				034A4E83211A9AD900936A46 /* TZPhotoPickerController.m in Sources */,
 				036E84132186EAB1001B9BB4 /* i9_UISetTTViewForRollerController.m in Sources */,
 				83E23EF421C202B100B43298 /* HCY_HomeImageModel.m in Sources */,
@@ -5595,6 +5594,7 @@
 				03FBDF9221928509006116FC /* ReadOrWriteView.m in Sources */,
 				036E84112186EAB1001B9BB4 /* FindBackPasswordViewController.m in Sources */,
 				0369D66F238BC5E100FD3272 /* ArmchairHomeCell.m in Sources */,
+				C9865C66238CF23000ECAAB9 /* CommandButtonView.m in Sources */,
 				036E84372186EAD3001B9BB4 /* UIView+FirstResponder.m in Sources */,
 				C973089A21B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m in Sources */,
 				0370A85E2111570500447DFB /* ShareProcessPoll.m in Sources */,
@@ -5771,7 +5771,7 @@
 				03BD81A6238BB89000F57978 /* NSBundle+TZImagePicker.m in Sources */,
 				03BD81A8238BB89000F57978 /* InformationDedailssViewController.m in Sources */,
 				03BD81A9238BB89000F57978 /* SetNetsPassWordViewController.m in Sources */,
-				0369D658238BC53100FD3272 /* PostButtonView.m in Sources */,
+				C9865C62238CBF7200ECAAB9 /* PostButtonView.m in Sources */,
 				03BD81AA238BB89000F57978 /* PaymentInfoViewController.m in Sources */,
 				03BD81AB238BB89000F57978 /* HCY_ConsumptionListCell.m in Sources */,
 				03BD81AC238BB89000F57978 /* TYWaveProgressView.m in Sources */,
@@ -5817,7 +5817,6 @@
 				03BD81D3238BB89000F57978 /* HomePageController.m in Sources */,
 				03BD81D4238BB89000F57978 /* NoMessageView.m in Sources */,
 				03BD81D5238BB89000F57978 /* OrganDiseaseModel.m in Sources */,
-				0369D676238BC5E100FD3272 /* CommandButtonView.m in Sources */,
 				03BD81D6238BB89000F57978 /* PECropRectView.m in Sources */,
 				03BD81D7238BB89000F57978 /* LectureDetailViewController.m in Sources */,
 				03BD81D8238BB89000F57978 /* HYC_CardsModel.m in Sources */,
@@ -5936,7 +5935,7 @@
 				03BD8246238BB89000F57978 /* CCSegmentedControl.m in Sources */,
 				03BD8247238BB89000F57978 /* BloodGuideViewController.m in Sources */,
 				03BD8248238BB89000F57978 /* CacheManager.m in Sources */,
-				03D59BF7238CC36800502A18 /* GlobalCommon.m in Sources */,
+				C9865C63238CBFEB00ECAAB9 /* GlobalCommon.m in Sources */,
 				03BD8249238BB89000F57978 /* ResultController.m in Sources */,
 				03BD824B238BB89000F57978 /* DBManager.m in Sources */,
 				03BD824C238BB89000F57978 /* FSSegmentTitleView.m in Sources */,
@@ -6042,6 +6041,7 @@
 				03BD82AC238BB89000F57978 /* NavBarViewController.m in Sources */,
 				03BD82AD238BB89000F57978 /* TZPhotoPreviewController.m in Sources */,
 				03BD82AE238BB89000F57978 /* UIImage+Units.m in Sources */,
+				C9865C67238CF23000ECAAB9 /* CommandButtonView.m in Sources */,
 				03BD82AF238BB89000F57978 /* ChannelScrollView.m in Sources */,
 				03BD82B0238BB89000F57978 /* BaseControlViewController.m in Sources */,
 				03BD82B1238BB89000F57978 /* RecommendDetailVC.m in Sources */,

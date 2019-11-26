@@ -630,7 +630,7 @@
         cell.indexLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row+1+section0Count+section1Count+section2Count];
     }
     
-    cell.answerLabel.font = [UIFont systemFontOfSize:14];
+    cell.answerLabel.font = [UIFont systemFontOfSize:14/[UserShareOnce shareOnce].multipleFontSize];
    // [self.cellH setObject:@(h) forKey:[NSString stringWithFormat:@"%ld",indexPath.row]];
     return cell;
 }

@@ -54,17 +54,10 @@
     
     
     preBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    preBtn.frame = CGRectMake(15, kStatusBarHeight+2, 80, 40);
+    preBtn.frame = CGRectMake(0, kStatusBarHeight+2, Adapter(40), 40);
     [preBtn setImage:[UIImage imageNamed:@"黑色返回"] forState:UIControlStateNormal];
-//    [preBtn setTitle:ModuleZW(@"返回") forState:UIControlStateNormal];
     [preBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //[preBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     preBtn.adjustsImageWhenHighlighted = NO;
-    //[preBtn sizeToFit];
-    preBtn.titleEdgeInsets = UIEdgeInsetsMake(1, -5, 0, 0);
-    preBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    preBtn.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
-    //[preBtn setHitTestEdgeInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
     [preBtn addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:preBtn];
     preBtn.hidden = YES;

@@ -72,7 +72,7 @@
     
     self.rightBtn.selected = [self chairPowerOnWithRespond:respond];;
     
-    if(!self.rightBtn.selected){
+    if(!self.rightBtn.selected ){
         [self.navigationController popViewControllerAnimated:NO];
     }
     
@@ -127,11 +127,7 @@
 
 - (void)initUI
 {
-    self.view.backgroundColor = [UIColor whiteColor];
-    UIScrollView *backScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight - kNavBarHeight)];
-    backScrollView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:backScrollView];
-    remindLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-Adapter(116))/2.0, kNavBarHeight+Adapter(35), Adapter(90), Adapter(35))];
+    remindLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-Adapter(116))/2.0, kNavBarHeight+25, Adapter(90), Adapter(35))];
     if (ISPaid) {
         remindLabel.font = [UIFont fontWithName:@"PingFang SC" size:17*[UserShareOnce shareOnce].fontSize];
     }else{
@@ -141,22 +137,22 @@
     remindLabel.textColor = [UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0];
     remindLabel.text = @"Testing";
     remindLabel.textAlignment = NSTextAlignmentCenter;
-    [backScrollView addSubview:remindLabel];
+    [self.view addSubview:remindLabel];
     
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(remindLabel.right, remindLabel.top+Adapter(5), Adapter(50), Adapter(25))];
     topView.backgroundColor = [UIColor clearColor];
     [self setupAnimationInLayer:topView.layer withSize:topView.frame.size tintColor:[UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0]];
-    [backScrollView addSubview:topView];
+    [self.view addSubview:topView];
     
     CGFloat height = 251/677.0*(ScreenWidth-Adapter(40));
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(Adapter(20), remindLabel.bottom+55, ScreenWidth-Adapter(40), height)];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(Adapter(20), remindLabel.bottom+30, ScreenWidth-Adapter(40), height)];
     imageV.image = [UIImage imageNamed:@"体测图"];
-    [backScrollView addSubview:imageV];
+    [self.view addSubview:imageV];
     
     UILabel *label = [[UILabel alloc] init];
-    label.frame = CGRectMake(imageV.left,imageV.bottom+55,ScreenWidth-imageV.left*2,Adapter(22.5));
+    label.frame = CGRectMake(Adapter(6),imageV.bottom+35,ScreenWidth-Adapter(12),Adapter(22.5));
     label.numberOfLines = 0;
-    [backScrollView addSubview:label];
+    [self.view addSubview:label];
     
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"Hold the electrode piece with your palm"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17*[UserShareOnce shareOnce].fontSize],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
     
@@ -165,10 +161,10 @@
     
     
     UILabel *label2 = [[UILabel alloc] init];
-    label2.frame = CGRectMake(imageV.left,label.bottom+Adapter(5),ScreenWidth-imageV.left*2,Adapter(200));
+    label2.frame = CGRectMake(label.left,label.bottom+Adapter(5),ScreenWidth-label.left*2,Adapter(200));
     label2.numberOfLines = 0;
     //label2.backgroundColor = [UIColor orangeColor];
-    [backScrollView addSubview:label2];
+    [self.view addSubview:label2];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
@@ -178,7 +174,6 @@
     
     label2.attributedText = string2;
     label2.textAlignment = NSTextAlignmentLeft;
-    backScrollView.contentSize = CGSizeMake(ScreenWidth, label2.bottom + Adapter(20));
 }
 
 - (void)setupAnimationInLayer:(CALayer *)layer withSize:(CGSize)size tintColor:(UIColor *)tintColor {

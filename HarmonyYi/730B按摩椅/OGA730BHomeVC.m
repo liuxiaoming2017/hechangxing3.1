@@ -234,7 +234,7 @@
     [self.bgScrollView addSubview:self.recommendV];
     
     UILabel *recommendLabel = [[UILabel alloc] init];
-    recommendLabel.frame = CGRectMake(margin,0,ScreenWidth-margin*2,Adapter(22.5));
+    recommendLabel.frame = CGRectMake(margin,Adapter(5),ScreenWidth-margin*2,Adapter(22.5));
     recommendLabel.text = @"Massage Prescription";
     recommendLabel.textAlignment = NSTextAlignmentLeft;
     recommendLabel.font = [UIFont fontWithName:@"PingFang SC" size:16*[UserShareOnce shareOnce].fontSize];
@@ -256,7 +256,7 @@
     
     UILabel *label1 = [[UILabel alloc] init];
     if(ISPaid){
-         label1.frame = CGRectMake(sublayerView.right+Adapter(19),sublayerView.top+Adapter(20),ScreenWidth-sublayerView.right-Adapter(35),Adapter(85)*[UserShareOnce shareOnce].multipleFontSize);
+         label1.frame = CGRectMake(sublayerView.right+Adapter(19),sublayerView.top+Adapter(20),ScreenWidth-sublayerView.right-Adapter(35),Adapter(90)*[UserShareOnce shareOnce].multipleFontSize);
     }else{
          label1.frame = CGRectMake(sublayerView.right+Adapter(19),sublayerView.top+Adapter(20),ScreenWidth-sublayerView.right-35,75+20+15);
     }
@@ -328,7 +328,7 @@
     //  CGFloat margin = ((ScreenWidth-107*3)/4.0);
     
     UILabel *label = [[UILabel alloc] init];
-    label.frame = CGRectMake(margin,self.recommendV.bottom+Adapter(15),ScreenWidth-margin*2,Adapter(20));
+    label.frame = CGRectMake(margin,self.recommendV.bottom+Adapter(15),ScreenWidth-margin*2,Adapter(23));
     //label.frame = CGRectMake(margin,kNavBarHeight+15,120,20);
     label.font = [UIFont fontWithName:@"PingFang SC" size:16*[UserShareOnce shareOnce].fontSize];
     label.text = @"Massage Technique";
@@ -336,17 +336,24 @@
     label.alpha = 1.0;
     [self.bgScrollView addSubview:label];
     //[self.view addSubview:label];
-    
+    CGFloat cellWithW;
+    if (ISPaid) {
+        cellWithW = (ScreenWidth - Adapter(50))/4;
+    }else{
+        cellWithW = (ScreenWidth - Adapter(40))/3;
+    }
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(Adapter(107)+margin, Adapter(111)+margin);
-    //layout.itemSize = CGSizeMake(130, 106);
-    layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    layout.itemSize = CGSizeMake(cellWithW , cellWithW);
+    layout.sectionInset = UIEdgeInsetsMake(Adapter(10), Adapter(10), Adapter(10), Adapter(10));
+    
     layout.minimumLineSpacing = 0;
     layout.minimumInteritemSpacing = 0;
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
-    self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom, ScreenWidth-margin, Adapter(125)*4+Adapter(50)) collectionViewLayout:layout];
-    //self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom+8, ScreenWidth-margin, ScreenHeight-label.bottom-8) collectionViewLayout:layout];
+    self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(0,label.bottom + Adapter(10), ScreenWidth, cellWithW*3+Adapter(50)) collectionViewLayout:layout];
+    if (ISPaid) {
+        self.collectionV.height = cellWithW*2+Adapter(30);
+    }
     self.collectionV.delegate = self;
     self.collectionV.dataSource = self;
     self.collectionV.showsHorizontalScrollIndicator = NO;
@@ -400,6 +407,14 @@
 {
     return self.dataArr.count;
 }
+- (CGFloat) collectionView:(UICollectionView *)collectionView
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+     return Adapter(10);
+}
+
+
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
