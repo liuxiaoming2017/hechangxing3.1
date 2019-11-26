@@ -431,11 +431,8 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     ArmChairModel *model = [self.dataArr objectAtIndex:indexPath.row];
     
     if([model.name isEqualToString:@"More"]){
-        OGA730BDetailVC *vc = [[OGA730BDetailVC alloc] initWithType:YES withTitleStr:model.name];
-        vc.armchairModel = model;
+        OGA730BThemeVC *vc = [[OGA730BThemeVC alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
-//        OGA730BThemeVC *vc = [[OGA730BThemeVC alloc] init];
-//        [self.navigationController pushViewController:vc animated:YES];
     }else{
         
        // [self nextVCWithModel:model];
