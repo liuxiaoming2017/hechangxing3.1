@@ -15,8 +15,6 @@
 #import "AESCipher.h"
 #import <sys/utsname.h>
 
-
-
 #import "LoginViewController.h"
 #import "CustomNavigationController.h"
 
@@ -698,6 +696,7 @@
 
 + (NSString *)commandFromName:(NSString *)str
 {
+#if FIRST_FLAG
     NSDictionary *dic = @{
                           @"大师精选":k530Command_MassageMaster,
                           @"轻松自在":k530Command_MassageRelease,
@@ -722,6 +721,12 @@
                           @"夜晚助眠":k530Command_MassageSweetDreams,
                           @"酸疼检测":k530Command_MassageIntellect
                           };
+#else
+    NSDictionary *dic = @{
+                          @"大师精选":@"k530Command_MassageMaster"
+                          };
+#endif
+    
     if(str){
         NSString *resultStr = [dic objectForKey:str];
         if(resultStr){

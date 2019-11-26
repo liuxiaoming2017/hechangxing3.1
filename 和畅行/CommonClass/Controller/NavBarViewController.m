@@ -43,6 +43,10 @@
     
     // 设置导航默认标题的颜色及字体大小
     self.navTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-Adapter(240))/2.0, Adapter(2)+kStatusBarHeight, Adapter(240), 40)];
+    if (ISPaid) {
+        self.navTitleLabel.top = kStatusBarHeight - Adapter(3);
+        self.navTitleLabel.height = 40+Adapter(3);
+    }
     self.navTitleLabel.font = [UIFont systemFontOfSize:18];
     self.navTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.navTitleLabel.textColor = [UIColor blackColor];

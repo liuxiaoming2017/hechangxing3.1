@@ -62,7 +62,7 @@
     UIScrollView *backScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
     [self.view addSubview:backScrollView];
     UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake((ScreenWidth-Adapter(110))/2.0, kNavBarHeight+Adapter(30), Adapter(110), Adapter(77))];
-    imageV.image = [UIImage imageNamed:@"和畅logo"];
+    imageV.image = [UIImage imageNamed:ModuleZW(@"和畅logo")];
     [backScrollView addSubview:imageV];
     NSArray *titleArray = @[ModuleZW(@"短信登录"),ModuleZW(@"密码登录")];
     UISegmentedControl *segment = [[UISegmentedControl alloc]initWithItems:titleArray];

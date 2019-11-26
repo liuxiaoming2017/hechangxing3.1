@@ -71,15 +71,13 @@
     
     self.rightBtn.selected = [self chairPowerOnWithRespond:respond];;
     
-    if(!self.rightBtn.selected){
+    if(!self.rightBtn.selected || respond.acheStatus == kDetectionAcheStatusNone){
         [self.navigationController popViewControllerAnimated:NO];
     }
     
     if (respond.acheStatus == kDetectionAcheStatusDoing) {
         self.acheStatus = YES;
     }
-    
-   
     // 酸痛检测结果
     if (respond.acheStatus == kDetectionAcheStatusDoing) { // 检测进行中
         
@@ -99,9 +97,6 @@
             }
         }
     }
-//    if (respond.achePart > 0 && respond.achePart < 7) {
-//        [array replaceObjectAtIndex:respond.achePart - 1 withObject:@(respond.acheResult)];
-//    }
     
     //    1，颈部；2，肩内；3，肩外；4，肩胛骨；5，背部；6，腰部
     if (respond.acheStatus == kDetectionAcheStatusDone && self.acheStatus == YES) {
