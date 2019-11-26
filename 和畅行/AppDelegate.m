@@ -37,16 +37,6 @@
 #import "SBJson.h"
 #import "ChangeLanguageObject.h"
 
-//#import <PgySDK/PgyManager.h>
-//#import <PgyUpdate/PgyUpdateManager.h>
-
-//#if FIRST_FLAG
-//#import <OGABluetooth530/OGABluetooth530.h>
-//
-//#else
-//#import <OGABluetooth730B/OGABluetoothManager_730B.h>
-//#endif
-
 #import "NSBundle+Language.h"
 
 #import "AFNetworking.h"
@@ -128,23 +118,23 @@
     [[CacheManager sharedCacheManager] createDataBase];
     
     
-//    蒲公英SDK
-    //启动基本SDK
-//    [[PgyManager sharedPgyManager] startManagerWithAppId:@"da15cba9ecb9d085233da45a1422f52c"];
-//    //启动更新检查SDK
-//    [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"da15cba9ecb9d085233da45a1422f52c"];
-    
-    
+#if FIRST_FLAG
+    //奥佳华按摩椅530
+    [[OGA530BluetoothManager shareInstance] setAppkey:OGA530AppKey appSecret:OGA530AppSecret];
+    [[OGA530BluetoothManager shareInstance] setIsLog:YES];
+
+#else
+    //奥佳华按摩椅730B
+    [[OGABluetoothManager_730B shareInstance] setAppkey:OGA530AppKey appSecret:OGA530AppSecret];
+    [[OGABluetoothManager_730B shareInstance] setIsLog:YES];
+#endif
     
     if(FIRST_FLAG){
         //奥佳华按摩椅
-//        [[OGA530BluetoothManager shareInstance] setAppkey:OGA530AppKey appSecret:OGA530AppSecret];
-//        [[OGA530BluetoothManager shareInstance] setIsLog:YES];
     }else{
         //奥佳华按摩椅
         //NSLog(@"haha:%@",OGA530AppKey);
-        [[OGABluetoothManager_730B shareInstance] setAppkey:OGA530AppKey appSecret:OGA530AppSecret];
-        [[OGABluetoothManager_730B shareInstance] setIsLog:YES];
+        
     }
     
     if(@available(iOS 11.0,*)){
