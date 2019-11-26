@@ -661,34 +661,30 @@
                 [timerACC invalidate];
             }
             
-            if ( self.soundCount < 20.0 || !self.isLound) {
+            if ([self soundIsTooSmall]) {
                 [self soundTooLow];
             }else{
                 [self testMp3Upload];
 
-//                if([GlobalCommon isManyMember]){
-//                    SubMemberView *subMember = [[SubMemberView alloc] initWithFrame:CGRectZero];
-//                    __weak typeof(self) weakSelf = self;
-//                    [subMember receiveSubIdWith:^(NSString *subId) {
-//                        NSLog(@"%@",subId);
-//                        if ([subId isEqualToString:@"user is out of date"]) {
-//                            //登录超时
-//                            
-//                        }else{
-//                            [weakSelf testMp3Upload];
-//                            NSLog(@"选中的子账户id为：%@",subId);
-//                        }
-//                        [subMember hideHintView];
-//                    }];
-//                }else{
-//                    [self testMp3Upload];
-//                }
-                
-                
             }
             
             
         }
+    }
+}
+
+- (BOOL)soundIsTooSmall
+{
+    if(ISPaid){
+        if(self.soundCount < 1.0 || !self.isLound){
+            return NO;
+        }
+        return YES;
+    }else{
+        if ( self.soundCount < 20.0 || !self.isLound){
+            return NO;
+        }
+        return YES;
     }
 }
 
