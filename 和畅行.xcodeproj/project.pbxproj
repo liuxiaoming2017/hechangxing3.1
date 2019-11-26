@@ -1005,7 +1005,6 @@
 		03BD841A238BC04B00F57978 /* OGA730BAcheTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BD8412238BC04800F57978 /* OGA730BAcheTestVC.m */; };
 		03BD841B238BC04B00F57978 /* OGA730BCommonVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BD8413238BC04900F57978 /* OGA730BCommonVC.m */; };
 		03BD841C238BC04B00F57978 /* OGA730BHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BD8416238BC04B00F57978 /* OGA730BHomeVC.m */; };
-		03BD841F238BC40900F57978 /* GlobalCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BD841D238BC40800F57978 /* GlobalCommon.m */; };
 		03C1F50720F491B700A341A8 /* RemindModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C1F50620F491B700A341A8 /* RemindModel.m */; };
 		03C2319821EC20E6003F0FCC /* sportShiFanYin.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03C2319721EC20E6003F0FCC /* sportShiFanYin.plist */; };
 		03C4D1F220F44DF800D7BF02 /* NSString+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C4D1F120F44DF800D7BF02 /* NSString+Utility.m */; };
@@ -1253,6 +1252,7 @@
 		C973090221BA6C9100060447 /* HCY_ActivationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C973090121BA6C9100060447 /* HCY_ActivationController.m */; };
 		C973090521BE16B700060447 /* HCY_InformationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C973090421BE16B700060447 /* HCY_InformationController.m */; };
 		C9847E972341A17B00202B70 /* UpdateReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9847E962341A17B00202B70 /* UpdateReportViewController.m */; };
+		C9865C5E238CB7A100ECAAB9 /* GlobalCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = C9865C5D238CB7A100ECAAB9 /* GlobalCommon.m */; };
 		C988EFD32383917800DCAF80 /* BuredPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = C988EFD12383917800DCAF80 /* BuredPoint.m */; };
 		C99B717221B903BE00F1FF5F /* HCY_DAVisceraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */; };
 		C9A2D3302331C68B00AC5185 /* NSBundle+Language.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A2D32F2331C68B00AC5185 /* NSBundle+Language.m */; };
@@ -1986,8 +1986,6 @@
 		03BD8414238BC04900F57978 /* OGA730BAcheTestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGA730BAcheTestVC.h; sourceTree = "<group>"; };
 		03BD8415238BC04A00F57978 /* OGA730BCommonVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGA730BCommonVC.h; sourceTree = "<group>"; };
 		03BD8416238BC04B00F57978 /* OGA730BHomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGA730BHomeVC.m; sourceTree = "<group>"; };
-		03BD841D238BC40800F57978 /* GlobalCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalCommon.m; sourceTree = "<group>"; };
-		03BD841E238BC40900F57978 /* GlobalCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalCommon.h; sourceTree = "<group>"; };
 		03C1F50520F491B700A341A8 /* RemindModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemindModel.h; sourceTree = "<group>"; };
 		03C1F50620F491B700A341A8 /* RemindModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemindModel.m; sourceTree = "<group>"; };
 		03C2319721EC20E6003F0FCC /* sportShiFanYin.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = sportShiFanYin.plist; sourceTree = "<group>"; };
@@ -2348,6 +2346,8 @@
 		C973090421BE16B700060447 /* HCY_InformationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_InformationController.m; sourceTree = "<group>"; };
 		C9847E952341A17B00202B70 /* UpdateReportViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateReportViewController.h; sourceTree = "<group>"; };
 		C9847E962341A17B00202B70 /* UpdateReportViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateReportViewController.m; sourceTree = "<group>"; };
+		C9865C5C238CB7A000ECAAB9 /* GlobalCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalCommon.h; sourceTree = "<group>"; };
+		C9865C5D238CB7A100ECAAB9 /* GlobalCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalCommon.m; sourceTree = "<group>"; };
 		C988EFD12383917800DCAF80 /* BuredPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuredPoint.m; sourceTree = "<group>"; };
 		C988EFD22383917800DCAF80 /* BuredPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuredPoint.h; sourceTree = "<group>"; };
 		C99B717021B903BE00F1FF5F /* HCY_DAVisceraCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_DAVisceraCell.h; sourceTree = "<group>"; };
@@ -3666,8 +3666,8 @@
 		0385402720EF1A54002AC776 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				03BD841E238BC40900F57978 /* GlobalCommon.h */,
-				03BD841D238BC40800F57978 /* GlobalCommon.m */,
+				C9865C5C238CB7A000ECAAB9 /* GlobalCommon.h */,
+				C9865C5D238CB7A100ECAAB9 /* GlobalCommon.m */,
 				03051FF322C0997C00385DD0 /* AESCipher.h */,
 				03051FF422C0997D00385DD0 /* AESCipher.m */,
 				038CE87220EDE8F9005E9219 /* UserShareOnce.h */,
@@ -5564,9 +5564,9 @@
 				03F6931720FF2FD400308E38 /* SBJsonWriter.m in Sources */,
 				03051FF522C0997D00385DD0 /* AESCipher.m in Sources */,
 				03513ADB20E9CAD4004E2805 /* main.m in Sources */,
+				C9865C5E238CB7A100ECAAB9 /* GlobalCommon.m in Sources */,
 				038CE87720EDF1BF005E9219 /* RootRequestController.m in Sources */,
 				0369D673238BC5E100FD3272 /* HCYSlider.m in Sources */,
-				03BD841F238BC40900F57978 /* GlobalCommon.m in Sources */,
 				03F97CFA21005DE300A0F842 /* WriteListController.m in Sources */,
 				0338E4FA212BC0DD00BBF576 /* TestBaseViewController.m in Sources */,
 				03A07C0320EF5BE800002274 /* RegistrationNoteController.m in Sources */,
