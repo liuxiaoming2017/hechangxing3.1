@@ -41,16 +41,18 @@
     [super viewDidLoad];
     
     self.dataArr = [self loadMoreProgramsData];
-    
+    CGFloat cellWithW;
+    if (ISPaid) {
+        cellWithW = (ScreenWidth - Adapter(50))/4;
+    }else{
+        cellWithW = (ScreenWidth - Adapter(40))/3;
+    }
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(Adapter(107)+margin, Adapter(111)+margin);
-    //layout.itemSize = CGSizeMake(130, 106);
-    layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    layout.minimumLineSpacing = 0;
-    layout.minimumInteritemSpacing = 0;
+    layout.itemSize = CGSizeMake(cellWithW, cellWithW);
+    layout.sectionInset = UIEdgeInsetsMake(Adapter(10), Adapter(10), Adapter(10), Adapter(10));
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
-    self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,kNavBarHeight+Adapter(10), ScreenWidth-margin, ScreenHeight-kNavBarHeight-Adapter(10)) collectionViewLayout:layout];
+    self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(0,kNavBarHeight+Adapter(10), ScreenWidth, ScreenHeight-kNavBarHeight-Adapter(10)) collectionViewLayout:layout];
     self.collectionV.delegate = self;
     self.collectionV.dataSource = self;
     self.collectionV.showsHorizontalScrollIndicator = NO;
@@ -74,6 +76,13 @@
     
     self.rightBtn.selected = [self chairPowerOnWithRespond:respond];
     
+}
+
+- (CGFloat) collectionView:(UICollectionView *)collectionView
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    return Adapter(10);
 }
 
 #pragma mark <UICollectionViewDataSource>

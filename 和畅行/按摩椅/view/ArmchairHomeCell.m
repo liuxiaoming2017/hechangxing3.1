@@ -8,9 +8,6 @@
 
 #import "ArmchairHomeCell.h"
 
-
-#define armchairCellW ((ScreenWidth-Adapter(107)*3)/4.0)
-
 @implementation ArmchairHomeCell
 
 @synthesize subLayer;
@@ -26,7 +23,7 @@
 
 - (void)setupUI
 {
-    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(armchairCellW/2.0, armchairCellW/2.0, Adapter(107), Adapter(111))];
+    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.width, self.height)];
     backImageView.backgroundColor = [UIColor whiteColor];
     backImageView.layer.cornerRadius = Adapter(10);
     backImageView.layer.masksToBounds = YES;
@@ -38,14 +35,14 @@
     //NSLog(@"#####:%@",NSStringFromCGRect(self.frame));
     
     //self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(25, 19, self.frame.size.width-48, self.frame.size.height-19-47)];
-    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake((self.frame.size.width-Adapter(60))/2.0, (self.frame.size.height-Adapter(79))/2.0, Adapter(60), Adapter(49))];
+    self.imageV = [[UIImageView alloc] initWithFrame:CGRectMake(self.width/4, self.width/8, self.width/2, self.width/2)];
     self.imageV.layer.cornerRadius = Adapter(8);
     self.imageV.contentMode = UIViewContentModeScaleAspectFit;
     self.imageV.image = [UIImage imageNamed:@"sports01"];
     [self addSubview:self.imageV];
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(15), CGRectGetMaxY(self.imageV.frame)+Adapter(10), self.frame.size.width-Adapter(15)*2, Adapter(20))];
-    self.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(5),self.imageV.bottom , self.width - Adapter(10), self.height*3/8)];
+    self.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].padSizeFloat];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
     //self.titleLabel.highlightedTextColor = UIColorFromHex(0X1E82D2);

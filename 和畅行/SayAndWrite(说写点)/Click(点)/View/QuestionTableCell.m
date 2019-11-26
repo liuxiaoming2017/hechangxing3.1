@@ -39,13 +39,7 @@
     [rightView.layer insertSublayer:[self addGradientLayerWithColor1:UIColorFromHex(0x81dddd) withColor2:UIColorFromHex(0x5d97f2) withFrame:rightView.bounds] atIndex:0];
     rightView.hidden = YES;
     self.indexLabel.font = [UIFont systemFontOfSize:16];
-//    @property (weak, nonatomic) IBOutlet UILabel *indexLabel;
-//
-//    @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
-//    @property (weak, nonatomic) IBOutlet UIView *rightView;
-//
-//    @property (weak, nonatomic) IBOutlet UILabel *answerLabel;
-//    @property (weak, nonatomic) IBOutlet UIView *leftView;
+
     [self.leftView  mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).offset(Adapter(8));
         make.size.mas_equalTo(CGSizeMake(Adapter(30), Adapter(30)));

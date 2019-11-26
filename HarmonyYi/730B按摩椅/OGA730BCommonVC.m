@@ -175,7 +175,7 @@
     if (btn.selected == YES) {
         
         __weak typeof(self) weakSelf = self;
-        [[OGABluetoothManager_730B shareInstance] sendShortCommand:k730Command_Stop success:^(BOOL success) {
+        [[OGABluetoothManager_730B shareInstance] sendShortCommand:k730Command_PowerOn success:^(BOOL success) {
             if (success) {
                 weakSelf.rightBtn.selected = NO;
             }

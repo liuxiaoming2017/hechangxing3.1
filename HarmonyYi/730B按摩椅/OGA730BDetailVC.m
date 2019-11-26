@@ -672,7 +672,7 @@ typedef enum : NSInteger {
 - (void)initUI
 {
     
-    self.navTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-Adapter(240))/2.0, Adapter(2)+kStatusBarHeight, Adapter(240), Adapter(40))];
+    self.navTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-Adapter(240))/2.0, Adapter(2)+kStatusBarHeight, Adapter(240), 40)];
     self.navTimeLabel.font = [UIFont systemFontOfSize:18];
     self.navTimeLabel.textAlignment = NSTextAlignmentCenter;
     self.navTimeLabel.textColor = [UIColor blackColor];
@@ -1001,13 +1001,16 @@ typedef enum : NSInteger {
     UIView *layerView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-Adapter(90), ScreenWidth, Adapter(20))];
     layerView.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:layerView];
-    
+
+
+
     InsidelayerView *insidelayerView = [[InsidelayerView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, Adapter(20))];
     [insidelayerView insertSublayerFromeView:layerView];
     [layerView addSubview:insidelayerView];
     
     self.postBottomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-Adapter(100), ScreenWidth, Adapter(275)-Adapter(90))];
     self.postBottomView.backgroundColor = [UIColor whiteColor];
+
     
     UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth/2.0-Adapter(6), Adapter(5), Adapter(12), Adapter(5))];
     imageV.image = [UIImage imageNamed:@"气压_上拉"];
@@ -1360,7 +1363,7 @@ typedef enum : NSInteger {
     CGFloat viewWidth = CGRectGetWidth(view.frame);
     CGFloat viewHeight = CGRectGetHeight(view.frame);
     
-    CGFloat topMargin = 10;
+    CGFloat topMargin = Adapter(10);
     
     UIBezierPath *path = [UIBezierPath bezierPath];
     
