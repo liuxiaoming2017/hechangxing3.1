@@ -64,7 +64,7 @@
     _contentLabel.text = @"About 3~4 min";
     _contentLabel.font = [UIFont systemFontOfSize:15];
     _contentLabel.backgroundColor = [UIColor clearColor];
-    //_contentLabel.hidden = YES;
+    _contentLabel.hidden = YES;
     [self addSubview:_contentLabel];
     
     [self.layer addSublayer:backGroundLayer];
@@ -96,8 +96,12 @@
     frontFillLayer.frame = self.bounds;
     
     //设置线宽
-    frontFillLayer.lineWidth = 8.0;
-    backGroundLayer.lineWidth = 8.0;
+    frontFillLayer.lineWidth = 5.0;
+    backGroundLayer.lineWidth = 5.0;
+    if(ISPaid){
+        frontFillLayer.lineWidth = 8.0;
+        backGroundLayer.lineWidth = 8.0;
+    }
 }
 
 #pragma mark - 设置label文字和进度的方法
