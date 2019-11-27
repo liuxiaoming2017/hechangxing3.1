@@ -23,8 +23,8 @@
 - (void)initUIwithTitle:(NSString *)title
 {
     CGFloat buttonWidth = Adapter(42);
-    CGFloat labelWidth = Adapter(80);
-    CGFloat margin = (ScreenWidth - labelWidth*4)/5.0;
+    //CGFloat labelWidth = Adapter(80);
+    //CGFloat margin = (ScreenWidth - labelWidth*4)/5.0;
     
     self.commandButton = [UIButton buttonWithType:UIButtonTypeCustom];
     

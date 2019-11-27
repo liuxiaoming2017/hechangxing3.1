@@ -435,26 +435,26 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
         [self.navigationController pushViewController:vc animated:YES];
     }else{
         
-       // [self nextVCWithModel:model];
+        [self nextVCWithModel:model];
         
-        NSString *statusStr = [self resultStringWithStatus];
-        if(![statusStr isEqualToString:@""]){
-            [GlobalCommon showMessage2:statusStr duration2:1.0];
-            return;
-        }else{
-            self.armchairModel = model;
-            if([self chairIsPowerOn] == NO){
-
-                [self showProgressHUD:startDevice];
-
-                [[OGABluetoothManager_730B shareInstance] sendShortCommand:k730Command_PowerOn success:^(BOOL success) {
-                    NSLog(@"启动设备成功啦");
-                }];
-            }else{
-                NSLog(@"开机了开机了");
-                [self nextVCWithModel:model];
-            }
-        }
+//        NSString *statusStr = [self resultStringWithStatus];
+//        if(![statusStr isEqualToString:@""]){
+//            [GlobalCommon showMessage2:statusStr duration2:1.0];
+//            return;
+//        }else{
+//            self.armchairModel = model;
+//            if([self chairIsPowerOn] == NO){
+//
+//                [self showProgressHUD:startDevice];
+//
+//                [[OGABluetoothManager_730B shareInstance] sendShortCommand:k730Command_PowerOn success:^(BOOL success) {
+//                    NSLog(@"启动设备成功啦");
+//                }];
+//            }else{
+//                NSLog(@"开机了开机了");
+//                [self nextVCWithModel:model];
+//            }
+//        }
         
     }
 }

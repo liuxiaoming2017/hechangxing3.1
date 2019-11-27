@@ -8,6 +8,7 @@
 
 #import "OGA730BAcheTestVC.h"
 #import "OGA730BTestResultVC.h"
+#import "JWProgressView.h"
 
 @interface OGA730BAcheTestVC ()
 
@@ -19,17 +20,21 @@
 
 @property (nonatomic, strong) NSMutableArray *acheArray;
 
+@property (nonatomic, strong) JWProgressView *progressView;
+
+@property (nonatomic, strong) NSTimer *countdownTimer;
+
 @end
 
 @implementation OGA730BAcheTestVC
-@synthesize remindLabel,acheArray;
+@synthesize remindLabel,acheArray,progressView;
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navTitleLabel.text = @"Chair Doctor";
     
-    [self initUI];
+    [self initUI2];
     
     self.subscribe = [[OGASubscribe_730B alloc] init];
     
@@ -42,16 +47,55 @@
     
    acheArray = [NSMutableArray arrayWithArray:@[@(2),@(2),@(1),@(2),@(2),@(2)]];
     
+   
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        //self.startTimeStr = [GlobalCommon getCurrentTimes];
+        
         [[OGABluetoothManager_730B shareInstance] sendShortCommand:k730Command_DetectionAche success:nil];
+    
     });
+    
+    [self startTimer];
+    
+}
+
+- (void)startTimer
+{
+    if (self.countdownTimer) {
+        [self.countdownTimer invalidate];
+        self.countdownTimer = nil;
+    }
+    self.countdownTimer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(changeProgressValue) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:self.countdownTimer forMode:NSDefaultRunLoopMode];
+}
+
+- (void)removeTimer
+{
+    if (self.countdownTimer) {
+        [self.countdownTimer invalidate];
+        self.countdownTimer = nil;
+    }
+}
+
+- (void)changeProgressValue
+{
+    
+    if(progressView.progressValue >= 0.98){
+        [self removeTimer];
+        return;
+    }
+    
+    progressView.progressValue = ((int)((progressView.progressValue * 220.0f) + 1.01) % 220) / 220.0f;
+    
+    //progressView.contentText=[NSString stringWithFormat:@"%f",progressView.progressValue];
     
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     
     [super viewDidDisappear:animated];
+    
+    [self removeTimer];
     
     [[OGABluetoothManager_730B shareInstance] removeSubscribe:self.subscribe];
 }
@@ -73,7 +117,7 @@
     self.rightBtn.selected = [self chairPowerOnWithRespond:respond];;
     
     if(!self.rightBtn.selected ){
-        [self.navigationController popViewControllerAnimated:NO];
+        //[self.navigationController popViewControllerAnimated:NO];
     }
     
     if (respond.acheStatus == kDetectionAcheStatusDoing) {
@@ -127,7 +171,7 @@
 
 - (void)initUI
 {
-    remindLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-Adapter(116))/2.0, kNavBarHeight+25, Adapter(90), Adapter(35))];
+    remindLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-Adapter(116))/2.0, kNavBarHeight+25+30, Adapter(90), Adapter(35))];
     if (ISPaid) {
         remindLabel.font = [UIFont fontWithName:@"PingFang SC" size:17*[UserShareOnce shareOnce].fontSize];
     }else{
@@ -170,7 +214,7 @@
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     paragraphStyle.lineSpacing = 5;
     
-    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc] initWithString:@"①Sit still and lean back against the chair. \n②Put the right hand naturally on side of your body, with palm downward. \n③Hold the electrode in your left hand. \n④Keep quiet. \n⑤It takes about 4~5 minutes."attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16*[UserShareOnce shareOnce].fontSize],NSForegroundColorAttributeName: [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
+    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc] initWithString:@"①Sit still and lean back against the chair. \n②Put the right hand naturally on side of your body, with palm downward. \n③Hold the electrode in your left hand. \n④Keep quiet. \n⑤It takes about 3~4 minutes."attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16*[UserShareOnce shareOnce].fontSize],NSForegroundColorAttributeName: [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
     
     label2.attributedText = string2;
     label2.textAlignment = NSTextAlignmentLeft;
@@ -200,6 +244,63 @@
     animation2.duration = 1.1;
     [subLayer2 addAnimation:animation2 forKey:nil];
 }
+
+- (void)initUI2
+{
+    
+    progressView = [[JWProgressView alloc]initWithFrame:CGRectMake((ScreenWidth-240)/2.0, kNavBarHeight+25, 240, 240)];
+    [self.view addSubview:progressView];
+    
+    remindLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-Adapter(116))/2.0, kNavBarHeight+25+30, Adapter(90), Adapter(35))];
+    if (ISPaid) {
+        remindLabel.font = [UIFont fontWithName:@"PingFang SC" size:17*[UserShareOnce shareOnce].fontSize];
+    }else{
+        remindLabel.font = [UIFont fontWithName:@"PingFang SC" size:17];
+    }
+    
+//    remindLabel.textColor = [UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0];
+//    remindLabel.text = @"Testing";
+//    remindLabel.textAlignment = NSTextAlignmentCenter;
+//    [self.view addSubview:remindLabel];
+//
+//    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(remindLabel.right, remindLabel.bottom+Adapter(5), Adapter(50), Adapter(25))];
+//    topView.backgroundColor = [UIColor clearColor];
+//    [self setupAnimationInLayer:topView.layer withSize:topView.frame.size tintColor:[UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0]];
+//    [self.view addSubview:topView];
+    
+    CGFloat height = 251/677.0*(ScreenWidth-Adapter(40));
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(Adapter(20), progressView.bottom+35, ScreenWidth-Adapter(40), height)];
+    imageV.image = [UIImage imageNamed:@"体测图"];
+    [self.view addSubview:imageV];
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.frame = CGRectMake(Adapter(6),imageV.bottom+35,ScreenWidth-Adapter(12),Adapter(22.5));
+    label.numberOfLines = 0;
+    [self.view addSubview:label];
+    
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"Hold the electrode piece with your palm"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17*[UserShareOnce shareOnce].fontSize],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
+    
+    label.attributedText = string;
+    label.textAlignment = NSTextAlignmentLeft;
+    
+    
+    UILabel *label2 = [[UILabel alloc] init];
+    label2.frame = CGRectMake(label.left,label.bottom+Adapter(5),ScreenWidth-label.left*2,Adapter(150));
+    label2.numberOfLines = 0;
+    //label2.backgroundColor = [UIColor orangeColor];
+    [self.view addSubview:label2];
+    
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.lineSpacing = 5;
+    
+    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc] initWithString:@"①Sit still and lean back against the chair. \n②Put the right hand naturally on side of your body, with palm downward. \n③Hold the electrode in your left hand."attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16*[UserShareOnce shareOnce].fontSize],NSForegroundColorAttributeName: [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
+    
+    label2.attributedText = string2;
+    label2.textAlignment = NSTextAlignmentLeft;
+}
+
+
 
 //- (void)messageBtnAction:(UIButton *)btn
 //{
