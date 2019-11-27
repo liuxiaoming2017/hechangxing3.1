@@ -1075,17 +1075,21 @@ typedef enum : NSInteger {
 
 - (void)longAction:(UILongPressGestureRecognizer *)gestureRecognizer {
     
+    PostButtonView *view = (PostButtonView *)gestureRecognizer.view;
+    
     switch (gestureRecognizer.state) {
         case UIGestureRecognizerStateBegan:
         {
             //向上-按下
             [self startTImer:gestureRecognizer.view.tag-500];
+            [view setButtonViewSelect:YES];
         }
             break;
         case UIGestureRecognizerStateEnded:
         {
             //向上-抬起
             [self removeTimer];
+            [view setButtonViewSelect:NO];
         }
             break;
         default:

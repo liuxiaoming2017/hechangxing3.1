@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id)initWithFrame:(CGRect)frame withModel:(ArmChairModel *)model;
 
-
+- (void)setButtonViewSelect:(BOOL)select;
 
 @end
 
