@@ -150,7 +150,7 @@
 - (BOOL)chairIsPowerOn
 {
     OGARespond_730B *respond = [OGABluetoothManager_730B shareInstance].respondModel;
-    if(respond.modeProgrameSelect || respond.modeWeakStop || respond.modeDetectionAche || respond.autoMassage > 0 || respond.massage_StatusNeck || respond.massage_StatusShoulder || respond.massage_StatusBack || respond.massage_StatusWaist || respond.massage_StatusUpperBody){
+    if(respond.modeProgrameSelect || respond.modeDetectionAche || respond.autoMassage > 0 || respond.massage_StatusNeck || respond.massage_StatusShoulder || respond.massage_StatusBack || respond.massage_StatusWaist || respond.massage_StatusUpperBody){
         return YES;
     }
     return NO;
@@ -158,7 +158,7 @@
 
 - (BOOL)chairPowerOnWithRespond:(OGARespond_730B *)respond
 {
-    if(respond.modeProgrameSelect || respond.modeWeakStop || respond.modeDetectionAche || respond.autoMassage > 0 || respond.massage_StatusNeck || respond.massage_StatusShoulder || respond.massage_StatusBack || respond.massage_StatusWaist || respond.massage_StatusUpperBody){
+    if(respond.modeProgrameSelect  || respond.modeDetectionAche || respond.autoMassage > 0 || respond.massage_StatusNeck || respond.massage_StatusShoulder || respond.massage_StatusBack || respond.massage_StatusWaist || respond.massage_StatusUpperBody){
         return YES;
     }
     return NO;

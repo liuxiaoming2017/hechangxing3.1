@@ -527,7 +527,6 @@ typedef enum : NSInteger {
 //        self.ledFirst = YES;
 //    }
     
-    NSLog(@"index:%ld",ledIndex);
     //加热
     CommandButtonView *comandView301 = (CommandButtonView *)[self.middleView viewWithTag:301];
     [comandView301 setButtonViewSelect:respond.massage_StatusWarm];
@@ -535,6 +534,9 @@ typedef enum : NSInteger {
     //按摩强度
     HCYSlider *slider1 = (HCYSlider *)[self.middleView viewWithTag:310];
     slider1.currentSliderValue = respond.massage_MovmentGears;
+    
+    NSLog(@"***:%u",(unsigned)respond.massage_MovmentGears);
+    
     //气囊强度
     HCYSlider *slider2 = (HCYSlider *)[self.middleView viewWithTag:311];
     slider2.currentSliderValue = respond.massage_AirGears;
@@ -1269,7 +1271,7 @@ typedef enum : NSInteger {
 - (void)playAction:(UIButton *)button
 {
     // __weak typeof(self) weakSelf = self;
-    [[OGABluetoothManager_730B shareInstance] sendShortCommand:k730Command_Stop success:^(BOOL success) {
+    [[OGABluetoothManager_730B shareInstance] sendShortCommand:k730Command_PowerOn success:^(BOOL success) {
         if (success) {
             // weakSelf.playBtn.selected = !weakSelf.playBtn.selected;
             // [weakSelf layerAnimationWithPause:weakSelf.playBtn.selected];

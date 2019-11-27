@@ -26,7 +26,7 @@
     UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.width, self.height)];
     backImageView.backgroundColor = [UIColor whiteColor];
     backImageView.layer.cornerRadius = Adapter(10);
-    backImageView.layer.masksToBounds = YES;
+    //backImageView.layer.masksToBounds = YES;
     backImageView.userInteractionEnabled = YES;
     [self  insertSublayerWithImageView:backImageView];
    
@@ -41,7 +41,7 @@
     self.imageV.image = [UIImage imageNamed:@"sports01"];
     [self addSubview:self.imageV];
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(5),self.imageV.bottom , self.width - Adapter(10), self.height*3/8)];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,self.imageV.bottom , self.width, self.height*3/8)];
     self.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].padSizeFloat];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
@@ -50,9 +50,9 @@
     self.titleLabel.numberOfLines = 0;
     [self addSubview:self.titleLabel];
     
-   
-    
 }
+
+
 
 -(void)insertSublayerWithImageView:(UIImageView *)imageV
 {

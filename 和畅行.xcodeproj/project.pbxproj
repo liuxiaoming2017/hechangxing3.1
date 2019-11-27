@@ -112,7 +112,6 @@
 		0369D67F238BC5E100FD3272 /* GLYPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D66E238BC5E100FD3272 /* GLYPageView.m */; };
 		0369D680238BC5E100FD3272 /* GLYPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D66E238BC5E100FD3272 /* GLYPageView.m */; };
 		0369D687238BCAA900FD3272 /* CommonTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A7CB1E2303BD6F00A1B7D9 /* CommonTabBarController.m */; };
-		0369D68A238BCAB200FD3272 /* CommonTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D688238BCAB100FD3272 /* CommonTabBarController.m */; };
 		036A667D2113ECBB0096A006 /* PrivateServiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 036A66782113ECBA0096A006 /* PrivateServiceModel.m */; };
 		036A667E2113ECBB0096A006 /* SelectedAdvisorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 036A667B2113ECBA0096A006 /* SelectedAdvisorModel.m */; };
 		036A667F2113ECBB0096A006 /* PrivateDoctorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 036A667C2113ECBB0096A006 /* PrivateDoctorModel.m */; };
@@ -328,6 +327,7 @@
 		0385402420EF1469002AC776 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0385402320EF1469002AC776 /* Security.framework */; };
 		0385402620EF1482002AC776 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0385402520EF1482002AC776 /* CoreTelephony.framework */; };
 		0385403020EF1C00002AC776 /* ChildMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0385402F20EF1C00002AC776 /* ChildMemberModel.m */; };
+		03875532238D053F00587B93 /* JWProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03875530238D053D00587B93 /* JWProgressView.m */; };
 		038A654A2112B0860055C760 /* MineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 038A65492112B0860055C760 /* MineCell.m */; };
 		038CE87420EDE8F9005E9219 /* UserShareOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = 038CE87320EDE8F9005E9219 /* UserShareOnce.m */; };
 		038CE87720EDF1BF005E9219 /* RootRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 038CE87620EDF1BF005E9219 /* RootRequestController.m */; };
@@ -368,6 +368,7 @@
 		03B1A19B211995CF00B23339 /* AdvisorysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B1A199211995CF00B23339 /* AdvisorysViewController.m */; };
 		03B1A19E2119966A00B23339 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B1A19C2119966A00B23339 /* NSString+Emoji.m */; };
 		03B1A1A12119969E00B23339 /* CPTextViewPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B1A1A02119969E00B23339 /* CPTextViewPlaceholder.m */; };
+		03B37D08238E02ED007B1915 /* CommonTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B37D06238E02EC007B1915 /* CommonTabBarController.m */; };
 		03B4E4D6232636B9003518EA /* armChair.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03B4E4D5232636B9003518EA /* armChair.plist */; };
 		03BD817B238BB89000F57978 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 038516FB2186AB67001DD2B7 /* Order.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		03BD817C238BB89000F57978 /* TimeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF992192B066006116FC /* TimeLineView.m */; };
@@ -1480,8 +1481,6 @@
 		0369D66B238BC5DE00FD3272 /* SublayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SublayerView.h; sourceTree = "<group>"; };
 		0369D66D238BC5E000FD3272 /* InsidelayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsidelayerView.h; sourceTree = "<group>"; };
 		0369D66E238BC5E100FD3272 /* GLYPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLYPageView.m; sourceTree = "<group>"; };
-		0369D688238BCAB100FD3272 /* CommonTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonTabBarController.m; path = "../../harmonyYi/和畅行/CommonClass/Controller/CommonTabBarController.m"; sourceTree = "<group>"; };
-		0369D689238BCAB200FD3272 /* CommonTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonTabBarController.h; path = "../../harmonyYi/和畅行/CommonClass/Controller/CommonTabBarController.h"; sourceTree = "<group>"; };
 		036A66772113ECB90096A006 /* SelectedAdvisorModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedAdvisorModel.h; sourceTree = "<group>"; };
 		036A66782113ECBA0096A006 /* PrivateServiceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivateServiceModel.m; sourceTree = "<group>"; };
 		036A66792113ECBA0096A006 /* PrivateServiceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateServiceModel.h; sourceTree = "<group>"; };
@@ -1871,6 +1870,8 @@
 		0385402520EF1482002AC776 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		0385402E20EF1C00002AC776 /* ChildMemberModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildMemberModel.h; sourceTree = "<group>"; };
 		0385402F20EF1C00002AC776 /* ChildMemberModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildMemberModel.m; sourceTree = "<group>"; };
+		03875530238D053D00587B93 /* JWProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JWProgressView.m; sourceTree = "<group>"; };
+		03875531238D053E00587B93 /* JWProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JWProgressView.h; sourceTree = "<group>"; };
 		038A65482112B0860055C760 /* MineCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MineCell.h; sourceTree = "<group>"; };
 		038A65492112B0860055C760 /* MineCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MineCell.m; sourceTree = "<group>"; };
 		038CE87220EDE8F9005E9219 /* UserShareOnce.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserShareOnce.h; sourceTree = "<group>"; };
@@ -1965,6 +1966,8 @@
 		03B1A19D2119966A00B23339 /* NSString+Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emoji.h"; sourceTree = "<group>"; };
 		03B1A19F2119969E00B23339 /* CPTextViewPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPTextViewPlaceholder.h; sourceTree = "<group>"; };
 		03B1A1A02119969E00B23339 /* CPTextViewPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPTextViewPlaceholder.m; sourceTree = "<group>"; };
+		03B37D06238E02EC007B1915 /* CommonTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonTabBarController.m; sourceTree = "<group>"; };
+		03B37D07238E02ED007B1915 /* CommonTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonTabBarController.h; sourceTree = "<group>"; };
 		03B4E4D5232636B9003518EA /* armChair.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = armChair.plist; sourceTree = "<group>"; };
 		03BD83FF238BB89000F57978 /* HarmonyYi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HarmonyYi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03BD8401238BBA8F00F57978 /* HarmonyYi.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HarmonyYi.plist; sourceTree = "<group>"; };
@@ -3953,8 +3956,8 @@
 			children = (
 				C9865C61238CBF7100ECAAB9 /* PostButtonView.h */,
 				C9865C60238CBF7100ECAAB9 /* PostButtonView.m */,
-				0369D689238BCAB200FD3272 /* CommonTabBarController.h */,
-				0369D688238BCAB100FD3272 /* CommonTabBarController.m */,
+				03B37D07238E02ED007B1915 /* CommonTabBarController.h */,
+				03B37D06238E02EC007B1915 /* CommonTabBarController.m */,
 				03BD840A238BC02800F57978 /* 730B按摩椅 */,
 			);
 			path = HarmonyYi;
@@ -3975,6 +3978,8 @@
 				03BD8410238BC04600F57978 /* OGA730BTestResultVC.m */,
 				03BD840C238BC04400F57978 /* OGA730BThemeVC.h */,
 				03BD840D238BC04400F57978 /* OGA730BThemeVC.m */,
+				03875531238D053E00587B93 /* JWProgressView.h */,
+				03875530238D053D00587B93 /* JWProgressView.m */,
 			);
 			path = "730B按摩椅";
 			sourceTree = "<group>";
@@ -5746,9 +5751,11 @@
 				03BD818B238BB89000F57978 /* CMPopTipView.m in Sources */,
 				03BD818C238BB89000F57978 /* HealthLectureViewController.m in Sources */,
 				03BD818D238BB89000F57978 /* HCY_ConsultingModel.m in Sources */,
+				03B37D08238E02ED007B1915 /* CommonTabBarController.m in Sources */,
 				03BD818E238BB89000F57978 /* HPITableViewCell.m in Sources */,
 				03BD8190238BB89000F57978 /* AnwerModel.m in Sources */,
 				03BD8191238BB89000F57978 /* TZImageManager.m in Sources */,
+				03875532238D053F00587B93 /* JWProgressView.m in Sources */,
 				03BD8192238BB89000F57978 /* UIView+Layout.m in Sources */,
 				03BD8193238BB89000F57978 /* openssl_wrapper.m in Sources */,
 				03BD8194238BB89000F57978 /* HCY_ActivationController.m in Sources */,
@@ -5945,7 +5952,6 @@
 				03BD841B238BC04B00F57978 /* OGA730BCommonVC.m in Sources */,
 				03BD8250238BB89000F57978 /* PaySuccessViewController.m in Sources */,
 				03BD8251238BB89000F57978 /* base64.m in Sources */,
-				0369D68A238BCAB200FD3272 /* CommonTabBarController.m in Sources */,
 				03BD8252238BB89000F57978 /* InformationCell.m in Sources */,
 				03BD8253238BB89000F57978 /* AppDelegate.m in Sources */,
 				03BD8254238BB89000F57978 /* SidebarViewController.m in Sources */,

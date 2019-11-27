@@ -34,6 +34,7 @@
     [super viewDidDisappear:YES];
     
     [[OGABluetoothManager_730B shareInstance] removeSubscribe:self.subscribe];
+    self.subscribe = nil;
     
 }
 
@@ -62,14 +63,21 @@
     
     [self.collectionV registerClass:[ArmchairHomeCell class] forCellWithReuseIdentifier:@"cellId"];
     
-    __weak typeof(self) weakSelf = self;
-    self.subscribe = [[OGASubscribe_730B alloc] init];
-    [[OGABluetoothManager_730B shareInstance] addSubscribe:self.subscribe];
-    [self.subscribe setRespondBlock:^(OGARespond_730B * _Nonnull respond) {
+}
+
+- (void)viewDidAppear:(BOOL)animated;
+{
+    [super viewDidAppear:animated];
+    if(!self.subscribe){
+        __weak typeof(self) weakSelf = self;
+        self.subscribe = [[OGASubscribe_730B alloc] init];
+        [[OGABluetoothManager_730B shareInstance] addSubscribe:self.subscribe];
         
-        [weakSelf didUpdateValueForChair:respond];
-    }];
-    
+        [self.subscribe setRespondBlock:^(OGARespond_730B * _Nonnull respond) {
+            [weakSelf didUpdateValueForChair:respond];
+        }];
+        
+    }
 }
 
 - (void)didUpdateValueForChair:(OGARespond_730B *)respond {
@@ -96,6 +104,9 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     ArmchairHomeCell *cell = (ArmchairHomeCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     ArmChairModel *model = [self.dataArr objectAtIndex:indexPath.row];
     cell.imageV.image = [UIImage imageNamed:model.name];
+    if([model.name isEqualToString:@"Neck&Shoulder"]){
+        cell.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*1.6];
+    }
     cell.titleLabel.text = model.name;
     return cell;
 }
