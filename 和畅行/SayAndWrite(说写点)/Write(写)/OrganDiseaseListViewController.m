@@ -120,17 +120,34 @@
             break;
         }
     }
-    NSArray *searchBarSubViews = [[self.searchBar.subviews objectAtIndex:0] subviews];
     
-    for (UIView *view in searchBarSubViews) {
-        if([view isKindOfClass:[UITextField class]]){
-            UITextField* textField = (UITextField*)view;
-            textField.backgroundColor = [UIColor clearColor];
-            textField.textColor = [UIColor whiteColor];
-            [textField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    
+    UITextField *textField = (UITextField*)[self subViewOfClassName:@"UISearchBarTextField" view:_searchBar];
+    textField.backgroundColor = [UIColor clearColor];
+    textField.textColor = [UIColor whiteColor];
+    
+    if (@available(iOS 13.0, *)) {
+        if (textField.attributedText.length > 0) {
+//            textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"输入"attributes:@{NSForegroundColorAttributeName: [UIColor redColor]}];
+            
+            NSMutableAttributedString *placeholderString = [[NSMutableAttributedString alloc] initWithString:_searchBar.placeholder attributes:@{NSForegroundColorAttributeName : [UIColor redColor]}];
+            textField.attributedPlaceholder = placeholderString;
         }
+    }else{
+        [textField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     }
     
+//    NSArray *searchBarSubViews = [[self.searchBar.subviews objectAtIndex:0] subviews];
+//
+//    for (UIView *view in searchBarSubViews) {
+//        if([view isKindOfClass:[UITextField class]]){
+//            UITextField* textField = (UITextField*)view;
+//            textField.backgroundColor = [UIColor clearColor];
+//            textField.textColor = [UIColor whiteColor];
+//            [textField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+//            textField.alpha = 1;
+//        }
+//    }
     for(UIView *searchBarSubview in [_searchBar subviews]){
         for(UIView *subView in [searchBarSubview subviews]){
             if([subView conformsToProtocol:@protocol(UITextInputTraits)]){
@@ -139,7 +156,9 @@
         }
     }
     
-    
+   
+  
+  
     
     [view addSubview:_searchBar];
     
@@ -148,6 +167,20 @@
     
     
    
+}
+
+- (UIView*)subViewOfClassName:(NSString*)className view:(UIView *)view{
+    for (UIView* subView in view.subviews) {
+        NSLog(@"======%@",subView.class);
+        if ([NSStringFromClass(subView.class) isEqualToString:className]) {
+            return subView;
+        }
+        UIView* resultFound = [self subViewOfClassName:className view:subView];
+        if (resultFound) {
+            return resultFound;
+        }
+    }
+    return nil;
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{

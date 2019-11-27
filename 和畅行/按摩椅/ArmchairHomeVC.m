@@ -347,16 +347,16 @@
     [self.bgScrollView addSubview:label];
     //[self.view addSubview:label];
     
+    CGFloat cellWithW = (ScreenWidth - Adapter(40))/3;
+    
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(Adapter(107)+margin, Adapter(111)+margin);
+    layout.itemSize = CGSizeMake(cellWithW, cellWithW);
     //layout.itemSize = CGSizeMake(130, 106);
-    layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    layout.minimumLineSpacing = 0;
-    layout.minimumInteritemSpacing = 0;
+    layout.sectionInset = UIEdgeInsetsMake(Adapter(10), Adapter(10), Adapter(10), Adapter(10));
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
 //    self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom, ScreenWidth-margin, Adapter(125)*4+Adapter(50)) collectionViewLayout:layout];
-     self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(margin/2.0,label.bottom+Adapter(8), ScreenWidth-margin, ScreenHeight-label.bottom-Adapter(8)) collectionViewLayout:layout];
+     self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(0,label.bottom+Adapter(8), ScreenWidth, ScreenHeight-label.bottom-Adapter(8)) collectionViewLayout:layout];
     self.collectionV.delegate = self;
     self.collectionV.dataSource = self;
     self.collectionV.showsHorizontalScrollIndicator = NO;
@@ -412,6 +412,13 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.dataArr.count;
+}
+
+- (CGFloat) collectionView:(UICollectionView *)collectionView
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    return Adapter(10);
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
