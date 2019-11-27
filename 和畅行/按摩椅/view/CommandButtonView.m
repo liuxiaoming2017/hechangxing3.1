@@ -8,7 +8,7 @@
 
 #import "CommandButtonView.h"
 #import "ArmChairModel.h"
-
+#define Adapterbody(d) (ISPaid ? Adapter(d)*0.8 : Adapter(d))
 @implementation CommandButtonView
 
 - (id)initWithFrame:(CGRect)frame withTitle:(NSString *)title
@@ -35,18 +35,18 @@
 {
     
     self.commandButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    if(self.width == Adapter(56)){
-        self.commandButton.frame = CGRectMake((self.width-Adapter(33))/2.0, Adapter(5), Adapter(33), Adapter(33));
+    if(self.width == Adapterbody(56)){
+        self.commandButton.frame = CGRectMake((self.width-Adapterbody(33))/2.0, Adapterbody(5), Adapterbody(33), Adapterbody(33));
     }
-    else if(self.width >= Adapter(53)){
-        self.commandButton.frame = CGRectMake((self.width-Adapter(53))/2.0, Adapter(5), Adapter(53), Adapter(53));
+    else if(self.width >= Adapterbody(53)){
+        self.commandButton.frame = CGRectMake((self.width-Adapterbody(53))/2.0, Adapterbody(5), Adapterbody(53), Adapterbody(53));
     }else{
-        self.commandButton.frame = CGRectMake((self.width-Adapter(33))/2.0, Adapter(5), Adapter(33), Adapter(33));
+        self.commandButton.frame = CGRectMake((self.width-Adapterbody(33))/2.0, Adapterbody(5), Adapterbody(33), Adapterbody(33));
     }
     
     
-    [self.commandButton setImage:[[UIImage imageNamed:title] transformWidth:Adapter(22) height:Adapter(22)]  forState:(UIControlStateNormal)];
-    [self.commandButton setImage:[[UIImage imageNamed:title] transformWidth:Adapter(22) height:Adapter(22)]  forState:(UIControlStateHighlighted)];
+    [self.commandButton setImage:[[UIImage imageNamed:title] transformWidth:Adapterbody(22) height:Adapterbody(22)]  forState:(UIControlStateNormal)];
+    [self.commandButton setImage:[[UIImage imageNamed:title] transformWidth:Adapterbody(22) height:Adapterbody(22)]  forState:(UIControlStateHighlighted)];
    
     
 //    CGSize size = self.CommandButton.frame.size;
@@ -65,7 +65,7 @@
     }
     
     UILabel *label = [[UILabel alloc] init];
-    label.frame = CGRectMake(-Adapter(10),self.commandButton.bottom+Adapter(5),self.width+Adapter(20),Adapter(20));
+    label.frame = CGRectMake(-Adapterbody(10),self.commandButton.bottom+Adapterbody(5),self.width+Adapterbody(20),Adapterbody(20));
 //    if (ISPaid) {
          label.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].padSizeFloat];
 //    }else{
@@ -115,7 +115,7 @@
     self.commandButton.selected = select;
     if(select){
         self.titleLabel.textColor = [UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0];
-        [self.commandButton setImage:[[UIImage imageNamed:str] transformWidth:Adapter(22) height:Adapter(22)] forState:UIControlStateNormal];
+        [self.commandButton setImage:[[UIImage imageNamed:str] transformWidth:Adapterbody(22) height:Adapterbody(22)] forState:UIControlStateNormal];
         self.commandButton.layer.backgroundColor = [UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1.0].CGColor;
     }else{
         self.titleLabel.textColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0];
