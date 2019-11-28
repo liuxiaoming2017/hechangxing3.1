@@ -170,8 +170,6 @@
             SublayerView *layerView = (SublayerView *)[self.recommendV viewWithTag:2008];
             ArmChairModel *model = [self recommendModelWithStr];
             [layerView setImageAndTitleWithModel:model withName:@""];
-            label.top = layerView.top-Adapter(15);
-            
     
             NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
             //11.22
@@ -179,6 +177,9 @@
             label.attributedText = [self attributedStringWithTitle:[NSString stringWithFormat:@"1、Your meridian type is%@\n2、You are recommended to apply %@ massage technique",str,str]];
             CGSize attSize = [label.attributedText boundingRectWithSize:CGSizeMake(label.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
             label.height = attSize.height;
+            if (label.height +  Adapter(20)  > layerView.height ) {
+                label.top = layerView.top-Adapter(10);
+            }
             speakBtn.frame = CGRectMake(label.left, label.bottom, label.width, Adapter(20));
             [speakBtn setTitle:@"3、Tap to retest" forState:UIControlStateNormal];
         }
@@ -253,7 +254,7 @@
     
     
     UILabel *label1 = [[UILabel alloc] init];
-    label1.frame = CGRectMake(sublayerView.right+Adapter(19),sublayerView.top+Adapter(20),ScreenWidth-sublayerView.right-Adapter(35),Adapter(90));
+    label1.frame = CGRectMake(sublayerView.right+Adapter(19),recommendLabel.bottom+Adapter(10),ScreenWidth-sublayerView.right-Adapter(35),Adapter(90));
 
     label1.numberOfLines = 0;
     label1.tag = 222;
@@ -266,16 +267,18 @@
         recommandStr = @"1、You have not done meridian test";
         btnStr = @"2、Tap to test";
     }else{
-        label1.top = sublayerView.top-Adapter(15);
+
         jlbsName = [GlobalCommon getStringWithLanguageSubjectSn:jlbsName];
         recommandStr = [NSString stringWithFormat:@"1、Your meridian type is %@\n2、You are recommended to apply %@ massage technique",jlbsName,jlbsName];
         btnStr = @"3、Tap to retest";
     }
     
-    
     label1.attributedText = [self attributedStringWithTitle:recommandStr];
     CGSize attSize = [label1.attributedText boundingRectWithSize:CGSizeMake(label1.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
     label1.height = attSize.height;
+    if (label1.height +  Adapter(20)  > sublayerView.height ) {
+         label1.top = sublayerView.top-Adapter(10);
+    }
     label1.textAlignment = NSTextAlignmentLeft;
     label1.alpha = 1.0;
     
