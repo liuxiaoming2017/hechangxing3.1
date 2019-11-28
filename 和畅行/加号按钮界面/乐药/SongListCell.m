@@ -49,7 +49,7 @@
     
     self.downloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.downloadBtn.frame = CGRectMake(backImageView.width - Adapter(30), Adapter(9), Adapter(18), Adapter(18));
-    [self.downloadBtn  setBackgroundImage:[UIImage imageNamed:@"乐药下载icon"] forState:UIControlStateNormal];
+    [self.downloadBtn  setImage:[[UIImage imageNamed:@"乐药下载icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
     self.downloadBtn.userInteractionEnabled = NO;
     self.downloadBtn.hidden = YES;
     
@@ -81,7 +81,7 @@
     
     self.downloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.downloadBtn.frame = CGRectMake(backImageView.width - Adapter(60), Adapter(25), Adapter(30), Adapter(30));
-    [self.downloadBtn  setBackgroundImage:[UIImage imageNamed:@"乐药下载icon"] forState:UIControlStateNormal];
+    [self.downloadBtn  setImage:[[UIImage imageNamed:@"乐药下载icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
     self.downloadBtn.userInteractionEnabled = NO;
     
     
@@ -94,7 +94,7 @@
     self.downloadBtn.frame = CGRectMake(ScreenWidth - Adapter(80), Adapter(25), Adapter(30), Adapter(30));
     self.downloadBtn.backgroundColor = [UIColor clearColor];
     [self.downloadBtn setTitle:@"" forState:(UIControlStateNormal)];
-    [self.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药播放icon"] forState:UIControlStateNormal];
+    [self.downloadBtn setImage:[[UIImage imageNamed:@"乐药播放icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
     
     [self.downloadBtn.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if([obj isKindOfClass:[ProgressIndicator class]]){
@@ -128,7 +128,7 @@
         
     }
     //[self.downloadBtn setBackgroundImage:[UIImage imageNamed:nameStr] forState:UIControlStateNormal];
-    [self.downloadBtn setBackgroundImage:[UIImage imageNamed:nameStr] forState:UIControlStateNormal];
+    [self.downloadBtn setImage:[[UIImage imageNamed:nameStr]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
 }
 
 
@@ -155,7 +155,7 @@
         self.PlayOrdownload = YES;
         
     }
-    [self.downloadBtn setBackgroundImage:[UIImage imageNamed:nameStr] forState:UIControlStateNormal];
+    [self.downloadBtn setImage:[[UIImage imageNamed:nameStr]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
     
 }
 

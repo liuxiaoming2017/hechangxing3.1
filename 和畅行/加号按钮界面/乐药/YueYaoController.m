@@ -528,7 +528,7 @@
                     __weak typeof(self) weakSelf = self;
                     [self showAlertMessage:@"当前正在使用流量，是否继续？" withSure:^(NSString *blockParam) {
                         [UserShareOnce shareOnce].wwanPlay = YES;
-                        [cell.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
+                        [cell.downloadBtn setImage:[[UIImage imageNamed:@"乐药暂停icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
                         if(![model.subjectSn isEqualToString:weakSelf.currentSubjectSn]){ //切换乐药播放列表
                             weakSelf.currentSubjectSn = model.subjectSn;
                             [weakSelf currentPlayYueYaoList];
@@ -547,7 +547,7 @@
             }
             /*********END**********/
             
-            [cell.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
+            [cell.downloadBtn setImage:[[UIImage imageNamed:@"乐药暂停icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
             if(![model.subjectSn isEqualToString:self.currentSubjectSn]){ //切换乐药播放列表
                 self.currentSubjectSn = model.subjectSn;
                 [self currentPlayYueYaoList];
@@ -559,7 +559,7 @@
             
             self.selectSongName = model.source; //播放链接
         }else{
-            [cell.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药播放icon"] forState:UIControlStateNormal];
+            [cell.downloadBtn setImage:[[UIImage imageNamed:@"乐药播放icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
             //  self.selectSongName = @"";
             [self pauseMusic];
         }
@@ -575,7 +575,7 @@
    
     SongListCell *cell = (SongListCell *)[tableView cellForRowAtIndexPath:indexPath];
     if(cell.PlayOrdownload){
-        [cell.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药播放icon"] forState:UIControlStateNormal];
+        [cell.downloadBtn setImage:[[UIImage imageNamed:@"乐药播放icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
         cell.currentSelect = NO;
         self.selectSongName = @"";
         [self stopMusic];
