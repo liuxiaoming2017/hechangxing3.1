@@ -26,7 +26,13 @@ extern BOOL isBF;
 //测试环境
 //#define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://10.1.71.38:8888/hcy-system/")
 
-#define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://47.92.73.99:8080/healthlm/")
+#if FIRST_FLAG
+    #define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://47.92.73.99:8080/healthlm/")
+#else
+    #define URL_PRE @"http://204.9.61.24/healthlm/"
+#endif
+
+
 //#define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://204.9.61.24:80/healthlm/")
 
 //预发布 http://47.92.73.99:8080/healthlm/

@@ -146,6 +146,9 @@
         }
     }
     
+    if(!FIRST_FLAG){
+        return;
+    }
     
     NSString *yueyaoHint = [[NSUserDefaults standardUserDefaults] objectForKey:hintYueYao];
     if([GlobalCommon stringEqualNull:yueyaoHint]){
@@ -924,11 +927,14 @@
             break;
         case GKAudioPlayerStateEnded: {     // 播放结束
             NSLog(@"播放结束了哈哈哈");
-            
+            if(self.isPlaying){
+                self.isPlaying = NO;
                 // 播放结束，自动播放下一首
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                 [self nextMusic];
-            });
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self nextMusic];
+                });
+            }
+            
             
         }
             break;

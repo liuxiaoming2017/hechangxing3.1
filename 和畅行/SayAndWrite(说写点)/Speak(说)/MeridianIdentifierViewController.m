@@ -68,6 +68,7 @@
 @property (nonatomic,assign) CGFloat soundCount;
 @property (nonatomic,assign) BOOL isLound;
 
+
 @end
 
 @implementation MeridianIdentifierViewController
@@ -676,15 +677,15 @@
 - (BOOL)soundIsTooSmall
 {
     if(ISPaid){
-        if(self.soundCount < 1.0 || !self.isLound){
-            return NO;
+        if(self.soundCount < 2.0){
+            return YES;
         }
-        return YES;
+        return NO;
     }else{
         if ( self.soundCount < 20.0 || !self.isLound){
-            return NO;
+            return YES;
         }
-        return YES;
+        return NO;
     }
 }
 
@@ -747,6 +748,7 @@
     
     if ([status intValue]==100)
     {
+        
         NSInteger code = [[[dic objectForKey:@"data"] objectForKey:@"code"] integerValue];
         NSString *codeStr = [self stringWithCode:code];
         LPPopup *popup = nil;
@@ -784,10 +786,8 @@
         vc.startTimeStr = self.startTimeStr;
         vc.titleStr = ModuleZW(@"经络辨识");
         [self.navigationController pushViewController:vc animated:YES];
-    }
-    else
+    }else
     {
-        
         UIButton* btn=(UIButton*)[self.view viewWithTag:10007];
         btn.enabled=YES;
         LPPopup *popup = [LPPopup popupWithText:[dic objectForKey:@"data"]];
@@ -805,9 +805,10 @@
         yincangView.hidden = YES;
         recordButton.selected = NO;
         return;
-        
     }
 }
+
+
 - (void)requestUpLoadError
 {
     [self hudWasHidden];

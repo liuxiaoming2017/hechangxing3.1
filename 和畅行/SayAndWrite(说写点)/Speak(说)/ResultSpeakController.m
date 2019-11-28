@@ -9,7 +9,13 @@
 #import "ResultSpeakController.h"
 #import "MeridianIdentifierViewController.h"
 #import "TipSpeakController.h"
+
+#if FIRST_FLAG
 #import "ArmchairHomeVC.h"
+#else
+#import "OGA730BHomeVC.h"
+#endif
+
 
 #define anmoyi [NSString stringWithFormat:@"%@hcy/member/action/yinyue",URL_PRE]
 
@@ -61,17 +67,32 @@
     if ([strRequest isEqualToString:anmoyi]){
         decisionHandler(WKNavigationActionPolicyCancel);
         
+        
+#if FIRST_FLAG
         for(UIViewController *vc in self.navigationController.viewControllers){
             if([vc isKindOfClass:[ArmchairHomeVC class]]){
                 [self.navigationController popToViewController:vc animated:YES];
                 return;
             }
         }
-        
         ArmchairHomeVC *vc = [[ArmchairHomeVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
         return;
+#else
+        for(UIViewController *vc in self.navigationController.viewControllers){
+            if([vc isKindOfClass:[OGA730BHomeVC class]]){
+                [self.navigationController popToViewController:vc animated:YES];
+                return;
+            }
+        }
+        OGA730BHomeVC *vc = [[OGA730BHomeVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+#endif
+        
+        
     }
     
     if([navigationAction.request allHTTPHeaderFields][@"Cookie"]){

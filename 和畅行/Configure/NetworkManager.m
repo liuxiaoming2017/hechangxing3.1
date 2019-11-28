@@ -478,9 +478,53 @@ static NSMutableArray *tasks;
             } progress:^(NSProgress * _Nonnull uploadProgress) {
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                if (successBlock) {
-                    successBlock(responseObject);
+                
+                id status=[responseObject objectForKey:@"status"];
+                if([status intValue] == 44){
+                    [weakSelf loginAgainWithTwo:NO withBlock:^(NSString *blockParam) {
+                        if([blockParam isEqualToString:@"error"]){
+                            if (failureBlock)
+                            {
+                                NSError *error = NULL;
+                                failureBlock(error);
+                            }
+                        }else{
+                            //登录后cookie已经发生变化,需要重新设置
+                            NSDictionary *headers = @{@"token":[UserShareOnce shareOnce].token,
+                                                      @"Set-Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",
+                                                                     [UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
+                            
+                            for(NSString *key in headers.allKeys){
+                                [manager.requestSerializer setValue:[headers objectForKey:key] forHTTPHeaderField:key];
+                            }
+                            
+                            [manager POST:URLString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+                                for (NSString *key in parameters) {
+                                    id value = parameters[key];
+                                    [formData appendPartWithFileURL:[NSURL fileURLWithPath:value] name:@"file" error:nil];
+                                }
+                            } progress:^(NSProgress * _Nonnull uploadProgress) {
+                                
+                            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                if (successBlock) {
+                                    successBlock(responseObject);
+                                }
+                            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                if (failureBlock)
+                                {
+                                    failureBlock(error);
+                                }
+                            }];
+                        }
+                    }];
+                    
+                }else{
+                    if (successBlock) {
+                        successBlock(responseObject);
+                    }
                 }
+                
+                
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 /***start***/
                 if([weakSelf isNetworkLogin]){

@@ -104,7 +104,7 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     ArmchairHomeCell *cell = (ArmchairHomeCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     ArmChairModel *model = [self.dataArr objectAtIndex:indexPath.row];
     cell.imageV.image = [UIImage imageNamed:model.name];
-    if([model.name isEqualToString:@"Neck&Shoulder"]){
+    if(ISPaid && [model.name isEqualToString:@"Neck&Shoulder"]){
         cell.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*1.6];
     }
     cell.titleLabel.text = model.name;

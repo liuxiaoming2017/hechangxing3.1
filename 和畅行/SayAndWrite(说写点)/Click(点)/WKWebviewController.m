@@ -9,7 +9,11 @@
 #import "WKWebviewController.h"
 #import "ShareProcessPoll.h"
 #import <WebKit/WebKit.h>
+#if FIRST_FLAG
 #import "ArmchairHomeVC.h"
+#else
+#import "OGA730BHomeVC.h"
+#endif
 
 @interface WKWebviewController ()<WKUIDelegate,WKNavigationDelegate>
 @property (nonatomic,strong) UIProgressView *progressView;
@@ -166,12 +170,22 @@
 - (void)goBack:(UIButton *)btn
 {
     
+    
+#if FIRST_FLAG
     for (UIViewController *controller in self.navigationController.viewControllers) {
         if ([controller isKindOfClass:[ArmchairHomeVC class]]) {
             [self.navigationController popToViewController:controller animated:YES];
             return;
         }
     }
+#else
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[OGA730BHomeVC class]]) {
+            [self.navigationController popToViewController:controller animated:YES];
+            return;
+        }
+    }
+#endif
     
     if (self.popInt == 111) {
         [self.navigationController popViewControllerAnimated:YES];

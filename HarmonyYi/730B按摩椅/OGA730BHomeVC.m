@@ -174,7 +174,7 @@
             NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
             //11.22
             str = [GlobalCommon getStringWithLanguageSubjectSn:str];
-            label.attributedText = [self attributedStringWithTitle:[NSString stringWithFormat:@"1、Your meridian type is%@\n2、You are recommended to apply %@ massage technique",str,str]];
+            label.attributedText = [self attributedStringWithTitle:[NSString stringWithFormat:@"1、Your meridian type is %@\n2、You are recommended to apply %@ massage technique",str,str]];
             CGSize attSize = [label.attributedText boundingRectWithSize:CGSizeMake(label.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
             label.height = attSize.height;
             if (label.height +  Adapter(20)  > layerView.height ) {
