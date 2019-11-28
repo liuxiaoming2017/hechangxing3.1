@@ -172,15 +172,13 @@
             [layerView setImageAndTitleWithModel:model withName:@""];
             label.top = layerView.top-Adapter(15);
             
-            if(ISPaid){
-                label.height = Adapter(85)*[UserShareOnce shareOnce].multipleFontSize;
-            }else{
-                 label.height = 75+20+15;
-            }           
+    
             NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
             //11.22
             str = [GlobalCommon getStringWithLanguageSubjectSn:str];
             label.attributedText = [self attributedStringWithTitle:[NSString stringWithFormat:@"1、Your meridian type is%@\n2、You are recommended to apply %@ massage technique",str,str]];
+            CGSize attSize = [label.attributedText boundingRectWithSize:CGSizeMake(label.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
+            label.height = attSize.height;
             speakBtn.frame = CGRectMake(label.left, label.bottom, label.width, Adapter(20));
             [speakBtn setTitle:@"3、Tap to retest" forState:UIControlStateNormal];
         }
@@ -255,12 +253,8 @@
     
     
     UILabel *label1 = [[UILabel alloc] init];
-    if(ISPaid){
-         label1.frame = CGRectMake(sublayerView.right+Adapter(19),sublayerView.top+Adapter(20),ScreenWidth-sublayerView.right-Adapter(35),Adapter(90)*[UserShareOnce shareOnce].multipleFontSize);
-    }else{
-         label1.frame = CGRectMake(sublayerView.right+Adapter(19),sublayerView.top+Adapter(20),ScreenWidth-sublayerView.right-35,75+20+15);
-    }
-   
+    label1.frame = CGRectMake(sublayerView.right+Adapter(19),sublayerView.top+Adapter(20),ScreenWidth-sublayerView.right-Adapter(35),Adapter(90));
+
     label1.numberOfLines = 0;
     label1.tag = 222;
     [self.recommendV addSubview:label1];
@@ -270,19 +264,18 @@
     NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
     if([jlbsName isEqualToString:@""] || jlbsName==nil ){
         recommandStr = @"1、You have not done meridian test";
-        label1.height = Adapter(40);
         btnStr = @"2、Tap to test";
     }else{
         label1.top = sublayerView.top-Adapter(15);
-        //11.22
         jlbsName = [GlobalCommon getStringWithLanguageSubjectSn:jlbsName];
         recommandStr = [NSString stringWithFormat:@"1、Your meridian type is %@\n2、You are recommended to apply %@ massage technique",jlbsName,jlbsName];
-        //recommandStr = [NSString stringWithFormat:@"1、Your meridian type is %@\n2、You are recommended to apply %@ massage technique",@"You Shang",@"Shang Shang"];
         btnStr = @"3、Tap to retest";
     }
     
     
     label1.attributedText = [self attributedStringWithTitle:recommandStr];
+    CGSize attSize = [label1.attributedText boundingRectWithSize:CGSizeMake(label1.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
+    label1.height = attSize.height;
     label1.textAlignment = NSTextAlignmentLeft;
     label1.alpha = 1.0;
     
@@ -431,16 +424,8 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     ArmChairModel *model = [self.dataArr objectAtIndex:indexPath.row];
     
     if([model.name isEqualToString:@"More"]){
-        
-        NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
-        NSString *nameStr = [GlobalCommon getStringWithLanguageSubjectSn:jlbsName];
-        nameStr = [nameStr stringByAppendingString:@" Prescription"];
-        OGA730BDetailVC *vc = [[OGA730BDetailVC alloc] initWithRecommend:YES withTitleStr:nameStr];
-        vc.armchairModel = model;
-        [vc commandActionWithModel:model];
+        OGA730BThemeVC *vc = [[OGA730BThemeVC alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
-//        OGA730BThemeVC *vc = [[OGA730BThemeVC alloc] init];
-//        [self.navigationController pushViewController:vc animated:YES];
     }else{
         
        // [self nextVCWithModel:model];
