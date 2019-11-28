@@ -171,10 +171,10 @@ typedef enum : NSInteger {
 {
     
     NSString *aUrlle= [NSString stringWithFormat:@"resources/listBySubject.jhtml?subjectSn=%@&mediaType=%@",typeStr,@"audio"];
-    [GlobalCommon showMBHudWithView:self.view];
+    [GlobalCommon showMBHudWithView:self.tableView];
     __weak typeof(self) weakSelf = self;
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:aUrlle parameters:nil successBlock:^(id response) {
-        [GlobalCommon hideMBHudWithView:weakSelf.view];
+        [GlobalCommon hideMBHudWithView:weakSelf.tableView];
         id status=[response objectForKey:@"status"];
         if([status intValue] == 100){
             NSArray *arr = [response objectForKey:@"data"];
@@ -227,7 +227,7 @@ typedef enum : NSInteger {
             return;
         }
     } failureBlock:^(NSError *error) {
-        [GlobalCommon hideMBHudWithView:weakSelf.view];
+        [GlobalCommon hideMBHudWithView:weakSelf.tableView];
         [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
 }

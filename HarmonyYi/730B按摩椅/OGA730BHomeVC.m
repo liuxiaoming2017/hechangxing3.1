@@ -371,6 +371,7 @@
     SublayerView *layerView = (SublayerView *)[gesture view];
     ArmChairModel *model = layerView.model;
     
+    
     NSString *statusStr = [self resultStringWithStatus];
     if(![statusStr isEqualToString:@""]){
         [GlobalCommon showMessage2:statusStr duration2:1.0];

@@ -339,6 +339,11 @@
                 case kFsAudioStreamFailed:                      // 播放失败
                     NSLog(@"播放失败");
                     weakSelf.playerState = GKAudioPlayerStateError;
+                    if(weakSelf.noDelegate){
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            [weakSelf playNextMusic];
+                        });
+                    }
                     break;
                 case kFsAudioStreamPlaybackCompleted:           // 播放完成
                 {
