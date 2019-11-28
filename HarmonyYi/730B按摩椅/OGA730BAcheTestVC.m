@@ -198,26 +198,26 @@
     label.numberOfLines = 0;
     [self.view addSubview:label];
     
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"Hold the electrode piece with your palm"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17*[UserShareOnce shareOnce].fontSize],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"Hold the electrode piece with your palm"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17*[UserShareOnce shareOnce].padSizeFloat],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
     
     label.attributedText = string;
     label.textAlignment = NSTextAlignmentLeft;
     
     
-    UILabel *label2 = [[UILabel alloc] init];
-    label2.frame = CGRectMake(label.left,label.bottom+Adapter(5),ScreenWidth-label.left*2,Adapter(200));
-    label2.numberOfLines = 0;
-    //label2.backgroundColor = [UIColor orangeColor];
-    [self.view addSubview:label2];
+    UITextView *textView = [[UITextView alloc] init];
+    textView.backgroundColor = [UIColor clearColor];
+    textView.frame = CGRectMake(label.left,label.bottom+Adapter(5),ScreenWidth-label.left*2,Adapter(200));
+    [textView setEditable:NO];
+    [self.view addSubview:textView];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     paragraphStyle.lineSpacing = 5;
     
-    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc] initWithString:@"①Sit still and lean back against the chair. \n②Put the right hand naturally on side of your body, with palm downward. \n③Hold the electrode in your left hand. \n④Keep quiet. \n⑤It takes about 3~4 minutes."attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16*[UserShareOnce shareOnce].fontSize],NSForegroundColorAttributeName: [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
+    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc] initWithString:@"①Sit still and lean back against the chair. \n②Put the right hand naturally on side of your body, with palm downward. \n③Hold the electrode in your left hand. \n④Keep quiet. \n⑤It takes about 3~4 minutes."attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16*[UserShareOnce shareOnce].padSizeFloat],NSForegroundColorAttributeName: [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
     
-    label2.attributedText = string2;
-    label2.textAlignment = NSTextAlignmentLeft;
+    textView.attributedText = string2;
+    textView.textAlignment = NSTextAlignmentLeft;
 }
 
 - (void)setupAnimationInLayer:(CALayer *)layer withSize:(CGSize)size tintColor:(UIColor *)tintColor {
@@ -266,26 +266,27 @@
     [self.view addSubview:label];
     
     
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"Hold the electrode piece with your palm"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17*[UserShareOnce shareOnce].fontSize],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"Hold the electrode piece with your palm"attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 17*[UserShareOnce shareOnce].padSizeFloat],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]}];
     
     label.attributedText = string;
     label.textAlignment = NSTextAlignmentLeft;
     
     
-    UILabel *label2 = [[UILabel alloc] init];
-    label2.frame = CGRectMake(label.left,label.bottom+Adapter(5),ScreenWidth-label.left*2,Adapter(200));
-    label2.numberOfLines = 0;
+    UITextView *textView = [[UITextView alloc] init];
+    textView.backgroundColor = [UIColor clearColor];
+    textView.frame = CGRectMake(label.left,label.bottom+Adapter(5),ScreenWidth-label.left*2,Adapter(200));
+    [textView setEditable:NO];
+    [self.view addSubview:textView];
     
-    [self.view addSubview:label2];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     paragraphStyle.lineSpacing = 5;
     
-    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc] initWithString:@"①Sit still and lean back against the chair. \n②Put the right hand naturally on side of your body, with palm downward. \n③Hold the electrode in your left hand.\n④Keep quiet. \n⑤It takes about 3~4 minutes."attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16*[UserShareOnce shareOnce].fontSize],NSForegroundColorAttributeName: [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
+    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc] initWithString:@"①Sit still and lean back against the chair. \n②Put the right hand naturally on side of your body, with palm downward. \n③Hold the electrode in your left hand.\n④Keep quiet. \n⑤It takes about 3~4 minutes."attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16*[UserShareOnce shareOnce].padSizeFloat],NSForegroundColorAttributeName: [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
     
-    label2.attributedText = string2;
-    label2.textAlignment = NSTextAlignmentLeft;
+    textView.attributedText = string2;
+    textView.textAlignment = NSTextAlignmentLeft;
 }
 
 
