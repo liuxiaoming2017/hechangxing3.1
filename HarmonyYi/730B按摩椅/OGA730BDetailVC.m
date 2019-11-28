@@ -424,7 +424,7 @@ typedef enum : NSInteger {
     }];
     
     if(self.currentIndexPath.row != row){
-//        [self.tableView.delegate tableView:self.tableView didDeselectRowAtIndexPath:self.currentIndexPath];
+        [self.tableView.delegate tableView:self.tableView didDeselectRowAtIndexPath:self.currentIndexPath];
         [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
         self.currentIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
     }
