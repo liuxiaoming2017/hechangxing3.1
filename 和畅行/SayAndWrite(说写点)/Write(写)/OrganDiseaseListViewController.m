@@ -109,6 +109,7 @@
     _searchBar.layer.cornerRadius = _searchBar.height/2;
     _searchBar.delegate = self;
     _searchBar.tag = 100;
+    
      [_searchBar setImage:[UIImage imageNamed:@"搜索 (1)"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
     _searchBar.placeholder = ModuleZW(@"搜索疾病名称");
     self.searchBar.barStyle=UIBarStyleDefault;
@@ -127,15 +128,10 @@
     textField.textColor = [UIColor whiteColor];
     
     if (@available(iOS 13.0, *)) {
-        if (textField.attributedText.length > 0) {
-//            textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"输入"attributes:@{NSForegroundColorAttributeName: [UIColor redColor]}];
-            
-            NSMutableAttributedString *placeholderString = [[NSMutableAttributedString alloc] initWithString:_searchBar.placeholder attributes:@{NSForegroundColorAttributeName : [UIColor redColor]}];
-            textField.attributedPlaceholder = placeholderString;
-        }
-    }else{
-        [textField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+            textField = [self.searchBar valueForKey:@"_searchTextField"];
     }
+        [textField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+
     
 //    NSArray *searchBarSubViews = [[self.searchBar.subviews objectAtIndex:0] subviews];
 //
