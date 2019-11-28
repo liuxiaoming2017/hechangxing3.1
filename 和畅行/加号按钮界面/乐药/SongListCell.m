@@ -49,7 +49,7 @@
     
     self.downloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.downloadBtn.frame = CGRectMake(backImageView.width - Adapter(30), Adapter(9), Adapter(18), Adapter(18));
-    [self.downloadBtn  setImage:[[UIImage imageNamed:@"乐药下载icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
+//    [self.downloadBtn  setImage:[[UIImage imageNamed:@"乐药下载icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
     self.downloadBtn.userInteractionEnabled = NO;
     self.downloadBtn.hidden = YES;
     
@@ -81,7 +81,7 @@
     
     self.downloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.downloadBtn.frame = CGRectMake(backImageView.width - Adapter(60), Adapter(25), Adapter(30), Adapter(30));
-    [self.downloadBtn  setImage:[[UIImage imageNamed:@"乐药下载icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
+//    [self.downloadBtn  setImage:[[UIImage imageNamed:@"乐药下载icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
     self.downloadBtn.userInteractionEnabled = NO;
     
     

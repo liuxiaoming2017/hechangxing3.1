@@ -307,7 +307,7 @@ typedef enum : NSInteger {
         
         if(cell.currentSelect){
             
-            [cell.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药暂停icon"] forState:UIControlStateNormal];
+            [cell.downloadBtn setImage:[[UIImage imageNamed:@"乐药暂停icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
             if(![model.subjectSn isEqualToString:self.currentSubjectSn]){ //切换乐药播放列表
                 self.currentSubjectSn = model.subjectSn;
                // [self currentPlayYueYaoList];
@@ -319,7 +319,7 @@ typedef enum : NSInteger {
             
             self.selectSongName = model.source; //播放链接
         }else{
-            [cell.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药播放icon"] forState:UIControlStateNormal];
+            [cell.downloadBtn setImage:[[UIImage imageNamed:@"乐药播放icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
             //  self.selectSongName = @"";
             [self pauseMusic];
         }
@@ -336,7 +336,7 @@ typedef enum : NSInteger {
     SongListCell *cell = (SongListCell *)[tableView cellForRowAtIndexPath:indexPath];
     cell.downloadBtn.hidden = YES;
     if(cell.PlayOrdownload){
-        [cell.downloadBtn setBackgroundImage:[UIImage imageNamed:@"乐药播放icon"] forState:UIControlStateNormal];
+        [cell.downloadBtn setImage:[[UIImage imageNamed:@"乐药播放icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
         cell.currentSelect = NO;
         self.selectSongName = @"";
         [self stopMusic];
@@ -425,7 +425,7 @@ typedef enum : NSInteger {
     }];
     
     if(self.currentIndexPath.row != row){
-        [self.tableView.delegate tableView:self.tableView didDeselectRowAtIndexPath:self.currentIndexPath];
+//        [self.tableView.delegate tableView:self.tableView didDeselectRowAtIndexPath:self.currentIndexPath];
         [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
         self.currentIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
     }
@@ -1033,8 +1033,8 @@ typedef enum : NSInteger {
     
     
     NSArray *nameArr = [self loadDataPlistWithStr:@"姿势"];
-    CGFloat buttonMargin = (self.postBottomView.width-Adapterbody(120)*2)/3.0;
-    CGFloat buttonMargin2 = (self.postBottomView.width-Adapterbody(90)*4)/5.0;
+    CGFloat buttonMargin = (self.postBottomView.width-Adapterbody(130)*2)/3.0;
+    CGFloat buttonMargin2 = (self.postBottomView.width-Adapterbody(100)*4)/5.0;
     
 //    UILabel *tipLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-200)/2.0, 15, 200, 15)];
 //    tipLabel.font = [UIFont systemFontOfSize:14];
@@ -1047,7 +1047,7 @@ typedef enum : NSInteger {
         
         ArmChairModel  *model = [nameArr objectAtIndex:i];
         if(i<2){
-            PostButtonView *commandView = [[PostButtonView alloc] initWithFrame:CGRectMake((buttonMargin+Adapterbody(120))*i+buttonMargin, Adapterbody(15), Adapterbody(120), Adapterbody(40)) withModel:model];
+            PostButtonView *commandView = [[PostButtonView alloc] initWithFrame:CGRectMake((buttonMargin+Adapterbody(130))*i+buttonMargin, Adapterbody(15), Adapterbody(130), Adapterbody(40)) withModel:model];
             commandView.tag = 500+i;
            
             [self.postBottomView addSubview:commandView];
@@ -1060,7 +1060,7 @@ typedef enum : NSInteger {
             NSInteger j = (i-2)/4;
             NSInteger k = (i-2)%4;
             
-            PostButtonView *commandView = [[PostButtonView alloc] initWithFrame:CGRectMake((buttonMargin2+Adapterbody(90))*k+buttonMargin2, Adapterbody(90)+Adapterbody(15)+Adapterbody(90)*j, Adapterbody(90), Adapterbody(40)) withModel:model];
+            PostButtonView *commandView = [[PostButtonView alloc] initWithFrame:CGRectMake((buttonMargin2+Adapterbody(100))*k+buttonMargin2, Adapterbody(100)+Adapterbody(5)+Adapterbody(100)*j, Adapterbody(100), Adapterbody(40)) withModel:model];
             commandView.tag = 500+i;
             [self.postBottomView addSubview:commandView];
             
