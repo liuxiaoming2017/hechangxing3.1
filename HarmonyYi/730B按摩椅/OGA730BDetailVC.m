@@ -86,7 +86,7 @@ typedef enum : NSInteger {
 @property (nonatomic,copy) NSString *currentSubjectSn;
 @property (nonatomic,copy) NSString *selectSongName;//当前播放的乐药
 @property (nonatomic,strong) NSIndexPath *currentIndexPath; //拿来做 类型切换 乐药播放时
-
+@property (nonatomic,assign) BOOL isPlaying;
 @end
 
 @implementation OGA730BDetailVC
@@ -98,6 +98,7 @@ typedef enum : NSInteger {
     self.dataArr = nil;
     self.currentIndexPath = nil;
     self.bgScrollView = nil;
+    
     [kPlayer stop];
 }
 
@@ -439,49 +440,54 @@ typedef enum : NSInteger {
     switch (status) {
         case GKAudioPlayerStateLoading:{    // 加载中
             
-            
+            self.isPlaying = NO;
         }
             break;
         case GKAudioPlayerStateBuffering: { // 缓冲中
             
-            
+            self.isPlaying = YES;
         }
             break;
         case GKAudioPlayerStatePlaying: {   // 播放中
             
             
-            
+            self.isPlaying = YES;
         }
             break;
         case GKAudioPlayerStatePaused:{     // 暂停
-           
+            
+            self.isPlaying = NO;
         }
             break;
         case GKAudioPlayerStateStoppedBy:{  // 主动停止
             
-            
+            self.isPlaying = NO;
         }
             break;
         case GKAudioPlayerStateStopped:{    // 打断停止
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self pauseMusic];
             });
-            
+            self.isPlaying = NO;
         }
             break;
         case GKAudioPlayerStateEnded: {     // 播放结束
             NSLog(@"播放结束了哈哈哈");
+            if(self.isPlaying){
+                self.isPlaying = NO;
+                // 播放结束，自动播放下一首
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self nextMusic];
+                });
+            }
             
-            // 播放结束，自动播放下一首
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self nextMusic];
-            });
             
         }
             break;
         case GKAudioPlayerStateError: {     // 播放出错
             NSLog(@"播放出错了");
             
+            self.isPlaying = NO;
         }
             break;
         default:
@@ -535,7 +541,7 @@ typedef enum : NSInteger {
     HCYSlider *slider1 = (HCYSlider *)[self.middleView viewWithTag:310];
     slider1.currentSliderValue = respond.massage_MovmentGears;
     
-    NSLog(@"***:%u",(unsigned)respond.massage_MovmentGears);
+    NSLog(@"***:%lu",(unsigned long)respond.massage_MovmentGears);
     
     //气囊强度
     HCYSlider *slider2 = (HCYSlider *)[self.middleView viewWithTag:311];

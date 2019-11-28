@@ -85,7 +85,7 @@
         return;
     }
     
-    progressView.progressValue = ((int)((progressView.progressValue * 225.0f) + 1.01) % 225) / 225.0f;
+    progressView.progressValue = ((int)((progressView.progressValue * 230.0f) + 1.01) % 230) / 230.0f;
     
     //progressView.contentText=[NSString stringWithFormat:@"%f",progressView.progressValue];
     
