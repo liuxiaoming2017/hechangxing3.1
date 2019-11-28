@@ -359,6 +359,11 @@
 -(void)getPayRequest {
     
 
+    if(!FIRST_FLAG){
+        self.isOnPay = NO;
+        return;
+    }
+    
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"noAppstoreCheck"]){
         [self createConsumeView];
         self.isOnPay = YES;
