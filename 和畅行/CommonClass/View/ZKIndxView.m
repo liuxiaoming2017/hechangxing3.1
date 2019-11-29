@@ -28,7 +28,6 @@
     if (self) {
        _btnArray = [[NSMutableArray alloc]init];
        
-        //NSArray *imagesData = @[@"erxue",@"yundong",@"yinyue",@"xueya",@"liuyan",@"dianhua",@"aijiu"];
         NSArray *imagesData = @[@"yinyue",@"yundong",@"aijiu",@"dianhua",@"shipin",@"xueya",@"liuyan",@"anmoyi",@"erxue"];
         NSArray *imagesNameData = @[ModuleZW(@"音乐"),ModuleZW(@"运动"),
                                                             ModuleZW(@"艾灸"),ModuleZW(@"电话"),

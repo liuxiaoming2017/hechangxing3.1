@@ -23,6 +23,7 @@
 		03101DE02330D6AA00C5F35E /* ArmchairAcheTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 03101DDF2330D6AA00C5F35E /* ArmchairAcheTestVC.m */; };
 		03139152237BC86200AB661C /* MainWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03139151237BC86200AB661C /* MainWebViewController.m */; };
 		03140CF9227FD9BC00BC79D9 /* QuestionTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03140CF8227FD9BC00BC79D9 /* QuestionTableCell.xib */; };
+		032466D42390A88D00A311EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03513AD420E9CAD4004E2805 /* Assets.xcassets */; };
 		0325A5EC210995F100275671 /* EEGDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0325A5EB210995F100275671 /* EEGDetailController.m */; };
 		0325A5F92109C29900275671 /* MySportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0325A5F42109C29900275671 /* MySportCell.m */; };
 		0325A5FA2109C29900275671 /* MenuTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0325A5F72109C29900275671 /* MenuTypeView.m */; };
@@ -76,7 +77,6 @@
 		034A4E8E211A9AD900936A46 /* TZImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034A4E7F211A9AD900936A46 /* TZImagePickerController.m */; };
 		03513ACD20E9CAD3004E2805 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03513ACC20E9CAD3004E2805 /* AppDelegate.m */; };
 		03513AD320E9CAD3004E2805 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03513AD120E9CAD3004E2805 /* Main.storyboard */; };
-		03513AD520E9CAD4004E2805 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03513AD420E9CAD4004E2805 /* Assets.xcassets */; };
 		03513AD820E9CAD4004E2805 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03513AD620E9CAD4004E2805 /* LaunchScreen.storyboard */; };
 		03513ADB20E9CAD4004E2805 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 03513ADA20E9CAD4004E2805 /* main.m */; };
 		0351C59123278C3B0035A9EA /* ArmchairThemeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0351C59023278C3B0035A9EA /* ArmchairThemeVC.m */; };
@@ -4752,6 +4752,7 @@
 				83DC66362275414600B10F23 /* unconnectedImage.png in Resources */,
 				C9B30677230506B0008D6D38 /* 支付完成.png in Resources */,
 				036E850C2186EB1A001B9BB4 /* help_picture_two.png in Resources */,
+				032466D42390A88D00A311EE /* Assets.xcassets in Resources */,
 				036E84E92186EB1A001B9BB4 /* bluetooth_reduce.png in Resources */,
 				036E84CE2186EB1A001B9BB4 /* switch_ongrey.png in Resources */,
 				036E85562186EB2A001B9BB4 /* NewShareView.xib in Resources */,
@@ -4829,7 +4830,6 @@
 				83DC65E92275414600B10F23 /* 个人信息_提交.png in Resources */,
 				036E85022186EB1A001B9BB4 /* 68MoxaHead_yellow.png in Resources */,
 				83DC66102275414600B10F23 /* zhifuwancheng.png in Resources */,
-				03513AD520E9CAD4004E2805 /* Assets.xcassets in Resources */,
 				83755F1B22854B5B00D761A2 /* btn_recipelst_normal.png in Resources */,
 				83DC662E2275414600B10F23 /* YD_Type.png in Resources */,
 				C9B30687230506B0008D6D38 /* 支付成功图片.png in Resources */,
