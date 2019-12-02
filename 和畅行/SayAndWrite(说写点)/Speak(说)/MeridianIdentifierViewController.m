@@ -128,38 +128,39 @@
   
     
     // 哆
-    UIImageView *duoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"duo"]];
-    CGFloat duoX = (ScreenWidth - duoView.frame.size.width*0.6) * 0.5;
-    //duoView.frame = CGRectMake(duoX, ScreenHeight * 0.2, duoView.bounds.size.width*0.6, duoView.bounds.size.height*0.6);
-    if(IS_IPHONE_6){
-        duoView.frame = CGRectMake(duoX, ScreenHeight * 0.16, duoView.bounds.size.width*0.6, duoView.bounds.size.height*0.6);
-    }else{
-        duoView.frame = CGRectMake(duoX, ScreenHeight * 0.2, duoView.bounds.size.width*0.6, duoView.bounds.size.height*0.6);
-    }
-    duoView.image = [UIImage imageNamed:@"duo默认"];
+    UIImageView *duoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:ModuleZW(@"duo默认")]];
+    duoView.frame = CGRectMake(ScreenWidth/2 - Adapter(50), ScreenHeight * 0.16, Adapter(100), Adapter(160));
     _image1 = duoView;
     [UpView addSubview:duoView];
     
     
-    // 文字背景框
-    UIImageView *wenBgView = [[UIImageView alloc] initWithFrame:CGRectMake(Adapter(20), CGRectGetMaxY(duoView.frame)+Adapter(75), ScreenWidth-Adapter(40), Adapter(80))];
-    if(IS_IPHONE_6){
-        wenBgView.frame = CGRectMake(Adapter(20), ScreenHeight*0.5, ScreenWidth-Adapter(40), Adapter(80));
+    NSArray *titleArr = [NSArray array];
+    if ([UserShareOnce shareOnce].languageType) {
+        titleArr = @[@"Do",@"Re",@"Mi",@"Sol",@"La"];
+        duoView.frame = CGRectMake(ScreenWidth/2 - Adapter(60), ScreenHeight /5, Adapter(150), Adapter(150));
+        if (ISPaid) {
+            duoView.frame = CGRectMake(ScreenWidth/2 - Adapter(60), ScreenHeight /5, Adapter(120), Adapter(120));
+        }
+    }else{
+        titleArr = @[@"哆",@"唻",@"咪",@"嗦",@"啦"];
     }
+    // 文字背景框
+    UIImageView *wenBgView = [[UIImageView alloc] initWithFrame:CGRectMake(Adapter(20), ScreenHeight/2 - Adapter(0), ScreenWidth-Adapter(40), Adapter(80))];
     [wenBgView setImage:[UIImage imageNamed:@"Wybs_WinZhi_Img_bg.png"]];
     wenBgView.tag = 10086;
     [UpView addSubview:wenBgView];
-    
-    
-    
-    NSArray *titleArr = @[@"哆",@"唻",@"咪",@"嗦",@"啦"];
     
     CGFloat marin = 10.0;
     CGFloat wenX = wenBgView.bounds.size.width / titleArr.count;
     for (int i = 0; i < titleArr.count; i++) {
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(wenX * i + marin,Adapter(10), Adapter(60), Adapter(60))];
         titleLabel.text = [titleArr objectAtIndex:i];
-        titleLabel.font = [UIFont systemFontOfSize:50.0/[UserShareOnce shareOnce].multipleFontSize];
+        if (ISNotPaid&&[UserShareOnce shareOnce].languageType) {
+            titleLabel.font = [UIFont systemFontOfSize:42.0/[UserShareOnce shareOnce].multipleFontSize];
+        }else{
+            titleLabel.font = [UIFont systemFontOfSize:50.0/[UserShareOnce shareOnce].multipleFontSize];
+        }
+    
         titleLabel.textColor = UIColorFromHex(0xFFFFFF);
         titleLabel.tag = 2018+i;
         titleLabel.alpha = 0.44;
@@ -186,20 +187,16 @@
         }
         
     }
-    
     // 开始
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setImage:[UIImage imageNamed:@"luyinbegin"] forState:UIControlStateNormal];
-    [button setBackgroundColor:UIColorFromHex(0xfac121)];
-    //button.currentImage.size.width
-    CGFloat startBtnX = (ScreenWidth - 160) * 0.5;
+    button.frame = CGRectMake(ScreenWidth/2 - 60, ScreenHeight - 60 - 120 - kTabsHeight + 44, 120, 120);
     
-    if(IS_IPHONE_6P){
-        button.frame = CGRectMake(startBtnX, CGRectGetMaxY(wenBgView.frame)+Adapter(75), 160,160);
-    }else{
-        CGFloat ff = ScreenHeight - CGRectGetMaxY(wenBgView.frame)-160;
-        button.frame = CGRectMake(startBtnX, CGRectGetMaxY(wenBgView.frame)+ff/2.0, 160,160);
+    if (ISPaid) {
+        button.frame = CGRectMake(ScreenWidth/2 - Adapter(50), ScreenHeight - Adapter(130) , Adapter(100), Adapter(100));
     }
+    [button setImage:[[UIImage imageNamed:@"luyinbegin"]transformWidth:button.height/8*3 height:button.height/2] forState:UIControlStateNormal];
+
+    [button setBackgroundColor:UIColorFromHex(0xfac121)];
     
     button.layer.cornerRadius = button.frame.size.width/2.0;
     button.tag=10004;
@@ -286,7 +283,7 @@
         btn.enabled=YES;
         // IsShiFan=false;
         [bianshiTime setFireDate:[NSDate distantFuture]];
-        _image1.image=[UIImage imageNamed:@"duo默认"];
+        _image1.image=[UIImage imageNamed:ModuleZW(@"duo默认")];
         [self changeTitleLabelAlphaWithtag:100];
         [recordButton setImage:[UIImage imageNamed:@"luyinbegin"] forState:UIControlStateNormal];
         double cTime = RecorderAcc.currentTime;
@@ -425,13 +422,14 @@
         timeNStager=0;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self->bianshiTime setFireDate:[NSDate distantFuture]];
-            self->_image1.image=[UIImage imageNamed:@"duo"];
+            self->_image1.image=[UIImage imageNamed:ModuleZW(@"duo")];
             self->_image3.image=[UIImage imageNamed:@"WinZhi_Img_duo_1.png"];
             self->_image4.image=[UIImage imageNamed:@"WinZhi_Img_ruai_1.png"];
             self->_image5.image=[UIImage imageNamed:@"WinZhi_Img_mi_1.png"];
             self->_image6.image=[UIImage imageNamed:@"WinZhi_Img_sao_1.png"];
             self->_image7.image=[UIImage imageNamed:@"WinZhi_Img_la_1.png"];
             self->_image2.image=[UIImage imageNamed:@"Wybs_duo.png"];
+            
             [self->recordButton setImage:[UIImage imageNamed:@"luyinbegin"] forState:UIControlStateNormal];
         });
         double cTime = RecorderAcc.currentTime;
@@ -495,7 +493,7 @@
             self.ZhiShiImgView.hidden=YES;
             self.ZhiShiImgView1.hidden=NO;
         }
-        _image1.image=[UIImage imageNamed:@"duo"];
+        _image1.image=[UIImage imageNamed:ModuleZW(@"duo")];
         //_image3.image=[UIImage imageNamed:@"WinZhi_Img_duo_2.png"];
         [self changeTitleLabelAlphaWithtag:2018];
         _image2.image=[UIImage imageNamed:@"Wybs_duo.png"];
@@ -504,7 +502,7 @@
     }
     if (timeNStager==1)
     {
-        _image1.image=[UIImage imageNamed:@"duo"];
+        _image1.image=[UIImage imageNamed:ModuleZW(@"duo")];
         //_image3.image=[UIImage imageNamed:@"WinZhi_Img_duo_2.png"];
         //[segmentImg setImage:[UIImage imageNamed:@"bs_6_1_duo.png"] forSegmentAtIndex:0];
         timeNStager++;
@@ -512,7 +510,7 @@
     }
     
     if (timeNStager==2) {
-        _image1.image=[UIImage imageNamed:@"ruai"];
+        _image1.image=[UIImage imageNamed:ModuleZW(@"ruai")];
         //        _image3.image=[UIImage imageNamed:@"WinZhi_Img_duo_1.png"];
         //        _image4.image=[UIImage imageNamed:@"WinZhi_Img_ruai_2.png"];
         [self changeTitleLabelAlphaWithtag:2018+1];
@@ -522,7 +520,7 @@
         return;
     }
     if (timeNStager==3) {
-        _image1.image=[UIImage imageNamed:@"ruai"];
+        _image1.image=[UIImage imageNamed:ModuleZW(@"ruai")];
         // _image4.image=[UIImage imageNamed:@"WinZhi_Img_ruai_2.png"];
         // [segmentImg setImage:[UIImage imageNamed:@"bs_6_1_ruai.png"] forSegmentAtIndex:1];
         timeNStager++;
@@ -530,14 +528,14 @@
     }
     if (timeNStager==4) {
         
-        _image1.image=[UIImage imageNamed:@"ruai"];
+        _image1.image=[UIImage imageNamed:ModuleZW(@"ruai")];
         //[segmentImg setImage:[UIImage imageNamed:@"bs_6_2_ruai.png"] forSegmentAtIndex:1];
         timeNStager++;
         return;
     }
     if (timeNStager==5) {
         
-        _image1.image=[UIImage imageNamed:@"mi"];
+        _image1.image=[UIImage imageNamed:ModuleZW(@"mi")];
         //        _image4.image=[UIImage imageNamed:@"WinZhi_Img_ruai_1.png"];
         //        _image5.image=[UIImage imageNamed:@"WinZhi_Img_mi_2.png"];
         [self changeTitleLabelAlphaWithtag:2018+2];
@@ -548,14 +546,14 @@
     }
     if (timeNStager==6) {
         
-        _image1.image=[UIImage imageNamed:@"mi"];
+        _image1.image=[UIImage imageNamed:ModuleZW(@"mi")];
         //[segmentImg setImage:[UIImage imageNamed:@"bs_6_1_mi.png"] forSegmentAtIndex:2];
         timeNStager++;
         return;
     }
     if (timeNStager==7) {
         
-        _image1.image=[UIImage imageNamed:@"mi"];
+        _image1.image=[UIImage imageNamed:ModuleZW(@"mi")];
         //[segmentImg setImage:[UIImage imageNamed:@"bs_6_2_mi.png"] forSegmentAtIndex:2];
         timeNStager++;
         return;
@@ -563,7 +561,7 @@
     
     if (timeNStager==8) {
         
-        _image1.image=[UIImage imageNamed:@"sou"];
+        _image1.image=[UIImage imageNamed:ModuleZW(ModuleZW(@"sou"))];
         //        _image5.image=[UIImage imageNamed:@"WinZhi_Img_mi_1.png"];
         //        _image6.image=[UIImage imageNamed:@"WinZhi_Img_sao_2.png"];
         [self changeTitleLabelAlphaWithtag:2018+3];
@@ -574,21 +572,21 @@
     }
     if (timeNStager==9) {
         
-        _image1.image=[UIImage imageNamed:@"sou"];
+        _image1.image=[UIImage imageNamed:ModuleZW(ModuleZW(@"sou"))];
         
         timeNStager++;
         return;
     }
     if (timeNStager==10) {
         
-        _image1.image=[UIImage imageNamed:@"sou"];
+        _image1.image=[UIImage imageNamed:ModuleZW(ModuleZW(@"sou"))];
         
         timeNStager++;
         return;
     }
     
     if (timeNStager==11) {
-        _image1.image=[UIImage imageNamed:@"la"];
+        _image1.image=[UIImage imageNamed:ModuleZW(@"la")];
         //        _image6.image=[UIImage imageNamed:@"WinZhi_Img_sao_1.png"];
         //        _image7.image=[UIImage imageNamed:@"WinZhi_Img_la_2.png"];
         [self changeTitleLabelAlphaWithtag:2018+4];
@@ -599,21 +597,21 @@
     }
     if (timeNStager==12) {
         
-        _image1.image=[UIImage imageNamed:@"la"];
+        _image1.image=[UIImage imageNamed:ModuleZW(@"la")];
         
         timeNStager++;
         return;
     }
     if (timeNStager==13) {
         
-        _image1.image=[UIImage imageNamed:@"la"];
+        _image1.image=[UIImage imageNamed:ModuleZW(@"la")];
         //[segmentImg setImage:[UIImage imageNamed:@"bs_6_2_la.png"] forSegmentAtIndex:4];
         timeNStager++;
         return;
     }
     if (timeNStager==14) {
         
-        _image1.image=[UIImage imageNamed:@"duo"];
+        _image1.image=[UIImage imageNamed:ModuleZW(@"duo默认")];
         
         //_image7.image=[UIImage imageNamed:@"la"];
         [self changeTitleLabelAlphaWithtag:100];
