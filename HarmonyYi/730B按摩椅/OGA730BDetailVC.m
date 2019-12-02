@@ -169,12 +169,12 @@ typedef enum : NSInteger {
 #pragma mark - 获取乐药列表
 - (void)requestYueyaoListWithType:(NSString *)typeStr
 {
-    NSString *subjectSn = [GlobalCommon getSubjectSnFrom:typeStr];
-    NSString *aUrlle= [NSString stringWithFormat:@"resources/listBySubject.jhtml?subjectSn=%@&mediaType=%@",subjectSn,@"audio"];
-    [GlobalCommon showMBHudWithView:self.view];
+    
+    NSString *aUrlle= [NSString stringWithFormat:@"resources/listBySubject.jhtml?subjectSn=%@&mediaType=%@",typeStr,@"audio"];
+    [GlobalCommon showMBHudWithView:self.tableView];
     __weak typeof(self) weakSelf = self;
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:aUrlle parameters:nil successBlock:^(id response) {
-        [GlobalCommon hideMBHudWithView:weakSelf.view];
+        [GlobalCommon hideMBHudWithView:weakSelf.tableView];
         id status=[response objectForKey:@"status"];
         if([status intValue] == 100){
             NSArray *arr = [response objectForKey:@"data"];
@@ -227,7 +227,7 @@ typedef enum : NSInteger {
             return;
         }
     } failureBlock:^(NSError *error) {
-        [GlobalCommon hideMBHudWithView:weakSelf.view];
+        [GlobalCommon hideMBHudWithView:weakSelf.tableView];
         [weakSelf showAlertWarmMessage:requestErrorMessage];
     }];
 }
@@ -541,7 +541,7 @@ typedef enum : NSInteger {
     HCYSlider *slider1 = (HCYSlider *)[self.middleView viewWithTag:310];
     slider1.currentSliderValue = respond.massage_MovmentGears;
     
-    NSLog(@"***:%lu",(unsigned long)respond.massage_MovmentGears);
+    //NSLog(@"***:%lu",(unsigned long)respond.massage_MovmentGears);
     
     //气囊强度
     HCYSlider *slider2 = (HCYSlider *)[self.middleView viewWithTag:311];
@@ -597,6 +597,7 @@ typedef enum : NSInteger {
 - (void)commandActionWithModel:(ArmChairModel *)model
 {
     NSLog(@"----发送----:%@,%d",model.command,[model.command intValue]);
+    
     
     [[OGABluetoothManager_730B shareInstance] sendShortCommand:model.command success:^(BOOL success) {
         if(success){

@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)commandActionWithModel:(ArmChairModel *)model;
 
+- (void)commandActionWithModel:(ArmChairModel *)model withTag:(NSInteger )tag;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -371,6 +371,7 @@
     SublayerView *layerView = (SublayerView *)[gesture view];
     ArmChairModel *model = layerView.model;
     
+    
     NSString *statusStr = [self resultStringWithStatus];
     if(![statusStr isEqualToString:@""]){
         [GlobalCommon showMessage2:statusStr duration2:1.0];
@@ -471,6 +472,7 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     if ([model.name isEqualToString:@"Custom"]){
         OGA730BDetailVC *vc = [[OGA730BDetailVC alloc] initWithType:YES withTitleStr:model.name];
         vc.armchairModel = model;
+        [vc commandActionWithModel:model withTag:100];
         [self.navigationController pushViewController:vc animated:YES];
         
     }else if ([model.name isEqualToString:@"Chair Doctor"]){
