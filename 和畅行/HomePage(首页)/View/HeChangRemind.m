@@ -84,7 +84,7 @@
 //    [self addSubview:lineImageV];
     
     //添加tableview
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, Adapter(52), self.frame.size.width, Adapter(59)*self.dataArr.count) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, Adapter(52), self.frame.size.width, 100 + Adapter(59)*self.dataArr.count) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor=[UIColor clearColor];

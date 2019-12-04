@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MyScrollTextView.h"
 @class SongListCell;
 @protocol songListCellDelegate<NSObject>
 @optional
@@ -20,6 +20,7 @@
 @property (nonatomic,strong) CALayer *subLayer;
 @property (nonatomic,strong) UIImageView *iconImage;
 @property (nonatomic,strong) UILabel *titleLabel;
+@property (nonatomic,strong) MyScrollTextView*chairTextView;
 @property (nonatomic,strong) UIButton *downloadBtn;
 @property (nonatomic,assign) BOOL PlayOrdownload;//是播放状态还是下载状态
 @property (nonatomic,weak) id<songListCellDelegate>delegate;

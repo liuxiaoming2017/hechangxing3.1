@@ -520,9 +520,11 @@
     NSMutableDictionary *playingInfo = [NSMutableDictionary new];
     NSString *iconStr = @"和畅依";
     if(self.model.subjectSn){
-      NSString  *titleStr = [self.model.subjectSn substringFromIndex:self.model.subjectSn.length-1];
+        NSString *nameStr = [GlobalCommon getStringWithSubjectSn:self.model.subjectSn];
+      NSString  *titleStr = [nameStr substringFromIndex:nameStr.length-1];
         iconStr = [NSString stringWithFormat:@"%@icon",titleStr];
     }
+    NSLog(@"%@",self.model.subjectSn);
    // playingInfo[MPMediaItemPropertyAlbumTitle] = iconStr;
     playingInfo[MPMediaItemPropertyTitle]      = self.model.title;
     //playingInfo[MPMediaItemPropertyArtist]     = @"爱你一万年";

@@ -40,12 +40,21 @@
 
     [self addSubview:backImageView];
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(10) ,Adapter(3), backImageView.width  - Adapter(35) , Adapter(30))];
-    self.titleLabel.textAlignment=NSTextAlignmentLeft;
-    self.titleLabel.numberOfLines = 0;
-    self.titleLabel.font=[UIFont systemFontOfSize:12.0];
-    self.titleLabel.textColor = RGB_TextAppGray;
-    self.titleLabel.backgroundColor=[UIColor clearColor];
+    
+    self.chairTextView = [[MyScrollTextView alloc] initWithFrame:CGRectMake(Adapter(10) ,Adapter(3), backImageView.width  - Adapter(20) , Adapter(30))];
+    self.chairTextView.textScrollMode = MyTextScrollContinuous;
+    self.chairTextView.textScrollDirection = MyTextScrollMoveLeft;
+    self.chairTextView.disance = Adapter(20);
+    self.chairTextView.textColor = RGB_TextAppGray;
+    self.chairTextView.textFont = [UIFont systemFontOfSize:12.0];
+    self.chairTextView.backgroundColor=[UIColor clearColor];
+    
+//    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(10) ,Adapter(3), backImageView.width  - Adapter(20) , Adapter(30))];
+//    self.titleLabel.textAlignment=NSTextAlignmentLeft;
+//    self.titleLabel.numberOfLines = 0;
+//    self.titleLabel.font=[UIFont systemFontOfSize:];
+//    self.titleLabel.textColor = RGB_TextAppGray;
+//    self.titleLabel.backgroundColor=[UIColor clearColor];
     
     self.downloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.downloadBtn.frame = CGRectMake(backImageView.width - Adapter(30), Adapter(9), Adapter(18), Adapter(18));
@@ -53,7 +62,7 @@
     self.downloadBtn.userInteractionEnabled = NO;
     self.downloadBtn.hidden = YES;
     
-    [self addSubview:self.titleLabel];
+    [self addSubview:self.chairTextView];
     [self addSubview:self.downloadBtn];
 }
 
@@ -72,7 +81,7 @@
     self.iconImage.image = [UIImage imageNamed:@"宫icon"];
     [backImageView addSubview:self.iconImage];
     
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(80) ,Adapter(15), backImageView.width  - Adapter(150) , Adapter(50))];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(70) ,Adapter(15), backImageView.width  - Adapter(120) , Adapter(50))];
     self.titleLabel.textAlignment=NSTextAlignmentLeft;
     self.titleLabel.numberOfLines = 0;
     self.titleLabel.font=[UIFont systemFontOfSize:16.0];
@@ -80,7 +89,12 @@
     self.titleLabel.backgroundColor=[UIColor clearColor];
     
     self.downloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.downloadBtn.frame = CGRectMake(backImageView.width - Adapter(60), Adapter(25), Adapter(30), Adapter(30));
+    if ([UserShareOnce shareOnce].languageType) {
+         self.downloadBtn.frame = CGRectMake(backImageView.width - Adapter(40), Adapter(25), Adapter(30), Adapter(30));
+        self.titleLabel.width = backImageView.width  - Adapter(105);
+    }else{
+         self.downloadBtn.frame = CGRectMake(backImageView.width - Adapter(60), Adapter(25), Adapter(30), Adapter(30));
+    }
 //    [self.downloadBtn  setImage:[[UIImage imageNamed:@"乐药下载icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
     self.downloadBtn.userInteractionEnabled = NO;
     
@@ -120,7 +134,11 @@
         [self.downloadBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
         self.PlayOrdownload = NO;
     }else{
-        self.downloadBtn.frame = CGRectMake(ScreenWidth - Adapter(80), Adapter(25), Adapter(30), Adapter(30));
+        if ([UserShareOnce shareOnce].languageType) {
+            self.downloadBtn.frame = CGRectMake(ScreenWidth - Adapter(60), Adapter(25), Adapter(30), Adapter(30));
+        }else{
+            self.downloadBtn.frame = CGRectMake(ScreenWidth - Adapter(80), Adapter(25), Adapter(30), Adapter(30));
+        }
          self.downloadBtn.backgroundColor = [UIColor clearColor];
         
          [self.downloadBtn setTitle:@"" forState:(UIControlStateNormal)];
@@ -148,7 +166,6 @@
         [self.downloadBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
         self.PlayOrdownload = NO;
     }else{
-       // self.downloadBtn.frame = CGRectMake(ScreenWidth - 80, 25, 30, 30);
         self.downloadBtn.backgroundColor = [UIColor clearColor];
         
         [self.downloadBtn setTitle:@"" forState:(UIControlStateNormal)];

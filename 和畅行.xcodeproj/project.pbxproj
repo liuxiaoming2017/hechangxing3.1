@@ -76,7 +76,6 @@
 		034A4E8D211A9AD900936A46 /* TZImageCropManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 034A4E7E211A9AD900936A46 /* TZImageCropManager.m */; };
 		034A4E8E211A9AD900936A46 /* TZImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034A4E7F211A9AD900936A46 /* TZImagePickerController.m */; };
 		03513ACD20E9CAD3004E2805 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03513ACC20E9CAD3004E2805 /* AppDelegate.m */; };
-		03513AD320E9CAD3004E2805 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03513AD120E9CAD3004E2805 /* Main.storyboard */; };
 		03513AD820E9CAD4004E2805 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03513AD620E9CAD4004E2805 /* LaunchScreen.storyboard */; };
 		03513ADB20E9CAD4004E2805 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 03513ADA20E9CAD4004E2805 /* main.m */; };
 		0351C59123278C3B0035A9EA /* ArmchairThemeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0351C59023278C3B0035A9EA /* ArmchairThemeVC.m */; };
@@ -947,7 +946,6 @@
 		03BD83C8238BB89000F57978 /* 血压05.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65A42275414600B10F23 /* 血压05.png */; };
 		03BD83C9238BB89000F57978 /* bloodguide2.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC659A2275414600B10F23 /* bloodguide2.png */; };
 		03BD83CA238BB89000F57978 /* img_fenxiang_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E849B2186EB15001B9BB4 /* img_fenxiang_bg.png */; };
-		03BD83CB238BB89000F57978 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03513AD120E9CAD3004E2805 /* Main.storyboard */; };
 		03BD83CC238BB89000F57978 /* btn_aijiu_recipe_day_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E84752186EB0E001B9BB4 /* btn_aijiu_recipe_day_add.png */; };
 		03BD83CD238BB89000F57978 /* LeMedicineType_img.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65142275414500B10F23 /* LeMedicineType_img.png */; };
 		03BD83CE238BB89000F57978 /* Regist_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC655A2275414500B10F23 /* Regist_btn.png */; };
@@ -1014,7 +1012,6 @@
 		03CEFC1621A68E580097CB17 /* GuidanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CEFC1421A68E580097CB17 /* GuidanceView.m */; };
 		03D1BF592328D38600F2BDD6 /* ArmChairModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D1BF582328D38600F2BDD6 /* ArmChairModel.m */; };
 		03D1E50321D7B0E10089E6CA /* VersionUpdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D1E50221D7B0E00089E6CA /* VersionUpdateView.m */; };
-		03D59BF6238CBD3A00502A18 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		03D99E5921AD2CBE00C766FD /* UMShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D99E5821AD2CBD00C766FD /* UMShare.framework */; };
 		03D99E5B21AD334300C766FD /* libSocialWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D99E5A21AD334300C766FD /* libSocialWeChat.a */; };
 		03D99E5D21AD335100C766FD /* libSocialQQ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D99E5C21AD335100C766FD /* libSocialQQ.a */; };
@@ -1238,6 +1235,7 @@
 		83E23EF721C24F7F00B43298 /* HCY_ActivityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EF621C24F7F00B43298 /* HCY_ActivityController.m */; };
 		83E23F0021C76CE800B43298 /* HYC_CardsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EFF21C76CE800B43298 /* HYC_CardsModel.m */; };
 		83E644912213E883004D286C /* ModuleZW.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83E644932213E883004D286C /* ModuleZW.strings */; };
+		C94B9286239750D000CB8281 /* MyScrollTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C94B9284239750CF00CB8281 /* MyScrollTextView.m */; };
 		C95643B4230D35C400FF8693 /* UIFont+YHFont.m in Sources */ = {isa = PBXBuildFile; fileRef = C95643B3230D35C400FF8693 /* UIFont+YHFont.m */; };
 		C973089A21B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C973089921B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m */; };
 		C97308E221BA0E9800060447 /* UIColor+Gradient.m in Sources */ = {isa = PBXBuildFile; fileRef = C97308E121BA0E9800060447 /* UIColor+Gradient.m */; };
@@ -1296,7 +1294,6 @@
 /* Begin PBXFileReference section */
 		03003E4C21CB707B003C89EE /* ServiceBlockCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServiceBlockCell.h; sourceTree = "<group>"; };
 		03003E4D21CB707B003C89EE /* ServiceBlockCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServiceBlockCell.m; sourceTree = "<group>"; };
-		030126C521F9628F000FA318 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		030126C621F96290000FA318 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		030126CD21F96683000FA318 /* ChangeLanguageObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChangeLanguageObject.h; sourceTree = "<group>"; };
 		030126CE21F96683000FA318 /* ChangeLanguageObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChangeLanguageObject.m; sourceTree = "<group>"; };
@@ -1430,7 +1427,6 @@
 		03513AC820E9CAD3004E2805 /* 和畅行.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "和畅行.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03513ACB20E9CAD3004E2805 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		03513ACC20E9CAD3004E2805 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		03513AD220E9CAD3004E2805 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		03513AD420E9CAD4004E2805 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		03513AD720E9CAD4004E2805 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		03513AD920E9CAD4004E2805 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2321,6 +2317,8 @@
 		83E23EFF21C76CE800B43298 /* HYC_CardsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HYC_CardsModel.m; sourceTree = "<group>"; };
 		83E644922213E883004D286C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ModuleZW.strings; sourceTree = "<group>"; };
 		C3992630D9BF859D26B53112 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C94B9284239750CF00CB8281 /* MyScrollTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyScrollTextView.m; sourceTree = "<group>"; };
+		C94B9285239750CF00CB8281 /* MyScrollTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyScrollTextView.h; sourceTree = "<group>"; };
 		C95643B2230D35C400FF8693 /* UIFont+YHFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIFont+YHFont.h"; sourceTree = "<group>"; };
 		C95643B3230D35C400FF8693 /* UIFont+YHFont.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIFont+YHFont.m"; sourceTree = "<group>"; };
 		C973089821B91C4B00060447 /* HCY_DAVisceraNoTimeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_DAVisceraNoTimeCell.h; sourceTree = "<group>"; };
@@ -2895,7 +2893,6 @@
 				032A7A0120E9F6C2003D4952 /* CommonClass */,
 				03513ACB20E9CAD3004E2805 /* AppDelegate.h */,
 				03513ACC20E9CAD3004E2805 /* AppDelegate.m */,
-				03513AD120E9CAD3004E2805 /* Main.storyboard */,
 				03513AD420E9CAD4004E2805 /* Assets.xcassets */,
 				03513AD620E9CAD4004E2805 /* LaunchScreen.storyboard */,
 				03513AD920E9CAD4004E2805 /* Info.plist */,
@@ -3980,6 +3977,8 @@
 				03BD840D238BC04400F57978 /* OGA730BThemeVC.m */,
 				03875531238D053E00587B93 /* JWProgressView.h */,
 				03875530238D053D00587B93 /* JWProgressView.m */,
+				C94B9285239750CF00CB8281 /* MyScrollTextView.h */,
+				C94B9284239750CF00CB8281 /* MyScrollTextView.m */,
 			);
 			path = "730B按摩椅";
 			sourceTree = "<group>";
@@ -4869,7 +4868,6 @@
 				83DC66452275414600B10F23 /* 血压05.png in Resources */,
 				83DC663B2275414600B10F23 /* bloodguide2.png in Resources */,
 				036E85082186EB1A001B9BB4 /* img_fenxiang_bg.png in Resources */,
-				03513AD320E9CAD3004E2805 /* Main.storyboard in Resources */,
 				036E84E22186EB1A001B9BB4 /* btn_aijiu_recipe_day_add.png in Resources */,
 				83DC65C12275414600B10F23 /* LeMedicineType_img.png in Resources */,
 				83DC66002275414600B10F23 /* Regist_btn.png in Resources */,
@@ -5159,7 +5157,6 @@
 				03BD83C8238BB89000F57978 /* 血压05.png in Resources */,
 				03BD83C9238BB89000F57978 /* bloodguide2.png in Resources */,
 				03BD83CA238BB89000F57978 /* img_fenxiang_bg.png in Resources */,
-				03BD83CB238BB89000F57978 /* Main.storyboard in Resources */,
 				03BD83CC238BB89000F57978 /* btn_aijiu_recipe_day_add.png in Resources */,
 				03BD83CD238BB89000F57978 /* LeMedicineType_img.png in Resources */,
 				03BD83CE238BB89000F57978 /* Regist_btn.png in Resources */,
@@ -5813,6 +5810,7 @@
 				03BD81C8238BB89000F57978 /* MoxaHelpViewController.m in Sources */,
 				03BD81C9238BB89000F57978 /* NSString+Emoji.m in Sources */,
 				03BD81CA238BB89000F57978 /* SongListModel.m in Sources */,
+				C94B9286239750D000CB8281 /* MyScrollTextView.m in Sources */,
 				03BD81CB238BB89000F57978 /* i9_MoxaMainViewController.m in Sources */,
 				03BD81CC238BB89000F57978 /* HCY_CallController.m in Sources */,
 				03BD81CD238BB89000F57978 /* ZYAudioManager.m in Sources */,
@@ -5882,7 +5880,6 @@
 				03BD820C238BB89000F57978 /* ArmchairTestResultVC.m in Sources */,
 				03BD820D238BB89000F57978 /* TZPhotoPickerController.m in Sources */,
 				03BD820E238BB89000F57978 /* i9_UISetTTViewForRollerController.m in Sources */,
-				03D59BF6238CBD3A00502A18 /* (null) in Sources */,
 				0369D680238BC5E100FD3272 /* GLYPageView.m in Sources */,
 				03BD820F238BB89000F57978 /* HCY_HomeImageModel.m in Sources */,
 				03BD8210238BB89000F57978 /* DataVerifier.m in Sources */,
@@ -6072,15 +6069,6 @@
 				C9B769782320B19800171DCC /* en */,
 			);
 			name = Language.strings;
-			sourceTree = "<group>";
-		};
-		03513AD120E9CAD3004E2805 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				03513AD220E9CAD3004E2805 /* Base */,
-				030126C521F9628F000FA318 /* zh-Hans */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		03513AD620E9CAD4004E2805 /* LaunchScreen.storyboard */ = {

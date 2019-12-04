@@ -1858,3 +1858,110 @@
 "mi" =  "Mi-展示图";
 "ruai" =  "Re-展示图";
 "sou" =  "Sol-展示图";
+
+
+/* 乐药 */
+"舒思—竭思曲（一）" = "Shusi‑song of hard thinking (1)";
+"舒思—竭思曲（二）" = "Shusi‑song of hard thinking (2)";
+"舒思—竭思曲（三）" = "Shusi‑song of hard thinking (3)";
+"舒思—竭思曲（四）" = "Shusi‑song of hard thinking (4)";
+
+"舒忧—忧悲曲（一）" = "Shuyou‑song of grief (1)";
+"舒忧—忧悲曲（二）" = "Shuyou‑song of grief (2)";
+"舒忧—忧悲曲（三）" = "Shuyou‑song of grief (3)";
+"舒忧—忧悲曲（四）" = "Shuyou‑song of grief (4)";
+
+"舒怒—狂怒曲（一）" = "Shunu‑song of rage (1)";
+"舒怒—狂怒曲（二）" = "Shunu‑song of rage (2)";
+"舒怒—狂怒曲（三）" = "Shunu‑song of rage (3)";
+"舒怒—狂怒曲（四）" = "Shunu‑song of rage (4)";
+
+"舒怒—震怒曲（一）" = "Shunu‑ song of furiousness (1)";
+"舒怒—震怒曲（二）" = "Shunu‑ song of furiousness (2)";
+"舒怒—震怒曲（三）" = "Shunu‑ song of furiousness (3)";
+"舒怒—震怒曲（四）" = "Shunu‑ song of furiousness (4)";
+
+"舒忧—忧曲（一）" = "Shuyou‑song of worry (1)";
+"舒忧—忧曲（二）" = "Shuyou‑song of worry (2)";
+"舒忧—忧曲（三）" = "Shuyou‑song of worry (3)";
+"舒忧—忧曲（四）" = "Shuyou‑song of worry (4)";
+
+"舒喜—狂喜曲（一）" = "Shuxi‑ song of rapture (1)";
+"舒喜—狂喜曲（二）" = "Shuxi‑ song of rapture (2)";
+"舒喜—狂喜曲（三）" = "Shuxi‑ song of rapture (3)";
+"舒喜—狂喜曲（四）" = "Shuxi‑ song of rapture (4)";
+
+"舒恐—恐怖曲（一）" = "Shukong‑ song of horribleness (1)";
+"舒恐—恐怖曲（二）" = "Shukong‑ song of horribleness (2)";
+"舒恐—恐怖曲（三）" = "Shukong‑ song of horribleness (3)";
+"舒恐—恐怖曲（四）" = "Shukong‑ song of horribleness (4)";
+
+"舒思—深思曲（一）" = "Shusi‑ song of deep thinking (1)";
+"舒思—深思曲（二）" = "Shusi‑ song of deep thinking (2)";
+"舒思—深思曲（三）" = "Shusi‑ song of deep thinking (3)";
+"舒思—深思曲（四）" = "Shusi‑ song of deep thinking (4)";
+
+"舒思—思曲（一）" = "Shusi‑ song of thinking (1)";
+"舒思—思曲（二）" = "Shusi‑ song of thinking (2)";
+"舒思—思曲（三）" = "Shusi‑ song of thinking (3)";
+"舒思—思曲（四）" = "Shusi‑ song of thinking (4)";
+
+"舒思—痛思曲（一）" = "Shusi‑ song of thinking in pain (1)";
+"舒思—痛思曲（二）" = "Shusi‑ song of thinking in pain (2)";
+"舒思—痛思曲（三）" = "Shusi‑ song of thinking in pain (3)";
+"舒思—痛思曲（四）" = "Shusi‑ song of thinking in pain (4)";
+
+"舒思—苦思曲（一）" = "Shusi‑ song of languishing (1)";
+"舒思—苦思曲（二）" = "Shusi‑ song of languishing (2)";
+"舒思—苦思曲（三）" = "Shusi‑ song of languishing (3)";
+"舒思—苦思曲（四）" = "Shusi‑ song of languishing (4)";
+
+"舒忧—忧愁曲（一）" = "Shuyou‑ song of depressing (1)";
+"舒忧—忧愁曲（二）" = "Shuyou‑ song of depressing (2)";
+"舒忧—忧愁曲（三）" = "Shuyou‑ song of depressing (3)";
+"舒忧—忧愁曲（四）" = "Shuyou‑ song of depressing (4)";
+
+"舒忧—忧郁曲（一）" = "Shuyou‑ song of melancholy (1)";
+"舒忧—忧郁曲（二）" = "Shuyou‑ song of melancholy (2)";
+"舒忧—忧郁曲（三）" = "Shuyou‑ song of melancholy (3)";
+"舒忧—忧郁曲（四）" = "Shuyou‑ song of melancholy (4)";
+
+"舒怒—盛怒曲（一）" = "Shunu‑ song of violent rage (1)";
+"舒怒—盛怒曲（二）" = "Shunu‑ song of violent rage (2)";
+"舒怒—盛怒曲（三）" = "Shunu‑ song of violent rage (3)";
+"舒怒—盛怒曲（四）" = "Shunu‑ song of violent rage (4)";
+
+"舒喜—欣喜曲（一）" = "Shuxi‑ song of joy (1)";
+"舒喜—欣喜曲（二）" = "Shuxi‑ song of joy (2)";
+"舒喜—欣喜曲（三）" = "Shuxi‑ song of joy (3)";
+"舒喜—欣喜曲（四）" = "Shuxi‑ song of joy (4)";
+
+"舒喜—喜曲（一）" = "Shuxi‑ song of happiness (1)";
+"舒喜—喜曲（二）" = "Shuxi‑ song of happiness (2)";
+"舒喜—喜曲（三）" = "Shuxi‑ song of happiness (3)";
+"舒喜—喜曲（四）" = "Shuxi‑ song of happiness (4)";
+
+"舒喜—窃喜曲（一）" = "Shuxi‑ song of self-chuckling (1)";
+"舒喜—窃喜曲（二）" = "Shuxi‑ song of self-chuckling (2)";
+"舒喜—窃喜曲（三）" = "Shuxi‑ song of self-chuckling (3)";
+"舒喜—窃喜曲（四）" = "Shuxi‑ song of self-chuckling (4)";
+
+"舒恐—恐惧曲（一）" = "Shukong‑ song of fear (1)";
+"舒恐—恐惧曲（二）" = "Shukong‑ song of fear (2)";
+"舒恐—恐惧曲（三）" = "Shukong‑ song of fear (3)";
+"舒恐—恐惧曲（四）" = "Shukong‑ song of fear (4)";
+
+"舒恐—惶恐曲（一）" = "Shusi‑ song of terry (1)";
+"舒恐—惶恐曲（二）" = "Shusi‑ song of terry (2)";
+"舒恐—惶恐曲（三）" = "Shusi‑ song of terry (3)";
+"舒恐—惶恐曲（四）" = "Shusi‑ song of terry (4)";
+
+"舒思—忧怨曲（一）" = "Shusi‑ song of fraught resentment (1)";
+"舒思—忧怨曲（二）" = "Shusi‑ song of fraught resentment (2)";
+"舒思—忧怨曲（三）" = "Shusi‑ song of fraught resentment (3)";
+"舒思—忧怨曲（四）" = "Shusi‑ song of fraught resentment (4)";
+
+"舒喜—暗喜曲（一）" = "Shuxi‑ song of secret delight (1)";
+"舒喜—暗喜曲（二）" = "Shuxi‑ song of secret delight (2)";
+"舒喜—暗喜曲（三）" = "Shuxi‑ song of secret delight (3)";
+"舒喜—暗喜曲（四）" = "Shuxi‑ song of secret delight (4)";
