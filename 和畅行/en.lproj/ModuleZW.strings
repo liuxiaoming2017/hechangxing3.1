@@ -1861,107 +1861,140 @@
 
 
 /* 乐药 */
-"舒思—竭思曲（一）" = "Shusi‑song of hard thinking (1)";
-"舒思—竭思曲（二）" = "Shusi‑song of hard thinking (2)";
-"舒思—竭思曲（三）" = "Shusi‑song of hard thinking (3)";
-"舒思—竭思曲（四）" = "Shusi‑song of hard thinking (4)";
+/*   宫    */
+"舒思—竭思曲（一）" = "Ease Thought‑Song of exhausted thinking (I)";
+"舒思—竭思曲（二）" = "Ease Thought‑Song of exhausted thinking (II)";
+"舒思—竭思曲（三）" = "Ease Thought‑Song of exhausted thinking (III)";
+"舒思—竭思曲（四）" = "Ease Thought‑Song of exhausted thinking (IV)";
 
-"舒忧—忧悲曲（一）" = "Shuyou‑song of grief (1)";
-"舒忧—忧悲曲（二）" = "Shuyou‑song of grief (2)";
-"舒忧—忧悲曲（三）" = "Shuyou‑song of grief (3)";
-"舒忧—忧悲曲（四）" = "Shuyou‑song of grief (4)";
+"舒思—深思曲（一）" = "Ease Thought‑ Song of deep thinking (I)";
+"舒思—深思曲（二）" = "Ease Thought‑ Song of deep thinking (II)";
+"舒思—深思曲（三）" = "Ease Thought‑ Song of deep thinking (III)";
+"舒思—深思曲（四）" = "Ease Thought‑ Song of deep thinking (IV)";
 
-"舒怒—狂怒曲（一）" = "Shunu‑song of rage (1)";
-"舒怒—狂怒曲（二）" = "Shunu‑song of rage (2)";
-"舒怒—狂怒曲（三）" = "Shunu‑song of rage (3)";
-"舒怒—狂怒曲（四）" = "Shunu‑song of rage (4)";
+"舒思—思曲（一）" = "Ease Thought‑ Song of thought (I)";
+"舒思—思曲（二）" = "Ease Thought‑ Song of thought (II)";
+"舒思—思曲（三）" = "Ease Thought‑ Song of thought (III)";
+"舒思—思曲（四）" = "Ease Thought‑ Song of thought (IV)";
 
-"舒怒—震怒曲（一）" = "Shunu‑ song of furiousness (1)";
-"舒怒—震怒曲（二）" = "Shunu‑ song of furiousness (2)";
-"舒怒—震怒曲（三）" = "Shunu‑ song of furiousness (3)";
-"舒怒—震怒曲（四）" = "Shunu‑ song of furiousness (4)";
+"舒思—痛思曲（一）" = "Ease Thought‑ Song of thought in pain (I)";
+"舒思—痛思曲（二）" = "Ease Thought‑ Song of thought in pain (II)";
+"舒思—痛思曲（三）" = "Ease Thought‑ Song of thought in pain (III)";
+"舒思—痛思曲（四）" = "Ease Thought‑ Song of thought in pain (IV)";
 
-"舒忧—忧曲（一）" = "Shuyou‑song of worry (1)";
-"舒忧—忧曲（二）" = "Shuyou‑song of worry (2)";
-"舒忧—忧曲（三）" = "Shuyou‑song of worry (3)";
-"舒忧—忧曲（四）" = "Shuyou‑song of worry (4)";
 
-"舒喜—狂喜曲（一）" = "Shuxi‑ song of rapture (1)";
-"舒喜—狂喜曲（二）" = "Shuxi‑ song of rapture (2)";
-"舒喜—狂喜曲（三）" = "Shuxi‑ song of rapture (3)";
-"舒喜—狂喜曲（四）" = "Shuxi‑ song of rapture (4)";
+"舒思—苦思曲（一）" = "Ease Thought‑ Song of hard thinking (I)";
+"舒思—苦思曲（二）" = "Ease Thought‑ Song of hard thinking (II)";
+"舒思—苦思曲（三）" = "Ease Thought‑ Song of hard thinking (III)";
+"舒思—苦思曲（四）" = "Ease Thought‑ Song of hard thinking (IV)";
 
-"舒恐—恐怖曲（一）" = "Shukong‑ song of horribleness (1)";
-"舒恐—恐怖曲（二）" = "Shukong‑ song of horribleness (2)";
-"舒恐—恐怖曲（三）" = "Shukong‑ song of horribleness (3)";
-"舒恐—恐怖曲（四）" = "Shukong‑ song of horribleness (4)";
 
-"舒思—深思曲（一）" = "Shusi‑ song of deep thinking (1)";
-"舒思—深思曲（二）" = "Shusi‑ song of deep thinking (2)";
-"舒思—深思曲（三）" = "Shusi‑ song of deep thinking (3)";
-"舒思—深思曲（四）" = "Shusi‑ song of deep thinking (4)";
+/*   商    */
 
-"舒思—思曲（一）" = "Shusi‑ song of thinking (1)";
-"舒思—思曲（二）" = "Shusi‑ song of thinking (2)";
-"舒思—思曲（三）" = "Shusi‑ song of thinking (3)";
-"舒思—思曲（四）" = "Shusi‑ song of thinking (4)";
+"舒忧—忧悲曲（一）" = "Ease Anxiety‑Song of anxiety and sorrow (I)";
+"舒忧—忧悲曲（二）" = "Ease Anxiety‑Song of anxiety and sorrow (II)";
+"舒忧—忧悲曲（三）" = "Ease Anxiety‑Song of anxiety and sorrow (III)";
+"舒忧—忧悲曲（四）" = "Ease Anxiety‑Song of anxiety and sorrow (IV)";
 
-"舒思—痛思曲（一）" = "Shusi‑ song of thinking in pain (1)";
-"舒思—痛思曲（二）" = "Shusi‑ song of thinking in pain (2)";
-"舒思—痛思曲（三）" = "Shusi‑ song of thinking in pain (3)";
-"舒思—痛思曲（四）" = "Shusi‑ song of thinking in pain (4)";
+"舒忧—忧愁曲（一）" = "Ease Anxiety‑ Song of anxiety and worry (I)";
+"舒忧—忧愁曲（二）" = "Ease Anxiety‑ Song of anxiety and worry (II)";
+"舒忧—忧愁曲（三）" = "Ease Anxiety‑ Song of anxiety and worry (III)";
+"舒忧—忧愁曲（四）" = "Ease Anxiety‑ Song of anxiety and worry (IV)";
 
-"舒思—苦思曲（一）" = "Shusi‑ song of languishing (1)";
-"舒思—苦思曲（二）" = "Shusi‑ song of languishing (2)";
-"舒思—苦思曲（三）" = "Shusi‑ song of languishing (3)";
-"舒思—苦思曲（四）" = "Shusi‑ song of languishing (4)";
+"舒忧—忧曲（一）" = "Ease Anxiety‑Song of anxiety (I)";
+"舒忧—忧曲（二）" = "Ease Anxiety‑Song of anxiety (II)";
+"舒忧—忧曲（三）" = "Ease Anxiety‑Song of anxiety (III)";
+"舒忧—忧曲（四）" = "Ease Anxiety‑Song of anxiety (IV)";
 
-"舒忧—忧愁曲（一）" = "Shuyou‑ song of depressing (1)";
-"舒忧—忧愁曲（二）" = "Shuyou‑ song of depressing (2)";
-"舒忧—忧愁曲（三）" = "Shuyou‑ song of depressing (3)";
-"舒忧—忧愁曲（四）" = "Shuyou‑ song of depressing (4)";
+"舒忧—忧郁曲（一）" = "Ease Anxiety‑ Song of anxiety and depression (I)";
+"舒忧—忧郁曲（二）" = "Ease Anxiety‑ Song of anxiety and depression (II)";
+"舒忧—忧郁曲（三）" = "Ease Anxiety‑ Song of anxiety and depression (III)";
+"舒忧—忧郁曲（四）" = "Ease Anxiety‑ Song of anxiety and depression (IV)";
 
-"舒忧—忧郁曲（一）" = "Shuyou‑ song of melancholy (1)";
-"舒忧—忧郁曲（二）" = "Shuyou‑ song of melancholy (2)";
-"舒忧—忧郁曲（三）" = "Shuyou‑ song of melancholy (3)";
-"舒忧—忧郁曲（四）" = "Shuyou‑ song of melancholy (4)";
+"舒忧—忧怨曲（一）" = "Ease Anxiety‑ Song of anxiety and bitterness (I)";
+"舒忧—忧怨曲（二）" = "Ease Anxiety‑ Song of anxiety and bitterness (II)";
+"舒忧—忧怨曲（三）" = "Ease Anxiety‑ Song of anxiety and bitterness (III)";
+"舒忧—忧怨曲（四）" = "Ease Anxiety‑ Song of anxiety and bitterness (IV)";
 
-"舒怒—盛怒曲（一）" = "Shunu‑ song of violent rage (1)";
-"舒怒—盛怒曲（二）" = "Shunu‑ song of violent rage (2)";
-"舒怒—盛怒曲（三）" = "Shunu‑ song of violent rage (3)";
-"舒怒—盛怒曲（四）" = "Shunu‑ song of violent rage (4)";
 
-"舒喜—欣喜曲（一）" = "Shuxi‑ song of joy (1)";
-"舒喜—欣喜曲（二）" = "Shuxi‑ song of joy (2)";
-"舒喜—欣喜曲（三）" = "Shuxi‑ song of joy (3)";
-"舒喜—欣喜曲（四）" = "Shuxi‑ song of joy (4)";
+/*   角    */
 
-"舒喜—喜曲（一）" = "Shuxi‑ song of happiness (1)";
-"舒喜—喜曲（二）" = "Shuxi‑ song of happiness (2)";
-"舒喜—喜曲（三）" = "Shuxi‑ song of happiness (3)";
-"舒喜—喜曲（四）" = "Shuxi‑ song of happiness (4)";
+"舒怒—狂怒曲（一）" = "Ease Anger‑Song of rage (I)";
+"舒怒—狂怒曲（二）" = "Ease Anger‑Song of rage (II)";
+"舒怒—狂怒曲（三）" = "Ease Anger‑Song of rage (III)";
+"舒怒—狂怒曲（四）" = "Ease Anger‑Song of rage (IV)";
 
-"舒喜—窃喜曲（一）" = "Shuxi‑ song of self-chuckling (1)";
-"舒喜—窃喜曲（二）" = "Shuxi‑ song of self-chuckling (2)";
-"舒喜—窃喜曲（三）" = "Shuxi‑ song of self-chuckling (3)";
-"舒喜—窃喜曲（四）" = "Shuxi‑ song of self-chuckling (4)";
+"舒怒—盛怒曲（一）" = "Ease Anger‑ Song of fury (I)";
+"舒怒—盛怒曲（二）" = "Ease Anger‑ Song of fury (II)";
+"舒怒—盛怒曲（三）" = "Ease Anger‑ Song of fury (III)";
+"舒怒—盛怒曲（四）" = "Ease Anger‑ Song of fury (IV)";
 
-"舒恐—恐惧曲（一）" = "Shukong‑ song of fear (1)";
-"舒恐—恐惧曲（二）" = "Shukong‑ song of fear (2)";
-"舒恐—恐惧曲（三）" = "Shukong‑ song of fear (3)";
-"舒恐—恐惧曲（四）" = "Shukong‑ song of fear (4)";
+"舒怒—怒曲（一）" = "Ease Anger‑ Song of anger (I)";
+"舒怒—怒曲（二）" = "Ease Anger‑ Song of anger (II)";
+"舒怒—怒曲（三）" = "Ease Anger‑ Song of anger (III)";
+"舒怒—怒曲（四）" = "Ease Anger‑ Song of anger (IV)";
 
-"舒恐—惶恐曲（一）" = "Shusi‑ song of terry (1)";
-"舒恐—惶恐曲（二）" = "Shusi‑ song of terry (2)";
-"舒恐—惶恐曲（三）" = "Shusi‑ song of terry (3)";
-"舒恐—惶恐曲（四）" = "Shusi‑ song of terry (4)";
+"舒怒—震怒曲（一）" = "Ease Anger‑ Song of enragement (I)";
+"舒怒—震怒曲（二）" = "Ease Anger‑ Song of enragement (II)";
+"舒怒—震怒曲（三）" = "Ease Anger‑ Song of enragement (III)";
+"舒怒—震怒曲（四）" = "Ease Anger‑ Song of enragement (IV)";
 
-"舒思—忧怨曲（一）" = "Shusi‑ song of fraught resentment (1)";
-"舒思—忧怨曲（二）" = "Shusi‑ song of fraught resentment (2)";
-"舒思—忧怨曲（三）" = "Shusi‑ song of fraught resentment (3)";
-"舒思—忧怨曲（四）" = "Shusi‑ song of fraught resentment (4)";
+"舒怒—愤怒曲（一）" = "Ease Anger‑ Song of wrath (I)";
+"舒怒—愤怒曲（二）" = "Ease Anger‑ Song of wrath (II)";
+"舒怒—愤怒曲（三）" = "Ease Anger‑ Song of wrath (III)";
+"舒怒—愤怒曲（四）" = "Ease Anger‑ Song of wrath (IV)";
 
-"舒喜—暗喜曲（一）" = "Shuxi‑ song of secret delight (1)";
-"舒喜—暗喜曲（二）" = "Shuxi‑ song of secret delight (2)";
-"舒喜—暗喜曲（三）" = "Shuxi‑ song of secret delight (3)";
-"舒喜—暗喜曲（四）" = "Shuxi‑ song of secret delight (4)";
+
+/*   徵    */
+
+"舒喜—狂喜曲（一）" = "Ease Joy‑ Song of ecstasy (I)";
+"舒喜—狂喜曲（二）" = "Ease Joy‑ Song of ecstasy (II)";
+"舒喜—狂喜曲（三）" = "Ease Joy‑ Song of ecstasy (III)";
+"舒喜—狂喜曲（四）" = "Ease Joy‑ Song of ecstasy (IV)";
+
+"舒喜—欣喜曲（一）" = "Ease Joy‑ Song of delighting rapture (I)";
+"舒喜—欣喜曲（二）" = "Ease Joy‑ Song of delighting rapture (II)";
+"舒喜—欣喜曲（三）" = "Ease Joy‑ Song of delighting rapture (III)";
+"舒喜—欣喜曲（四）" = "Ease Joy‑ Song of delighting rapture (IV)";
+
+"舒喜—喜曲（一）" = "Ease Joy‑ Song of joy (I)";
+"舒喜—喜曲（二）" = "Ease Joy‑ Song of joy (II)";
+"舒喜—喜曲（三）" = "Ease Joy‑ Song of joy (III)";
+"舒喜—喜曲（四）" = "Ease Joy‑ Song of joy (IV)";
+
+"舒喜—窃喜曲（一）" = "Ease Joy‑ Song of sniggering (I)";
+"舒喜—窃喜曲（二）" = "Ease Joy‑ Song of sniggering (II)";
+"舒喜—窃喜曲（三）" = "Ease Joy‑ Song of sniggering (III)";
+"舒喜—窃喜曲（四）" = "Ease Joy‑ Song of sniggering (IV)";
+
+"舒喜—暗喜曲（一）" = "Ease Joy‑ Song of secret delight (I)";
+"舒喜—暗喜曲（二）" = "Ease Joy‑ Song of secret delight (II)";
+"舒喜—暗喜曲（三）" = "Ease Joy‑ Song of secret delight (III)";
+"舒喜—暗喜曲（四）" = "Ease Joy‑ Song of secret delight (IV)";
+
+/*   羽    */
+"舒恐—恐怖曲（一）" = "Ease Fear‑ Song of horribleness (I)";
+"舒恐—恐怖曲（二）" = "Ease Fear‑ Song of horribleness (II)";
+"舒恐—恐怖曲（三）" = "Ease Fear‑ Song of horribleness (III)";
+"舒恐—恐怖曲（四）" = "Ease Fear‑ Song of horribleness (IV)";
+
+"舒恐—恐惧曲（一）" = "Ease Fear‑ Song of terror (I)";
+"舒恐—恐惧曲（二）" = "Ease Fear‑ Song of terror (II)";
+"舒恐—恐惧曲（三）" = "Ease Fear‑ Song of terror (III)";
+"舒恐—恐惧曲（四）" = "Ease Fear‑ Song of terror (IV)";
+
+"舒恐—恐曲（一）" = "Ease Fear‑ Song of fear (I)";
+"舒恐—恐曲（二）" = "Ease Fear‑ Song of fear (II)";
+"舒恐—恐曲（三）" = "Ease Fear‑ Song of fear (III)";
+"舒恐—恐曲（四）" = "Ease Fear‑ Song of fear (IV)";
+
+"舒恐—恐慌曲（一）" = "Ease Fear‑ Song of panic (I)";
+"舒恐—恐慌曲（二）" = "Ease Fear‑ Song of panic (II)";
+"舒恐—恐慌曲（三）" = "Ease Fear‑ Song of panic (III)";
+"舒恐—恐慌曲（四）" = "Ease Fear‑ Song of panic (IV)";
+
+"舒恐—惶恐曲（一）" = "Ease Fear‑ Song of scare (I)";
+"舒恐—惶恐曲（二）" = "Ease Fear‑ Song of scare (II)";
+"舒恐—惶恐曲（三）" = "Ease Fear‑ Song of scare (III)";
+"舒恐—惶恐曲（四）" = "Ease Fear‑ Song of scare (IV)";
+

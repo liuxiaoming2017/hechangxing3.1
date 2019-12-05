@@ -783,6 +783,7 @@ typedef enum : NSInteger {
         [self.upsideView addSubview:self.tableView];
         
         NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
+        jlbsName = [GlobalCommon getStringWithSubjectSn:jlbsName];
         [self requestYueyaoListWithType:jlbsName];
     }
     
