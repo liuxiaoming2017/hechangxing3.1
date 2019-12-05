@@ -15,7 +15,7 @@
 #import "AdvisorysViewController.h"
 #import "BloodGuideViewController.h"
 #import "PressureViewController.h"
-#import "i9_MoxaMainViewController.h"
+#import "IJoouMainVC.h"
 #import "HCY_CallController.h"
 #import "WXPhoneController.h"
 #import "OGA730BHomeVC.h"
@@ -98,7 +98,7 @@
         case 2:
             
         {
-            i9_MoxaMainViewController * vc1 = [[i9_MoxaMainViewController alloc] init];
+            IJoouMainVC * vc1 = [[IJoouMainVC alloc] init];
             vc1.hidesBottomBarWhenPushed = YES;
             [[self selectedViewController] pushViewController:vc1 animated:YES];
             return ;

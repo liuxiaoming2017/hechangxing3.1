@@ -41,6 +41,8 @@
 		032A7A1A20EA17A5003D4952 /* HSTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A1920EA17A5003D4952 /* HSTabBar.m */; };
 		032A7A2220EA1E43003D4952 /* UIViewExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A2120EA1E43003D4952 /* UIViewExt.m */; };
 		032A7A2720EA20FF003D4952 /* UIView+ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A2520EA20FF003D4952 /* UIView+ViewController.m */; };
+		032C542223989AE800D131D5 /* BCBluetoothSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032C542123989AE800D131D5 /* BCBluetoothSDK.framework */; };
+		032C542623989CAD00D131D5 /* IJoouMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 032C542523989CAD00D131D5 /* IJoouMainVC.m */; };
 		0334105820EDBDB800BD68C2 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334105720EDBDB800BD68C2 /* NetworkManager.m */; };
 		0337A723218ADC6C005A4693 /* PECropRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337A71B218ADC6B005A4693 /* PECropRectView.m */; };
 		0337A724218ADC6C005A4693 /* PECropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337A71D218ADC6B005A4693 /* PECropViewController.m */; };
@@ -1354,6 +1356,9 @@
 		032A7A2420EA1E8B003D4952 /* GlobalDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalDefine.h; sourceTree = "<group>"; };
 		032A7A2520EA20FF003D4952 /* UIView+ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ViewController.m"; sourceTree = "<group>"; };
 		032A7A2620EA20FF003D4952 /* UIView+ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ViewController.h"; sourceTree = "<group>"; };
+		032C542123989AE800D131D5 /* BCBluetoothSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BCBluetoothSDK.framework; sourceTree = "<group>"; };
+		032C542423989CAD00D131D5 /* IJoouMainVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IJoouMainVC.h; sourceTree = "<group>"; };
+		032C542523989CAD00D131D5 /* IJoouMainVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IJoouMainVC.m; sourceTree = "<group>"; };
 		0334105620EDBDB800BD68C2 /* NetworkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
 		0334105720EDBDB800BD68C2 /* NetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
 		0337A71A218ADC6B005A4693 /* PECropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PECropViewController.h; sourceTree = "<group>"; };
@@ -1734,6 +1739,7 @@
 		03799C1820F899AD004024D1 /* AnwerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnwerModel.m; sourceTree = "<group>"; };
 		037B5A3E21097BBF0076D3AA /* HeartLive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartLive.m; sourceTree = "<group>"; };
 		037B5A3F21097BC00076D3AA /* HeartLive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartLive.h; sourceTree = "<group>"; };
+		037E32F92398A2EF001F6624 /* Pods_和畅行.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_和畅行.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03843691236AB4F200392D79 /* HCY_CarDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCY_CarDetailController.h; sourceTree = "<group>"; };
 		03843692236AB4F300392D79 /* HCY_CarDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCY_CarDetailController.m; sourceTree = "<group>"; };
 		03843694236AB50F00392D79 /* ConsumptionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsumptionController.h; sourceTree = "<group>"; };
@@ -2459,6 +2465,7 @@
 				03BD82C3238BB89000F57978 /* UIKit.framework in Frameworks */,
 				03BD82C4238BB89000F57978 /* moxibustion.framework in Frameworks */,
 				03BD82C5238BB89000F57978 /* UMShare.framework in Frameworks */,
+				032C542223989AE800D131D5 /* BCBluetoothSDK.framework in Frameworks */,
 				03BD82C6238BB89000F57978 /* libWeChatSDK.a in Frameworks */,
 				03BD8408238BBC1400F57978 /* OGABluetooth730B.framework in Frameworks */,
 				03BD82C7238BB89000F57978 /* libz.1.1.3.tbd in Frameworks */,
@@ -2730,6 +2737,15 @@
 				C95643B3230D35C400FF8693 /* UIFont+YHFont.m */,
 			);
 			path = Configure;
+			sourceTree = "<group>";
+		};
+		032C542323989B2100D131D5 /* 百川艾灸 */ = {
+			isa = PBXGroup;
+			children = (
+				032C542423989CAD00D131D5 /* IJoouMainVC.h */,
+				032C542523989CAD00D131D5 /* IJoouMainVC.m */,
+			);
+			path = "百川艾灸";
 			sourceTree = "<group>";
 		};
 		0337A719218ADC5C005A4693 /* PEPhotoCropEditor */ = {
@@ -3724,6 +3740,11 @@
 		0390CF7B20ECB5CF000ECA53 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				037E32F92398A2EF001F6624 /* Pods_和畅行.framework */,
+				03BD8407238BBC1400F57978 /* OGABluetooth730B.framework */,
+				035260AF230BD4B200A716C8 /* OGABluetooth530.framework */,
+				03CEFC0921A64B6A0097CB17 /* moxibustion.framework */,
+				032C542123989AE800D131D5 /* BCBluetoothSDK.framework */,
 				034243C8235EA57F001231E7 /* Reachability.framework */,
 				034243C6235EA574001231E7 /* FreeStreamer.framework */,
 				034243C4235EA54D001231E7 /* Pods_和畅行.framework */,
@@ -3731,8 +3752,6 @@
 				034243C0235EA31B001231E7 /* Pods_和畅行.framework */,
 				0328F6302334CA6400BD25F7 /* CoreBluetooth.framework */,
 				036C8E0B23289B4800729889 /* Pods_和畅行.framework */,
-				03BD8407238BBC1400F57978 /* OGABluetooth730B.framework */,
-				035260AF230BD4B200A716C8 /* OGABluetooth530.framework */,
 				83C5F8232272FF1A00889370 /* HHDoctorSDK.framework */,
 				036859DD222783DE00B10BE7 /* Pods_和畅行.framework */,
 				039EB91E21CF773300AE4A0D /* Pods_和畅行.framework */,
@@ -3749,7 +3768,6 @@
 				03D99E5E21AD335E00C766FD /* libSocialSina.a */,
 				03D99E5C21AD335100C766FD /* libSocialQQ.a */,
 				03D99E5A21AD334300C766FD /* libSocialWeChat.a */,
-				03CEFC0921A64B6A0097CB17 /* moxibustion.framework */,
 				036E85B52186EBD8001B9BB4 /* libxml2.2.tbd */,
 				0377198D21056F5F0010EA8B /* QuartzCore.framework */,
 				0377198B21056EE10010EA8B /* UIKit.framework */,
@@ -3952,6 +3970,7 @@
 		03BD8409238BBC4200F57978 /* HarmonyYi */ = {
 			isa = PBXGroup;
 			children = (
+				032C542323989B2100D131D5 /* 百川艾灸 */,
 				C9865C61238CBF7100ECAAB9 /* PostButtonView.h */,
 				C9865C60238CBF7100ECAAB9 /* PostButtonView.m */,
 				03B37D07238E02ED007B1915 /* CommonTabBarController.h */,
@@ -5935,6 +5954,7 @@
 				03BD8241238BB89000F57978 /* RSADataVerifier.m in Sources */,
 				03BD8242238BB89000F57978 /* ResultWriteController.m in Sources */,
 				03BD8243238BB89000F57978 /* NetworkManager.m in Sources */,
+				032C542623989CAD00D131D5 /* IJoouMainVC.m in Sources */,
 				0369D67A238BC5E100FD3272 /* SublayerView.m in Sources */,
 				03BD8244238BB89000F57978 /* BloodSugerModel.m in Sources */,
 				03BD8245238BB89000F57978 /* BatteryView.m in Sources */,
