@@ -18,9 +18,8 @@
 #define kCOMMIT @"member/service/fxpgReport.jhtml"                   /*********** 提交接口  ************/
 #define kGET_CHILDMEMBER @"member/memberModifi/list.jhtml"   /*********** 获取子账户 ************/
 
-@interface OrganDiseaseListViewController ()<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface OrganDiseaseListViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate>
 {
-    UISearchBar *_searchBar;
     UITableView *_tableView;
     NSMutableArray *_dataArr;
     
@@ -31,7 +30,7 @@
     NSMutableArray *_symptomDataArr;//病症数据
 }
 
-@property (nonatomic,retain) UISearchBar *searchBar;
+@property (nonatomic,strong) UITextField *searchTF;
 @property (nonatomic,retain) UITableView *tableView;
 @property (nonatomic,retain) NSMutableArray *dataArr;
 @property (nonatomic,assign) NSInteger selectedCount;
@@ -105,78 +104,38 @@
     self.backView = view;
     [self.view addSubview:view];
     
-    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(Adapter(10), Adapter(10), ScreenWidth-Adapter(40), Adapter(36))];
-    _searchBar.layer.cornerRadius = _searchBar.height/2;
-    _searchBar.delegate = self;
-    _searchBar.tag = 100;
-    
-     [_searchBar setImage:[UIImage imageNamed:@"搜索 (1)"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
-    _searchBar.placeholder = ModuleZW(@"搜索疾病名称");
-    self.searchBar.barStyle=UIBarStyleDefault;
-    self.searchBar.backgroundColor = RGB_ButtonBlue;
-    
-    for (UIView *view in self.searchBar.subviews) {
-        if ([view isKindOfClass:NSClassFromString(@"UIView")] && view.subviews.count > 0) {
-            [[view.subviews objectAtIndex:0] removeFromSuperview];
-            break;
-        }
-    }
-    
-    
-    UITextField *textField = (UITextField*)[self subViewOfClassName:@"UISearchBarTextField" view:_searchBar];
-    textField.backgroundColor = [UIColor clearColor];
-    textField.textColor = [UIColor whiteColor];
-    
-    if (@available(iOS 13.0, *)) {
-            textField = [self.searchBar valueForKey:@"_searchTextField"];
-    }
-        [textField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-
-    
-//    NSArray *searchBarSubViews = [[self.searchBar.subviews objectAtIndex:0] subviews];
-//
-//    for (UIView *view in searchBarSubViews) {
-//        if([view isKindOfClass:[UITextField class]]){
-//            UITextField* textField = (UITextField*)view;
-//            textField.backgroundColor = [UIColor clearColor];
-//            textField.textColor = [UIColor whiteColor];
-//            [textField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-//            textField.alpha = 1;
-//        }
-//    }
-    for(UIView *searchBarSubview in [_searchBar subviews]){
-        for(UIView *subView in [searchBarSubview subviews]){
-            if([subView conformsToProtocol:@protocol(UITextInputTraits)]){
-                [(UITextField *)subView setReturnKeyType:UIReturnKeyDone];
-            }
-        }
-    }
-    
-   
-  
-  
-    
-    [view addSubview:_searchBar];
-    
-    
-    //[_searchBar release];
-    
-    
-   
+    _searchTF = [[UITextField alloc] initWithFrame:CGRectMake(Adapter(10), Adapter(10), ScreenWidth-Adapter(40), Adapter(36))];
+    _searchTF.layer.cornerRadius = _searchTF.height/2;
+    _searchTF.clearButtonMode=UITextFieldViewModeWhileEditing;
+    _searchTF.backgroundColor = RGB_ButtonBlue;
+    _searchTF.textColor = [UIColor whiteColor];
+    _searchTF.tintColor = [UIColor whiteColor];
+    _searchTF.delegate = self;
+    _searchTF.tag = 100;
+    _searchTF.attributedPlaceholder = [[NSAttributedString alloc] initWithString:ModuleZW(@"搜索疾病名称") attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    UIImageView *leftImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(10), Adapter(10), Adapter(30), Adapter(16))];
+    leftImageView.image = [UIImage imageNamed:@"搜索 (1)"];
+    leftImageView.contentMode = UIViewContentModeScaleAspectFit;
+    _searchTF.leftView = leftImageView;
+    _searchTF.leftViewMode = UITextFieldViewModeAlways;
+    [view addSubview:_searchTF];
 }
 
-- (UIView*)subViewOfClassName:(NSString*)className view:(UIView *)view{
-    for (UIView* subView in view.subviews) {
-        NSLog(@"======%@",subView.class);
-        if ([NSStringFromClass(subView.class) isEqualToString:className]) {
-            return subView;
-        }
-        UIView* resultFound = [self subViewOfClassName:className view:subView];
-        if (resultFound) {
-            return resultFound;
-        }
-    }
-    return nil;
+-(UIImage*)createImageWithColor: (UIColor*)color
+{
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField*)textField {
+    [self.searchTF resignFirstResponder];
+    return YES;
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -184,27 +143,9 @@
     [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
 }
 
-
-//将要进入编辑模式
--(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
-    //[searchBar setShowsCancelButton:YES animated:YES];
-    return YES;
-}
-//将要推出编辑模式
--(BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar{
-    [searchBar setShowsCancelButton:NO animated:YES];
-    [searchBar resignFirstResponder];
-    return YES;
-}
-//点击取消按钮
--(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
-    [searchBar resignFirstResponder];
-    [searchBar setShowsCancelButton:NO animated:YES];
-}
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-    NSArray *arr = [[DBManager sharedManager] readModelsWith:_searchBar.text];
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    NSArray *arr = [[DBManager sharedManager] readModelsWith:string];
     NSMutableArray *marr = [[NSMutableArray alloc] initWithArray:arr];
     _dataArr = [marr mutableCopy];
     if(arr.count > 0){
@@ -213,13 +154,9 @@
         self.backView.frame = CGRectMake(Adapter(10), kNavBarHeight, ScreenWidth-Adapter(20), Adapter(56));
     }
     [_tableView reloadData];
+    return YES;
 }
 
-//开始搜索
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    [searchBar resignFirstResponder];
-
-}
 #pragma mark- tableView相关
 -(void)createTableView{
     

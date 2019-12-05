@@ -121,7 +121,7 @@
 #define Adapter(d)                         ((CGFloat)d/375)*ScreenWidth
 
 #define ISPaid                         [UIDevice currentDevice].userInterfaceIdiom ==UIUserInterfaceIdiomPad
-
+#define ISNotPaid                         [UIDevice currentDevice].userInterfaceIdiom !=UIUserInterfaceIdiomPad
 #define ViewCtrlTopBarHeight                (IsiOS7Later ? (NaviBarHeight + StatusBarHeight) : NaviBarHeight)
 #define IsUseIOS7SystemSwipeGoBack          (IsiOS7Later ? YES : NO)
 

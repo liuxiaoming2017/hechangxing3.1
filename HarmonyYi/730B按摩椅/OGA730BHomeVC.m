@@ -431,9 +431,6 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
         OGA730BThemeVC *vc = [[OGA730BThemeVC alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }else{
-        
-       // [self nextVCWithModel:model];
-        
         NSString *statusStr = [self resultStringWithStatus];
         if(![statusStr isEqualToString:@""]){
             [GlobalCommon showMessage2:statusStr duration2:1.0];

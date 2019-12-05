@@ -584,12 +584,12 @@
         UILabel *title = [Tools labelWith:_sectionDataArr[section] frame:CGRectMake(Adapter(5), Adapter(5), Adapter(95), Adapter(50)) textSize:14 textColor:RGB_TextGray lines:2 aligment:NSTextAlignmentCenter];
         
         if(ret == NO){
-            title.backgroundColor = [UIColor whiteColor];
+            title.backgroundColor = [UIColor clearColor];
             title.textColor = RGB_TextGray;
             title.layer.cornerRadius = 0;
             title.layer.masksToBounds = NO;
         }else{
-            title.textColor = [UIColor whiteColor];
+            title.textColor = [UIColor clearColor];
             title.backgroundColor = RGB_TextOrange;
             title.layer.cornerRadius = title.height/2;
             title.layer.masksToBounds = YES;

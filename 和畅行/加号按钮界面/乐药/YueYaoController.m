@@ -459,7 +459,8 @@
             cell.titleLabel.attributedText = salaryStr;
           
         }else{
-            cell.titleLabel.text = model.title;
+            cell.titleLabel.text = ModuleZW(model.title);
+            NSLog(@"-------------------------%@",model.title);
         }
         cell.currentSelect = NO;
         NSString *imageStr = @"";
@@ -655,7 +656,7 @@
                 model.status = [dic objectForKey:@"status"];
                 model.title = [dic objectForKey:@"name"];
                 model.source = [[[dic objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"source"];
-                model.subjectSn = typeStr;
+                model.subjectSn = subjectSn;
                 [arr2 addObject:model];
                 
                 if(kPlayer.playerState == 2 && kPlayer.playUrlStr){

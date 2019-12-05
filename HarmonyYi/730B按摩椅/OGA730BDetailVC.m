@@ -242,22 +242,6 @@ typedef enum : NSInteger {
     return self.dataArr.count;
 }
 
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.width, 30)];
-//    titleLabel.font = [UIFont systemFontOfSize:15];
-//    titleLabel.textAlignment = NSTextAlignmentCenter;
-//    titleLabel.backgroundColor = UIColorFromHex(0X1E82D2);
-//    titleLabel.textColor = [UIColor whiteColor];
-//    titleLabel.text = @"Music List";
-//
-//    return titleLabel;
-//}
-//
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return 30;
-//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -270,15 +254,13 @@ typedef enum : NSInteger {
     if(self.dataArr.count>0){
         SongListModel *model = [self.dataArr objectAtIndex:indexPath.row];
         
-        cell.titleLabel.text = model.title;
+        cell.chairTextView.text = ModuleZW(model.title);
         
         cell.currentSelect = NO;
         NSString *imageStr = @"";
-//        cell.downloadBtn.hidden = YES;
 //        if(indexPath.row == self.currentIndexPath.row){
 //            cell.downloadBtn.hidden = NO;
 //        }
-        
         
         imageStr = @"乐药播放icon";
 
@@ -294,12 +276,14 @@ typedef enum : NSInteger {
 {
     
     SongListCell *cell = (SongListCell *)[tableView cellForRowAtIndexPath:indexPath];
-    cell.downloadBtn.hidden = NO;
+//    cell.downloadBtn.hidden = NO;
     if(cell.PlayOrdownload){ //播放暂停
         
         if(self.currentIndexPath && self.currentIndexPath.row != indexPath.row) { //乐药类型切换时,处理正在播放的状态
             [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:self.currentIndexPath];
             self.currentIndexPath = nil;
+            cell.chairTextView.textColor = RGB_TextAppGray;
+            [cell.chairTextView endScroll];
         }
         
         cell.currentSelect = !cell.currentSelect;
@@ -316,12 +300,15 @@ typedef enum : NSInteger {
             self.currentIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
             
             [self playActionWithModel:model];
-            
+            cell.chairTextView.textColor = RGB_ButtonBlue;
+            [cell.chairTextView startScroll];
             self.selectSongName = model.source; //播放链接
         }else{
-            [cell.downloadBtn setImage:[[UIImage imageNamed:@"乐药播放icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
+//            [cell.downloadBtn setImage:[[UIImage imageNamed:@"乐药播放icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
             //  self.selectSongName = @"";
             [self pauseMusic];
+            cell.chairTextView.textColor = RGB_TextAppGray;
+            [cell.chairTextView endScroll];
         }
         
     }
@@ -334,12 +321,13 @@ typedef enum : NSInteger {
 {
     
     SongListCell *cell = (SongListCell *)[tableView cellForRowAtIndexPath:indexPath];
-    cell.downloadBtn.hidden = YES;
     if(cell.PlayOrdownload){
-        [cell.downloadBtn setImage:[[UIImage imageNamed:@"乐药播放icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
+//        [cell.downloadBtn setImage:[[UIImage imageNamed:@"乐药播放icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
         cell.currentSelect = NO;
         self.selectSongName = @"";
         [self stopMusic];
+        cell.chairTextView.textColor = RGB_TextAppGray;
+        [cell.chairTextView endScroll];
     }
     
 }
