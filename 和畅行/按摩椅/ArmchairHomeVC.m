@@ -315,10 +315,10 @@
     label1.alpha = 1.0;
     
     UIButton *speakBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    speakBtn.frame = CGRectMake(label1.left, label1.bottom+10, label1.width, Adapter(20));
-    if (ISPaid) {
-       speakBtn.top =  label1.bottom - 10;
-    }
+    speakBtn.frame = CGRectMake(label1.left, label1.bottom, label1.width, Adapter(20));
+//    if (ISPaid) {
+//       speakBtn.top =  label1.bottom - 10;
+//    }
     [speakBtn setTitle:btnStr forState:UIControlStateNormal];
     [speakBtn setTitleColor:[UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0] forState:UIControlStateNormal];
     speakBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
