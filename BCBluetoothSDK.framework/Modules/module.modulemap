@@ -1,0 +1,6 @@
+framework module BCBluetoothSDK {
+  umbrella header "BCBluetoothSDK.h"
+
+  export *
+  module * { export * }
+}
