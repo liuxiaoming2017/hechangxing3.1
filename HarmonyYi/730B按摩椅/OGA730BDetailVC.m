@@ -98,8 +98,7 @@ typedef enum : NSInteger {
     self.dataArr = nil;
     self.currentIndexPath = nil;
     self.bgScrollView = nil;
-    
-    [kPlayer stop];
+    kPlayer.noDelegate = YES;
 }
 
 
@@ -212,10 +211,17 @@ typedef enum : NSInteger {
             weakSelf.dataArr = arr2;
             kPlayer.musicArr = arr2;
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf.tableView reloadData];
+            [weakSelf.tableView reloadData];
+            
+            if(isSelectRow){
+                weakSelf.currentIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+            }else{
+                
+                [weakSelf stopPlayer];
+                
+                weakSelf.currentIndexPath = nil;
                 [weakSelf.tableView.delegate tableView:weakSelf.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-            });
+            }
             
         }else if ([status intValue] == 44)
         {
@@ -255,18 +261,27 @@ typedef enum : NSInteger {
         SongListModel *model = [self.dataArr objectAtIndex:indexPath.row];
         
         cell.chairTextView.text = ModuleZW(model.title);
-        
-        cell.currentSelect = NO;
         NSString *imageStr = @"";
-//        if(indexPath.row == self.currentIndexPath.row){
-//            cell.downloadBtn.hidden = NO;
-//        }
         
-        imageStr = @"乐药播放icon";
-
+        if(kPlayer.playUrlStr && [model.source isEqualToString:kPlayer.playUrlStr] && kPlayer.playerState == 2){
+            cell.currentSelect = YES;
+            imageStr = @"乐药暂停icon";
+            
+            cell.chairTextView.textColor = RGB_ButtonBlue;
+            [cell.chairTextView startScroll];
+            
+            self.selectSongName = model.source;
+            
+        }else{
+    
+            cell.currentSelect = NO;
+            
+            imageStr = @"乐药播放icon";
+            
+        }
+        
         [cell downloadChairWithImageStr:imageStr];
         
-    
     }
     
     return cell;
@@ -771,18 +786,8 @@ typedef enum : NSInteger {
         [self.upsideView addSubview:self.tableView];
         
         NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
-        jlbsName = [GlobalCommon getStringWithSubjectSn:jlbsName];
         [self requestYueyaoListWithType:jlbsName];
     }
-    
-
-//    self.playBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    self.playBtn.frame = CGRectMake((animationView.width-20)/2.0, self.timeLabel.bottom+3, 20, 20);
-//    [self.playBtn setImage:[UIImage imageNamed:@"按摩_播放"] forState:UIControlStateNormal];
-//    [self.playBtn setImage:[UIImage imageNamed:@"按摩_暂停"] forState:UIControlStateSelected];
-//    [self.playBtn addTarget:self action:@selector(playAction:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.playBtn setHitTestEdgeInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
-//    [animationView addSubview:self.playBtn];
     
     [self.upsideView addSubview:animationView];
     

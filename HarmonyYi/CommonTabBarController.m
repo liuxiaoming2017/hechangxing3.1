@@ -20,6 +20,7 @@
 #import "WXPhoneController.h"
 #import "OGA730BHomeVC.h"
 
+#import "i9_MoxaMainViewController.h"
 
 @interface CommonTabBarController ()<HSTabBarDelegate,ZKIndexViewDelegate>
 
@@ -98,7 +99,7 @@
         case 2:
             
         {
-            IJoouMainVC * vc1 = [[IJoouMainVC alloc] init];
+            i9_MoxaMainViewController * vc1 = [[i9_MoxaMainViewController alloc] init];
             vc1.hidesBottomBarWhenPushed = YES;
             [[self selectedViewController] pushViewController:vc1 animated:YES];
             return ;

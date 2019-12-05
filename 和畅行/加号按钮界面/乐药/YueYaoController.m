@@ -312,7 +312,8 @@
         self.isPlaying = YES;
         self.selectSongName = kPlayer.playUrlStr;
         SongListModel *model = [kPlayer.musicArr objectAtIndex:0];
-        [self dealHysegmentControlWithStr:model.subjectSn];
+        NSString *subjectSn = [GlobalCommon getStringWithSubjectSn:model.subjectSn];
+        [self dealHysegmentControlWithStr:subjectSn];
         return;
     }
     
@@ -540,6 +541,7 @@
                         [cell.downloadBtn setImage:[[UIImage imageNamed:@"乐药暂停icon"]transformWidth:Adapter(20) height:Adapter(20)] forState:UIControlStateNormal];
                         if(![model.subjectSn isEqualToString:weakSelf.currentSubjectSn]){ //切换乐药播放列表
                             weakSelf.currentSubjectSn = model.subjectSn;
+                            
                             [weakSelf currentPlayYueYaoList];
                         }
                         

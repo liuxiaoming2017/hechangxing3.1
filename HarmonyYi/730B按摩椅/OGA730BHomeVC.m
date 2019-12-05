@@ -194,8 +194,6 @@
         bluetoothBtn.selected = [UserShareOnce shareOnce].ogaConnected;
     }
     
-    
-    
 }
 
 - (void)bluetoothBtnAction:(UIButton *)button
@@ -371,6 +369,8 @@
     SublayerView *layerView = (SublayerView *)[gesture view];
     ArmChairModel *model = layerView.model;
     
+//    [self nextVCWithModel:model];
+//    return;
     
     NSString *statusStr = [self resultStringWithStatus];
     if(![statusStr isEqualToString:@""]){
@@ -378,11 +378,11 @@
         return;
     }else{
         self.armchairModel = model;
-        
-        if([self chairIsPowerOn] == NO){
-            
-            [self showProgressHUD:startDevice];
     
+        if([self chairIsPowerOn] == NO){
+
+            [self showProgressHUD:startDevice];
+
             [[OGABluetoothManager_730B shareInstance] sendShortCommand:k730Command_PowerOn success:^(BOOL success) {
                 NSLog(@"启动设备成功啦");
             }];
@@ -466,13 +466,16 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
         [self.navigationController pushViewController:vc animated:YES];
         return;
     }
+    [self stopPlayer];
     if ([model.name isEqualToString:@"Custom"]){
+        
         OGA730BDetailVC *vc = [[OGA730BDetailVC alloc] initWithType:YES withTitleStr:model.name];
         vc.armchairModel = model;
         [vc commandActionWithModel:model withTag:100];
         [self.navigationController pushViewController:vc animated:YES];
         
     }else if ([model.name isEqualToString:@"Chair Doctor"]){
+        
         OGA730BAcheTestVC *vc = [[OGA730BAcheTestVC alloc] init];
         vc.armchairModel = model;
         [self.navigationController pushViewController:vc animated:YES];
