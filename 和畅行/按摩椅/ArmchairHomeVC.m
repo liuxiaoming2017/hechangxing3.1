@@ -168,9 +168,14 @@
             [layerView setImageAndTitleWithModel:model withName:@""];
             label.top = layerView.top;
             label.height = Adapter(75);
-            NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
-            label.attributedText = [self attributedStringWithTitle:[NSString stringWithFormat:@"1、您的经络检测类型为%@\n2、建议您选用%@推拿手法",str,str]];
-            speakBtn.frame = CGRectMake(label.left, label.bottom+Adapter(10), label.width, Adapter(20));
+            jlbsName = [GlobalCommon getStringWithSubjectSn:jlbsName];
+            label.attributedText = [self attributedStringWithTitle:[NSString stringWithFormat:@"1、您的经络检测类型为%@\n2、建议您选用%@推拿手法",jlbsName,jlbsName]];
+            CGSize attSize = [label.attributedText boundingRectWithSize:CGSizeMake(label.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
+            label.height = attSize.height;
+            if (label.height +  Adapter(20)  > layerView.height ) {
+                label.top = layerView.top-Adapter(10);
+            }
+            speakBtn.frame = CGRectMake(label.left, label.bottom, label.width, Adapter(20));
             [speakBtn setTitle:@"3、点我再次检测" forState:UIControlStateNormal];
         }
         
@@ -291,16 +296,21 @@
     NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
     if([jlbsName isEqualToString:@""] || jlbsName==nil ){
         recommandStr = @"1、您尚未进行经络检测";
-        label1.height = Adapter(30);
+//        label1.height = Adapter(30);
         btnStr = @"2、点我立即检测";
     }else{
+        NSString *physicalStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
+        physicalStr = [GlobalCommon getStringWithSubjectSn:physicalStr];
         label1.top = sublayerView.top;
-        recommandStr = [NSString stringWithFormat:@"1、您的经络检测类型为%@\n2、建议您选用%@推拿手法",[[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"],[[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"]];
+        recommandStr = [NSString stringWithFormat:@"1、您的经络检测类型为%@\n2、建议您选用%@推拿手法",physicalStr,physicalStr];
         btnStr = @"3、点我再次检测";
     }
-    
-    
     label1.attributedText = [self attributedStringWithTitle:recommandStr];
+    CGSize attSize = [label1.attributedText boundingRectWithSize:CGSizeMake(label1.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
+    label1.height = attSize.height;
+    if (label1.height +  Adapter(20)  > sublayerView.height ) {
+        label1.top = sublayerView.top-Adapter(10);
+    }
     label1.textAlignment = NSTextAlignmentLeft;
     label1.alpha = 1.0;
     
@@ -324,7 +334,7 @@
 {
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraphStyle.lineSpacing = 15;
+    paragraphStyle.lineSpacing = 2;
     
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:recommandStr attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size:13*[UserShareOnce shareOnce].fontSize],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
     
@@ -700,6 +710,7 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
 - (ArmChairModel *)recommendModelWithStr
 {
     NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
+    jlbsName = [GlobalCommon getStringWithSubjectSn:jlbsName];
     if([jlbsName isEqualToString:@""] || jlbsName==nil){
         ArmChairModel *model = [[ArmChairModel alloc] init];
         model.name = @"大师精选";

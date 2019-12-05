@@ -1236,6 +1236,7 @@
 		83E23F0021C76CE800B43298 /* HYC_CardsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EFF21C76CE800B43298 /* HYC_CardsModel.m */; };
 		83E644912213E883004D286C /* ModuleZW.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83E644932213E883004D286C /* ModuleZW.strings */; };
 		C94B9286239750D000CB8281 /* MyScrollTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C94B9284239750CF00CB8281 /* MyScrollTextView.m */; };
+		C94B929323989EF200CB8281 /* MyScrollTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C94B9284239750CF00CB8281 /* MyScrollTextView.m */; };
 		C95643B4230D35C400FF8693 /* UIFont+YHFont.m in Sources */ = {isa = PBXBuildFile; fileRef = C95643B3230D35C400FF8693 /* UIFont+YHFont.m */; };
 		C973089A21B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C973089921B91C4B00060447 /* HCY_DAVisceraNoTimeCell.m */; };
 		C97308E221BA0E9800060447 /* UIColor+Gradient.m in Sources */ = {isa = PBXBuildFile; fileRef = C97308E121BA0E9800060447 /* UIColor+Gradient.m */; };
@@ -5546,6 +5547,7 @@
 				036E84412186EAD3001B9BB4 /* UIImage+Util.m in Sources */,
 				03C5913D2331BB030058EF33 /* ArmchairTestResultVC.m in Sources */,
 				034A4E83211A9AD900936A46 /* TZPhotoPickerController.m in Sources */,
+				C94B929323989EF200CB8281 /* MyScrollTextView.m in Sources */,
 				036E84132186EAB1001B9BB4 /* i9_UISetTTViewForRollerController.m in Sources */,
 				83E23EF421C202B100B43298 /* HCY_HomeImageModel.m in Sources */,
 				038516A62186AB39001DD2B7 /* DataVerifier.m in Sources */,
