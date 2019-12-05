@@ -369,8 +369,8 @@
     SublayerView *layerView = (SublayerView *)[gesture view];
     ArmChairModel *model = layerView.model;
     
-    [self nextVCWithModel:model];
-    return;
+//    [self nextVCWithModel:model];
+//    return;
     
     NSString *statusStr = [self resultStringWithStatus];
     if(![statusStr isEqualToString:@""]){
@@ -428,15 +428,8 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     ArmChairModel *model = [self.dataArr objectAtIndex:indexPath.row];
     
     if([model.name isEqualToString:@"More"]){
-        NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
-        NSString *nameStr = [GlobalCommon getStringWithLanguageSubjectSn:jlbsName];
-        nameStr = [nameStr stringByAppendingString:@" Prescription"];
-        OGA730BDetailVC *vc = [[OGA730BDetailVC alloc] initWithRecommend:YES withTitleStr:nameStr];
-        vc.armchairModel = model;
-        [vc commandActionWithModel:model];
+        OGA730BThemeVC *vc = [[OGA730BThemeVC alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
-//        OGA730BThemeVC *vc = [[OGA730BThemeVC alloc] init];
-//        [self.navigationController pushViewController:vc animated:YES];
     }else{
         NSString *statusStr = [self resultStringWithStatus];
         if(![statusStr isEqualToString:@""]){
@@ -473,16 +466,16 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
         [self.navigationController pushViewController:vc animated:YES];
         return;
     }
-    
     [self stopPlayer];
-    
     if ([model.name isEqualToString:@"Custom"]){
+        
         OGA730BDetailVC *vc = [[OGA730BDetailVC alloc] initWithType:YES withTitleStr:model.name];
         vc.armchairModel = model;
         [vc commandActionWithModel:model withTag:100];
         [self.navigationController pushViewController:vc animated:YES];
         
     }else if ([model.name isEqualToString:@"Chair Doctor"]){
+        
         OGA730BAcheTestVC *vc = [[OGA730BAcheTestVC alloc] init];
         vc.armchairModel = model;
         [self.navigationController pushViewController:vc animated:YES];

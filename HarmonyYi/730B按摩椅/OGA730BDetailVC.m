@@ -216,6 +216,9 @@ typedef enum : NSInteger {
             if(isSelectRow){
                 weakSelf.currentIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
             }else{
+                
+                [weakSelf stopPlayer];
+                
                 weakSelf.currentIndexPath = nil;
                 [weakSelf.tableView.delegate tableView:weakSelf.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
             }
@@ -514,7 +517,7 @@ typedef enum : NSInteger {
     self.playBtn.selected = respond.modeStop;
     
     if(!self.rightBtn.selected){
-       // [self.navigationController popViewControllerAnimated:NO];
+        [self.navigationController popViewControllerAnimated:NO];
     }
     
     [self layerAnimationWithPause:respond.modeStop];
@@ -783,18 +786,8 @@ typedef enum : NSInteger {
         [self.upsideView addSubview:self.tableView];
         
         NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
-        jlbsName = [GlobalCommon getStringWithSubjectSn:jlbsName];
         [self requestYueyaoListWithType:jlbsName];
     }
-    
-
-//    self.playBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    self.playBtn.frame = CGRectMake((animationView.width-20)/2.0, self.timeLabel.bottom+3, 20, 20);
-//    [self.playBtn setImage:[UIImage imageNamed:@"按摩_播放"] forState:UIControlStateNormal];
-//    [self.playBtn setImage:[UIImage imageNamed:@"按摩_暂停"] forState:UIControlStateSelected];
-//    [self.playBtn addTarget:self action:@selector(playAction:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.playBtn setHitTestEdgeInsets:UIEdgeInsetsMake(50, 50, 50, 50)];
-//    [animationView addSubview:self.playBtn];
     
     [self.upsideView addSubview:animationView];
     
