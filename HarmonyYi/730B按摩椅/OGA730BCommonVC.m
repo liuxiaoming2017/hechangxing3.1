@@ -161,6 +161,7 @@
     if(respond.modeProgrameSelect  || respond.modeDetectionAche || respond.autoMassage > 0 || respond.massage_StatusNeck || respond.massage_StatusShoulder || respond.massage_StatusBack || respond.massage_StatusWaist || respond.massage_StatusUpperBody){
         return YES;
     }
+   // [self stopPlayer];
     return NO;
 }
 
@@ -191,5 +192,11 @@
     }
 }
 
+- (void)stopPlayer
+{
+    if(kPlayer.playUrlStr != nil && kPlayer.playerState == 2){
+        [kPlayer stop];
+    }
+}
 
 @end

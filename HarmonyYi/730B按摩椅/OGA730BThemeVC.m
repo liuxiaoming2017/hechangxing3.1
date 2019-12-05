@@ -142,6 +142,8 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
 
 - (void)nextVCWithModel:(ArmChairModel *)model
 {
+        [self stopPlayer];
+    
         OGA730BDetailVC *vc = [[OGA730BDetailVC alloc] initWithType:NO withTitleStr:model.name];
         vc.armchairModel = model;
         [vc commandActionWithModel:model];

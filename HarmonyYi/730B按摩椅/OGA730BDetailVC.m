@@ -98,8 +98,7 @@ typedef enum : NSInteger {
     self.dataArr = nil;
     self.currentIndexPath = nil;
     self.bgScrollView = nil;
-    
-    [kPlayer stop];
+    kPlayer.noDelegate = YES;
 }
 
 
@@ -212,10 +211,14 @@ typedef enum : NSInteger {
             weakSelf.dataArr = arr2;
             kPlayer.musicArr = arr2;
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf.tableView reloadData];
+            [weakSelf.tableView reloadData];
+            
+            if(isSelectRow){
+                weakSelf.currentIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+            }else{
+                weakSelf.currentIndexPath = nil;
                 [weakSelf.tableView.delegate tableView:weakSelf.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-            });
+            }
             
         }else if ([status intValue] == 44)
         {
@@ -255,18 +258,27 @@ typedef enum : NSInteger {
         SongListModel *model = [self.dataArr objectAtIndex:indexPath.row];
         
         cell.chairTextView.text = ModuleZW(model.title);
-        
-        cell.currentSelect = NO;
         NSString *imageStr = @"";
-//        if(indexPath.row == self.currentIndexPath.row){
-//            cell.downloadBtn.hidden = NO;
-//        }
         
-        imageStr = @"乐药播放icon";
-
+        if(kPlayer.playUrlStr && [model.source isEqualToString:kPlayer.playUrlStr] && kPlayer.playerState == 2){
+            cell.currentSelect = YES;
+            imageStr = @"乐药暂停icon";
+            
+            cell.chairTextView.textColor = RGB_ButtonBlue;
+            [cell.chairTextView startScroll];
+            
+            self.selectSongName = model.source;
+            
+        }else{
+    
+            cell.currentSelect = NO;
+            
+            imageStr = @"乐药播放icon";
+            
+        }
+        
         [cell downloadChairWithImageStr:imageStr];
         
-    
     }
     
     return cell;
@@ -502,7 +514,7 @@ typedef enum : NSInteger {
     self.playBtn.selected = respond.modeStop;
     
     if(!self.rightBtn.selected){
-        [self.navigationController popViewControllerAnimated:NO];
+       // [self.navigationController popViewControllerAnimated:NO];
     }
     
     [self layerAnimationWithPause:respond.modeStop];

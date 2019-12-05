@@ -37,6 +37,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)chairIsPowerOn;
 
 - (BOOL)chairPowerOnWithRespond:(OGARespond_730B *)respond;
+
+- (void)stopPlayer;
 @end
 
 NS_ASSUME_NONNULL_END
