@@ -79,8 +79,7 @@
         case 1:
         {
             if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
-                UIAlertView *av = [[UIAlertView alloc] initWithTitle:ModuleZW(@"提示") message:@"您还不是会员" delegate:self cancelButtonTitle:ModuleZW(@"确定") otherButtonTitles:nil,nil];
-                [av show];
+                [self weiGouMaiMessage];
             }else{
                 NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];
                 //11.22
@@ -174,6 +173,26 @@
     [GlobalCommon pageDurationWithpageId:@"3" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
 
     
+}
+
+- (void)weiGouMaiMessage
+{
+    VersionUpdateView *updateView = [VersionUpdateView showWeiGouMaiViewWithContent:weiGouMai];
+    [GlobalCommon addMaskView];
+    __weak __typeof(updateView)wupdateView = updateView;
+    updateView.versionUpdateBlock = ^(BOOL isUpdate){
+        
+        if(isUpdate){
+            UITabBarController *main = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
+            main.selectedIndex = 2;
+            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+            window.rootViewController = main;
+        }
+        
+        [GlobalCommon removeMaskView];
+        [wupdateView removeFromSuperview];
+    };
+    [[UIApplication sharedApplication].keyWindow addSubview:updateView];
 }
 
 - (void)indexDissmiss

@@ -90,6 +90,25 @@
 }
 
 
+- (void)weiGouMaiMessage
+{
+    VersionUpdateView *updateView = [VersionUpdateView showWeiGouMaiViewWithContent:weiGouMai];
+    [GlobalCommon addMaskView];
+    __weak __typeof(updateView)wupdateView = updateView;
+    updateView.versionUpdateBlock = ^(BOOL isUpdate){
+        
+        if(isUpdate){
+            UITabBarController *main = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
+            main.selectedIndex = 2;
+            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+            window.rootViewController = main;
+        }
+        
+        [GlobalCommon removeMaskView];
+        [wupdateView removeFromSuperview];
+    };
+    [[UIApplication sharedApplication].keyWindow addSubview:updateView];
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {

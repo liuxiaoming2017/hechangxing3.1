@@ -523,8 +523,7 @@
 {
     
     if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还不是会员" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-        [av show];
+        [self weiGouMaiMessage];
         return;
     }
     
@@ -720,8 +719,7 @@
     if ([model.type isEqualToString:@"REPORT"] ) {
         
         if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
-            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还不是会员" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-            [av show];
+            [self weiGouMaiMessage];
             return;
         }
         
@@ -776,8 +774,7 @@
     if (model.quarter != nil && ![model.quarter isKindOfClass:[NSNull class]]&&model.quarter.length != 0) {
         
         if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
-            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还不是会员" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-            [av show];
+            [self weiGouMaiMessage];
             return;
         }
         
@@ -807,6 +804,26 @@
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
+
+- (void)weiGouMaiMessage
+{
+    VersionUpdateView *updateView = [VersionUpdateView showWeiGouMaiViewWithContent:weiGouMai];
+    [GlobalCommon addMaskView];
+    __weak __typeof(updateView)wupdateView = updateView;
+    updateView.versionUpdateBlock = ^(BOOL isUpdate){
+        
+        if(isUpdate){
+            UITabBarController *main = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
+            main.selectedIndex = 2;
+            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+            window.rootViewController = main;
+        }
+        
+        [GlobalCommon removeMaskView];
+        [wupdateView removeFromSuperview];
+    };
+    [[UIApplication sharedApplication].keyWindow addSubview:updateView];
 }
 
 - (ArchivesController *)viewController

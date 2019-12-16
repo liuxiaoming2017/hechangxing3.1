@@ -16,6 +16,8 @@
 #import "WriteListController.h"
 #import "QuestionListController.h"
 #import "HCY_HomeImageModel.h"
+
+
 @implementation ReadOrWriteView
 
 -(instancetype)initWithFrame:(CGRect)frame
@@ -95,9 +97,9 @@
         case 100:
         {
             if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
-                UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还不是会员" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-                [av show];
-                return;
+
+                [self weiGouMaiMessage];
+
             }
             if([self isFirestClickThePageWithString:@"speak"]){
                 vc = [[MeridianIdentifierViewController alloc] init];
@@ -120,8 +122,7 @@
             }
             
             if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
-                UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还不是会员" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-                [av show];
+                [self weiGouMaiMessage];
             }else{
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.viewController.navigationController pushViewController:vc animated:YES];
@@ -145,6 +146,27 @@
             break;
     }
 }
+
+- (void)weiGouMaiMessage
+{
+    VersionUpdateView *updateView = [VersionUpdateView showWeiGouMaiViewWithContent:weiGouMai];
+    [GlobalCommon addMaskView];
+    __weak __typeof(updateView)wupdateView = updateView;
+    updateView.versionUpdateBlock = ^(BOOL isUpdate){
+        
+        if(isUpdate){
+            UITabBarController *main = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
+            main.selectedIndex = 2;
+            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+            window.rootViewController = main;
+        }
+        
+        [GlobalCommon removeMaskView];
+        [wupdateView removeFromSuperview];
+    };
+    [[UIApplication sharedApplication].keyWindow addSubview:updateView];
+}
+
 # pragma mark - 写按钮点击
 - (void)writeBtnBtnAction:(UIButton *)btn
 {

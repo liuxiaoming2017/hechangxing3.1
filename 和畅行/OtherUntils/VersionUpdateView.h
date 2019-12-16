@@ -16,4 +16,5 @@ typedef void(^VersionUpdateBlock)(BOOL isUpdate);
 
 + (instancetype)versionUpdateViewWithContent:(NSString *)content type:(NSString *)typeStr;
 
++ (instancetype)showWeiGouMaiViewWithContent:(NSString *)content;
 @end

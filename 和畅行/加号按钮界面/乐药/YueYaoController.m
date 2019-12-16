@@ -460,7 +460,7 @@
             cell.titleLabel.attributedText = salaryStr;
           
         }else{
-            cell.titleLabel.text = ModuleZW(model.title);
+            cell.titleLabel.text = model.title;
             NSLog(@"-------------------------%@",model.title);
         }
         cell.currentSelect = NO;
@@ -816,6 +816,7 @@
             }
         }
     }
+    
     kPlayer.model = model;
     kPlayer.playUrlStr = urlStr;
     [kPlayer play];

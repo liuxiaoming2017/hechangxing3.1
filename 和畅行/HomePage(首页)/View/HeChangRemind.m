@@ -163,8 +163,7 @@
     if([cell.typeLabel.text isEqualToString:ModuleZW(@"一说")]){
         
         if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
-            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还不是会员" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-            [av show];
+            [self weiGouMaiMessage];
             return;
         }
         if([self isFirestClickThePageWithString:@"speak"]){
@@ -177,8 +176,7 @@
         
     }else if ([cell.typeLabel.text isEqualToString:ModuleZW(@"一写")]){
         if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
-            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还不是会员" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-            [av show];
+            [self weiGouMaiMessage];
             return;
         }
         if([self isFirestClickThePageWithString:@"write"]){
@@ -232,6 +230,27 @@
         [self.tableView reloadData];
     }
 }
+
+- (void)weiGouMaiMessage
+{
+    VersionUpdateView *updateView = [VersionUpdateView showWeiGouMaiViewWithContent:weiGouMai];
+    [GlobalCommon addMaskView];
+    __weak __typeof(updateView)wupdateView = updateView;
+    updateView.versionUpdateBlock = ^(BOOL isUpdate){
+        
+        if(isUpdate){
+            UITabBarController *main = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
+            main.selectedIndex = 2;
+            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+            window.rootViewController = main;
+        }
+        
+        [GlobalCommon removeMaskView];
+        [wupdateView removeFromSuperview];
+    };
+    [[UIApplication sharedApplication].keyWindow addSubview:updateView];
+}
+
 
 - (void)updateViewWithData:(NSMutableArray *)arr withHeight:(CGFloat)height
 {

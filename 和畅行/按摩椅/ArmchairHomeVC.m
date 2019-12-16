@@ -766,7 +766,7 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     SayAndWriteController *vc = nil;
     
     if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
-        [self showAlertWarmMessage:@"您还不是会员"];
+        [self weiGouMaiMessage];
         return;
     }
     self.isHitSpeak = YES;

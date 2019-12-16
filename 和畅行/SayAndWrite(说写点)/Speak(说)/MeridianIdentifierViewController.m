@@ -14,10 +14,12 @@
 
 #import "CustomNavigationController.h"
 #import "LoginViewController.h"
+
 #import <AVFoundation/AVFoundation.h>
 
 #import "ResultSpeakController.h"
 #import "UIButton+BACountDown.h"
+
 
 #define MENU_POPOVER_FRAME  CGRectMake(8, 0, 140, 88)
 #define kTabsHeight 46.5
@@ -67,7 +69,7 @@
 /**soundCount*/
 @property (nonatomic,assign) CGFloat soundCount;
 @property (nonatomic,assign) BOOL isLound;
-
+@property (nonatomic,strong) AVAudioPlayer *player;
 
 @end
 
@@ -102,6 +104,10 @@
 
 }
 
+- (void)dealloc
+{
+    self.player = nil;
+}
 
 - (void)viewDidLoad {
     
@@ -112,6 +118,52 @@
     self.topView.backgroundColor = [UIColor clearColor];
     self.navTitleLabel.text = ModuleZW(@"经络功能状态评估");
     self.startTimeStr = [GlobalCommon getCurrentTimes];
+    if(FIRST_FLAG){
+        [self playTip];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    if (bianshiTime) {
+        [bianshiTime invalidate];
+    }
+    [self stopPlay];
+}
+
+- (void)playTip
+{
+    
+    if(kPlayer.playUrlStr != nil && kPlayer.playerState == 2){
+        [kPlayer stop];
+    }
+    NSString *urlStr = [[[NSBundle mainBundle] bundlePath] stringByAppendingString:@"/tip.mp3"];
+   // NSURL *url = [[NSBundle mainBundle] URLForResource:@"tip.mp3" withExtension:nil];
+    
+//    NSString *path = [ NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+//    NSString *folderPath = [path stringByAppendingPathComponent:@"musicCache"];
+//    folderPath = [folderPath stringByAppendingPathComponent:@"tip.mp3"];
+//    kPlayer.playUrlStr = folderPath;
+//    [kPlayer play];
+    
+    //NSError *error;
+    //self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+    
+    NSError *playerIninError;
+    NSData *audioData = [NSData dataWithContentsOfFile:urlStr];
+    self.player = [[AVAudioPlayer alloc] initWithData:audioData fileTypeHint:AVFileTypeMPEGLayer3
+                                            error:&playerIninError];
+    
+    [self.player prepareToPlay];
+    [self.player play];
+}
+
+- (void)stopPlay
+{
+    if([self.player isPlaying]){
+        [self.player stop];
+    }
 }
 
 - (void)setupContentView
@@ -205,6 +257,7 @@
     [self.view addSubview:button];
     
     timeNStager=0;
+    
     bianshiTime=[NSTimer scheduledTimerWithTimeInterval:0.6f target:self selector:@selector(runTimeBianshi) userInfo:nil repeats:YES];
     [bianshiTime setFireDate:[NSDate distantFuture]];
     
@@ -303,6 +356,8 @@
         __weak UIButton *btn = sender;
         __weak typeof(self) blockSelf = self;
         [btn setImage:nil forState:UIControlStateNormal];
+        
+        [self stopPlay];
         
         if(kPlayer.playerState == 2){
             [kPlayer stop];
