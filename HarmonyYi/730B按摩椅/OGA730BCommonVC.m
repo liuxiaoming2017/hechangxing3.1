@@ -34,10 +34,10 @@
 - (NSArray *)loadHomeData
 {
     NSArray *arr2 = @[
-                      @{@"name":@"Feet&Calves",@"command":k730Command_FeetCalves},
+                      @{@"name":@"Shopping Goer",@"command":k730Command_FeetCalves},
                       @{@"name":@"Thai",@"command":k730Command_Thai},
-                      @{@"name":@"Japanese",@"command":k730Command_Japanese},
-                      @{@"name":@"Gentle",@"command":k730Command_Gentle},
+                      @{@"name":@"Kidney Care",@"command":k730Command_Japanese},
+                      @{@"name":@"Computer Worker",@"command":k730Command_Gentle},
                       @{@"name":@"Vigorous",@"command":k730Command_Vigorous},
                       @{@"name":@"Chair Doctor",@"command":k730Command_DetectionAche},
                       @{@"name":@"Custom",@"command":@""},
@@ -53,12 +53,12 @@
     NSArray *arr2 = @[
                       @{@"name":@"Relax",@"command":k730Command_Relax},
                       @{@"name":@"Stretch",@"command":k730Command_Stretch},
-                      @{@"name":@"Upper Back",@"command":k730Command_UpperBack},
-                      @{@"name":@"Chinese",@"command":k730Command_Chinese},
-                      @{@"name":@"Altheletic",@"command":k730Command_Altheltic},
+                      @{@"name":@"Neck",@"command":k730Command_UpperBack},
+                      @{@"name":@"Liver Care",@"command":k730Command_Chinese},
+                      @{@"name":@"Phubbing",@"command":k730Command_Altheltic},
                       @{@"name":@"Lower Back",@"command":k730Command_LowerBack},
-                      @{@"name":@"Neck&Shoulder",@"command":k730Command_NeckShoulder},
-                      @{@"name":@"Balinese",@"command":k730Command_Balinese},
+                      @{@"name":@"Driver",@"command":k730Command_NeckShoulder},
+                      @{@"name":@"Stomach Care",@"command":k730Command_Balinese},
                       ];
     NSArray *arr = [ArmChairModel mj_objectArrayWithKeyValuesArray:arr2];
     return arr;
@@ -100,7 +100,7 @@
                       @{@"name":@"Shoulder",@"command":k730Command_Warm},
                       @{@"name":@"Back",@"command":k730Command_Warm},//UpperBack
                       @{@"name":@"Waist",@"command":k730Command_Warm},//LowerBack
-                      @{@"name":@"UpperBody",@"command":k730Command_Warm} //WholeBack
+                      @{@"name":@"Neck",@"command":k730Command_Warm} //WholeBack
                       ];
     NSArray *arr3 = @[
                       @{@"name":@"Shiatsu",@"command":k730Command_Warm},//指压

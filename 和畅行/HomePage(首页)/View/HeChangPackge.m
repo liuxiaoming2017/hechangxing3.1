@@ -165,7 +165,7 @@
         
     }else{
         [MemberUserShance shareOnce].isOpenPackge = NO;
-        [self updateImageView];
+//        [self updateImageView];
         return;
     }
     NSString *bingTaiStr = @"";

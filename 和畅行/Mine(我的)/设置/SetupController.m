@@ -108,8 +108,18 @@
                     fontSizeLabel.text = ModuleZW(@"小");
                 }
                 self.fontSizeLabel = fontSizeLabel;
-                
-                
+            }
+            
+            if ( i == 3 ) {
+                NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                CFShow(CFBridgingRetain(infoDictionary));
+                NSString *versionStr = [infoDictionary objectForKey:@"CFBundleShortVersionString"];//版本
+                UILabel *fontSizeLabel = [[UILabel alloc]initWithFrame:CGRectMake(bottomButton.width -Adapter(200), 0, Adapter(170), ScreenWidth*0.133)];
+                fontSizeLabel.textAlignment = NSTextAlignmentRight;
+                fontSizeLabel.font = [UIFont systemFontOfSize:13];
+                fontSizeLabel.textColor = RGB_TextGray;
+                fontSizeLabel.text = versionStr;
+                [bottomButton addSubview:fontSizeLabel];
             }
             [[bottomButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
                 self.isPush = YES;

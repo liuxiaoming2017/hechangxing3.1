@@ -243,7 +243,7 @@
 
 
 //============================= 加号 ==================================
-"音乐"                                                              = "Treatment Music";
+"乐药"                                                              = "Treatment Music";
 "运动"                                                              = "Exercise";
 "艾灸"                                                              = "Moxibustion";
 "电话"                                                              = "Tel";
@@ -524,7 +524,6 @@
 "您已超90天未进行体质状态评估"        ="You haven’t tested your constitution for over 90 days ";
 "健康保险"        ="Health insurance";
 "昆仑保险"        ="Kunlun insurance";
-"樂藥"        ="Treatment music";
 "体质体检报告"        ="Constitution test report";
 "脏腑体检报告"        ="Zang-fu organs test report";
 "经络体检报告"        ="Meridian test report";
@@ -595,7 +594,6 @@
 "支付结果确认中"        ="Payment result confirmation";
 "支付失败"        ="Payment failed";
 "预约挂号"        ="Appointment ";
-"乐药"        ="Treatment music";
 "预约视频"        ="Appointment video";
 "第三方支付"        ="Third party payment ";
 "未安装微信"        ="WeChat not installed";

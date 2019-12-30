@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IJoouMainVC : NavBarViewController
-
+@property (nonatomic,copy) NSString *connectState;//蓝牙连接状态
 @end
 
 NS_ASSUME_NONNULL_END

@@ -13,6 +13,9 @@
 #import "SugerViewController.h"
 #import "SGScanningQRCodeVC.h"
 #import "ArmchairThemeVC.h"
+#if !FIRST_FLAG
+#import "IjoouSetViewController.h"
+#endif
 
 @interface CustomNavigationController ()<UIGestureRecognizerDelegate>
 
@@ -62,6 +65,13 @@
         if([vc isKindOfClass:[BloodPressureNonDeviceViewController class]]||[vc isKindOfClass:[SugerViewController class]]||[vc isKindOfClass:[SGScanningQRCodeVC class]]||[vc isKindOfClass:[ArmchairThemeVC class]]){
             return NO;
         }
+        
+#if !FIRST_FLAG
+        if([vc isKindOfClass:[IjoouSetViewController class]]){
+            return NO;
+        }
+        
+#endif
         
     }
     

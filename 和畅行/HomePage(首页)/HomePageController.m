@@ -308,7 +308,7 @@
     }
     
     if (!self.readWriteView){
-        
+        _havePackage = YES;
         self.readWriteView = [[ReadOrWriteView alloc] initWithFrame:CGRectMake(0, _havePackage?self.packgeView.bottom+Adapter(5):Adapter(5), ScreenWidth, imageHeight+Adapter(10))];
     
         [self.bgScrollView addSubview:self.readWriteView];
@@ -332,7 +332,7 @@
     }
     
     
-    
+    _havePackage = YES;
     self.readWriteView.frame = CGRectMake(self.readWriteView.left, _havePackage?self.packgeView.bottom-Adapter(65):Adapter(5), self.readWriteView.width, self.readWriteView.height);
 
     if(_isActivity){
@@ -388,6 +388,7 @@
 
 - (void)updateViewFrame
 {
+    _havePackage= YES;
     self.readWriteView.frame = CGRectMake(self.readWriteView.left, _havePackage?self.packgeView.bottom-Adapter(65):Adapter(5), self.readWriteView.width, self.readWriteView.height);
     if(self.activityImage){
         self.activityImage.frame = CGRectMake(self.activityImage.left, self.readWriteView.bottom+Adapter(10), self.activityImage.width, self.activityImage.height);
@@ -517,7 +518,7 @@
                         }
                     }
                 }else{ //未做检测，不显示和畅包
-                    self->_havePackage = NO;
+                    self->_havePackage = YES;
                 }
                 //本地没有缓存,则在这里展示页面,有缓存在上个接口展示页面
                 if(![weakSelf getLocalPackageContent22]){
@@ -528,8 +529,8 @@
                 if(self->_havePackage){
                     [weakSelf.packgeView changePackgeTypeWithStatus:status withXingStr:[[response objectForKey:@"data"] objectForKey:@"name"]];
                 }
-                
-                //保存和畅包状态,以便下次打开应用直接读取缓存
+//
+//                //保存和畅包状态,以便下次打开应用直接读取缓存
                 NSString *packageStr = [NSString stringWithFormat:@"%ld&&%@",(long)status,[[response objectForKey:@"data"] objectForKey:@"name"]];
                 [[NSUserDefaults standardUserDefaults]setValue: packageStr forKey:[NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum]];
                 [[NSUserDefaults standardUserDefaults] synchronize];
@@ -545,7 +546,7 @@
     } failureBlock:^(NSError *error) {
         [weakSelf requestRemindNetWork];
         
-        self->_havePackage = NO;
+        self->_havePackage = YES;
         if(![self getLocalPackageContent]){
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf showHomePackageView];
@@ -640,7 +641,7 @@
         if([str1 integerValue]>=0 && [str1 integerValue]<=11){
             _havePackage = YES;
         }else{
-            _havePackage = NO;
+            _havePackage = YES;
         }
         return YES;
     }
