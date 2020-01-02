@@ -72,14 +72,13 @@
     self.preBtn.hidden = NO;
     self.leftBtn.hidden = YES;
     self.canreload = 0;
-//    [BCBluetoothManager shared].delegate = self;
     self.manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
     self.navTitleLabel.text = @"ijoou";
     self.startView = [[UIView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight - kNavBarHeight)];
     self.startView.backgroundColor = RGB_AppWhite;
     [self.view addSubview:self.startView];
 
-    UILabel *startLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(30), Adapter(40), ScreenWidth - Adapter(60), Adapter(40))];
+    UILabel *startLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(30), Adapter(40), ScreenWidth - Adapter(60), Adapter(50))];
     startLabel.numberOfLines = 2;
     startLabel.textAlignment = NSTextAlignmentCenter;
     startLabel.text = @"Welcome to ijoou and start your moxibustion trip!";
@@ -105,8 +104,12 @@
 
 # pragma mark - 布局展示搜索结果页面
 -(void)layoutShowView{
+    
+   
+    
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showFailView) object:nil];
     self.showView = [[UIView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight - kNavBarHeight)];
+    self.showView.hidden = YES;
     self.showView.backgroundColor = RGB_AppWhite;
     [self.view addSubview:self.showView];
     
@@ -171,6 +174,38 @@
     setAllBT.hidden = YES;
     [self.showView addSubview:setAllBT];
     self.setAllBT = setAllBT;
+    
+    
+    int deInt = 0;
+    for (int i = 0; i < self.dataArr.count; i++) {
+        BCDeviceModel *dataModel = self.dataArr[i];
+        for (int j = 0; j < self.bindDeviceArray.count; j++) {
+            if ([[dataModel.BCDevice.identifier UUIDString] isEqualToString:self.bindDeviceArray[j]]) {
+                deInt++;
+            }
+        }
+    }
+    
+    if (deInt != self.dataArr.count) {
+        [self.collectionV reloadData];
+        self.collectionV.hidden = NO;
+        self.findView.hidden = YES;
+        self.showView.hidden = NO;
+    }
+    __weak typeof(self) weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5* NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        if (deInt == weakSelf.dataArr.count) {
+            [GlobalCommon showMBHudWithView:weakSelf.view];
+            for (int i  = 0 ; i < weakSelf.dataArr.count; i++) {
+                [BCBluetoothManager shared].delegate = self;
+                [[BCBluetoothManager shared] authenticationDevice:weakSelf.dataArr[i]];
+            }
+        }
+        
+    });
+    
+    
   
 }
 
@@ -178,7 +213,7 @@
 # pragma  mark - 全部设置点击事件
 -(void)setAllAction {
     if (self.dataArr.count == 0) {
-        [GlobalCommon showMessage2:@"连接错误 请重新连接" duration2:2.0];
+        [GlobalCommon showMessage2:@"Connection error,please reconnect" duration2:2.0];
         [self findCancel:[UIButton buttonWithType:(UIButtonTypeCustom)]];
         return;
     }
@@ -243,9 +278,10 @@
         if (self.unbindBT.hidden == YES) {
             if (self.chooseArray > 0) {
                 [GlobalCommon showMBHudWithView:self.view];
+                [BCBluetoothManager shared].delegate = self;
                 NSLog(@"%@",_chooseArray);
                 for (int i  = 0 ; i < self.chooseArray.count; i++) {
-                    [[BCBluetoothManager shared] bindDevice:self.chooseArray[i]];
+                    [[BCBluetoothManager shared] authenticationDevice:self.chooseArray[i]];
                 }
                 [_dataArr removeAllObjects];
                 _dataArr = [NSMutableArray arrayWithArray:self.chooseArray];
@@ -274,13 +310,16 @@
                 }
             }
             [self.chooseArray removeAllObjects];
-            if (self.dataArr.count >0) {
-                [self.collectionV reloadData];
-            }else{
-                [self findCancel:[UIButton buttonWithType:(UIButtonTypeCustom)]];
-                self.showType = 0;
-            }
-            [GlobalCommon hideMBHudWithView:self.view];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                if (self.dataArr.count >0) {
+                    [self.collectionV reloadData];
+                }else{
+                    [self findCancel:[UIButton buttonWithType:(UIButtonTypeCustom)]];
+                    self.showType = 0;
+                }
+                [GlobalCommon hideMBHudWithView:self.view];
+            });
+           
             
         }
     }
@@ -289,22 +328,25 @@
 # pragma mark - 开始搜索蓝牙设备
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary<NSString *, id> *)advertisementData RSSI:(NSNumber *)RSSI
 {
-    
     BOOL isCan = [[BCBluetoothManager shared] scanDevice:peripheral withAdvertisementData:advertisementData rssi:RSSI];
     if (isCan) {
         BOOL isCanbind = [[BCBluetoothManager shared] scanDeviceIsBind:peripheral withAdvertisementData:advertisementData];
         if (!isCanbind) {
             if (![_peripheralArr containsObject:peripheral]) {
                 [_peripheralArr addObject:peripheral];
-                [self.manager connectPeripheral:peripheral options:nil];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.manager connectPeripheral:peripheral options:nil];
+                });
+                
             }
-            NSLog(@"-==-=-=-=-=-=-=-=-=-=-=-=-%@\n -------------%ld",peripheral.name , (long)peripheral.state);
         } else {
             for (int i = 0; i<_bindDeviceArray.count; i++) {
                 if ([_bindDeviceArray[i]  isEqualToString:[peripheral.identifier UUIDString]]) {
                     if (![_peripheralArr containsObject:peripheral]) {
                         [_peripheralArr addObject:peripheral];
-                        [self.manager connectPeripheral:peripheral options:nil];
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            [self.manager connectPeripheral:peripheral options:nil];
+                        });
                     }
                 }
             }
@@ -312,7 +354,7 @@
     }
 }
 
-# pragma mark - 设备鉴权
+# pragma mark - 设备已连接
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
 {
     BCDeviceModel *model = [[BCDeviceModel alloc] initWithDevice:peripheral];
@@ -326,45 +368,15 @@
     }
     [self.dataArr addObject:model];
     self.canreload++;
+    [self.manager stopScan];
     NSLog(@"--------------------------%d   -----------------------------------%d",self.canreload,(int)self.peripheralArr.count);
     if (self.canreload == (int)_peripheralArr.count) {
-        __weak typeof(self) weakSelf = self;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2* NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            int deInt = 0;
-            for (int i = 0; i < weakSelf.dataArr.count; i++) {
-                BCDeviceModel *dataModel = weakSelf.dataArr[i];
-                for (int j = 0; j < weakSelf.bindDeviceArray.count; j++) {
-                    if ([[dataModel.BCDevice.identifier UUIDString] isEqualToString:weakSelf.bindDeviceArray[j]]) {
-                        deInt++;
-                    }
-                }
-            }
-            if (deInt == weakSelf.dataArr.count) {
-                [GlobalCommon showMBHudWithView:self.view];
-                for (int i  = 0 ; i < weakSelf.dataArr.count; i++) {
-                    [[BCBluetoothManager shared] bindDevice:weakSelf.dataArr[i]];
-                }
-            }
-           
-        });
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self layoutShowView];
-            self.canreload = 0;
-            self.collectionV.hidden = NO;
-            [self.manager stopScan];
-            self.ijoouRightBT.hidden = YES;
-            self.findView.hidden = YES;
-            self.rightBtn.hidden = YES;
-            [self.timer invalidate];
-        });
-        
+        [self layoutShowView];
+        self.canreload = 0;
+        self.ijoouRightBT.hidden = YES;
+        self.rightBtn.hidden = YES;
+        [self.timer invalidate];
     }
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [BCBluetoothManager shared].delegate = self;
-        [[BCBluetoothManager shared] authenticationDevice:model];
-    });
 }
 
 //连接蓝牙设备失败
@@ -401,7 +413,6 @@
         self.showLabel.hidden = YES;
         self.showType = 1;
         self.unbindBT.hidden = NO;
-        [self.collectionV reloadData];
     }
 }
 # pragma mark - 开始搜索点击事件
@@ -480,7 +491,7 @@
     [self.topView addSubview:self.unbindBT];
     
    
-    UILabel *findLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(30), ScreenHeight/2, ScreenWidth - Adapter(60), Adapter(40))];
+    UILabel *findLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(30), ScreenHeight/2, ScreenWidth - Adapter(60), Adapter(50))];
     findLabel.numberOfLines = 2;
     findLabel.textAlignment = NSTextAlignmentCenter;
     findLabel.text = @"ijoou is being searched, please keep bluetooth open";
@@ -596,7 +607,7 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     if (self.showType == 1) {
         cell.voltameterView.batteryView.width = (model.voltameter*(cell.voltameterView.frame.size.width-cell.voltameterView.lineW*2))/100;
         cell.timeLabel.text =  [NSString stringWithFormat:@"%ldmin",(long)model.residueDuration];
-        cell.temperatureLabel.text =[NSString stringWithFormat:@"%ld℃",(long)model.temperature];
+        cell.temperatureLabel.text =[NSString stringWithFormat:@"%ld℃",(long)(model.temperature+1)];
         if (self.cancelBT.hidden == NO) {
             cell.voltameterView.hidden = YES;
             cell.selectedBT.hidden = NO;
@@ -685,7 +696,6 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
 - (void)didUpdateDatasWithDevice:(BCDeviceModel *)device statusCode:(BCBluetoothOperatestatusCode)code feedBackType:(BCBluetoothOperateFeedbackType)type
 {
     
-    NSLog(@"-=-=-=-=-=-=-=-=-=-=-=-=-=-=- 接受 代理 -=-=-=-=-=-------------");
     switch (type) {
             //获取设备基本信息
         case BCBluetoothOperateFeedbackTypeInfo:
@@ -713,6 +723,11 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
                 [[NSUserDefaults standardUserDefaults] synchronize];
             }
             
+            if (self.showView.hidden == YES) {
+                 self.collectionV.hidden = NO;;
+                self.showView.hidden = NO;
+            }
+            
             [[BCBluetoothManager shared] turnOnDevice:device];
             [self openDevice:device];
             for (int i = 0; i < self.dataArr.count; i++) {
@@ -733,23 +748,15 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
             //设备权限鉴定
         case BCBluetoothOperateFeedbackTypeAuthentication:
             if (code == BCBluetoothOperatestatusCodeAuthenticationSuccess) {
-//                for (int i = 0; i < _dataArr.count; i++) {
-//                    BCDeviceModel *model = _dataArr[i];
-//                    if (![model.deviceID isEqualToString:device.deviceID]) {
-//                        [_dataArr addObject:model];
-//                    }
-//                }
-//                [_collectionV reloadData];
-                
+                [[BCBluetoothManager shared] bindDevice:device];
                 NSLog(@"设备权限鉴定成功");
             }else{
-//                for (int i = 0; i < _dataArr.count; i++) {
-//                    BCDeviceModel *model = _dataArr[i];
-//                    if ([model.deviceID isEqualToString:device.deviceID]) {
-//                        [_dataArr removeObject:model];
-//                    }
-//                }
-//                [_collectionV reloadData];
+                for (int i = 0; i < _dataArr.count; i++) {
+                    BCDeviceModel *model = _dataArr[i];
+                    if ([model.deviceID isEqualToString:device.deviceID]) {
+                        [_dataArr removeObject:model];
+                    }
+                }
                 NSLog(@"设备权限鉴定失败");
             }
             break;
@@ -781,13 +788,18 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     }else{
         self.startView.hidden = YES;
     }
-    if (_dataArr.count > 0) {
-        [self.dataArr removeAllObjects];
-        for (int i = 0 ; i<_dataArr.count; i++) {
-            BCDeviceModel *model = _dataArr[i];
-            [[BCBluetoothManager shared] turnOffDevice:model];
-        }
+   
+    if (_peripheralArr.count>0) {
+        __weak typeof(self) weakSelf = self;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            for (int i = 0; i < weakSelf.peripheralArr.count; i++) {
+                [weakSelf.manager cancelPeripheralConnection:weakSelf.peripheralArr[i]];
+            }
+            [weakSelf.peripheralArr removeAllObjects];
+        });
+        
     }
+    self.canreload = 0;
     [self.manager stopScan];
     self.showView.hidden = YES;
     self.ijoouRightBT.hidden = YES;

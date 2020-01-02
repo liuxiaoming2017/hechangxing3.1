@@ -35,7 +35,7 @@
     [self addSubview:self.imageV];
     
     self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0 ,self.imageV.width, self.imageV.height)];
-    self.titleLabel.font = [UIFont systemFontOfSize:25];
+    self.titleLabel.font = [UIFont systemFontOfSize:25/[UserShareOnce shareOnce].multipleFontSize];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.textColor = RGB_ButtonBlue;
     self.titleLabel.text = @"A1";
@@ -57,7 +57,7 @@
     NSArray *titleArray = @[@"30min",@"43℃"];
     for (int i = 0; i<2; i++) {
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake((backImageView.width/2+ Adapter(5))*i, self.imageV.bottom, backImageView.width/2- Adapter(5), backImageView.width/3-Adapter(10))];
-        label.font = [UIFont systemFontOfSize:13];
+        label.font = [UIFont systemFontOfSize:13/[UserShareOnce shareOnce].multipleFontSize];
         label.text = titleArray[i];
         [self addSubview:label];
         if (i==0) {

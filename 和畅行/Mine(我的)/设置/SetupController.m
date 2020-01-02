@@ -310,6 +310,9 @@
             NSInteger isUpdate = [[dic objectForKey:@"isUpdate"] integerValue];
             if(isUpdate == 1){
                 NSString *downUrl = @"https://itunes.apple.com/cn/app/id1440487968";
+                if ([UserShareOnce shareOnce].languageType) {
+                  downUrl  = @"https://apps.apple.com/cn/app/harmonyyi/id1477581955";
+                }
                 if([[UserShareOnce shareOnce].username isEqualToString:@"13665541112"] || [[UserShareOnce shareOnce].username isEqualToString:@"18163865881"]){
                     return ;
                 }

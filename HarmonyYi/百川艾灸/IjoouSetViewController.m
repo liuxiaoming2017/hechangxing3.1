@@ -90,7 +90,7 @@
     
     UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, nameView.width, nameView.height)];
     nameLabel.text = @"";
-    nameLabel.font = [UIFont systemFontOfSize:32];
+    nameLabel.font = [UIFont systemFontOfSize:32/[UserShareOnce shareOnce].multipleFontSize];
     nameLabel.textAlignment = NSTextAlignmentCenter;
     nameLabel.layer.cornerRadius = nameLabel.width/2;
     nameLabel.layer.masksToBounds = YES;
@@ -116,8 +116,8 @@
         [self.view addSubview:righLabel];
         
         UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(Adapter(30), leftLabel.bottom , ScreenWidth - Adapter(60), Adapter(35))];
-        [slider setThumbImage:[[UIImage imageNamed:@"ijoou滑块"]transformWidth:25 height:25] forState:UIControlStateHighlighted];
-        [slider setThumbImage:[[UIImage imageNamed:@"ijoou滑块"]transformWidth:25 height:25] forState:UIControlStateNormal];
+        [slider setThumbImage:[[UIImage imageNamed:@"ijoou滑块"]transformWidth:Adapter(25) height:Adapter(25)] forState:UIControlStateHighlighted];
+        [slider setThumbImage:[[UIImage imageNamed:@"ijoou滑块"]transformWidth:Adapter(25) height:Adapter(25)] forState:UIControlStateNormal];
         [slider setMinimumTrackTintColor:RGB_ButtonBlue];          //左边轨道的颜色
         [slider setMaximumTrackTintColor:RGB_ButtonBlue];
         [self.view addSubview:slider];
@@ -221,7 +221,23 @@
     }else{
         for (int i = 0; i < _chooesArray.count; i++) {
             BCDeviceModel *model = _chooesArray[i];
-            [[BCBluetoothManager shared] setDeviceTempreture: (NSInteger)( (int)_temperatureSlider.value-3)/0.76 withDevice:model];
+            int i =  (int)_temperatureSlider.value;
+            if (i<45) {
+                i = i + 8;
+            }else if (i>44&&i<48){
+                i = i + 9;
+            }else if (i>47&&i<51){
+                i = i + 10;
+            }else if (i>50&&i<54){
+                i = i + 11;
+            }else if (i>53&&i<57){
+                i = i + 12;
+            }else if (i>56&&i<60){
+                i = i + 13;
+            }else{
+                i = i + 14;
+            }
+            [[BCBluetoothManager shared] setDeviceTempreture:i withDevice:model];
             [[BCBluetoothManager shared] setDeviceTime:_timeSlider.value withDevice:model];
         }
     
@@ -338,7 +354,7 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     BCDeviceModel *model =   _dataArray[indexPath.row];
     cell.titleLabel.text =model.deviceName;
     cell.timeLabel.text =  [NSString stringWithFormat:@"%ldmin",(long)model.residueDuration];
-    cell.temperatureLabel.text =[NSString stringWithFormat:@"%ld℃",(long)model.temperature];
+    cell.temperatureLabel.text =[NSString stringWithFormat:@"%ld℃",(long)(model.temperature+1)];
     cell.isChooes = NO;
     for (int i = 0; i<_chooesArray.count; i++) {
         BCDeviceModel *chooseModel =   _chooesArray[i];
