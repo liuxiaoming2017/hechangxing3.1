@@ -301,27 +301,15 @@
 # pragma mark - 已购买乐药列表
 -(void)GetMusicResourceslist
 {
-//    [GlobalCommon showMBHudWithView:self.view];
-//    NSString *UrlPre=URL_PRE;
-//    NSString *aUrlle= [NSString stringWithFormat:@"%@/member/resources/list/%@.jhtml",UrlPre,[UserShareOnce shareOnce].uid];
-//    aUrlle = [aUrlle stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-//    NSURL *url = [NSURL URLWithString:aUrlle];
-//
-//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-//    NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-//    NSString *headStr = [NSString stringWithFormat:@"ios_hcy-oem-%@",nowVersion];
-//    //[request addRequestHeader:@"version" value:@"ios_jlsl-yh-3"]; //ios_hcy-oem-3.1.3
-//    [request addRequestHeader:@"version" value:headStr];
-//    [request addRequestHeader:@"Cookie" value:[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]];
-//    if([UserShareOnce shareOnce].languageType){
-//        [request addRequestHeader:@"language" value:[UserShareOnce shareOnce].languageType];
-//    }
-//    [request setRequestMethod:@"GET"];
-//    [request setTimeOutSeconds:20];
-//    [request setDelegate:self];
-//    [request setDidFailSelector:@selector(requestResourceslistErrorw:)];
-//    [request setDidFinishSelector:@selector(requestResourceslistCompletedw:)];
-//    [request startAsynchronous];
+    
+    if(!FIRST_FLAG){ //英文版处理
+        NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
+        if([jlbsName isEqualToString:@""] || jlbsName==nil ){
+            jlbsName = @"JLBS-S4";
+        }
+        [self requestYueyaoListWithType:jlbsName];
+        return;
+    }
     
     [GlobalCommon showMBHudWithView:self.view];
     NSString *urlStr= [NSString stringWithFormat:@"member/resources/list/%@.jhtml",[UserShareOnce shareOnce].uid];
@@ -334,6 +322,47 @@
     }];
 }
 
+#pragma mark - 获取乐药列表
+- (void)requestYueyaoListWithType:(NSString *)typeStr
+{
+    
+    NSString *aUrlle= [NSString stringWithFormat:@"resources/listBySubject.jhtml?subjectSn=%@&mediaType=%@",typeStr,@"audio"];
+    [GlobalCommon showMBHudWithView:self.view];
+    __weak typeof(self) weakSelf = self;
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:aUrlle parameters:nil successBlock:^(id response) {
+        [GlobalCommon hideMBHudWithView:self.view];
+        id status=[response objectForKey:@"status"];
+        if([status intValue] == 100){
+            NSArray *arr = [response objectForKey:@"data"];
+            NSMutableArray *arr2 = [NSMutableArray arrayWithCapacity:0];
+            for(NSInteger i =0;i<arr.count;i++){
+                NSDictionary *dic = [arr objectAtIndex:i];
+                SongListModel *model = [[SongListModel alloc] init];
+                model.idStr = [NSString stringWithFormat:@"%@",[dic objectForKey:@"id"]];
+                model.productId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productId"]];
+                if([[dic objectForKey:@"price"] isKindOfClass:[NSNull class]]){
+                    model.price = 0;
+                }else{
+                    model.price = [[dic objectForKey:@"price"] floatValue];
+                }
+                model.status = [dic objectForKey:@"status"];
+                model.title = [dic objectForKey:@"name"];
+                model.source = [[[dic objectForKey:@"resourcesWarehouses"] objectAtIndex:0] objectForKey:@"source"];
+                model.subjectSn = typeStr;
+                [arr2 addObject:model];
+                
+            }
+            weakSelf.yueYaoArray = arr2;
+        }else{
+            NSString *str = [response objectForKey:@"data"];
+            [weakSelf showAlertWarmMessage:str];
+            return;
+        }
+    } failureBlock:^(NSError *error) {
+        [GlobalCommon hideMBHudWithView:weakSelf.view];
+        [weakSelf showAlertWarmMessage:requestErrorMessage];
+    }];
+}
 
 - (void)requestResourceslistCompletedw:(NSDictionary *)dic
 {
