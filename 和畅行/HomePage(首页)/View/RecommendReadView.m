@@ -220,11 +220,6 @@
 - (void)checkHaveUpdateWithType:(NSString *)typeStr
 {
     
-//    if(!isProduct){
-//        [[PgyUpdateManager sharedPgyManager] checkUpdate];
-//        return;
-//    }
-    
     //ios_hcy-oem-1.0 hcy_android_oem-oem-1.0
     NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     NSString *headStr = [NSString stringWithFormat:@"ios_hcy-oem-%@",nowVersion];

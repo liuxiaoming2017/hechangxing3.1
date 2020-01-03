@@ -106,7 +106,10 @@
 
 - (void)dealloc
 {
-    self.player = nil;
+    if(!FIRST_FLAG){
+        self.player = nil;
+    }
+    
 }
 
 - (void)viewDidLoad {
@@ -118,7 +121,7 @@
     self.topView.backgroundColor = [UIColor clearColor];
     self.navTitleLabel.text = ModuleZW(@"经络功能状态评估");
     self.startTimeStr = [GlobalCommon getCurrentTimes];
-    if(FIRST_FLAG){
+    if(!FIRST_FLAG){
         [self playTip];
     }
 }
