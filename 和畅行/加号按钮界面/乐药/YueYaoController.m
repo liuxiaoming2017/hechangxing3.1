@@ -127,9 +127,9 @@
     self.isPlaying = NO;
     self.isFirstIn = YES;
     if(self.isYueLuoyi){
-        self.navTitleLabel.text = @"樂絡怡";
+        self.navTitleLabel.text = @"乐药怡";
     }else{
-        self.navTitleLabel.text = @"樂藥";
+        self.navTitleLabel.text = @"乐药";
     }
     
     
@@ -1256,7 +1256,6 @@
     for (CBCharacteristic *c in service.characteristics)
     {
         NSLog(@"\n>>>\t特征UUID FOUND(in 服务UUID:%@): %@ (data:%@)",service.UUID.description,c.UUID,c.UUID.data);
-       
         
         //假如你和硬件商量好了，某个UUID时写，某个读的，那就不用判断啦
         

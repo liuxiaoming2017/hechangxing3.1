@@ -29,7 +29,7 @@
        _btnArray = [[NSMutableArray alloc]init];
        
         NSArray *imagesData = @[@"yinyue",@"yundong",@"aijiu",@"dianhua",@"shipin",@"xueya",@"liuyan",@"anmoyi",@"erxue"];
-        NSArray *imagesNameData = @[ModuleZW(@"音乐"),ModuleZW(@"运动"),
+        NSArray *imagesNameData = @[ModuleZW(@"乐药"),ModuleZW(@"运动"),
                                                             ModuleZW(@"艾灸"),ModuleZW(@"电话"),
                                                             ModuleZW(@"视频"),ModuleZW(@"血压"),
                                                             ModuleZW(@"图文"),ModuleZW(@"推拿"),ModuleZW(@"耳穴")];

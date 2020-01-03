@@ -521,7 +521,7 @@
     NSString *iconStr = @"和畅依";
     if(self.model.subjectSn){
         NSString *nameStr = [GlobalCommon getStringWithSubjectSn:self.model.subjectSn];
-      NSString  *titleStr = [nameStr substringFromIndex:nameStr.length-1];
+        NSString  *titleStr = [nameStr substringFromIndex:nameStr.length-1];
         iconStr = [NSString stringWithFormat:@"%@icon",titleStr];
     }
     NSLog(@"%@",self.model.subjectSn);

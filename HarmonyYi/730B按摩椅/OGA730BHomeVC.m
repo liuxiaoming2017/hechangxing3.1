@@ -426,6 +426,9 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     ArmChairModel *model = [self.dataArr objectAtIndex:indexPath.row];
     cell.imageV.image = [UIImage imageNamed:model.name];
     cell.titleLabel.text = model.name;
+    if (model.name.length > 12 &&ISPaid) {
+        cell.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:12*[UserShareOnce shareOnce].padSizeFloat];
+    }
     return cell;
 }
 

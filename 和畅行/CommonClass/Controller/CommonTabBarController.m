@@ -117,7 +117,20 @@
                 }
             }
             
-             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
+            if ([UserShareOnce shareOnce].languageType) {
+                UIAlertController *alerVC = [UIAlertController alertControllerWithTitle:ModuleZW(@"温馨提示") message:ModuleZW(@"请在法定工作日AM9:00-PM17:00拨打") preferredStyle:(UIAlertControllerStyleAlert)];
+                UIAlertAction *cabcekAction  = [UIAlertAction actionWithTitle:ModuleZW(@"取消") style:(UIAlertActionStyleCancel) handler:nil];
+                UIAlertAction *sureAction  = [UIAlertAction actionWithTitle:ModuleZW(@"确定") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
+                }];
+                [alerVC addAction:cabcekAction];
+                [alerVC addAction:sureAction];
+                [self presentViewController:alerVC animated:YES completion:nil];
+            }else{
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
+            }
+            
+        
 
         }
             

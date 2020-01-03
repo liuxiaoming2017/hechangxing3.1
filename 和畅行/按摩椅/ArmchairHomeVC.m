@@ -315,10 +315,10 @@
     label1.alpha = 1.0;
     
     UIButton *speakBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    speakBtn.frame = CGRectMake(label1.left, label1.bottom+10, label1.width, Adapter(20));
-    if (ISPaid) {
-       speakBtn.top =  label1.bottom - 10;
-    }
+    speakBtn.frame = CGRectMake(label1.left, label1.bottom, label1.width, Adapter(20));
+//    if (ISPaid) {
+//       speakBtn.top =  label1.bottom - 10;
+//    }
     [speakBtn setTitle:btnStr forState:UIControlStateNormal];
     [speakBtn setTitleColor:[UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0] forState:UIControlStateNormal];
     speakBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -729,22 +729,22 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
                               @"少宫":@{@"name":@"少宫",@"command":k530Command_MassageEnergyRecovery},
                               @"左角宫":@{@"name":@"左角宫",@"command":k530Command_MassageEnergyRecovery},
                               @"上宫":@{@"name":@"上宫",@"command":k530Command_MassageHipsShapping},
-                              @"加宫":@{@"name":@"加宫",@"command":k530Command_Sedentary},
+                              @"加宫":@{@"name":@"加宫",@"command":k530Command_Balinese},
                               @"大宫":@{@"name":@"大宫",@"command":k530Command_CosyComfort},
-                              @"少商":@{@"name":@"少商",@"command":k530Command_Balinese},
+                              @"少商":@{@"name":@"少商",@"command":k530Command_Sedentary},
                               @"左商":@{@"name":@"左商",@"command":k530Command_MassageBalanceMind},
                               @"上商":@{@"name":@"上商",@"command":k530Command_NeckShoulder4D},
                               @"右商":@{@"name":@"右商",@"command":k530Command_MassageRelease},
                               @"钛商":@{@"name":@"钛商",@"command":k530Command_MassageMaster},
                               @"少徵":@{@"name":@"少徵",@"command":k530Command_MassageMiddayRest},
-                              @"判徵":@{@"name":@"判徵",@"command":k530Command_MassageDeepTissue},
+                              @"判徵":@{@"name":@"判徵",@"command":k530Command_Traceller},
                               @"上徵":@{@"name":@"上徵",@"command":k530Command_MassageSweetDreams},
                               @"右徵":@{@"name":@"右徵",@"command":k530Command_TextNeck},
                               @"质徵":@{@"name":@"质徵",@"command":k530Command_TextNeck},
                               @"少羽":@{@"name":@"少羽",@"command":k530Command_Shopping},
                               @"桎羽":@{@"name":@"桎羽",@"command":k530Command_Shopping},
                               @"上羽":@{@"name":@"上羽",@"command":k530Command_Athlete},
-                              @"众羽":@{@"name":@"众羽",@"command":k530Command_Traceller},
+                              @"众羽":@{@"name":@"众羽",@"command":k530Command_MassageDeepTissue},
                               @"大羽":@{@"name":@"大羽",@"command":k530Command_SpinalReleasePressure},
                               @"少角":@{@"name":@"少角",@"command":k530Command_MassageAMRoutine},
                               @"判角":@{@"name":@"判角",@"command":k530Command_MassageThai},

@@ -65,6 +65,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)scanDevice:(CBPeripheral*)bluetoothDevice withAdvertisementData:(NSDictionary*)advertisementData rssi : (NSNumber *)RSSI;
 
 
+/**
+ 扫描到的设备是否被绑定
+ */
+- (BOOL)scanDeviceIsBind:(CBPeripheral*)bluetoothDevice withAdvertisementData:(NSDictionary*)advertisementData;
 
 /**
 鉴定权限
