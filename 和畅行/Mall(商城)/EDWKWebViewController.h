@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MainWebViewController.h"
+#import "NavBarViewController.h"
 
-@interface EDWKWebViewController : MainWebViewController
+@interface EDWKWebViewController : NavBarViewController
 @property (nonatomic,assign) BOOL isCollect;
 @property (nonatomic,copy) NSString *titleStr;
 @property (nonatomic,copy) NSString *pageIDStr;
