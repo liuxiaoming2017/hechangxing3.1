@@ -57,7 +57,7 @@
     // 在iOS上默认为NO，表示不能自动通过窗口打开
     config.preferences.javaScriptCanOpenWindowsAutomatically = NO;
     
-    //config.processPool = [[WKProcessPool alloc] init];
+    config.processPool = [[WKProcessPool alloc] init];
     
     WKUserContentController *userContentController = WKUserContentController.new;
     
@@ -94,7 +94,7 @@
     NSURL *url = [NSURL URLWithString:urlStr];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
-     //[request addValue:[self getCookieValue] forHTTPHeaderField:@"Cookie"];
+    [request addValue:[self getCookieValue] forHTTPHeaderField:@"Cookie"];
     
     if([UserShareOnce shareOnce].languageType){
         [request addValue:[UserShareOnce shareOnce].languageType forHTTPHeaderField:@"language"];
