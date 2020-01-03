@@ -111,11 +111,10 @@
             vc1.hidesBottomBarWhenPushed = YES;
             [[self selectedViewController] pushViewController:vc1 animated:YES];
 #else
-                i9_MoxaMainViewController * vc1 = [[i9_MoxaMainViewController alloc] init];
-                vc1.hidesBottomBarWhenPushed = YES;
-                [[self selectedViewController] pushViewController:vc1 animated:YES];
+            i9_MoxaMainViewController * vc1 = [[i9_MoxaMainViewController alloc] init];
+            vc1.hidesBottomBarWhenPushed = YES;
+            [[self selectedViewController] pushViewController:vc1 animated:YES];
 #endif
-            
             
             return ;
         }
