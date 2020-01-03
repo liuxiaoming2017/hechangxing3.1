@@ -366,6 +366,13 @@
 # pragma mark - 推荐按摩点击事件
 - (void)tapAction:(UITapGestureRecognizer *)gesture
 {
+    
+    NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
+    if([jlbsName isEqualToString:@""] || jlbsName==nil ){
+        [GlobalCommon showMessage2:@"You have not done meridian test" duration2:1.0];
+        return;
+    }
+    
     SublayerView *layerView = (SublayerView *)[gesture view];
     ArmChairModel *model = layerView.model;
     

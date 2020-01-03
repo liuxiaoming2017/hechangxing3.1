@@ -75,7 +75,7 @@
     }else if ([strRequest isEqualToString:yundong]){ //进入运动
          decisionHandler(WKNavigationActionPolicyCancel);
         if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
-            [self showAlertWarmMessage:@"您还不是会员"];
+            [self weiGouMaiMessage];
             return;
         }
         NSString *physicalStr = [[NSUserDefaults standardUserDefaults]valueForKey:@"Physical"];

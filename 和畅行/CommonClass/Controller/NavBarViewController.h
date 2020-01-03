@@ -42,4 +42,6 @@
 -(void)addEnPopButton;
 
 - (void)showAlertMessage:(NSString *)message withSure:(void(^)(NSString * blockParam))sureBlock withCancel:(void(^)(NSString * blockParam))cancelBlock;
+
+- (void)weiGouMaiMessage;
 @end

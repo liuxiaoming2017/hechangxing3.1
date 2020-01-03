@@ -29,6 +29,8 @@
 #import <sys/utsname.h>
 #import <objc/runtime.h>
 
+
+
 @interface HomePageController ()<UIScrollViewDelegate>
 
 @property (nonatomic,strong) UIScrollView *bgScrollView;
@@ -104,15 +106,16 @@
     //埋点数据上传
     [self buriedDataPoints];
     
-//    self.rightBtn.hidden = NO;
-     [self.rightBtn addTarget:self action:@selector(messageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    //self.rightBtn.hidden = NO;
+    [self.rightBtn addTarget:self action:@selector(messageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)messageBtnAction:(UIButton *)btn
 {
-    BOOL isLogin = [self isLogin];
-    NSString *resultStr = isLogin ? @"成功" : @"失败";
-    NSLog(@"**:%@",resultStr);
+//    BOOL isLogin = [self isLogin];
+//    NSString *resultStr = isLogin ? @"成功" : @"失败";
+//    NSLog(@"**:%@",resultStr);
+
 }
 
 - (BOOL)isLogin

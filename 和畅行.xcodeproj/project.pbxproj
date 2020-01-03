@@ -91,6 +91,7 @@
 		035BBC5A21ABA4E900AB537D /* UIButton+BACountDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 035BBC5821ABA4E900AB537D /* UIButton+BACountDown.m */; };
 		035BBC6021ABDF2300AB537D /* GovSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035BBC5E21ABDF2200AB537D /* GovSectionView.m */; };
 		035F31F4231D0604009A0D94 /* ArmchairHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F31F3231D0604009A0D94 /* ArmchairHomeVC.m */; };
+		0362319223A22E5F00033841 /* tip.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0362319123A22E5E00033841 /* tip.mp3 */; };
 		036285992106BB020090020D /* CellUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 036285982106BB020090020D /* CellUtil.m */; };
 		0369D65B238BC57400FD3272 /* SongListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D65A238BC57400FD3272 /* SongListCell.m */; };
 		0369D65C238BC57400FD3272 /* SongListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0369D65A238BC57400FD3272 /* SongListCell.m */; };
@@ -1463,6 +1464,7 @@
 		035BBC5F21ABDF2200AB537D /* GovSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GovSectionView.h; sourceTree = "<group>"; };
 		035F31F2231D0604009A0D94 /* ArmchairHomeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArmchairHomeVC.h; sourceTree = "<group>"; };
 		035F31F3231D0604009A0D94 /* ArmchairHomeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArmchairHomeVC.m; sourceTree = "<group>"; };
+		0362319123A22E5E00033841 /* tip.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tip.mp3; sourceTree = "<group>"; };
 		036285972106BB020090020D /* CellUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CellUtil.h; sourceTree = "<group>"; };
 		036285982106BB020090020D /* CellUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CellUtil.m; sourceTree = "<group>"; };
 		036859DD222783DE00B10BE7 /* Pods_和畅行.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_和畅行.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3985,6 +3987,7 @@
 		03BD8409238BBC4200F57978 /* HarmonyYi */ = {
 			isa = PBXGroup;
 			children = (
+				0362319123A22E5E00033841 /* tip.mp3 */,
 				032C542323989B2100D131D5 /* 百川艾灸 */,
 				C9865C61238CBF7100ECAAB9 /* PostButtonView.h */,
 				C9865C60238CBF7100ECAAB9 /* PostButtonView.m */,
@@ -5019,6 +5022,7 @@
 				03BD830F238BB89000F57978 /* icon_jiuover.png in Resources */,
 				03BD8310238BB89000F57978 /* wd54.mp3 in Resources */,
 				03BD8311238BB89000F57978 /* 血压13.png in Resources */,
+				0362319223A22E5F00033841 /* tip.mp3 in Resources */,
 				03BD8312238BB89000F57978 /* bluetooth_add.png in Resources */,
 				03BD8313238BB89000F57978 /* zixundishitu.png in Resources */,
 				03BD8314238BB89000F57978 /* private.png in Resources */,

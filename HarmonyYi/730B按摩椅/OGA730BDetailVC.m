@@ -260,7 +260,7 @@ typedef enum : NSInteger {
     if(self.dataArr.count>0){
         SongListModel *model = [self.dataArr objectAtIndex:indexPath.row];
         
-        cell.chairTextView.text = ModuleZW(model.title);
+        cell.chairTextView.text = model.title;
         NSString *imageStr = @"";
         
         if(kPlayer.playUrlStr && [model.source isEqualToString:kPlayer.playUrlStr] && kPlayer.playerState == 2){

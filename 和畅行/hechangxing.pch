@@ -39,6 +39,7 @@
 #import <ReactiveObjC/ReactiveObjC.h>
 #import "CacheManager.h"
 #import "GKAudioPlayer.h"
+#import "VersionUpdateView.h"
 
 #if FIRST_FLAG
 #import <OGABluetooth530/OGABluetooth530.h>

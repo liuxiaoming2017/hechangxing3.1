@@ -29,7 +29,7 @@ extern BOOL isBF;
 #if FIRST_FLAG
     #define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://47.92.73.99:8080/healthlm/")
 #else
-    #define URL_PRE @"http://204.9.61.24/healthlm/"
+    #define URL_PRE (isProduct ? @"http://204.9.61.24/healthlm/" : @"http://47.92.73.99:8080/healthlm/")
 #endif
 
 
@@ -216,6 +216,8 @@ extern BOOL isBF;
 
 #define hintYueYao @"hintYueYao"
 #define hintTuiNa @"hintTuiNa"
+
+#define weiGouMai @"您现在还不是和畅会员，如果您想享受此服务，请您先去购买和畅会员服务卡"
 
 #define kVerRounterUrl @"http://123.125.97.241:8083" //测试环境   生产环境打包时请把这一行注释掉
 #define IOS7 ([[[UIDevice currentDevice] systemVersion] floatValue]>=7.0 ? YES : NO)

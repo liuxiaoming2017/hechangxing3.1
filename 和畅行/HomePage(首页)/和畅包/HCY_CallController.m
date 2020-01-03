@@ -11,6 +11,7 @@
 #import "AdvisorysViewController.h"
 #import "AppDelegate.h"
 #import "WXPhoneController.h"
+#import "VersionUpdateView.h"
 
 //#import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 
@@ -153,20 +154,39 @@
 }
 - (void)messageHintView
 {
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"您还没有购买视频咨询服务，是否前去购买？" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        UITabBarController *main = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
-        main.selectedIndex = 2;
-        //UINavigationController *nav = main.selectedViewController;
-        UIWindow *window = [UIApplication sharedApplication].keyWindow;
-        window.rootViewController = main;
-    }];
-    UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    
+    
+    VersionUpdateView *updateView = [VersionUpdateView showWeiGouMaiViewWithContent:@"您还没有购买视频咨询服务，是否前去购买？"];
+    [GlobalCommon addMaskView];
+    __weak __typeof(updateView)wupdateView = updateView;
+    updateView.versionUpdateBlock = ^(BOOL isUpdate){
         
-    }];
-    [alertVC addAction:alertAct1];
-    [alertVC addAction:alertAct12];
-    [self presentViewController:alertVC animated:YES completion:NULL];
+        if(isUpdate){
+            UITabBarController *main = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
+            main.selectedIndex = 2;
+            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+            window.rootViewController = main;
+        }
+        
+        [GlobalCommon removeMaskView];
+        [wupdateView removeFromSuperview];
+    };
+    [[UIApplication sharedApplication].keyWindow addSubview:updateView];
+    
+//    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"您还没有购买视频咨询服务，是否前去购买？" preferredStyle:UIAlertControllerStyleAlert];
+//    UIAlertAction *alertAct1 = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        UITabBarController *main = [(AppDelegate*)[UIApplication sharedApplication].delegate tabBar];
+//        main.selectedIndex = 2;
+//        //UINavigationController *nav = main.selectedViewController;
+//        UIWindow *window = [UIApplication sharedApplication].keyWindow;
+//        window.rootViewController = main;
+//    }];
+//    UIAlertAction *alertAct12 = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//
+//    }];
+//    [alertVC addAction:alertAct1];
+//    [alertVC addAction:alertAct12];
+//    [self presentViewController:alertVC animated:YES completion:NULL];
 }
 
 
