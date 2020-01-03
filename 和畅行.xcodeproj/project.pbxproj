@@ -716,7 +716,6 @@
 		03BD82E1238BB89000F57978 /* Wybs_WinZhi_Img_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65882275414600B10F23 /* Wybs_WinZhi_Img_bg.png */; };
 		03BD82E2238BB89000F57978 /* 完成.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65B32275414600B10F23 /* 完成.png */; };
 		03BD82E3238BB89000F57978 /* add_device.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E84AD2186EB18001B9BB4 /* add_device.png */; };
-		03BD82E4238BB89000F57978 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 839E0C572213E0540090F179 /* InfoPlist.strings */; };
 		03BD82E5238BB89000F57978 /* 支付图标.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B30668230506B0008D6D38 /* 支付图标.png */; };
 		03BD82E6238BB89000F57978 /* wd55.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 036E84492186EAF5001B9BB4 /* wd55.mp3 */; };
 		03BD82E7238BB89000F57978 /* 血压03.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65A02275414600B10F23 /* 血压03.png */; };
@@ -1089,7 +1088,6 @@
 		83755F192281514200D761A2 /* WXPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83755F182281514200D761A2 /* WXPhoneController.m */; };
 		83755F1B22854B5B00D761A2 /* btn_recipelst_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 83755F1A22854B5B00D761A2 /* btn_recipelst_normal.png */; };
 		837D822321F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837D822121F1A72E00FBFF99 /* BloodOxyNonDeviceViewController.m */; };
-		839E0C552213E0540090F179 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 839E0C572213E0540090F179 /* InfoPlist.strings */; };
 		83C5F7E02270002000889370 /* LJRulerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C5F7DC2270001F00889370 /* LJRulerScrollView.m */; };
 		83C5F7E12270002000889370 /* LJRuler.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C5F7DF2270002000889370 /* LJRuler.m */; };
 		83C5F8222272EED300889370 /* WriteleftTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C5F8212272EED300889370 /* WriteleftTableViewCell.m */; };
@@ -1236,6 +1234,7 @@
 		83E23EF721C24F7F00B43298 /* HCY_ActivityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EF621C24F7F00B43298 /* HCY_ActivityController.m */; };
 		83E23F0021C76CE800B43298 /* HYC_CardsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EFF21C76CE800B43298 /* HYC_CardsModel.m */; };
 		83E644912213E883004D286C /* ModuleZW.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83E644932213E883004D286C /* ModuleZW.strings */; };
+		C941474823BEE4A3002592D1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 839E0C572213E0540090F179 /* InfoPlist.strings */; };
 		C94B9286239750D000CB8281 /* MyScrollTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C94B9284239750CF00CB8281 /* MyScrollTextView.m */; };
 		C94B929323989EF200CB8281 /* MyScrollTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C94B9284239750CF00CB8281 /* MyScrollTextView.m */; };
 		C95643B4230D35C400FF8693 /* UIFont+YHFont.m in Sources */ = {isa = PBXBuildFile; fileRef = C95643B3230D35C400FF8693 /* UIFont+YHFont.m */; };
@@ -2327,6 +2326,7 @@
 		83E23EFF21C76CE800B43298 /* HYC_CardsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HYC_CardsModel.m; sourceTree = "<group>"; };
 		83E644922213E883004D286C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ModuleZW.strings; sourceTree = "<group>"; };
 		C3992630D9BF859D26B53112 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C941474923BEE7B9002592D1 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		C94B9284239750CF00CB8281 /* MyScrollTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyScrollTextView.m; sourceTree = "<group>"; };
 		C94B9285239750CF00CB8281 /* MyScrollTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyScrollTextView.h; sourceTree = "<group>"; };
 		C95643B2230D35C400FF8693 /* UIFont+YHFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIFont+YHFont.h"; sourceTree = "<group>"; };
@@ -4667,6 +4667,7 @@
 				en,
 				Base,
 				"zh-Hans",
+				"en-GB",
 			);
 			mainGroup = 03513ABF20E9CAD3004E2805;
 			productRefGroup = 03513AC920E9CAD3004E2805 /* Products */;
@@ -4688,7 +4689,6 @@
 				83DC662C2275414600B10F23 /* Wybs_WinZhi_Img_bg.png in Resources */,
 				83DC66532275414600B10F23 /* 完成.png in Resources */,
 				036E851A2186EB1A001B9BB4 /* add_device.png in Resources */,
-				839E0C552213E0540090F179 /* InfoPlist.strings in Resources */,
 				C9B3067F230506B0008D6D38 /* 支付图标.png in Resources */,
 				036E84502186EAF5001B9BB4 /* wd55.mp3 in Resources */,
 				83DC66412275414600B10F23 /* 血压03.png in Resources */,
@@ -4931,6 +4931,7 @@
 				83DC66232275414600B10F23 /* 2_06 -11122@3x.png in Resources */,
 				036E85142186EB1A001B9BB4 /* ic_electricity_01_green.png in Resources */,
 				036E85032186EB1A001B9BB4 /* i9MoxaHead_red.png in Resources */,
+				C941474823BEE4A3002592D1 /* InfoPlist.strings in Resources */,
 				036E84D82186EB1A001B9BB4 /* icon_wechat_share.png in Resources */,
 				83DC65D72275414600B10F23 /* ReplaceSec_NSecS.png in Resources */,
 				036E85242186EB1A001B9BB4 /* ic_password.png in Resources */,
@@ -4976,7 +4977,6 @@
 				03BD82E1238BB89000F57978 /* Wybs_WinZhi_Img_bg.png in Resources */,
 				03BD82E2238BB89000F57978 /* 完成.png in Resources */,
 				03BD82E3238BB89000F57978 /* add_device.png in Resources */,
-				03BD82E4238BB89000F57978 /* InfoPlist.strings in Resources */,
 				03BD82E5238BB89000F57978 /* 支付图标.png in Resources */,
 				03BD82E6238BB89000F57978 /* wd55.mp3 in Resources */,
 				03BD82E7238BB89000F57978 /* 血压03.png in Resources */,
@@ -6134,6 +6134,7 @@
 			children = (
 				03513AD720E9CAD4004E2805 /* Base */,
 				030126C621F96290000FA318 /* zh-Hans */,
+				C941474923BEE7B9002592D1 /* en-GB */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

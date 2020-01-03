@@ -296,6 +296,7 @@
     //ios_hcy-oem-1.0 hcy_android_oem-oem-1.0
     NSString *nowVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     NSString *headStr = [NSString stringWithFormat:@"ios_hcy-oem-%@",nowVersion];
+    [GlobalCommon showMBHudWithView:self.view];
     //headStr = @"hcy_android_oem-oem-1.0";
     //为网络请求添加请求头
     NSDictionary *headDic = @{@"version":headStr,@"token":[UserShareOnce shareOnce].token,@"Cookie":[NSString stringWithFormat:@"token=%@;JSESSIONID＝%@",[UserShareOnce shareOnce].token,[UserShareOnce shareOnce].JSESSIONID]};
@@ -331,8 +332,9 @@
         }
         
         NSLog(@"haha:%@",response);
-        
+        [GlobalCommon hideMBHudWithView:self.view];
     } failureBlock:^(NSError *error) {
+        [GlobalCommon hideMBHudWithView:self.view];
         [self showAlertWarmMessage:requestErrorMessage];
     }];
 }
