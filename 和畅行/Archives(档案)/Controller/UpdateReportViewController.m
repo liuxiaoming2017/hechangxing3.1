@@ -308,7 +308,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.label.text = ModuleZW(@"上传中...");
+    hud.label.text = ModuleZW(@"上传中…");
     NSString *str = [NSString stringWithFormat:@"%@/login/healthr/upload.jhtml",URL_PRE];
     __weak typeof(self) weakSelf = self;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];

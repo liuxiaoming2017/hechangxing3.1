@@ -168,7 +168,7 @@
             _temperatureSlider.value = 40;
             _timeSlider.value = 1;
         }
-        _temperatureLabel.text = [NSString stringWithFormat:@"%d℃",(int)_temperatureSlider.value];
+        _temperatureLabel.text = [NSString stringWithFormat:@"%d℃",(int)(_temperatureSlider.value + 1)];
         _timeLabel.text = [NSString stringWithFormat:@"%dmin",(int)_timeSlider.value];
         setAllBT.selected = YES;
         [setAllBT setImage:[[UIImage imageNamed:@"ijoou选中"]transformWidth:Adapter(20) height:Adapter(20)] forState:(UIControlStateNormal)];
@@ -178,7 +178,7 @@
         nameLabel.text = model.deviceName;
         _temperatureSlider.value = model.temperature;
         _timeSlider.value = model.residueDuration;
-        _temperatureLabel.text = [NSString stringWithFormat:@"%d℃",(int)_temperatureSlider.value];
+        _temperatureLabel.text = [NSString stringWithFormat:@"%d℃",(int)(_temperatureSlider.value + 1)];
         _timeLabel.text = [NSString stringWithFormat:@"%dmin",(int)_timeSlider.value];
         setAllBT.selected = NO;
         [setAllBT setImage:[[UIImage imageNamed:@"ijoou未选中"]transformWidth:Adapter(20) height:Adapter(20)] forState:(UIControlStateNormal)];

@@ -132,6 +132,10 @@
     if (bianshiTime) {
         [bianshiTime invalidate];
     }
+    if (timerACC) {
+        [timerACC invalidate];
+    }
+    
     [self stopPlay];
 }
 

@@ -110,7 +110,9 @@
 - (void)createUI
 {
     
-    NSArray *numberArray = @[@"0\n收藏",@"0\n卡包",@"0\n积分"];
+    NSArray *numberArray = @[[NSString stringWithFormat:@"0\n%@",ModuleZW(@"收藏")],
+                                              [NSString stringWithFormat:@"0\n%@",ModuleZW(@"卡包")],
+                                              [NSString stringWithFormat:@"0\n%@",ModuleZW(@"积分")]];
     NSArray *titleArr           = @[@"待付款",@"待评价",
                                     @"退款/售后",@"全部订单"];
     NSArray *imageArr        = @[@"我的待付款",@"我的待评价",@"我的退款售后",@"我的全部订单"];
