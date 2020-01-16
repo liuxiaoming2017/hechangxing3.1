@@ -272,27 +272,36 @@
     [ArchiveVC.tabBarItem setImageInsets:edgeInset];
     ArchiveVC.tabBarItem.titlePositionAdjustment = offSet;
     
-    
-    EDWKWebViewController *mallVC = [[EDWKWebViewController alloc] initWithUrlString:[NSString stringWithFormat:@"%@mobileIndex.html",URL_PRE]];
-    CustomNavigationController *mallNav = [[CustomNavigationController alloc] initWithRootViewController:mallVC];
-    mallVC.tabBarItem.title = ModuleZW(@"商城");
-    mallVC.tabBarItem.image = [UIImage imageNamed:@"MallNormal"];
-    mallVC.tabBarItem.selectedImage = [UIImage imageNamed:@"MallSelect"];
-    [mallVC.tabBarItem setImageInsets:edgeInset];
-    mallVC.tabBarItem.titlePositionAdjustment = offSet;
-    
+
     MineViewController *mineVC = [[MineViewController alloc] init];
     CustomNavigationController *mineNav = [[CustomNavigationController alloc] initWithRootViewController:mineVC];
     mineVC.tabBarItem.title = ModuleZW(@"我的");
     mineVC.tabBarItem.image = [UIImage imageNamed:@"MyNormal"];
-   
+    
+    NSLog(@"frame:%@,frame2",NSStringFromCGSize(mineVC.tabBarItem.image.size));
+    
+    //NSLog(@"haha:%@",NSStringFromUIEdgeInsets(mineVC.tabBarItem.imageInsets));
+    //NSLog(@"****:%@",NSStringFromUIEdgeInsets(mineVC.tabBarItem.tit));
+   //MyNormal
    
     mineVC.tabBarItem.selectedImage = [UIImage imageNamed:@"MySelect"];
     [mineVC.tabBarItem setImageInsets:edgeInset];
     mineVC.tabBarItem.titlePositionAdjustment = offSet;
     
     CommonTabBarController *tabBar = [[CommonTabBarController alloc] init];
-    tabBar.viewControllers = @[homeNav,ArchiveNav,mallNav,mineNav];
+    if(FIRST_FLAG){
+        EDWKWebViewController *mallVC = [[EDWKWebViewController alloc] initWithUrlString:[NSString stringWithFormat:@"%@mobileIndex.html",URL_PRE]];
+        CustomNavigationController *mallNav = [[CustomNavigationController alloc] initWithRootViewController:mallVC];
+        mallVC.tabBarItem.title = ModuleZW(@"商城");
+        mallVC.tabBarItem.image = [UIImage imageNamed:@"MallNormal"];
+        mallVC.tabBarItem.selectedImage = [UIImage imageNamed:@"MallSelect"];
+        [mallVC.tabBarItem setImageInsets:edgeInset];
+        mallVC.tabBarItem.titlePositionAdjustment = offSet;
+        tabBar.viewControllers = @[homeNav,ArchiveNav,mallNav,mineNav];
+    }else{
+        tabBar.viewControllers = @[homeNav,ArchiveNav,mineNav];
+    }
+    
     return tabBar;
     
 }

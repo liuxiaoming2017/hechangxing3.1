@@ -195,7 +195,7 @@
     
     NSArray *titleArr = [NSArray array];
     if ([UserShareOnce shareOnce].languageType) {
-        titleArr = @[@"Do",@"Re",@"Mi",@"Sol",@"La"];
+        titleArr = @[@"Do",@"Re",@"Mi",@"So",@"La"];
         duoView.frame = CGRectMake(ScreenWidth/2 - Adapter(75), ScreenHeight /5, Adapter(150), Adapter(150));
         if (ISPaid) {
             duoView.frame = CGRectMake(ScreenWidth/2 - Adapter(60), ScreenHeight /5, Adapter(120), Adapter(120));

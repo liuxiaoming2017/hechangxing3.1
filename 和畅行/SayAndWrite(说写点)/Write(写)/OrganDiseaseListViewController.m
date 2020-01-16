@@ -70,7 +70,7 @@
     _selectedCount = 0;
     
     
-    UIButton *selectedSymDisBtn = [Tools creatButtonWithFrame:CGRectMake(Adapter(30), ScreenHeight - Adapter(50), ScreenWidth - Adapter(60), Adapter(40)) target:self sel:@selector(selectedSymDisBtnClick:) tag:22 image:nil title:ModuleZW(@"确定")];
+    UIButton *selectedSymDisBtn = [Tools creatButtonWithFrame:CGRectMake(Adapter(30), ScreenHeight - Adapter(50), ScreenWidth - Adapter(60), Adapter(40)) target:self sel:@selector(selectedSymDisBtnClick:) tag:22 image:nil title:ModuleZW(@"下一步")];
     selectedSymDisBtn.backgroundColor = RGB_ButtonBlue;
     selectedSymDisBtn.layer.cornerRadius = selectedSymDisBtn.height/2;
     selectedSymDisBtn.layer.masksToBounds = YES;
