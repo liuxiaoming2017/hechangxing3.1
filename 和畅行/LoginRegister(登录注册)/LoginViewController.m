@@ -93,7 +93,12 @@
     userNameBox.frame=CGRectMake(segment.left, segment.bottom+Adapter(40), ScreenWidth - Adapter(140) ,Adapter(30) );
     userNameBox.borderStyle=UITextBorderStyleNone;
     userNameBox.returnKeyType=UIReturnKeyNext;
-    userNameBox.keyboardType=UIKeyboardTypeNumberPad;
+    if ([UserShareOnce shareOnce].languageType) {
+        userNameBox.keyboardType=UIKeyboardTypeDefault;
+    }else{
+        userNameBox.keyboardType=UIKeyboardTypeNumberPad;
+    }
+    
     userNameBox.clearButtonMode=UITextFieldViewModeWhileEditing;
     userNameBox.delegate=self;
     userNameBox.font=[UIFont systemFontOfSize:15.0];
@@ -134,7 +139,12 @@
             [button setTitleColor:RGB_TextMidLightGray forState:(UIControlStateNormal)];
             [button setImage:[[UIImage imageNamed:@"协议选中"] transformWidth:Adapter(15) height:Adapter(15)] forState:(UIControlStateNormal)];
             [button setImageEdgeInsets:UIEdgeInsetsMake(0, Adapter(-5), 0, 0)];
-            button.width = button.width + Adapter(15);
+            if (ISPaid) {
+                button.width = button.width + Adapter(20);
+            }else{
+                button.width = button.width + Adapter(15);
+            }
+            
             _leftButton = button;
         }else{
             [button setTitleColor:RGB_ButtonBlue forState:(UIControlStateNormal)];

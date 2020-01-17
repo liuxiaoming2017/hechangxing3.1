@@ -20,9 +20,8 @@ extern BOOL isBF;
 
 //数据统计测试环境
 //#define DATAURL_PRE @"http://47.92.160.74:8086/api/v1/"
-#define DATAURL_PRE @"http://10.1.71.96:8086/api/v1/"
-
-#define DATAURL_PRE1 @"http://10.1.71.96:8086/login/"
+#define DATAURL_PRE @"http://47.92.160.74:8088/hcdp-api/api/"
+#define DATAURL_PRE1 @"http://47.92.160.74:8088/hcdp-api/api/login"
 //测试环境
 //#define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://10.1.71.38:8888/hcy-system/")
 

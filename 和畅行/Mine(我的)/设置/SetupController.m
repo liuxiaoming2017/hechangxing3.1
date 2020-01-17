@@ -362,7 +362,7 @@
                 NSString *down_timeStr = [GlobalCommon getCurrentTimes];;//下载时间
                 
               
-                NSString *downloadStr = [NSString stringWithFormat:@"%@user/download",DATAURL_PRE];
+                NSString *downloadStr = [NSString stringWithFormat:@"%@v1/user/download",DATAURL_PRE];
                 NSDictionary *downloadDic = @{ @"body":@{@"channel":@"",
                                                          @"downTime":down_timeStr,
                                                          @"remark":@"",

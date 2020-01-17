@@ -909,7 +909,7 @@
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     CFShow(CFBridgingRetain(infoDictionary));
     NSString *versionStr = [infoDictionary objectForKey:@"CFBundleShortVersionString"];//版本
-    NSString *downloadStr = [NSString stringWithFormat:@"%@/user/visit",DATAURL_PRE];
+    NSString *downloadStr = [NSString stringWithFormat:@"%@v1/user/visit",DATAURL_PRE];
     NSDictionary *downloadDic = @{ @"body":@{
                                            @"userId":userSign,
                                            @"memberId":memberId,
@@ -929,5 +929,41 @@
     }];
 }
 
-
++(NSString *)getChairEffecttIDWithString:(NSString *)string {
+    
+    if (!string) {
+        string = @"0";
+        return string;
+    }else{
+        NSDictionary *dic = @{@"大师精选":@"1",
+                              @"轻松自在":@"2",
+                              @"关节呵护":@"3",
+                              @"脊柱支柱":@"4",
+                              @"上班族":@"5",
+                              @"低头族":@"6",
+                              @"驾车族":@"7",
+                              @"运动派":@"8",
+                              @"御宅派":@"9",
+                              @"爱购派":@"10",
+                              @"巴黎式":@"11",
+                              @"中式":@"12",
+                              @"泰式":@"13",
+                              @"深层按摩":@"14",
+                              @"活血循环":@"15",
+                              @"活力唤醒":@"16",
+                              @"美臀塑性":@"17",
+                              @"元气复苏":@"18",
+                              @"绽放魅力":@"19",
+                              @"清晨唤醒":@"20",
+                              @"瞬间补眠":@"21",
+                              @"夜晚助眠":@"22" };
+        NSString *effectID = [dic valueForKey:string];
+        if (!effectID) {
+            effectID = @"0";
+        }
+        return effectID;
+    }
+    
+    
+}
 @end

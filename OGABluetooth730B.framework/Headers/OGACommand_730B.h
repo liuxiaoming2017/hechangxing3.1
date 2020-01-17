@@ -175,7 +175,7 @@ UIKIT_EXTERN NSString * _Nonnull const k730Command_ManualUpperBodyKnead3;
 UIKIT_EXTERN NSString * _Nonnull const k730Command_ManualUpperBodyRoll;
 
 #pragma mark ------ 手动姿态 调节
-// 调节停止
+// 靠背升+小腿降
 UIKIT_EXTERN NSString * _Nonnull const k730Command_AdjustStop;
 // 靠背升+小腿降
 UIKIT_EXTERN NSString * _Nonnull const k730Command_BackUpLegDown;

@@ -80,4 +80,6 @@
 + (float)sizeAtPath:(NSString *)path;
 
 + (void)networkStatusChange;
+
++(NSString *)getChairEffecttIDWithString:(NSString *)string;
 @end

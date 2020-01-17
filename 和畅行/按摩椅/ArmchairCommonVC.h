@@ -9,7 +9,7 @@
 #import "NavBarViewController.h"
 #import "ArmChairModel.h"
 
-#import <OGABluetooth530/OGABluetooth530.h>
+#import <OGABluetooth_Combine/OGABluetooth_Combine.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

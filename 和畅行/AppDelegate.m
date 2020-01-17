@@ -120,7 +120,8 @@
     
 #if FIRST_FLAG
     //奥佳华按摩椅530
-    [[OGA530BluetoothManager shareInstance] setAppkey:OGA530AppKey appSecret:OGA530AppSecret];
+    [OGAConfiguration setAppkey:OGA530AppKey appSecret:OGA530AppSecret];
+//    [[OGA530BluetoothManager shareInstance] setAppkey:OGA530AppKey appSecret:OGA530AppSecret];
     [[OGA530BluetoothManager shareInstance] setIsLog:YES];
 
 #else
@@ -148,8 +149,8 @@
     }
     
     
-    //对比版本
-    [self versionContrast];
+    //获取埋点token
+    [self buriedDataPoints];
     [self requestUI];
     return YES;
 }
@@ -553,7 +554,7 @@
     NSString *startTimeStr = [UserShareOnce shareOnce].startTime;
     NSString *endTimeStr = [GlobalCommon getCurrentTimes];
     
-    NSString *accessurlStr = [NSString stringWithFormat:@"%@user/start",DATAURL_PRE];
+    NSString *accessurlStr = [NSString stringWithFormat:@"%@v1/user/start",DATAURL_PRE];
     NSDictionary *accessDic = @{ @"body":@{
                                          @"id":@"",
                                          @"userId":userSign,
@@ -573,12 +574,22 @@
 }
 
 
+
+-(void)buriedDataPoints {
+    //获取买点token
+    NSString *appSignStr = [[NSBundle mainBundle] bundleIdentifier];
+    NSDictionary *downloadDic = @{@"username":appSignStr,
+                                  @"password":@"ky3h" };
+    [[BuredPoint sharedYHBuriedPoint]getTokenWithUrl:DATAURL_PRE1 dic:downloadDic successBlock:^(id  _Nonnull response) {
+        [self versionContrast];
+    } failureBlock:^(NSError * _Nonnull error) {
+        
+    }];
+    
+}
+
 //版本对比
-
-
-
-//版本对比
--(void )  versionContrast {
+-(void )versionContrast {
     //该接口用于记录用户使用app下载网站资源记录
     NSString *userSign = [UserShareOnce shareOnce].uid;
     if ([GlobalCommon stringEqualNull:userSign]) {
@@ -599,7 +610,7 @@
         if (![oldversionStr isEqualToString:versionStr]) {
             NSString *down_timeStr = [GlobalCommon getCurrentTimes];;//下载时间
             
-            NSString *downloadStr = [NSString stringWithFormat:@"%@user/download",DATAURL_PRE];
+            NSString *downloadStr = [NSString stringWithFormat:@"%@v1/user/download",DATAURL_PRE];
             NSDictionary *downloadDic = @{ @"body":@{
                                                    @"id":@"",
                                                    @"userId":@"",

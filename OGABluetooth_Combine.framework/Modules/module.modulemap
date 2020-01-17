@@ -1,0 +1,6 @@
+framework module OGABluetooth_Combine {
+  umbrella header "OGABluetooth_Combine.h"
+
+  export *
+  module * { export * }
+}

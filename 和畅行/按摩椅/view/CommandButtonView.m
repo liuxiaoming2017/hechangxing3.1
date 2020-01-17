@@ -44,11 +44,6 @@
         self.commandButton.frame = CGRectMake((self.width-Adapterbody(33))/2.0, Adapterbody(5), Adapterbody(33), Adapterbody(33));
     }
     
-    
-    [self.commandButton setImage:[[UIImage imageNamed:title] transformWidth:Adapterbody(22) height:Adapterbody(22)]  forState:(UIControlStateNormal)];
-    [self.commandButton setImage:[[UIImage imageNamed:title] transformWidth:Adapterbody(22) height:Adapterbody(22)]  forState:(UIControlStateHighlighted)];
-   
-    
 //    CGSize size = self.CommandButton.frame.size;
 //    CGFloat radius = self.CommandButton.width/2.0;
 //    [self.CommandButton setImage:[self createImageWithColor:[UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1.0] size:size radius:radius] forState:UIControlStateNormal];
@@ -77,6 +72,12 @@
     label.textAlignment = NSTextAlignmentCenter;
     self.titleLabel = label;
     [self addSubview:label];
+    
+    if ([title isEqualToString:@"Neck"]) {
+        title = @"NeckNext";
+    }
+    [self.commandButton setImage:[[UIImage imageNamed:title] transformWidth:Adapterbody(22) height:Adapterbody(22)]  forState:(UIControlStateNormal)];
+    [self.commandButton setImage:[[UIImage imageNamed:title] transformWidth:Adapterbody(22) height:Adapterbody(22)]  forState:(UIControlStateHighlighted)];
 }
 
 
