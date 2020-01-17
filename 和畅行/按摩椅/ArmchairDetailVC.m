@@ -1037,7 +1037,7 @@ typedef enum : NSInteger {
 
 //-(void)viewWillDisappear:(BOOL)animated {
 //    [super viewWillDisappear:animated];
-//    
+//
 //    self.endTimeStr = [GlobalCommon getCurrentTimes];
 //    NSString *userSign = [UserShareOnce shareOnce].uid;
 //    NSString *memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
@@ -1045,7 +1045,7 @@ typedef enum : NSInteger {
 //        //高级按摩
 //        NSString *userSign = [UserShareOnce shareOnce].uid;
 //        NSString *memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
-//        
+//
 //        NSString *deviceStr = [NSString stringWithFormat:@"%@mchair/advanced",DATAURL_PRE];
 //        NSDictionary *deviceDic = @{ @"body":@{
 //                                             @"id":@"",
@@ -1081,15 +1081,15 @@ typedef enum : NSInteger {
 //                                             @"startDate": self.startTimeStr,
 //                                             @"endDate":self.endTimeStr}
 //                                     };
-//        
+//
 //        [[BuredPoint sharedYHBuriedPoint] submitWithUrl:deviceStr dic:deviceDic successBlock:^(id  _Nonnull response) {
 //            NSLog(@"%@",response);
 //        } failureBlock:^(NSError * _Nonnull error) {
 //        }];
-//        
+//
 //    }else{
 //        //普通按摩
-//        
+//
 //        NSString *deviceStr = [NSString stringWithFormat:@"%@mchair/effect",DATAURL_PRE];
 //        NSString *effectId = [GlobalCommon getChairEffecttIDWithString:self.titleStr];
 //        NSDictionary *deviceDic = @{ @"body":@{
@@ -1111,13 +1111,13 @@ typedef enum : NSInteger {
 //                                             @"startDate":self.startTimeStr,
 //                                             @"endDate":self.endTimeStr}
 //                                     };
-//        
+//
 //        [[BuredPoint sharedYHBuriedPoint] submitWithUrl:deviceStr dic:deviceDic successBlock:^(id  _Nonnull response) {
 //            NSLog(@"%@",response);
 //        } failureBlock:^(NSError * _Nonnull error) {
 //        }];
 //    }
-//    
+//
 //}
 
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {

@@ -83,7 +83,7 @@
     _textView.keyboardType = UIKeyboardTypeDefault;
     _textView.returnKeyType = UIReturnKeyDone;
     _textViews.text = ModuleZW(@"请输入报告说明内容");
-    _textViews.font = [UIFont systemFontOfSize:15];
+    _textViews.font = [UIFont systemFontOfSize:15/[UserShareOnce shareOnce].multipleFontSize];
     _textViews.textColor =RGB(162, 162, 162);
     [backView addSubview:_textViews];
     _textView.backgroundColor = [UIColor clearColor];

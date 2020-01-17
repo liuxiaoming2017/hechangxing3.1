@@ -88,7 +88,7 @@
     }
     self.plusBtn.center=temp;
   
-    NSLog(@"frame:%@,frame2",NSStringFromCGSize(self.plusBtn.imageView.image.size));
+    NSLog(@"frame:%@,frame2:%@",NSStringFromCGSize(self.plusBtn.imageView.image.size),NSStringFromCGRect(self.plusBtn.frame));
     
     // 2.设置其它UITabBarButton的位置和尺寸
     
