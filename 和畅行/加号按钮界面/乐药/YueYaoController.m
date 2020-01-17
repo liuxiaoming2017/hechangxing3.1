@@ -273,13 +273,13 @@
     
     NSArray *titleArray = FIRST_FLAG ? @[@"宫", @"商", @"角", @"徵",@"羽"] : @[@"Gong",@"Shang",@"Jue",@"Zhi",@"Yu"];
     
-    UISegmentedControl *topSegment = [[UISegmentedControl alloc]initWithItems:titleArray];
-    topSegment.frame = CGRectMake(0, kNavBarHeight+Adapter(5), Adapter(250), Adapter(50));
-
+    UISegmentedControl *topSegment = [[UISegmentedControl alloc]initWithItems:titleArray];//Adapter(250)
+    topSegment.frame = CGRectMake(0, kNavBarHeight+Adapter(5), Adapter(315), Adapter(50));
+    CGFloat scaleSize = FIRST_FLAG ? 1 : [UserShareOnce shareOnce].multipleFontSize;
     topSegment.tintColor = [UIColor whiteColor];
-    NSDictionary *selectedDic = @{NSFontAttributeName:[UIFont systemFontOfSize:28],
+    NSDictionary *selectedDic = @{NSFontAttributeName:[UIFont systemFontOfSize:28/scaleSize],
                                   NSForegroundColorAttributeName:[UIColor blackColor]};
-    NSDictionary *noSelectedDic = @{NSFontAttributeName:[UIFont systemFontOfSize:25],
+    NSDictionary *noSelectedDic = @{NSFontAttributeName:[UIFont systemFontOfSize:25/scaleSize],
                                     NSForegroundColorAttributeName:RGB_TextAppGray};
     [topSegment setTitleTextAttributes:selectedDic forState:(UIControlStateSelected)];
     [topSegment setTitleTextAttributes:noSelectedDic forState:(UIControlStateNormal)];
@@ -287,8 +287,14 @@
     topSegment.tag = 1024;
     
     if(!FIRST_FLAG){
-        [topSegment setApportionsSegmentWidthsByContent:YES];
-       // [topSegment sizeToFit];
+        if(ISPaid){
+            [topSegment setApportionsSegmentWidthsByContent:YES];
+        }else{
+            [topSegment setWidth:75.0 forSegmentAtIndex:0];
+            [topSegment setWidth:85.0 forSegmentAtIndex:1];
+        }
+        
+//        [topSegment sizeToFit];
     }
 
     [self.view addSubview:topSegment];
