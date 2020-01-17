@@ -128,8 +128,11 @@
     self.isFirstIn = YES;
     if(self.isYueLuoyi){
         self.navTitleLabel.text = @"乐药怡";
+        if(!FIRST_FLAG){
+            self.navTitleLabel.text = @"Ear Acupuncture";
+        }
     }else{
-        self.navTitleLabel.text = @"乐药";
+        self.navTitleLabel.text = ModuleZW(@"乐药");
     }
     
     
@@ -268,9 +271,11 @@
 - (void)createTopGongView
 {
     
-    NSArray *titleArray = @[@"宫", @"商", @"角", @"徵",@"羽"];
+    NSArray *titleArray = FIRST_FLAG ? @[@"宫", @"商", @"角", @"徵",@"羽"] : @[@"Gong",@"Shang",@"Jue",@"Zhi",@"Yu"];
+    
     UISegmentedControl *topSegment = [[UISegmentedControl alloc]initWithItems:titleArray];
     topSegment.frame = CGRectMake(0, kNavBarHeight+Adapter(5), Adapter(250), Adapter(50));
+
     topSegment.tintColor = [UIColor whiteColor];
     NSDictionary *selectedDic = @{NSFontAttributeName:[UIFont systemFontOfSize:28],
                                   NSForegroundColorAttributeName:[UIColor blackColor]};
@@ -280,10 +285,17 @@
     [topSegment setTitleTextAttributes:noSelectedDic forState:(UIControlStateNormal)];
     [topSegment addTarget:self action:@selector(valuesegChanged:) forControlEvents:(UIControlEventValueChanged)];
     topSegment.tag = 1024;
+    
+    if(!FIRST_FLAG){
+        [topSegment setApportionsSegmentWidthsByContent:YES];
+       // [topSegment sizeToFit];
+    }
+
     [self.view addSubview:topSegment];
     
+    NSArray *titlesArr = FIRST_FLAG ? @[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫",] : @[@"Shao Gong",@"Zuojue Gong",@"Shang Gong",@"Jia Gong",@"Da Gong"];
     
-    hysegmentControl = [[HYSegmentedControl alloc] initWithOriginY:topSegment.bottom + Adapter(15) Titles: @[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫",] delegate:self];
+    hysegmentControl = [[HYSegmentedControl alloc] initWithOriginY:topSegment.bottom + Adapter(15) Titles:titlesArr delegate:self];
     [self.view addSubview:hysegmentControl];
 
 
@@ -312,7 +324,7 @@
         self.isPlaying = YES;
         self.selectSongName = kPlayer.playUrlStr;
         SongListModel *model = [kPlayer.musicArr objectAtIndex:0];
-        NSString *subjectSn = [GlobalCommon getStringWithSubjectSn:model.subjectSn];
+        NSString *subjectSn = [GlobalCommon getStringWithLanguageSubjectSn:model.subjectSn];
         [self dealHysegmentControlWithStr:subjectSn];
         return;
     }
@@ -323,7 +335,7 @@
     if (![GlobalCommon stringEqualNull:physicalStr]) {
         
         //11.22
-        physicalStr = [GlobalCommon getStringWithSubjectSn:physicalStr];
+        physicalStr = [GlobalCommon getStringWithLanguageSubjectSn:physicalStr];
         
         [self dealHysegmentControlWithStr:physicalStr];
     }
@@ -346,10 +358,19 @@
                                  @[@"少徵",@"判徵",@"上徵",@"右徵", @"质徵"],
                                  @[@"少羽", @"桎羽",@"上羽",@"众羽",@"大羽"]
                                  ];
+    if(!FIRST_FLAG){
+        segmentedArray = @[
+                           @[@"Shao Gong",@"Zuojue Gong",@"Shang Gong",@"Jia Gong",@"Da Gong"],
+                           @[@"Shao Shang",@"Zuo Shang",@"Shang Shang",@"You Shang",@"Tai Shang"],
+                           @[@"Shao Jue",@"Pan Jue",@"Shang Jue",@"Tai Jue",@"Da Jue"],
+                           @[@"Shao Zhi",@"Pan Zhi",@"Shang Zhi",@"You Zhi",@"Zhi Zhi"],
+                           @[@"Shao Yu",@"Zhi Yu",@"Shang Yu",@"Zhong Yu",@"Da Yu"]
+                           ];
+    }
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
             NSString *str = segmentedArray[i][j];
-            if([ModuleZW(nameStr) isEqualToString:str]){
+            if([nameStr isEqualToString:str]){
                 topSegment.selectedSegmentIndex = i;
                 [self hysegmentInitBtnorline:topSegment];
                 [hysegmentControl changeSegmentedControlWithIndex:j];
@@ -533,7 +554,7 @@
         if(cell.currentSelect){
             
             /***********流量播放弹框********/
-            if(![UserShareOnce shareOnce].wwanPlay){
+            if(![UserShareOnce shareOnce].wwanPlay && FIRST_FLAG){
                 if([[UserShareOnce shareOnce].networkState isEqualToString:@"wwan"]){
                     __weak typeof(self) weakSelf = self;
                     [self showAlertMessage:@"当前正在使用流量，是否继续？" withSure:^(NSString *blockParam) {
@@ -977,34 +998,39 @@
     if (segment.selectedSegmentIndex==0)
     {
         SegIndex=0;
-        [hysegmentControl setBtnorline:@[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫"]];
+        NSArray *arr = FIRST_FLAG ? @[@"少宫", @"左角宫", @"上宫", @"加宫",@"大宫"] : @[@"Shao Gong",@"Zuojue Gong",@"Shang Gong",@"Jia Gong",@"Da Gong"];
+        [hysegmentControl setBtnorline:arr];
         
         
     }
     else if (segment.selectedSegmentIndex==1)
     {
         SegIndex=1;
-        [hysegmentControl setBtnorline:@[ @"少商", @"左商",@"上商",@"右商", @"钛商" ]];
+        NSArray *arr = FIRST_FLAG ? @[ @"少商", @"左商",@"上商",@"右商", @"钛商"] :  @[@"Shao Shang",@"Zuo Shang",@"Shang Shang",@"You Shang",@"Tai Shang"];
+        [hysegmentControl setBtnorline:arr];
         
         
     }
     else if (segment.selectedSegmentIndex==2)
     {
         SegIndex=2;
-        [hysegmentControl setBtnorline:@[@"少角",@"判角",@"上角", @"钛角",@"大角"]];
+        NSArray *arr = FIRST_FLAG ? @[@"少角",@"判角",@"上角", @"钛角",@"大角"] : @[@"Shao Jue",@"Pan Jue",@"Shang Jue",@"Tai Jue",@"Da Jue"];
+        [hysegmentControl setBtnorline:arr];
         
     }
     else if (segment.selectedSegmentIndex==3)
     {
         SegIndex=3;
-        [hysegmentControl setBtnorline:@[@"少徵",@"判徵",@"上徵",@"右徵", @"质徵"]];
-        
+        //[hysegmentControl setBtnorline:@[@"少徵",@"判徵",@"上徵",@"右徵", @"质徵"]];
+        NSArray *arr = FIRST_FLAG ? @[@"少徵",@"判徵",@"上徵",@"右徵", @"质徵"] : @[@"Shao Zhi",@"Pan Zhi",@"Shang Zhi",@"You Zhi",@"Zhi Zhi"];
+        [hysegmentControl setBtnorline:arr];
     }
     else
     {
         SegIndex=4;
-        [hysegmentControl setBtnorline:@[@"少羽", @"桎羽",@"上羽",@"众羽",@"大羽"]];
-        
+        //[hysegmentControl setBtnorline:@[@"少羽", @"桎羽",@"上羽",@"众羽",@"大羽"]];
+        NSArray *arr = FIRST_FLAG ? @[@"少羽", @"桎羽",@"上羽",@"众羽",@"大羽"] : @[@"Shao Yu",@"Zhi Yu",@"Shang Yu",@"Zhong Yu",@"Da Yu"];
+        [hysegmentControl setBtnorline:arr];
     }
 }
 
@@ -1012,8 +1038,16 @@
 - (void)hySegmentedControlSelectAtIndex:(NSInteger)index
 {
     UIButton* btn=[[hysegmentControl GetSegArray] objectAtIndex:index];
-    self.typeStr = btn.titleLabel.text;
-    [self requestYueyaoListWithType:btn.titleLabel.text];
+    if(FIRST_FLAG){
+        self.typeStr = btn.titleLabel.text;
+        [self requestYueyaoListWithType:btn.titleLabel.text];
+    }else{
+        NSArray *arr = @[@"Gong",@"Shang",@"Jue",@"Zhi",@"Yu"];
+        NSString *resultStr = [btn.titleLabel.text stringByAppendingString:[NSString stringWithFormat:@" %@",arr[SegIndex]]];
+        self.typeStr = resultStr;
+        [self requestYueyaoListWithType:resultStr];
+    }
+    
 }
 
 

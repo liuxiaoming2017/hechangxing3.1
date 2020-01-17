@@ -133,13 +133,17 @@
     bottomV.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:bottomV];
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-Adapterbody(200))/2.0, Adapterbody(15), Adapterbody(200), Adapterbody(20))];
+    CGFloat marginBottom = FIRST_FLAG ? Adapterbody(15) : Adapterbody(5);
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-Adapterbody(200))/2.0, marginBottom, Adapterbody(200), Adapterbody(20))];
     titleLabel.font = [UIFont systemFontOfSize:16];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.text = ModuleZW(@"请选择");
     [bottomV addSubview:titleLabel];
-    //UIColorFromHex(0Xf1f1f1)
+    if(!FIRST_FLAG){
+        titleLabel.hidden = YES;
+    }
     
     bottomV.layer.cornerRadius=5;
     bottomV.layer.shadowColor = UIColorFromHex(0Xf1f1f1).CGColor;

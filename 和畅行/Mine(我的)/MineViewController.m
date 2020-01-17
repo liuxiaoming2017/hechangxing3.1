@@ -117,7 +117,11 @@
                                     @"退款/售后",@"全部订单"];
     NSArray *imageArr        = @[@"我的待付款",@"我的待评价",@"我的退款售后",@"我的全部订单"];
     //listNamesArr                  = @[@"咨询记录",@"地址管理",@"运动示范音",@"设置"];
-    listNamesArr                  = @[@"咨询记录",@"地址管理",@"设置"];
+    if(FIRST_FLAG){
+       listNamesArr                  = @[@"咨询记录",@"地址管理",@"设置"];
+    }else{
+        listNamesArr                  = @[@"咨询记录",@"卡包",@"设置"];
+    }
     
     UIScrollView *backScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake( 0,-kStatusBarHeight, ScreenWidth, ScreenHeight+kStatusBarHeight - kTabBarHeight )];
     backScrollView.backgroundColor = [UIColor clearColor];
@@ -126,6 +130,9 @@
     
     //顶部蓝色背景
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, Adapter(224)+kNavBarHeight)];
+    if(!FIRST_FLAG){
+        backImageView.height = Adapter(154)+kNavBarHeight;
+    }
     backImageView.tag = 1000;
     backImageView.backgroundColor = RGB_ButtonBlue;
     backImageView.userInteractionEnabled = YES;
@@ -163,15 +170,11 @@
     self.userNameLabel = userName;
     
     //e(15 , backImageView.bottom-, ScreenWidth-35, 70)
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(Adapter(15) , backImageView.bottom-Adapter(35), ScreenWidth-Adapter(35), Adapter(70))];
-    imageV.layer.cornerRadius = Adapter(10.0);
-    imageV.userInteractionEnabled = YES;
-    imageV.layer.masksToBounds = YES;
-    imageV.backgroundColor = [UIColor whiteColor];
-    [backScrollView addSubview:imageV];
-    [self insertSublayerWithImageView:imageV];
+
     
-    UIImageView *buttonBackImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(15), backImageView.bottom+ Adapter(60), ScreenWidth - Adapter(30), listNamesArr.count*Adapter(58))];
+    CGFloat marginBottom = FIRST_FLAG ? Adapter(60) : Adapter(25);
+    
+    UIImageView *buttonBackImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(15), backImageView.bottom+ marginBottom, ScreenWidth - Adapter(30), listNamesArr.count*Adapter(58))];
 //    UIImageView *buttonBackImageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, backImageView.bottom+ 60, ScreenWidth - 30, listNamesArr.count*58)];
     buttonBackImageView.backgroundColor = [UIColor whiteColor];
     buttonBackImageView.userInteractionEnabled = YES;
@@ -182,7 +185,16 @@
     
     backScrollView.contentSize = CGSizeMake(0, buttonBackImageView.bottom + Adapter(20));
     
-
+if(FIRST_FLAG){ //英文版没有
+    
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(Adapter(15) , backImageView.bottom-Adapter(35), ScreenWidth-Adapter(35), Adapter(70))];
+    imageV.layer.cornerRadius = Adapter(10.0);
+    imageV.userInteractionEnabled = YES;
+    imageV.layer.masksToBounds = YES;
+    imageV.backgroundColor = [UIColor whiteColor];
+    [backScrollView addSubview:imageV];
+    [self insertSublayerWithImageView:imageV];
+    
     for (int i=0; i<titleArr.count; i++) {
         
         if (i < numberArray.count){
@@ -288,10 +300,13 @@
             [imageV addSubview:button];
         }
     }
+} ////英文版没有
+    
     
     for (int i=0; i<listNamesArr.count; i++) {
         
         UIButton *bottomButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        //bottomButton.frame = CGRectMake(Adapter(20), buttonBackImageView.height/listNamesArr.count*i,ScreenWidth - Adapter(40), Adapter(58));
         bottomButton.frame = CGRectMake(Adapter(20), buttonBackImageView.height/listNamesArr.count*i,ScreenWidth - Adapter(40), Adapter(58));
         [bottomButton setTitle:ModuleZW(listNamesArr[i]) forState:(UIControlStateNormal)];
         [bottomButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
@@ -317,13 +332,19 @@
                 }
                     break;
                 case 1: {
-                    HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
-                    vc.noWebviewBack = YES;
-                    vc.progressType = progress2;
-                    vc.titleStr = ModuleZW(@"收货地址");
-                    vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/order/receiverlist.jhtml",URL_PRE];
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
+                    if(FIRST_FLAG){
+                        HeChangPackgeController *vc = [[HeChangPackgeController alloc] init];
+                        vc.noWebviewBack = YES;
+                        vc.progressType = progress2;
+                        vc.titleStr = ModuleZW(@"收货地址");
+                        vc.urlStr = [NSString stringWithFormat:@"%@member/mobile/order/receiverlist.jhtml",URL_PRE];
+                        vc.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:vc animated:YES];
+                    }else{
+                        BlockViewController *vc = [[BlockViewController alloc] init];
+                        vc.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:vc animated:YES];
+                    }
                     
                 }
                     break;

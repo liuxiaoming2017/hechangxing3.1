@@ -219,7 +219,7 @@
         }else if([firstStr isEqualToString:@"Y"]){
             NSArray *arr = @[@"大羽",@"上羽",@"少羽",@"桎羽",@"众羽"];
             if([UserShareOnce shareOnce].languageType){
-                arr = @[@"Da Yu",@"Shang Yu",@"Shao Yu",@"You Yu",@"Zhi Yu"];
+                arr = @[@"Da Yu",@"Shang Yu",@"Shao Yu",@"Zhi Yu",@"Zhong Yu"];
             }
             returnStr = [arr objectAtIndex:numberIndex-1];
         }
@@ -229,9 +229,60 @@
 
 
 +(NSString *)getSubjectSnFrom:(NSString *)subjectName{
-    if ([subjectName isEqualToString:@"大宫"]) {
+    NSArray *arr = @[@"大宫",@"加宫",@"上宫",@"少宫",@"左角宫"];
+    if([UserShareOnce shareOnce].languageType){
+        arr = @[@"Da Gong",@"Jia Gong",@"Shang Gong",@"Shao Gong",@"Zuojue Gong"];
+    }
+    for(NSInteger i=0;i<arr.count;i++){
+        if([subjectName isEqualToString:arr[i]]){
+            NSString *resultStr =[@"JLBS-G" stringByAppendingString:[NSString stringWithFormat:@"%ld",i+1]];
+            return resultStr;
+        }
+    }
+    NSArray *arr1 = @[@"上商",@"少商",@"钛商",@"右商",@"左商"];
+    if([UserShareOnce shareOnce].languageType){
+        arr1 = @[@"Shang Shang",@"Shao Shang",@"Tai Shang",@"You Shang",@"Zuo Shang"];
+    }
+    for(NSInteger i=0;i<arr1.count;i++){
+        if([subjectName isEqualToString:arr1[i]]){
+            NSString *resultStr =[@"JLBS-S" stringByAppendingString:[NSString stringWithFormat:@"%ld",i+1]];
+            return resultStr;
+        }
+    }
+    NSArray *arr2 = @[@"大角",@"判角",@"上角",@"少角",@"钛角"];
+    if([UserShareOnce shareOnce].languageType){
+        arr2 = @[@"Da Jue",@"Pan Jue",@"Shang Jue",@"Shao Jue",@"Tai Jue"];
+    }
+    for(NSInteger i=0;i<arr2.count;i++){
+        if([subjectName isEqualToString:arr2[i]]){
+            NSString *resultStr =[@"JLBS-Z" stringByAppendingString:[NSString stringWithFormat:@"%ld",i+1]];
+            return resultStr;
+        }
+    }
+    NSArray *arr3 = @[@"判徵",@"上徵",@"少徵",@"右徵",@"质徵"];
+    if([UserShareOnce shareOnce].languageType){
+        arr3 = @[@"Pan Zhi",@"Shang Zhi",@"Shao Zhi",@"You Zhi",@"Zhi Zhi"];
+    }
+    for(NSInteger i=0;i<arr3.count;i++){
+        if([subjectName isEqualToString:arr3[i]]){
+            NSString *resultStr =[@"JLBS-J" stringByAppendingString:[NSString stringWithFormat:@"%ld",i+1]];
+            return resultStr;
+        }
+    }
+    NSArray *arr4 = @[@"大羽",@"上羽",@"少羽",@"桎羽",@"众羽"];
+    if([UserShareOnce shareOnce].languageType){
+        arr4 = @[@"Da Yu",@"Shang Yu",@"Shao Yu",@"Zhi Yu",@"Zhong Yu"];
+    }
+    for(NSInteger i=0;i<arr4.count;i++){
+        if([subjectName isEqualToString:arr4[i]]){
+            NSString *resultStr =[@"JLBS-Y" stringByAppendingString:[NSString stringWithFormat:@"%ld",i+1]];
+            return resultStr;
+        }
+    }
+    /*
+    if ([subjectName isEqualToString:@"大宫"] || [subjectName isEqualToString:@"Da Gong"]) {
         return @"JLBS-G1";
-    }else if ([subjectName isEqualToString:@"加宫"]) {
+    }else if ([subjectName isEqualToString:@"加宫"] || [subjectName isEqualToString:@"Jia Gong"]) {
         return @"JLBS-G2";
     }else if ([subjectName isEqualToString:@"上宫"]) {
         return @"JLBS-G3";
@@ -280,6 +331,7 @@
     }else if ([subjectName isEqualToString:@"众羽"]) {
         return @"JLBS-Y5";
     }
+     */
     return nil;
 }
 

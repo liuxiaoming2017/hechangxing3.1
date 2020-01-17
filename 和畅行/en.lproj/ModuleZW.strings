@@ -46,7 +46,7 @@
 "您当前属于重度已病态"                                      = "Critical illness";
 
 "针对您目前的状况，优先进行经络梳理"             = "Suggetsion: Do meridian regulation in priority";
-"点击查看我们为您定制的和畅服务包"                 = "Get personlized services";
+"点击查看我们为您定制的和畅服务包"                 = "View More";
 "一说 经络梳理"                                                    = "ONE Speaking:meridian test";
 "一写 调理脏腑"                                                    = "ONE Writing: Zang-fu organs test";
 "一点 调和体质"                                                    = "ONE Clicking: constitution test ";
@@ -213,7 +213,7 @@
 "证件号码"                       =  "ID No. ";
 "证件号码："                    =  "ID No.: ";
 "男"                                   =  "Male";
-"女"                                   =  "Femal";
+"女"                                   =  "Female";
 "加载中..."                        = "Loading…";
 "请稍后"                           ="Loading…";
 "添加家庭成员"                        =  "Add Family Member";
@@ -463,7 +463,7 @@
 "个人信息更新成功"        ="Personal information updated successfully";
 "个人信息"        ="Personal information";
 "您的输入太长了"        ="Your input is too long";
-"请上传头像"   = "Upload avatar";
+"请上传头像"   = "Upload Profile Photo";
 "已婚"        ="Married";
 "未婚"        ="Unmarried";
 "证件号"        ="ID card";
@@ -471,7 +471,7 @@
 "军官证"        ="Certificate of officers";
 "passport"        ="Passport";
 "您选择的日期超出当前日期，请重新选择"        ="The date you selected is beyond the current date. Please select again ";
-"上传头像"        ="Upload avatar";
+"上传头像"        ="Upload Profile Photo";
 "请选择性别"        ="Select sex";
 "Phone Number"        ="Mobile Number";
 "填写手机号码"        ="Fill in your mobile number";
@@ -517,7 +517,7 @@
 "Get your personalized Harmony package after test"        ="Get your personalized Harmony package after test";
 "检测到新版本，是否下载?"        ="New version detected, download? ";
 "健康档案"        ="Health archive";
-"体质辨识"        ="Constitution identification";
+"体质辨识"        ="Constitution test";
 "体质辨识报告"        ="Constitution identification report";
 "您已超过7天未进行经络状态的评估"        ="You haven’t tested your meridian for over 7 days ";
 "您已超过30天未进行脏腑状态的评估"        ="You haven’t tested your zang-fu organs for over 30 days ";
@@ -736,7 +736,7 @@
 "已患疾病"        ="Existing diseases";
 "您最多只能选择五种疾病"        ="You can choose 5 kinds of diseases at most";
 "已选疾病"        ="Diseases chosen";
-"现病史"        ="History of present illness";
+"现病史"        ="History of Symptoms";
 
 "背部"        ="Back";
 "病因"        ="Cause";
@@ -1538,7 +1538,7 @@
 "设备搜寻中"     =   "Searching device";
 "当前无灸疗计划"     =   "No moxibustion plan currently";
 "已连接AJi9"     =   "Already connected to AJi9";
-"艾灸仪没有连接上?\n取出艾灸头，此时设备会振动"     =   "Not collected yet? \n Take out the device head and it will vibrate";
+"艾灸仪没有连接上?\n取出艾灸头，此时设备会振动"     =   "Not connected yet? \n Take out the device head and it will vibrate";
 "打开蓝牙"     =   "Open Bluetooth";
 "灸大夫隔物灸仪列表"     =   "Sandwiched moxibustion device list";
 "现连接灸头网络名称"     =   "Name of the network connected";
@@ -1684,7 +1684,7 @@
 "检查更新"=    "Check for updates";
 "退出登录"=    "Log out";
 "用户协议"=    "User Aggrement";
-"头像"=    "Avatar";
+"头像"=    "Profile Photo";
 "昵称"=    "Nickname";
 "性别"=    "Gender";
 "请输入你想咨询的内容"=    "Please input what you want to ask ";
@@ -1701,7 +1701,7 @@
 "血糖检测"=    "Test Sugar";
 "血糖监测"=    "Monitor Sugar";
 "午餐前"=    "Before lunch ";
-"第一部分  五官面部及皮肤自查"=    "Part One  Self-examination of five sense organs, face and skin ";
+"第一部分  五官面部及皮肤自查"=    "Part One  Self-examination of facial organs and skin";
 "第二部分  冷热感应状况"=    "Part Two  Sense condition of cold and heat ";
 "第三部分  精神状况"=    "Part Three  Mental condition ";
 "第四部分  身体及代谢症状"=    "Part Four  Physical and metabolic symptoms";
@@ -1732,7 +1732,7 @@
 "睡前"=    "Before sleep ";
 
 
-"疾病检测"    =       "Disease Test";
+"疾病检测"    =       "Zang-fu test";
 "二维码"     =     "QR Code";
 "血压心率检测"   =      "Blood Pressure/Heart Rate";
 "已选症状%ld/5"   =       "Symptoms chosen %ld/5";

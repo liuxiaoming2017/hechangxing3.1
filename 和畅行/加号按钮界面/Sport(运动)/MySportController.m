@@ -538,7 +538,7 @@
         voiceButton.selected = NO;
         
         /***********流量播放弹框********/
-        if(![UserShareOnce shareOnce].wwanPlay){
+        if(![UserShareOnce shareOnce].wwanPlay && FIRST_FLAG){
             if([[UserShareOnce shareOnce].networkState isEqualToString:@"wwan"]){
                 __weak typeof(self) weakSelf = self;
                 [self showAlertMessage:@"当前正在使用流量，是否继续？" withSure:^(NSString *blockParam) {

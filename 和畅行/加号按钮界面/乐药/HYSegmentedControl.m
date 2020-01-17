@@ -65,24 +65,35 @@
         _scrollView.contentSize = CGSizeMake([titles count]*width4btn, HYSegmentedControl_Height);
         _scrollView.showsHorizontalScrollIndicator = NO;
         
+       
+        
         for (int i = 0; i<[titles count]; i++) {
             
             CGRect textRect = [titles[i] boundingRectWithSize:CGSizeMake(MAXFLOAT, HYSegmentedControl_Height)
                                                       options:NSStringDrawingUsesLineFragmentOrigin
                                                    attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
                                                       context:nil];
+            
             CGFloat with = textRect.size.width + Adapter(26);
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            if(!FIRST_FLAG){
+                CGFloat marginW = ScreenWidth/5.0-6;
+                CGFloat btnW = with > marginW ? marginW : with;
+                with = btnW;
+                NSString *str = [titles objectAtIndex:i];
+                NSString *title = [[str componentsSeparatedByString:@" "] objectAtIndex:0];
+                [btn setTitle:title forState:UIControlStateNormal];
+            }else{
+                [btn setTitle:[titles objectAtIndex:i] forState:UIControlStateNormal];
+            }
             btn.frame = CGRectMake(ScreenWidth*(2*i+1)/(titles.count*2) -with/2 , .0f, with, HYSegmentedControl_Height);
             [btn setTitleColor:RGB_TextAppGray forState:UIControlStateNormal];
-            btn.titleLabel.font = [UIFont systemFontOfSize:14];
             btn.layer.borderColor = [RGB_TextAppGray CGColor];
             btn.layer.borderWidth = 0.5f;
             btn.layer.cornerRadius = btn.height/2;
             btn.layer.masksToBounds = YES;
             [btn setBackgroundColor:RGB_AppWhite];
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-            [btn setTitle:[titles objectAtIndex:i] forState:UIControlStateNormal];
             btn.titleLabel.font=[UIFont systemFontOfSize:14];
             [btn addTarget:self action:@selector(segmentedControlChange:) forControlEvents:UIControlEventTouchUpInside];
             btn.tag = Define_Tag_add+i;
@@ -103,8 +114,17 @@
                                                   context:nil];
         CGFloat with = textRect.size.width + Adapter(26);
         UIButton* btn=[_array4Btn objectAtIndex:i];
-        btn.titleLabel.text=[titles objectAtIndex:i];
-        [btn setTitle:[titles objectAtIndex:i] forState:UIControlStateNormal];
+        //btn.titleLabel.text=[titles objectAtIndex:i];
+        if(!FIRST_FLAG){
+            CGFloat marginW = ScreenWidth/5.0-6;
+            CGFloat btnW = with > marginW ? marginW : with;
+            with = btnW;
+            NSString *str = [titles objectAtIndex:i];
+            NSString *title = [[str componentsSeparatedByString:@" "] objectAtIndex:0];
+            [btn setTitle:title forState:UIControlStateNormal];
+        }else{
+            [btn setTitle:[titles objectAtIndex:i] forState:UIControlStateNormal];
+        }
          btn.frame = CGRectMake(ScreenWidth*(2*i+1)/(titles.count*2) -with/2 , .0f, with, HYSegmentedControl_Height);
     }
 }

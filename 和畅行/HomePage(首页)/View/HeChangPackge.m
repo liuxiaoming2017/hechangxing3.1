@@ -67,18 +67,17 @@
     self.remindLabel.textAlignment = NSTextAlignmentCenter;
     self.remindLabel.textColor = [UIColor whiteColor];
     NSString *str = ModuleZW(@"您未完成和畅体检,全部完成体检后定制属于您的和畅服务包");
-    self.remindLabel.text = str;
+    if(FIRST_FLAG){
+        self.remindLabel.text = str;
+    }else{
+        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:str attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16*[UserShareOnce shareOnce].multipleFontSize],NSForegroundColorAttributeName: [UIColor whiteColor]}];
+        self.remindLabel.attributedText = attrString;
+    }
+    
     [self addSubview:self.remindLabel];
-    //CGSize strSize = [str boundingRectWithSize:CGSizeMake(self.remindLabel.width, 1200) options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont fontWithName:[[UIFont systemFontOfSize:1] fontName] size:15]} context:nil].size;
-    //self.remindLabel.frame = CGRectMake(self.remindLabel.left, imgV.top+(imgV.height-strSize.height)/2.0, self.remindLabel.width, strSize.height);
     
-//    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake((ScreenWidth-272)/2.0, self.imageV.bottom-20, 272, 40)];
-//    bottomView.backgroundColor = [UIColor whiteColor];
-//    bottomView.layer.cornerRadius = bottomView.height/2.0;
-//    bottomView.clipsToBounds = YES;
-//    [self addSubview:bottomView];
-    
-    
+   
+
     self.toViewButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [self.toViewButton addTarget:self action:@selector(pushAction) forControlEvents:(UIControlEventTouchUpInside)];
     self.toViewButton.frame = CGRectMake(ScreenWidth/2.0 - Adapter(136), self.imageV.bottom - Adapter(25), Adapter(272), Adapter(60));
@@ -90,49 +89,7 @@
     [tapButton addTarget:self action:@selector(tapAction) forControlEvents:(UIControlEventTouchUpInside)];
     [self addSubview:tapButton];
     
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
-//    [bottomView addGestureRecognizer:tap];
-    
-    /*
-    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
-    imageV.layer.cornerRadius = 8.0;
-    imageV.layer.masksToBounds = YES;
-    imageV.backgroundColor = [UIColor whiteColor];
-    [self addSubview:imageV];
-    [GlobalCommon insertSublayerWithView:self withImageView:imageV];
-    
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 15, 120, 30)];
-    titleLabel.font = [UIFont systemFontOfSize:18];
-    titleLabel.textAlignment = NSTextAlignmentLeft;
-    titleLabel.textColor = [UIColor blackColor];
-    titleLabel.text = @"和畅包";
-    [self addSubview:titleLabel];
-    
-    UIImageView *imgV = [[UIImageView alloc] initWithFrame:CGRectMake(15, 50+5, 80, 80)];
-    imgV.tag = 101;
-    imgV.image = [UIImage imageNamed:@"packge"];
-    [self addSubview:imgV];
-    
-    self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-200)/2.0, 5, 200, 40)];
-    self.contentLabel.font = [UIFont systemFontOfSize:18];
-    self.contentLabel.textAlignment = NSTextAlignmentCenter;
-    self.contentLabel.textColor = UIColorFromHex(0X1E82D2);
-    self.contentLabel.text = @"和畅服务";
-    
-    self.remindLabel = [[UILabel alloc] initWithFrame:CGRectMake(imgV.right+15, imgV.top+10, self.width-imgV.right-30, 60)];
-    self.remindLabel.font = [UIFont systemFontOfSize:15];
-    self.remindLabel.numberOfLines = 0;
-    self.remindLabel.textAlignment = NSTextAlignmentLeft;
-    self.remindLabel.textColor = UIColorFromHex(0X8E8E93);
-    NSString *str = @"您未完成和畅体检,全部完成体检后定制属于您的和畅服务包";
-    self.remindLabel.text = str;
-    [self addSubview:self.remindLabel];
-    CGSize strSize = [str boundingRectWithSize:CGSizeMake(self.remindLabel.width, 1200) options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont fontWithName:[[UIFont systemFontOfSize:1] fontName] size:15]} context:nil].size;
-    self.remindLabel.frame = CGRectMake(self.remindLabel.left, imgV.top+(imgV.height-strSize.height)/2.0, self.remindLabel.width, strSize.height);
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
-    [self addGestureRecognizer:tap];
-     */
+
 }
 
 
@@ -216,9 +173,7 @@
 - (void)updateImageView
 {
     
-//    NSString *str = ModuleZW(@"您未完成和畅体检,全部完成体检后定制属于您的和畅服务包");
-//    self.remindLabel.text = str;
-//    [self.toViewButton setBackgroundImage:[UIImage imageNamed:ModuleZW(@"和畅包未检测")] forState:(UIControlStateNormal)];
+
     
     self.hidden = YES;
 
@@ -251,10 +206,7 @@
 - (void)joinStringWithstr1:(NSString *)colorStr1 WithStr2:(NSString *)colorStr2 withColor:(UIColor *)titleColor
 {
     NSString *str = [NSString stringWithFormat:@"您当前处在%@的%@状态",colorStr1,colorStr2];
-//    NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:str];
-//    [attributeStr addAttribute:NSForegroundColorAttributeName value:titleColor range:NSMakeRange(5, 2)];
-//    [attributeStr addAttribute:NSForegroundColorAttributeName value:titleColor range:NSMakeRange(8, 2)];
-//    self.remindLabel.attributedText = attributeStr;
+
     
     self.remindLabel.text = str;
     
@@ -287,7 +239,16 @@
 {
     NSString *stateStr = [NSString stringWithFormat:@"您当前属于%@",str1];
     NSString *str = [NSString stringWithFormat:@"%@%@，%@",ModuleZW(stateStr),str2,ModuleZW(@"点击查看我们为您定制的和畅服务包")];
-    self.remindLabel.text = str;
+    if(FIRST_FLAG){
+        self.remindLabel.text = str;
+    }else{
+        str = [NSString stringWithFormat:@"%@%@. |%@",ModuleZW(stateStr),str2,ModuleZW(@"点击查看我们为您定制的和畅服务包")];
+        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:str attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16*[UserShareOnce shareOnce].multipleFontSize],NSForegroundColorAttributeName: [UIColor whiteColor]}];
+        UIFont *boldFont = [UIFont boldSystemFontOfSize:17*[UserShareOnce shareOnce].multipleFontSize];
+        [attrString addAttribute:NSFontAttributeName value:boldFont range:[str rangeOfString:@"|View More"]];
+        self.remindLabel.attributedText = attrString;
+    }
+    
     [self.toViewButton setBackgroundImage:[UIImage imageNamed:ModuleZW(@"和畅包p")] forState:(UIControlStateNormal)];
 
 }
