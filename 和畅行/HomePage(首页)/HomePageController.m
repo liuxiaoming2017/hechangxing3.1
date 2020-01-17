@@ -74,8 +74,11 @@
     if(FIRST_FLAG){
         _packgeView.remindLabel.font = [UIFont systemFontOfSize:16];
     }else{
-        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:_packgeView.remindLabel.text attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16*[UserShareOnce shareOnce].multipleFontSize],NSForegroundColorAttributeName: [UIColor whiteColor]}];
-        UIFont *boldFont = [UIFont boldSystemFontOfSize:17*[UserShareOnce shareOnce].multipleFontSize];
+        
+        CGFloat scaleSize = ISPaid ? [UserShareOnce shareOnce].padSizeFloat : [UserShareOnce shareOnce].multipleFontSize;
+        
+        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:_packgeView.remindLabel.text attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16*scaleSize],NSForegroundColorAttributeName: [UIColor whiteColor]}];
+        UIFont *boldFont = [UIFont boldSystemFontOfSize:17*scaleSize];
         [attrString addAttribute:NSFontAttributeName value:boldFont range:[_packgeView.remindLabel.text rangeOfString:@"|View More"]];
         _packgeView.remindLabel.attributedText = attrString;
     }

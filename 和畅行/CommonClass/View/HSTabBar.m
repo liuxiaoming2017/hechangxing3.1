@@ -23,12 +23,14 @@
             [plusBtn setTitle:@"+" forState:UIControlStateNormal];
             plusBtn.titleLabel.font = [UIFont systemFontOfSize:30];
         }else{
-            CGFloat buttonW = ISPaid ? 113 : 93;
+            //CGFloat buttonW = ISPaid ? 113 : 93;
+            CGFloat buttonW = ScreenWidth / 4;
             plusBtn.frame = CGRectMake(0, 5, buttonW, 48);
             [plusBtn setImage:[UIImage imageNamed:@"moreNormal"] forState:UIControlStateNormal];
             [plusBtn setTitle:@"More" forState:UIControlStateNormal];
             [plusBtn setTitleColor:UIColorFromHex(0x999999) forState:UIControlStateNormal];
-            plusBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+            CGFloat fontSize = 14/[UserShareOnce shareOnce].multipleFontSize;
+            plusBtn.titleLabel.font = [UIFont systemFontOfSize:fontSize];
             
             if(ISNotPaid){
                 [self changeButtonType:plusBtn];
@@ -88,9 +90,10 @@
     }
     self.plusBtn.center=temp;
   
-    NSLog(@"frame:%@,frame2",NSStringFromCGSize(self.plusBtn.imageView.image.size));
+    NSLog(@"frame:%@,frame2:%@",NSStringFromCGSize(self.plusBtn.imageView.image.size),NSStringFromCGRect(self.plusBtn.frame));
     
     // 2.设置其它UITabBarButton的位置和尺寸
+    
     
     CGFloat tabbarButtonIndex = 0;
     for (UIView *child in self.subviews) {
