@@ -453,7 +453,13 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     
     
     if([model.name isEqualToString:@"更多按摩"]){
-        ArmchairThemeVC *vc = [[ArmchairThemeVC alloc] init];
+//        ArmchairThemeVC *vc = [[ArmchairThemeVC alloc] init];
+//        [self.navigationController pushViewController:vc animated:YES];
+        ArmchairDetailVC *vc = [[ArmchairDetailVC alloc] initWithType:YES withTitleStr:model.name];
+        vc.armchairModel = model;
+        if([model.name isEqualToString:@"肩颈4D"]){
+            [vc commandActionWithModel:model];
+        }
         [self.navigationController pushViewController:vc animated:YES];
     }else{
         NSString *statusStr = [self resultStringWithStatus];
@@ -678,6 +684,8 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
         
     }];
     
+    
+//    - (void)connectPeripheral:(CBPeripheral *)peripheral connect:(void(^__nullable)(void))connect timeoutConnect:(void (^__nullable)(void))timeoutConnect;
     [[OGA530BluetoothManager shareInstance] connectPeripheral:peripheral connect:^{
         
         NSLog(@"uuid:%@",peripheral.identifier);
@@ -686,10 +694,10 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setObject:uuidStr forKey:OGADeviceUUID];
         [userDefaults synchronize];
-       
+        
         NSLog(@"连接成功");
         dispatch_async(dispatch_get_main_queue(), ^{
-           
+            
             //[progress removeFromSuperview];
             
             [weakself.progressHud removeFromSuperview];
@@ -702,7 +710,10 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
             [UserShareOnce shareOnce].ogaConnected = YES;
         });
         
+    } timeoutConnect:^{
+        
     }];
+
 }
 
 

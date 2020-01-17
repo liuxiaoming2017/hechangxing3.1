@@ -156,7 +156,7 @@
             BCDeviceModel *model = _dataArray[0];
             nameStr = model.deviceName;
         }
-        nameLabel.text = nameStr;
+        
         for (int i = 0 ; i < _dataArray.count; i++) {
             [_chooesArray addObject:_dataArray[i]];
         }
@@ -168,6 +168,12 @@
             _temperatureSlider.value = 40;
             _timeSlider.value = 1;
         }
+        if (_chooesArray.count>2) {
+            nameLabel.font = [UIFont systemFontOfSize:32/[UserShareOnce shareOnce].multipleFontSize/_chooesArray.count*2];
+        }else{
+            nameLabel.font = [UIFont systemFontOfSize:32/[UserShareOnce shareOnce].multipleFontSize];
+        }
+        nameLabel.text = nameStr;
         _temperatureLabel.text = [NSString stringWithFormat:@"%d℃",(int)(_temperatureSlider.value + 1)];
         _timeLabel.text = [NSString stringWithFormat:@"%dmin",(int)_timeSlider.value];
         setAllBT.selected = YES;
@@ -279,6 +285,12 @@
     for (int i= 0; i < _chooesArray.count; i++) {
         BCDeviceModel *model = _chooesArray[i];
         nameStr =  [nameStr stringByAppendingString:[NSString stringWithFormat:@"%@、",model.deviceName]];
+    }
+    
+    if (_chooesArray.count>2) {
+        _nameLabel.font = [UIFont systemFontOfSize:32/[UserShareOnce shareOnce].multipleFontSize/_chooesArray.count*2];
+    }else{
+        _nameLabel.font = [UIFont systemFontOfSize:32/[UserShareOnce shareOnce].multipleFontSize];
     }
     nameStr = [nameStr substringToIndex:nameStr.length - 1];
     _nameLabel.text = nameStr;
@@ -396,6 +408,11 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     for (int i= 0; i < _chooesArray.count; i++) {
         BCDeviceModel *model = _chooesArray[i];
         nameStr =  [nameStr stringByAppendingString:[NSString stringWithFormat:@"%@、",model.deviceName]];
+    }
+    if (_chooesArray.count>2) {
+        _nameLabel.font = [UIFont systemFontOfSize:32/[UserShareOnce shareOnce].multipleFontSize/_chooesArray.count*2];
+    }else{
+        _nameLabel.font = [UIFont systemFontOfSize:32/[UserShareOnce shareOnce].multipleFontSize];
     }
     nameStr = [nameStr substringToIndex:nameStr.length - 1];
     _nameLabel.text = nameStr;

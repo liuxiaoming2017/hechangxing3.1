@@ -116,7 +116,7 @@
     
     [UserShareOnce shareOnce].startTime = [GlobalCommon getCurrentTimes];
     //埋点数据上传
-    [self buriedDataPoints];
+    [self submitData];
     
     //self.rightBtn.hidden = NO;
     [self.rightBtn addTarget:self action:@selector(messageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -690,22 +690,6 @@
     [super viewDidAppear:animated];
 
 }
-
-//数据上传处理
-
--(void)buriedDataPoints {
-    //获取买点token
-    NSString *downloadStr = [NSString stringWithFormat:@"http://10.1.71.96:8086/login"];
-    NSString *appSignStr = [[NSBundle mainBundle] bundleIdentifier];
-    NSDictionary *downloadDic = @{@"username":appSignStr,
-                                  @"password":@"ky3h" };
-    [[BuredPoint sharedYHBuriedPoint]getTokenWithUrl:downloadStr dic:downloadDic successBlock:^(id  _Nonnull response) {
-        [self submitData];
-    } failureBlock:^(NSError * _Nonnull error) {
-        
-    }];
-
-}
     
 -(void)submitData{
     //==============================此接口为用户新增用户信息使用   怎么判断新增客户? 后台判断=========================
@@ -731,7 +715,7 @@
     }
     
     NSString *appSignStr = [[NSBundle mainBundle] bundleIdentifier];
-    NSString *urlStr = [NSString stringWithFormat:@"%@user/info",DATAURL_PRE];
+    NSString *urlStr = [NSString stringWithFormat:@"%@v1/user/info",DATAURL_PRE];
     NSDictionary *infodic = @{ @"body":@{
                                        @"userId":userSign,
                                        @"memberId":memberId,
@@ -763,7 +747,7 @@
     NSString *network_methodStr = [GlobalCommon internetStatus];//联网方式
     
     
-    NSString *deviceStr = [NSString stringWithFormat:@"%@user/device",DATAURL_PRE];
+    NSString *deviceStr = [NSString stringWithFormat:@"%@v1/user/device",DATAURL_PRE];
     NSDictionary *deviceDic = @{ @"body":@{
                                          @"id":@"",
                                          @"userId":userSign,

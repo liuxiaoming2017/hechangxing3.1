@@ -42,7 +42,7 @@
 #import "VersionUpdateView.h"
 
 #if FIRST_FLAG
-#import <OGABluetooth530/OGABluetooth530.h>
+#import <OGABluetooth_Combine/OGABluetooth_Combine.h>
 #else
 #import <OGABluetooth730B/OGABluetoothManager_730B.h>
 #endif

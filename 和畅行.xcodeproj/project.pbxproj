@@ -79,7 +79,6 @@
 		03513AD820E9CAD4004E2805 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03513AD620E9CAD4004E2805 /* LaunchScreen.storyboard */; };
 		03513ADB20E9CAD4004E2805 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 03513ADA20E9CAD4004E2805 /* main.m */; };
 		0351C59123278C3B0035A9EA /* ArmchairThemeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0351C59023278C3B0035A9EA /* ArmchairThemeVC.m */; };
-		035260B0230BD4B200A716C8 /* OGABluetooth530.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 035260AF230BD4B200A716C8 /* OGABluetooth530.framework */; };
 		03535EE720F701DF00664FA9 /* TipWriteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03535EE620F701DF00664FA9 /* TipWriteController.m */; };
 		03535EEA20F703A400664FA9 /* SayAndWriteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03535EE920F703A400664FA9 /* SayAndWriteController.m */; };
 		03535EF320F7262C00664FA9 /* TipClickController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03535EF220F7262C00664FA9 /* TipClickController.m */; };
@@ -521,7 +520,6 @@
 		03BD8215238BB89000F57978 /* UIClickLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E857E2186EB46001B9BB4 /* UIClickLabel.m */; };
 		03BD8216238BB89000F57978 /* SetupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036FC0E82118281100C1A793 /* SetupController.m */; };
 		03BD8217238BB89000F57978 /* ConnectBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E858B2186EB47001B9BB4 /* ConnectBtn.m */; };
-		03BD8218238BB89000F57978 /* ArmchairHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F31F3231D0604009A0D94 /* ArmchairHomeVC.m */; };
 		03BD8219238BB89000F57978 /* AllServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B76975231FA27B00171DCC /* AllServiceCell.m */; };
 		03BD821A238BB89000F57978 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F6930720FF2FD300308E38 /* SBJsonWriter.m */; };
 		03BD821B238BB89000F57978 /* AESCipher.m in Sources */ = {isa = PBXBuildFile; fileRef = 03051FF422C0997D00385DD0 /* AESCipher.m */; };
@@ -993,7 +991,6 @@
 		03BD83F8238BB89000F57978 /* switch_onblue.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E84622186EB07001B9BB4 /* switch_onblue.png */; };
 		03BD83F9238BB89000F57978 /* PEPhotoCropEditor.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0337A720218ADC6C005A4693 /* PEPhotoCropEditor.bundle */; };
 		03BD8402238BBA8F00F57978 /* HarmonyYi.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03BD8401238BBA8F00F57978 /* HarmonyYi.plist */; };
-		03BD8408238BBC1400F57978 /* OGABluetooth730B.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03BD8407238BBC1400F57978 /* OGABluetooth730B.framework */; };
 		03BD8417238BC04B00F57978 /* OGA730BThemeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BD840D238BC04400F57978 /* OGA730BThemeVC.m */; };
 		03BD8418238BC04B00F57978 /* OGA730BDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BD840E238BC04500F57978 /* OGA730BDetailVC.m */; };
 		03BD8419238BC04B00F57978 /* OGA730BTestResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BD8410238BC04600F57978 /* OGA730BTestResultVC.m */; };
@@ -1255,6 +1252,8 @@
 		C9865C66238CF23000ECAAB9 /* CommandButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9865C65238CF22F00ECAAB9 /* CommandButtonView.m */; };
 		C9865C67238CF23000ECAAB9 /* CommandButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9865C65238CF22F00ECAAB9 /* CommandButtonView.m */; };
 		C988EFD32383917800DCAF80 /* BuredPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = C988EFD12383917800DCAF80 /* BuredPoint.m */; };
+		C99088AC23C4225800E984ED /* OGABluetooth_Combine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99088AB23C4225700E984ED /* OGABluetooth_Combine.framework */; };
+		C99088AE23C423E300E984ED /* OGABluetooth730B.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99088AD23C423E200E984ED /* OGABluetooth730B.framework */; };
 		C99B717221B903BE00F1FF5F /* HCY_DAVisceraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */; };
 		C9A2D3302331C68B00AC5185 /* NSBundle+Language.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A2D32F2331C68B00AC5185 /* NSBundle+Language.m */; };
 		C9B306472304F84E008D6D38 /* HealthLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B306462304F84D008D6D38 /* HealthLectureViewController.m */; };
@@ -1440,7 +1439,6 @@
 		03513ADA20E9CAD4004E2805 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0351C58F23278C3B0035A9EA /* ArmchairThemeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArmchairThemeVC.h; sourceTree = "<group>"; };
 		0351C59023278C3B0035A9EA /* ArmchairThemeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArmchairThemeVC.m; sourceTree = "<group>"; };
-		035260AF230BD4B200A716C8 /* OGABluetooth530.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OGABluetooth530.framework; sourceTree = "<group>"; };
 		03535EE520F701DF00664FA9 /* TipWriteController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TipWriteController.h; sourceTree = "<group>"; };
 		03535EE620F701DF00664FA9 /* TipWriteController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TipWriteController.m; sourceTree = "<group>"; };
 		03535EE820F703A400664FA9 /* SayAndWriteController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SayAndWriteController.h; sourceTree = "<group>"; };
@@ -1976,7 +1974,6 @@
 		03B4E4D5232636B9003518EA /* armChair.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = armChair.plist; sourceTree = "<group>"; };
 		03BD83FF238BB89000F57978 /* HarmonyYi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HarmonyYi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03BD8401238BBA8F00F57978 /* HarmonyYi.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HarmonyYi.plist; sourceTree = "<group>"; };
-		03BD8407238BBC1400F57978 /* OGABluetooth730B.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OGABluetooth730B.framework; sourceTree = "<group>"; };
 		03BD840B238BC04300F57978 /* OGA730BTestResultVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGA730BTestResultVC.h; sourceTree = "<group>"; };
 		03BD840C238BC04400F57978 /* OGA730BThemeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGA730BThemeVC.h; sourceTree = "<group>"; };
 		03BD840D238BC04400F57978 /* OGA730BThemeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGA730BThemeVC.m; sourceTree = "<group>"; };
@@ -2360,6 +2357,8 @@
 		C9865C65238CF22F00ECAAB9 /* CommandButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandButtonView.m; sourceTree = "<group>"; };
 		C988EFD12383917800DCAF80 /* BuredPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuredPoint.m; sourceTree = "<group>"; };
 		C988EFD22383917800DCAF80 /* BuredPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuredPoint.h; sourceTree = "<group>"; };
+		C99088AB23C4225700E984ED /* OGABluetooth_Combine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OGABluetooth_Combine.framework; sourceTree = "<group>"; };
+		C99088AD23C423E200E984ED /* OGABluetooth730B.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OGABluetooth730B.framework; sourceTree = "<group>"; };
 		C99B717021B903BE00F1FF5F /* HCY_DAVisceraCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_DAVisceraCell.h; sourceTree = "<group>"; };
 		C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_DAVisceraCell.m; sourceTree = "<group>"; };
 		C9A2D32E2331C68B00AC5185 /* NSBundle+Language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Language.h"; sourceTree = "<group>"; };
@@ -2429,7 +2428,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0328F6312334CA6400BD25F7 /* CoreBluetooth.framework in Frameworks */,
-				035260B0230BD4B200A716C8 /* OGABluetooth530.framework in Frameworks */,
 				03D99E5F21AD335E00C766FD /* libSocialSina.a in Frameworks */,
 				03D99E5D21AD335100C766FD /* libSocialQQ.a in Frameworks */,
 				03D99E5B21AD334300C766FD /* libSocialWeChat.a in Frameworks */,
@@ -2451,6 +2449,7 @@
 				03535EF820F73CAB00664FA9 /* libsqlite3.tbd in Frameworks */,
 				0306C5D621CCC15A00DA5DC1 /* UShareUI.framework in Frameworks */,
 				0385402420EF1469002AC776 /* Security.framework in Frameworks */,
+				C99088AC23C4225800E984ED /* OGABluetooth_Combine.framework in Frameworks */,
 				03FBDF4C21927DC1006116FC /* UMCommon.framework in Frameworks */,
 				0385402220EF1462002AC776 /* SystemConfiguration.framework in Frameworks */,
 				0385402020EF1457002AC776 /* CoreGraphics.framework in Frameworks */,
@@ -2481,7 +2480,7 @@
 				03BD82C5238BB89000F57978 /* UMShare.framework in Frameworks */,
 				C9EE6E2123ACB63000BE4B57 /* BCBluetoothSDK.framework in Frameworks */,
 				03BD82C6238BB89000F57978 /* libWeChatSDK.a in Frameworks */,
-				03BD8408238BBC1400F57978 /* OGABluetooth730B.framework in Frameworks */,
+				C99088AE23C423E300E984ED /* OGABluetooth730B.framework in Frameworks */,
 				03BD82C7238BB89000F57978 /* libz.1.1.3.tbd in Frameworks */,
 				03BD82C8238BB89000F57978 /* libSocialSina.a in Frameworks */,
 				03BD82C9238BB89000F57978 /* libz.1.2.5.tbd in Frameworks */,
@@ -3757,10 +3756,10 @@
 		0390CF7B20ECB5CF000ECA53 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C99088AD23C423E200E984ED /* OGABluetooth730B.framework */,
+				C99088AB23C4225700E984ED /* OGABluetooth_Combine.framework */,
 				C9EE6E2023ACB62F00BE4B57 /* BCBluetoothSDK.framework */,
 				037E32F92398A2EF001F6624 /* Pods_和畅行.framework */,
-				03BD8407238BBC1400F57978 /* OGABluetooth730B.framework */,
-				035260AF230BD4B200A716C8 /* OGABluetooth530.framework */,
 				03CEFC0921A64B6A0097CB17 /* moxibustion.framework */,
 				034243C8235EA57F001231E7 /* Reachability.framework */,
 				034243C6235EA574001231E7 /* FreeStreamer.framework */,
@@ -5944,7 +5943,6 @@
 				03BD8215238BB89000F57978 /* UIClickLabel.m in Sources */,
 				03BD8216238BB89000F57978 /* SetupController.m in Sources */,
 				03BD8217238BB89000F57978 /* ConnectBtn.m in Sources */,
-				03BD8218238BB89000F57978 /* ArmchairHomeVC.m in Sources */,
 				03BD8219238BB89000F57978 /* AllServiceCell.m in Sources */,
 				03BD821A238BB89000F57978 /* SBJsonWriter.m in Sources */,
 				03BD821B238BB89000F57978 /* AESCipher.m in Sources */,

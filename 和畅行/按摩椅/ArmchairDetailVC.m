@@ -112,7 +112,7 @@ typedef enum : NSInteger {
     slideDirect = SlideDirectTopToBottom;
     panViewMaxY = ScreenHeight-Adapter(100);
     panViewMinY = ScreenHeight-Adapter(185);
-    
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     //按摩椅添加订阅
     self.ogaSubscribe = [[OGA530Subscribe alloc] init];
     __weak typeof(self) weakSelf = self;
@@ -1034,6 +1034,91 @@ typedef enum : NSInteger {
     
 }
 
+
+//-(void)viewWillDisappear:(BOOL)animated {
+//    [super viewWillDisappear:animated];
+//    
+//    self.endTimeStr = [GlobalCommon getCurrentTimes];
+//    NSString *userSign = [UserShareOnce shareOnce].uid;
+//    NSString *memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
+//    if(!self.isAdvanced){
+//        //高级按摩
+//        NSString *userSign = [UserShareOnce shareOnce].uid;
+//        NSString *memberId = [NSString stringWithFormat:@"%@",[MemberUserShance shareOnce].idNum];
+//        
+//        NSString *deviceStr = [NSString stringWithFormat:@"%@mchair/advanced",DATAURL_PRE];
+//        NSDictionary *deviceDic = @{ @"body":@{
+//                                             @"id":@"",
+//                                             @"memberChild":memberId,
+//                                             @"memberId":userSign,
+//                                             @"subject":@"1",
+//                                             @"massageName":@"0",
+//                                             @"classifyId":@"0",
+//                                             @"blackHeat":@"1-2",
+//                                             @"soleRoller":@"1-2",
+//                                             @"rounie":@"1",
+//                                             @"qiaoji":@"1",
+//                                             @"zhiya":@"1",
+//                                             @"tuina":@"1",
+//                                             @"paida":@"1",
+//                                             @"jianjing4":@"1",
+//                                             @"yaobugunya":@"1",
+//                                             @"xigaianmo":@"0",
+//                                             @"xiaotuijiare":@"1",
+//                                             @"ruidian":@"1",
+//                                             @"body":@"1",
+//                                             @"jianjing":@"1",
+//                                             @"shoubi":@"1",
+//                                             @"yaotun":@"1",
+//                                             @"xiaotui":@"1",
+//                                             @"zeroG":@"1",
+//                                             @"takeIn":@"1",
+//                                             @"spreadOn":@"1",
+//                                             @"daobei":@"1",
+//                                             @"taitui":@"1",
+//                                             @"shengbei":@"1",
+//                                             @"jiangtui":@"1",
+//                                             @"startDate": self.startTimeStr,
+//                                             @"endDate":self.endTimeStr}
+//                                     };
+//        
+//        [[BuredPoint sharedYHBuriedPoint] submitWithUrl:deviceStr dic:deviceDic successBlock:^(id  _Nonnull response) {
+//            NSLog(@"%@",response);
+//        } failureBlock:^(NSError * _Nonnull error) {
+//        }];
+//        
+//    }else{
+//        //普通按摩
+//        
+//        NSString *deviceStr = [NSString stringWithFormat:@"%@mchair/effect",DATAURL_PRE];
+//        NSString *effectId = [GlobalCommon getChairEffecttIDWithString:self.titleStr];
+//        NSDictionary *deviceDic = @{ @"body":@{
+//                                             @"id":@"",
+//                                             @"memberChild":memberId,
+//                                             @"memberId":userSign,
+//                                             @"effectId":effectId,
+//                                             @"blackHeat":@"0",
+//                                             @"soleRoller":@"0",
+//                                             @"qinangStrength":@"1-2",
+//                                             @"massageStrength":@"1-2",
+//                                             @"zeroG":@"1",
+//                                             @"takeIn":@"1",
+//                                             @"spreadOn":@"1",
+//                                             @"daobei":@"1",
+//                                             @"taitui":@"1",
+//                                             @"shengbei":@"1",
+//                                             @"jiangtui":@"1",
+//                                             @"startDate":self.startTimeStr,
+//                                             @"endDate":self.endTimeStr}
+//                                     };
+//        
+//        [[BuredPoint sharedYHBuriedPoint] submitWithUrl:deviceStr dic:deviceDic successBlock:^(id  _Nonnull response) {
+//            NSLog(@"%@",response);
+//        } failureBlock:^(NSError * _Nonnull error) {
+//        }];
+//    }
+//    
+//}
 
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
     return YES;

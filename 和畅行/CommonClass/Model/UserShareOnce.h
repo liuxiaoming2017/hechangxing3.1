@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "ChildMemberModel.h"
 #import <AVFoundation/AVFoundation.h>
+#import <CoreBluetooth/CoreBluetooth.h>
 
 @interface UserShareOnce : NSObject
 
@@ -79,6 +80,9 @@
 
 @property (copy, nonatomic) NSString  *networkState;
 
+//ijoou设备
+@property (copy, nonatomic) NSMutableArray  *ijoouArray;
+@property (nonatomic , strong) CBCentralManager *manager;
 
 + (UserShareOnce *)shareOnce;
 +(void)attemptDealloc;

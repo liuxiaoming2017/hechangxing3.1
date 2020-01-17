@@ -116,7 +116,7 @@ static NSMutableArray *tasks;
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error == nil) {
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-            NSString *token = [NSString stringWithFormat:@"%@",[dict valueForKey:@"data11"]];
+            NSString *token = [NSString stringWithFormat:@"%@",[dict valueForKey:@"data"]];
             if (![self stringEqualNull:token]) {
                 self.pointToken = token;
                 if (successBlock)

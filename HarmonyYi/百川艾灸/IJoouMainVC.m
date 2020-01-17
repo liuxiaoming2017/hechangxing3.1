@@ -27,7 +27,6 @@
 @property (nonatomic,strong)UILabel *showLabel;
 @property (nonatomic,strong) UIButton *ijoouRightBT;
 @property (nonatomic,strong) UICollectionView *collectionV;
-@property (nonatomic , strong) CBCentralManager *manager;
 @property (nonatomic , strong) NSMutableArray *peripheralArr;
 @property (nonatomic, strong) NSMutableArray *chooseArray;
 @property (nonatomic, strong) NSMutableArray *bindDeviceArray;
@@ -59,8 +58,41 @@
     _deviceANumber = 1;
     _deviceBNumber = 1;
     _canShowClose = NO;
+    if(![UserShareOnce shareOnce].manager){
+        [UserShareOnce shareOnce].manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+    }else{
+        [self centralManagerDidUpdateState:[UserShareOnce shareOnce].manager];
+    }
     //布局页面
     [self layoutStartIJooView];
+    
+    if ([UserShareOnce shareOnce].ijoouArray.count > 0) {
+        //已经被系统或者其他APP连接上的设备数组
+        NSArray *arr = [[UserShareOnce shareOnce].manager retrieveConnectedPeripheralsWithServices:@[[CBUUID UUIDWithString:@"FFF0"]]];//serviceUUID就是你首次连接配对的蓝牙
+        NSLog(@"%@",arr);
+        for (int i = 0; i < [UserShareOnce shareOnce].ijoouArray.count; i++) {
+            BCDeviceModel *model = [UserShareOnce shareOnce].ijoouArray[i];
+            for (int j = 0; j < arr.count; j++) {
+                CBPeripheral *pheral = arr[j];
+                if ([[model.BCDevice.identifier UUIDString] isEqualToString:[pheral.identifier UUIDString]]) {
+                    [self.dataArr addObject:model];
+                }
+            }
+        }
+        
+        if (self.dataArr.count > 0) {
+            self.showType = 1;
+            [self layoutShowView];
+            self.setAllBT.hidden = NO;
+            self.cancelBT.hidden = YES;
+            self.bindBT.hidden = YES;
+            self.showLabel.hidden = YES;
+            self.unbindBT.hidden = NO;
+            self.canreload = 0;
+            self.ijoouRightBT.hidden = YES;
+            self.rightBtn.hidden = YES;
+        }
+    }
     
 }
 
@@ -72,11 +104,20 @@
     self.preBtn.hidden = NO;
     self.leftBtn.hidden = YES;
     self.canreload = 0;
-    self.manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+    
     self.navTitleLabel.text = @"ijoou";
     self.startView = [[UIView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight - kNavBarHeight)];
     self.startView.backgroundColor = RGB_AppWhite;
     [self.view addSubview:self.startView];
+    
+    self.unbindBT = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.unbindBT.frame = CGRectMake(ScreenWidth-Adapter(110), 2+kStatusBarHeight, Adapter(100), 40);
+    [self.unbindBT addTarget:self action:@selector(unbindAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.unbindBT.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [self.unbindBT setTitle:@"Unbind device" forState:(UIControlStateNormal)];
+    [self.unbindBT setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    self.unbindBT.hidden = YES;
+    [self.topView addSubview:self.unbindBT];
 
     UILabel *startLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(30), Adapter(40), ScreenWidth - Adapter(60), Adapter(50))];
     startLabel.numberOfLines = 2;
@@ -104,8 +145,6 @@
 
 # pragma mark - 布局展示搜索结果页面
 -(void)layoutShowView{
-    
-   
     
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showFailView) object:nil];
     self.showView = [[UIView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight - kNavBarHeight)];
@@ -175,38 +214,42 @@
     [self.showView addSubview:setAllBT];
     self.setAllBT = setAllBT;
     
-    
-    int deInt = 0;
-    for (int i = 0; i < self.dataArr.count; i++) {
-        BCDeviceModel *dataModel = self.dataArr[i];
-        for (int j = 0; j < self.bindDeviceArray.count; j++) {
-            if ([[dataModel.BCDevice.identifier UUIDString] isEqualToString:self.bindDeviceArray[j]]) {
-                deInt++;
-            }
-        }
-    }
-    
-    if (deInt != self.dataArr.count) {
+    NSLog(@"%@ -=-=-=-=-=-=-=   %d",[UserShareOnce shareOnce].ijoouArray,self.showType);
+    if ([UserShareOnce shareOnce].ijoouArray.count > 0&&self.showType == 1) {
+        setAllBT.hidden = NO;
         [self.collectionV reloadData];
         self.collectionV.hidden = NO;
         self.findView.hidden = YES;
         self.showView.hidden = NO;
-    }
-    __weak typeof(self) weakSelf = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5* NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        if (deInt == weakSelf.dataArr.count) {
-            [GlobalCommon showMBHudWithView:weakSelf.view];
-            for (int i  = 0 ; i < weakSelf.dataArr.count; i++) {
-                [BCBluetoothManager shared].delegate = self;
-                [[BCBluetoothManager shared] authenticationDevice:weakSelf.dataArr[i]];
+    }else{
+        int deInt = 0;
+        for (int i = 0; i < self.dataArr.count; i++) {
+            BCDeviceModel *dataModel = self.dataArr[i];
+            for (int j = 0; j < self.bindDeviceArray.count; j++) {
+                if ([[dataModel.BCDevice.identifier UUIDString] isEqualToString:self.bindDeviceArray[j]]) {
+                    deInt++;
+                }
             }
         }
         
-    });
-    
-    
-  
+        if (deInt != self.dataArr.count) {
+            [self.collectionV reloadData];
+            self.collectionV.hidden = NO;
+            self.findView.hidden = YES;
+            self.showView.hidden = NO;
+        }
+        __weak typeof(self) weakSelf = self;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5* NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            if (deInt == weakSelf.dataArr.count) {
+                [GlobalCommon showMBHudWithView:weakSelf.view];
+                for (int i  = 0 ; i < weakSelf.dataArr.count; i++) {
+                    [BCBluetoothManager shared].delegate = self;
+                    [[BCBluetoothManager shared] authenticationDevice:weakSelf.dataArr[i]];
+                }
+            }
+        });
+    }
 }
 
 
@@ -228,11 +271,13 @@
         [BCBluetoothManager shared].delegate = self;
     };
     vc.DisconnecBlack = ^(NSMutableArray * _Nonnull dataArray) {
+        [BCBluetoothManager shared].delegate = self;
         if (dataArray.count == weakSelf.dataArr.count) {
             for (int i = 0; i<dataArray.count; i++) {
                 BCDeviceModel *chooseModel = dataArray[i];
                 [[BCBluetoothManager shared] turnOffDevice:chooseModel];
             }
+            weakSelf.showType = 0;
             [weakSelf findCancel:[UIButton buttonWithType:(UIButtonTypeCustom)]];
         }else{
             [BCBluetoothManager shared].delegate = self;
@@ -335,7 +380,7 @@
             if (![_peripheralArr containsObject:peripheral]) {
                 [_peripheralArr addObject:peripheral];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self.manager connectPeripheral:peripheral options:nil];
+                    [[UserShareOnce shareOnce].manager connectPeripheral:peripheral options:nil];
                 });
                 
             }
@@ -345,7 +390,7 @@
                     if (![_peripheralArr containsObject:peripheral]) {
                         [_peripheralArr addObject:peripheral];
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                            [self.manager connectPeripheral:peripheral options:nil];
+                            [[UserShareOnce shareOnce].manager connectPeripheral:peripheral options:nil];
                         });
                     }
                 }
@@ -368,7 +413,7 @@
     }
     [self.dataArr addObject:model];
     self.canreload++;
-    [self.manager stopScan];
+    [[UserShareOnce shareOnce].manager stopScan];
     NSLog(@"--------------------------%d   -----------------------------------%d",self.canreload,(int)self.peripheralArr.count);
     if (self.canreload == (int)_peripheralArr.count) {
         [self layoutShowView];
@@ -381,7 +426,9 @@
 
 //连接蓝牙设备失败
 - (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(nullable NSError *)error{
+    
   
+    
 }
 //断开蓝牙设备连接
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(nullable NSError *)error{
@@ -417,6 +464,7 @@
 }
 # pragma mark - 开始搜索点击事件
 -(void)startAction {
+    NSLog(@"self.connectState ======   %@",self.connectState);
      if (![self.connectState isEqualToString:kCONNECTED_POWERD_ON]) {
          [GlobalCommon showMessage2:@"Please turn on bluetooth" duration2:2.0];
          return;
@@ -447,21 +495,28 @@
 -(void)layoutFindView{
     self.startView.hidden = YES;
     _canShowClose = YES;
-    if (_peripheralArr.count>0) {
-        for (int i = 0; i < _peripheralArr.count; i++) {
-            [self.manager cancelPeripheralConnection:_peripheralArr[i]];
+    NSArray *arr = [[UserShareOnce shareOnce].manager retrieveConnectedPeripheralsWithServices:@[[CBUUID UUIDWithString:@"FFF0"]]];
+    if (arr.count>0) {
+        for (int i = 0; i < arr.count; i++) {
+            [[UserShareOnce shareOnce].manager cancelPeripheralConnection:arr[i]];
         }
-        [_peripheralArr removeAllObjects];
+        [self.peripheralArr removeAllObjects];
     }
     [self.dataArr removeAllObjects];
     CBUUID *uuid = [CBUUID UUIDWithString:@"FFF0"];
-    [self.manager scanForPeripheralsWithServices:@[uuid] options:@{CBCentralManagerScanOptionAllowDuplicatesKey:@(YES)}];
+    [[UserShareOnce shareOnce].manager scanForPeripheralsWithServices:@[uuid] options:@{CBCentralManagerScanOptionAllowDuplicatesKey:@(YES)}];
 
     self.findView = [[UIView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight - kNavBarHeight)];
     self.findView.backgroundColor = RGB_AppWhite;
     [self.view addSubview:self.findView];
     
-   
+    self.ijoouRightBT = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.ijoouRightBT.frame = CGRectMake(ScreenWidth-Adapter(70), 2+kStatusBarHeight, Adapter(60), 40);
+    [self.ijoouRightBT addTarget:self action:@selector(findCancel:) forControlEvents:UIControlEventTouchUpInside];
+    [self.ijoouRightBT setTitle:@"cancel" forState:(UIControlStateNormal)];
+    [self.ijoouRightBT setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [self.topView addSubview:self.ijoouRightBT];
+    
     UIButton *findBT = [UIButton buttonWithType:(UIButtonTypeCustom)];
     findBT.frame = CGRectMake(ScreenWidth/2 - Adapter(30), ScreenHeight/3 - Adapter(60), Adapter(60), Adapter(60));
     [findBT setImage:[UIImage imageNamed:@"ijoou蓝牙"] forState:(UIControlStateNormal)];
@@ -471,24 +526,6 @@
     findBT.layer.masksToBounds = YES;
     [self.findView addSubview:findBT];
     self.findBT = findBT;
-    
-    
-    
-    self.ijoouRightBT = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.ijoouRightBT.frame = CGRectMake(ScreenWidth-Adapter(70), 2+kStatusBarHeight, Adapter(60), 40);
-    [self.ijoouRightBT addTarget:self action:@selector(findCancel:) forControlEvents:UIControlEventTouchUpInside];
-    [self.ijoouRightBT setTitle:@"cancel" forState:(UIControlStateNormal)];
-    [self.ijoouRightBT setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-    [self.topView addSubview:self.ijoouRightBT];
-    
-    self.unbindBT = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.unbindBT.frame = CGRectMake(ScreenWidth-Adapter(110), 2+kStatusBarHeight, Adapter(100), 40);
-    [self.unbindBT addTarget:self action:@selector(unbindAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.unbindBT.titleLabel setFont:[UIFont systemFontOfSize:14]];
-    [self.unbindBT setTitle:@"Unbind device" forState:(UIControlStateNormal)];
-    [self.unbindBT setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-    self.unbindBT.hidden = YES;
-    [self.topView addSubview:self.unbindBT];
     
    
     UILabel *findLabel = [[UILabel alloc]initWithFrame:CGRectMake(Adapter(30), ScreenHeight/2, ScreenWidth - Adapter(60), Adapter(50))];
@@ -661,14 +698,16 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
             [BCBluetoothManager shared].delegate = self;
         };
         vc.DisconnecBlack = ^(NSMutableArray * _Nonnull dataArray) {
+            [BCBluetoothManager shared].delegate = self;
             if (dataArray.count == weakSelf.dataArr.count) {
                 for (int i = 0; i<dataArray.count; i++) {
                     BCDeviceModel *chooseModel = dataArray[i];
                     [[BCBluetoothManager shared] turnOffDevice:chooseModel];
                 }
+                weakSelf.showType = 0;
                 [weakSelf findCancel:[UIButton buttonWithType:(UIButtonTypeCustom)]];
             }else{
-                [BCBluetoothManager shared].delegate = self;
+                
                 for (int i = 0; i<dataArray.count; i++) {
                     BCDeviceModel *chooseModel = dataArray[i];
                     [[BCBluetoothManager shared] turnOffDevice:chooseModel];
@@ -723,10 +762,8 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
                 [[NSUserDefaults standardUserDefaults] synchronize];
             }
             
-            if (self.showView.hidden == YES) {
-                 self.collectionV.hidden = NO;;
-                self.showView.hidden = NO;
-            }
+            self.collectionV.hidden = NO;;
+            self.showView.hidden = NO;
             
             [[BCBluetoothManager shared] turnOnDevice:device];
             [self openDevice:device];
@@ -774,8 +811,14 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
 
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    if(!self.popType){
-        [self findCancel:nil];
+    if (self.popType) {
+        return;
+    }
+    if(!self.popType&&self.showType == 1){
+        [UserShareOnce shareOnce].ijoouArray = [self.dataArr mutableCopy];
+    }else{
+        [self findCancel:[UIButton buttonWithType:(UIButtonTypeCustom)]];
+        [UserShareOnce shareOnce].ijoouArray = nil;
     }
 }
 
@@ -789,18 +832,18 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
         self.startView.hidden = YES;
     }
    
-    if (_peripheralArr.count>0) {
+    NSArray *arr = [[UserShareOnce shareOnce].manager retrieveConnectedPeripheralsWithServices:@[[CBUUID UUIDWithString:@"FFF0"]]];
+    if (arr.count>0) {
         __weak typeof(self) weakSelf = self;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            for (int i = 0; i < weakSelf.peripheralArr.count; i++) {
-                [weakSelf.manager cancelPeripheralConnection:weakSelf.peripheralArr[i]];
+            for (int i = 0; i < arr.count; i++) {
+                [[UserShareOnce shareOnce].manager cancelPeripheralConnection:arr[i]];
             }
             [weakSelf.peripheralArr removeAllObjects];
         });
-        
     }
     self.canreload = 0;
-    [self.manager stopScan];
+    [[UserShareOnce shareOnce].manager stopScan];
     self.showView.hidden = YES;
     self.ijoouRightBT.hidden = YES;
     self.findView.hidden = YES;
@@ -879,7 +922,7 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     backView.backgroundColor = RGBA(1, 1, 1, 0.4);
     [self.view addSubview:backView];
     
-    UIView *showView = [[UIView alloc]initWithFrame:CGRectMake((ScreenWidth -ScreenHeight/2)/2, ScreenHeight/6, ScreenHeight/2 , ScreenHeight/1.5)];
+    UIView *showView = [[UIView alloc]initWithFrame:CGRectMake(ScreenWidth/8, ScreenHeight/2 - ScreenWidth*9/16, ScreenWidth*3/4 , ScreenWidth*9/8)];
     showView.backgroundColor = [UIColor whiteColor];
     showView.layer.cornerRadius = Adapter(10);
     [backView addSubview:showView];

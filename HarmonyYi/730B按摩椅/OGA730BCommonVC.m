@@ -100,7 +100,7 @@
                       @{@"name":@"Shoulder",@"command":k730Command_Warm},
                       @{@"name":@"Back",@"command":k730Command_Warm},//UpperBack
                       @{@"name":@"Waist",@"command":k730Command_Warm},//LowerBack
-                      @{@"name":@"Neck",@"command":k730Command_Warm} //WholeBack
+                      @{@"name":@"UpperBody",@"command":k730Command_Warm} //WholeBack
                       ];
     NSArray *arr3 = @[
                       @{@"name":@"Shiatsu",@"command":k730Command_Warm},//指压
