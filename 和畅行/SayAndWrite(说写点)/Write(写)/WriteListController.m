@@ -155,10 +155,28 @@
 #pragma mark-症状列表界面以及左tableView
 -(void)createSymptom{
     
-   
-    UILabel *symptomLabel = [Tools labelWith:ModuleZW(@"选择症状") frame:CGRectMake(Adapter(20), 0, Adapter(200), Adapter(46)) textSize:16 textColor:RGB_TextGray lines:1 aligment:NSTextAlignmentLeft];
-    symptomLabel.backgroundColor = [UIColor clearColor];
-    [_rightView addSubview:symptomLabel];
+
+    if(!FIRST_FLAG){ //Please select your most common symptoms up to 5.
+        NSString *str = @"Tips: Please select your most common symptoms up to 5";
+        CGFloat scaleSize = ISPaid ? [UserShareOnce shareOnce].padSizeFloat : [UserShareOnce shareOnce].multipleFontSize;
+        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:str attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 13*scaleSize > 15.6 ? 15.6 : 13*scaleSize],NSForegroundColorAttributeName: RGB_TextGray}];
+        UIColor *redCor = [UIColor redColor];
+        UIFont *boldFont = [UIFont boldSystemFontOfSize:14*scaleSize > 16.8 ? 16.8 : 14*scaleSize];
+        [attrString addAttribute:NSFontAttributeName value:boldFont range:[str rangeOfString:@"Tips:"]];
+        [attrString addAttribute:NSForegroundColorAttributeName value:redCor range:[str rangeOfString:@"Tips:"]];
+        UILabel *symptomLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, ScreenWidth-10, Adapter(46))];
+        symptomLabel.backgroundColor = [UIColor clearColor];
+        symptomLabel.textAlignment = NSTextAlignmentLeft;
+        symptomLabel.numberOfLines = 0;
+        symptomLabel.attributedText = attrString;
+        symptomLabel.backgroundColor = [UIColor clearColor];
+        [_rightView addSubview:symptomLabel];
+    }else{
+        UILabel *symptomLabel = [Tools labelWith:ModuleZW(@"选择症状") frame:CGRectMake(Adapter(20), 0, Adapter(200), Adapter(46)) textSize:16 textColor:RGB_TextGray lines:1 aligment:NSTextAlignmentLeft];
+        symptomLabel.backgroundColor = [UIColor clearColor];
+        [_rightView addSubview:symptomLabel];
+    }
+    
     [self createDataSource];
     _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, Adapter(46), Adapter(110), _leftView.bounds.size.height-Adapter(102)) style:UITableViewStylePlain];
     _leftTableView.backgroundColor = RGB_AppWhite;
