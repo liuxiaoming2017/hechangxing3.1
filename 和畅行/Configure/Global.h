@@ -171,10 +171,18 @@ extern BOOL isBF;
  *  一写---脏腑辨识
  */
 #define BaseWebAdressYiXie @"/member/service/index/yixie/ZFBS"
+//Evaluate, understand the meridian state
+//Get to know the physical state
+#if FIRST_FLAG
+    #define jlbsAdvice @"评测一下，了解经络状态"
+    #define tzbsAdvice @"评测一下，了解体质状态"
+    #define zfbsAdvice @"评测一下，了解脏腑状态"
+#else
+    #define jlbsAdvice @"Evaluate, understand the meridian state"
+    #define tzbsAdvice @"Evaluate, understand the constitution state"
+    #define zfbsAdvice @"Evaluate, understand the Zang-fu state"
+#endif
 
-#define jlbsAdvice @"评测一下，了解经络状态"
-#define tzbsAdvice @"评测一下，了解体质状态"
-#define zfbsAdvice @"评测一下，了解脏腑状态"
 
 #define requestErrorMessage       ModuleZW(@"服务器开小差了,请稍后重试!")
 
