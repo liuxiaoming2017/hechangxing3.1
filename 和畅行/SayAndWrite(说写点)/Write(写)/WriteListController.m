@@ -21,6 +21,8 @@
 
 @property (nonatomic,strong)NSIndexPath *myIndexPath;
 @property (nonatomic,strong)UIButton *backButton;
+@property (nonatomic,strong)UIButton *maleButton;
+@property (nonatomic,strong)UIButton *famaleButton;
 @property (nonatomic,strong)UILabel *choseLabel;
 @property (nonatomic,assign)BOOL isPush;
 @end
@@ -82,6 +84,9 @@
 -(void)initWithController{
     _touchedPart = [[NSString alloc] init];
     _leftButton = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth/2 - ScreenWidth/4, kNavBarHeight+Adapter(10), ScreenWidth/2, Adapter(34)) target:self sel:@selector(leftBtnClick:) tag:11 image:nil title:ModuleZW(@"人体图解")];
+    if ([UserShareOnce shareOnce].languageType) {
+        _leftButton.frame =  CGRectMake(Adapter(20), _leftButton.top, ScreenWidth/2 - Adapter(30), Adapter(34));
+    }
     _leftButton.titleLabel.font = [UIFont systemFontOfSize:16];
     _leftButton.backgroundColor = UIColorFromHex(0XFFA200);
     [_leftButton.titleLabel setLineBreakMode:NSLineBreakByTruncatingTail];
@@ -90,6 +95,9 @@
     [self.view addSubview:_leftButton];
     
     _rightButton = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth - ScreenWidth/6 - Adapter(20), kNavBarHeight+Adapter(10), ScreenWidth/6,Adapter(34)) target:self sel:@selector(rightBtnClick:) tag:12 image:nil title:ModuleZW(@"症状列表")];
+    if ([UserShareOnce shareOnce].languageType) {
+        _rightButton.frame =  CGRectMake(Adapter(10) + ScreenWidth/2, _leftButton.top, _leftButton.width, Adapter(34));
+    }
     _rightButton.titleLabel.font = [UIFont systemFontOfSize:16];
     _rightButton.backgroundColor = UIColorFromHex(0XC3C3C3);
     [_rightButton.titleLabel setLineBreakMode:NSLineBreakByTruncatingTail];
@@ -118,9 +126,35 @@
 #pragma mark-人体图解界面
 -(void)createBodyView{
     
-    UIButton *sexButton = [Tools creatButtonWithFrame:CGRectMake(Adapter(25), Adapter(28), Adapter(74), Adapter(35)) target:self sel:@selector(sexBtnClick:) tag:13 image:ModuleZW(@"ICD10_man") title:nil];
+    
+    if ([UserShareOnce shareOnce].languageType) {
+        NSArray *sexArray = @[@"Male",@"Female"];
+        for (int i = 0; i<2; i++) {
+            UIButton *menBT = [UIButton buttonWithType:(UIButtonTypeCustom)];
+            menBT.frame = CGRectMake(Adapter(20), _leftView.height/2 - Adapterbody(55) + Adapterbody(70)*i, Adapterbody(45), Adapterbody(45));
+            [menBT setTitle:sexArray[i] forState:(UIControlStateNormal)];
+            [menBT addTarget:self action:@selector(chooseAction:) forControlEvents:(UIControlEventTouchUpInside)];
+            [menBT.titleLabel setFont:[UIFont systemFontOfSize:13/[UserShareOnce shareOnce].multipleFontSize]];
+            menBT.layer.masksToBounds = YES;
+            menBT.layer.cornerRadius = menBT.height/2;
+            [_leftView addSubview:menBT];
+            menBT.tag = 100 + i;
+            if (i == 0) {
+                menBT.backgroundColor = UIColorFromHex(0XFFA200);
+                _maleButton = menBT;
+            }else{
+                menBT.backgroundColor = UIColorFromHex(0XC3C3C3);
+                _famaleButton = menBT;
+            }
+            [_leftView addSubview:menBT];
+        }
+    }else{
+         UIButton *sexButton = [Tools creatButtonWithFrame:CGRectMake(Adapter(25), Adapter(28), Adapter(74), Adapter(35)) target:self sel:@selector(sexBtnClick:) tag:13 image:ModuleZW(@"ICD10_man") title:nil];
+        [_leftView addSubview:sexButton];
+    }
+   
     _sex = 0;
-    [_leftView addSubview:sexButton];
+    
     UIButton *sideButton = [Tools creatButtonWithFrame:CGRectMake(ScreenWidth-Adapter(90), _leftView.height-Adapter(83) -kTabBarHeight, Adapter(56.5), Adapter(53)) target:self sel:@selector(sideBtnClick:) tag:14 image:@"" title:nil];
     [_leftView addSubview:sideButton];
     _isFront = YES;
@@ -328,6 +362,9 @@
             self->_rightButton.width =ScreenWidth/6;
             self->_rightButton.backgroundColor = UIColorFromHex(0XC3C3C3);
         }];
+    }else{
+        _leftButton.backgroundColor = UIColorFromHex(0XFFA200);
+        _rightButton.backgroundColor = UIColorFromHex(0XC3C3C3);
     }
     _leftView.hidden = NO;
     _rightView.hidden = YES;
@@ -351,6 +388,9 @@
             self->_leftButton.left = Adapter(20);
             self->_leftButton.backgroundColor = UIColorFromHex(0XC3C3C3);
         }];
+    }else{
+        _leftButton.backgroundColor = UIColorFromHex(0XC3C3C3);
+        _rightButton.backgroundColor = UIColorFromHex(0XFFA200);
     }
     _backButton.hidden = NO;
     _leftView.hidden = YES;
@@ -388,6 +428,19 @@
 }
 
 #pragma mark-点击性别按钮
+
+-(void)chooseAction:(UIButton *)button {
+    button.backgroundColor = UIColorFromHex(0XFFA200);
+    if (button.tag == 100) {
+          _sex = 0;
+        _famaleButton.backgroundColor = UIColorFromHex(0XC3C3C3);
+    }else{
+         _sex = 1;
+        _maleButton.backgroundColor = UIColorFromHex(0XC3C3C3);
+    }
+    [self reloadLeftView];
+    [self cancelledSelected];
+}
 -(void)sexBtnClick:(UIButton *)button{
     if (_sex == 0) {
         _sex = 1;
