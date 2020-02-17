@@ -21,7 +21,7 @@
       "extent" : "full-screen",
       "idiom" : "iphone",
       "subtype" : "1792h",
-      "filename" : "828x1792.png",
+      "filename" : "828X1792.png",
       "minimum-system-version" : "12.0",
       "orientation" : "portrait",
       "scale" : "2x"
@@ -38,7 +38,7 @@
       "extent" : "full-screen",
       "idiom" : "iphone",
       "subtype" : "2436h",
-      "filename" : "1125x2436.png",
+      "filename" : "1125X2436.png",
       "minimum-system-version" : "11.0",
       "orientation" : "portrait",
       "scale" : "3x"
@@ -72,7 +72,7 @@
       "extent" : "full-screen",
       "idiom" : "iphone",
       "subtype" : "667h",
-      "filename" : "75x1334.png",
+      "filename" : "750X1334.png",
       "minimum-system-version" : "8.0",
       "orientation" : "portrait",
       "scale" : "2x"
@@ -80,7 +80,7 @@
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
-      "filename" : "640x960.png",
+      "filename" : "640X960.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
       "scale" : "2x"
@@ -89,7 +89,7 @@
       "extent" : "full-screen",
       "idiom" : "iphone",
       "subtype" : "retina4",
-      "filename" : "640x1136.png",
+      "filename" : "640X1136.png",
       "minimum-system-version" : "7.0",
       "orientation" : "portrait",
       "scale" : "2x"
@@ -97,7 +97,7 @@
     {
       "orientation" : "portrait",
       "idiom" : "ipad",
-      "filename" : "768x1024.png",
+      "filename" : "768X1024.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
       "scale" : "1x"
@@ -112,7 +112,7 @@
     {
       "orientation" : "portrait",
       "idiom" : "ipad",
-      "filename" : "1536x2048.png",
+      "filename" : "1536X2048.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
       "scale" : "2x"
@@ -133,7 +133,7 @@
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
-      "filename" : "1242-2690.png",
+      "filename" : "640X960-1.png",
       "extent" : "full-screen",
       "scale" : "2x"
     },

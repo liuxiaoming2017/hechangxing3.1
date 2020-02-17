@@ -11,7 +11,7 @@
 #import "MySportController.h"
 #import "YueYaoController.h"
 #import "i9_MoxaMainViewController.h"
-
+#import "IJoouMainVC.h"
 
 #define yueleyi [NSString stringWithFormat:@"%@hcy/member/action/erxue",URL_PRE]
 
@@ -100,8 +100,14 @@
         return;
     }else if ([strRequest isEqualToString:aijiu]){ //进入艾灸
         decisionHandler(WKNavigationActionPolicyCancel);
-        i9_MoxaMainViewController *vc = [[i9_MoxaMainViewController alloc] init];
+        #if !FIRST_FLAG
+                    IJoouMainVC * vc = [[IJoouMainVC alloc] init];
+        #else
+                    i9_MoxaMainViewController * vc = [[i9_MoxaMainViewController alloc] init];
+                    
+        #endif
         [self.navigationController pushViewController:vc animated:YES];
+        
         return;
     }
     if([navigationAction.request allHTTPHeaderFields][@"Cookie"]){
