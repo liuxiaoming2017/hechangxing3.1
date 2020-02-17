@@ -93,7 +93,7 @@
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = 30;
+    self.tableView.estimatedRowHeight = Adapter(59);
     self.tableView.scrollEnabled = NO;
     [self addSubview:self.tableView];
     
