@@ -58,6 +58,8 @@ static int const tick = 80;
 
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"31" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -70,6 +72,7 @@ static int const tick = 80;
     self.navTitleLabel.text =  ModuleZW(@"血压心率检测");
     self.navTitleLabel.font = [UIFont systemFontOfSize:18/[UserShareOnce shareOnce].multipleFontSize];
     [self initWithController];
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     
     self.isHidden = NO;
     self.canSubmit = NO;

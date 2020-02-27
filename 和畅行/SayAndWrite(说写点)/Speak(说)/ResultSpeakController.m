@@ -21,6 +21,8 @@
 
 @interface ResultSpeakController ()<UIGestureRecognizerDelegate>
 
+
+
 @end
 
 @implementation ResultSpeakController
@@ -116,6 +118,13 @@
     
     NSLog(@"str*****:%@",strRequest);
     //decisionHandler(WKNavigationActionPolicyAllow);
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    if (!self.typeStr) return;
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:self.typeStr withstartTime:self.startTimeStr withendTime:self.endTimeStr];
 }
 
 

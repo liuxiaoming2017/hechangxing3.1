@@ -13,5 +13,5 @@
 
 @property (nonatomic,copy) NSString *TZBSstr;
 @property (nonatomic,assign) NSInteger subCatId;//评估结论分类表的id
-
+@property (nonatomic,copy) NSString *typePointStr;
 @end

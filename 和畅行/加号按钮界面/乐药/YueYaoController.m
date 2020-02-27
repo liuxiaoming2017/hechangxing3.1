@@ -123,6 +123,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     self.isOnPay = YES;
     self.isPlaying = NO;
     self.isFirstIn = YES;
@@ -256,6 +257,14 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    NSString *typeStr = [NSString string];
+    if(self.isYueLuoyi){
+        typeStr = @"34";
+    }else{
+        typeStr = @"26";
+    }
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:typeStr withstartTime:self.startTimeStr withendTime:self.endTimeStr];
 }
 
 - (id)initWithType:(BOOL )isYueLuoyi
@@ -1614,6 +1623,7 @@
     [super didReceiveMemoryWarning];
     
 }
+
 
 
 

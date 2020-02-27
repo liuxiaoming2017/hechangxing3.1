@@ -36,6 +36,7 @@
 @property (nonatomic,assign) NSInteger selectedCount;
 @property (nonatomic,retain) NSMutableArray *selectedArr;
 @property (nonatomic,retain) NSMutableArray *symptomDataArr;
+@property (nonatomic,assign)BOOL isPush;
 //子账户弹出视图
 @property (nonatomic ,strong) UIView *backView;
 
@@ -60,6 +61,14 @@
     [super viewWillAppear:animated];
     [self.tableView reloadData];
     _selectedCount = _selectedArr.count;
+    _isPush = NO;
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    if(_isPush) return;
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"7" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
 }
 
 #pragma mark- 初始化数据
@@ -299,6 +308,7 @@
 }
 #pragma mark- 点击已选症状及疾病
 -(void)selectedSymDisBtnClick:(UIButton *)button{
+    self.isPush = YES;
     HpiViewController *hpiVC = [[HpiViewController alloc]init];
     hpiVC.topArray = self.upData;
     hpiVC.bottomArray =  _selectedArr;

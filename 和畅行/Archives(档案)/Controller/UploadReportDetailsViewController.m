@@ -18,6 +18,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navTitleLabel.text = ModuleZW(@"报告详情");
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     self.view.backgroundColor = [UIColor whiteColor];
     self.leftBtn.hidden = YES;
     self.preBtn.hidden =NO;
@@ -142,6 +143,11 @@
 
 -(void)leftBtnClick {
     [self.navigationController popViewControllerAnimated:YES];
+}
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"59" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
 }
 
 @end

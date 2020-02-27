@@ -73,6 +73,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navTitleLabel.text = ModuleZW(@"图文咨询");
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     self.view.backgroundColor = RGB_AppWhite;
     self.canPOP = YES;
     self.headArray = [[NSMutableArray alloc]init];
@@ -615,6 +616,12 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     self.subId = subId;
 }
 
+
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"32" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+}
 
 
 

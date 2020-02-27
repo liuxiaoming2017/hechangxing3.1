@@ -38,6 +38,7 @@
     self.preBtn.hidden = NO;
     self.navTitleLabel.text = ModuleZW(@"上传报告");
     [self layoutUploadReport];
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
 }
 //布局上传报告页面
 -(void )layoutUploadReport{
@@ -408,6 +409,11 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     return YES;
 }
 
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"60" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+}
 
 @end
 

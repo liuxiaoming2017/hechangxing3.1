@@ -47,7 +47,7 @@
     tabBar.tabBarDelegate = self;
     [self setValue:tabBar forKeyPath:@"tabBar"];
     
-    self.startTimeStr = [GlobalCommon getCurrentTimes];
+    
 }
 
 # pragma mark - HSTabBarDelegate

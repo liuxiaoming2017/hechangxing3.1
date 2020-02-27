@@ -130,7 +130,9 @@
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
             }
             
-        
+            //拨打电话埋点
+            self.startTimeStr = [GlobalCommon getCurrentTimes];
+            [GlobalCommon pageDurationWithpageId:@"29" withstartTime:self.startTimeStr withendTime:self.startTimeStr];
 
         }
             

@@ -150,13 +150,26 @@
     bottomV.layer.shadowOffset=CGSizeMake(0, -5);
     bottomV.layer.shadowRadius=8;
     bottomV.layer.shadowOpacity = YES;
+    CGFloat btWith = (ScreenWidth-Adapterbody(80))/3;
+    CGFloat bottowWith = (ScreenWidth-btWith*2)/3;
+    
 
     for (NSInteger i=0;i<5;i++) {
         UIButton *selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         if(i<3){
-           selectBtn.frame = CGRectMake((ScreenWidth-Adapterbody(54)*3-Adapterbody(60))/2.0+(Adapterbody(84))*i, titleLabel.bottom+Adapterbody(15), Adapterbody(54), Adapterbody(54));
+            if ([UserShareOnce shareOnce].languageType) {
+                 selectBtn.frame = CGRectMake(Adapterbody(20) +(btWith + Adapterbody(20))*i, titleLabel.bottom+Adapterbody(15), btWith, Adapterbody(54));
+            }else{
+                 selectBtn.frame = CGRectMake((ScreenWidth-Adapterbody(54)*3-Adapterbody(60))/2.0+(Adapterbody(84))*i, titleLabel.bottom+Adapterbody(15), Adapterbody(54), Adapterbody(54));
+            }
+          
         }else{
-            selectBtn.frame = CGRectMake((ScreenWidth-Adapterbody(54)*2-Adapterbody(30))/2.0+(Adapterbody(84))*(i-3), titleLabel.bottom+Adapterbody(86), Adapterbody(54), Adapterbody(54));
+            if ([UserShareOnce shareOnce].languageType) {
+                selectBtn.frame = CGRectMake(bottowWith + (btWith + bottowWith)*(i-3), titleLabel.bottom+Adapterbody(86), btWith, Adapterbody(54));
+            }else{
+                 selectBtn.frame = CGRectMake((ScreenWidth-Adapterbody(54)*2-Adapterbody(30))/2.0+(Adapterbody(84))*(i-3), titleLabel.bottom+Adapterbody(86), Adapterbody(54), Adapterbody(54));
+            }
+            
         }
         selectBtn.tag = 2019+i;
         
@@ -987,6 +1000,8 @@
             [UserShareOnce shareOnce].isRefresh = YES;
             ResultController *resultVC = [[ResultController alloc] init];
             resultVC.TZBSstr = weakSelf.str;
+            resultVC.typePointStr = @"8";
+            resultVC.startTimeStr = self.startTimeStr;
             [weakSelf.navigationController pushViewController:resultVC animated:YES];
 
         }

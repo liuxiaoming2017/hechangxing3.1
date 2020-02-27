@@ -131,7 +131,14 @@
     
     UIButton *ploadRreportBT = [UIButton buttonWithType:UIButtonTypeCustom];
     ploadRreportBT.frame = CGRectMake(ScreenWidth-Adapter(104), 2+kStatusBarHeight, Adapter(100), 40);
-    [ploadRreportBT setTitle:ModuleZW(@"上传报告") forState:(UIControlStateNormal)];
+    if ([UserShareOnce shareOnce].languageType) {
+        [ploadRreportBT setImage:[UIImage imageNamed:@"上传病例"] forState:(UIControlStateNormal)];
+        ploadRreportBT.left = ScreenWidth-Adapter(50);
+        ploadRreportBT.width = Adapter(40);
+    }else{
+        [ploadRreportBT setTitle:ModuleZW(@"上传报告") forState:(UIControlStateNormal)];
+    }
+    
     if (ISPaid) {
         [ploadRreportBT.titleLabel setFont:[UIFont systemFontOfSize:15/[UserShareOnce shareOnce].multipleFontSize]];
     }else{
@@ -321,6 +328,20 @@
     [_dataListArray removeAllObjects];
     [self.timeLinvView.tableView reloadData];
     
+    NSString *numberType = [NSString string];
+    if (self.typeUrlInteger < 7) {
+        numberType = [NSString stringWithFormat:@"%ld",self.typeUrlInteger + 12];
+    }else if (self.typeUrlInteger < 7) {
+        numberType = [NSString stringWithFormat:@"%ld",self.typeUrlInteger + 17];
+    }else{
+        numberType = [NSString stringWithFormat:@"%ld",self.typeUrlInteger + 11];
+    }
+    
+    
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:numberType withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+
     
     if(self.typeUrlInteger < 7 || self.typeUrlInteger == 10||self.typeUrlInteger == 14) {
         if (self.wkwebview) {

@@ -70,13 +70,13 @@
     
     self.dataArr = [self loadHomeData];
     
-    UIView *view = [[UIView alloc] init];
-    view.frame = CGRectMake(Adapter(14),kNavBarHeight+Adapter(20),Adapter(107.5),Adapter(115));
-    
-    view.layer.backgroundColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1.0].CGColor;
-    view.layer.cornerRadius = Adapter(8);
-    [self.bgScrollView addSubview:view];
-    
+    //    UIView *view = [[UIView alloc] init];
+    //    view.frame = CGRectMake(Adapter(14),kNavBarHeight+Adapter(20),Adapter(107.5),Adapter(115));
+    //
+    //    view.layer.backgroundColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1.0].CGColor;
+    //    view.layer.cornerRadius = Adapter(8);
+    //    [self.bgScrollView addSubview:view];
+    //
     [self createRecommendView];
     
     [self createBottomView];
@@ -98,14 +98,14 @@
     //
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
     
-//    NSString *tuinaHint = [[NSUserDefaults standardUserDefaults] objectForKey:hintTuiNa];
-//    if([GlobalCommon stringEqualNull:tuinaHint]){
-//        __weak typeof(self) weakSelf = self;
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            [weakSelf addNoteView];
-//        });
-//
-//    }
+    //    NSString *tuinaHint = [[NSUserDefaults standardUserDefaults] objectForKey:hintTuiNa];
+    //    if([GlobalCommon stringEqualNull:tuinaHint]){
+    //        __weak typeof(self) weakSelf = self;
+    //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    //            [weakSelf addNoteView];
+    //        });
+    //
+    //    }
     
 }
 
@@ -161,16 +161,16 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    
     if(self.isHitSpeak){
         NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
         if(![jlbsName isEqualToString:@""] && jlbsName!=nil){
-            UIButton *speakBtn = (UIButton *)[self.recommendV viewWithTag:111];
+            //            UIButton *speakBtn = (UIButton *)[self.recommendV viewWithTag:111];
             UILabel *label = (UILabel *)[self.recommendV viewWithTag:222];
             SublayerView *layerView = (SublayerView *)[self.recommendV viewWithTag:2008];
             ArmChairModel *model = [self recommendModelWithStr];
             [layerView setImageAndTitleWithModel:model withName:@""];
-    
+            
             NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
             //11.22
             str = [GlobalCommon getStringWithLanguageSubjectSn:str];
@@ -180,8 +180,8 @@
             if (label.height +  Adapter(20)  > layerView.height ) {
                 label.top = layerView.top-Adapter(10);
             }
-            speakBtn.frame = CGRectMake(label.left, label.bottom, label.width, Adapter(20));
-            [speakBtn setTitle:@"3、Tap to retest" forState:UIControlStateNormal];
+            //            speakBtn.frame = CGRectMake(label.left, label.bottom, label.width, Adapter(20));
+            //            [speakBtn setTitle:@"3、Tap to retest" forState:UIControlStateNormal];
         }
         self.isHitSpeak = NO;
     }
@@ -253,46 +253,46 @@
     
     UILabel *label1 = [[UILabel alloc] init];
     label1.frame = CGRectMake(sublayerView.right+Adapter(19),recommendLabel.bottom+Adapter(10),ScreenWidth-sublayerView.right-Adapter(35),Adapter(90));
-
+    
     label1.numberOfLines = 0;
     label1.tag = 222;
     [self.recommendV addSubview:label1];
     
     NSString *recommandStr = @"";
-    NSString *btnStr = @"";
+    //    NSString *btnStr = @"";
     NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
     if([jlbsName isEqualToString:@""] || jlbsName==nil ){
         recommandStr = @"1、You have not done meridian test";
-        btnStr = @"2、Tap to test";
+        //        btnStr = @"2、Tap to test";
     }else{
-
+        
         jlbsName = [GlobalCommon getStringWithLanguageSubjectSn:jlbsName];
         recommandStr = [NSString stringWithFormat:@"1、Your meridian type is %@\n2、You are recommended to apply %@ massage technique",jlbsName,jlbsName];
-        btnStr = @"3、Tap to retest";
+        //        btnStr = @"3、Tap to retest";
     }
     
     label1.attributedText = [self attributedStringWithTitle:recommandStr];
     CGSize attSize = [label1.attributedText boundingRectWithSize:CGSizeMake(label1.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
     label1.height = attSize.height;
-    if (label1.height +  Adapter(20)  > sublayerView.height ) {
-         label1.top = sublayerView.top-Adapter(10);
-    }
+    //    if (label1.height +  Adapter(20)  > sublayerView.height ) {
+    //         label1.top = sublayerView.top-Adapter(10);
+    //    }
     label1.textAlignment = NSTextAlignmentLeft;
     label1.alpha = 1.0;
     
-    UIButton *speakBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    speakBtn.frame = CGRectMake(label1.left, label1.bottom, label1.width, Adapter(20));
-    [speakBtn setTitle:btnStr forState:UIControlStateNormal];
-    [speakBtn setTitleColor:[UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0] forState:UIControlStateNormal];
-    speakBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    if (ISPaid) {
-         speakBtn.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize> 30 ? 30 : 14*[UserShareOnce shareOnce].fontSize];
-    }else{
-         speakBtn.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize > 15.0 ? 15.0 : 14];
-    }
-    [speakBtn addTarget:self action:@selector(speakBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    speakBtn.tag = 111;
-    [self.recommendV addSubview:speakBtn];
+    //    UIButton *speakBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    //    speakBtn.frame = CGRectMake(label1.left, label1.bottom, label1.width, Adapter(20));
+    //    [speakBtn setTitle:btnStr forState:UIControlStateNormal];
+    //    [speakBtn setTitleColor:[UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0] forState:UIControlStateNormal];
+    //    speakBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    //    if (ISPaid) {
+    //         speakBtn.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize> 30 ? 30 : 14*[UserShareOnce shareOnce].fontSize];
+    //    }else{
+    //         speakBtn.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize > 15.0 ? 15.0 : 14];
+    //    }
+    //    [speakBtn addTarget:self action:@selector(speakBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    //    speakBtn.tag = 111;
+    //    [self.recommendV addSubview:speakBtn];
     
     
 }
@@ -304,23 +304,19 @@
     paragraphStyle.lineSpacing = 2;
     
     if (ISPaid) {
-          NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:recommandStr attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize> 30 ? 30 : 14*[UserShareOnce shareOnce].fontSize],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:recommandStr attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize> 30 ? 30 : 14*[UserShareOnce shareOnce].fontSize],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
         return string;
     }else{
-          NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:recommandStr attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize > 15.0 ? 15.0 : 14],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:recommandStr attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size:14*[UserShareOnce shareOnce].fontSize > 15.0 ? 15.0 : 14],NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1.0],NSParagraphStyleAttributeName:paragraphStyle.copy}];
         return string;
     }
-   
+    
     
     
 }
 
 - (void)createBottomView
 {
-    
-    
-    //  CGFloat margin = ((ScreenWidth-107*3)/4.0);
-    
     UILabel *label = [[UILabel alloc] init];
     label.frame = CGRectMake(margin,self.recommendV.bottom+Adapter(15),ScreenWidth-margin*2,Adapter(23));
     //label.frame = CGRectMake(margin,kNavBarHeight+15,120,20);
@@ -329,38 +325,112 @@
     label.textAlignment = NSTextAlignmentLeft;
     label.alpha = 1.0;
     [self.bgScrollView addSubview:label];
-    //[self.view addSubview:label];
-    CGFloat cellWithW;
-    if (ISPaid) {
-        cellWithW = (ScreenWidth - Adapter(50))/4;
+    
+    UIButton *retestBT = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    retestBT.frame = CGRectMake(ScreenWidth/2 - Adapter(70), self.recommendV.bottom + Adapter(30), Adapter(140), Adapter(42));
+    retestBT.layer.masksToBounds = YES;
+    [retestBT setTitle:@"Tap to retest" forState:(UIControlStateNormal)];
+    retestBT.layer.cornerRadius = retestBT.height/2;
+    retestBT.layer.borderColor = RGB_ButtonBlue.CGColor;
+    retestBT.layer.borderWidth = Adapter(1);
+    [retestBT setTitleColor:RGB_ButtonBlue forState:(UIControlStateNormal)];
+    [retestBT setTitleColor:RGB_ButtonBlue forState:(UIControlStateHighlighted)];
+    [[retestBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        SayAndWriteController *vc = nil;
+        
+        if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
+            [self showAlertWarmMessage:@"您还不是会员"];
+            return;
+        }
+        self.isHitSpeak = YES;
+        if([self isFirestClickThePageWithString:@"speak"]){
+            vc = [[MeridianIdentifierViewController alloc] init];
+            vc.haveAnmo = YES;
+        }else{
+            vc = [[TipSpeakController alloc] init];
+            vc.haveAnmo = YES;
+        }
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    }];
+    [self.bgScrollView addSubview:retestBT];
+    
+    label.top = retestBT.bottom+Adapter(15);
+    
+    SublayerView *sublayerView = [[SublayerView alloc] initWithFrame:CGRectMake(label.left, label.bottom+Adapter(10), Adapter(108), Adapter(115))];
+    sublayerView.tag = 2009;
+    [sublayerView setImageAndTitleWithModel:nil withName:@""];
+    [sublayerView insertSublayerFromeView:self.bgScrollView];
+    
+    UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapDoctorAction:)];
+    [sublayerView addGestureRecognizer:tapGesture];
+    
+    [self.bgScrollView addSubview:sublayerView];
+    
+    
+    UILabel *label1 = [[UILabel alloc] init];
+    label1.frame = CGRectMake(sublayerView.right+Adapter(19),label.bottom+Adapter(10),ScreenWidth-sublayerView.right-Adapter(35),Adapter(90));
+    
+    label1.numberOfLines = 0;
+    label1.tag = 222;
+    [self.bgScrollView addSubview:label1];
+    
+    NSString *recommandStr = @"";
+    //    NSString *btnStr = @"";
+    NSString *jlbsName = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
+    if([jlbsName isEqualToString:@""] || jlbsName==nil ){
+        recommandStr = @"1、You have not done meridian test";
+        //        btnStr = @"2、Tap to test";
     }else{
-        cellWithW = (ScreenWidth - Adapter(40))/3;
+        
+        jlbsName = [GlobalCommon getStringWithLanguageSubjectSn:jlbsName];
+        recommandStr = [NSString stringWithFormat:@"1、Your meridian type is %@\n2、You are recommended to apply %@ massage technique",jlbsName,jlbsName];
+        //        btnStr = @"3、Tap to retest";
     }
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(cellWithW , cellWithW);
-    layout.sectionInset = UIEdgeInsetsMake(Adapter(10), Adapter(10), Adapter(10), Adapter(10));
-    
-    layout.minimumLineSpacing = 0;
-    layout.minimumInteritemSpacing = 0;
-    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    
-    self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(0,label.bottom + Adapter(10), ScreenWidth, cellWithW*3+Adapter(50)) collectionViewLayout:layout];
-    if (ISPaid) {
-        self.collectionV.height = cellWithW*2+Adapter(30);
-    }
-    self.collectionV.delegate = self;
-    self.collectionV.dataSource = self;
-    self.collectionV.showsHorizontalScrollIndicator = NO;
-    self.collectionV.showsVerticalScrollIndicator = NO;
-    self.collectionV.backgroundColor = [UIColor clearColor];
-    self.collectionV.scrollEnabled = NO;
-    
-    [self.collectionV registerClass:[ArmchairHomeCell class] forCellWithReuseIdentifier:@"cellId"];
+    label1.attributedText = [self attributedStringWithTitle:recommandStr];
+    CGSize attSize = [label1.attributedText boundingRectWithSize:CGSizeMake(label1.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
+    label1.height = attSize.height;
+    //    if (label1.height +  Adapter(20)  > sublayerView.height ) {
+    //         label1.top = sublayerView.top-Adapter(10);
+    //    }
+    label1.textAlignment = NSTextAlignmentLeft;
+    label1.alpha = 1.0;
     
     
-    [self.bgScrollView addSubview:self.collectionV];
+    //       CGFloat cellWithW;
+    //                 if (ISPaid) {
+    //                     cellWithW = (ScreenWidth - Adapter(50))/4;
+    //                 }else{
+    //                     cellWithW = (ScreenWidth - Adapter(40))/3;
+    //                 }
+    //                 UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    //                 layout.itemSize = CGSizeMake(cellWithW , cellWithW);
+    //                 layout.sectionInset = UIEdgeInsetsMake(Adapter(10), Adapter(10), Adapter(10), Adapter(10));
+    //
+    //                 layout.minimumLineSpacing = 0;
+    //                 layout.minimumInteritemSpacing = 0;
+    //                 layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    //
+    //                 self.collectionV= [[UICollectionView alloc] initWithFrame:CGRectMake(0,label.bottom + Adapter(10), ScreenWidth, cellWithW*3+Adapter(50)) collectionViewLayout:layout];
+    //                 if (ISPaid) {
+    //                     self.collectionV.height = cellWithW*2+Adapter(30);
+    //                 }
+    //                 self.collectionV.delegate = self;
+    //                 self.collectionV.dataSource = self;
+    //                 self.collectionV.showsHorizontalScrollIndicator = NO;
+    //                 self.collectionV.showsVerticalScrollIndicator = NO;
+    //                 self.collectionV.backgroundColor = [UIColor clearColor];
+    //                 self.collectionV.scrollEnabled = NO;
     
-    self.bgScrollView.contentSize = CGSizeMake(1, self.collectionV.bottom+Adapter(10));
+    //                 [self.collectionV registerClass:[ArmchairHomeCell class] forCellWithReuseIdentifier:@"cellId"];
+    //
+    //
+    //                 [self.bgScrollView addSubview:self.collectionV];
+    
+    self.bgScrollView.contentSize = CGSizeMake(1, label1.bottom + Adapter(30));
+    
+    
 }
 
 # pragma mark - 推荐按摩点击事件
@@ -376,8 +446,8 @@
     SublayerView *layerView = (SublayerView *)[gesture view];
     ArmChairModel *model = layerView.model;
     
-//    [self nextVCWithModel:model];
-//    return;
+    //    [self nextVCWithModel:model];
+    //    return;
     
     NSString *statusStr = [self resultStringWithStatus];
     if(![statusStr isEqualToString:@""]){
@@ -385,24 +455,51 @@
         return;
     }else{
         self.armchairModel = model;
-    
+        
         if([self chairIsPowerOn] == NO){
-
+            
             [self showProgressHUD:startDevice];
-
+            
             [[OGABluetoothManager_730B shareInstance] sendShortCommand:k730Command_PowerOn success:^(BOOL success) {
                 NSLog(@"启动设备成功啦");
             }];
         }else{
             NSLog(@"开机了开机了");
             [self nextVCWithModel:model];
-
+            
         }
     }
     
     
     
 }
+
+
+-(void)tapDoctorAction:(UITapGestureRecognizer *)gesture {
+    
+    NSString *statusStr = [self resultStringWithStatus];
+    if(![statusStr isEqualToString:@""]){
+        [GlobalCommon showMessage2:statusStr duration2:1.0];
+        return;
+    }else{
+        self.armchairModel = self.dataArr[5];
+        if([self chairIsPowerOn] == NO){
+            [self showProgressHUD:startDevice];
+            
+            [[OGABluetoothManager_730B shareInstance] sendShortCommand:k730Command_PowerOn success:^(BOOL success) {
+                NSLog(@"启动设备成功啦");
+            }];
+        }else{
+            NSLog(@"开机了开机了");
+            [self stopPlayer];
+            OGA730BAcheTestVC *vc = [[OGA730BAcheTestVC alloc] init];
+            vc.armchairModel = self.dataArr[5];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+}
+
+
 
 
 
@@ -415,7 +512,7 @@
                     layout:(UICollectionViewLayout *)collectionViewLayout
 minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
-     return Adapter(10);
+    return Adapter(10);
 }
 
 
@@ -448,9 +545,9 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
         }else{
             self.armchairModel = model;
             if([self chairIsPowerOn] == NO){
-
+                
                 [self showProgressHUD:startDevice];
-
+                
                 [[OGABluetoothManager_730B shareInstance] sendShortCommand:k730Command_PowerOn success:^(BOOL success) {
                     NSLog(@"启动设备成功啦");
                 }];
@@ -577,18 +674,18 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     
     [[OGABluetoothManager_730B shareInstance] scanPeripheral:^(NSMutableArray * _Nonnull array)
      {
-         [weakSelf.progressHud removeFromSuperview];
-         weakSelf.progressHud = nil;
-         weakSelf.listView.array = array;
-         
-     } timeoutSacn:^{
-         if(weakSelf.progressHud){
-             [weakSelf.progressHud removeFromSuperview];
-             weakSelf.progressHud = nil;
-             [GlobalCommon showMessage2:noneDevice duration2:1.0];
-         }
-         
-     }];
+        [weakSelf.progressHud removeFromSuperview];
+        weakSelf.progressHud = nil;
+        weakSelf.listView.array = array;
+        
+    } timeoutSacn:^{
+        if(weakSelf.progressHud){
+            [weakSelf.progressHud removeFromSuperview];
+            weakSelf.progressHud = nil;
+            [GlobalCommon showMessage2:noneDevice duration2:1.0];
+        }
+        
+    }];
 }
 
 # pragma mark - 提示框自动消失方法,进入到这个方法代表设备连接失败
@@ -694,7 +791,7 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     } timeoutConnect:^{
         
     }];
-
+    
 }
 
 
@@ -705,36 +802,36 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     if([jlbsName isEqualToString:@""] || jlbsName==nil){
         ArmChairModel *model = [[ArmChairModel alloc] init];
         model.name = @"大师精选";
-       // model.command = k530Command_MassageMaster;
+        // model.command = k530Command_MassageMaster;
         return model;
     }else{
         NSDictionary *dic = @{
-                              @"JLBS-G4":@{@"name":@"JLBS-G4",@"command":k730Command_Relax},
-                              @"JLBS-G5":@{@"name":@"JLBS-G5",@"command":k730Command_Relax},
-                              @"JLBS-G3":@{@"name":@"JLBS-G3",@"command":k730Command_Balinese},
-                              @"JLBS-G2":@{@"name":@"JLBS-G2",@"command":k730Command_Balinese},
-                              @"JLBS-G1":@{@"name":@"JLBS-G1",@"command":k730Command_Balinese},
-                              @"JLBS-S2":@{@"name":@"JLBS-S2",@"command":k730Command_Gentle},
-                              @"JLBS-S5":@{@"name":@"JLBS-S5",@"command":k730Command_Gentle},
-                              @"JLBS-S1":@{@"name":@"JLBS-S1",@"command":k730Command_UpperBack},
-                              @"JLBS-S4":@{@"name":@"JLBS-S4",@"command":k730Command_UpperBack},
-                              @"JLBS-S3":@{@"name":@"JLBS-S3",@"command":k730Command_UpperBack},
-                              @"JLBS-Z3":@{@"name":@"JLBS-Z3",@"command":k730Command_NeckShoulder},
-                              @"JLBS-Z1":@{@"name":@"JLBS-Z1",@"command":k730Command_NeckShoulder},
-                              @"JLBS-Z2":@{@"name":@"JLBS-Z2",@"command":k730Command_Altheltic},
-                              @"JLBS-Z4":@{@"name":@"JLBS-Z4",@"command":k730Command_Altheltic},
-                              @"JLBS-Z5":@{@"name":@"JLBS-Z5",@"command":k730Command_Altheltic},
-                              @"JLBS-Y3":@{@"name":@"JLBS-Y3",@"command":k730Command_FeetCalves},
-                              @"JLBS-Y4":@{@"name":@"JLBS-Y4",@"command":k730Command_FeetCalves},
-                              @"JLBS-Y2":@{@"name":@"JLBS-Y2",@"command":k730Command_Japanese},
-                              @"JLBS-Y5":@{@"name":@"JLBS-Y5",@"command":k730Command_Japanese},
-                              @"JLBS-Y1":@{@"name":@"JLBS-Y1",@"command":k730Command_LowerBack},
-                              @"JLBS-J4":@{@"name":@"JLBS-J4",@"command":k730Command_Stretch},
-                              @"JLBS-J2":@{@"name":@"JLBS-J2",@"command":k730Command_Thai},
-                              @"JLBS-J3":@{@"name":@"JLBS-J3",@"command":k730Command_Stretch},
-                              @"JLBS-J5":@{@"name":@"JLBS-J5",@"command":k730Command_Stretch},
-                              @"JLBS-J1":@{@"name":@"JLBS-J1",@"command":k730Command_Chinese},
-                              };
+            @"JLBS-G4":@{@"name":@"JLBS-G4",@"command":k730Command_Relax},
+            @"JLBS-G5":@{@"name":@"JLBS-G5",@"command":k730Command_Relax},
+            @"JLBS-G3":@{@"name":@"JLBS-G3",@"command":k730Command_Balinese},
+            @"JLBS-G2":@{@"name":@"JLBS-G2",@"command":k730Command_Balinese},
+            @"JLBS-G1":@{@"name":@"JLBS-G1",@"command":k730Command_Balinese},
+            @"JLBS-S2":@{@"name":@"JLBS-S2",@"command":k730Command_Gentle},
+            @"JLBS-S5":@{@"name":@"JLBS-S5",@"command":k730Command_Gentle},
+            @"JLBS-S1":@{@"name":@"JLBS-S1",@"command":k730Command_UpperBack},
+            @"JLBS-S4":@{@"name":@"JLBS-S4",@"command":k730Command_UpperBack},
+            @"JLBS-S3":@{@"name":@"JLBS-S3",@"command":k730Command_UpperBack},
+            @"JLBS-Z3":@{@"name":@"JLBS-Z3",@"command":k730Command_NeckShoulder},
+            @"JLBS-Z1":@{@"name":@"JLBS-Z1",@"command":k730Command_NeckShoulder},
+            @"JLBS-Z2":@{@"name":@"JLBS-Z2",@"command":k730Command_Altheltic},
+            @"JLBS-Z4":@{@"name":@"JLBS-Z4",@"command":k730Command_Altheltic},
+            @"JLBS-Z5":@{@"name":@"JLBS-Z5",@"command":k730Command_Altheltic},
+            @"JLBS-Y3":@{@"name":@"JLBS-Y3",@"command":k730Command_FeetCalves},
+            @"JLBS-Y4":@{@"name":@"JLBS-Y4",@"command":k730Command_FeetCalves},
+            @"JLBS-Y2":@{@"name":@"JLBS-Y2",@"command":k730Command_Japanese},
+            @"JLBS-Y5":@{@"name":@"JLBS-Y5",@"command":k730Command_Japanese},
+            @"JLBS-Y1":@{@"name":@"JLBS-Y1",@"command":k730Command_LowerBack},
+            @"JLBS-J4":@{@"name":@"JLBS-J4",@"command":k730Command_Stretch},
+            @"JLBS-J2":@{@"name":@"JLBS-J2",@"command":k730Command_Thai},
+            @"JLBS-J3":@{@"name":@"JLBS-J3",@"command":k730Command_Stretch},
+            @"JLBS-J5":@{@"name":@"JLBS-J5",@"command":k730Command_Stretch},
+            @"JLBS-J1":@{@"name":@"JLBS-J1",@"command":k730Command_Chinese},
+        };
         NSDictionary *dic1 = [dic objectForKey:jlbsName];
         ArmChairModel *model = [ArmChairModel mj_objectWithKeyValues:dic1];
         model.name = @"推荐";
@@ -747,22 +844,7 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
 # pragma mark - 进入一说 经络检测
 - (void)speakBtnAction
 {
-    SayAndWriteController *vc = nil;
     
-    if(![UserShareOnce shareOnce].languageType&&![[UserShareOnce shareOnce].bindCard isEqualToString:@"1"]){
-        [self showAlertWarmMessage:@"您还不是会员"];
-        return;
-    }
-    self.isHitSpeak = YES;
-    if([self isFirestClickThePageWithString:@"speak"]){
-        vc = [[MeridianIdentifierViewController alloc] init];
-        vc.haveAnmo = YES;
-    }else{
-        vc = [[TipSpeakController alloc] init];
-        vc.haveAnmo = YES;
-    }
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (BOOL)isFirestClickThePageWithString:(NSString *)string

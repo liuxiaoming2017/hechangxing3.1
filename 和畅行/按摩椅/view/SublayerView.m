@@ -14,6 +14,7 @@
 
 @property (nonatomic,strong) UIImageView *imageV;
 @property (nonatomic,strong) UILabel *titleLabel;
+@property (nonatomic,strong) UIImageView *recommendImageView;
 
 
 @end
@@ -44,6 +45,7 @@
     
     self.imageV.layer.cornerRadius = Adapter(8);
     self.imageV.contentMode = UIViewContentModeScaleAspectFit;
+    self.imageV.userInteractionEnabled = YES;
     [self addSubview:self.imageV];
     
     self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adapter(2), CGRectGetMaxY(self.imageV.frame)+Adapter(10), self.frame.size.width-Adapter(2)*2, Adapter(20))];
@@ -60,6 +62,12 @@
     [self addSubview:self.titleLabel];
     
     
+    self.recommendImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, Adapter(10), Adapter(45), Adapter(18))];
+    self.recommendImageView.hidden = YES;
+    self.recommendImageView.image = [UIImage imageNamed:@"Recommend"];
+    [self addSubview:self.recommendImageView];
+    
+    
 }
 
 - (void)setImageVandTitleLabelwithModel:(ArmChairModel *)model
@@ -74,29 +82,40 @@
 
 - (void)setImageAndTitleWithModel:(ArmChairModel *)model withName:(NSString *)name
 {
-    self.model = model;
-    NSString *jlbsName2 = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
     
-    if([jlbsName2 isEqualToString:@""] || jlbsName2==nil){
-        self.titleLabel.text = @"";
-        self.imageV.image = [UIImage imageNamed:@"推荐_默认"];
-        self.imageV.frame = CGRectMake((self.frame.size.width-Adapter(70))/2.0, (self.frame.size.height-Adapter(70))/2.0, Adapter(70), Adapter(70));
-        self.titleLabel.frame = CGRectMake(Adapter(2), CGRectGetMaxY(self.imageV.frame)+Adapter(10), self.frame.size.width-Adapter(2)*2, Adapter(20));
-    }else{
-        //11.22
-        NSString *jlbsName = [GlobalCommon getStringWithLanguageSubjectSn:jlbsName2];
-        
-        self.titleLabel.text = [NSString stringWithFormat:@"%@推拿手法",jlbsName];
-        if([UserShareOnce shareOnce].languageType){
-            self.titleLabel.text = jlbsName;
+    if (model) {
+        self.model = model;
+        NSString *jlbsName2 = [[NSUserDefaults standardUserDefaults] objectForKey:@"Physical"];
+        if ([UserShareOnce shareOnce].languageType) {
+            self.recommendImageView.hidden = NO;
         }
-        //11.22
-        NSString *imageStr = [GlobalCommon getStringWithSubjectSn:jlbsName2];
-        imageStr = [imageStr substringFromIndex:[imageStr length]-1];
-        self.imageV.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@icon",imageStr]];
-        self.imageV.frame = CGRectMake((self.frame.size.width-Adapter(55))/2.0, (self.frame.size.height-Adapter(85))/2.0, Adapter(55), Adapter(55));
-        self.titleLabel.frame = CGRectMake(2, CGRectGetMaxY(self.imageV.frame)+10, self.frame.size.width-2*2, Adapter(20));
+        if([jlbsName2 isEqualToString:@""] || jlbsName2==nil){
+            self.titleLabel.text = @"";
+            self.imageV.image = [UIImage imageNamed:@"推荐_默认"];
+            self.imageV.frame = CGRectMake((self.frame.size.width-Adapter(70))/2.0, (self.frame.size.height-Adapter(70))/2.0, Adapter(70), Adapter(70));
+            self.titleLabel.frame = CGRectMake(Adapter(2), CGRectGetMaxY(self.imageV.frame)+Adapter(10), self.frame.size.width-Adapter(2)*2, Adapter(20));
+        }else{
+            //11.22
+            NSString *jlbsName = [GlobalCommon getStringWithLanguageSubjectSn:jlbsName2];
+            
+            self.titleLabel.text = [NSString stringWithFormat:@"%@推拿手法",jlbsName];
+            if([UserShareOnce shareOnce].languageType){
+                self.titleLabel.text = jlbsName;
+            }
+            //11.22
+            NSString *imageStr = [GlobalCommon getStringWithSubjectSn:jlbsName2];
+            imageStr = [imageStr substringFromIndex:[imageStr length]-1];
+            self.imageV.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@icon",imageStr]];
+            self.imageV.frame = CGRectMake((self.frame.size.width-Adapter(55))/2.0, (self.frame.size.height-Adapter(85))/2.0, Adapter(55), Adapter(55));
+            self.titleLabel.frame = CGRectMake(2, CGRectGetMaxY(self.imageV.frame)+10, self.frame.size.width-2*2, Adapter(20));
+        }
+        
+    }else{
+        self.imageV.image = [UIImage imageNamed:@"Chair Doctor"];
+        self.titleLabel.text = @"Chair Doctor";
+        self.recommendImageView.hidden = YES;
     }
+    
     
 }
 

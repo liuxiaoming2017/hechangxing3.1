@@ -425,6 +425,10 @@ if(FIRST_FLAG){ //英文版没有
     PersonalInformationViewController * personInfoView=[[PersonalInformationViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:personInfoView];
     [self presentViewController:nav animated:YES completion:nil];
+    NSString *photoStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"35" withstartTime:photoStr withendTime:photoStr];
+
+    
 }
 
 -(void)insertSublayerWithImageView:(UIImageView *)imageV
@@ -452,6 +456,11 @@ if(FIRST_FLAG){ //英文版没有
     }
 }
 
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"5" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+}
 
 
 @end
