@@ -180,6 +180,11 @@
 # pragma mark - 后台版本判断
 - (void)requestVersionDataWithType:(NSString *)type
 {
+    
+    if(!FIRST_FLAG){
+        return;
+    }
+    
     if (!isProduct) {
         [[NSUserDefaults standardUserDefaults] setObject:@"noAppstoreCheck" forKey:@"noAppstoreCheck"];
         [[NSUserDefaults standardUserDefaults] synchronize];
