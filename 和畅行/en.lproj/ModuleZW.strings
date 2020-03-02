@@ -52,7 +52,7 @@
 "一点 调和体质"                                                    = "ONE Clicking: constitution test ";
 "和畅提醒"                                                            = "Reminder";
 "您的经络状态已有7天以上为测评"                      = "Test my meridian state";
-"推荐阅读"                                                            = "Reads";
+"推荐阅读"                                                            = "Related Articles";
 "一听   30分钟/次，3次/日"                                   = "ONE Listening 30min*3/day";
 "一站   全套和畅八式2次"                                      = "ONE Standing 2 times Harmony exercise";
 "一站   重复第二式“剑指后仰式”3次"                     = "ONE Standing exercise part2  3 times";
@@ -516,7 +516,7 @@
 "经络知识"        ="Meridian knowledge";
 "Get your personalized Harmony package after test"        ="Get your personalized Harmony package after test";
 "检测到新版本，是否下载?"        ="New version detected, download? ";
-"健康档案"        ="Health archive";
+"健康档案"        ="Health Archive";
 "体质辨识"        ="Constitution test";
 "体质辨识报告"        ="Constitution identification report";
 "您已超过7天未进行经络状态的评估"        ="You haven’t tested your meridian for over 7 days ";
@@ -1668,8 +1668,8 @@
 
 "无需注册，可直接登录"=    "Log in directly";
 "我已阅读并同意"=    "I've read and agreed";
-"《炎黄用户协议》"=    "Yanhuang User Agreement";
-"请阅读并同意《炎黄用户协议》"=    "Please read and agree to the Yanhuang User Agreement.";
+"《炎黄用户协议》"=    "Dejia Harmony User Agreement";
+"请阅读并同意《炎黄用户协议》"=    "Please read and agree to the Dejia Harmony User Agreement.";
 "短信登录"=    "SMS Login";
 "密码登录"=    "Pswd Login";
 "收藏"=    "Collect";

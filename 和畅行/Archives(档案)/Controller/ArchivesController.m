@@ -129,27 +129,29 @@
     self.noView = [NoMessageView createImageWith:100.0f];
     [self.view addSubview:self.noView ];
     
-    UIButton *ploadRreportBT = [UIButton buttonWithType:UIButtonTypeCustom];
-    ploadRreportBT.frame = CGRectMake(ScreenWidth-Adapter(104), 2+kStatusBarHeight, Adapter(100), 40);
-    [ploadRreportBT setTitle:ModuleZW(@"上传报告") forState:(UIControlStateNormal)];
-    if (ISPaid) {
-        [ploadRreportBT.titleLabel setFont:[UIFont systemFontOfSize:15/[UserShareOnce shareOnce].multipleFontSize]];
-    }else{
-        [ploadRreportBT.titleLabel setFont:[UIFont systemFontOfSize:15/[UserShareOnce shareOnce].fontSize]];
-    }
-    
-    [ploadRreportBT setTitleColor:RGB_ButtonBlue forState:(UIControlStateNormal)];
-    [[ploadRreportBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        UpdateReportViewController *updateVC = [[UpdateReportViewController alloc]init];
-        updateVC.hidesBottomBarWhenPushed = YES;
-        updateVC.returnTextBlock = ^{
-            self.pageInteger = 1;
-            [self requestHealthHintDataWithTipyInteger:self.typeUrlInteger withPageInteger:self.pageInteger];
-        };
-        [self.navigationController pushViewController:updateVC animated:YES];
+    if(FIRST_FLAG){ //英文版隐藏上传报告
+        UIButton *ploadRreportBT = [UIButton buttonWithType:UIButtonTypeCustom];
+        ploadRreportBT.frame = CGRectMake(ScreenWidth-Adapter(104), 2+kStatusBarHeight, Adapter(100), 40);
+        [ploadRreportBT setTitle:ModuleZW(@"上传报告") forState:(UIControlStateNormal)];
+        if (ISPaid) {
+            [ploadRreportBT.titleLabel setFont:[UIFont systemFontOfSize:15/[UserShareOnce shareOnce].multipleFontSize]];
+        }else{
+            [ploadRreportBT.titleLabel setFont:[UIFont systemFontOfSize:15/[UserShareOnce shareOnce].fontSize]];
+        }
         
-    }];
-    [self.topView addSubview:ploadRreportBT];
+        [ploadRreportBT setTitleColor:RGB_ButtonBlue forState:(UIControlStateNormal)];
+        [[ploadRreportBT rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            UpdateReportViewController *updateVC = [[UpdateReportViewController alloc]init];
+            updateVC.hidesBottomBarWhenPushed = YES;
+            updateVC.returnTextBlock = ^{
+                self.pageInteger = 1;
+                [self requestHealthHintDataWithTipyInteger:self.typeUrlInteger withPageInteger:self.pageInteger];
+            };
+            [self.navigationController pushViewController:updateVC animated:YES];
+            
+        }];
+        [self.topView addSubview:ploadRreportBT];
+    }
     
     //下拉刷新
     MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];

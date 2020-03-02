@@ -72,7 +72,7 @@
       "extent" : "full-screen",
       "idiom" : "iphone",
       "subtype" : "667h",
-      "filename" : "75x1334.png",
+      "filename" : "750X1334.png",
       "minimum-system-version" : "8.0",
       "orientation" : "portrait",
       "scale" : "2x"
@@ -133,7 +133,6 @@
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
-      "filename" : "1242-2690.png",
       "extent" : "full-screen",
       "scale" : "2x"
     },

@@ -55,7 +55,7 @@
     [moreButton addTarget:self action:@selector(moreAction) forControlEvents:(UIControlEventTouchUpInside)];
     [self addSubview:moreButton];
     
-    CGFloat width = (ScreenWidth - Adapter(33))/2.5;
+    //CGFloat width = (ScreenWidth - Adapter(33))/2.5;
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     //layout.itemSize = CGSizeMake(width, width*0.75+7+40);
@@ -181,9 +181,6 @@
 - (void)requestVersionDataWithType:(NSString *)type
 {
     
-    if(!FIRST_FLAG){
-        return;
-    }
     
     if (!isProduct) {
         [[NSUserDefaults standardUserDefaults] setObject:@"noAppstoreCheck" forKey:@"noAppstoreCheck"];

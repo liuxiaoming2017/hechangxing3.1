@@ -55,8 +55,7 @@
                          ModuleZW(@"血糖"),
                          ModuleZW(@"心率"),
                          ModuleZW(@"呼吸"),
-                         ModuleZW(@"体温"),
-                         ModuleZW(@"体检报告"), nil];
+                         ModuleZW(@"体温"),nil];
     }else{
         self.titleArr = [NSArray arrayWithObjects:
                          ModuleZW(@"全部"),

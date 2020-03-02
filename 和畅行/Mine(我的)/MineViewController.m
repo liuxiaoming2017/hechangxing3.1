@@ -120,7 +120,8 @@
     if(FIRST_FLAG){
        listNamesArr                  = @[@"咨询记录",@"地址管理",@"设置"];
     }else{
-        listNamesArr                  = @[@"咨询记录",@"卡包",@"设置"];
+        //listNamesArr                  = @[@"咨询记录",@"卡包",@"设置"];
+        listNamesArr                  = @[@"咨询记录",@"设置"];
     }
     
     UIScrollView *backScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake( 0,-kStatusBarHeight, ScreenWidth, ScreenHeight+kStatusBarHeight - kTabBarHeight )];
@@ -341,9 +342,11 @@ if(FIRST_FLAG){ //英文版没有
                         vc.hidesBottomBarWhenPushed = YES;
                         [self.navigationController pushViewController:vc animated:YES];
                     }else{
-                        BlockViewController *vc = [[BlockViewController alloc] init];
-                        vc.hidesBottomBarWhenPushed = YES;
-                        [self.navigationController pushViewController:vc animated:YES];
+                        SetupController *vc = [[SetupController alloc] init];
+                        CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:vc];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self presentViewController:nav animated:YES completion:nil];
+                        });
                     }
                     
                 }
