@@ -47,7 +47,7 @@
     tabBar.tabBarDelegate = self;
     [self setValue:tabBar forKeyPath:@"tabBar"];
     
-    self.startTimeStr = [GlobalCommon getCurrentTimes];
+    
 }
 
 # pragma mark - HSTabBarDelegate
@@ -149,18 +149,10 @@
             
             break;
         case 4:
-            if ([UserShareOnce shareOnce].username.length != 11) {
-                [self showAlerVC];
-                return;
-            }
-            vc = [[HCY_CallController alloc] init];
-            break;
-        case 5:
         {
-            
             if([[[NSUserDefaults standardUserDefaults] objectForKey:@"bloodNeverCaution"] isEqualToString:@"1"]){
                 PressureViewController *vc = [[PressureViewController alloc] init];
-                 vc.hidesBottomBarWhenPushed = YES;
+                vc.hidesBottomBarWhenPushed = YES;
                 [[self selectedViewController] pushViewController:vc animated:YES];
             }else{
                 BloodGuideViewController * vc1 = [[BloodGuideViewController alloc] init];
@@ -168,14 +160,19 @@
                 vc1.hidesBottomBarWhenPushed = YES;
                 [[self selectedViewController] pushViewController:vc1 animated:YES];
             }
-           
-            return;
         }
+            
+            break;
+        case 5:
+        
+            
+            vc = [[OGA730BHomeVC alloc] init];
+        
             
             break;
         case 6:{
            
-            vc = [[AdvisorysViewController alloc] init];
+             vc = [[YueYaoController alloc] initWithType:YES];
         }
             break;
         case 7:

@@ -29,6 +29,10 @@
     
     
     [self customeViewWithStr:urlStr];
+    
+    if (!self.startTimeStr) {
+        self.startTimeStr = [GlobalCommon getCurrentTimes];
+    }
 }
 
 
@@ -66,8 +70,9 @@
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    if (!_typePointStr) return;
     self.endTimeStr = [GlobalCommon getCurrentTimes];
-    [GlobalCommon pageDurationWithpageId:@"8" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+    [GlobalCommon pageDurationWithpageId:self.typePointStr withstartTime:self.startTimeStr withendTime:self.endTimeStr];
 }
 
 

@@ -204,7 +204,7 @@
         if([[response objectForKey:@"status"] intValue] == 100){
             NSDictionary *dic = [response objectForKey:@"data"];
             NSString *Resultstr = [dic objectForKey:@"version"];
-            if([Resultstr isEqualToString:nowVersion]){ //需要审核
+            if([Resultstr isEqualToString:nowVersion]){ //正在版本审核
                 [UserShareOnce shareOnce].bindCard = @"1";
             }else{ //针对之前用户
                 [[NSUserDefaults standardUserDefaults] setObject:@"noAppstoreCheck" forKey:@"noAppstoreCheck"];

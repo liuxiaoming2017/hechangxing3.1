@@ -105,7 +105,7 @@
     self.leftBtn.hidden = YES;
     self.canreload = 0;
     
-    self.navTitleLabel.text = @"ijoou";
+    self.navTitleLabel.text = @"Ijoou";
     self.startView = [[UIView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, ScreenWidth, ScreenHeight - kNavBarHeight)];
     self.startView.backgroundColor = RGB_AppWhite;
     [self.view addSubview:self.startView];

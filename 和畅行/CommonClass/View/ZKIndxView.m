@@ -33,16 +33,22 @@
                                                             ModuleZW(@"艾灸"),ModuleZW(@"电话"),
                                                             ModuleZW(@"视频"),ModuleZW(@"血压"),
                                                             ModuleZW(@"图文"),ModuleZW(@"推拿"),ModuleZW(@"耳穴")];
-//        if([UserShareOnce shareOnce].languageType){
-//            imagesNameData = @[ModuleZW(@"音乐"),ModuleZW(@"运动"),
-//                               ModuleZW(@"艾灸"),ModuleZW(@"电话"),
-//                               ModuleZW(@"视频"),ModuleZW(@"血压"),
-//                               ModuleZW(@"图文"),ModuleZW(@"耳穴")];
-//        }
+        if([UserShareOnce shareOnce].languageType){
+            imagesData = @[@"yinyue",@"yundong",@"aijiu",@"dianhua",@"xueya",@"anmoyi",@"erxue"];
+            imagesNameData = @[ModuleZW(@"乐药"),ModuleZW(@"运动"),
+                               ModuleZW(@"艾灸"),ModuleZW(@"电话"),
+                               ModuleZW(@"血压"),
+                              ModuleZW(@"推拿"),ModuleZW(@"耳穴")];
+        }
 //        NSInteger lieshu = imagesData.count/3;
        
         NSInteger lieshu = imagesData.count/3+imagesData.count%3;
         //NSInteger lieshu = imagesData.count%3;
+        
+        if(!FIRST_FLAG){
+            lieshu = 3;
+        }
+        
         for(int i=0;i<imagesData.count;i++){
             //row排数;col列数
             int row = i/3;
@@ -90,10 +96,10 @@
             
             
             if (i == 4){
-                if ([UserShareOnce shareOnce].languageType){
-                    button.hidden = YES;
-                    name.hidden  = YES;
-                }
+//                if ([UserShareOnce shareOnce].languageType){
+//                    button.hidden = YES;
+//                    name.hidden  = YES;
+//                }
             }
             
             [self addSubview:button];

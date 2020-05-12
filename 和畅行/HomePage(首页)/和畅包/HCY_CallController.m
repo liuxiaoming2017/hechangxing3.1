@@ -23,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     self.navTitleLabel.text = ModuleZW(@"视频医生");
     
     UILabel *label = [Tools creatLabelWithFrame:CGRectMake(10,kNavBarHeight + 10, ScreenWidth - 10, 40) text:ModuleZW(@"在线咨询") textSize:24];
@@ -83,8 +83,12 @@
         [self.navigationController pushViewController:adVC animated:YES];
         return;
     }
+    
+    NSString *nowString = [GlobalCommon getCurrentTimes];
+    
 
-    #if TARGET_IPHONE_SIMULATOR
+
+    #if TARGET_IPHONE_SIMULATOR || !FIRST_FLAG
     
     #else
         HHMSDK *hhmSdk = [[HHMSDK alloc] init];
@@ -114,6 +118,8 @@
                 }
             }];
             
+            [GlobalCommon pageDurationWithpageId:@"49" withstartTime:nowString withendTime:nowString];
+            
             
         }else if (index.row == 1) {
             if ([UserShareOnce shareOnce].username.length != 11) {
@@ -127,6 +133,7 @@
                     [hhmSdk startCall:HHCallTypeAdult];
                 }
             }];
+            [GlobalCommon pageDurationWithpageId:@"50" withstartTime:nowString withendTime:nowString];
             
         }else {
             
@@ -187,6 +194,12 @@
 //    [alertVC addAction:alertAct1];
 //    [alertVC addAction:alertAct12];
 //    [self presentViewController:alertVC animated:YES completion:NULL];
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"30" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
 }
 
 

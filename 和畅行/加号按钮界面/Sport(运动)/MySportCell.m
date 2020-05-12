@@ -42,14 +42,21 @@
     self.titleLabel.textAlignment = NSTextAlignmentLeft;
     self.titleLabel.textColor = [UIColor whiteColor];
     self.titleLabel.font = [UIFont systemFontOfSize:16];
-    [self.bottomView addSubview:self.titleLabel];
     
+    [self.bottomView addSubview:self.titleLabel];
+    if(!FIRST_FLAG){
+        self.bottomView.hidden = YES;
+    }
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAction)];
     [self addGestureRecognizer:tapGesture];
 }
 
 - (void)tapGestureAction
 {
+    if(!FIRST_FLAG){
+        self.bottomView.hidden = YES;
+        return;
+    }
     _isTap = !_isTap;
     if(_isTap){
         self.bottomView.hidden = YES;
@@ -64,7 +71,9 @@
     CGSize titleSize = [titleStr boundingRectWithSize:CGSizeMake(self.width-10, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:tdic context:nil].size;
     self.titleLabel.text = titleStr;
     _isTap = NO;
-    self.bottomView.hidden = NO;
+    if(FIRST_FLAG){
+        self.bottomView.hidden = NO;
+    }
     if(titleSize.height>30){
         self.bottomView.frame = CGRectMake(0, self.height - titleSize.height - 10, self.width, titleSize.height + 10);
     }else{

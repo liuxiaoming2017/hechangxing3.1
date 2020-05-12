@@ -224,7 +224,9 @@
     [audioSession setActive:YES error:nil];
     
     yueYaoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    yueYaoButton.frame = CGRectMake((ScreenWidth - Adapter(25) * 3) / 2 + Adapter(25), Adapter(3), Adapter(25), Adapter(25));
+    //yueYaoButton.frame = CGRectMake((ScreenWidth - Adapter(25) * 3) / 2 + Adapter(25), Adapter(3), Adapter(25), Adapter(25));
+    yueYaoButton.frame = CGRectMake((ScreenWidth - Adapter(25) * 3) * 5 / 6 + Adapter(50), Adapter(3), Adapter(25), Adapter(25));
+    
     
     [yueYaoButton setBackgroundImage:[UIImage imageNamed:@"yudongbofang2.png"] forState:UIControlStateNormal];
     [yueYaoButton setBackgroundImage:[UIImage imageNamed:@"yundongbofang1.png"] forState:UIControlStateSelected];
@@ -232,7 +234,8 @@
     [yueYaoButton addTarget:self action:@selector(yueYaoAction:) forControlEvents:UIControlEventTouchUpInside];
     
     [footView addSubview:yueYaoButton];
-    UILabel *bofangyueYao = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/3, voiceButton.bottom, ScreenWidth/3,Adapter(16))];
+    //UILabel *bofangyueYao = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/3, voiceButton.bottom, ScreenWidth/3,Adapter(16))];
+    UILabel *bofangyueYao = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth*2/3, voiceButton.bottom, ScreenWidth/3,Adapter(16))];
     bofangyueYao.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     
     bofangyueYao.text = ModuleZW(@"播放乐药");
@@ -244,13 +247,13 @@
     [shifanyinButton setBackgroundImage:[UIImage imageNamed:@"yundongyueyaoting.png"] forState:UIControlStateNormal];
     [shifanyinButton setBackgroundImage:[UIImage imageNamed:@"yundongyueyao.png"] forState:UIControlStateSelected];
     [shifanyinButton addTarget:self action:@selector(shifanyinAction:) forControlEvents:UIControlEventTouchUpInside];
-    [footView addSubview:shifanyinButton];
+   // [footView addSubview:shifanyinButton];
     UILabel *shifanyin = [[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth*2/3, voiceButton.bottom, ScreenWidth/3,Adapter(16))];
     shifanyin.textColor = [UtilityFunc colorWithHexString:@"#666666"];
     shifanyin.text = ModuleZW(@"动作示范音");
     shifanyin.textAlignment = NSTextAlignmentCenter;
     shifanyin.font = [UIFont systemFontOfSize:12];
-    [footView addSubview:shifanyin];
+   // [footView addSubview:shifanyin];
     
     /********************************************/
     
@@ -976,6 +979,9 @@
     }else{
         cell.bottomView.hidden = NO;
         [cell titleHeightWithStr:titleStr];
+    }
+    if(!FIRST_FLAG){
+        cell.bottomView.hidden = YES;
     }
     return cell;
 }

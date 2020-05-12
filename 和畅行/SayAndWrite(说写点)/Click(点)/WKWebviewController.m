@@ -62,7 +62,7 @@
     WKUserContentController *userContentController = WKUserContentController.new;
     NSString *cookieStr = [NSString stringWithFormat:@"document.cookie = '%@=%@';document.cookie = '%@=%@';",@"token",[UserShareOnce shareOnce].token,@"JSESSIONID",[UserShareOnce shareOnce].JSESSIONID];
     
-    WKUserScript *cookieScript = [[WKUserScript alloc] initWithSource:cookieStr injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
+    WKUserScript *cookieScript = [[WKUserScript alloc] initWithSource:cookieStr injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:YES];
     
     
     [userContentController addUserScript:cookieScript];
@@ -111,6 +111,8 @@
     
     // [GlobalCommon showMBHudWithView:self.view];
 }
+
+
 
 - (NSString*)readCurrentCookieWith:(NSDictionary*)dic{
     if (dic == nil) {
@@ -187,7 +189,7 @@
     }
 #endif
     
-    if (self.popInt == 111) {
+    if (self.popInt == 111 || [self.titleStr isEqualToString:ModuleZW(@"和畅包")]) {
         [self.navigationController popViewControllerAnimated:YES];
     }else{
         [self.navigationController popToRootViewControllerAnimated:YES];
@@ -229,6 +231,53 @@
         } else { // 加载中
             self.progressView.hidden = NO;
             [self.progressView setProgress:newprogress animated:YES];
+        }
+    }
+}
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+{
+
+    WKNavigationActionPolicy policy = WKNavigationActionPolicyAllow;
+    //NSURL *url = navigationAction.request.URL;
+    if (policy == WKNavigationActionPolicyAllow) {
+        NSDictionary *dic = navigationAction.request.allHTTPHeaderFields;
+        NSString *cookie = [dic objectForKey:@"Cookie"];
+        if (cookie == nil) {
+            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:navigationAction.request.URL];
+            request.allHTTPHeaderFields = dic;
+            [request setValue:@"替换custom cookie" forHTTPHeaderField:@"Cookie"];
+            [webView loadRequest:request];
+            policy = WKNavigationActionPolicyCancel;
+        }
+    }
+    if (decisionHandler) {
+        decisionHandler(policy);
+    }
+}
+
+// 此方法是收到响应开始加载后才会调用
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
+    // 获取cookie
+    if (@available(iOS 12.0, *)) {//iOS11也有这种获取方式，但是我使用的时候iOS11系统可以在response里面直接获取到，只有iOS12获取不到
+        WKHTTPCookieStore *cookieStore = webView.configuration.websiteDataStore.httpCookieStore;
+        [cookieStore getAllCookies:^(NSArray* cookies) {
+            [self setCookie:cookies];
+        }];
+    }else {
+        NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
+        NSArray *cookies =[NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:response.URL];
+        [self setCookie:cookies];
+    }
+
+    decisionHandler(WKNavigationResponsePolicyAllow);
+}
+
+// 保存cookie到NSHTTPCookieStorage
+-(void)setCookie:(NSArray *)cookies {
+    if (cookies.count > 0) {
+        for (NSHTTPCookie *cookie in cookies) {
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
         }
     }
 }

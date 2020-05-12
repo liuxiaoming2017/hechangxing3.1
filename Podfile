@@ -3,7 +3,9 @@ use_frameworks!
 
 inhibit_all_warnings!
 
-target '和畅行'do
+source 'https://github.com/CocoaPods/Specs.git'
+
+abstract_target 'specialTarget' do
 pod 'AFNetworking'
 pod 'MJExtension'
 pod 'SDWebImage', '~> 4.2.1'
@@ -11,9 +13,19 @@ pod 'FMDB'
 pod 'PYPhotoBrowser', '~> 1.5.6'
 pod 'MJRefresh'
 pod 'YYModel'
-pod 'HHDoctorSDK', :git => "http://code.hh-medic.com/hh_public/HHDoctorSDK.ios.git"
 pod 'ReactiveObjC', '~> 2.1.0'
-pod ‘Masonry’
+pod 'Masonry'
 pod 'FreeStreamer'                    # 音频播放
-end
+pod 'JMessage'
 
+  target '和畅行' do
+  pod 'HHDoctorSDK', :git => "http://code.hh-medic.com/hh_public/HHDoctorSDK.ios.git"
+  end
+
+  target 'HarmonyYi' do
+
+  pod 'FBSDKLoginKit'
+  pod 'GoogleSignIn'
+  end
+
+end

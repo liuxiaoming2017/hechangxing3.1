@@ -66,6 +66,8 @@
 @property(nonatomic,strong) UILabel *souLabel;
 @property(nonatomic,strong) UILabel *laLabel;
 
+@property(nonatomic,assign) int popType;
+
 /**soundCount*/
 @property (nonatomic,assign) CGFloat soundCount;
 @property (nonatomic,assign) BOOL isLound;
@@ -99,8 +101,7 @@
     }else{
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
-    self.endTimeStr = [GlobalCommon getCurrentTimes];
-    [GlobalCommon pageDurationWithpageId:@"6" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+    
 
 }
 
@@ -124,8 +125,13 @@
     if(!FIRST_FLAG){
         [self playTip];
     }
+    
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.popType = 0;
+}
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
@@ -137,6 +143,11 @@
     }
     
     [self stopPlay];
+    if (self.popType == 0) {
+        self.endTimeStr = [GlobalCommon getCurrentTimes];
+        [GlobalCommon pageDurationWithpageId:@"6" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+    }
+    
 }
 
 - (void)playTip
@@ -845,6 +856,8 @@
         vc.urlStr = aUrlle;
         vc.startTimeStr = self.startTimeStr;
         vc.titleStr = ModuleZW(@"经络辨识");
+        vc.typeStr = @"6";
+        self.popType = 1;
         [self.navigationController pushViewController:vc animated:YES];
     }else
     {
@@ -967,6 +980,8 @@
     _progress = nil;
     
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

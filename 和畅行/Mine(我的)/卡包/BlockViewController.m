@@ -309,9 +309,13 @@
 }
 -(void)dealloc {
     
+    
+    
+}
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     self.endTimeStr = [GlobalCommon getCurrentTimes];
     [GlobalCommon pageDurationWithpageId:@"37" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
-    
 }
 
 @end

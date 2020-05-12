@@ -29,9 +29,9 @@
     [leftView.layer insertSublayer:[self addGradientLayerWithColor1:UIColorFromHex(0x52c8a1) withColor2:UIColorFromHex(0x0ba151) withFrame:leftView.bounds] atIndex:0];
     
     
-    rightView.width = Adapter(40);
+    rightView.width = Adapter(60);//40
     rightView.height = Adapter(40);
-    rightView.left =  ScreenWidth -  Adapter(54);
+    rightView.left =  ScreenWidth -  Adapter(64);//54
     rightView.layer.cornerRadius = Adapter(8.0);
     rightView.layer.masksToBounds = YES;
     //rightView.backgroundColor = [UIColor orangeColor];
@@ -57,7 +57,7 @@
         make.top.equalTo(self.mas_top);
         make.bottom.equalTo(self.mas_bottom);
         make.leading.equalTo(self.leftView.mas_leading).offset(Adapter(30));
-        make.trailing.equalTo(self.mas_trailing).offset(Adapter(-54));
+        make.trailing.equalTo(self.mas_trailing).offset(Adapter(-68));//54
         make.height.greaterThanOrEqualTo(@(Adapter(70)));
     }];
     [self.contentLabel  mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -70,7 +70,8 @@
     [self.answerLabel  mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.rightView);
         make.left.equalTo(self.rightView.mas_left);
-        make.size.mas_equalTo(CGSizeMake(Adapter(40), Adapter(40)));
+        make.size.mas_equalTo(self.rightView.size); //CGSizeMake(Adapter(40), Adapter(40))
+        
     }];
     
     

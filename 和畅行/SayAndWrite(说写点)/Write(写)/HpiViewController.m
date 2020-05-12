@@ -19,6 +19,7 @@
 @property (nonatomic,strong)UIView *bottomView;
 @property (nonatomic,strong)UITableView *topTableView;
 @property (nonatomic,strong)UITableView *bottomTableView;
+@property (nonatomic,assign)BOOL isPush;
 @end
 
 @implementation HpiViewController
@@ -28,6 +29,19 @@
     self.navTitleLabel.text = ModuleZW(@"现病史");
     
     [self layoutView];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    _isPush = NO;
+}
+
+
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    if(_isPush) return;
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"7" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
 }
 
 //布局现病史页面
@@ -121,6 +135,7 @@
         [param appendFormat:@"&device=1"];
         
         [UserShareOnce shareOnce].isRefresh = YES;
+        self->_isPush = YES;
         //cust_id=6098&symptomStr=167-1.0&icds=T42.401&level=2&zxNum=1&disNum=5&sex=0&device=
         NSString *urlStr = [NSString stringWithFormat:@"%@%@?%@",URL_PRE,kCOMMIT,param];
         ResultWriteController *vc = [[ResultWriteController alloc] init];

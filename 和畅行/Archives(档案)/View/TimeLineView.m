@@ -57,6 +57,7 @@
          self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
     }
 
+   
     
     [self.tableView registerClass:[HCY_ReportCell class] forCellReuseIdentifier:@"HCY_ReportCell"];
 }
@@ -537,6 +538,7 @@
     NSString *url = [[NSString alloc] initWithFormat:@"%@/member/service/reports.jhtml?memberChildId=%@&quarter=%@&year=%@",URL_PRE,idNim,self.topModel.quarter,self.topModel.year];
     ResultSpeakController *vc = [[ResultSpeakController alloc] init];
     vc.urlStr = url;
+    vc.typeStr = @"53";
     vc.titleStr = ModuleZW(@"季度报告详情");
     vc.hidesBottomBarWhenPushed = YES;
     [[self viewController].navigationController pushViewController:vc animated:YES];
@@ -549,6 +551,7 @@
     
     
     HealthTipsModel *model = [self.dataArr objectAtIndex:indexPath.row];
+    NSString *nowTimeStr = [GlobalCommon getCurrentTimes];
     
     ////经络
     if ([model.subjectCategorySn isEqualToString:@"JLBS"] ||[model.type isEqualToString:@"JLBS"]) {
@@ -561,6 +564,7 @@
         }
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = aUrlle;
+        vc.typeStr = @"55";
         vc.titleStr = ModuleZW(@"经络详情");
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
@@ -575,12 +579,14 @@
             tzUrlle= [NSString stringWithFormat:@"%@%@",URL_PRE,model.link];
             ResultSpeakController *vc = [[ResultSpeakController alloc] init];
             vc.urlStr = tzUrlle;
+            vc.typeStr = @"57";
             vc.titleStr = ModuleZW(@"体质详情");
             vc.hidesBottomBarWhenPushed = YES;
             [[self viewController].navigationController pushViewController:vc animated:YES];
         }else{
             ResultController *resultVC = [[ResultController alloc] init];
             resultVC.TZBSstr = [model.subject valueForKey:@"subject_sn"];
+            resultVC.typePointStr = @"57";
             //resultVC.titleStr = @"健康档案";
             resultVC.hidesBottomBarWhenPushed = YES;
             [[self viewController].navigationController pushViewController:resultVC animated:YES];
@@ -601,6 +607,7 @@
         //member/service/zf_report.jhtml?cust_id=32&physique_id=181224175130815054&device=1
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = zfStr;
+        vc.typeStr = @"56";
         vc.titleStr = ModuleZW(@"脏腑详情");
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
@@ -729,6 +736,7 @@
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = url;
         vc.titleStr = ModuleZW(@"季度报告详情");
+        vc.typeStr = @"53";
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
     }
@@ -736,9 +744,12 @@
     
     //病历列表
     if (![GlobalCommon stringEqualNull:model.medicRecordId]||[model.type isEqualToString:@"MedicRecord"]){
+         [GlobalCommon pageDurationWithpageId:@"54" withstartTime:nowTimeStr withendTime:nowTimeStr];
+
+        
 # pragma mark -  病历列表
 
-        #if TARGET_IPHONE_SIMULATOR
+        #if TARGET_IPHONE_SIMULATOR || !FIRST_FLAG
 
         #else
          if (![GlobalCommon stringEqualNull:model.medicRecordId]){
@@ -784,6 +795,7 @@
         ResultSpeakController *vc = [[ResultSpeakController alloc] init];
         vc.urlStr = resulturl;
         vc.titleStr = ModuleZW(@"季度报告详情");
+        vc.typeStr = @"53";
         vc.hidesBottomBarWhenPushed = YES;
         [[self viewController].navigationController pushViewController:vc animated:YES];
         

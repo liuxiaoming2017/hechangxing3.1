@@ -48,11 +48,13 @@
 #endif
 
 //和缓
-#if TARGET_IPHONE_SIMULATOR
+#if TARGET_IPHONE_SIMULATOR || !FIRST_FLAG
 
 #else
         #import <HHDoctorSDK/HHDoctorSDK-Swift.h>
 #endif
+
+
 //数据埋点
 #import "BuredPoint.h"
 //#import <YHDFBuriedPoint/BuredPoint.h>

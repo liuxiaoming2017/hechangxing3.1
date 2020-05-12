@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -337,6 +337,8 @@
 		0391D0F920F5ACE4001B52F1 /* SubMemberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391D0F720F5ACE4001B52F1 /* SubMemberView.m */; };
 		039661EB21F1736100754AAA /* ShoppingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039661EA21F1736100754AAA /* ShoppingController.m */; };
 		039661F121F1BF7F00754AAA /* PayMentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039661EF21F1BF7E00754AAA /* PayMentViewController.m */; };
+		0398C0C4246A6DB10083D625 /* UISegmentedControl+Style_ios13.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398C0C3246A6DB10083D625 /* UISegmentedControl+Style_ios13.m */; };
+		0398C0C5246A7AFE0083D625 /* UISegmentedControl+Style_ios13.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398C0C3246A6DB10083D625 /* UISegmentedControl+Style_ios13.m */; };
 		039B2AD4212522D000D558F5 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039B2AD3212522D000D558F5 /* TestViewController.m */; };
 		039B2AD72125247100D558F5 /* TestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 039B2AD62125247100D558F5 /* TestCell.m */; };
 		039B2ADA2125586200D558F5 /* TemperNonDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039B2AD92125586100D558F5 /* TemperNonDeviceViewController.m */; };
@@ -1009,6 +1011,8 @@
 		03CEFC1621A68E580097CB17 /* GuidanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CEFC1421A68E580097CB17 /* GuidanceView.m */; };
 		03D1BF592328D38600F2BDD6 /* ArmChairModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D1BF582328D38600F2BDD6 /* ArmChairModel.m */; };
 		03D1E50321D7B0E10089E6CA /* VersionUpdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D1E50221D7B0E00089E6CA /* VersionUpdateView.m */; };
+		03D3CF82246949EC008FE924 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D3CF81246949EC008FE924 /* LocalAuthentication.framework */; };
+		03D3CF84246949FB008FE924 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D3CF83246949FB008FE924 /* SafariServices.framework */; };
 		03D99E5921AD2CBE00C766FD /* UMShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D99E5821AD2CBD00C766FD /* UMShare.framework */; };
 		03D99E5B21AD334300C766FD /* libSocialWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D99E5A21AD334300C766FD /* libSocialWeChat.a */; };
 		03D99E5D21AD335100C766FD /* libSocialQQ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D99E5C21AD335100C766FD /* libSocialQQ.a */; };
@@ -1895,6 +1899,8 @@
 		039661EA21F1736100754AAA /* ShoppingController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShoppingController.m; sourceTree = "<group>"; };
 		039661EF21F1BF7E00754AAA /* PayMentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayMentViewController.m; sourceTree = "<group>"; };
 		039661F021F1BF7F00754AAA /* PayMentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayMentViewController.h; sourceTree = "<group>"; };
+		0398C0C2246A6DB10083D625 /* UISegmentedControl+Style_ios13.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UISegmentedControl+Style_ios13.h"; sourceTree = "<group>"; };
+		0398C0C3246A6DB10083D625 /* UISegmentedControl+Style_ios13.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UISegmentedControl+Style_ios13.m"; sourceTree = "<group>"; };
 		039B2AD2212522D000D558F5 /* TestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		039B2AD3212522D000D558F5 /* TestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		039B2AD52125247100D558F5 /* TestCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestCell.h; sourceTree = "<group>"; };
@@ -2008,6 +2014,8 @@
 		03D1BF582328D38600F2BDD6 /* ArmChairModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArmChairModel.m; sourceTree = "<group>"; };
 		03D1E50121D7B0E00089E6CA /* VersionUpdateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionUpdateView.h; sourceTree = "<group>"; };
 		03D1E50221D7B0E00089E6CA /* VersionUpdateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionUpdateView.m; sourceTree = "<group>"; };
+		03D3CF81246949EC008FE924 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		03D3CF83246949FB008FE924 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		03D99E5821AD2CBD00C766FD /* UMShare.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMShare.framework; sourceTree = "<group>"; };
 		03D99E5A21AD334300C766FD /* libSocialWeChat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSocialWeChat.a; path = "和畅行/友盟分享/SocialLibraries/WeChat/libSocialWeChat.a"; sourceTree = "<group>"; };
 		03D99E5C21AD335100C766FD /* libSocialQQ.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSocialQQ.a; path = "和畅行/友盟分享/SocialLibraries/QQ/libSocialQQ.a"; sourceTree = "<group>"; };
@@ -2138,7 +2146,15 @@
 		03FBDF992192B066006116FC /* TimeLineView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimeLineView.m; sourceTree = "<group>"; };
 		03FBDF9B2192B0B3006116FC /* TimeLineCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeLineCell.h; sourceTree = "<group>"; };
 		03FBDF9C2192B0B3006116FC /* TimeLineCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimeLineCell.m; sourceTree = "<group>"; };
-		432A80A6E0CB6A191C1F35C4 /* Pods-和畅行.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-和畅行.debug.xcconfig"; path = "Pods/Target Support Files/Pods-和畅行/Pods-和畅行.debug.xcconfig"; sourceTree = "<group>"; };
+		14FC77CE0E30E78918D1EF0C /* Pods_specialTarget____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_specialTarget____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		22DA9A9C18B20473DAB5970F /* Pods_HarmonyYi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HarmonyYi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25613ED6E5840A61FDEA7C62 /* Pods-和畅行.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-和畅行.debug.xcconfig"; path = "Pods/Target Support Files/Pods-和畅行/Pods-和畅行.debug.xcconfig"; sourceTree = "<group>"; };
+		370719B738A9BEE50222A619 /* Pods-HarmonyYi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarmonyYi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HarmonyYi/Pods-HarmonyYi.debug.xcconfig"; sourceTree = "<group>"; };
+		39E65FAF7029A75FEF3BE02D /* Pods-specialTarget-和畅行.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-specialTarget-和畅行.debug.xcconfig"; path = "Pods/Target Support Files/Pods-specialTarget-和畅行/Pods-specialTarget-和畅行.debug.xcconfig"; sourceTree = "<group>"; };
+		460BCEBB6DC913E46DE93ABF /* Pods-specialTarget-HarmonyYi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-specialTarget-HarmonyYi.release.xcconfig"; path = "Pods/Target Support Files/Pods-specialTarget-HarmonyYi/Pods-specialTarget-HarmonyYi.release.xcconfig"; sourceTree = "<group>"; };
+		4D61251BA2B0A311FD2A53DB /* Pods-和畅行.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-和畅行.release.xcconfig"; path = "Pods/Target Support Files/Pods-和畅行/Pods-和畅行.release.xcconfig"; sourceTree = "<group>"; };
+		5455A2C6728E1FC76579D999 /* Pods-specialTarget-和畅行.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-specialTarget-和畅行.release.xcconfig"; path = "Pods/Target Support Files/Pods-specialTarget-和畅行/Pods-specialTarget-和畅行.release.xcconfig"; sourceTree = "<group>"; };
+		722A584BA0710AAF5A6FC9A7 /* Pods-specialTarget-HarmonyYi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-specialTarget-HarmonyYi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-specialTarget-HarmonyYi/Pods-specialTarget-HarmonyYi.debug.xcconfig"; sourceTree = "<group>"; };
 		832ED75A2278286A00BFEEFC /* HpiViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HpiViewController.h; sourceTree = "<group>"; };
 		832ED75B2278286A00BFEEFC /* HpiViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HpiViewController.m; sourceTree = "<group>"; };
 		832ED75D2278321800BFEEFC /* HPITableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPITableViewCell.h; sourceTree = "<group>"; };
@@ -2322,7 +2338,6 @@
 		83E23EFE21C76CE800B43298 /* HYC_CardsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HYC_CardsModel.h; sourceTree = "<group>"; };
 		83E23EFF21C76CE800B43298 /* HYC_CardsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HYC_CardsModel.m; sourceTree = "<group>"; };
 		83E644922213E883004D286C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ModuleZW.strings; sourceTree = "<group>"; };
-		C3992630D9BF859D26B53112 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C941474923BEE7B9002592D1 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		C94B9284239750CF00CB8281 /* MyScrollTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyScrollTextView.m; sourceTree = "<group>"; };
 		C94B9285239750CF00CB8281 /* MyScrollTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyScrollTextView.h; sourceTree = "<group>"; };
@@ -2419,7 +2434,8 @@
 		C9FDB92821BE3D4900E726F3 /* HCY_ConsumptionListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCY_ConsumptionListCell.h; sourceTree = "<group>"; };
 		C9FDB92921BE3D4900E726F3 /* HCY_ConsumptionListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCY_ConsumptionListCell.m; sourceTree = "<group>"; };
 		C9FDB92A21BE3D4900E726F3 /* HCY_ConsumptionListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HCY_ConsumptionListCell.xib; sourceTree = "<group>"; };
-		FE7460D05597BE7EC6524138 /* Pods-和畅行.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-和畅行.release.xcconfig"; path = "Pods/Target Support Files/Pods-和畅行/Pods-和畅行.release.xcconfig"; sourceTree = "<group>"; };
+		CF70B0FE2E8E9D25A4C271B5 /* Pods-HarmonyYi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarmonyYi.release.xcconfig"; path = "Pods/Target Support Files/Pods-HarmonyYi/Pods-HarmonyYi.release.xcconfig"; sourceTree = "<group>"; };
+		E8DF519A01670411033B7E27 /* Pods_specialTarget_HarmonyYi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_specialTarget_HarmonyYi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2469,6 +2485,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03D3CF84246949FB008FE924 /* SafariServices.framework in Frameworks */,
+				03D3CF82246949EC008FE924 /* LocalAuthentication.framework in Frameworks */,
 				03BD82BC238BB89000F57978 /* CoreBluetooth.framework in Frameworks */,
 				03BD82BE238BB89000F57978 /* libSocialSina.a in Frameworks */,
 				03BD82BF238BB89000F57978 /* libSocialQQ.a in Frameworks */,
@@ -2845,6 +2863,8 @@
 				034390A0210ACCA500B57142 /* SongListModel.m */,
 				03CECBF3210EF00700A443B8 /* AVPlayerObject.h */,
 				03CECBF4210EF00700A443B8 /* AVPlayerObject.m */,
+				0398C0C2246A6DB10083D625 /* UISegmentedControl+Style_ios13.h */,
+				0398C0C3246A6DB10083D625 /* UISegmentedControl+Style_ios13.m */,
 			);
 			path = "乐药";
 			sourceTree = "<group>";
@@ -3756,6 +3776,8 @@
 		0390CF7B20ECB5CF000ECA53 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				03D3CF83246949FB008FE924 /* SafariServices.framework */,
+				03D3CF81246949EC008FE924 /* LocalAuthentication.framework */,
 				C99088AD23C423E200E984ED /* OGABluetooth730B.framework */,
 				C99088AB23C4225700E984ED /* OGABluetooth_Combine.framework */,
 				C9EE6E2023ACB62F00BE4B57 /* BCBluetoothSDK.framework */,
@@ -3802,7 +3824,9 @@
 				0390CF7E20ECB5D0000ECA53 /* AVFoundation.framework */,
 				0390CF7C20ECB5D0000ECA53 /* CoreFoundation.framework */,
 				0390CF7D20ECB5D0000ECA53 /* Foundation.framework */,
-				C3992630D9BF859D26B53112 /* Pods____.framework */,
+				22DA9A9C18B20473DAB5970F /* Pods_HarmonyYi.framework */,
+				E8DF519A01670411033B7E27 /* Pods_specialTarget_HarmonyYi.framework */,
+				14FC77CE0E30E78918D1EF0C /* Pods_specialTarget____.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -4208,8 +4232,14 @@
 		64364212D7DF2E6D910174EE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				432A80A6E0CB6A191C1F35C4 /* Pods-和畅行.debug.xcconfig */,
-				FE7460D05597BE7EC6524138 /* Pods-和畅行.release.xcconfig */,
+				25613ED6E5840A61FDEA7C62 /* Pods-和畅行.debug.xcconfig */,
+				4D61251BA2B0A311FD2A53DB /* Pods-和畅行.release.xcconfig */,
+				370719B738A9BEE50222A619 /* Pods-HarmonyYi.debug.xcconfig */,
+				CF70B0FE2E8E9D25A4C271B5 /* Pods-HarmonyYi.release.xcconfig */,
+				722A584BA0710AAF5A6FC9A7 /* Pods-specialTarget-HarmonyYi.debug.xcconfig */,
+				460BCEBB6DC913E46DE93ABF /* Pods-specialTarget-HarmonyYi.release.xcconfig */,
+				39E65FAF7029A75FEF3BE02D /* Pods-specialTarget-和畅行.debug.xcconfig */,
+				5455A2C6728E1FC76579D999 /* Pods-specialTarget-和畅行.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -4623,12 +4653,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 03BD83FC238BB89000F57978 /* Build configuration list for PBXNativeTarget "HarmonyYi" */;
 			buildPhases = (
-				03BD8179238BB89000F57978 /* [CP] Check Pods Manifest.lock */,
+				54A2A022556E53DD3D28BD4C /* [CP] Check Pods Manifest.lock */,
 				03BD817A238BB89000F57978 /* Sources */,
 				03BD82BB238BB89000F57978 /* Frameworks */,
 				03BD82DF238BB89000F57978 /* Resources */,
-				03BD83FA238BB89000F57978 /* [CP] Embed Pods Frameworks */,
-				03BD83FB238BB89000F57978 /* [CP] Copy Pods Resources */,
+				697ED4BC89789BDD8D601A33 /* [CP] Embed Pods Frameworks */,
+				59B52D71080151E469AF8D1F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -5260,96 +5290,60 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		03BD8179238BB89000F57978 /* [CP] Check Pods Manifest.lock */ = {
+		54A2A022556E53DD3D28BD4C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-和畅行-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-specialTarget-HarmonyYi-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		03BD83FA238BB89000F57978 /* [CP] Embed Pods Frameworks */ = {
+		59B52D71080151E469AF8D1F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-和畅行/Pods-和畅行-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
-				"${BUILT_PRODUCTS_DIR}/DACircularProgress/DACircularProgress.framework",
-				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
-				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
-				"${BUILT_PRODUCTS_DIR}/FreeStreamer/FreeStreamer.framework",
-				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/HHDoctorSDK.framework",
-				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
-				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
-				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
-				"${PODS_ROOT}/NIMSDK/NIMSDK/NIMSDK.framework",
-				"${PODS_ROOT}/NIMSDK/NIMAVChat/NIMAVChat.framework",
-				"${PODS_ROOT}/NIMSDK/NIMAVChat/NMC.framework",
-				"${PODS_ROOT}/NIMSDK/NIMAVChat/NMCBasicModuleFramework.framework",
-				"${BUILT_PRODUCTS_DIR}/PYPhotoBrowser/PYPhotoBrowser.framework",
-				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/ReactiveObjC/ReactiveObjC.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/YYModel/YYModel.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DACircularProgress.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FreeStreamer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HHDoctorSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NIMSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NIMAVChat.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NMC.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NMCBasicModuleFramework.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PYPhotoBrowser.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveObjC.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYModel.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-和畅行/Pods-和畅行-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		03BD83FB238BB89000F57978 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-和畅行/Pods-和畅行-resources.sh",
-				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/resources/SecurityKit.bundle",
-				"${PODS_ROOT}/NIMSDK/NIMAVChat/Resources/NMCVideoFilter.bundle",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-specialTarget-HarmonyYi/Pods-specialTarget-HarmonyYi-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SecurityKit.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/NMCVideoFilter.bundle",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-specialTarget-HarmonyYi/Pods-specialTarget-HarmonyYi-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-和畅行/Pods-和畅行-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-specialTarget-HarmonyYi/Pods-specialTarget-HarmonyYi-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		697ED4BC89789BDD8D601A33 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-specialTarget-HarmonyYi/Pods-specialTarget-HarmonyYi-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-specialTarget-HarmonyYi/Pods-specialTarget-HarmonyYi-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-specialTarget-HarmonyYi/Pods-specialTarget-HarmonyYi-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AF39BC23D98947F91514DB68 /* [CP] Embed Pods Frameworks */ = {
@@ -5357,53 +5351,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-和畅行/Pods-和畅行-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
-				"${BUILT_PRODUCTS_DIR}/DACircularProgress/DACircularProgress.framework",
-				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
-				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
-				"${BUILT_PRODUCTS_DIR}/FreeStreamer/FreeStreamer.framework",
-				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/HHDoctorSDK.framework",
-				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
-				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
-				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
-				"${PODS_ROOT}/NIMSDK/NIMSDK/NIMSDK.framework",
-				"${PODS_ROOT}/NIMSDK/NIMAVChat/NIMAVChat.framework",
-				"${PODS_ROOT}/NIMSDK/NIMAVChat/NMC.framework",
-				"${PODS_ROOT}/NIMSDK/NIMAVChat/NMCBasicModuleFramework.framework",
-				"${BUILT_PRODUCTS_DIR}/PYPhotoBrowser/PYPhotoBrowser.framework",
-				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/ReactiveObjC/ReactiveObjC.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/YYModel/YYModel.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-specialTarget-和畅行/Pods-specialTarget-和畅行-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DACircularProgress.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FreeStreamer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HHDoctorSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NIMSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NIMAVChat.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NMC.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NMCBasicModuleFramework.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PYPhotoBrowser.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveObjC.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYModel.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-specialTarget-和畅行/Pods-specialTarget-和畅行-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-和畅行/Pods-和畅行-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-specialTarget-和畅行/Pods-specialTarget-和畅行-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BFAA0FAE2B18DFE5C32480DF /* [CP] Copy Pods Resources */ = {
@@ -5411,19 +5368,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-和畅行/Pods-和畅行-resources.sh",
-				"${PODS_ROOT}/HHDoctorSDK/HHDoctorSDK/resources/SecurityKit.bundle",
-				"${PODS_ROOT}/NIMSDK/NIMAVChat/Resources/NMCVideoFilter.bundle",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-specialTarget-和畅行/Pods-specialTarget-和畅行-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SecurityKit.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/NMCVideoFilter.bundle",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-specialTarget-和畅行/Pods-specialTarget-和畅行-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-和畅行/Pods-和畅行-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-specialTarget-和畅行/Pods-specialTarget-和畅行-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F354F97218B358223C6D1A31 /* [CP] Check Pods Manifest.lock */ = {
@@ -5437,7 +5391,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-和畅行-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-specialTarget-和畅行-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -5625,6 +5579,7 @@
 				0337A726218ADC6C005A4693 /* PECropView.m in Sources */,
 				03CEFC1621A68E580097CB17 /* GuidanceView.m in Sources */,
 				034A4E86211A9AD900936A46 /* TZAssetCell.m in Sources */,
+				0398C0C4246A6DB10083D625 /* UISegmentedControl+Style_ios13.m in Sources */,
 				036E84122186EAB1001B9BB4 /* I9_BlueToothListViewController.m in Sources */,
 				036FC0E12118246800C1A793 /* FeedbackViewController.m in Sources */,
 				03F6931620FF2FD400308E38 /* SBJsonStreamWriterState.m in Sources */,
@@ -6053,6 +6008,7 @@
 				03BD827F238BB89000F57978 /* LJRuler.m in Sources */,
 				0369D678238BC5E100FD3272 /* OGBluetoothListView.m in Sources */,
 				03BD8280238BB89000F57978 /* WXPhoneController.m in Sources */,
+				0398C0C5246A7AFE0083D625 /* UISegmentedControl+Style_ios13.m in Sources */,
 				03BD8281238BB89000F57978 /* LiveMonitorVC.m in Sources */,
 				03BD8282238BB89000F57978 /* WeXinViewController.m in Sources */,
 				03BD8283238BB89000F57978 /* QuestionCell.m in Sources */,
@@ -6280,7 +6236,7 @@
 		};
 		03513ADF20E9CAD4004E2805 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 432A80A6E0CB6A191C1F35C4 /* Pods-和畅行.debug.xcconfig */;
+			baseConfigurationReference = 39E65FAF7029A75FEF3BE02D /* Pods-specialTarget-和畅行.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -6349,7 +6305,7 @@
 		};
 		03513AE020E9CAD4004E2805 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FE7460D05597BE7EC6524138 /* Pods-和畅行.release.xcconfig */;
+			baseConfigurationReference = 5455A2C6728E1FC76579D999 /* Pods-specialTarget-和畅行.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -6419,7 +6375,7 @@
 		};
 		03BD83FD238BB89000F57978 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 432A80A6E0CB6A191C1F35C4 /* Pods-和畅行.debug.xcconfig */;
+			baseConfigurationReference = 722A584BA0710AAF5A6FC9A7 /* Pods-specialTarget-HarmonyYi.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
@@ -6488,7 +6444,7 @@
 		};
 		03BD83FE238BB89000F57978 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FE7460D05597BE7EC6524138 /* Pods-和畅行.release.xcconfig */;
+			baseConfigurationReference = 460BCEBB6DC913E46DE93ABF /* Pods-specialTarget-HarmonyYi.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";

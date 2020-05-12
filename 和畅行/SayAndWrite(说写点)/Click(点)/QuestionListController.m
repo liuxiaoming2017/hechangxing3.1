@@ -131,18 +131,24 @@
 {
     UIView *bottomV = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-Adapterbody(220), ScreenWidth, Adapterbody(220))];
     bottomV.backgroundColor = [UIColor whiteColor];
+    bottomV.tag = 101;
     [self.view addSubview:bottomV];
     
-    CGFloat marginBottom = FIRST_FLAG ? Adapterbody(15) : Adapterbody(5);
+    CGFloat marginBottom = FIRST_FLAG ? Adapterbody(15) : Adapterbody(5)+7;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-Adapterbody(200))/2.0, marginBottom, Adapterbody(200), Adapterbody(20))];
     titleLabel.font = [UIFont systemFontOfSize:16];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.textColor = [UIColor blackColor];
+    titleLabel.tag = 1201;
     titleLabel.text = ModuleZW(@"请选择");
     [bottomV addSubview:titleLabel];
+    
     if(!FIRST_FLAG){
-        titleLabel.hidden = YES;
+        //titleLabel.hidden = YES;
+        titleLabel.textAlignment = NSTextAlignmentLeft;
+        titleLabel.left = Adapterbody(20);
+        titleLabel.text = @"Remind:60";
     }
     
     bottomV.layer.cornerRadius=5;
@@ -150,13 +156,26 @@
     bottomV.layer.shadowOffset=CGSizeMake(0, -5);
     bottomV.layer.shadowRadius=8;
     bottomV.layer.shadowOpacity = YES;
+    CGFloat btWith = (ScreenWidth-Adapterbody(80))/3;
+    CGFloat bottowWith = (ScreenWidth-btWith*2)/3;
+    
 
     for (NSInteger i=0;i<5;i++) {
         UIButton *selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         if(i<3){
-           selectBtn.frame = CGRectMake((ScreenWidth-Adapterbody(54)*3-Adapterbody(60))/2.0+(Adapterbody(84))*i, titleLabel.bottom+Adapterbody(15), Adapterbody(54), Adapterbody(54));
+            if ([UserShareOnce shareOnce].languageType) {
+                 selectBtn.frame = CGRectMake(Adapterbody(20) +(btWith + Adapterbody(20))*i, titleLabel.bottom+Adapterbody(15), btWith, Adapterbody(54));
+            }else{
+                 selectBtn.frame = CGRectMake((ScreenWidth-Adapterbody(54)*3-Adapterbody(60))/2.0+(Adapterbody(84))*i, titleLabel.bottom+Adapterbody(15), Adapterbody(54), Adapterbody(54));
+            }
+          
         }else{
-            selectBtn.frame = CGRectMake((ScreenWidth-Adapterbody(54)*2-Adapterbody(30))/2.0+(Adapterbody(84))*(i-3), titleLabel.bottom+Adapterbody(86), Adapterbody(54), Adapterbody(54));
+            if ([UserShareOnce shareOnce].languageType) {
+                selectBtn.frame = CGRectMake(bottowWith + (btWith + bottowWith)*(i-3), titleLabel.bottom+Adapterbody(86), btWith, Adapterbody(54));
+            }else{
+                 selectBtn.frame = CGRectMake((ScreenWidth-Adapterbody(54)*2-Adapterbody(30))/2.0+(Adapterbody(84))*(i-3), titleLabel.bottom+Adapterbody(86), Adapterbody(54), Adapterbody(54));
+            }
+            
         }
         selectBtn.tag = 2019+i;
         
@@ -187,6 +206,10 @@
 # pragma mark - 答题按钮
 - (void)selectBtnBtnAction:(UIButton *)btn
 {
+    if(_selectNum == 60){ //所有题目已经答完
+        [self generateTZBS];
+        return;
+    }
     if(self.isSelect && self.selectIndexPath.row!=_rowNum-1){
         QuestionTableCell *cell = (QuestionTableCell *)[self.tableView cellForRowAtIndexPath:self.selectIndexPath];
         NSArray *arr1 = [self.questionArr objectAtIndex:self.selectIndexPath.section];
@@ -210,6 +233,10 @@
     _selectNum+=1;
     NSInteger indexNum = btn.tag - 2018;
     NSLog(@"hhh:%ld",indexNum);
+    
+    UILabel *titLabel = (UILabel *)[self.view viewWithTag:1201];
+    titLabel.text = [NSString stringWithFormat:@"Remind:%ld",60-_selectNum];
+    
     model.selectNum = indexNum;
     if(model.reverse){
         model.grade = 5 - indexNum;
@@ -633,8 +660,8 @@
         NSInteger section2Count = [[self.questionArr objectAtIndex:2] count];
         cell.indexLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row+1+section0Count+section1Count+section2Count];
     }
-    
-    cell.answerLabel.font = [UIFont systemFontOfSize:14/[UserShareOnce shareOnce].multipleFontSize];
+    //14
+    cell.answerLabel.font = [UIFont systemFontOfSize:10/[UserShareOnce shareOnce].multipleFontSize];
    // [self.cellH setObject:@(h) forKey:[NSString stringWithFormat:@"%ld",indexPath.row]];
     return cell;
 }
@@ -987,8 +1014,12 @@
             [UserShareOnce shareOnce].isRefresh = YES;
             ResultController *resultVC = [[ResultController alloc] init];
             resultVC.TZBSstr = weakSelf.str;
+            resultVC.typePointStr = @"8";
+            resultVC.startTimeStr = self.startTimeStr;
             [weakSelf.navigationController pushViewController:resultVC animated:YES];
 
+        }else{
+            [weakSelf showAlertWarmMessage:[dic objectForKey:@"data"]];
         }
     } failureBlock:^(NSError *error) {
         [GlobalCommon hideMBHudWithView:weakSelf.view];

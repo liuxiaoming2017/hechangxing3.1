@@ -322,7 +322,13 @@
                 if([GlobalCommon stringEqualNull:textStr]){
                     textStr = @"无";
                 }
-                [weakSelf showUpdateView:downUrl contentStr:textStr typeStr:ytpeStr];
+                if([[UserShareOnce shareOnce].languageType isEqualToString:@"us-en"]){
+                    NSString *englistStr = @"The latest version comes whether you update?";
+                    [weakSelf showUpdateView:downUrl contentStr:englistStr typeStr:@"0"];
+                }else{
+                    [weakSelf showUpdateView:downUrl contentStr:textStr typeStr:@"0"];
+                }
+    
                 NSLog(@"升级了");
             }else{
                 if(typeInt == 1){

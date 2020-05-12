@@ -58,7 +58,7 @@
     
     if (_labTitle == nil) {
         _labTitle = [[UILabel alloc] init];
-        _labTitle.text = @"选择设备";
+        _labTitle.text = ModuleZW(@"选择设备");
         _labTitle.textColor = [UIColor blackColor];
         _labTitle.font = [UIFont systemFontOfSize:16];
         _labTitle.textAlignment = NSTextAlignmentCenter;
@@ -89,7 +89,7 @@
         self.btnCancel = [UIButton buttonWithType:UIButtonTypeSystem];
         _btnCancel.layer.borderWidth = 0.5f;
         _btnCancel.layer.borderColor = [UIColor whiteColor].CGColor;
-        [_btnCancel setTitle:@"取消" forState:UIControlStateNormal];
+        [_btnCancel setTitle:ModuleZW(@"取消") forState:UIControlStateNormal];
         [_btnCancel setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_btnCancel addTarget:self action:@selector(actionCancel:) forControlEvents:UIControlEventTouchUpInside];
         [_mainView addSubview:_btnCancel];

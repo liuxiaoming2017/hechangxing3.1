@@ -243,14 +243,15 @@
     if(FIRST_FLAG){
         self.remindLabel.text = str;
     }else{
-        str = [NSString stringWithFormat:@"%@%@. |%@",ModuleZW(stateStr),str2,ModuleZW(@"点击查看我们为您定制的和畅服务包")];
-        
-        CGFloat scaleSize = ISPaid ? [UserShareOnce shareOnce].padSizeFloat : [UserShareOnce shareOnce].multipleFontSize;
-        
-        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:str attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16*scaleSize],NSForegroundColorAttributeName: [UIColor whiteColor]}];
-        UIFont *boldFont = [UIFont boldSystemFontOfSize:17*scaleSize];
-        [attrString addAttribute:NSFontAttributeName value:boldFont range:[str rangeOfString:@"|View More"]];
-        self.remindLabel.attributedText = attrString;
+//        str = [NSString stringWithFormat:@"%@%@. |%@",ModuleZW(stateStr),str2,ModuleZW(@"点击查看我们为您定制的和畅服务包")];
+//
+//        CGFloat scaleSize = ISPaid ? [UserShareOnce shareOnce].padSizeFloat : [UserShareOnce shareOnce].multipleFontSize;
+//
+//        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:str attributes: @{NSFontAttributeName: [UIFont fontWithName:@"PingFang SC" size: 16*scaleSize],NSForegroundColorAttributeName: [UIColor whiteColor]}];
+//        UIFont *boldFont = [UIFont boldSystemFontOfSize:17*scaleSize];
+//        [attrString addAttribute:NSFontAttributeName value:boldFont range:[str rangeOfString:@"|View More"]];
+//        self.remindLabel.attributedText = attrString;
+        self.remindLabel.text = @"View More";
     }
     
     [self.toViewButton setBackgroundImage:[UIImage imageNamed:ModuleZW(@"和畅包p")] forState:(UIControlStateNormal)];

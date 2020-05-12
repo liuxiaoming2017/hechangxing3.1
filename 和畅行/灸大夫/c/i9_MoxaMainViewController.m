@@ -180,6 +180,7 @@
     
     [self initView];
     [self initViewAndDatas];
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
 }
 
 
@@ -1990,6 +1991,12 @@ CGFloat i9distanceBetweenPoints (CGPoint first, CGPoint second)
 
 - (void)dealloc {
     NSLog(@"");
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"28" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
 }
 
 @end

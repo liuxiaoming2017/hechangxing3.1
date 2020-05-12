@@ -21,6 +21,8 @@
 #import "NoteController.h"
 #import "NoteView.h"
 
+#import "UISegmentedControl+Style_ios13.h"
+
 #import <MediaPlayer/MediaPlayer.h>
 #import <notify.h>
 
@@ -123,6 +125,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     self.isOnPay = YES;
     self.isPlaying = NO;
     self.isFirstIn = YES;
@@ -256,6 +259,14 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    NSString *typeStr = [NSString string];
+    if(self.isYueLuoyi){
+        typeStr = @"34";
+    }else{
+        typeStr = @"26";
+    }
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:typeStr withstartTime:self.startTimeStr withendTime:self.endTimeStr];
 }
 
 - (id)initWithType:(BOOL )isYueLuoyi
@@ -274,6 +285,9 @@
     NSArray *titleArray = FIRST_FLAG ? @[@"宫", @"商", @"角", @"徵",@"羽"] : @[@"Gong",@"Shang",@"Jue",@"Zhi",@"Yu"];
     
     UISegmentedControl *topSegment = [[UISegmentedControl alloc]initWithItems:titleArray];//Adapter(250)
+    
+    [topSegment sameWithIos12Style];
+    
     topSegment.frame = CGRectMake(0, kNavBarHeight+Adapter(5), Adapter(315), Adapter(50));
     CGFloat scaleSize = FIRST_FLAG ? 1 : [UserShareOnce shareOnce].multipleFontSize;
     topSegment.tintColor = [UIColor whiteColor];
@@ -290,7 +304,7 @@
         if(ISPaid){
             [topSegment setApportionsSegmentWidthsByContent:YES];
         }else{
-            [topSegment setWidth:75.0 forSegmentAtIndex:0];
+            [topSegment setWidth:85.0 forSegmentAtIndex:0];
             [topSegment setWidth:85.0 forSegmentAtIndex:1];
         }
         
@@ -1614,6 +1628,7 @@
     [super didReceiveMemoryWarning];
     
 }
+
 
 
 

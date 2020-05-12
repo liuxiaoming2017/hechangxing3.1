@@ -72,7 +72,7 @@
     [self initUI];
     
     self.navTitleLabel.text = ModuleZW(@"推拿");
-    
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     self.dataArr = [NSMutableArray array];
     
 
@@ -152,6 +152,8 @@
     [super viewDidDisappear:YES];
     [[OGA530BluetoothManager shareInstance] removeSubscribe:self.subscribe];
     [self.dataArr removeAllObjects];
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"33" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -839,5 +841,6 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
 //    ArmchairAcheTestVC *vc = [[ArmchairAcheTestVC alloc] init];
 //    [self.navigationController pushViewController:vc animated:YES];
 //}
+
 
 @end

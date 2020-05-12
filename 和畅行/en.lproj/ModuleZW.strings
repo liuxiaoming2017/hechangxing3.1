@@ -36,7 +36,7 @@
 
 //=============================== 首页===============================
 
-"和畅包"                                                               = "Harmony package";
+"和畅包"                                                               = "Harmony Package";
 "您当前处在健康的未病状态的"                           = "Healthy ";
 "您当前属于未病态"                                             = "Healthy";
 "您当前属于欲病态"                                             = "Sub-healthy";
@@ -96,14 +96,14 @@
 "去结算" = "CHECKOUT";
 "确认完成" = "Done";
 //=====================================一说================================
-"脏腑状态评估"             ="Zang-fu organs test";
+"脏腑状态评估"             ="Zang-fu Organs Test";
 "很抱歉，您所录制的声音无效，请重新辨识。"        ="Sorry, the voice you recorded is invalid. Please re-identify";
 "录音权限被禁止"          ="Recording permission is disabled";
-"经络功能状态评估"      ="Meridian test";
+"经络功能状态评估"      ="Meridian Test";
 "未采集到有效声音，请录制有效声音"        ="No valid voice is collected, please record a valid voice";
-"经络状态评估"        ="Meridian test";
-"经络辨识"              = "Meridian test";
-"经络辨识报告"    = "Meridian test report";
+"经络状态评估"        ="Meridian Test";
+"经络辨识"              = "Meridian Test";
+"经络辨识报告"    = "Meridian Test Report";
 
 
 //=============================== 运动==================================
@@ -248,7 +248,7 @@
 "艾灸"                                                              = "Moxibustion";
 "电话"                                                              = "Tel";
 "视频"                                                              = "Video";
-"留言"                                                              = "Harmony package";
+"留言"                                                              = "Harmony Package";
 "耳穴"                                                              = "Ear Acupuncture";
 "留言"                                                              = "Message";
 
@@ -513,21 +513,21 @@
 "您输入的手机号格式错误"        ="Wrong format of mobile number";
 "账号不能为空"        ="Account cannot be empty";
 "手机号和验证码不能为空"        ="Mobile number and verification code cannot be empty";
-"经络知识"        ="Meridian knowledge";
+"经络知识"        ="Meridian Knowledge";
 "Get your personalized Harmony package after test"        ="Get your personalized Harmony package after test";
 "检测到新版本，是否下载?"        ="New version detected, download? ";
 "健康档案"        ="Health Archive";
-"体质辨识"        ="Constitution test";
+"体质辨识"        ="Constitution Test";
 "体质辨识报告"        ="Constitution identification report";
 "您已超过7天未进行经络状态的评估"        ="You haven’t tested your meridian for over 7 days ";
 "您已超过30天未进行脏腑状态的评估"        ="You haven’t tested your zang-fu organs for over 30 days ";
 "您已超90天未进行体质状态评估"        ="You haven’t tested your constitution for over 90 days ";
 "健康保险"        ="Health insurance";
 "昆仑保险"        ="Kunlun insurance";
-"体质体检报告"        ="Constitution test report";
-"脏腑体检报告"        ="Zang-fu organs test report";
-"经络体检报告"        ="Meridian test report";
-"和畅经络运动"        ="Harmony meridian exercise";
+"体质体检报告"        ="Constitution Test Report";
+"脏腑体检报告"        ="Zang-fu Organs Test Report";
+"经络体检报告"        ="Meridian Test Report";
+"和畅经络运动"        ="Harmony Meridian Exercise";
 "请去个人中心->我的->运动示范音中下载示范音，不然您将无法收听到语音播放"        ="Please go to Personal Center->Me->Exercise Demo Recording to download the demo record. Otherwise you will not be able to listen to the voice playback. ";
 "请去下载乐药"        ="Download treatment music";
 
@@ -643,11 +643,11 @@
 "我的优惠券"        ="My coupons";
 "开始查找"        ="Start searching";
 "您还没有音乐，请您先去下载"        ="You have no treatment music. Download";
-"食疗处方"        ="Diet prescription";
-"体质处方"        ="Constitution prescription";
+"食疗处方"        ="Diet Prescription";
+"体质处方"        ="Constitution Prescription";
 "保险方案"        ="Insurance plan";
 "辅助就医"        ="Aid for medical treatment";
-"体征监检测"        ="Physical examination";
+"体征监检测"        ="Physical Examination";
 "获取星级失败"        ="Failed to obtain star rating";
 "未登录或登录已过期，请重新登录"        ="Not logged in or expired. Re-login";
 "请检查网络"        ="Check network ";
@@ -722,7 +722,7 @@
 "人体图解"    = "Body Diagram";
 "症状列表" = "Symptom List";
 "已选症状"    = "Symptoms chosen";
-"脏腑辨识"        ="Zang-fu organs";
+"脏腑辨识"        ="Zang-fu Organs";
 "脏腑辨识报告"        ="Zang-fu organs report";
 "整个身体"        ="Whole Body";
 "头面部"        ="Head and face";
@@ -1524,7 +1524,7 @@
 "主诉: %@"     =   "Chief Complaint: %@";
 "月"     =   "M";
 "日"     =   "D";
-"季度报告详情"     =   "Quarterly report details";
+"季度报告详情"     =   "Quarterly Report Details";
 "体温详情"     =   "Body temperature details";
 "呼吸详情"     =   "Breathing details";
 "血氧详情"     =   "Blood oxygen details";
@@ -1732,7 +1732,7 @@
 "睡前"=    "Before sleep ";
 
 
-"疾病检测"    =       "Zang-fu test";
+"疾病检测"    =       "Zang-fu Test";
 "二维码"     =     "QR Code";
 "血压心率检测"   =      "Blood Pressure/Heart Rate";
 "已选症状%ld/5"   =       "Symptoms chosen %ld/5";
@@ -1998,3 +1998,4 @@
 "舒恐—惶恐曲（三）" = "Ease Fear‑ Song of scare (III)";
 "舒恐—惶恐曲（四）" = "Ease Fear‑ Song of scare (IV)";
 
+"选择设备"  = "Select Equipment";

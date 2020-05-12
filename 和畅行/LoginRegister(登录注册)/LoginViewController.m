@@ -20,6 +20,7 @@
 #import "payRequsestHandler.h"
 #import "HeChangPackgeController.h"
 #import "EnRegistrController.h"
+#import "UISegmentedControl+Style_ios13.h"
 #define margin 40
 #define leftOrigin 40
 
@@ -66,6 +67,7 @@
     [backScrollView addSubview:imageV];
     NSArray *titleArray = @[ModuleZW(@"短信登录"),ModuleZW(@"密码登录")];
     UISegmentedControl *segment = [[UISegmentedControl alloc]initWithItems:titleArray];
+    [segment sameWithIos12Style];
     segment.frame = CGRectMake(Adapter(40), imageV.bottom + Adapter(40), ScreenWidth - Adapter(80), Adapter(30));
     segment.tintColor = [UIColor clearColor];
     NSDictionary* selectedTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:24*[UserShareOnce shareOnce].fontSize],NSForegroundColorAttributeName: RGB_ButtonBlue };

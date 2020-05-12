@@ -40,8 +40,8 @@
     self.isPush = NO;
 }
 
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
     if (!self.isPush) {
         self.endTimeStr = [GlobalCommon getCurrentTimes];
         [GlobalCommon pageDurationWithpageId:@"7" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
@@ -1113,6 +1113,7 @@
         OrganDiseaseListViewController *diseaseList = [[OrganDiseaseListViewController alloc] init];
         diseaseList.upData = _selectedArr;
         diseaseList.sex = _sex;
+        diseaseList.startTimeStr = self.startTimeStr;
         diseaseList.rightDataArr = self.rightDataArr;
         diseaseList.startTimeStr = self.startTimeStr;
         diseaseList.refreshTableView = ^{

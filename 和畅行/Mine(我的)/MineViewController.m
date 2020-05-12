@@ -344,6 +344,7 @@ if(FIRST_FLAG){ //英文版没有
                     }else{
                         SetupController *vc = [[SetupController alloc] init];
                         CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:vc];
+                        nav.modalPresentationStyle = UIModalPresentationFullScreen;
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [self presentViewController:nav animated:YES completion:nil];
                         });
@@ -368,9 +369,13 @@ if(FIRST_FLAG){ //英文版没有
                     break;
                 case 2: {
                     SetupController *vc = [[SetupController alloc] init];
+                   // vc.modalPresentationStyle = UIModalPresentationFullScreen;
                     CustomNavigationController *nav = [[CustomNavigationController alloc] initWithRootViewController:vc];
+                    nav.modalPresentationStyle = UIModalPresentationFullScreen;
                     dispatch_async(dispatch_get_main_queue(), ^{
+                        
                         [self presentViewController:nav animated:YES completion:nil];
+                        
                     });
                 }
                     break;
@@ -427,7 +432,12 @@ if(FIRST_FLAG){ //英文版没有
 -(void)loginClick{
     PersonalInformationViewController * personInfoView=[[PersonalInformationViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:personInfoView];
+    nav.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:nav animated:YES completion:nil];
+    NSString *photoStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"35" withstartTime:photoStr withendTime:photoStr];
+
+    
 }
 
 -(void)insertSublayerWithImageView:(UIImageView *)imageV
@@ -455,6 +465,11 @@ if(FIRST_FLAG){ //英文版没有
     }
 }
 
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"5" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+}
 
 
 @end

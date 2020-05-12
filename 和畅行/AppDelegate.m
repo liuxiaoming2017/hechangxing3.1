@@ -88,7 +88,7 @@
     [[UITabBar appearance] setTranslucent:NO];
     
     //和缓医疗SDK注册,是和缓分配给的productId
-    #if TARGET_IPHONE_SIMULATOR
+    #if TARGET_IPHONE_SIMULATOR || !FIRST_FLAG
     
     #else
         HHSDKOptions *hhSdk = [[HHSDKOptions alloc] initWithProductId:HHSDK_id isDebug:NO isDevelop:NO];

@@ -27,11 +27,15 @@
 
 @implementation MyAvdisorysViewController
 - (void)dealloc{
-    
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     self.endTimeStr = [GlobalCommon getCurrentTimes];
     [GlobalCommon pageDurationWithpageId:@"43" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
-    
 }
+
+
 
 - (void)goBack:(UIButton *)btn
 {

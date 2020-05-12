@@ -56,6 +56,7 @@
     self.leftBtn.userInteractionEnabled = NO;
     self.preBtn.hidden = NO;
     self.leftBtn.hidden = YES;
+    self.startTimeStr = [GlobalCommon getCurrentTimes];
     
     NSURL *url = [NSURL URLWithString:self.dataPath];
     NSData *data = [NSData dataWithContentsOfURL:url];
@@ -176,11 +177,17 @@
     self.dataSource = dataArray;
 }
 
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.endTimeStr = [GlobalCommon getCurrentTimes];
+    [GlobalCommon pageDurationWithpageId:@"58" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 /*
 #pragma mark - Navigation

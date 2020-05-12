@@ -14,5 +14,6 @@
 @property (nonatomic,copy) NSString *titleStr;
 @property (nonatomic,assign) NSInteger typeInteger;
 @property (nonatomic,assign) BOOL noWebviewBack;
+@property (nonatomic,assign) BOOL isSelf;
 @end
 

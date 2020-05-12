@@ -130,44 +130,51 @@
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
             }
             
-        
+            //拨打电话埋点
+            self.startTimeStr = [GlobalCommon getCurrentTimes];
+            [GlobalCommon pageDurationWithpageId:@"29" withstartTime:self.startTimeStr withendTime:self.startTimeStr];
 
         }
             
             break;
         case 4:
-            if ([UserShareOnce shareOnce].username.length != 11) {
-                [self showAlerVC];
-                return;
-            }
-            vc = [[HCY_CallController alloc] init];
+         
+                if ([UserShareOnce shareOnce].username.length != 11) {
+                    [self showAlerVC];
+                    return;
+                }
+                vc = [[HCY_CallController alloc] init];
+           
+            
             break;
         case 5:
         {
             
-            if([[[NSUserDefaults standardUserDefaults] objectForKey:@"bloodNeverCaution"] isEqualToString:@"1"]){
-                PressureViewController *vc = [[PressureViewController alloc] init];
-                 vc.hidesBottomBarWhenPushed = YES;
-                [[self selectedViewController] pushViewController:vc animated:YES];
-            }else{
-                BloodGuideViewController * vc1 = [[BloodGuideViewController alloc] init];
-                vc1.isBottom = YES;
-                vc1.hidesBottomBarWhenPushed = YES;
-                [[self selectedViewController] pushViewController:vc1 animated:YES];
-            }
-           
-            return;
+                if([[[NSUserDefaults standardUserDefaults] objectForKey:@"bloodNeverCaution"] isEqualToString:@"1"]){
+                    PressureViewController *vc = [[PressureViewController alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [[self selectedViewController] pushViewController:vc animated:YES];
+                }else{
+                    BloodGuideViewController * vc1 = [[BloodGuideViewController alloc] init];
+                    vc1.isBottom = YES;
+                    vc1.hidesBottomBarWhenPushed = YES;
+                    [[self selectedViewController] pushViewController:vc1 animated:YES];
+                }
+            
         }
             
             break;
         case 6:{
-           
-            vc = [[AdvisorysViewController alloc] init];
+            
+                vc = [[AdvisorysViewController alloc] init];
+            
         }
             break;
         case 7:
             
-            vc = [[ArmchairHomeVC alloc] init];
+            
+                vc = [[ArmchairHomeVC alloc] init];
+            
            
             
             break;
