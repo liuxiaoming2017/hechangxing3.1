@@ -19,17 +19,20 @@ extern BOOL isBF;
 #define isProduct YES
 
 //数据统计测试环境
-//#define DATAURL_PRE @"http://47.92.160.74:8086/api/v1/"
-#define DATAURL_PRE @"http://47.92.160.74:8088/hcdp-api/api/"
+////#define DATAURL_PRE @"http://47.92.160.74:8086/api/v1/"
+//#define DATAURL_PRE @"http://47.92.160.74:8088/hcdp-api/api/"
+////数据统计生产环境
+//#define DATAURL_PRE @"https://hcdp.ky3h.com/portal"
+
+#define DATAURL_PRE (isProduct ? @"https://hcdp.ky3h.com/hcdp-api/api/" : @"http://47.92.160.74:8088/hcdp-api/api/")
+
 #define DATAURL_PRE1 @"http://47.92.160.74:8088/hcdp-api/api/login"
-//测试环境
-//#define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://10.1.71.38:8888/hcy-system/")
 
 #if FIRST_FLAG
     #define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://47.92.73.99:8080/healthlm/")
 #else
-    #define URL_PRE (isProduct ? @"http://204.9.61.24/healthlm/" : @"http://47.92.73.99:8080/healthlm/")
-   // #define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://47.92.73.99:8080/healthlm/")
+    //#define URL_PRE (isProduct ? @"http://204.9.61.24/healthlm/" : @"http://47.92.73.99:8080/healthlm/")
+   #define URL_PRE @"http://10.1.71.104:8080/healthlm-en/"
 #endif
 
 

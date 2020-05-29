@@ -12,10 +12,15 @@
 #import "BloodPressureNonDeviceViewController.h"
 #import "SugerViewController.h"
 #import "SGScanningQRCodeVC.h"
-#import "ArmchairThemeVC.h"
+
 #if !FIRST_FLAG
-#import "IjoouSetViewController.h"
+    #import "IjoouSetViewController.h"
+#else
+    #import "ArmchairThemeVC.h"
 #endif
+
+
+
 
 @interface CustomNavigationController ()<UIGestureRecognizerDelegate>
 
@@ -62,7 +67,7 @@
                 return NO;
             }
         }
-        if([vc isKindOfClass:[BloodPressureNonDeviceViewController class]]||[vc isKindOfClass:[SugerViewController class]]||[vc isKindOfClass:[SGScanningQRCodeVC class]]||[vc isKindOfClass:[ArmchairThemeVC class]]){
+        if([vc isKindOfClass:[BloodPressureNonDeviceViewController class]]||[vc isKindOfClass:[SugerViewController class]]||[vc isKindOfClass:[SGScanningQRCodeVC class]]){
             return NO;
         }
         
@@ -70,8 +75,12 @@
         if([vc isKindOfClass:[IjoouSetViewController class]]){
             return NO;
         }
-        
+#else
+   if([vc isKindOfClass:[ArmchairThemeVC class]]){
+            return NO;
+        }
 #endif
+        
         
     }
     

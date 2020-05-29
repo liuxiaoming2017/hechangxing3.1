@@ -13,12 +13,13 @@
 #import <sys/utsname.h>
 #import <UIKit/UIKit.h>
 static NSMutableArray *tasks;
-@interface BuredPoint ()
+@interface BuredPoint ()<NSURLSessionTaskDelegate>
 
 @property (nonatomic,copy)NSString *signStr;
 @property (nonatomic,copy)NSString *openStr;
 @property (nonatomic,copy)NSString *locationKey;
 @property (nonatomic,copy)NSString *pointToken;
+@property(nonatomic,strong)NSURLSession *session;
 @end
 @implementation BuredPoint
 
@@ -32,6 +33,15 @@ static NSMutableArray *tasks;
     return sharedBANetManager;
 }
 
+
+- (NSURLSession *)session
+{
+    if(_session == nil){
+        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+        _session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
+    }
+    return _session;
+}
 
 -(void)setTheSignatureWithSignStr:(NSString *)signString withOpenStr:(NSString *)openStr withLacationKey:(NSString *)lacationKey{
     self.openStr = openStr;
@@ -111,9 +121,9 @@ static NSMutableArray *tasks;
     [request setHTTPBody:data];
     
     //3.获得会话对象
-    NSURLSession *session = [NSURLSession sharedSession];
+//    NSURLSession *session = [NSURLSession sharedSession];
     
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error == nil) {
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
             NSString *token = [NSString stringWithFormat:@"%@",[dict valueForKey:@"data"]];
@@ -159,9 +169,10 @@ static NSMutableArray *tasks;
         [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         
         //3.获得会话对象
-        NSURLSession *session = [NSURLSession sharedSession];
         
-        NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        
+        NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             if (error == nil) {
                 NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
                 if (successBlock)
@@ -219,7 +230,21 @@ static NSMutableArray *tasks;
     }
 }
 
+-(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler
+{
+    if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust])
 
+       {
+
+           NSURLCredential *cre = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+
+           // 调用block
+
+           completionHandler(NSURLSessionAuthChallengeUseCredential,cre);
+
+       }
+    NSLog(@"space:%@",challenge.protectionSpace);
+}
 
 //有定位的同步请求
 -(void)mainLocationThreadRequestWithUrl:(NSString *)myUrl dic:(NSDictionary *)dic resultBlock:(BAResponseResult)resultBlock {
@@ -296,9 +321,9 @@ static NSMutableArray *tasks;
     [request setHTTPBody:data];
 
     //3.获得会话对象
-    NSURLSession *session = [NSURLSession sharedSession];
+   // NSURLSession *session = [NSURLSession sharedSession];
     
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error == nil) {
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
             if (successBlock)

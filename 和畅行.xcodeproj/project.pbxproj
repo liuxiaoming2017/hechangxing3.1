@@ -379,7 +379,6 @@
 		03BD8180238BB89000F57978 /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A0320E9F6EB003D4952 /* CustomNavigationController.m */; };
 		03BD8181238BB89000F57978 /* ResultSpeakController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03771990210580BA0010EA8B /* ResultSpeakController.m */; };
 		03BD8182238BB89000F57978 /* HCY_DAVisceraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C99B717121B903BE00F1FF5F /* HCY_DAVisceraCell.m */; };
-		03BD8183238BB89000F57978 /* ArmchairDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 036C8E0E23289E1400729889 /* ArmchairDetailVC.m */; };
 		03BD8184238BB89000F57978 /* QuestionListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03535EFA20F7425100664FA9 /* QuestionListController.m */; };
 		03BD8185238BB89000F57978 /* TZImageCropManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 034A4E7E211A9AD900936A46 /* TZImageCropManager.m */; };
 		03BD8186238BB89000F57978 /* HSTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A1920EA17A5003D4952 /* HSTabBar.m */; };
@@ -402,7 +401,6 @@
 		03BD8198238BB89000F57978 /* NoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EE39AE2366D43700369B34 /* NoteView.m */; };
 		03BD8199238BB89000F57978 /* i9_blelistViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E858A2186EB47001B9BB4 /* i9_blelistViewCell.m */; };
 		03BD819A238BB89000F57978 /* HpiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832ED75B2278286A00BFEEFC /* HpiViewController.m */; };
-		03BD819B238BB89000F57978 /* ArmchairCommonVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 036C8E112328A27B00729889 /* ArmchairCommonVC.m */; };
 		03BD819C238BB89000F57978 /* PayMentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039661EF21F1BF7E00754AAA /* PayMentViewController.m */; };
 		03BD819D238BB89000F57978 /* TZProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 034A4E75211A9AD600936A46 /* TZProgressView.m */; };
 		03BD819E238BB89000F57978 /* UpdateReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9847E962341A17B00202B70 /* UpdateReportViewController.m */; };
@@ -485,7 +483,6 @@
 		03BD81F0238BB89000F57978 /* CardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B30692230507C5008D6D38 /* CardModel.m */; };
 		03BD81F1238BB89000F57978 /* MyAvdisorysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036FC0D121181AF300C1A793 /* MyAvdisorysViewController.m */; };
 		03BD81F2238BB89000F57978 /* NSDictionary+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0385401520EF06AB002AC776 /* NSDictionary+Extension.m */; };
-		03BD81F3238BB89000F57978 /* ArmChairModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D1BF582328D38600F2BDD6 /* ArmChairModel.m */; };
 		03BD81F4238BB89000F57978 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 039B2AD3212522D000D558F5 /* TestViewController.m */; };
 		03BD81F5238BB89000F57978 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0390CF8A20ECB975000ECA53 /* RegisterViewController.m */; };
 		03BD81F6238BB89000F57978 /* ZKIndxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CEFC1221A64EF30097CB17 /* ZKIndxView.m */; };
@@ -493,7 +490,6 @@
 		03BD81F8238BB89000F57978 /* UIBlueToothInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E841B2186EAC4001B9BB4 /* UIBlueToothInfo.m */; };
 		03BD81F9238BB89000F57978 /* MySportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0325A5F42109C29900275671 /* MySportCell.m */; };
 		03BD81FA238BB89000F57978 /* ArchivesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF7C219280BE006116FC /* ArchivesController.m */; };
-		03BD81FB238BB89000F57978 /* ArmchairThemeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0351C59023278C3B0035A9EA /* ArmchairThemeVC.m */; };
 		03BD81FC238BB89000F57978 /* payRequsestHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 038517072186AB9E001DD2B7 /* payRequsestHandler.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		03BD81FD238BB89000F57978 /* InformationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF6B2192806E006116FC /* InformationController.m */; };
 		03BD81FE238BB89000F57978 /* AVPlayerObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CECBF4210EF00700A443B8 /* AVPlayerObject.m */; };
@@ -510,7 +506,6 @@
 		03BD8209238BB89000F57978 /* UIButton+BACountDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 035BBC5821ABA4E900AB537D /* UIButton+BACountDown.m */; };
 		03BD820A238BB89000F57978 /* SelectedAdvisorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 036A667B2113ECBA0096A006 /* SelectedAdvisorModel.m */; };
 		03BD820B238BB89000F57978 /* UIImage+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E84322186EAD3001B9BB4 /* UIImage+Util.m */; };
-		03BD820C238BB89000F57978 /* ArmchairTestResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C5913C2331BB030058EF33 /* ArmchairTestResultVC.m */; };
 		03BD820D238BB89000F57978 /* TZPhotoPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034A4E69211A9AD300936A46 /* TZPhotoPickerController.m */; };
 		03BD820E238BB89000F57978 /* i9_UISetTTViewForRollerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036E840B2186EAB0001B9BB4 /* i9_UISetTTViewForRollerController.m */; };
 		03BD820F238BB89000F57978 /* HCY_HomeImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EF321C202B100B43298 /* HCY_HomeImageModel.m */; };
@@ -593,7 +588,6 @@
 		03BD8260238BB89000F57978 /* NSBundle+Language.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A2D32F2331C68B00AC5185 /* NSBundle+Language.m */; };
 		03BD8261238BB89000F57978 /* WriteleftTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C5F8212272EED300889370 /* WriteleftTableViewCell.m */; };
 		03BD8262238BB89000F57978 /* TZVideoPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034A4E71211A9AD500936A46 /* TZVideoPlayerController.m */; };
-		03BD8263238BB89000F57978 /* ArmchairAcheTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 03101DDF2330D6AA00C5F35E /* ArmchairAcheTestVC.m */; };
 		03BD8264238BB89000F57978 /* SymptomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F97D0121005EE300A0F842 /* SymptomModel.m */; };
 		03BD8265238BB89000F57978 /* PECropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337A71D218ADC6B005A4693 /* PECropViewController.m */; };
 		03BD8266238BB89000F57978 /* SBJsonStreamParserAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F692FD20FF2FD200308E38 /* SBJsonStreamParserAccumulator.m */; };
@@ -728,7 +722,6 @@
 		03BD82EE238BB89000F57978 /* i9_UISetTTViewForRoller.xib in Resources */ = {isa = PBXBuildFile; fileRef = 036E85372186EB27001B9BB4 /* i9_UISetTTViewForRoller.xib */; };
 		03BD82EF238BB89000F57978 /* 血压15.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC659F2275414600B10F23 /* 血压15.png */; };
 		03BD82F0238BB89000F57978 /* btn_aijiu_recipe_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E84652186EB08001B9BB4 /* btn_aijiu_recipe_2.png */; };
-		03BD82F1238BB89000F57978 /* armChair.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03B4E4D5232636B9003518EA /* armChair.plist */; };
 		03BD82F2238BB89000F57978 /* 使用规范.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65A62275414600B10F23 /* 使用规范.png */; };
 		03BD82F3238BB89000F57978 /* recheck_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65B02275414600B10F23 /* recheck_blue.png */; };
 		03BD82F4238BB89000F57978 /* ic_no_recipe.png in Resources */ = {isa = PBXBuildFile; fileRef = 036E84822186EB11001B9BB4 /* ic_no_recipe.png */; };
@@ -1022,6 +1015,7 @@
 		03DEBC71210863AB008434BD /* LiveMonitorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DEBC70210863AA008434BD /* LiveMonitorVC.m */; };
 		03DEBC74210863CC008434BD /* LeadPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DEBC72210863CB008434BD /* LeadPlayer.m */; };
 		03DEBC772108641D008434BD /* Helper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03DEBC752108641C008434BD /* Helper.mm */; };
+		03E2251E2480F0610083CEF6 /* ArmChairModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D1BF582328D38600F2BDD6 /* ArmChairModel.m */; };
 		03E36FE920EDB882000974E1 /* UtilityFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE820EDB882000974E1 /* UtilityFunc.m */; };
 		03EB041921E86B96000AA88B /* ZYAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB041721E86B95000AA88B /* ZYAudioManager.m */; };
 		03EBD1E922EE8B7C001FAD7A /* HWTFCursorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EBD1E222EE8B7A001FAD7A /* HWTFCursorView.m */; };
@@ -5018,7 +5012,6 @@
 				03BD82EE238BB89000F57978 /* i9_UISetTTViewForRoller.xib in Resources */,
 				03BD82EF238BB89000F57978 /* 血压15.png in Resources */,
 				03BD82F0238BB89000F57978 /* btn_aijiu_recipe_2.png in Resources */,
-				03BD82F1238BB89000F57978 /* armChair.plist in Resources */,
 				03BD82F2238BB89000F57978 /* 使用规范.png in Resources */,
 				03BD82F3238BB89000F57978 /* recheck_blue.png in Resources */,
 				03BD82F4238BB89000F57978 /* ic_no_recipe.png in Resources */,
@@ -5743,7 +5736,6 @@
 				03BD8180238BB89000F57978 /* CustomNavigationController.m in Sources */,
 				03BD8181238BB89000F57978 /* ResultSpeakController.m in Sources */,
 				03BD8182238BB89000F57978 /* HCY_DAVisceraCell.m in Sources */,
-				03BD8183238BB89000F57978 /* ArmchairDetailVC.m in Sources */,
 				03BD8184238BB89000F57978 /* QuestionListController.m in Sources */,
 				03BD8185238BB89000F57978 /* TZImageCropManager.m in Sources */,
 				03BD8186238BB89000F57978 /* HSTabBar.m in Sources */,
@@ -5769,7 +5761,6 @@
 				03BD8198238BB89000F57978 /* NoteView.m in Sources */,
 				03BD8199238BB89000F57978 /* i9_blelistViewCell.m in Sources */,
 				03BD819A238BB89000F57978 /* HpiViewController.m in Sources */,
-				03BD819B238BB89000F57978 /* ArmchairCommonVC.m in Sources */,
 				03BD819C238BB89000F57978 /* PayMentViewController.m in Sources */,
 				03BD819D238BB89000F57978 /* TZProgressView.m in Sources */,
 				03BD819E238BB89000F57978 /* UpdateReportViewController.m in Sources */,
@@ -5859,7 +5850,6 @@
 				03BD81F0238BB89000F57978 /* CardModel.m in Sources */,
 				03BD81F1238BB89000F57978 /* MyAvdisorysViewController.m in Sources */,
 				03BD81F2238BB89000F57978 /* NSDictionary+Extension.m in Sources */,
-				03BD81F3238BB89000F57978 /* ArmChairModel.m in Sources */,
 				03BD81F4238BB89000F57978 /* TestViewController.m in Sources */,
 				03BD81F5238BB89000F57978 /* RegisterViewController.m in Sources */,
 				03BD81F6238BB89000F57978 /* ZKIndxView.m in Sources */,
@@ -5867,7 +5857,6 @@
 				03BD81F8238BB89000F57978 /* UIBlueToothInfo.m in Sources */,
 				03BD81F9238BB89000F57978 /* MySportCell.m in Sources */,
 				03BD81FA238BB89000F57978 /* ArchivesController.m in Sources */,
-				03BD81FB238BB89000F57978 /* ArmchairThemeVC.m in Sources */,
 				03BD81FC238BB89000F57978 /* payRequsestHandler.mm in Sources */,
 				03BD81FD238BB89000F57978 /* InformationController.m in Sources */,
 				03BD81FE238BB89000F57978 /* AVPlayerObject.m in Sources */,
@@ -5885,7 +5874,6 @@
 				03BD841C238BC04B00F57978 /* OGA730BHomeVC.m in Sources */,
 				03BD820A238BB89000F57978 /* SelectedAdvisorModel.m in Sources */,
 				03BD820B238BB89000F57978 /* UIImage+Util.m in Sources */,
-				03BD820C238BB89000F57978 /* ArmchairTestResultVC.m in Sources */,
 				03BD820D238BB89000F57978 /* TZPhotoPickerController.m in Sources */,
 				03BD820E238BB89000F57978 /* i9_UISetTTViewForRollerController.m in Sources */,
 				0369D680238BC5E100FD3272 /* GLYPageView.m in Sources */,
@@ -5911,6 +5899,7 @@
 				03BD8225238BB89000F57978 /* PECropView.m in Sources */,
 				03BD8226238BB89000F57978 /* GuidanceView.m in Sources */,
 				03BD8227238BB89000F57978 /* TZAssetCell.m in Sources */,
+				03E2251E2480F0610083CEF6 /* ArmChairModel.m in Sources */,
 				03BD8228238BB89000F57978 /* I9_BlueToothListViewController.m in Sources */,
 				03BD8229238BB89000F57978 /* FeedbackViewController.m in Sources */,
 				03BD822A238BB89000F57978 /* SBJsonStreamWriterState.m in Sources */,
@@ -5974,7 +5963,6 @@
 				03BD8260238BB89000F57978 /* NSBundle+Language.m in Sources */,
 				03BD8261238BB89000F57978 /* WriteleftTableViewCell.m in Sources */,
 				03BD8262238BB89000F57978 /* TZVideoPlayerController.m in Sources */,
-				03BD8263238BB89000F57978 /* ArmchairAcheTestVC.m in Sources */,
 				03BD8264238BB89000F57978 /* SymptomModel.m in Sources */,
 				03BD8265238BB89000F57978 /* PECropViewController.m in Sources */,
 				03BD8266238BB89000F57978 /* SBJsonStreamParserAccumulator.m in Sources */,

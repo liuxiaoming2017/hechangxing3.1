@@ -122,10 +122,16 @@
     _searchTF.delegate = self;
     _searchTF.tag = 100;
     _searchTF.attributedPlaceholder = [[NSAttributedString alloc] initWithString:ModuleZW(@"搜索疾病名称") attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    UIImageView *leftImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(10), Adapter(10), Adapter(30), Adapter(16))];
+    
+    
+    UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(Adapter(10), Adapter(10), Adapter(30), Adapter(16))];
+    //UIImageView *leftImageView = [[UIImageView alloc]initWithFrame:CGRectMake(Adapter(10), Adapter(10), Adapter(30), Adapter(16))];
+    UIImageView *leftImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Adapter(30), Adapter(16))];
     leftImageView.image = [UIImage imageNamed:@"搜索 (1)"];
     leftImageView.contentMode = UIViewContentModeScaleAspectFit;
-    _searchTF.leftView = leftImageView;
+    [leftView addSubview:leftImageView];
+    
+    _searchTF.leftView = leftView;
     _searchTF.leftViewMode = UITextFieldViewModeAlways;
     [view addSubview:_searchTF];
 }

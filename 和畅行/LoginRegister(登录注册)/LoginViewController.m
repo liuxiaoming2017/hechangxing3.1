@@ -21,11 +21,20 @@
 #import "HeChangPackgeController.h"
 #import "EnRegistrController.h"
 #import "UISegmentedControl+Style_ios13.h"
+
+#if !FIRST_FLAG
+    #import <FBSDKCoreKit/FBSDKCoreKit.h>
+    #import <FBSDKLoginKit/FBSDKLoginKit.h>
+
+    #import <GoogleSignIn/GoogleSignIn.h>
+#endif
+
+
 #define margin 40
 #define leftOrigin 40
 
 
-@interface LoginViewController ()
+@interface LoginViewController ()<GIDSignInDelegate>
 @property (nonatomic, strong) UIView *blueView;
 @property (nonatomic, strong) UILabel *addNumberLabel;
 @property (nonatomic, strong) UILabel *promptLabel;
@@ -48,6 +57,11 @@
     [self addRightBtn];
     
     [self initWithUI];
+#if !FIRST_FLAG
+    [GIDSignIn sharedInstance].presentingViewController = self;
+    [[GIDSignIn sharedInstance] restorePreviousSignIn];
+#endif
+   
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -255,29 +269,44 @@
     imageV5.backgroundColor = UIColorFromHex(0xb8b8b8);
     [backScrollView addSubview:imageV5];
     
-    UIButton *weixinBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    weixinBtn.frame = CGRectMake((ScreenWidth-Adapter(40))/2.0, otherLoginLabel.bottom+Adapter(20), Adapter(40), Adapter(40));
-    [weixinBtn setBackgroundImage:[UIImage imageNamed:@"微信登录"] forState:UIControlStateNormal];
-    [weixinBtn addTarget:self action:@selector(weixinBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    [backScrollView addSubview:weixinBtn];
-    
-    
-    if (![WXApi isWXAppInstalled]) {
+    if(!FIRST_FLAG){
+        UIButton *facebookBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        facebookBtn.frame = CGRectMake((ScreenWidth-Adapter(40)*2-45)/2.0, otherLoginLabel.bottom+Adapter(20), Adapter(40), Adapter(40));
+        [facebookBtn setBackgroundImage:[UIImage imageNamed:@"微信登录"] forState:UIControlStateNormal];
+        [facebookBtn addTarget:self action:@selector(facebookBtnAction) forControlEvents:UIControlEventTouchUpInside];
+        [backScrollView addSubview:facebookBtn];
+        
+        UIButton *googleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        googleBtn.frame = CGRectMake(facebookBtn.right+45, facebookBtn.top, facebookBtn.width, facebookBtn.height);
+        [googleBtn setBackgroundImage:[UIImage imageNamed:@"微信登录"] forState:UIControlStateNormal];
+        [googleBtn addTarget:self action:@selector(googleBtnAction) forControlEvents:UIControlEventTouchUpInside];
+        [backScrollView addSubview:googleBtn];
+        
+    }else{
+        UIButton *weixinBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+           weixinBtn.frame = CGRectMake((ScreenWidth-Adapter(40))/2.0, otherLoginLabel.bottom+Adapter(20), Adapter(40), Adapter(40));
+           [weixinBtn setBackgroundImage:[UIImage imageNamed:@"微信登录"] forState:UIControlStateNormal];
+           [weixinBtn addTarget:self action:@selector(weixinBtnAction) forControlEvents:UIControlEventTouchUpInside];
+           [backScrollView addSubview:weixinBtn];
+        
+        if (![WXApi isWXAppInstalled]) {
 
-        otherLoginLabel.hidden = YES;
-        imageV5.hidden = YES;
-        imageV4.hidden = YES;
-        weixinBtn.hidden = YES;
-        if([UserShareOnce shareOnce].languageType){
-            self.registeredBT.top = ScreenHeight - kTabBarHeight - Adapter(20);
-            otherLoginLabel.top = self.registeredBT.top - Adapter(40);
-            imageV5.top = otherLoginLabel.top + Adapter(15);
-            imageV4.top = otherLoginLabel.top + Adapter(15);
-            otherLoginLabel.hidden = NO;
-            imageV5.hidden = NO;
-            imageV4.hidden = NO;
+            otherLoginLabel.hidden = YES;
+            imageV5.hidden = YES;
+            imageV4.hidden = YES;
+            weixinBtn.hidden = YES;
+            if([UserShareOnce shareOnce].languageType){
+                self.registeredBT.top = ScreenHeight - kTabBarHeight - Adapter(20);
+                otherLoginLabel.top = self.registeredBT.top - Adapter(40);
+                imageV5.top = otherLoginLabel.top + Adapter(15);
+                imageV4.top = otherLoginLabel.top + Adapter(15);
+                otherLoginLabel.hidden = NO;
+                imageV5.hidden = NO;
+                imageV4.hidden = NO;
+            }
         }
     }
+    
     
     backScrollView.contentSize = CGSizeMake(ScreenWidth, otherLoginLabel.bottom+Adapter(80));
     
@@ -457,6 +486,91 @@
         }
     }];
 }
+
+# pragma mark - facebook登录
+- (void)facebookBtnAction
+{
+    #if !FIRST_FLAG
+    __weak typeof(self) weakSelf = self;
+    FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
+    [loginManager logInWithPermissions:@[@"public_profile"] fromViewController:weakSelf handler:^(FBSDKLoginManagerLoginResult * _Nullable result, NSError * _Nullable error) {
+        NSLog(@"result:%@",result.token.tokenString);
+        [self getUserInfoWithResult:result];
+    }];
+       
+    #endif
+
+}
+
+- (void)getUserInfoWithResult:(FBSDKLoginManagerLoginResult *)result2
+{
+    NSDictionary*params= @{@"fields":@"id,name,email,age_range,first_name,last_name,link,gender,locale,picture,timezone,updated_time,verified"};
+    
+    FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
+                                  initWithGraphPath:result2.token.userID
+                                  parameters:params
+                                  HTTPMethod:@"GET"];
+    __weak typeof(self) weakSelf = self;
+    [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+        NSLog(@"%@",result);
+        
+        NSString *gender = [result objectForKey:@"gender"];
+        if([GlobalCommon stringEqualNull:gender]){
+            gender = @"";
+        }
+        NSString *email = [result objectForKey:@"email"];
+        if([GlobalCommon stringEqualNull:email]){
+            email = @"";
+        }
+        NSString *photourl = [[[result objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
+        if([GlobalCommon stringEqualNull:photourl]){
+            photourl = @"";
+        }
+        NSDictionary *facebookDic = @{@"user_id":[result objectForKey:@"id"],
+                                               @"nikename":[result objectForKey:@"name"],
+                                               @"sex":gender,
+                                               @"photourl":photourl,
+                                      @"id_token":result2.token.tokenString,
+                                      @"email":email
+                                      
+        };
+        
+        [weakSelf userLoginWithWeiXParams:facebookDic withCheck:4];
+    }];
+}
+
+# pragma mark - google登录
+- (void)googleBtnAction
+{
+    GIDSignIn *signIn = [GIDSignIn sharedInstance];
+
+    signIn.shouldFetchBasicProfile=YES;
+
+    signIn.delegate=self;
+    
+    [signIn signIn];
+    
+}
+
+- (void)signIn:(GIDSignIn*)signIn didSignInForUser:(GIDGoogleUser*)user withError:(NSError*)error
+{
+   if (error != nil) {
+      if (error.code == kGIDSignInErrorCodeHasNoAuthInKeychain) {
+        NSLog(@"The user has not signed in before or they have since signed out.");
+      } else {
+        NSLog(@"%@", error.localizedDescription);
+      }
+      return;
+    }
+    NSString *userId = user.userID;                  // For client-side use only!
+    NSString *idToken = user.authentication.idToken; // Safe to send to the server
+    NSString *fullName = user.profile.name;
+    NSString *givenName = user.profile.givenName;
+    NSString *familyName = user.profile.familyName;
+    NSString *email = user.profile.email;
+}
+
+
 - (NSString*)removeEmoji:(NSString *)username {
     
     NSString *regex = @"^[a-zA-Z0-9_\u4e00-\u9fa5]+$";

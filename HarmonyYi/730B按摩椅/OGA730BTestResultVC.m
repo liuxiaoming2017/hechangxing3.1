@@ -143,17 +143,17 @@
     
     
     
-//    UIButton *anmoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    CGFloat btnWidth = 200.0;
-//    anmoBtn.frame = CGRectMake((ScreenWidth-btnWidth)/2.0, suantengView.bottom+45 > ScreenHeight-50 ? ScreenHeight-60 : suantengView.bottom+45, btnWidth, 40);
-//    anmoBtn.layer.cornerRadius = 6.0;
-//    anmoBtn.clipsToBounds = YES;
-//    anmoBtn.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:17];
-//    [anmoBtn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
-//    [anmoBtn setTitle:@"智能按摩" forState:UIControlStateNormal];
-//    [anmoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    anmoBtn.backgroundColor = [UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0];
-//    [self.view addSubview:anmoBtn];
+    UIButton *anmoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    CGFloat btnWidth = 200.0;
+    anmoBtn.frame = CGRectMake((ScreenWidth-btnWidth)/2.0, suantengView.bottom+45 > ScreenHeight-50 ? ScreenHeight-60 : suantengView.bottom+45, btnWidth, 40);
+    anmoBtn.layer.cornerRadius = 6.0;
+    anmoBtn.clipsToBounds = YES;
+    anmoBtn.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:17];
+    [anmoBtn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [anmoBtn setTitle:@"Start Massage" forState:UIControlStateNormal];
+    [anmoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    anmoBtn.backgroundColor = [UIColor colorWithRed:30/255.0 green:130/255.0 blue:210/255.0 alpha:1.0];
+    [self.view addSubview:anmoBtn];
     
 }
 
@@ -277,38 +277,46 @@
 - (ArmChairModel *)modelResultWithsuanten:(int)suantenCount withpilao:(int)pilaoCount
 {
     ArmChairModel *model = [[ArmChairModel alloc] init];
-    NSString *nameStr = @"";
+    //NSString *nameStr = @"";
     switch (suantenCount) {
         case 1:
         {
             if(pilaoCount == 1){
-                nameStr = @"巴黎式";
+                //nameStr = @"巴黎式";
+                model.command = k730Command_Gentle;
             }else if (pilaoCount == 2){
-                nameStr = @"轻松自在";
+                //nameStr = @"轻松自在";
+                model.command = k730Command_NeckShoulder;
             }else{
-                nameStr = @"夜晚助眠";
+                //nameStr = @"夜晚助眠";
+                model.command = k730Command_FeetCalves;
             }
         }
             break;
         case 2:
         {
             if(pilaoCount == 1){
-                nameStr = @"清晨唤醒";
+                //nameStr = @"清晨唤醒";
+                model.command = k730Command_Altheltic;
             }else if (pilaoCount == 2){
-                nameStr = @"中式";
+                model.command = k730Command_Chinese;
             }else{
-                nameStr = @"元气复苏";
+                //nameStr = @"元气复苏";
+                model.command = k730Command_Vigorous;
             }
         }
             break;
         case 3:
         {
             if(pilaoCount == 1){
-                nameStr = @"运动派";
+                //nameStr = @"运动派";
+                model.command = k730Command_Stretch;
             }else if (pilaoCount == 2){
-                nameStr = @"活血循环";
+                //nameStr = @"活血循环";
+                model.command = k730Command_Relax;
             }else{
-                nameStr = @"深层按摩";
+                //nameStr = @"深层按摩";
+                model.command = k730Command_Balinese;
             }
         }
             break;
@@ -316,8 +324,8 @@
         default:
             break;
     }
-    model.name = nameStr;
-   // model.command = [GlobalCommon commandFromName:model.name];
+    model.name = @"Massage";
+    //model.command = [GlobalCommon commandFromName:model.name];
     return model;
 }
 

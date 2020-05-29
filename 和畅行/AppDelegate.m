@@ -41,6 +41,11 @@
 
 #import "AFNetworking.h"
 
+#if !FIRST_FLAG
+    #import <FBSDKCoreKit/FBSDKCoreKit.h>
+    #import <GoogleSignIn/GoogleSignIn.h>
+#endif
+
 @interface AppDelegate ()<WXApiDelegate>
 
 @property (nonatomic, strong) NSURLSessionDataTask * dataTask;
@@ -108,7 +113,7 @@
     
     [self returnMainPage2];
     
-    [self.window makeKeyAndVisible];
+   // [self.window makeKeyAndVisible];
     
    
     //埋点注册  AeKAfeKr4YGknb2kPxd8d4xqxFcbjhg0
@@ -128,15 +133,20 @@
     //奥佳华按摩椅730B
     [[OGABluetoothManager_730B shareInstance] setAppkey:OGA530AppKey appSecret:OGA530AppSecret];
     [[OGABluetoothManager_730B shareInstance] setIsLog:YES];
+    
+    //facebook
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                                    didFinishLaunchingWithOptions:launchOptions];
+           [FBSDKSettings setAppID:@"604788230127907"];
+    
+    //谷歌 @"com.googleusercontent.apps.958024855386-so3o6i5o1adrpjjkt4o5bt2ajjqjv94i"
+    [GIDSignIn sharedInstance].clientID = @"958024855386-so3o6i5o1adrpjjkt4o5bt2ajjqjv94i.apps.googleusercontent.com";
+   // [GIDSignIn sharedInstance].delegate = self;
+
+   
 #endif
     
-    if(FIRST_FLAG){
-        //奥佳华按摩椅
-    }else{
-        //奥佳华按摩椅
-        //NSLog(@"haha:%@",OGA530AppKey);
-        
-    }
+   [self.window makeKeyAndVisible];
     
     if(@available(iOS 11.0,*)){
         
@@ -159,7 +169,7 @@
 -(void)requestUI {
     
     NSString *urlStr = @"mobile/index/indexpic.jhtml";
-    __weak typeof(self) weakSelf = self;
+   // __weak typeof(self) weakSelf = self;
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:urlStr parameters:nil successBlock:^(id response) {
         
         
@@ -449,6 +459,26 @@
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
+    
+    #if !FIRST_FLAG
+    if([url.host isEqualToString:@"authorize"]){
+            BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:app
+                                                                           openURL:url
+                                                                 sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                                                        annotation:options[UIApplicationOpenURLOptionsAnnotationKey]
+                             ];
+            
+             // Add any custom logic here.
+             return handled;
+    }else{
+//        return [[GIDSignIn sharedInstance] handleURL:url
+//        sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+//               annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+        return [[GIDSignIn sharedInstance] handleURL:url];
+    }
+    #endif
+    
+    
     BOOL result = [[UMSocialManager defaultManager]  handleOpenURL:url options:options];
     if (!result) {
         // 其他如支付等SDK的回调
@@ -492,6 +522,27 @@
 }
     return YES;
 }
+
+//- (void)signIn:(GIDSignIn *)signIn
+//didSignInForUser:(GIDGoogleUser *)user
+//     withError:(NSError *)error {
+//  if (error != nil) {
+//    if (error.code == kGIDSignInErrorCodeHasNoAuthInKeychain) {
+//      NSLog(@"The user has not signed in before or they have since signed out.");
+//    } else {
+//      NSLog(@"%@", error.localizedDescription);
+//    }
+//    return;
+//  }
+//  // Perform any operations on signed in user here.
+//  NSString *userId = user.userID;                  // For client-side use only!
+//  NSString *idToken = user.authentication.idToken; // Safe to send to the server
+//  NSString *fullName = user.profile.name;
+//  NSString *givenName = user.profile.givenName;
+//  NSString *familyName = user.profile.familyName;
+//  NSString *email = user.profile.email;
+//  // ...
+//}
 
 /*
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options

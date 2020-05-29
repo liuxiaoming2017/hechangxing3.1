@@ -52,6 +52,7 @@
 
 @property (nonatomic, assign) BOOL isHitSpeak;
 
+@property (nonatomic, strong) CBPeripheral *peripheral;
 @end
 
 @implementation ArmchairHomeVC
@@ -226,6 +227,8 @@
     }
     if(!bluetoothBtn.selected){
         [self manualScanPeripheral];
+    }else{
+        [self disconnectDevice];
     }
 }
 
@@ -577,6 +580,8 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     } timeoutSacn:nil];
 }
 
+
+
 # pragma mark - 手动搜索设备
 - (void)manualScanPeripheral
 {
@@ -606,6 +611,19 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
          }
          
      }];
+}
+
+# pragma mark - 断开蓝牙设备
+- (void)disconnectDevice
+{
+    if(self.peripheral && [OGA530BluetoothManager shareInstance].respondModel.powerOn == NO){
+        __weak typeof(self) weakSelf = self;
+        [[OGABluetoothManager_730B shareInstance] disconnectPeripheral:self.peripheral disConnect:^(CBPeripheral * _Nonnull device) {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:OGADeviceUUID];
+            weakSelf.bluetoothBtn.selected = NO;
+        }];
+    }
+    
 }
 
 # pragma mark - 提示框自动消失方法,进入到这个方法代表设备连接失败
@@ -696,6 +714,8 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setObject:uuidStr forKey:OGADeviceUUID];
         [userDefaults synchronize];
+        
+        weakself.peripheral = peripheral;
         
         NSLog(@"连接成功");
         dispatch_async(dispatch_get_main_queue(), ^{

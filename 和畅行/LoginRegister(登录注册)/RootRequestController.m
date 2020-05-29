@@ -98,6 +98,17 @@
             PhoneStr = [dicTmp valueForKey:@"PhoneShortMessage"];
         }
         [self userLoginWithShortMessage:PhoneStr];
+    }else if ([strcheck isEqualToString:@"4"]){
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+        [dic setObject:[dicTmp valueForKey:@"user_id"] forKey:@"user_id"];
+        
+         [dic setObject:[dicTmp valueForKey:@"nikename"] forKey:@"nikename"];
+         
+         [dic setObject:[dicTmp valueForKey:@"sex"] forKey:@"sex"];
+         [dic setObject:[dicTmp valueForKey:@"photourl"] forKey:@"photourl"];
+         [dic setObject:[dicTmp valueForKey:@"id_token"] forKey:@"id_token"];
+         [dic setObject:[dicTmp valueForKey:@"email"] forKey:@"email"];
+        [self userLoginWithWeiXParams:dic withCheck:4];
     }
     else{
         [appDelegate() returnMainPage];

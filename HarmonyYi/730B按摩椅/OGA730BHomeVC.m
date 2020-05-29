@@ -23,6 +23,7 @@
 
 #import "NoteView.h"
 
+//#import "OGA730BTestResultVC.h"
 
 
 @interface OGA730BHomeVC ()<UICollectionViewDataSource,UICollectionViewDelegate,MBProgressHUDDelegate,UIGestureRecognizerDelegate>
@@ -46,6 +47,7 @@
 
 @property (nonatomic, assign) BOOL isHitSpeak;
 
+@property (nonatomic, strong) CBPeripheral *peripheral; //已连接蓝牙
 @end
 
 @implementation OGA730BHomeVC
@@ -206,6 +208,8 @@
     }
     if(!bluetoothBtn.selected){
         [self manualScanPeripheral];
+    }else{
+        [self disconnectDevice];
     }
 }
 
@@ -436,8 +440,8 @@
     SublayerView *layerView = (SublayerView *)[gesture view];
     ArmChairModel *model = layerView.model;
     
-    //    [self nextVCWithModel:model];
-    //    return;
+//        [self nextVCWithModel:model];
+//        return;
     
     NSString *statusStr = [self resultStringWithStatus];
     if(![statusStr isEqualToString:@""]){
@@ -466,6 +470,10 @@
 
 
 -(void)tapDoctorAction:(UITapGestureRecognizer *)gesture {
+    
+//    OGA730BTestResultVC *vc = [[OGA730BTestResultVC alloc] initWithacheResult:3 withfatigueResult:2];
+//    [self.navigationController pushViewController:vc animated:YES];
+//    return;
     
     NSString *statusStr = [self resultStringWithStatus];
     if(![statusStr isEqualToString:@""]){
@@ -678,6 +686,19 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     }];
 }
 
+# pragma mark - 断开蓝牙设备
+- (void)disconnectDevice
+{
+    if(self.peripheral && ![self chairIsPowerOn]){
+        __weak typeof(self) weakSelf = self;
+        [[OGABluetoothManager_730B shareInstance] disconnectPeripheral:self.peripheral disConnect:^(CBPeripheral * _Nonnull device) {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:OGADeviceUUID];
+            weakSelf.bluetoothBtn.selected = NO;
+        }];
+    }
+    
+}
+
 # pragma mark - 提示框自动消失方法,进入到这个方法代表设备连接失败
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
@@ -764,6 +785,8 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
         [userDefaults setObject:uuidStr forKey:OGADeviceUUID];
         [userDefaults synchronize];
         
+        weakself.peripheral = peripheral;
+        
         NSLog(@"连接成功");
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -783,6 +806,8 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     }];
     
 }
+
+
 
 
 # pragma mark - 根据一说结果获取推荐的按摩手法
