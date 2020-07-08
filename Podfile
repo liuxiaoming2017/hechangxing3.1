@@ -3,7 +3,9 @@ use_frameworks!
 
 inhibit_all_warnings!
 
-source 'https://github.com/CocoaPods/Specs.git'
+#source 'https://github.com/CocoaPods/Specs.git'
+#source 'https://cdn.cocoapods.org/'
+source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
 
 abstract_target 'specialTarget' do
 pod 'AFNetworking'

@@ -92,7 +92,7 @@ DEPENDENCIES:
   - YYModel
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git:
     - AFNetworking
     - AppAuth
     - DACircularProgress
@@ -116,6 +116,9 @@ SPEC REPOS:
     - ReactiveObjC
     - SDWebImage
     - YYModel
+  trunk:
+    - AppAuth
+    - GTMSessionFetcher
 
 EXTERNAL SOURCES:
   HHDoctorSDK:
@@ -152,6 +155,6 @@ SPEC CHECKSUMS:
   SDWebImage: 791bb72962b3492327ddcac4b1880bd1b5458431
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 185ed61210ceb9139c04ca694d796abec929b77e
+PODFILE CHECKSUM: 8b46b3f82341badef990063cf4200b4f75c03d97
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

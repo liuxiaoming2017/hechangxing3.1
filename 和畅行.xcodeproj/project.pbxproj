@@ -1076,6 +1076,7 @@
 		03FBDF97219285A0006116FC /* NavBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF96219285A0006116FC /* NavBarViewController.m */; };
 		03FBDF9A2192B066006116FC /* TimeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF992192B066006116FC /* TimeLineView.m */; };
 		03FBDF9D2192B0B3006116FC /* TimeLineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBDF9C2192B0B3006116FC /* TimeLineCell.m */; };
+		0EB0BDD731C4FF647BE85DA6 /* Pods_specialTarget_HarmonyYi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8DF519A01670411033B7E27 /* Pods_specialTarget_HarmonyYi.framework */; };
 		832ED75C2278286A00BFEEFC /* HpiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832ED75B2278286A00BFEEFC /* HpiViewController.m */; };
 		832ED75F2278321800BFEEFC /* HPITableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832ED75E2278321800BFEEFC /* HPITableViewCell.m */; };
 		835DB8DB21D3685D00B8DF99 /* HCY_ConsultingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 835DB8DA21D3685D00B8DF99 /* HCY_ConsultingModel.m */; };
@@ -1229,6 +1230,7 @@
 		83E23EF721C24F7F00B43298 /* HCY_ActivityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EF621C24F7F00B43298 /* HCY_ActivityController.m */; };
 		83E23F0021C76CE800B43298 /* HYC_CardsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E23EFF21C76CE800B43298 /* HYC_CardsModel.m */; };
 		83E644912213E883004D286C /* ModuleZW.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83E644932213E883004D286C /* ModuleZW.strings */; };
+		9A25F7441B566FB6CF043020 /* Pods_specialTarget____.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FC77CE0E30E78918D1EF0C /* Pods_specialTarget____.framework */; };
 		C941474823BEE4A3002592D1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 839E0C572213E0540090F179 /* InfoPlist.strings */; };
 		C94B9286239750D000CB8281 /* MyScrollTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C94B9284239750CF00CB8281 /* MyScrollTextView.m */; };
 		C94B929323989EF200CB8281 /* MyScrollTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C94B9284239750CF00CB8281 /* MyScrollTextView.m */; };
@@ -2140,7 +2142,7 @@
 		03FBDF992192B066006116FC /* TimeLineView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimeLineView.m; sourceTree = "<group>"; };
 		03FBDF9B2192B0B3006116FC /* TimeLineCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeLineCell.h; sourceTree = "<group>"; };
 		03FBDF9C2192B0B3006116FC /* TimeLineCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimeLineCell.m; sourceTree = "<group>"; };
-		14FC77CE0E30E78918D1EF0C /* Pods_specialTarget____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_specialTarget____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		14FC77CE0E30E78918D1EF0C /* Pods_specialTarget____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_specialTarget____.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		22DA9A9C18B20473DAB5970F /* Pods_HarmonyYi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HarmonyYi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25613ED6E5840A61FDEA7C62 /* Pods-和畅行.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-和畅行.debug.xcconfig"; path = "Pods/Target Support Files/Pods-和畅行/Pods-和畅行.debug.xcconfig"; sourceTree = "<group>"; };
 		370719B738A9BEE50222A619 /* Pods-HarmonyYi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarmonyYi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HarmonyYi/Pods-HarmonyYi.debug.xcconfig"; sourceTree = "<group>"; };
@@ -2472,6 +2474,7 @@
 				0390CF7F20ECB5D0000ECA53 /* CoreFoundation.framework in Frameworks */,
 				0390CF8020ECB5D0000ECA53 /* Foundation.framework in Frameworks */,
 				0306C5C921CCBEFA00DA5DC1 /* libSocialWeChat.a in Frameworks */,
+				9A25F7441B566FB6CF043020 /* Pods_specialTarget____.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2517,6 +2520,7 @@
 				03BD82DC238BB89000F57978 /* CoreFoundation.framework in Frameworks */,
 				03BD82DD238BB89000F57978 /* Foundation.framework in Frameworks */,
 				03BD82DE238BB89000F57978 /* libSocialWeChat.a in Frameworks */,
+				0EB0BDD731C4FF647BE85DA6 /* Pods_specialTarget_HarmonyYi.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
