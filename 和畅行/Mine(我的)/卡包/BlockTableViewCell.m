@@ -75,8 +75,13 @@
         NSString *str = [model.cashcard valueForKey:@"name"];
           _hLabel.text = str;
         _mLabel.text = [NSString stringWithFormat:@"%@ : %@元",ModuleZW(@"余额"),model.balance];
-        timeStr = [NSString stringWithFormat:@"%@",[model.cashcard valueForKey:@"endDate"]];
-        _yLabel.text  =[NSString stringWithFormat:@"%@%@",[self getDateStringWithTimeStr:timeStr],ModuleZW(@"到期")];
+        if([GlobalCommon stringEqualNull:[model.cashcard objectForKey:@"expiredTime"]] || [[model.cashcard objectForKey:@"expiredTime"] intValue] == 0){
+            _yLabel.text  =@"永久有效";
+        }else{
+            timeStr = [NSString stringWithFormat:@"%@",[model.cashcard valueForKey:@"expiredTime"]];
+            _yLabel.text  =[NSString stringWithFormat:@"%@%@",[self getDateStringWithTimeStr:timeStr],ModuleZW(@"到期")];
+        }
+        
     }else{
         _mLabel.hidden = YES;
         _yLabel.hidden = YES;

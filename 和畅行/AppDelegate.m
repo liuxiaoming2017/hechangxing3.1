@@ -44,6 +44,7 @@
 #if !FIRST_FLAG
     #import <FBSDKCoreKit/FBSDKCoreKit.h>
     #import <GoogleSignIn/GoogleSignIn.h>
+    #import <JMessage/JMessage.h>
 #endif
 
 @interface AppDelegate ()<WXApiDelegate>
@@ -142,7 +143,15 @@
     //谷歌 @"com.googleusercontent.apps.958024855386-so3o6i5o1adrpjjkt4o5bt2ajjqjv94i"
     [GIDSignIn sharedInstance].clientID = @"958024855386-so3o6i5o1adrpjjkt4o5bt2ajjqjv94i.apps.googleusercontent.com";
    // [GIDSignIn sharedInstance].delegate = self;
-
+    
+    //极光
+    [JMessage setupJMessage:launchOptions appKey:JMESSAGE_APPKEY channel:nil apsForProduction:NO category:nil];
+    
+    [JMessage registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                          UIUserNotificationTypeSound |
+                                                          UIUserNotificationTypeAlert)
+                                              categories:nil];
+    
    
 #endif
     
@@ -314,6 +323,14 @@
     }
     
     return tabBar;
+    
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    // Required - 注册token
+#if !FIRST_FLAG
+    [JMessage registerDeviceToken:deviceToken];
+#endif
     
 }
 

@@ -98,7 +98,7 @@
             PhoneStr = [dicTmp valueForKey:@"PhoneShortMessage"];
         }
         [self userLoginWithShortMessage:PhoneStr];
-    }else if ([strcheck isEqualToString:@"4"]){
+    }else if ([strcheck isEqualToString:@"4"] || [strcheck isEqualToString:@"5"]){
         NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
         [dic setObject:[dicTmp valueForKey:@"user_id"] forKey:@"user_id"];
         
@@ -106,9 +106,14 @@
          
          [dic setObject:[dicTmp valueForKey:@"sex"] forKey:@"sex"];
          [dic setObject:[dicTmp valueForKey:@"photourl"] forKey:@"photourl"];
-         [dic setObject:[dicTmp valueForKey:@"id_token"] forKey:@"id_token"];
+        if([strcheck isEqualToString:@"4"]){
+           [dic setObject:[dicTmp valueForKey:@"id_token"] forKey:@"id_token"];
+        }else{
+            [dic setObject:[dicTmp valueForKey:@"input_token"] forKey:@"input_token"];
+        }
+         
          [dic setObject:[dicTmp valueForKey:@"email"] forKey:@"email"];
-        [self userLoginWithWeiXParams:dic withCheck:4];
+        [self userLoginWithWeiXParams:dic withCheck:[strcheck integerValue]];
     }
     else{
         [appDelegate() returnMainPage];

@@ -26,13 +26,16 @@ extern BOOL isBF;
 
 #define DATAURL_PRE (isProduct ? @"https://hcdp.ky3h.com/hcdp-api/api/" : @"http://47.92.160.74:8088/hcdp-api/api/")
 
-#define DATAURL_PRE1 @"http://47.92.160.74:8088/hcdp-api/api/login"
+#define DATAURL_PRE1 (isProduct ? @"https://hcdp.ky3h.com/hcdp-api/api/login" : @"http://47.92.160.74:8088/hcdp-api/api/login")
+
+//#define DATAURL_PRE1 @"http://47.92.160.74:8088/hcdp-api/api/login"
+
 
 #if FIRST_FLAG
     #define URL_PRE (isProduct ? @"http://eky3h.com/healthlm/" : @"http://47.92.73.99:8080/healthlm/")
 #else
-    //#define URL_PRE (isProduct ? @"http://204.9.61.24/healthlm/" : @"http://47.92.73.99:8080/healthlm/")
-   #define URL_PRE @"http://10.1.71.104:8080/healthlm-en/"
+    #define URL_PRE (isProduct ? @"http://204.9.61.24/healthlm/" : @"http://47.92.73.99:8080/healthlm/")
+   //#define URL_PRE @"http://10.1.71.104:8080/healthlm-en/"
 #endif
 
 

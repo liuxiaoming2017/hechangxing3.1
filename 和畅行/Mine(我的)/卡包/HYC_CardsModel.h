@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 
+
 //卡类型
 @property (nonatomic,copy)  NSString*kindStr;
 //现金卡总额

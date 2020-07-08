@@ -42,9 +42,14 @@
 #import "VersionUpdateView.h"
 
 #if FIRST_FLAG
-#import <OGABluetooth_Combine/OGABluetooth_Combine.h>
+    #import <OGABluetooth_Combine/OGABluetooth_Combine.h>
 #else
-#import <OGABluetooth730B/OGABluetoothManager_730B.h>
+    #import <OGABluetooth730B/OGABluetoothManager_730B.h>
+    //极光相关
+    #import <JMessage/JMessage.h>
+    #import "JCHATStringUtils.h"
+    #import "ViewUtil.h"
+    #import "JCHATAlertToSendImage.h"
 #endif
 
 //和缓

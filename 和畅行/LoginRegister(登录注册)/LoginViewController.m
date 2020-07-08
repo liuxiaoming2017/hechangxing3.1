@@ -33,8 +33,12 @@
 #define margin 40
 #define leftOrigin 40
 
+#if !FIRST_FLAG
+    @interface LoginViewController ()<GIDSignInDelegate>
+#else
+    @interface LoginViewController ()
+#endif
 
-@interface LoginViewController ()<GIDSignInDelegate>
 @property (nonatomic, strong) UIView *blueView;
 @property (nonatomic, strong) UILabel *addNumberLabel;
 @property (nonatomic, strong) UILabel *promptLabel;
@@ -488,17 +492,17 @@
 }
 
 # pragma mark - facebook登录
+
+#if !FIRST_FLAG
 - (void)facebookBtnAction
 {
-    #if !FIRST_FLAG
+    
     __weak typeof(self) weakSelf = self;
     FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
     [loginManager logInWithPermissions:@[@"public_profile"] fromViewController:weakSelf handler:^(FBSDKLoginManagerLoginResult * _Nullable result, NSError * _Nullable error) {
         NSLog(@"result:%@",result.token.tokenString);
         [self getUserInfoWithResult:result];
     }];
-       
-    #endif
 
 }
 
@@ -562,14 +566,28 @@
       }
       return;
     }
-    NSString *userId = user.userID;                  // For client-side use only!
-    NSString *idToken = user.authentication.idToken; // Safe to send to the server
-    NSString *fullName = user.profile.name;
-    NSString *givenName = user.profile.givenName;
-    NSString *familyName = user.profile.familyName;
-    NSString *email = user.profile.email;
+//    NSString *userId = user.userID;                  // For client-side use only!
+//    NSString *idToken = user.authentication.idToken; // Safe to send to the server
+//    NSString *fullName = user.profile.name;
+//    NSString *givenName = user.profile.givenName;
+//    NSString *familyName = user.profile.familyName;
+//    NSString *email = user.profile.email;
+    NSString *photoStr = @"";
+    if(user.profile.hasImage){
+        NSURL *url = [user.profile imageURLWithDimension:40];
+        photoStr = [url absoluteString];
+    }
+    NSDictionary *googleDic = @{@"user_id":user.userID,
+                                           @"nikename":user.profile.name,
+                                           @"sex":@"",
+                                           @"photourl":photoStr,
+                                @"input_token":user.authentication.idToken,
+                                  @"email":user.profile.email
+                                  
+    };
+    [self userLoginWithWeiXParams:googleDic withCheck:5];
 }
-
+#endif
 
 - (NSString*)removeEmoji:(NSString *)username {
     
