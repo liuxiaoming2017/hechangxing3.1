@@ -203,6 +203,7 @@ static NSMutableArray *tasks;
             [manager.requestSerializer setValue:headStr forHTTPHeaderField:@"version"];
         }
         
+       
         sessionTask = [manager GET:URLString parameters:parameters  progress:^(NSProgress * _Nonnull downloadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

@@ -21,7 +21,7 @@
     return self;
 }
 - (void)initUIwithTitle:(NSString *)title
-{
+{    
     CGFloat buttonWidth = Adapterbody(42);
     CGFloat labelWidth = Adapterbody(80);
     CGFloat margin = (ScreenWidth - labelWidth*4)/5.0;

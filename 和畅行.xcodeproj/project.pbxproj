@@ -6265,6 +6265,7 @@
 				);
 				INFOPLIST_FILE = "和畅行/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_GENERATE_MAP_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"$(inherited)",
@@ -6335,6 +6336,7 @@
 				);
 				INFOPLIST_FILE = "和畅行/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_GENERATE_MAP_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"$(inherited)",
@@ -6404,6 +6406,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/HarmonyYi.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_GENERATE_MAP_FILE = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"$(inherited)",
@@ -6474,6 +6477,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/HarmonyYi.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_GENERATE_MAP_FILE = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"$(inherited)",

@@ -618,7 +618,7 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
     if(self.peripheral && [OGA530BluetoothManager shareInstance].respondModel.powerOn == NO){
         __weak typeof(self) weakSelf = self;
-        [[OGABluetoothManager_730B shareInstance] disconnectPeripheral:self.peripheral disConnect:^(CBPeripheral * _Nonnull device) {
+        [[OGA530BluetoothManager shareInstance] disconnectPeripheral:self.peripheral disConnect:^(CBPeripheral * _Nonnull device) {
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:OGADeviceUUID];
             weakSelf.bluetoothBtn.selected = NO;
         }];

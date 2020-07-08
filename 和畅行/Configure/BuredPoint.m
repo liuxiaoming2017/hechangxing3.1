@@ -123,23 +123,25 @@ static NSMutableArray *tasks;
     //3.获得会话对象
 //    NSURLSession *session = [NSURLSession sharedSession];
     
+    __weak typeof(self) weakSelf = self;
+    
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error == nil) {
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
             NSString *token = [NSString stringWithFormat:@"%@",[dict valueForKey:@"data"]];
             if (![self stringEqualNull:token]) {
-                self.pointToken = token;
+                weakSelf.pointToken = token;
                 if (successBlock)
                 {
                     successBlock(response);
                 }
             }else{
-                self.pointToken = nil;
+                weakSelf.pointToken = nil;
             }
           
-             NSLog(@"%@",self.pointToken);
+             NSLog(@"%@",weakSelf.pointToken);
         }else{
-            self.pointToken = nil;
+            weakSelf.pointToken = nil;
             if (failureBlock)
             {
                 failureBlock(error);

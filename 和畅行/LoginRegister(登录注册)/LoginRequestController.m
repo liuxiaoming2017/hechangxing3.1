@@ -226,6 +226,8 @@
         aUrl = @"weiq/sms/login.jhtml";
     }else if (check == 4){ //facebook
         aUrl = @"facebook/authlogin.jhtml";
+    }else if (check == 5){ //google
+        aUrl = @"google/authlogin.jhtml";
     }
     
     __weak typeof(self) weakself = self;
@@ -324,17 +326,7 @@
                 }
                 [UtilityFunc updateAppConfigWithMutableDictionary:dicTmp];
                 
-            }else if (check == 4){
-                
-                /*
-                 NSDictionary *facebookDic = @{@"user_id":[result objectForKey:@"id"],
-                          @"nikename":[result objectForKey:@"name"],
-                          @"sex":gender,
-                          @"photourl":photourl,
-                 @"id_token":result2.token.tokenString,
-                 @"email":email
-                 */
-                 
+            }else if (check == 4 || check == 5){
                 
                 NSMutableDictionary* dicTmp = [UtilityFunc mutableDictionaryFromAppConfig];
                 if (dicTmp) {
@@ -344,9 +336,15 @@
                     
                     [dicTmp setObject:[paramDic valueForKey:@"sex"] forKey:@"sex"];
                     [dicTmp setObject:[paramDic valueForKey:@"photourl"] forKey:@"photourl"];
-                    [dicTmp setObject:[paramDic valueForKey:@"id_token"] forKey:@"id_token"];
                     [dicTmp setObject:[paramDic valueForKey:@"email"] forKey:@"email"];
-                    [dicTmp setValue:@"4" forKey:@"ischeck"];
+                    if(check == 4){
+                        [dicTmp setObject:[paramDic valueForKey:@"id_token"] forKey:@"id_token"];
+                        [dicTmp setValue:@"4" forKey:@"ischeck"];
+                    }else{
+                        [dicTmp setObject:[paramDic valueForKey:@"input_token"] forKey:@"input_token"];
+                        [dicTmp setValue:@"5" forKey:@"ischeck"];
+                    }
+                   
 
                 }
                 [UtilityFunc updateAppConfigWithMutableDictionary:dicTmp];
