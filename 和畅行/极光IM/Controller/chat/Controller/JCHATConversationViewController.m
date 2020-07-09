@@ -48,19 +48,101 @@
 @implementation JCHATConversationViewController//change name chatcontroller
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
 
     _refreshAvatarUsersDic = [NSMutableDictionary dictionary];
     _allMessageDic = [NSMutableDictionary dictionary];
     _allmessageIdArr = [NSMutableArray array];
     _imgDataArr = [NSMutableArray array];
-    //DDLogDebug(@"Action - viewDidLoad");
-    self.title = _conversation.title;
-    [self setupView];
-    [self addNotification];
-    [self addDelegate];
-    [self getGroupMemberListWithGetMessageFlag:YES];
+    
+    if(self.conversation){
+        self.navTitleLabel.text = _conversation.title;
+        [self setupView];
+        [self addNotification];
+        [self addDelegate];
+        [self getGroupMemberListWithGetMessageFlag:YES];
+    }else{
+        [self connectContactWithName:@""];
+    }
+    
+    
 }
+
+- (JCHATMessageTableView *)messageTableView
+{
+    
+    
+    if(!_messageTableView){
+        JCHATMessageTableView *tableView = [[JCHATMessageTableView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, ScreenWidth, ScreenHeight-self.topView.height-kTabBarHeight)];
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        _messageTableView = tableView;
+        [self.view addSubview:_messageTableView];
+    }
+    return _messageTableView;
+}
+
+- (JCHATToolBarContainer *)toolBarContainer
+{
+    if(!_toolBarContainer){
+        JCHATToolBarContainer *toolBarView = [[JCHATToolBarContainer alloc] initWithFrame:CGRectMake(0, ScreenHeight-kTabBarHeight, ScreenWidth, 45)];
+        _toolBarContainer = toolBarView;
+        _toolBarContainer.toolbar.delegate = self;
+        [_toolBarContainer.toolbar setUserInteractionEnabled:YES];
+        _toolBarContainer.toolbar.textView.text = [[JCHATSendMsgManager ins] draftStringWithConversation:_conversation];
+        [self.view addSubview:_toolBarContainer];
+    }
+    return _toolBarContainer;
+}
+
+- (JCHATMoreViewContainer *)moreViewContainer
+{
+    if(!_moreViewContainer){
+        JCHATMoreViewContainer *moreView = [[JCHATMoreViewContainer alloc] initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, 0)];
+        _moreViewContainer = moreView;
+        
+        [self.view addSubview:_moreViewContainer];
+    }
+    return _moreViewContainer;;
+}
+
+# pragma mark - 获取联系人列表
+- (void)networkContact
+{
+    
+    
+    [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:@"doctor/alllist.jhtml" parameters:nil successBlock:^(id response) {
+        if([[response objectForKey:@"status"] intValue] == 100){
+            NSDictionary *dic = [[response objectForKey:@"data"] objectAtIndex:0];
+            NSString *name = [dic objectForKey:@"imUsername"];
+            [self connectContactWithName:name];
+        }
+    } failureBlock:^(NSError *error) {
+        
+    }];
+}
+
+# pragma mark - 发起通话连接
+- (void)connectContactWithName:(NSString *)name
+{
+    __weak typeof(self) weakSelf = self;
+    [JMSGConversation createSingleConversationWithUsername:@"lxm2020" appKey:JMESSAGE_APPKEY completionHandler:^(id resultObject, NSError *error) {
+        if(error == nil){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                JMSGConversation *conversation = resultObject;
+                weakSelf.navTitleLabel.text = conversation.title;
+                [weakSelf setupView];
+                [weakSelf addNotification];
+                [weakSelf addDelegate];
+                [weakSelf getGroupMemberListWithGetMessageFlag:YES];
+            });
+        }else{
+            
+        }
+    }];
+}
+
 
 - (void)viewWillAppear:(BOOL)animated {
   //DDLogDebug(@"Event - viewWillAppear");
@@ -71,7 +153,7 @@
     [_conversation refreshTargetInfoFromServer:^(id resultObject, NSError *error) {
         //DDLogDebug(@"refresh nav right button");
         kSTRONGSELF
-        [strongSelf.navigationController setNavigationBarHidden:NO];
+       // [strongSelf.navigationController setNavigationBarHidden:NO];
         // 禁用 iOS7 返回手势
         if ([strongSelf.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
             strongSelf.navigationController.interactivePopGestureRecognizer.enabled = YES;
@@ -134,8 +216,13 @@
 }
 
 - (void)setupView {
-  [self setupNavigation];
-  [self setupComponentView];
+ // [self setupNavigation];
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.messageTableView];
+    [self.view addSubview:self.toolBarContainer];
+    [self.view addSubview:self.moreViewContainer];
+    
+ [self setupComponentView];
 }
 
 - (void)addtoolbar {
@@ -148,9 +235,9 @@
                                                                            action:@selector(tapClick:)];
   [self.view addGestureRecognizer:gesture];
   [self.view setBackgroundColor:[UIColor clearColor]];
-  _toolBarContainer.toolbar.delegate = self;
-  [_toolBarContainer.toolbar setUserInteractionEnabled:YES];
-  self.toolBarContainer.toolbar.textView.text = [[JCHATSendMsgManager ins] draftStringWithConversation:_conversation];
+//  _toolBarContainer.toolbar.delegate = self;
+//  [_toolBarContainer.toolbar setUserInteractionEnabled:YES];
+//  self.toolBarContainer.toolbar.textView.text = [[JCHATSendMsgManager ins] draftStringWithConversation:_conversation];
   _messageTableView.userInteractionEnabled = YES;
   _messageTableView.showsVerticalScrollIndicator = NO;
   _messageTableView.delegate = self;
@@ -160,31 +247,36 @@
   
   _moreViewContainer.moreView.delegate = self;
   _moreViewContainer.moreView.backgroundColor = messageTableColor;
+  
 }
 
 - (void)setupNavigation {
-  self.navigationController.navigationBar.translucent = NO;
-  _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-  [_rightBtn setFrame:navigationRightButtonRect];
-  if (_conversation.conversationType == kJMSGConversationTypeSingle) {
-    [_rightBtn setImage:[UIImage imageNamed:@"userDetail"] forState:UIControlStateNormal];
-  } else {
-      [_rightBtn setImage:[UIImage imageNamed:@"groupDetail"] forState:UIControlStateNormal];
-      [self updateGroupConversationTittle:nil];
-    if ([((JMSGGroup *)_conversation.target) isMyselfGroupMember]) {
-      _rightBtn.hidden = YES;
-    }
-  }
+  //self.navigationController.navigationBar.translucent = NO;
+    
+    self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
+
+    
+//  _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//  [_rightBtn setFrame:navigationRightButtonRect];
+//  if (_conversation.conversationType == kJMSGConversationTypeSingle) {
+//    [_rightBtn setImage:[UIImage imageNamed:@"userDetail"] forState:UIControlStateNormal];
+//  } else {
+//      [_rightBtn setImage:[UIImage imageNamed:@"groupDetail"] forState:UIControlStateNormal];
+//      [self updateGroupConversationTittle:nil];
+//    if ([((JMSGGroup *)_conversation.target) isMyselfGroupMember]) {
+//      _rightBtn.hidden = YES;
+//    }
+//  }
   
   [_conversation clearUnreadCount];
   
-  [_rightBtn addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBtn];//为导航栏添加右侧按钮
+//  [_rightBtn addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
+//  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBtn];//为导航栏添加右侧按钮
     
   UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-  [leftBtn setFrame:kNavigationLeftButtonRect];
-  [leftBtn setImage:[UIImage imageNamed:@"goBack"] forState:UIControlStateNormal];
-  [leftBtn setImageEdgeInsets:kGoBackBtnImageOffset];
+  [leftBtn setFrame:CGRectMake(0, kStatusBarHeight+2, Adapter(40), 40)];
+  [leftBtn setImage:[UIImage imageNamed:@"黑色返回"] forState:UIControlStateNormal];
+ // [leftBtn setImageEdgeInsets:kGoBackBtnImageOffset];
 
   [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
@@ -690,6 +782,14 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   return _voiceRecordHUD;
 }
 
+- (void)goBack:(UIButton *)btn
+{
+    if ([[JCHATAudioPlayerHelper shareInstance] isPlaying]) {
+      [[JCHATAudioPlayerHelper shareInstance] stopAudio];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)backClick {
   if ([[JCHATAudioPlayerHelper shareInstance] isPlaying]) {
     [[JCHATAudioPlayerHelper shareInstance] stopAudio];
@@ -913,6 +1013,9 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   [UIView animateWithDuration:0.25 animations:^{
     _toolBarToBottomConstrait.constant = 0;
     _moreViewHeight.constant = 227;
+      _toolBarContainer.top = 100;
+      _moreViewContainer.top = 227;
+      _moreViewContainer.height = 227;
     [_messageTableView layoutIfNeeded];
     [_toolBarContainer layoutIfNeeded];
     [_moreViewContainer layoutIfNeeded];

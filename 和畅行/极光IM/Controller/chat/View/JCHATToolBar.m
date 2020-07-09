@@ -347,6 +347,16 @@
 
 @implementation JCHATToolBarContainer
 
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if(self){
+        _toolbar = NIB(JCHATToolBar);
+        [self performSelector:@selector(addtoolbar) withObject:nil afterDelay:0.02];
+    }
+    return self;
+}
+
 - (id)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {

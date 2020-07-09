@@ -203,6 +203,9 @@
     [[NetworkManager sharedNetworkManager] requestWithType:0 urlString:[NSString stringWithFormat:@"login/version.jhtml?id=ios"] parameters:nil successBlock:^(id response) {
         if([[response objectForKey:@"status"] intValue] == 100){
             NSDictionary *dic = [response objectForKey:@"data"];
+            if([dic isKindOfClass:[NSNull class]] || dic == nil){
+                return;
+            }
             NSString *Resultstr = [dic objectForKey:@"version"];
             if([Resultstr isEqualToString:nowVersion]){ //正在版本审核
                 [UserShareOnce shareOnce].bindCard = @"1";
