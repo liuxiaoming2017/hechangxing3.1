@@ -2547,7 +2547,7 @@
 		03FBDF992192B066006116FC /* TimeLineView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimeLineView.m; sourceTree = "<group>"; };
 		03FBDF9B2192B0B3006116FC /* TimeLineCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeLineCell.h; sourceTree = "<group>"; };
 		03FBDF9C2192B0B3006116FC /* TimeLineCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimeLineCell.m; sourceTree = "<group>"; };
-		14FC77CE0E30E78918D1EF0C /* Pods_specialTarget____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_specialTarget____.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		14FC77CE0E30E78918D1EF0C /* Pods_specialTarget____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_specialTarget____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		22DA9A9C18B20473DAB5970F /* Pods_HarmonyYi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HarmonyYi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25613ED6E5840A61FDEA7C62 /* Pods-和畅行.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-和畅行.debug.xcconfig"; path = "Pods/Target Support Files/Pods-和畅行/Pods-和畅行.debug.xcconfig"; sourceTree = "<group>"; };
 		370719B738A9BEE50222A619 /* Pods-HarmonyYi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarmonyYi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HarmonyYi/Pods-HarmonyYi.debug.xcconfig"; sourceTree = "<group>"; };
