@@ -41,6 +41,14 @@
 		032A7A1A20EA17A5003D4952 /* HSTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A1920EA17A5003D4952 /* HSTabBar.m */; };
 		032A7A2220EA1E43003D4952 /* UIViewExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A2120EA1E43003D4952 /* UIViewExt.m */; };
 		032A7A2720EA20FF003D4952 /* UIView+ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032A7A2520EA20FF003D4952 /* UIView+ViewController.m */; };
+		032E070D24B7443700E8DAB9 /* SHMessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 032E070C24B7443700E8DAB9 /* SHMessageInputView.m */; };
+		032E071124B745A600E8DAB9 /* SHShortVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032E071024B745A500E8DAB9 /* SHShortVideoViewController.m */; };
+		032E071424B745C600E8DAB9 /* SHShortAVPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 032E071324B745C600E8DAB9 /* SHShortAVPlayer.m */; };
+		032E071724B745E500E8DAB9 /* UIView+SHExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 032E071624B745E500E8DAB9 /* UIView+SHExtension.m */; };
+		032E071C24B7469A00E8DAB9 /* SHShareMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 032E071824B7469900E8DAB9 /* SHShareMenuView.m */; };
+		032E071D24B7469A00E8DAB9 /* SHShareMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 032E071924B7469900E8DAB9 /* SHShareMenuItem.m */; };
+		032E072124B748F300E8DAB9 /* SHMessageVoiceHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 032E071F24B748F300E8DAB9 /* SHMessageVoiceHUD.m */; };
+		032E072324B74AA000E8DAB9 /* SHChatUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 032E072224B74AA000E8DAB9 /* SHChatUI.bundle */; };
 		0334105820EDBDB800BD68C2 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334105720EDBDB800BD68C2 /* NetworkManager.m */; };
 		0337A723218ADC6C005A4693 /* PECropRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337A71B218ADC6B005A4693 /* PECropRectView.m */; };
 		0337A724218ADC6C005A4693 /* PECropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337A71D218ADC6B005A4693 /* PECropViewController.m */; };
@@ -1526,6 +1534,23 @@
 		032A7A2420EA1E8B003D4952 /* GlobalDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalDefine.h; sourceTree = "<group>"; };
 		032A7A2520EA20FF003D4952 /* UIView+ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ViewController.m"; sourceTree = "<group>"; };
 		032A7A2620EA20FF003D4952 /* UIView+ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ViewController.h"; sourceTree = "<group>"; };
+		032E070B24B7443700E8DAB9 /* SHMessageInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMessageInputView.h; sourceTree = "<group>"; };
+		032E070C24B7443700E8DAB9 /* SHMessageInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMessageInputView.m; sourceTree = "<group>"; };
+		032E070E24B7452100E8DAB9 /* SHMessageHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHMessageHeader.h; sourceTree = "<group>"; };
+		032E070F24B745A500E8DAB9 /* SHShortVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHShortVideoViewController.h; sourceTree = "<group>"; };
+		032E071024B745A500E8DAB9 /* SHShortVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHShortVideoViewController.m; sourceTree = "<group>"; };
+		032E071224B745C600E8DAB9 /* SHShortAVPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHShortAVPlayer.h; sourceTree = "<group>"; };
+		032E071324B745C600E8DAB9 /* SHShortAVPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHShortAVPlayer.m; sourceTree = "<group>"; };
+		032E071524B745E500E8DAB9 /* UIView+SHExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SHExtension.h"; sourceTree = "<group>"; };
+		032E071624B745E500E8DAB9 /* UIView+SHExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SHExtension.m"; sourceTree = "<group>"; };
+		032E071824B7469900E8DAB9 /* SHShareMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHShareMenuView.m; sourceTree = "<group>"; };
+		032E071924B7469900E8DAB9 /* SHShareMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHShareMenuItem.m; sourceTree = "<group>"; };
+		032E071A24B7469A00E8DAB9 /* SHShareMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHShareMenuView.h; sourceTree = "<group>"; };
+		032E071B24B7469A00E8DAB9 /* SHShareMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHShareMenuItem.h; sourceTree = "<group>"; };
+		032E071E24B746F500E8DAB9 /* SHMessageType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHMessageType.h; sourceTree = "<group>"; };
+		032E071F24B748F300E8DAB9 /* SHMessageVoiceHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMessageVoiceHUD.m; sourceTree = "<group>"; };
+		032E072024B748F300E8DAB9 /* SHMessageVoiceHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMessageVoiceHUD.h; sourceTree = "<group>"; };
+		032E072224B74AA000E8DAB9 /* SHChatUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SHChatUI.bundle; sourceTree = "<group>"; };
 		0334105620EDBDB800BD68C2 /* NetworkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
 		0334105720EDBDB800BD68C2 /* NetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
 		0337A71A218ADC6B005A4693 /* PECropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PECropViewController.h; sourceTree = "<group>"; };
@@ -3183,6 +3208,30 @@
 			path = "百川艾灸";
 			sourceTree = "<group>";
 		};
+		032E070724B743E300E8DAB9 /* other */ = {
+			isa = PBXGroup;
+			children = (
+				032E070B24B7443700E8DAB9 /* SHMessageInputView.h */,
+				032E070C24B7443700E8DAB9 /* SHMessageInputView.m */,
+				032E070E24B7452100E8DAB9 /* SHMessageHeader.h */,
+				032E070F24B745A500E8DAB9 /* SHShortVideoViewController.h */,
+				032E071024B745A500E8DAB9 /* SHShortVideoViewController.m */,
+				032E071224B745C600E8DAB9 /* SHShortAVPlayer.h */,
+				032E071324B745C600E8DAB9 /* SHShortAVPlayer.m */,
+				032E071524B745E500E8DAB9 /* UIView+SHExtension.h */,
+				032E071624B745E500E8DAB9 /* UIView+SHExtension.m */,
+				032E071B24B7469A00E8DAB9 /* SHShareMenuItem.h */,
+				032E071924B7469900E8DAB9 /* SHShareMenuItem.m */,
+				032E071A24B7469A00E8DAB9 /* SHShareMenuView.h */,
+				032E071824B7469900E8DAB9 /* SHShareMenuView.m */,
+				032E071E24B746F500E8DAB9 /* SHMessageType.h */,
+				032E072024B748F300E8DAB9 /* SHMessageVoiceHUD.h */,
+				032E071F24B748F300E8DAB9 /* SHMessageVoiceHUD.m */,
+				032E072224B74AA000E8DAB9 /* SHChatUI.bundle */,
+			);
+			path = other;
+			sourceTree = "<group>";
+		};
 		0337A719218ADC5C005A4693 /* PEPhotoCropEditor */ = {
 			isa = PBXGroup;
 			children = (
@@ -4428,6 +4477,7 @@
 		03AD9CAB24B5ABA30084BAE2 /* chat */ = {
 			isa = PBXGroup;
 			children = (
+				032E070724B743E300E8DAB9 /* other */,
 				03AD9E3924B5B30A0084BAE2 /* Controller */,
 				03AD9DC524B5B2270084BAE2 /* View */,
 				03AD9DC424B5B21C0084BAE2 /* Model */,
@@ -5897,6 +5947,7 @@
 				03AD9D5024B5ABE90084BAE2 /* fail05@3x.png in Resources */,
 				03BD831C238BB89000F57978 /* 流程介绍页_02.png in Resources */,
 				03AD9D2324B5ABE90084BAE2 /* file_message_bg.png in Resources */,
+				032E072324B74AA000E8DAB9 /* SHChatUI.bundle in Resources */,
 				03BD831D238BB89000F57978 /* UMCommonLog.bundle in Resources */,
 				03BD831E238BB89000F57978 /* 血压11.png in Resources */,
 				03AD9D4024B5ABE90084BAE2 /* mychatBg@2x.png in Resources */,
@@ -6726,8 +6777,10 @@
 				03AD9DFC24B5B2830084BAE2 /* JCHATLoadMessageTableViewCell.m in Sources */,
 				03BD81C3238BB89000F57978 /* UIColor+Gradient.m in Sources */,
 				03BD81C5238BB89000F57978 /* UserShareOnce.m in Sources */,
+				032E072124B748F300E8DAB9 /* SHMessageVoiceHUD.m in Sources */,
 				03AD9DCD24B5B2540084BAE2 /* JCHATChatModel.m in Sources */,
 				03BD81C6238BB89000F57978 /* RecommendReadView.m in Sources */,
+				032E071424B745C600E8DAB9 /* SHShortAVPlayer.m in Sources */,
 				03AD9DDE24B5B26B0084BAE2 /* JCHATFootTableViewCell.m in Sources */,
 				0369D65C238BC57400FD3272 /* SongListCell.m in Sources */,
 				0369D670238BC5E100FD3272 /* ArmchairHomeCell.m in Sources */,
@@ -6741,6 +6794,7 @@
 				C9DDC33223A89CA500C4A590 /* QQBatteryView.m in Sources */,
 				03BD81CD238BB89000F57978 /* ZYAudioManager.m in Sources */,
 				03AD9E4F24B5BBE60084BAE2 /* MJPhotoBrowser.m in Sources */,
+				032E071124B745A600E8DAB9 /* SHShortVideoViewController.m in Sources */,
 				03BD81CE238BB89000F57978 /* SBJsonStreamParserState.m in Sources */,
 				03BD81CF238BB89000F57978 /* MainWebViewController.m in Sources */,
 				03BD81D0238BB89000F57978 /* BlockTableViewCell.m in Sources */,
@@ -6789,6 +6843,7 @@
 				03BD81F0238BB89000F57978 /* CardModel.m in Sources */,
 				03BD81F1238BB89000F57978 /* MyAvdisorysViewController.m in Sources */,
 				03BD81F2238BB89000F57978 /* NSDictionary+Extension.m in Sources */,
+				032E071C24B7469A00E8DAB9 /* SHShareMenuView.m in Sources */,
 				03AD9E1624B5B29A0084BAE2 /* XHVoiceRecordHUD.m in Sources */,
 				03BD81F4238BB89000F57978 /* TestViewController.m in Sources */,
 				03BD81F5238BB89000F57978 /* RegisterViewController.m in Sources */,
@@ -6888,6 +6943,7 @@
 				C9E1563A23A35CB800141420 /* IjoouSetCollectionViewCell.m in Sources */,
 				03BD8247238BB89000F57978 /* BloodGuideViewController.m in Sources */,
 				03AD9E2B24B5B2CD0084BAE2 /* JCHATMessageTextView.m in Sources */,
+				032E071D24B7469A00E8DAB9 /* SHShareMenuItem.m in Sources */,
 				03BD8248238BB89000F57978 /* CacheManager.m in Sources */,
 				C9865C63238CBFEB00ECAAB9 /* GlobalCommon.m in Sources */,
 				03BD8249238BB89000F57978 /* ResultController.m in Sources */,
@@ -6931,6 +6987,7 @@
 				03BD826A238BB89000F57978 /* QuestionModel.m in Sources */,
 				03BD826B238BB89000F57978 /* NewChannelView.m in Sources */,
 				03BD826C238BB89000F57978 /* GanYuSchemeController.m in Sources */,
+				032E070D24B7443700E8DAB9 /* SHMessageInputView.m in Sources */,
 				03BD8419238BC04B00F57978 /* OGA730BTestResultVC.m in Sources */,
 				03BD826D238BB89000F57978 /* SayAndWriteController.m in Sources */,
 				03AD9E0924B5B2830084BAE2 /* JCHATMessageTableViewCell.m in Sources */,
@@ -6970,6 +7027,7 @@
 				03BD8283238BB89000F57978 /* QuestionCell.m in Sources */,
 				03BD8284238BB89000F57978 /* AdvisorysViewController.m in Sources */,
 				03BD8285238BB89000F57978 /* MessageViewController.m in Sources */,
+				032E071724B745E500E8DAB9 /* UIView+SHExtension.m in Sources */,
 				03BD8286238BB89000F57978 /* ChangeLanguageObject.m in Sources */,
 				03BD8287238BB89000F57978 /* ZHPickView.m in Sources */,
 				03BD8288238BB89000F57978 /* VersionUpdateView.m in Sources */,

@@ -28,8 +28,11 @@
 #import "JCHATGroupDetailViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
-@interface JCHATConversationViewController () {
-  
+#import "SHMessageInputView.h"
+
+@interface JCHATConversationViewController ()<SHMessageInputViewDelegate//输入框代理
+> {
+    
 @private
     BOOL isNoOtherMessage;
     NSInteger messageOffset;
@@ -41,6 +44,9 @@
     UIButton *_rightBtn;
     NSMutableDictionary *_refreshAvatarUsersDic;
 }
+
+//下方工具栏
+@property (nonatomic,strong)SHMessageInputView *chatInputView;
 
 @end
 
@@ -83,28 +89,65 @@
     return _messageTableView;
 }
 
-- (JCHATToolBarContainer *)toolBarContainer
-{
-    if(!_toolBarContainer){
-        JCHATToolBarContainer *toolBarView = [[JCHATToolBarContainer alloc] initWithFrame:CGRectMake(0, ScreenHeight-kTabBarHeight, ScreenWidth, 45)];
-        _toolBarContainer = toolBarView;
-        _toolBarContainer.toolbar.delegate = self;
-        [_toolBarContainer.toolbar setUserInteractionEnabled:YES];
-        _toolBarContainer.toolbar.textView.text = [[JCHATSendMsgManager ins] draftStringWithConversation:_conversation];
-        [self.view addSubview:_toolBarContainer];
-    }
-    return _toolBarContainer;
-}
+//- (JCHATToolBarContainer *)toolBarContainer
+//{
+//    if(!_toolBarContainer){
+//        JCHATToolBarContainer *toolBarView = [[JCHATToolBarContainer alloc] initWithFrame:CGRectMake(0, ScreenHeight-kTabBarHeight, ScreenWidth, 45)];
+//        _toolBarContainer = toolBarView;
+//        _toolBarContainer.toolbar.delegate = self;
+//        [_toolBarContainer.toolbar setUserInteractionEnabled:YES];
+//        _toolBarContainer.toolbar.textView.text = [[JCHATSendMsgManager ins] draftStringWithConversation:_conversation];
+//        [self.view addSubview:_toolBarContainer];
+//    }
+//    return _toolBarContainer;
+//}
 
-- (JCHATMoreViewContainer *)moreViewContainer
-{
-    if(!_moreViewContainer){
-        JCHATMoreViewContainer *moreView = [[JCHATMoreViewContainer alloc] initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, 0)];
-        _moreViewContainer = moreView;
+//- (JCHATMoreViewContainer *)moreViewContainer
+//{
+//    if(!_moreViewContainer){
+//        JCHATMoreViewContainer *moreView = [[JCHATMoreViewContainer alloc] initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, 0)];
+//        _moreViewContainer = moreView;
+//
+//        [self.view addSubview:_moreViewContainer];
+//    }
+//    return _moreViewContainer;;
+//}
+
+#pragma mark 下方输入框
+- (SHMessageInputView *)chatInputView{
+    
+    if (!_chatInputView) {
+        _chatInputView = [[SHMessageInputView alloc]init];
+        _chatInputView.frame = CGRectMake(0, self.view.height - kSHInPutHeight - kSHBottomSafe, kSHWidth, kSHInPutHeight);
+        _chatInputView.delegate = self;
+        _chatInputView.supVC = self;
         
-        [self.view addSubview:_moreViewContainer];
+        //图标
+        NSArray *plugIcons = @[@"sharemore_pic.png", @"sharemore_video.png"];
+        //标题
+        NSArray *plugTitle = @[@"照片", @"拍摄"];
+        
+        // 添加第三方接入数据
+        NSMutableArray *shareMenuItems = [NSMutableArray array];
+        
+        //配置Item按钮
+        [plugIcons enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop)  {
+            
+            SHShareMenuItem *shareMenuItem = [[SHShareMenuItem alloc] initWithIcon:[UIImage imageNamed:[NSString stringWithFormat:@"SHChatUI.bundle/%@",obj]] title:plugTitle[idx]];
+            [shareMenuItems addObject:shareMenuItem];
+        }];
+        
+        _chatInputView.shareMenuItems = shareMenuItems;
+        [_chatInputView reloadView];
+        
+        if (kSHBottomSafe) {
+            UIView *view = [[UIView alloc]init];
+            view.frame = CGRectMake(0, _chatInputView.maxY, kSHWidth, kSHBottomSafe);
+            view.backgroundColor = kInPutViewColor;
+            [self.view addSubview:view];
+        }
     }
-    return _moreViewContainer;;
+    return _chatInputView;
 }
 
 # pragma mark - 获取联系人列表
@@ -219,10 +262,10 @@
  // [self setupNavigation];
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.messageTableView];
-    [self.view addSubview:self.toolBarContainer];
-    [self.view addSubview:self.moreViewContainer];
+    //[self.view addSubview:self.toolBarContainer];
+    [self.view addSubview:self.chatInputView];
     
- [self setupComponentView];
+    [self setupComponentView];
 }
 
 - (void)addtoolbar {
@@ -685,6 +728,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   return [NSMutableArray arrayWithArray:sortResultArr];
 }
 
+#pragma mark 获取消息数据
 - (void)getPageMessage {
   //DDLogDebug(@"Action - getAllMessage");
   [self cleanMessageCache];

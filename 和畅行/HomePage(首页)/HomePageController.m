@@ -792,6 +792,8 @@
 {
     
     NSLog(@"name:%@,pass:%@",[UserShareOnce shareOnce].jgname,[UserShareOnce shareOnce].jgpass);
+    [UserShareOnce shareOnce].jgname = @"1977850379@qq.com";
+    [UserShareOnce shareOnce].jgpass = @"111111";
     
     [JMSGUser loginWithUsername:[UserShareOnce shareOnce].jgname password:[UserShareOnce shareOnce].jgpass completionHandler:^(id resultObject, NSError *error) {
         if(error == nil){
