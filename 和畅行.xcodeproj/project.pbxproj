@@ -371,7 +371,6 @@
 		03AD9CC424B5ABBC0084BAE2 /* JCHATGroupSettingCtl.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AD9CB224B5ABB80084BAE2 /* JCHATGroupSettingCtl.m */; };
 		03AD9CC524B5ABBC0084BAE2 /* JCHATGroupDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03AD9CB324B5ABB80084BAE2 /* JCHATGroupDetailViewController.xib */; };
 		03AD9CC624B5ABBC0084BAE2 /* JCHATSelectFriendsCtl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03AD9CB624B5ABB90084BAE2 /* JCHATSelectFriendsCtl.xib */; };
-		03AD9CC724B5ABBC0084BAE2 /* JCHATConversationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03AD9CB824B5ABBA0084BAE2 /* JCHATConversationViewController.xib */; };
 		03AD9CC824B5ABBC0084BAE2 /* JCHATFriendDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AD9CBA24B5ABBB0084BAE2 /* JCHATFriendDetailViewController.m */; };
 		03AD9CC924B5ABBC0084BAE2 /* JCHATConversationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AD9CBB24B5ABBB0084BAE2 /* JCHATConversationListViewController.m */; };
 		03AD9CCA24B5ABBC0084BAE2 /* JCHATConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AD9CBC24B5ABBB0084BAE2 /* JCHATConversationViewController.m */; };
@@ -2139,7 +2138,6 @@
 		03AD9CB524B5ABB90084BAE2 /* JCHATDetailsInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATDetailsInfoViewController.h; sourceTree = "<group>"; };
 		03AD9CB624B5ABB90084BAE2 /* JCHATSelectFriendsCtl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATSelectFriendsCtl.xib; sourceTree = "<group>"; };
 		03AD9CB724B5ABBA0084BAE2 /* JCHATConversationListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATConversationListViewController.h; sourceTree = "<group>"; };
-		03AD9CB824B5ABBA0084BAE2 /* JCHATConversationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATConversationViewController.xib; sourceTree = "<group>"; };
 		03AD9CB924B5ABBB0084BAE2 /* JCHATConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATConversationViewController.h; sourceTree = "<group>"; };
 		03AD9CBA24B5ABBB0084BAE2 /* JCHATFriendDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATFriendDetailViewController.m; sourceTree = "<group>"; };
 		03AD9CBB24B5ABBB0084BAE2 /* JCHATConversationListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATConversationListViewController.m; sourceTree = "<group>"; };
@@ -4761,7 +4759,6 @@
 				03AD9CBD24B5ABBB0084BAE2 /* JCHATConversationListViewController.xib */,
 				03AD9CB924B5ABBB0084BAE2 /* JCHATConversationViewController.h */,
 				03AD9CBC24B5ABBB0084BAE2 /* JCHATConversationViewController.m */,
-				03AD9CB824B5ABBA0084BAE2 /* JCHATConversationViewController.xib */,
 				03AD9CB524B5ABB90084BAE2 /* JCHATDetailsInfoViewController.h */,
 				03AD9CAE24B5ABB70084BAE2 /* JCHATDetailsInfoViewController.m */,
 				03AD9CB124B5ABB80084BAE2 /* JCHATDetailsInfoViewController.xib */,
@@ -5903,7 +5900,6 @@
 				03BD8320238BB89000F57978 /* sound_open.png in Resources */,
 				03BD8321238BB89000F57978 /* 确定p.png in Resources */,
 				03AD9DE124B5B26B0084BAE2 /* JCHATGroupMemberCollectionViewCell.xib in Resources */,
-				03AD9CC724B5ABBC0084BAE2 /* JCHATConversationViewController.xib in Resources */,
 				03AD9D3524B5ABE90084BAE2 /* frame@2x.png in Resources */,
 				03BD8322238BB89000F57978 /* UISetTTViewController.xib in Resources */,
 				03BD8323238BB89000F57978 /* ic_electricity_02_green.png in Resources */,

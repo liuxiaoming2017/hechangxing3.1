@@ -84,6 +84,10 @@
 @property (copy, nonatomic) NSMutableArray  *ijoouArray;
 @property (nonatomic , strong) CBCentralManager *manager;
 
+//极光
+@property (nonatomic,copy) NSString *jgname; //极光用户名
+@property (nonatomic,copy) NSString *jgpass; //极光密码
+
 + (UserShareOnce *)shareOnce;
 +(void)attemptDealloc;
 @end

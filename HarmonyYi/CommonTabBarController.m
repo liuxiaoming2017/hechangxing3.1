@@ -23,9 +23,13 @@
 
 #if !FIRST_FLAG
 #import "IJoouMainVC.h"
+
+#import "JCHATConversationViewController.h" //极光聊天
+
 #else
 #import "i9_MoxaMainViewController.h"
 #endif
+
 
 
 @interface CommonTabBarController ()<HSTabBarDelegate,ZKIndexViewDelegate>
@@ -141,7 +145,23 @@
                 [alerVC addAction:sureAction];
                 [self presentViewController:alerVC animated:YES completion:nil];
             }else{
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
+                //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
+                
+                [JMSGConversation allConversations:^(id resultObject, NSError *error) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        NSArray *arr = [self sortConversation:resultObject];
+                         JCHATConversationViewController *vc = [[JCHATConversationViewController alloc] init];
+                        vc.hidesBottomBarWhenPushed = YES;
+                        if(arr.count > 0){
+                            JMSGConversation *conversation = [arr objectAtIndex:0];
+                            vc.conversation = conversation;
+                        }else{ //没有conversation
+                            vc.conversation = nil;
+                        }
+                        [[self selectedViewController] pushViewController:vc animated:YES];
+                    });
+                }];
+                
             }
            
 
@@ -193,6 +213,18 @@
     [GlobalCommon pageDurationWithpageId:@"3" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
 
     
+}
+
+#pragma mark --排序conversation
+- (NSArray *)sortConversation:(NSMutableArray *)conversationArr {
+    NSSortDescriptor *firstDescriptor = [[NSSortDescriptor alloc] initWithKey:@"latestMessage.timestamp" ascending:NO];
+    
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:firstDescriptor, nil];
+    
+    NSArray *sortedArray = [conversationArr sortedArrayUsingDescriptors:sortDescriptors];
+    
+    return sortedArray;
+
 }
 
 - (void)indexDissmiss

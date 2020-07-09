@@ -120,6 +120,12 @@
             userShare = [UserShareOnce mj_objectWithKeyValues:dic];
             userShare.JSESSIONID = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"JSESSIONID"];
             userShare.token = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"token"];
+            
+            if(!FIRST_FLAG){
+                userShare.jgname = [[response objectForKey:@"data"] objectForKey:@"jgname"];
+                userShare.jgpass = [[response objectForKey:@"data"] objectForKey:@"jgpass"];
+            }
+            
             userShare.isRefresh = NO;
             userShare.passWord = self->passWordBox.text;
             if([GlobalCommon stringEqualNull:[dic objectForKey:@"uuid"]] ){
@@ -266,6 +272,10 @@
             userShare = [UserShareOnce mj_objectWithKeyValues:dic];
             userShare.JSESSIONID = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"JSESSIONID"];
             userShare.token = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"token"];
+            if(!FIRST_FLAG){
+                userShare.jgname = [[response objectForKey:@"data"] objectForKey:@"jgname"];
+                userShare.jgpass = [[response objectForKey:@"data"] objectForKey:@"jgpass"];
+                       }
             userShare.isRefresh = NO;
             userShare.wxName = paramDic[@"screen_name"];
             NSArray *arrMem = [[[response objectForKey:@"data"] objectForKey:@"member"] objectForKey:@"mengberchild"];
@@ -401,7 +411,10 @@
             userShare = [UserShareOnce mj_objectWithKeyValues:dic];
             userShare.JSESSIONID = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"JSESSIONID"];
             userShare.token = [[(NSDictionary *)response objectForKey:@"data"] objectForKey:@"token"];
-            
+            if(!FIRST_FLAG){
+                 userShare.jgname = [[response objectForKey:@"data"] objectForKey:@"jgname"];
+                 userShare.jgpass = [[response objectForKey:@"data"] objectForKey:@"jgpass"];
+                    }
             userShare.isRefresh = NO;
             if([GlobalCommon stringEqualNull:[dic objectForKey:@"uuid"]] ){
                 userShare.uuid = nil;

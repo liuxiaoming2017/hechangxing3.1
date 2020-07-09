@@ -18,6 +18,8 @@
 #import "JCHATMessageTableViewCell.h"
 #import "JCHATPhotoPickerViewController.h"
 
+#import "SayAndWriteController.h"
+
 #define interval 60*2 //static =const
 #define navigationRightButtonRect CGRectMake(0, 0, 14, 17)
 #define messageTableColor [UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1]
@@ -25,7 +27,7 @@
 static NSInteger const messagePageNumber = 25;
 static NSInteger const messagefristPageNumber = 20;
 
-@interface JCHATConversationViewController : UIViewController <
+@interface JCHATConversationViewController : SayAndWriteController <
 UITableViewDataSource,
 UITableViewDelegate,
 SendMessageDelegate,

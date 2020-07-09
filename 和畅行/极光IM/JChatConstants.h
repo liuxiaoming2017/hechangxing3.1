@@ -32,11 +32,11 @@
 #define kApplicationWidth     [UIScreen mainScreen].bounds.size.width //(e.g. 320)
 #define kApplicationHeight    [UIScreen mainScreen].bounds.size.height//不包含状态bar的高度(e.g. 460)
 
-#define kStatusBarHeight         20
+//#define kStatusBarHeight         20
 #define kNavigationBarHeight     44
 #define kNavigationheightForIOS7 64
 #define kContentHeight           (kApplicationHeight - kNavigationBarHeight)
-#define kTabBarHeight            49
+//#define kTabBarHeight            49
 #define kTableRowTitleSize       14
 #define maxPopLength             170
 

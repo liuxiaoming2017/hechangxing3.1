@@ -23,6 +23,7 @@
 
 
 
+
 @interface CommonTabBarController ()<HSTabBarDelegate,ZKIndexViewDelegate>
 
 @property (nonatomic,strong) ZKIndxView *zkView;
@@ -115,6 +116,7 @@
                     [self showAlerVC];
                     return;
                 }
+                
             }
             
             if (![UserShareOnce shareOnce].languageType) {
@@ -128,6 +130,8 @@
                 [self presentViewController:alerVC animated:YES completion:nil];
             }else{
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006776668"]];
+                
+               
             }
             
             //拨打电话埋点

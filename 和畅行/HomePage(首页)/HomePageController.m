@@ -639,12 +639,21 @@
         }else{
             [weakSelf showAlertWarmMessage:[response objectForKey:@"data"]];
         }
-            [self.testActivityIndicator stopAnimating];
-            [self.testActivityIndicator setHidesWhenStopped:YES];
-    } failureBlock:^(NSError *error) {
-        [self.testActivityIndicator stopAnimating];
-        [self.testActivityIndicator setHidesWhenStopped:YES];
+            [weakSelf.testActivityIndicator stopAnimating];
+            [weakSelf.testActivityIndicator setHidesWhenStopped:YES];
         
+        if(!FIRST_FLAG){
+            [weakSelf JGLogin]; //极光登录
+        }
+        
+        
+    } failureBlock:^(NSError *error) {
+        [weakSelf.testActivityIndicator stopAnimating];
+        [weakSelf.testActivityIndicator setHidesWhenStopped:YES];
+        
+        if(!FIRST_FLAG){
+            [weakSelf JGLogin]; //极光登录
+        }
     }];
     
 }
@@ -777,6 +786,19 @@
     [GlobalCommon pageDurationWithpageId:@"1" withstartTime:self.startTimeStr withendTime:self.endTimeStr];
 }
 
+
+# pragma mark - 极光登录
+- (void)JGLogin
+{
+    
+    NSLog(@"name:%@,pass:%@",[UserShareOnce shareOnce].jgname,[UserShareOnce shareOnce].jgpass);
+    
+    [JMSGUser loginWithUsername:[UserShareOnce shareOnce].jgname password:[UserShareOnce shareOnce].jgpass completionHandler:^(id resultObject, NSError *error) {
+        if(error == nil){
+            NSLog(@"登录成功!!!!!!");
+        }
+    }];
+}
 
 
 @end
