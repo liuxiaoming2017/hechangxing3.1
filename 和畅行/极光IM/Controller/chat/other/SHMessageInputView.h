@@ -18,6 +18,7 @@
 @optional
 
 // text
+- (void)sendText :(NSString *)text;
 - (void)chatMessageWithSendText:(NSString *)text;
 
 // image
@@ -50,6 +51,32 @@
 //下方菜单点击
 - (void)didSelecteMenuItem:(SHShareMenuItem *)menuItem index:(NSInteger)index;
 
+- (void)photoClick;
+
+- (void)cameraClick;
+
+/**
+ *  按下录音按钮开始录音
+ */
+- (void)didStartRecordingVoiceAction;
+/**
+ *  手指向上滑动取消录音
+ */
+- (void)didCancelRecordingVoiceAction;
+/**
+ *  松开手指完成录音
+ */
+- (void)didFinishRecordingVoiceAction;
+/**
+ *  当手指离开按钮的范围内时，主要为了通知外部的HUD
+ */
+- (void)didDragOutsideAction;
+/**
+ *  当手指再次进入按钮的范围内时，主要也是为了通知外部的HUD
+ */
+- (void)didDragInsideAction;
+
+
 @end
 
 @interface SHMessageInputView : UIView
@@ -77,5 +104,8 @@
 - (void)openCard;
 //打开红包
 - (void)openRedPaper;
+
+
+- (void)dealWithTap;
 
 @end

@@ -1199,10 +1199,13 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   return timeId;
 }
 
-
+#pragma mark -- 点击空白处
 - (void)tapClick:(UIGestureRecognizer *)gesture {
-    [self.toolBarContainer.toolbar.textView resignFirstResponder];
-    [self dropToolBar];
+//    [self.toolBarContainer.toolbar.textView resignFirstResponder];
+   // [self dropToolBar];
+    
+    [self.chatInputView dealWithTap];
+    
 }
 
 #pragma mark --滑动至尾端

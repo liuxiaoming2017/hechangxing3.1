@@ -142,11 +142,17 @@ static CGFloat start_maxy;
         [_voiceBtn setTitle:@"按住说话" forState:UIControlStateNormal];
         [_voiceBtn setTitle:@"松开发送" forState:UIControlStateHighlighted];
         //点击方式
-        [_voiceBtn addTarget:self action:@selector(beginRecordVoice:) forControlEvents:UIControlEventTouchDown];
-        [_voiceBtn addTarget:self action:@selector(endRecordVoice:) forControlEvents:UIControlEventTouchUpInside];
-        [_voiceBtn addTarget:self action:@selector(cancelRecordVoice:) forControlEvents:UIControlEventTouchUpOutside | UIControlEventTouchCancel];
-        [_voiceBtn addTarget:self action:@selector(RemindDragExit:) forControlEvents:UIControlEventTouchDragExit];
-        [_voiceBtn addTarget:self action:@selector(RemindDragEnter:) forControlEvents:UIControlEventTouchDragEnter];
+//        [_voiceBtn addTarget:self action:@selector(beginRecordVoice:) forControlEvents:UIControlEventTouchDown];
+//        [_voiceBtn addTarget:self action:@selector(endRecordVoice:) forControlEvents:UIControlEventTouchUpInside];
+//        [_voiceBtn addTarget:self action:@selector(cancelRecordVoice:) forControlEvents:UIControlEventTouchUpOutside | UIControlEventTouchCancel];
+//        [_voiceBtn addTarget:self action:@selector(RemindDragExit:) forControlEvents:UIControlEventTouchDragExit];
+//        [_voiceBtn addTarget:self action:@selector(RemindDragEnter:) forControlEvents:UIControlEventTouchDragEnter];
+        
+        [_voiceBtn addTarget:self action:@selector(holdDownButtonTouchDown) forControlEvents:UIControlEventTouchDown];
+        [_voiceBtn addTarget:self action:@selector(holdDownButtonTouchUpOutside) forControlEvents:UIControlEventTouchUpOutside];
+        [_voiceBtn addTarget:self action:@selector(holdDownButtonTouchUpInside) forControlEvents:UIControlEventTouchUpInside];
+        [_voiceBtn addTarget:self action:@selector(holdDownDragOutside) forControlEvents:UIControlEventTouchDragExit];
+        [_voiceBtn addTarget:self action:@selector(holdDownDragInside) forControlEvents:UIControlEventTouchDragEnter];
         
         _voiceBtn.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
@@ -383,12 +389,45 @@ static CGFloat start_maxy;
     }
 }
 
+#pragma mark - 处理外面的点击事件
+- (void)dealWithTap
+{
+    switch (_inputType) {
+        case SHInputViewType_default:
+            
+            break;
+        case SHInputViewType_text:
+            
+            break;
+        case SHInputViewType_voice:
+            
+            break;
+        case SHInputViewType_emotion:
+            
+            break;
+        case SHInputViewType_menu:
+        {
+            
+            self.menuBtn.selected = NO;
+            _inputType = SHInputViewType_default;
+            [UIView animateWithDuration:0.25 animations:^{
+                
+               self.y = start_maxy - self.height;
+                self.menuView.y = self.superview.height-kSHBottomSafe;
+            } completion:^(BOOL finished) {
+                self.menuView.hidden = YES;
+            }];
+        }
+            break;
+    }
+}
+
 #pragma mark - 发送消息
 #pragma mark 发送文字
 - (void)sendMessageWithText:(NSString *)text {
     
-    if ([_delegate respondsToSelector:@selector(chatMessageWithSendText:)]) {
-        [_delegate chatMessageWithSendText:text];
+    if ([_delegate respondsToSelector:@selector(sendText:)]) {
+        [_delegate sendText:text];
     }
     
     self.textView.text = @"";
@@ -459,36 +498,46 @@ static CGFloat start_maxy;
 #pragma mark 打开照片
 - (void)openPhoto{
     
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-        picker.view.backgroundColor = [UIColor whiteColor];
-        picker.delegate = self;
-        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        
-        [self.supVC presentViewController:picker animated:YES completion:nil];
+//    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+//        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+//        picker.view.backgroundColor = [UIColor whiteColor];
+//        picker.delegate = self;
+//        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+//
+//        [self.supVC presentViewController:picker animated:YES completion:nil];
+//    }
+    
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(photoClick)]) {
+      [self.delegate photoClick];
     }
+    
 }
 
 #pragma mark 打开相机
 - (void)openCarema{
     
-    SHShortVideoViewController *vc = [[SHShortVideoViewController alloc]init];
-//    vc.maxSeconds = 15;
-    @kSHWeak(self);
-    vc.finishBlock = ^(id content) {
-        @kSHStrong(self);
-        if ([content isKindOfClass:[NSString class]]) {
-            NSLog(@"视频路径：%@",content);
-            //发送视频
-            [self sendMessageWithVideo:content];
-            
-        }else if ([content isKindOfClass:[UIImage class]]){
-            NSLog(@"图片内容：%@",content);
-            //发送图片与照片
-            [self sendMessageWithImage:content];
-        }
-    };
-    [self.supVC presentViewController:vc animated:YES completion:nil];
+//    SHShortVideoViewController *vc = [[SHShortVideoViewController alloc]init];
+////    vc.maxSeconds = 15;
+//    @kSHWeak(self);
+//    vc.finishBlock = ^(id content) {
+//        @kSHStrong(self);
+//        if ([content isKindOfClass:[NSString class]]) {
+//            NSLog(@"视频路径：%@",content);
+//            //发送视频
+//            [self sendMessageWithVideo:content];
+//
+//        }else if ([content isKindOfClass:[UIImage class]]){
+//            NSLog(@"图片内容：%@",content);
+//            //发送图片与照片
+//            [self sendMessageWithImage:content];
+//        }
+//    };
+//    [self.supVC presentViewController:vc animated:YES completion:nil];
+    
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(cameraClick)]) {
+      [self.delegate cameraClick];
+    }
+    
 }
 
 #pragma mark 打开定位
@@ -545,11 +594,12 @@ static CGFloat start_maxy;
 
 #pragma mark - UITextViewDelegate
 #pragma mark 键盘上功能点击
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     
     if ([text isEqualToString:@"\n"]) {//点击了发送
         //发送文字
-        //[self sendMessageWithText:[SHEmotionTool getRealStrWithAtt:textView.attributedText]];
+        [self sendMessageWithText:textView.text];
         return NO;
     }
     return YES;
@@ -594,9 +644,22 @@ static CGFloat start_maxy;
 #pragma mark - SHShareMenuViewDelegate
 - (void)didSelecteShareMenuItem:(SHShareMenuItem *)menuItem index:(NSInteger)index{
     
-    if ([_delegate respondsToSelector:@selector(didSelecteMenuItem:index:)]) {
-        [_delegate didSelecteMenuItem:menuItem index:index];
+//    if ([_delegate respondsToSelector:@selector(didSelecteMenuItem:index:)]) {
+//        [_delegate didSelecteMenuItem:menuItem index:index];
+//    }
+    
+    if(index == 0){
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(photoClick)]) {
+          [self.delegate photoClick];
+        }
+    }else if (index == 1){
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(cameraClick)]) {
+          [self.delegate cameraClick];
+        }
+    }else{
+        
     }
+    
 }
 
 #pragma mark - SHVoiceRecordHelperDelegate
@@ -618,6 +681,35 @@ static CGFloat start_maxy;
 }
 
 #pragma mark - 录音touch事件
+- (void)holdDownButtonTouchUpOutside {
+  if ([self.delegate respondsToSelector:@selector(didCancelRecordingVoiceAction)]) {
+    [self.delegate didCancelRecordingVoiceAction];
+  }
+}
+
+- (void)holdDownButtonTouchUpInside {
+  if ([self.delegate respondsToSelector:@selector(didFinishRecordingVoiceAction)]) {
+    [self.delegate didFinishRecordingVoiceAction];
+  }
+}
+
+- (void)holdDownDragOutside {
+  if ([self.delegate respondsToSelector:@selector(didDragOutsideAction)]) {
+    [self.delegate didDragOutsideAction];
+  }
+}
+
+- (void)holdDownDragInside {
+  if ([self.delegate respondsToSelector:@selector(didDragInsideAction)]) {
+    [self.delegate didDragInsideAction];
+  }
+}
+
+
+
+
+
+
 #pragma mark 开始录音
 - (void)beginRecordVoice:(UIButton *)button {
     
