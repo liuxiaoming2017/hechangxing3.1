@@ -135,7 +135,7 @@
     remindLabel.backgroundColor = [UIColor clearColor];
     remindLabel.text = kXHVoiceRecordPauseString;
     remindLabel.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:remindLabel];
+   // [self addSubview:remindLabel];
     _remindLabel = remindLabel;
   }
   

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SHMessageHeader.h"
-
+#import <Photos/Photos.h>
 /**
  聊天输入框
  */
@@ -22,7 +22,9 @@
 - (void)chatMessageWithSendText:(NSString *)text;
 
 // image
-- (void)chatMessageWithSendImage:(NSString *)imageName size:(CGSize)size;
+- (void)chatMessageWithSendImage:(UIImage *)image;
+
+- (void)chatMessageWithSendImageArr:(NSArray *)imageArr;
 
 // video
 - (void)chatMessageWithSendVideo:(NSString *)videoName;

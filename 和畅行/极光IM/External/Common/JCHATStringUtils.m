@@ -13,11 +13,11 @@
 }
 
 static NSString * const FORMAT_PAST_SHORT = @"yyyy/MM/dd";
-static NSString * const FORMAT_PAST_TIME = @"ahh:mm";
-static NSString * const FORMAT_THIS_WEEK = @"eee ahh:mm";
+static NSString * const FORMAT_PAST_TIME = @"a hh:mm";
+static NSString * const FORMAT_THIS_WEEK = @"eee a hh:mm";
 static NSString * const FORMAT_THIS_WEEK_SHORT = @"eee";
-static NSString * const FORMAT_YESTERDAY = @"ahh:mm";
-static NSString * const FORMAT_TODAY = @"ahh:mm";
+static NSString * const FORMAT_YESTERDAY = @"a hh:mm";
+static NSString * const FORMAT_TODAY = @"a hh:mm";
 
 + (NSString *)errorAlert:(NSError *)error {
   NSString *errorAlert = nil;
@@ -200,16 +200,16 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
 
   //上述时间差输出不同信息
   if (theDiff < 60) {
-    output = @"刚刚";
+    output = ModuleZW(@"刚刚");
 
   } else if (theDiff < 60 * 60) {
     int minute = (int) (theDiff / 60);
-    output = [NSString stringWithFormat:@"%d分钟前", minute];
+    output = [NSString stringWithFormat:@"%d %@", minute,ModuleZW(@"分钟前")];
 
   } else {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh"];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en"];
     [formatter setLocale:locale];
 
     BOOL isTodayYesterday = NO;
@@ -257,7 +257,7 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
 
 + (NSString *)getTodayYesterdayString:(NSDate *)theDate {
   NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-  NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh"];
+  NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en"];
   [formatter setLocale:locale];
   formatter.dateStyle = NSDateFormatterShortStyle;
   formatter.timeStyle = NSDateFormatterNoStyle;
@@ -267,7 +267,7 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
 
 + (NSString *)getPastDateString:(NSDate *)theDate {
   NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-  NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh"];
+  NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en"];
   [formatter setLocale:locale];
   formatter.dateStyle = NSDateFormatterLongStyle;
   formatter.timeStyle = NSDateFormatterNoStyle;

@@ -105,7 +105,7 @@
             break;
         case 1://文字
         {
-            self.messageVoiceLabel.text = @"手指上滑，取消发送";
+           // self.messageVoiceLabel.text = @"手指上滑，取消发送";
             [self.overlayWindow addSubview:self];
         }
             break;
@@ -113,7 +113,7 @@
         {
             self.messageVoiceLabel.backgroundColor = kRGB(155, 57, 57, 1);
             
-            self.messageVoiceLabel.text = @"松开手指，取消发送";
+           // self.messageVoiceLabel.text = @"松开手指，取消发送";
             self.messageVoiceImage.image = [self imageNamed:@"voice_change.png"];
 
             [self.overlayWindow addSubview:self];

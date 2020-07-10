@@ -10,13 +10,15 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "SHShortVideoViewController.h"
+#import "TZImagePickerController.h"
+#import "JCHATAudioPlayerHelper.h"
 
 @interface SHMessageInputView ()<
 UITextViewDelegate,
 UIImagePickerControllerDelegate,
 UINavigationControllerDelegate,
-SHShareMenuViewDelegate//菜单代理
-//录音代理
+SHShareMenuViewDelegate, //菜单代理
+TZImagePickerControllerDelegate
 >
 
 //改变输入状态按钮（语音、文字）
@@ -139,8 +141,8 @@ static CGFloat start_maxy;
         [_voiceBtn setTitleColor:kRGB(76, 76, 76, 1) forState:UIControlStateNormal];
         [_voiceBtn setTitleColor:kRGB(76, 76, 76, 1) forState:UIControlStateHighlighted];
         //文字内容
-        [_voiceBtn setTitle:@"按住说话" forState:UIControlStateNormal];
-        [_voiceBtn setTitle:@"松开发送" forState:UIControlStateHighlighted];
+        [_voiceBtn setTitle:@"Hold to Talk" forState:UIControlStateNormal];
+        [_voiceBtn setTitle:@"Release to send" forState:UIControlStateHighlighted];
         //点击方式
 //        [_voiceBtn addTarget:self action:@selector(beginRecordVoice:) forControlEvents:UIControlEventTouchDown];
 //        [_voiceBtn addTarget:self action:@selector(endRecordVoice:) forControlEvents:UIControlEventTouchUpInside];
@@ -308,10 +310,19 @@ static CGFloat start_maxy;
         case SHInputViewType_default://默认
         {
             self.textView.hidden  = NO;
+            if(self.menuView.hidden){
+                [UIView animateWithDuration:0.25 animations:^{
+                    self.y = start_maxy - self.height;
+                }];
+            }else{
+                [UIView animateWithDuration:0.25 animations:^{
+                    self.y = start_maxy - self.height;
+                    self.menuView.y = self.superview.height-kSHBottomSafe;
+                } completion:^(BOOL finished) {
+                    self.menuView.hidden = YES;
+                }];
+            }
             
-            [UIView animateWithDuration:0.25 animations:^{
-                self.y = start_maxy - self.height;
-            }];
         }
             break;
         case SHInputViewType_text://文本
@@ -392,6 +403,9 @@ static CGFloat start_maxy;
 #pragma mark - 处理外面的点击事件
 - (void)dealWithTap
 {
+    
+    [self.textView resignFirstResponder];
+    
     switch (_inputType) {
         case SHInputViewType_default:
             
@@ -445,11 +459,10 @@ static CGFloat start_maxy;
 #pragma mark 发送图片
 - (void)sendMessageWithImage:(UIImage *)image{
     
-//    NSString *imageName = [self getFileNameWithContent:image type:SHMessageFileType_image];
-//
-//    if ([_delegate respondsToSelector:@selector(chatMessageWithSendImage:size:)]) {
-//        [_delegate chatMessageWithSendImage:imageName size:image.size];
-//    }
+    if ([_delegate respondsToSelector:@selector(chatMessageWithSendImage:)]) {
+        [_delegate chatMessageWithSendImage:image];
+    }
+    
 }
 
 #pragma mark 发送视频
@@ -496,8 +509,11 @@ static CGFloat start_maxy;
 
 #pragma mark - 菜单内容
 #pragma mark 打开照片
-- (void)openPhoto{
-    
+//- (void)openPhoto{
+//
+//
+//
+//
 //    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
 //        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
 //        picker.view.backgroundColor = [UIColor whiteColor];
@@ -506,38 +522,74 @@ static CGFloat start_maxy;
 //
 //        [self.supVC presentViewController:picker animated:YES completion:nil];
 //    }
+//
+//
+//
+//}
+
+# pragma mark - 选取本地图片
+-(void)openPhoto{
+  
+    __weak typeof(self) weakSelf = self;
     
-    if (self.delegate &&[self.delegate respondsToSelector:@selector(photoClick)]) {
-      [self.delegate photoClick];
-    }
+   // NSMutableArray *photosArr = [NSMutableArray arrayWithCapacity:0];
+    
+    
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:4 delegate:weakSelf];
+    imagePickerVc.maxImagesCount = 4;//最小照片必选张数,默认是0
+    imagePickerVc.sortAscendingByModificationDate = NO;// 对照片排序，按修改时间升序，默认是YES。如果设置为NO
+   
+    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets,BOOL isSelectOriginalPhoto){
+        NSLog(@"选中图片photos === %@",photos);
+        
+       // [photosArr addObjectsFromArray:photos];
+        
+        if(photos.count>0){
+            if (weakSelf.delegate &&[weakSelf.delegate respondsToSelector:@selector(chatMessageWithSendImageArr:)]) {
+                [weakSelf.delegate chatMessageWithSendImageArr:photos];
+            }
+        }
+        
+    
+    }];
+    [weakSelf.supVC presentViewController:imagePickerVc animated:YES completion:nil];
     
 }
 
-#pragma mark 打开相机
-- (void)openCarema{
-    
-//    SHShortVideoViewController *vc = [[SHShortVideoViewController alloc]init];
-////    vc.maxSeconds = 15;
-//    @kSHWeak(self);
-//    vc.finishBlock = ^(id content) {
-//        @kSHStrong(self);
-//        if ([content isKindOfClass:[NSString class]]) {
-//            NSLog(@"视频路径：%@",content);
-//            //发送视频
-//            [self sendMessageWithVideo:content];
-//
-//        }else if ([content isKindOfClass:[UIImage class]]){
-//            NSLog(@"图片内容：%@",content);
-//            //发送图片与照片
-//            [self sendMessageWithImage:content];
-//        }
-//    };
-//    [self.supVC presentViewController:vc animated:YES completion:nil];
-    
-    if (self.delegate &&[self.delegate respondsToSelector:@selector(cameraClick)]) {
-      [self.delegate cameraClick];
+
+# pragma mark - 拍照
+- (void)takePhoto
+{
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied)
+    {
+        NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+        NSString *str = [NSString stringWithFormat:ModuleZW(@"请在iPhone的\"设置->隐私->相机\"选项中，允许%@访问您的摄像头。"),appName];
+
+       // [self.viewController showAlertWarmMessage:str];
+        return;
     }
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     
+    picker.delegate = self;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    picker.mediaTypes = [NSArray arrayWithObjects: @"public.image", nil];
+    [self.supVC presentViewController:picker animated:YES completion:^{
+    }];
+}
+
+
+
+- (void)imagePickerController:(UIImagePickerController *)picker
+didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    //[picker dismissModalViewControllerAnimated:YES comp];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(chatMessageWithSendImage:)]) {
+        [self.delegate chatMessageWithSendImage:image];
+    }
 }
 
 #pragma mark 打开定位
@@ -558,39 +610,7 @@ static CGFloat start_maxy;
     [self sendMessageWithRedPackage:@"恭喜发财，大吉大利"];
 }
 
-#pragma mark - UIImagePickerControllerDelegate
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(nonnull NSDictionary<NSString *,id> *)info{
-    
-    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
-    
-    if ([mediaType isEqualToString:@"public.movie"]) {//如果是视频
-        
-        //视频路径
-        NSURL *url = [info objectForKey:UIImagePickerControllerMediaURL];
-        
-        //发送视频
-        [self sendMessageWithVideo:url.path];
-        
-        //发送视频
-        [self.supVC dismissViewControllerAnimated:YES completion:nil];
-        
-    }else if ([mediaType isEqualToString:@"public.image"]){
-        
-        UIImage *image = nil;
-        //如果允许编辑则获得编辑后的照片，否则获取原始照片
-        if (picker.allowsEditing) {
-            
-            image = [info objectForKey:UIImagePickerControllerEditedImage];//获取编辑后的照片
-        }else{
-            
-            image = [info objectForKey:UIImagePickerControllerOriginalImage];//获取原始照片
-        }
-        //发送图片与照片
-        [self sendMessageWithImage:image];
-        
-        [self.supVC dismissViewControllerAnimated:YES completion:nil];
-    }
-}
+
 
 #pragma mark - UITextViewDelegate
 #pragma mark 键盘上功能点击
@@ -649,13 +669,13 @@ static CGFloat start_maxy;
 //    }
     
     if(index == 0){
-        if (self.delegate &&[self.delegate respondsToSelector:@selector(photoClick)]) {
-          [self.delegate photoClick];
-        }
+//        if (self.delegate &&[self.delegate respondsToSelector:@selector(photoClick)]) {
+//          [self.delegate photoClick];
+//        }
+        [self openPhoto];
     }else if (index == 1){
-        if (self.delegate &&[self.delegate respondsToSelector:@selector(cameraClick)]) {
-          [self.delegate cameraClick];
-        }
+
+        [self takePhoto];
     }else{
         
     }
@@ -681,6 +701,14 @@ static CGFloat start_maxy;
 }
 
 #pragma mark - 录音touch事件
+- (void)holdDownButtonTouchDown {
+  if ([self.delegate respondsToSelector:@selector(didStartRecordingVoiceAction)]) {
+    [[JCHATAudioPlayerHelper shareInstance] stopAudio];
+    [self.delegate didStartRecordingVoiceAction];
+  }
+}
+
+
 - (void)holdDownButtonTouchUpOutside {
   if ([self.delegate respondsToSelector:@selector(didCancelRecordingVoiceAction)]) {
     [self.delegate didCancelRecordingVoiceAction];

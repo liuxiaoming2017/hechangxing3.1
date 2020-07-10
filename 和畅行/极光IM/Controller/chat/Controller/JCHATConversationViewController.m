@@ -72,6 +72,8 @@
         [self connectContactWithName:@""];
     }
     
+    //添加键盘监听
+    [self addKeyboardNote];
     
 }
 
@@ -81,37 +83,20 @@
     
     if(!_messageTableView){
         JCHATMessageTableView *tableView = [[JCHATMessageTableView alloc] initWithFrame:CGRectMake(0, self.topView.bottom, ScreenWidth, ScreenHeight-self.topView.height-kTabBarHeight)];
-        tableView.delegate = self;
-        tableView.dataSource = self;
         _messageTableView = tableView;
+        _messageTableView.userInteractionEnabled = YES;
+         _messageTableView.showsVerticalScrollIndicator = NO;
+         _messageTableView.delegate = self;
+         _messageTableView.dataSource = self;
+         _messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+         _messageTableView.backgroundColor = messageTableColor;
+        _messageTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.view addSubview:_messageTableView];
     }
     return _messageTableView;
 }
 
-//- (JCHATToolBarContainer *)toolBarContainer
-//{
-//    if(!_toolBarContainer){
-//        JCHATToolBarContainer *toolBarView = [[JCHATToolBarContainer alloc] initWithFrame:CGRectMake(0, ScreenHeight-kTabBarHeight, ScreenWidth, 45)];
-//        _toolBarContainer = toolBarView;
-//        _toolBarContainer.toolbar.delegate = self;
-//        [_toolBarContainer.toolbar setUserInteractionEnabled:YES];
-//        _toolBarContainer.toolbar.textView.text = [[JCHATSendMsgManager ins] draftStringWithConversation:_conversation];
-//        [self.view addSubview:_toolBarContainer];
-//    }
-//    return _toolBarContainer;
-//}
 
-//- (JCHATMoreViewContainer *)moreViewContainer
-//{
-//    if(!_moreViewContainer){
-//        JCHATMoreViewContainer *moreView = [[JCHATMoreViewContainer alloc] initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, 0)];
-//        _moreViewContainer = moreView;
-//
-//        [self.view addSubview:_moreViewContainer];
-//    }
-//    return _moreViewContainer;;
-//}
 
 #pragma mark 下方输入框
 - (SHMessageInputView *)chatInputView{
@@ -125,7 +110,7 @@
         //图标
         NSArray *plugIcons = @[@"sharemore_pic.png", @"sharemore_video.png"];
         //标题
-        NSArray *plugTitle = @[@"照片", @"拍摄"];
+        NSArray *plugTitle = @[@"Album", @"Camera"];
         
         // 添加第三方接入数据
         NSMutableArray *shareMenuItems = [NSMutableArray array];
@@ -190,8 +175,7 @@
 - (void)viewWillAppear:(BOOL)animated {
   //DDLogDebug(@"Event - viewWillAppear");
   [super viewWillAppear:animated];
-  [self.toolBarContainer.toolbar drawRect:self.toolBarContainer.toolbar.frame];
-    
+  
     kWEAKSELF
     [_conversation refreshTargetInfoFromServer:^(id resultObject, NSError *error) {
         //DDLogDebug(@"refresh nav right button");
@@ -207,7 +191,7 @@
         } else {
             strongSelf.title = [resultObject title];
         }
-        [_messageTableView reloadData];
+        [self->_messageTableView reloadData];
     }];
   
 }
@@ -252,7 +236,7 @@
     //DDLogDebug(@"Action -- dealloc");
     //  [[NSNotificationCenter defaultCenter] removeObserver:self name:kAlertToSendImage object:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self.toolBarContainer.toolbar.textView removeObserver:self forKeyPath:@"contentSize"];
+    
     //remove delegate
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAlertToSendImage object:self];
     [JMessage removeDelegate:self withConversation:_conversation];
@@ -260,37 +244,76 @@
 
 - (void)setupView {
  // [self setupNavigation];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = messageTableColor;
     [self.view addSubview:self.messageTableView];
-    //[self.view addSubview:self.toolBarContainer];
     [self.view addSubview:self.chatInputView];
     
-    [self setupComponentView];
+    UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                             action:@selector(tapClick:)];
+    [self.view addGestureRecognizer:gesture];
 }
 
-- (void)addtoolbar {
-  self.toolBarContainer.toolbar.frame = CGRectMake(0, 0, kApplicationWidth, 45);
-  [self.toolBarContainer addSubview:self.toolBarContainer.toolbar];
+
+
+#pragma mark - 键盘通知
+#pragma mark 添加键盘通知
+- (void)addKeyboardNote {
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    
+    // 1.显示键盘
+    [center addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillShowNotification object:nil];
+    
+    // 2.隐藏键盘
+    [center addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)setupComponentView {
-  UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                           action:@selector(tapClick:)];
-  [self.view addGestureRecognizer:gesture];
-  [self.view setBackgroundColor:[UIColor clearColor]];
-//  _toolBarContainer.toolbar.delegate = self;
-//  [_toolBarContainer.toolbar setUserInteractionEnabled:YES];
-//  self.toolBarContainer.toolbar.textView.text = [[JCHATSendMsgManager ins] draftStringWithConversation:_conversation];
-  _messageTableView.userInteractionEnabled = YES;
-  _messageTableView.showsVerticalScrollIndicator = NO;
-  _messageTableView.delegate = self;
-  _messageTableView.dataSource = self;
-  _messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-  _messageTableView.backgroundColor = messageTableColor;
-  
-  _moreViewContainer.moreView.delegate = self;
-  _moreViewContainer.moreView.backgroundColor = messageTableColor;
-  
+#pragma mark 键盘通知执行
+- (void)keyboardChange:(NSNotification *)notification {
+    
+    NSDictionary *userInfo = [notification userInfo];
+    NSTimeInterval animationDuration;
+    UIViewAnimationCurve animationCurve;
+    CGRect keyboardEndFrame;
+    
+    [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&animationCurve];
+    [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
+    [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
+
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    [UIView setAnimationCurve:animationCurve];
+    
+    CGRect newFrame = self.chatInputView.frame;
+    newFrame.origin.y = keyboardEndFrame.origin.y - newFrame.size.height;
+    
+    if ([notification.name isEqualToString:@"UIKeyboardWillHideNotification"]) {
+        newFrame.origin.y -= kSHBottomSafe;
+    }
+    self.chatInputView.frame = newFrame;
+    
+    [UIView commitAnimations];
+}
+
+#pragma mark 工具栏高度改变
+- (void)toolbarHeightChange{
+    
+    //改变聊天界面高度
+    CGRect frame = self.messageTableView.frame;
+    frame.size.height = self.chatInputView.y-kNavBarHeight;
+    self.messageTableView.frame = frame;
+    
+     NSLog(@"********frame:%@",NSStringFromCGRect(frame));
+    
+    [self.view layoutIfNeeded];
+    //滚动到底部
+    [self scrollToEnd];
+}
+
+#pragma mark - ScrollVIewDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    //默认输入
+    self.chatInputView.inputType = SHInputViewType_default;
 }
 
 - (void)setupNavigation {
@@ -429,41 +452,41 @@
 
         if (message.contentType == kJMSGContentTypeEventNotification) {
           if (((JMSGEventContent *)message.content).eventType == kJMSGEventNotificationRemoveGroupMembers
-              && ![((JMSGGroup *)_conversation.target) isMyselfGroupMember]) {
+              && ![((JMSGGroup *)self->_conversation.target) isMyselfGroupMember]) {
             [strongSelf setupNavigation];
           }
         }
 
-        if (_conversation.conversationType == kJMSGConversationTypeSingle) {
-        } else if (![((JMSGGroup *)_conversation.target).gid isEqualToString:((JMSGGroup *)message.target).gid]){
+        if (self->_conversation.conversationType == kJMSGConversationTypeSingle) {
+        } else if (![((JMSGGroup *)self->_conversation.target).gid isEqualToString:((JMSGGroup *)message.target).gid]){
           return;
         }
         
-        JCHATChatModel *model = [_allMessageDic objectForKey:message.msgId];
+        JCHATChatModel *model = [self->_allMessageDic objectForKey:message.msgId];
         if (model) {// 说明已经加载，说明可能是同步下来的多媒体消息，下载完成，然后再次收到就去刷新
             model.message = message;
             [strongSelf refreshCellMessageMediaWithChatModel:model];
         }else{
             
-            NSString *firstMsgId = [_allmessageIdArr firstObject];
-            JCHATChatModel *firstModel = [_allMessageDic objectForKey:firstMsgId];
+            NSString *firstMsgId = [self->_allmessageIdArr firstObject];
+            JCHATChatModel *firstModel = [self->_allMessageDic objectForKey:firstMsgId];
             if (message.timestamp < firstModel.message.timestamp) {
                 // 比数组中最老的消息时间都小的，无需加入界面显示，下次翻页时会加载
                 return ;
             }
             
             model = [[JCHATChatModel alloc] init];
-            [model setChatModelWith:message conversationType:_conversation];
+            [model setChatModelWith:message conversationType:self->_conversation];
             if (message.contentType == kJMSGContentTypeImage) {
-                [_imgDataArr addObject:model];
+                [self->_imgDataArr addObject:model];
             }
-            model.photoIndex = [_imgDataArr count] -1;
+            model.photoIndex = [self->_imgDataArr count] -1;
             [strongSelf addmessageShowTimeData:message.timestamp];
             [strongSelf addMessage:model];
             
             BOOL isHaveCache = NO;
             NSString *key = [NSString stringWithFormat:@"%@_%@",message.fromUser.username,message.fromUser.appKey];
-            NSMutableArray *messages = _refreshAvatarUsersDic[key];
+            NSMutableArray *messages = self->_refreshAvatarUsersDic[key];
             if (messages) {
                 isHaveCache = YES;
                 [messages addObject:message];
@@ -474,7 +497,7 @@
             if (messages.count > 10) {
                 [messages removeObjectAtIndex:0];
             }
-            [_refreshAvatarUsersDic setObject:messages forKey:key];
+            [self->_refreshAvatarUsersDic setObject:messages forKey:key];
             
             [strongSelf chcekReceiveMessageAvatarWithReceiveNewMessage:message];
 //            if (!isHaveCache) {
@@ -496,22 +519,22 @@
           return;
       }
       
-      if (_conversation.conversationType == kJMSGConversationTypeSingle) {
-      } else if (![((JMSGGroup *)_conversation.target).gid isEqualToString:((JMSGGroup *)message.target).gid]){
+      if (self->_conversation.conversationType == kJMSGConversationTypeSingle) {
+      } else if (![((JMSGGroup *)self->_conversation.target).gid isEqualToString:((JMSGGroup *)message.target).gid]){
           return;
       }
     
-      JCHATChatModel *model = [_allMessageDic objectForKey:message.msgId];
+      JCHATChatModel *model = [self->_allMessageDic objectForKey:message.msgId];
       if (model) {// 说明已经加载，说明可能是同步下来的多媒体消息，下载完成，然后再次收到就去刷新
           model.message = message;
           [self refreshCellMessageMediaWithChatModel:model];
       }else{
           model = [[JCHATChatModel alloc] init];
-          [model setChatModelWith:message conversationType:_conversation];
+          [model setChatModelWith:message conversationType:self->_conversation];
           if (message.contentType == kJMSGContentTypeImage) {
-              [_imgDataArr addObject:model];
+              [self->_imgDataArr addObject:model];
           }
-          model.photoIndex = [_imgDataArr count] -1;
+          model.photoIndex = [self->_imgDataArr count] -1;
           [self addmessageShowTimeData:message.timestamp];
           [self addMessage:model];
       }
@@ -842,15 +865,12 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 }
 
 - (void)pressVoiceBtnToHideKeyBoard {///!!!
-  [self.toolBarContainer.toolbar.textView resignFirstResponder];
-  _toolBarHeightConstrait.constant = 45;
-  [self dropToolBar];
+
+ 
 }
 
 - (void)switchToTextInputMode {
-  UITextField *inputview = self.toolBarContainer.toolbar.textView;
-  [inputview becomeFirstResponder];
-  [self layoutAndAnimateMessageInputTextView:inputview];
+    
 }
 #pragma mark --增加朋友
 - (void)addFriends
@@ -862,72 +882,28 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
     [self.navigationController pushViewController:groupDetailCtl animated:YES];
 }
 
-#pragma mark -调用相册
-- (void)photoClick {
-  ALAssetsLibrary *lib = [[ALAssetsLibrary alloc] init];
-  [lib enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-    JCHATPhotoPickerViewController *photoPickerVC = [[JCHATPhotoPickerViewController alloc] init];
-    photoPickerVC.photoDelegate = self;
-    [self presentViewController:photoPickerVC animated:YES completion:NULL];
-  } failureBlock:^(NSError *error) {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有相册权限" message:@"请到设置页面获取相册权限" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [alertView show];
-  }];
+- (void)JCHATPhotoPickerViewController:(JCHATPhotoSelectViewController *)PhotoPickerVC
+selectedPhotoArray:(NSArray *)selected_photo_array
+{
+    
 }
 
-#pragma mark --调用相机
-- (void)cameraClick {
-  UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-  
-  if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    NSString *requiredMediaType = ( NSString *)kUTTypeImage;
-    NSArray *arrMediaTypes=[NSArray arrayWithObjects:requiredMediaType,nil];
-    [picker setMediaTypes:arrMediaTypes];
-    picker.showsCameraControls = YES;
-    picker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    picker.editing = YES;
-    picker.delegate = self;
-    [self presentViewController:picker animated:YES completion:nil];
-  }
-}
-
-#pragma mark - ZYQAssetPickerController Delegate
-//-(void)assetPickerController:(ZYQAssetPickerController *)picker didFinishPickingAssets:(NSArray *)assets{
-//  for (int i=0; i<assets.count; i++) {
-//    ALAsset *asset=assets[i];
-//    UIImage *tempImg=[UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
-//    [self prepareImageMessage:tempImg];
-//    [self dropToolBarNoAnimate];
-//  }
-//}
-#pragma mark - HMPhotoPickerViewController Delegate
-- (void)JCHATPhotoPickerViewController:(JCHATPhotoSelectViewController *)PhotoPickerVC selectedPhotoArray:(NSArray *)selected_photo_array {
-  for (UIImage *image in selected_photo_array) {
-    [self prepareImageMessage:image];
-  }
-  [self dropToolBarNoAnimate];
-}
-#pragma mark - UIImagePickerController Delegate
-//相机,相册Finish的代理
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-  NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
-  
-  if ([mediaType isEqualToString:@"public.movie"]) {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    //[MBProgressHUD showMessage:@"不支持视频发送" view:self.view];
-    return;
-  }
-  UIImage *image;
-  image = [info objectForKey:UIImagePickerControllerOriginalImage];
-  [self prepareImageMessage:image];
-  [self dropToolBarNoAnimate];
-  [self dismissViewControllerAnimated:YES completion:nil];
-}
 
 #pragma mark --发送图片
+- (void)chatMessageWithSendImage:(UIImage *)image
+{
+    [self prepareImageMessage:image];
+}
+
+- (void)chatMessageWithSendImageArr:(NSArray *)imageArr
+{
+    for (UIImage *image in imageArr) {
+      [self prepareImageMessage:image];
+    }
+}
+
 - (void)prepareImageMessage:(UIImage *)img {
-  //DDLogDebug(@"Action - prepareImageMessage");
+  
   img = [img resizedImageByWidth:upLoadImgWidth];
   
   JMSGMessage* message = nil;
@@ -984,20 +960,15 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
                                                name:kDeleteMessage
                                              object:nil];
 
-  [self.toolBarContainer.toolbar.textView addObserver:self
-                                           forKeyPath:@"contentSize"
-                                              options:NSKeyValueObservingOptionNew
-                                              context:nil];
-  self.toolBarContainer.toolbar.textView.delegate = self;
+
 }
 
 - (void)inputKeyboardWillShow:(NSNotification *)notification{
   _barBottomFlag=NO;
-  CGRect keyBoardFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+ 
   CGFloat animationTime = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
   
   [UIView animateWithDuration:animationTime animations:^{
-    _moreViewHeight.constant = keyBoardFrame.size.height;
     [self.view layoutIfNeeded];
   }];
   [self scrollToEnd];//!
@@ -1007,7 +978,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   CGFloat animationTime = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     kWEAKSELF
   [UIView animateWithDuration:animationTime animations:^{
-    _moreViewHeight.constant = 0;
+    
     [weakSelf.view layoutIfNeeded];
   }];
   [self scrollToBottomAnimated:NO];
@@ -1018,59 +989,26 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   [self prepareTextMessage:text];
 }
 
-- (void)perform {
-  _moreViewHeight.constant = 0;
-  _toolBarToBottomConstrait.constant = 0;
-}
 
 #pragma mark --返回下面的位置
 - (void)dropToolBar {
   _barBottomFlag =YES;
   _previousTextViewContentHeight = 31;
-  _toolBarContainer.toolbar.addButton.selected = NO;
+ 
   [_messageTableView reloadData];
   [UIView animateWithDuration:0.3 animations:^{
-    _toolBarToBottomConstrait.constant = 0;
-    _moreViewHeight.constant = 0;
+    
   }];
 }
 
 - (void)dropToolBarNoAnimate {
   _barBottomFlag =YES;
   _previousTextViewContentHeight = 31;
-  _toolBarContainer.toolbar.addButton.selected = NO;
+ 
   [_messageTableView reloadData];
-  _toolBarToBottomConstrait.constant = 0;
-  _moreViewHeight.constant = 0;
-}
-
-#pragma mark --按下功能响应
-- (void)pressMoreBtnClick:(UIButton *)btn {
-  _barBottomFlag=NO;
-  [_toolBarContainer.toolbar.textView resignFirstResponder];
   
-  _toolBarToBottomConstrait.constant = 0;
-  _moreViewHeight.constant = 227;
-  [_messageTableView setNeedsDisplay];
-  [_moreViewContainer setNeedsLayout];
-  [_toolBarContainer setNeedsLayout];
-  [UIView animateWithDuration:0.25 animations:^{
-    _toolBarToBottomConstrait.constant = 0;
-    _moreViewHeight.constant = 227;
-      _toolBarContainer.top = 100;
-      _moreViewContainer.top = 227;
-      _moreViewContainer.height = 227;
-    [_messageTableView layoutIfNeeded];
-    [_toolBarContainer layoutIfNeeded];
-    [_moreViewContainer layoutIfNeeded];
-  }];
-  [_toolBarContainer.toolbar switchToolbarToTextMode];
-  [self scrollToBottomAnimated:NO];
 }
 
-- (void)noPressmoreBtnClick:(UIButton *)btn {
-  [_toolBarContainer.toolbar.textView becomeFirstResponder];
-}
 
 #pragma mark ----发送文本消息
 - (void)prepareTextMessage:(NSString *)text {
@@ -1201,8 +1139,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 
 #pragma mark -- 点击空白处
 - (void)tapClick:(UIGestureRecognizer *)gesture {
-//    [self.toolBarContainer.toolbar.textView resignFirstResponder];
-   // [self dropToolBar];
+
     
     [self.chatInputView dealWithTap];
     
@@ -1230,7 +1167,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   NSString *messageId = _allmessageIdArr[indexPath.row];
   JCHATChatModel *model = _allMessageDic[messageId];
   if (model.isTime == YES) {
-    return 31;
+    return 31+6;
   }
   
   if (model.message.contentType == kJMSGContentTypeEventNotification) {
@@ -1531,7 +1468,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 #pragma mark 预览图片 PictureDelegate
 //PictureDelegate
 - (void)tapPicture:(NSIndexPath *)index tapView:(UIImageView *)tapView tableViewCell:(UITableViewCell *)tableViewCell {
-  [self.toolBarContainer.toolbar.textView resignFirstResponder];
+ 
   JCHATMessageTableViewCell *cell =(JCHATMessageTableViewCell *)tableViewCell;
   NSInteger count = _imgDataArr.count;
   NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
@@ -1677,9 +1614,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   if (self.barBottomFlag) {
     return;
   }
-  if (object == self.toolBarContainer.toolbar.textView && [keyPath isEqualToString:@"contentSize"]) {
-    [self layoutAndAnimateMessageInputTextView:object];
-  }
+
 }
 
 
@@ -1693,68 +1628,6 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 }
 
 #pragma mark - Layout Message Input View Helper Method
-
-//计算input textfield 的高度
-- (void)layoutAndAnimateMessageInputTextView:(UITextView *)textView {
-  CGFloat maxHeight = [JCHATToolBar maxHeight];
-  
-  CGFloat contentH = [self getTextViewContentH:textView];
-  
-  BOOL isShrinking = contentH < _previousTextViewContentHeight;
-  CGFloat changeInHeight = contentH - _previousTextViewContentHeight;
-  
-  if (!isShrinking && (_previousTextViewContentHeight == maxHeight || textView.text.length == 0)) {
-    changeInHeight = 0;
-  }
-  else {
-    changeInHeight = MIN(changeInHeight, maxHeight - _previousTextViewContentHeight);
-  }
-  if (changeInHeight != 0.0f) {
-      kWEAKSELF
-    [UIView animateWithDuration:0.25f
-                     animations:^{
-                       [weakSelf setTableViewInsetsWithBottomValue:_messageTableView.contentInset.bottom + changeInHeight];
-                       
-                       [weakSelf scrollToBottomAnimated:NO];
-                       
-                       if (isShrinking) {
-                         if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0) {
-                           _previousTextViewContentHeight = MIN(contentH, maxHeight);
-                         }
-                         // if shrinking the view, animate text view frame BEFORE input view frame
-                         [_toolBarContainer.toolbar adjustTextViewHeightBy:changeInHeight];
-                       }
-                       
-                       if (!isShrinking) {
-                         if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0) {
-                           weakSelf.previousTextViewContentHeight = MIN(contentH, maxHeight);
-                         }
-                         // growing the view, animate the text view frame AFTER input view frame
-                         [weakSelf.toolBarContainer.toolbar adjustTextViewHeightBy:changeInHeight];
-                       }
-                     }
-                     completion:^(BOOL finished) {
-                     }];
-    JCHATMessageTextView *textview =_toolBarContainer.toolbar.textView;
-    CGSize textSize = [JCHATStringUtils stringSizeWithWidthString:textview.text withWidthLimit:textView.frame.size.width withFont:[UIFont systemFontOfSize:st_toolBarTextSize]];
-    CGFloat textHeight = textSize.height > maxHeight?maxHeight:textSize.height;
-    _toolBarHeightConstrait.constant = textHeight + 16;//!
-    self.previousTextViewContentHeight = MIN(contentH, maxHeight);
-  }
-  
-  // Once we reached the max height, we have to consider the bottom offset for the text view.
-  // To make visible the last line, again we have to set the content offset.
-  if (self.previousTextViewContentHeight == maxHeight) {
-    double delayInSeconds = 0.01;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime,
-                   dispatch_get_main_queue(),
-                   ^(void) {
-                     CGPoint bottomOffset = CGPointMake(0.0f, contentH - textView.bounds.size.height);
-                     [textView setContentOffset:bottomOffset animated:YES];
-                   });
-  }
-}
 
 - (void)inputTextViewDidChange:(JCHATMessageTextView *)messageInputTextView {
   [[JCHATSendMsgManager ins] updateConversation:_conversation withDraft:messageInputTextView.text];
@@ -1773,23 +1646,10 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 #pragma mark - Previte Method
 
 - (BOOL)shouldAllowScroll {
-  //      if (self.isUserScrolling) {
-  //          if ([self.delegate respondsToSelector:@selector(shouldPreventScrollToBottomWhileUserScrolling)]
-  //              && [self.delegate shouldPreventScrollToBottomWhileUserScrolling]) {
-  //              return NO;
-  //          }
-  //      }
-  
   return YES;
 }
 
 #pragma mark - Scroll Message TableView Helper Method
-
-- (void)setTableViewInsetsWithBottomValue:(CGFloat)bottom {
-  //    UIEdgeInsets insets = [self tableViewInsetsWithBottomValue:bottom];
-  //    self.messageTableView.contentInset = insets;
-  //    self.messageTableView.scrollIndicatorInsets = insets;
-}
 
 - (UIEdgeInsets)tableViewInsetsWithBottomValue:(CGFloat)bottom {
   UIEdgeInsets insets = UIEdgeInsetsZero;

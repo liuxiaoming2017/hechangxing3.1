@@ -31,7 +31,7 @@
     PHCachingImageManager *imageManage = [[PHCachingImageManager alloc] init];
     
     [imageManage requestImageForAsset:imageAsset targetSize:_albumImage.frame.size contentMode:PHImageContentModeDefault options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-      _albumImage.image = result;
+        self->_albumImage.image = result;
     }];
   }
 }
@@ -48,7 +48,7 @@
                            targetSize:_albumImage.frame.size
                           contentMode:PHImageContentModeDefault
                               options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-      _albumImage.image = result;
+        self->_albumImage.image = result;
     }];
   }
 }

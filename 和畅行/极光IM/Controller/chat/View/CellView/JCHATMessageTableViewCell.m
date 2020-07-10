@@ -36,6 +36,13 @@ static NSInteger const readViewRadius = 4;
     self.backgroundColor = [UIColor clearColor];
     _headView = [UIImageView new];
     [_headView setImage:[UIImage imageNamed:@"headDefalt.png"]];
+//    if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].memberImage]){
+//        [_headView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"1我的_03"]];
+//         
+//    }else{
+//        [_headView sd_setImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage] placeholderImage:[UIImage imageNamed:@"1我的_03"]];
+//          
+//    }
     _headView.layer.cornerRadius = headHeight/2;
     _headView.layer.masksToBounds = YES;
     _headView.contentMode = UIViewContentModeScaleAspectFill;
@@ -121,16 +128,24 @@ static NSInteger const readViewRadius = 4;
             JMSGUser *user = ((JMSGUser *)strongSelf.model.message.fromUser);
             if ([objectId isEqualToString:user.username]) {
                 if (data != nil) {
-                    _model.isDefaultAvatar = NO;
-                    _model.avatarDataLength = data.length;
+                    self->_model.isDefaultAvatar = NO;
+                    self->_model.avatarDataLength = data.length;
                     [strongSelf.headView setImage:[UIImage imageWithData:data]];
                 } else {
+
                     [strongSelf.headView setImage:[UIImage imageNamed:@"headDefalt"]];
                 }
             }
         } else {
             //DDLogDebug(@"Action -- get thumbavatar fail");
-            [strongSelf.headView setImage:[UIImage imageNamed:@"headDefalt"]];
+            //[strongSelf.headView setImage:[UIImage imageNamed:@"headDefalt"]];
+            if([GlobalCommon stringEqualNull:[UserShareOnce shareOnce].memberImage]){
+                [strongSelf.headView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"1我的_03"]];
+                 
+            }else{
+                [strongSelf.headView sd_setImageWithURL:[NSURL URLWithString:[UserShareOnce shareOnce].memberImage] placeholderImage:[UIImage imageNamed:@"1我的_03"]];
+                  
+            }
         }
     }];
 }

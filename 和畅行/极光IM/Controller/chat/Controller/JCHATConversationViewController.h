@@ -13,7 +13,6 @@
 #import "JCHATChatModel.h"
 #import "XHVoiceRecordHUD.h"
 #import "XHVoiceRecordHelper.h"
-//#import "JCHATVoiceTableViewCell.h"
 #import "JCHATMessageTableView.h"
 #import "JCHATMessageTableViewCell.h"
 #import "JCHATPhotoPickerViewController.h"
@@ -46,12 +45,8 @@ UITextViewDelegate>{
     
 }
 
-@property (weak, nonatomic) IBOutlet JCHATMessageTableView *messageTableView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolBarHeightConstrait;
-@property (weak, nonatomic) IBOutlet JCHATToolBarContainer *toolBarContainer;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolBarToBottomConstrait;
-@property (weak, nonatomic) IBOutlet JCHATMoreViewContainer *moreViewContainer;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *moreViewHeight;
+@property(strong, nonatomic) JCHATMessageTableView *messageTableView;
+
 @property(nonatomic, assign) JPIMInputViewType textViewInputViewType;
 @property(assign, nonatomic) BOOL barBottomFlag;
 @property(nonatomic, strong, readwrite) XHVoiceRecordHUD *voiceRecordHUD;
